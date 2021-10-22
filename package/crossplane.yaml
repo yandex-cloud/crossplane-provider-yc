@@ -1,0 +1,7 @@
+apiVersion: meta.pkg.crossplane.io/v1alpha1
+kind: Provider
+metadata:
+  name: provider-tf-template
+spec:
+  controller:
+    image: DOCKER_REGISTRY/provider-tf-template:VERSION
