@@ -4,10 +4,11 @@
 PROJECT_NAME := provider-tf-template
 PROJECT_REPO := github.com/crossplane-contrib/$(PROJECT_NAME)
 
-TERRAFORM_VERSION := 1.0.5
-TERRAFORM_PROVIDER_SOURCE := "hashicorp/hashicups"
-TERRAFORM_PROVIDER_VERSION := 0.3.1
-TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-hashicups
+export TERRAFORM_VERSION := 1.0.5
+export TERRAFORM_PROVIDER_SOURCE :=
+export TERRAFORM_PROVIDER_VERSION :=
+export TERRAFORM_PROVIDER_DOWNLOAD_NAME :=
+export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX :=
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -102,9 +103,6 @@ submodules:
 # This is for running out-of-cluster locally, and is for convenience. Running
 # this make target will print out the command which was used. For more control,
 # try running the binary directly with different arguments.
-export TERRAFORM_VERSION
-export TERRAFORM_PROVIDER_SOURCE
-export TERRAFORM_PROVIDER_VERSION
 run: go.build
 	@$(INFO) Running Crossplane locally out-of-cluster . . .
 	@# To see other arguments that can be provided, run the command with --help instead

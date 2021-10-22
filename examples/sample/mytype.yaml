@@ -1,9 +1,15 @@
-apiVersion: sample.template.tf.crossplane.io/v1alpha1
-kind: MyType
+apiVersion: hashicups.hashicups.tf.crossplane.io/v1alpha1
+kind: Order
 metadata:
   name: example
 spec:
   forProvider:
-    configurableField: test
+    items:
+      - coffee:
+          - id: 3
+        quantity: 2
+      - coffee:
+          - id: 2
+        quantity: 2
   providerConfigRef:
     name: default

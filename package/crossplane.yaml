@@ -4,4 +4,4 @@ metadata:
   name: provider-tf-template
 spec:
   controller:
-    image: DOCKER_REGISTRY/provider-tf-template:VERSION
+    image: DOCKER_REGISTRY/provider-tf-template-controller:VERSION
