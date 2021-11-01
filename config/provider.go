@@ -20,5 +20,6 @@ func GetProvider() tjconfig.Provider {
 		configure(pc)
 	}
 
+	pc.ConfigureResources()
 	return pc
 }
