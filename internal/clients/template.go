@@ -22,11 +22,11 @@ const (
 	// Template credentials environment variable names
 	envUsername = "HASHICUPS_USERNAME"
 	envPassword = "HASHICUPS_PASSWORD"
-
-	fmtEnvVar = "%s=%s"
 )
 
 const (
+	fmtEnvVar = "%s=%s"
+
 	// error messages
 	errNoProviderConfig     = "no providerConfigRef provided"
 	errGetProviderConfig    = "cannot get referenced ProviderConfig"

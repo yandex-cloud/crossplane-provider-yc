@@ -32,7 +32,7 @@ import (
 
 // Setup adds a controller that reconciles ProviderConfigs by accounting for
 // their current usage.
-func Setup(mgr ctrl.Manager, l logging.Logger, rl workqueue.RateLimiter, _ terraform.SetupFn, _ *terraform.WorkspaceStore, _ config.Provider, concurrency int) error {
+func Setup(mgr ctrl.Manager, l logging.Logger, rl workqueue.RateLimiter, _ terraform.SetupFn, _ *terraform.WorkspaceStore, _ *config.Provider, concurrency int) error {
 	name := providerconfig.ControllerName(v1alpha1.ProviderConfigGroupKind)
 
 	o := controller.Options{
