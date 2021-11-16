@@ -19,7 +19,6 @@ package config
 import (
 	tjconfig "github.com/crossplane-contrib/terrajet/pkg/config"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	tf "github.com/hashicorp/terraform-provider-hashicups/hashicups"
 )
 
 const (
@@ -28,8 +27,7 @@ const (
 )
 
 // GetProvider returns provider configuration
-func GetProvider() *tjconfig.Provider {
-	resourceMap := tf.Provider().ResourcesMap
+func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 	// Comment out the line below instead of the above, if your Terraform
 	// provider uses an old version (<v2) of github.com/hashicorp/terraform-plugin-sdk.
 	// resourceMap := conversion.GetV2ResourceMap(tf.Provider())
@@ -41,7 +39,7 @@ func GetProvider() *tjconfig.Provider {
 		return r
 	}
 
-	pc := tjconfig.NewProvider(resourceMap, resourcePrefix, modulePath,
+	pc := tjconfig.NewProvider(tf.ResourcesMap, resourcePrefix, modulePath,
 		tjconfig.WithDefaultResourceFn(defaultResourceFn))
 
 	for _, configure := range []func(provider *tjconfig.Provider){

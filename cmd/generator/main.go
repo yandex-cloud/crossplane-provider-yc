@@ -23,6 +23,8 @@ import (
 	"os"
 	"path/filepath"
 
+	tf "github.com/hashicorp/terraform-provider-hashicups/hashicups"
+
 	"github.com/crossplane-contrib/terrajet/pkg/pipeline"
 
 	"github.com/crossplane-contrib/provider-tf-template/config"
@@ -36,5 +38,5 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("cannot calculate the absolute path of %s", os.Args[1]))
 	}
-	pipeline.Run(config.GetProvider(), absRootDir)
+	pipeline.Run(config.GetProvider(tf.Provider()), absRootDir)
 }
