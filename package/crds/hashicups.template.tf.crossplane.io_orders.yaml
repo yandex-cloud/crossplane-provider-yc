@@ -4,14 +4,14 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.6.2
   creationTimestamp: null
-  name: orders.hashicups.hashicups.tf.crossplane.io
+  name: orders.hashicups.template.tf.crossplane.io
 spec:
-  group: hashicups.hashicups.tf.crossplane.io
+  group: hashicups.template.tf.crossplane.io
   names:
     categories:
     - crossplane
     - managed
-    - tfhashicups
+    - tftemplate
     kind: Order
     listKind: OrderList
     plural: orders
