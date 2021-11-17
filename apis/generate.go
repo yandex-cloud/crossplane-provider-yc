@@ -23,8 +23,10 @@ limitations under the License.
 //go:generate rm -rf ../package/crds
 
 // Remove generated files
-//go:generate bash -c "rm -rf $(find . -iname 'zz_*')"
-//go:generate bash -c "rm -rf $(find ../internal/controller -iname 'zz_*')"
+//go:generate bash -c "find . -iname 'zz_*' -delete"
+//go:generate bash -c "find . -type d -empty -delete"
+//go:generate bash -c "find ../internal/controller -iname 'zz_*' -delete"
+//go:generate bash -c "find ../internal/controller -type d -empty -delete"
 
 // Run Terrajet generator
 //go:generate go run -tags generate ../cmd/generator/main.go ..
