@@ -37,6 +37,11 @@ RUN unzip /tmp/terraform_${TERRAFORM_VERSION}_linux_${ARCH}.zip -d /usr/local/bi
 
 ADD provider /usr/local/bin/crossplane-provider
 
+# Provider controller needs these environment variable at runtime
+ENV TERRAFORM_VERSION ${TERRAFORM_VERSION}
+ENV TERRAFORM_PROVIDER_SOURCE ${TERRAFORM_PROVIDER_SOURCE}
+ENV TERRAFORM_PROVIDER_VERSION ${TERRAFORM_PROVIDER_VERSION}
+
 USER ${USER_ID}
 EXPOSE 8080
 
