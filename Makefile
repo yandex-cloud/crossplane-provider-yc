@@ -4,7 +4,7 @@
 PROJECT_NAME := provider-tf-template
 PROJECT_REPO := github.com/crossplane-contrib/$(PROJECT_NAME)
 
-export TERRAFORM_VERSION := 1.0.5
+export TERRAFORM_VERSION := 1.0.11
 export TERRAFORM_PROVIDER_SOURCE :=
 export TERRAFORM_PROVIDER_VERSION :=
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME :=
