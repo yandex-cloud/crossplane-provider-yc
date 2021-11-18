@@ -1,4 +1,4 @@
-apiVersion: hashicups.hashicups.tf.crossplane.io/v1alpha1
+apiVersion: hashicups.hashicups.jet.crossplane.io/v1alpha1
 kind: Order
 metadata:
   name: example

@@ -1,15 +1,15 @@
-module github.com/crossplane-contrib/provider-tf-template
+module github.com/crossplane-contrib/provider-jet-template
 
 go 1.16
 
 require (
+	github.com/crossplane-contrib/provider-tf-template v0.0.0-20211118091831-6adf2511138f
 	github.com/crossplane-contrib/terrajet v0.1.1-0.20211116112027-dcab1c74d55d
 	github.com/crossplane/crossplane-runtime v0.15.1-0.20211004150827-579c1833b513
 	github.com/crossplane/crossplane-tools v0.0.0-20210916125540-071de511ae8e
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.7.0
 	github.com/hashicorp/terraform-provider-hashicups v0.3.1
 	github.com/pkg/errors v0.9.1
-	go.uber.org/multierr v1.7.0 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/apimachinery v0.22.0
 	k8s.io/client-go v0.22.0
