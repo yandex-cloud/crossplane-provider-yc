@@ -22,8 +22,8 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1hashicups "github.com/crossplane-contrib/provider-tf-template/apis/hashicups/v1alpha1"
-	v1alpha1 "github.com/crossplane-contrib/provider-tf-template/apis/v1alpha1"
+	v1alpha1hashicups "github.com/crossplane-contrib/provider-jet-template/apis/hashicups/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-jet-template/apis/v1alpha1"
 )
 
 func init() {
