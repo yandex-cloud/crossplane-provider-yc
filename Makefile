@@ -80,20 +80,7 @@ crds.clean:
 	@find package/crds -name '*.yaml.sed' -delete || $(FAIL)
 	@$(OK) cleaned generated CRDs
 
-terrajet.run:
-	@go run cmd/generator/main.go
-
-generate.init: terrajet.run
 generate.done: crds.clean
-
-# todo(turkenh): clean up whole apis and internal/control directories once we
-# figured out where to keep non generated files inside there dirs
-terrajet.clean:
-	@rm -f apis/zz_*.go
-	@rm -f apis/*/zz_*.go
-	@rm -f apis/*/*/zz_*.go
-	@rm -f internal/controller/zz_*.go
-	@rm -f internal/controller/*/*/zz_*.go
 
 # Update the submodules, such as the common build scripts.
 submodules:
