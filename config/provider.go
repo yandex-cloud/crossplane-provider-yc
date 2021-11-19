@@ -32,7 +32,7 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 	// provider uses an old version (<v2) of github.com/hashicorp/terraform-plugin-sdk.
 	// resourceMap := conversion.GetV2ResourceMap(tf.Provider())
 
-	defaultResourceFn := func(name string, terraformResource *schema.Resource) *tjconfig.Resource {
+	defaultResourceFn := func(name string, terraformResource *schema.Resource, opts ...tjconfig.ResourceOption) *tjconfig.Resource {
 		r := tjconfig.DefaultResource(name, terraformResource)
 		// Add any provider-specific defaulting here. For example:
 		//   r.ExternalName = tjconfig.IdentifierFromProvider
