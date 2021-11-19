@@ -30,11 +30,6 @@ func (mg *Order) GetTerraformResourceType() string {
 	return "hashicups_order"
 }
 
-// GetTerraformResourceIDField returns Terraform identifier field for this Order
-func (tr *Order) GetTerraformResourceIDField() string {
-	return "id"
-}
-
 // GetConnectionDetailsMapping for this Order
 func (tr *Order) GetConnectionDetailsMapping() map[string]string {
 	return nil
