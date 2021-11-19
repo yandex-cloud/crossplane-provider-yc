@@ -1,4 +1,4 @@
-apiVersion: template.tf.crossplane.io/v1alpha1
+apiVersion: template.jet.crossplane.io/v1alpha1
 kind: ProviderConfig
 metadata:
   name: default

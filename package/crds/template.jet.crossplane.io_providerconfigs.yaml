@@ -4,14 +4,14 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.6.2
   creationTimestamp: null
-  name: providerconfigs.template.tf.crossplane.io
+  name: providerconfigs.template.jet.crossplane.io
 spec:
-  group: template.tf.crossplane.io
+  group: template.jet.crossplane.io
   names:
     categories:
     - crossplane
     - provider
-    - tftemplate
+    - templatejet
     kind: ProviderConfig
     listKind: ProviderConfigList
     plural: providerconfigs
@@ -29,7 +29,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: A ProviderConfig configures a TF Template provider.
+        description: A ProviderConfig configures a Template JET provider.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation

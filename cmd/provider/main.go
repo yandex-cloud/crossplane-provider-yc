@@ -28,10 +28,10 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	"github.com/crossplane-contrib/provider-tf-template/apis"
-	pconfig "github.com/crossplane-contrib/provider-tf-template/config"
-	"github.com/crossplane-contrib/provider-tf-template/internal/clients"
-	"github.com/crossplane-contrib/provider-tf-template/internal/controller"
+	"github.com/crossplane-contrib/provider-jet-template/apis"
+	pconfig "github.com/crossplane-contrib/provider-jet-template/config"
+	"github.com/crossplane-contrib/provider-jet-template/internal/clients"
+	"github.com/crossplane-contrib/provider-jet-template/internal/controller"
 )
 
 func main() {
@@ -47,7 +47,7 @@ func main() {
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 
 	zl := zap.New(zap.UseDevMode(*debug))
-	log := logging.NewLogrLogger(zl.WithName("provider-tf-template"))
+	log := logging.NewLogrLogger(zl.WithName("provider-jet-template"))
 	if *debug {
 		// The controller-runtime runs with a no-op logger by default. It is
 		// *very* verbose even at info level, so we only provide it a real
@@ -62,7 +62,7 @@ func main() {
 
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
 		LeaderElection:   *leaderElection,
-		LeaderElectionID: "crossplane-leader-election-provider-tf-template",
+		LeaderElectionID: "crossplane-leader-election-provider-jet-template",
 		SyncPeriod:       syncPeriod,
 	})
 	kingpin.FatalIfError(err, "Cannot create controller manager")
