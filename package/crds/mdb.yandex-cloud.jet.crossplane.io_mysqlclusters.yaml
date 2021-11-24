@@ -1,0 +1,355 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.6.2
+  creationTimestamp: null
+  name: mysqlclusters.mdb.yandex-cloud.jet.crossplane.io
+spec:
+  group: mdb.yandex-cloud.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - yandex-cloudjet
+    kind: MysqlCluster
+    listKind: MysqlClusterList
+    plural: mysqlclusters
+    singular: mysqlcluster
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: MysqlCluster is the Schema for the MysqlClusters API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: MysqlClusterSpec defines the desired state of MysqlCluster
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  access:
+                    items:
+                      properties:
+                        dataLens:
+                          type: boolean
+                        webSql:
+                          type: boolean
+                      type: object
+                    type: array
+                  allowRegenerationHost:
+                    type: boolean
+                  backupWindowStart:
+                    items:
+                      properties:
+                        hours:
+                          format: int64
+                          type: integer
+                        minutes:
+                          format: int64
+                          type: integer
+                      type: object
+                    type: array
+                  database:
+                    items:
+                      properties:
+                        name:
+                          type: string
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  deletionProtection:
+                    type: boolean
+                  description:
+                    type: string
+                  environment:
+                    type: string
+                  folderId:
+                    type: string
+                  host:
+                    items:
+                      properties:
+                        assignPublicIp:
+                          type: boolean
+                        name:
+                          type: string
+                        replicationSourceName:
+                          type: string
+                        subnetId:
+                          type: string
+                        zone:
+                          type: string
+                      required:
+                      - zone
+                      type: object
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  maintenanceWindow:
+                    items:
+                      properties:
+                        day:
+                          type: string
+                        hour:
+                          format: int64
+                          type: integer
+                        type:
+                          type: string
+                      required:
+                      - type
+                      type: object
+                    type: array
+                  mysqlConfig:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  networkId:
+                    type: string
+                  resources:
+                    items:
+                      properties:
+                        diskSize:
+                          format: int64
+                          type: integer
+                        diskTypeId:
+                          type: string
+                        resourcePresetId:
+                          type: string
+                      required:
+                      - diskSize
+                      - diskTypeId
+                      - resourcePresetId
+                      type: object
+                    type: array
+                  restore:
+                    items:
+                      properties:
+                        backupId:
+                          type: string
+                        time:
+                          type: string
+                      required:
+                      - backupId
+                      type: object
+                    type: array
+                  securityGroupIds:
+                    items:
+                      type: string
+                    type: array
+                  user:
+                    items:
+                      properties:
+                        authenticationPlugin:
+                          type: string
+                        connectionLimits:
+                          items:
+                            properties:
+                              maxConnectionsPerHour:
+                                format: int64
+                                type: integer
+                              maxQuestionsPerHour:
+                                format: int64
+                                type: integer
+                              maxUpdatesPerHour:
+                                format: int64
+                                type: integer
+                              maxUserConnections:
+                                format: int64
+                                type: integer
+                            type: object
+                          type: array
+                        globalPermissions:
+                          items:
+                            type: string
+                          type: array
+                        name:
+                          type: string
+                        passwordSecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        permission:
+                          items:
+                            properties:
+                              databaseName:
+                                type: string
+                              roles:
+                                items:
+                                  type: string
+                                type: array
+                            required:
+                            - databaseName
+                            type: object
+                          type: array
+                      required:
+                      - name
+                      - passwordSecretRef
+                      type: object
+                    type: array
+                  version:
+                    type: string
+                required:
+                - database
+                - environment
+                - host
+                - networkId
+                - resources
+                - user
+                - version
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: MysqlClusterStatus defines the observed state of MysqlCluster.
+            properties:
+              atProvider:
+                properties:
+                  createdAt:
+                    type: string
+                  health:
+                    type: string
+                  status:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

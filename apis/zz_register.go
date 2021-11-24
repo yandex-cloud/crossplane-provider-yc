@@ -22,15 +22,53 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/crossplane-contrib/provider-jet-template/apis/hashicups/v1alpha1"
-	v1alpha1apis "github.com/crossplane-contrib/provider-jet-template/apis/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/alb/v1alpha1"
+	v1alpha1api "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/api/v1alpha1"
+	v1alpha1compute "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/compute/v1alpha1"
+	v1alpha1container "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/container/v1alpha1"
+	v1alpha1dataproc "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/dataproc/v1alpha1"
+	v1alpha1dns "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/dns/v1alpha1"
+	v1alpha1function "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/function/v1alpha1"
+	v1alpha1iam "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/iam/v1alpha1"
+	v1alpha1kms "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/kms/v1alpha1"
+	v1alpha1kubernetes "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/kubernetes/v1alpha1"
+	v1alpha1lb "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/lb/v1alpha1"
+	v1alpha1logging "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/logging/v1alpha1"
+	v1alpha1mdb "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/mdb/v1alpha1"
+	v1alpha1message "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/message/v1alpha1"
+	v1alpha1organizationmanager "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/organizationmanager/v1alpha1"
+	v1alpha1resourcemanager "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/resourcemanager/v1alpha1"
+	v1alpha1storage "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/storage/v1alpha1"
+	v1alpha1apis "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/v1alpha1"
+	v1alpha1vpc "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/vpc/v1alpha1"
+	v1alpha1yandex "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/yandex/v1alpha1"
+	v1alpha1ydb "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/ydb/v1alpha1"
 )
 
 func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1api.SchemeBuilder.AddToScheme,
+		v1alpha1compute.SchemeBuilder.AddToScheme,
+		v1alpha1container.SchemeBuilder.AddToScheme,
+		v1alpha1dataproc.SchemeBuilder.AddToScheme,
+		v1alpha1dns.SchemeBuilder.AddToScheme,
+		v1alpha1function.SchemeBuilder.AddToScheme,
+		v1alpha1iam.SchemeBuilder.AddToScheme,
+		v1alpha1kms.SchemeBuilder.AddToScheme,
+		v1alpha1kubernetes.SchemeBuilder.AddToScheme,
+		v1alpha1lb.SchemeBuilder.AddToScheme,
+		v1alpha1logging.SchemeBuilder.AddToScheme,
+		v1alpha1mdb.SchemeBuilder.AddToScheme,
+		v1alpha1message.SchemeBuilder.AddToScheme,
+		v1alpha1organizationmanager.SchemeBuilder.AddToScheme,
+		v1alpha1resourcemanager.SchemeBuilder.AddToScheme,
+		v1alpha1storage.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
+		v1alpha1vpc.SchemeBuilder.AddToScheme,
+		v1alpha1yandex.SchemeBuilder.AddToScheme,
+		v1alpha1ydb.SchemeBuilder.AddToScheme,
 	)
 }
 

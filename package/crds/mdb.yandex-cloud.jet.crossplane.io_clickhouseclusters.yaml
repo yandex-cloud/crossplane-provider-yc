@@ -1,0 +1,946 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.6.2
+  creationTimestamp: null
+  name: clickhouseclusters.mdb.yandex-cloud.jet.crossplane.io
+spec:
+  group: mdb.yandex-cloud.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - yandex-cloudjet
+    kind: ClickhouseCluster
+    listKind: ClickhouseClusterList
+    plural: clickhouseclusters
+    singular: clickhousecluster
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ClickhouseCluster is the Schema for the ClickhouseClusters API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ClickhouseClusterSpec defines the desired state of ClickhouseCluster
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  access:
+                    items:
+                      properties:
+                        dataLens:
+                          type: boolean
+                        metrika:
+                          type: boolean
+                        serverless:
+                          type: boolean
+                        webSql:
+                          type: boolean
+                      type: object
+                    type: array
+                  adminPasswordSecretRef:
+                    description: A SecretKeySelector is a reference to a secret key
+                      in an arbitrary namespace.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  backupWindowStart:
+                    items:
+                      properties:
+                        hours:
+                          format: int64
+                          type: integer
+                        minutes:
+                          format: int64
+                          type: integer
+                      type: object
+                    type: array
+                  clickhouse:
+                    items:
+                      properties:
+                        config:
+                          items:
+                            properties:
+                              backgroundPoolSize:
+                                format: int64
+                                type: integer
+                              backgroundSchedulePoolSize:
+                                format: int64
+                                type: integer
+                              compression:
+                                items:
+                                  properties:
+                                    method:
+                                      type: string
+                                    minPartSize:
+                                      format: int64
+                                      type: integer
+                                    minPartSizeRatio:
+                                      type: number
+                                  required:
+                                  - method
+                                  - minPartSize
+                                  - minPartSizeRatio
+                                  type: object
+                                type: array
+                              geobaseUri:
+                                type: string
+                              graphiteRollup:
+                                items:
+                                  properties:
+                                    name:
+                                      type: string
+                                    pattern:
+                                      items:
+                                        properties:
+                                          function:
+                                            type: string
+                                          regexp:
+                                            type: string
+                                          retention:
+                                            items:
+                                              properties:
+                                                age:
+                                                  format: int64
+                                                  type: integer
+                                                precision:
+                                                  format: int64
+                                                  type: integer
+                                              required:
+                                              - age
+                                              - precision
+                                              type: object
+                                            type: array
+                                        required:
+                                        - function
+                                        type: object
+                                      type: array
+                                  required:
+                                  - name
+                                  type: object
+                                type: array
+                              kafka:
+                                items:
+                                  properties:
+                                    saslMechanism:
+                                      type: string
+                                    saslPasswordSecretRef:
+                                      description: A SecretKeySelector is a reference
+                                        to a secret key in an arbitrary namespace.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                    saslUsername:
+                                      type: string
+                                    securityProtocol:
+                                      type: string
+                                  type: object
+                                type: array
+                              kafkaTopic:
+                                items:
+                                  properties:
+                                    name:
+                                      type: string
+                                    settings:
+                                      items:
+                                        properties:
+                                          saslMechanism:
+                                            type: string
+                                          saslPasswordSecretRef:
+                                            description: A SecretKeySelector is a
+                                              reference to a secret key in an arbitrary
+                                              namespace.
+                                            properties:
+                                              key:
+                                                description: The key to select.
+                                                type: string
+                                              name:
+                                                description: Name of the secret.
+                                                type: string
+                                              namespace:
+                                                description: Namespace of the secret.
+                                                type: string
+                                            required:
+                                            - key
+                                            - name
+                                            - namespace
+                                            type: object
+                                          saslUsername:
+                                            type: string
+                                          securityProtocol:
+                                            type: string
+                                        type: object
+                                      type: array
+                                  required:
+                                  - name
+                                  type: object
+                                type: array
+                              keepAliveTimeout:
+                                format: int64
+                                type: integer
+                              logLevel:
+                                type: string
+                              markCacheSize:
+                                format: int64
+                                type: integer
+                              maxConcurrentQueries:
+                                format: int64
+                                type: integer
+                              maxConnections:
+                                format: int64
+                                type: integer
+                              maxPartitionSizeToDrop:
+                                format: int64
+                                type: integer
+                              maxTableSizeToDrop:
+                                format: int64
+                                type: integer
+                              mergeTree:
+                                items:
+                                  properties:
+                                    maxBytesToMergeAtMinSpaceInPool:
+                                      format: int64
+                                      type: integer
+                                    maxReplicatedMergesInQueue:
+                                      format: int64
+                                      type: integer
+                                    numberOfFreeEntriesInPoolToLowerMaxSizeOfMerge:
+                                      format: int64
+                                      type: integer
+                                    partsToDelayInsert:
+                                      format: int64
+                                      type: integer
+                                    partsToThrowInsert:
+                                      format: int64
+                                      type: integer
+                                    replicatedDeduplicationWindow:
+                                      format: int64
+                                      type: integer
+                                    replicatedDeduplicationWindowSeconds:
+                                      format: int64
+                                      type: integer
+                                  type: object
+                                type: array
+                              metricLogEnabled:
+                                type: boolean
+                              metricLogRetentionSize:
+                                format: int64
+                                type: integer
+                              metricLogRetentionTime:
+                                format: int64
+                                type: integer
+                              partLogRetentionSize:
+                                format: int64
+                                type: integer
+                              partLogRetentionTime:
+                                format: int64
+                                type: integer
+                              queryLogRetentionSize:
+                                format: int64
+                                type: integer
+                              queryLogRetentionTime:
+                                format: int64
+                                type: integer
+                              queryThreadLogEnabled:
+                                type: boolean
+                              queryThreadLogRetentionSize:
+                                format: int64
+                                type: integer
+                              queryThreadLogRetentionTime:
+                                format: int64
+                                type: integer
+                              rabbitmq:
+                                items:
+                                  properties:
+                                    passwordSecretRef:
+                                      description: A SecretKeySelector is a reference
+                                        to a secret key in an arbitrary namespace.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                    username:
+                                      type: string
+                                  type: object
+                                type: array
+                              textLogEnabled:
+                                type: boolean
+                              textLogLevel:
+                                type: string
+                              textLogRetentionSize:
+                                format: int64
+                                type: integer
+                              textLogRetentionTime:
+                                format: int64
+                                type: integer
+                              timezone:
+                                type: string
+                              traceLogEnabled:
+                                type: boolean
+                              traceLogRetentionSize:
+                                format: int64
+                                type: integer
+                              traceLogRetentionTime:
+                                format: int64
+                                type: integer
+                              uncompressedCacheSize:
+                                format: int64
+                                type: integer
+                            type: object
+                          type: array
+                        resources:
+                          items:
+                            properties:
+                              diskSize:
+                                format: int64
+                                type: integer
+                              diskTypeId:
+                                type: string
+                              resourcePresetId:
+                                type: string
+                            required:
+                            - diskSize
+                            - diskTypeId
+                            - resourcePresetId
+                            type: object
+                          type: array
+                      required:
+                      - resources
+                      type: object
+                    type: array
+                  cloudStorage:
+                    items:
+                      properties:
+                        enabled:
+                          type: boolean
+                      required:
+                      - enabled
+                      type: object
+                    type: array
+                  copySchemaOnNewHosts:
+                    type: boolean
+                  database:
+                    items:
+                      properties:
+                        name:
+                          type: string
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  deletionProtection:
+                    type: boolean
+                  description:
+                    type: string
+                  environment:
+                    type: string
+                  folderId:
+                    type: string
+                  formatSchema:
+                    items:
+                      properties:
+                        name:
+                          type: string
+                        type:
+                          type: string
+                        uri:
+                          type: string
+                      required:
+                      - name
+                      - type
+                      - uri
+                      type: object
+                    type: array
+                  host:
+                    items:
+                      properties:
+                        assignPublicIp:
+                          type: boolean
+                        shardName:
+                          type: string
+                        subnetId:
+                          type: string
+                        type:
+                          type: string
+                        zone:
+                          type: string
+                      required:
+                      - type
+                      - zone
+                      type: object
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  maintenanceWindow:
+                    items:
+                      properties:
+                        day:
+                          type: string
+                        hour:
+                          format: int64
+                          type: integer
+                        type:
+                          type: string
+                      required:
+                      - type
+                      type: object
+                    type: array
+                  mlModel:
+                    items:
+                      properties:
+                        name:
+                          type: string
+                        type:
+                          type: string
+                        uri:
+                          type: string
+                      required:
+                      - name
+                      - type
+                      - uri
+                      type: object
+                    type: array
+                  networkId:
+                    type: string
+                  securityGroupIds:
+                    items:
+                      type: string
+                    type: array
+                  serviceAccountId:
+                    type: string
+                  shardGroup:
+                    items:
+                      properties:
+                        description:
+                          type: string
+                        name:
+                          type: string
+                        shardNames:
+                          items:
+                            type: string
+                          type: array
+                      required:
+                      - name
+                      - shardNames
+                      type: object
+                    type: array
+                  sqlDatabaseManagement:
+                    type: boolean
+                  sqlUserManagement:
+                    type: boolean
+                  user:
+                    items:
+                      properties:
+                        name:
+                          type: string
+                        passwordSecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        permission:
+                          items:
+                            properties:
+                              databaseName:
+                                type: string
+                            required:
+                            - databaseName
+                            type: object
+                          type: array
+                        quota:
+                          items:
+                            properties:
+                              errors:
+                                format: int64
+                                type: integer
+                              executionTime:
+                                format: int64
+                                type: integer
+                              intervalDuration:
+                                format: int64
+                                type: integer
+                              queries:
+                                format: int64
+                                type: integer
+                              readRows:
+                                format: int64
+                                type: integer
+                              resultRows:
+                                format: int64
+                                type: integer
+                            required:
+                            - intervalDuration
+                            type: object
+                          type: array
+                        settings:
+                          items:
+                            properties:
+                              addHttpCorsHeader:
+                                type: boolean
+                              allowDdl:
+                                type: boolean
+                              compile:
+                                type: boolean
+                              compileExpressions:
+                                type: boolean
+                              connectTimeout:
+                                format: int64
+                                type: integer
+                              countDistinctImplementation:
+                                type: string
+                              distinctOverflowMode:
+                                type: string
+                              distributedAggregationMemoryEfficient:
+                                type: boolean
+                              distributedDdlTaskTimeout:
+                                format: int64
+                                type: integer
+                              distributedProductMode:
+                                type: string
+                              emptyResultForAggregationByEmptySet:
+                                type: boolean
+                              enableHttpCompression:
+                                type: boolean
+                              fallbackToStaleReplicasForDistributedQueries:
+                                type: boolean
+                              forceIndexByDate:
+                                type: boolean
+                              forcePrimaryKey:
+                                type: boolean
+                              groupByOverflowMode:
+                                type: string
+                              groupByTwoLevelThreshold:
+                                format: int64
+                                type: integer
+                              groupByTwoLevelThresholdBytes:
+                                format: int64
+                                type: integer
+                              httpConnectionTimeout:
+                                format: int64
+                                type: integer
+                              httpHeadersProgressInterval:
+                                format: int64
+                                type: integer
+                              httpReceiveTimeout:
+                                format: int64
+                                type: integer
+                              httpSendTimeout:
+                                format: int64
+                                type: integer
+                              inputFormatDefaultsForOmittedFields:
+                                type: boolean
+                              inputFormatValuesInterpretExpressions:
+                                type: boolean
+                              insertQuorum:
+                                format: int64
+                                type: integer
+                              insertQuorumTimeout:
+                                format: int64
+                                type: integer
+                              joinOverflowMode:
+                                type: string
+                              joinUseNulls:
+                                type: boolean
+                              joinedSubqueryRequiresAlias:
+                                type: boolean
+                              lowCardinalityAllowInNativeFormat:
+                                type: boolean
+                              maxAstDepth:
+                                format: int64
+                                type: integer
+                              maxAstElements:
+                                format: int64
+                                type: integer
+                              maxBlockSize:
+                                format: int64
+                                type: integer
+                              maxBytesBeforeExternalGroupBy:
+                                format: int64
+                                type: integer
+                              maxBytesBeforeExternalSort:
+                                format: int64
+                                type: integer
+                              maxBytesInDistinct:
+                                format: int64
+                                type: integer
+                              maxBytesInJoin:
+                                format: int64
+                                type: integer
+                              maxBytesInSet:
+                                format: int64
+                                type: integer
+                              maxBytesToRead:
+                                format: int64
+                                type: integer
+                              maxBytesToSort:
+                                format: int64
+                                type: integer
+                              maxBytesToTransfer:
+                                format: int64
+                                type: integer
+                              maxColumnsToRead:
+                                format: int64
+                                type: integer
+                              maxExecutionTime:
+                                format: int64
+                                type: integer
+                              maxExpandedAstElements:
+                                format: int64
+                                type: integer
+                              maxInsertBlockSize:
+                                format: int64
+                                type: integer
+                              maxMemoryUsage:
+                                format: int64
+                                type: integer
+                              maxMemoryUsageForUser:
+                                format: int64
+                                type: integer
+                              maxNetworkBandwidth:
+                                format: int64
+                                type: integer
+                              maxNetworkBandwidthForUser:
+                                format: int64
+                                type: integer
+                              maxQuerySize:
+                                format: int64
+                                type: integer
+                              maxReplicaDelayForDistributedQueries:
+                                format: int64
+                                type: integer
+                              maxResultBytes:
+                                format: int64
+                                type: integer
+                              maxResultRows:
+                                format: int64
+                                type: integer
+                              maxRowsInDistinct:
+                                format: int64
+                                type: integer
+                              maxRowsInJoin:
+                                format: int64
+                                type: integer
+                              maxRowsInSet:
+                                format: int64
+                                type: integer
+                              maxRowsToGroupBy:
+                                format: int64
+                                type: integer
+                              maxRowsToRead:
+                                format: int64
+                                type: integer
+                              maxRowsToSort:
+                                format: int64
+                                type: integer
+                              maxRowsToTransfer:
+                                format: int64
+                                type: integer
+                              maxTemporaryColumns:
+                                format: int64
+                                type: integer
+                              maxTemporaryNonConstColumns:
+                                format: int64
+                                type: integer
+                              maxThreads:
+                                format: int64
+                                type: integer
+                              mergeTreeMaxBytesToUseCache:
+                                format: int64
+                                type: integer
+                              mergeTreeMaxRowsToUseCache:
+                                format: int64
+                                type: integer
+                              mergeTreeMinBytesForConcurrentRead:
+                                format: int64
+                                type: integer
+                              mergeTreeMinRowsForConcurrentRead:
+                                format: int64
+                                type: integer
+                              minBytesToUseDirectIo:
+                                format: int64
+                                type: integer
+                              minCountToCompile:
+                                format: int64
+                                type: integer
+                              minCountToCompileExpression:
+                                format: int64
+                                type: integer
+                              minExecutionSpeed:
+                                format: int64
+                                type: integer
+                              minExecutionSpeedBytes:
+                                format: int64
+                                type: integer
+                              minInsertBlockSizeBytes:
+                                format: int64
+                                type: integer
+                              minInsertBlockSizeRows:
+                                format: int64
+                                type: integer
+                              outputFormatJsonQuote64BitIntegers:
+                                type: boolean
+                              outputFormatJsonQuoteDenormals:
+                                type: boolean
+                              priority:
+                                format: int64
+                                type: integer
+                              quotaMode:
+                                type: string
+                              readOverflowMode:
+                                type: string
+                              readonly:
+                                format: int64
+                                type: integer
+                              receiveTimeout:
+                                format: int64
+                                type: integer
+                              replicationAlterPartitionsSync:
+                                format: int64
+                                type: integer
+                              resultOverflowMode:
+                                type: string
+                              selectSequentialConsistency:
+                                type: boolean
+                              sendProgressInHttpHeaders:
+                                type: boolean
+                              sendTimeout:
+                                format: int64
+                                type: integer
+                              setOverflowMode:
+                                type: string
+                              skipUnavailableShards:
+                                type: boolean
+                              sortOverflowMode:
+                                type: string
+                              timeoutOverflowMode:
+                                type: string
+                              transferOverflowMode:
+                                type: string
+                              transformNullIn:
+                                type: boolean
+                              useUncompressedCache:
+                                type: boolean
+                            type: object
+                          type: array
+                      required:
+                      - name
+                      - passwordSecretRef
+                      type: object
+                    type: array
+                  version:
+                    type: string
+                  zookeeper:
+                    items:
+                      properties:
+                        resources:
+                          items:
+                            properties:
+                              diskSize:
+                                format: int64
+                                type: integer
+                              diskTypeId:
+                                type: string
+                              resourcePresetId:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                required:
+                - clickhouse
+                - environment
+                - host
+                - networkId
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: ClickhouseClusterStatus defines the observed state of ClickhouseCluster.
+            properties:
+              atProvider:
+                properties:
+                  createdAt:
+                    type: string
+                  health:
+                    type: string
+                  status:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

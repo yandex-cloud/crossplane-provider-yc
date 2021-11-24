@@ -22,8 +22,8 @@ import (
 )
 
 const (
-	resourcePrefix = "template"
-	modulePath     = "github.com/crossplane-contrib/provider-jet-template"
+	resourcePrefix = "yandex-cloud"
+	modulePath     = "github.com/crossplane-contrib/provider-jet-yandex-cloud"
 )
 
 // GetProvider returns provider configuration
@@ -40,7 +40,16 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 	}
 
 	pc := tjconfig.NewProvider(tf.ResourcesMap, resourcePrefix, modulePath,
-		tjconfig.WithDefaultResourceFn(defaultResourceFn))
+		tjconfig.WithDefaultResourceFn(defaultResourceFn),
+		tjconfig.WithSkipList([]string{
+			"yandex_iot_core_device$",
+			"yandex_iot_core_registry",
+		}),
+		//tjconfig.WithIncludeList([]string{
+		//	"yandex_vpc_network$",
+		//	"yandex_vpc_subnet$",
+		//}),
+	)
 
 	for _, configure := range []func(provider *tjconfig.Provider){
 		// add custom config functions
