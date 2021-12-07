@@ -28,10 +28,10 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	"github.com/crossplane-contrib/provider-jet-yandex-cloud/apis"
-	pconfig "github.com/crossplane-contrib/provider-jet-yandex-cloud/config"
-	"github.com/crossplane-contrib/provider-jet-yandex-cloud/internal/clients"
-	"github.com/crossplane-contrib/provider-jet-yandex-cloud/internal/controller"
+	"bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud/apis"
+	pconfig "bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud/config"
+	"bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud/internal/clients"
+	"bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud/internal/controller"
 )
 
 func main() {

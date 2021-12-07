@@ -34,7 +34,7 @@ import (
 	tjcontroller "github.com/crossplane-contrib/terrajet/pkg/controller"
 	"github.com/crossplane-contrib/terrajet/pkg/terraform"
 
-	v1alpha1 "github.com/crossplane-contrib/provider-jet-yandex-cloud/apis/organizationmanager/v1alpha1"
+	v1alpha1 "bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud/apis/organizationmanager/v1alpha1"
 )
 
 // Setup adds a controller that reconciles SamlFederation managed resources.

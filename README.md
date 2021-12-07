@@ -8,12 +8,12 @@ YC API.
 ## Getting Started
 
 Install the provider by using the following command after changing the image tag
-to the [latest release](https://github.com/crossplane-contrib/provider-jet-yandex-cloud/releases):
+to the [latest release](https://bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud/releases):
 ```
 kubectl crossplane install provider crossplane/provider-jet-yandex-cloud:v0.1.0
 ```
 
-You can see the API reference [here](https://doc.crds.dev/github.com/crossplane-contrib/provider-jet-yandex-cloud).
+You can see the API reference [here](https://doc.crds.dev/bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud).
 
 ## Developing
 
@@ -55,7 +55,7 @@ make build
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please
-open an [issue](https://github.com/crossplane-contrib/provider-jet-yandex-cloud/issues).
+open an [issue](https://bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud/issues).
 
 ## Contact
 
