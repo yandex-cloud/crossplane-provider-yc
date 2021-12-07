@@ -5,8 +5,8 @@ metadata:
   namespace: default
 type: Opaque
 data:
-  #  echo user1user1 | base64
-  password: dXNlcjF1c2VyMQo=
+  # 12345678
+  password: MTIzNDU2Nzg=
 ---
 apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: PostgresqlCluster
@@ -36,9 +36,9 @@ spec:
         hour: 12
     database:
       - name: db_name
-        owner: user_name
+        owner: user1
     user:
-      - name: user_name
+      - name: user1
         passwordSecretRef:
           name: postgresql
           key: password

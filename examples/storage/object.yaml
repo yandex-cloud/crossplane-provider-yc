@@ -1,0 +1,25 @@
+apiVersion: storage.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Object
+metadata:
+  name: provider-jet-yc-object
+spec:
+  forProvider:
+    contentBase64: "" # todo
+    key: "cute-cat"
+    accessKey: |+
+      -----BEGIN PUBLIC KEY-----
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiGz9VfFufol/umosHJDC
+      WdT8P9A7/XCrvrrTEGUJqn9g62w20Ag/y1AyM+ZrjEtSNlJ8xbIoEA+nNYsHXAdC
+      LBli+p/yO5Wm/z9HZNMXfs7FlgRbFmdT9g+Oqt2uafFICpcmhSYnxMkbQN1dR64q
+      BxUQ+UWLmsLxOzgUZ5qCeVa0VClYP1wAxBvYO284d337OmnMiuDzgluA7HEhc+Uu
+      Xdv5836AI1l2yEgjk0BMUQN4XDSjUHQQ9XBx5K5XnXVlgUPSdYDb9I4YvZMKdLI6
+      NAzLTfvfmGV9OuI7xHWRk2kSAgZYiPQlJ5571mZDpe6KOTXJMlZmYomRrN/biMRO
+      5wIDAQAB
+      -----END PUBLIC KEY-----
+    secretKeySecretRef:
+      name: # todo
+      namespace: # todo
+      key: # todo
+    bucket: "tf-test-bucket"
+  providerConfigRef:
+    name: default
