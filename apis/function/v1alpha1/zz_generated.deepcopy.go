@@ -921,6 +921,11 @@ func (in *TriggerParameters) DeepCopyInto(out *TriggerParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.ObjectStorage != nil {
 		in, out := &in.ObjectStorage, &out.ObjectStorage
 		*out = make([]ObjectStorageParameters, len(*in))

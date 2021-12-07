@@ -173,6 +173,11 @@ func (in *DatabaseDedicatedParameters) DeepCopyInto(out *DatabaseDedicatedParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
@@ -393,6 +398,11 @@ func (in *DatabaseServerlessParameters) DeepCopyInto(out *DatabaseServerlessPara
 	}
 	if in.LocationID != nil {
 		in, out := &in.LocationID, &out.LocationID
+		*out = new(string)
+		**out = **in
+	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
 		*out = new(string)
 		**out = **in
 	}

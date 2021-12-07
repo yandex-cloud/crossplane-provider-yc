@@ -216,6 +216,8 @@ spec:
                       - type
                       type: object
                     type: array
+                  name:
+                    type: string
                   networkId:
                     type: string
                   restore:
@@ -290,6 +292,7 @@ spec:
                 - database
                 - environment
                 - host
+                - name
                 - networkId
                 - user
                 type: object

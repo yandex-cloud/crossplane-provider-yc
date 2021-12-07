@@ -177,6 +177,8 @@ spec:
                     additionalProperties:
                       type: string
                     type: object
+                  name:
+                    type: string
                   networkId:
                     type: string
                   securityGroupIds:
@@ -277,6 +279,7 @@ spec:
                     type: array
                 required:
                 - config
+                - name
                 - networkId
                 type: object
               providerConfigRef:

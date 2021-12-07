@@ -29,6 +29,9 @@ type RepositoryObservation struct {
 }
 
 type RepositoryParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 // RepositorySpec defines the desired state of Repository

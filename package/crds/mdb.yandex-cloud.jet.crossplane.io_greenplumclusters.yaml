@@ -122,6 +122,8 @@ spec:
                       - resources
                       type: object
                     type: array
+                  name:
+                    type: string
                   networkId:
                     type: string
                   securityGroupIds:
@@ -188,6 +190,7 @@ spec:
                 - environment
                 - masterHostCount
                 - masterSubcluster
+                - name
                 - networkId
                 - segmentHostCount
                 - segmentInHost

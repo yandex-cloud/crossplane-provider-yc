@@ -90,6 +90,8 @@ spec:
                   memory:
                     format: int64
                     type: integer
+                  name:
+                    type: string
                   package:
                     items:
                       properties:
@@ -117,6 +119,7 @@ spec:
                 required:
                 - entrypoint
                 - memory
+                - name
                 - runtime
                 - userHash
                 type: object

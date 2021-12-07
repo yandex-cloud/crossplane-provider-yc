@@ -60,6 +60,9 @@ type SubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
 	// +kubebuilder:validation:Required
 	NetworkID *string `json:"networkId" tf:"network_id,omitempty"`
 

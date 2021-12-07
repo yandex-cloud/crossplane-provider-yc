@@ -141,6 +141,11 @@ func (in *GroupParameters) DeepCopyInto(out *GroupParameters) {
 			(*out)[key] = outVal
 		}
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.RetentionPeriod != nil {
 		in, out := &in.RetentionPeriod, &out.RetentionPeriod
 		*out = new(string)

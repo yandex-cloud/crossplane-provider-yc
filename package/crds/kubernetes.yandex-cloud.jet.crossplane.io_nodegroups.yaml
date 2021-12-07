@@ -206,6 +206,8 @@ spec:
                       - autoUpgrade
                       type: object
                     type: array
+                  name:
+                    type: string
                   nodeLabels:
                     additionalProperties:
                       type: string

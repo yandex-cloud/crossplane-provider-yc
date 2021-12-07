@@ -51,6 +51,9 @@ type DiskParameters struct {
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	Size *int64 `json:"size,omitempty" tf:"size,omitempty"`
 
 	// +kubebuilder:validation:Optional

@@ -6,7 +6,7 @@ include ../../../build/makelib/common.mk
 
 # ====================================================================================
 #  Options
-IMAGE = $(BUILD_REGISTRY)/provider-jet-yandex-cloud-controller-$(ARCH)
+IMAGE = $(BUILD_REGISTRY)/provider-jet-yc-controller-$(ARCH)
 include ../../../build/makelib/image.mk
 
 # ====================================================================================

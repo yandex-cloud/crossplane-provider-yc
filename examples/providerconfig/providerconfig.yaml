@@ -4,8 +4,10 @@ metadata:
   name: default
 spec:
   credentials:
+    cloudId: b1gjk8shtb2smi1cgqdn
+    folderId: b1gl3b8gmea01lcfpifp
     source: Secret
     secretRef:
-      name: example-creds
+      name: provider-yc-gen-secret
       namespace: crossplane-system
-      key: credentials
+      key: creds

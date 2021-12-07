@@ -64,6 +64,9 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Required
 	Master []MasterParameters `json:"master" tf:"master,omitempty"`
 
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
 	// +kubebuilder:validation:Required
 	NetworkID *string `json:"networkId" tf:"network_id,omitempty"`
 

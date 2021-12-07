@@ -64,6 +64,8 @@ spec:
                 properties:
                   clusterId:
                     type: string
+                  name:
+                    type: string
                   partitions:
                     format: int64
                     type: integer
@@ -103,6 +105,7 @@ spec:
                     type: array
                 required:
                 - clusterId
+                - name
                 - partitions
                 - replicationFactor
                 type: object

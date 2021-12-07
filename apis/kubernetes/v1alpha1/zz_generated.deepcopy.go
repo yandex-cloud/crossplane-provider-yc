@@ -362,6 +362,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
@@ -1247,6 +1252,11 @@ func (in *NodeGroupParameters) DeepCopyInto(out *NodeGroupParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
 	}
 	if in.NodeLabels != nil {
 		in, out := &in.NodeLabels, &out.NodeLabels

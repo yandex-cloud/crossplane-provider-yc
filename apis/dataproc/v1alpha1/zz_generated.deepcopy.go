@@ -273,6 +273,11 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 			(*out)[key] = outVal
 		}
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.SecurityGroupIds != nil {
 		in, out := &in.SecurityGroupIds, &out.SecurityGroupIds
 		*out = make([]*string, len(*in))

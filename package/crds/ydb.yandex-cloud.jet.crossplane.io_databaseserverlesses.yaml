@@ -73,6 +73,10 @@ spec:
                     type: object
                   locationId:
                     type: string
+                  name:
+                    type: string
+                required:
+                - name
                 type: object
               providerConfigRef:
                 default:

@@ -242,6 +242,9 @@ type LoadBalancerParameters struct {
 	// +kubebuilder:validation:Optional
 	Listener []ListenerParameters `json:"listener,omitempty" tf:"listener,omitempty"`
 
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
 	// +kubebuilder:validation:Required
 	NetworkID *string `json:"networkId" tf:"network_id,omitempty"`
 

@@ -41,6 +41,9 @@ type ZoneParameters struct {
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	PrivateNetworks []*string `json:"privateNetworks,omitempty" tf:"private_networks,omitempty"`
 
 	// +kubebuilder:validation:Optional

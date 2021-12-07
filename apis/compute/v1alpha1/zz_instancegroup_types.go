@@ -245,6 +245,9 @@ type InstanceGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	MaxCheckingHealthDuration *int64 `json:"maxCheckingHealthDuration,omitempty" tf:"max_checking_health_duration,omitempty"`
 
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
 	// +kubebuilder:validation:Required
 	ScalePolicy []ScalePolicyParameters `json:"scalePolicy" tf:"scale_policy,omitempty"`
 

@@ -41,6 +41,9 @@ type TargetGroupParameters struct {
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	Target []TargetParameters `json:"target,omitempty" tf:"target,omitempty"`
 }
 

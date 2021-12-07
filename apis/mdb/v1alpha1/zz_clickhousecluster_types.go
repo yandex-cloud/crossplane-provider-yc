@@ -114,6 +114,9 @@ type ClickhouseClusterParameters struct {
 	MlModel []MlModelParameters `json:"mlModel,omitempty" tf:"ml_model,omitempty"`
 
 	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Required
 	NetworkID *string `json:"networkId" tf:"network_id,omitempty"`
 
 	// +kubebuilder:validation:Optional

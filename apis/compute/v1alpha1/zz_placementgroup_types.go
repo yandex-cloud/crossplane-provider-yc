@@ -39,6 +39,9 @@ type PlacementGroupParameters struct {
 
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 // PlacementGroupSpec defines the desired state of PlacementGroup

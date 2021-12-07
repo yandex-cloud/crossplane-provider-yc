@@ -215,6 +215,9 @@ type NodeGroupParameters struct {
 	MaintenancePolicy []NodeGroupMaintenancePolicyParameters `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	NodeLabels map[string]*string `json:"nodeLabels,omitempty" tf:"node_labels,omitempty"`
 
 	// +kubebuilder:validation:Optional

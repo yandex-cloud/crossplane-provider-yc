@@ -199,6 +199,9 @@ type TriggerParameters struct {
 	// +kubebuilder:validation:Optional
 	MessageQueue []MessageQueueParameters `json:"messageQueue,omitempty" tf:"message_queue,omitempty"`
 
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
 	// +kubebuilder:validation:Optional
 	ObjectStorage []ObjectStorageParameters `json:"objectStorage,omitempty" tf:"object_storage,omitempty"`
 

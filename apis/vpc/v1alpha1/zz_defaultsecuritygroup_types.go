@@ -28,6 +28,8 @@ import (
 type DefaultSecurityGroupObservation struct {
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 

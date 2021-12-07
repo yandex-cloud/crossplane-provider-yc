@@ -200,6 +200,8 @@ spec:
                 properties:
                   createdAt:
                     type: string
+                  name:
+                    type: string
                   status:
                     type: string
                 type: object

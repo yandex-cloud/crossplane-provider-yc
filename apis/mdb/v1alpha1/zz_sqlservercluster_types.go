@@ -97,6 +97,9 @@ type SqlserverClusterParameters struct {
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Required
 	NetworkID *string `json:"networkId" tf:"network_id,omitempty"`
 
 	// +kubebuilder:validation:Required

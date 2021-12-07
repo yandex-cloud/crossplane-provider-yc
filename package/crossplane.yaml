@@ -1,7 +1,7 @@
 apiVersion: meta.pkg.crossplane.io/v1alpha1
 kind: Provider
 metadata:
-  name: provider-jet-yandex-cloud
+  name: provider-jet-yc
 spec:
   controller:
-    image: DOCKER_REGISTRY/provider-jet-yandex-cloud-controller:VERSION
+    image: DOCKER_REGISTRY/provider-jet-yc-controller:VERSION

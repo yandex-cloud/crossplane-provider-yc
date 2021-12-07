@@ -140,6 +140,8 @@ spec:
                     additionalProperties:
                       type: string
                     type: object
+                  name:
+                    type: string
                   networkId:
                     type: string
                   resources:
@@ -243,6 +245,7 @@ spec:
                 - database
                 - environment
                 - host
+                - name
                 - networkId
                 - resources
                 - user

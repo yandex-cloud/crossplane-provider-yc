@@ -94,6 +94,9 @@ type GreenplumClusterParameters struct {
 	MasterSubcluster []MasterSubclusterParameters `json:"masterSubcluster" tf:"master_subcluster,omitempty"`
 
 	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Required
 	NetworkID *string `json:"networkId" tf:"network_id,omitempty"`
 
 	// +kubebuilder:validation:Optional

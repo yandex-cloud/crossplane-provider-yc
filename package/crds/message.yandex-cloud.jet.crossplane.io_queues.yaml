@@ -77,6 +77,10 @@ spec:
                   messageRetentionSeconds:
                     format: int64
                     type: integer
+                  name:
+                    type: string
+                  namePrefix:
+                    type: string
                   receiveWaitTimeSeconds:
                     format: int64
                     type: integer

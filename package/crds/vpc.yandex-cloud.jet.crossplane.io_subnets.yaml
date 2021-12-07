@@ -85,6 +85,8 @@ spec:
                     additionalProperties:
                       type: string
                     type: object
+                  name:
+                    type: string
                   networkId:
                     type: string
                   routeTableId:

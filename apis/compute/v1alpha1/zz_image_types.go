@@ -51,6 +51,9 @@ type ImageParameters struct {
 	MinDiskSize *int64 `json:"minDiskSize,omitempty" tf:"min_disk_size,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	OsType *string `json:"osType,omitempty" tf:"os_type,omitempty"`
 
 	// +kubebuilder:validation:Optional

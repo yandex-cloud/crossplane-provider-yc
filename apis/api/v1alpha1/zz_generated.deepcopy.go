@@ -157,6 +157,11 @@ func (in *GatewayParameters) DeepCopyInto(out *GatewayParameters) {
 			(*out)[key] = outVal
 		}
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.Spec != nil {
 		in, out := &in.Spec, &out.Spec
 		*out = new(string)

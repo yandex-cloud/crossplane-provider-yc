@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Crossplane Authors.
+Copyright 2020 The Crossplane Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,7 +26,27 @@ import (
 type ProviderConfigSpec struct {
 	// Credentials required to authenticate to this provider.
 	Credentials ProviderCredentials `json:"credentials"`
+	// Stage of this provider, should be one of Prod;Preprod;Custom.
+	// Empty value equals to Prod in YC API.
+	// +kubebuilder:validation:Enum=None;Prod;Preprod;Custom
+	// +optional
+	Stage ProviderStage `json:"stage,omitempty"`
+	// CustomEndpoint used in case Stage set to Custom.
+	// +optional
+	CustomEndpoint string `json:"customEndopoint,omitempty"`
 }
+
+// ProviderStage is yandex.cloud stage to work with. One of Prod/Preprod/Custom
+type ProviderStage string
+
+const (
+	// ProviderStageProd - Prod ProviderStage
+	ProviderStageProd ProviderStage = "Prod"
+	// ProviderStagePreprod - Preprod ProviderStage
+	ProviderStagePreprod ProviderStage = "Preprod"
+	// ProviderStageCustom - Custom ProviderStage
+	ProviderStageCustom ProviderStage = "Custom"
+)
 
 // ProviderCredentials required to authenticate.
 type ProviderCredentials struct {
@@ -35,6 +55,14 @@ type ProviderCredentials struct {
 	Source xpv1.CredentialsSource `json:"source"`
 
 	xpv1.CommonCredentialSelectors `json:",inline"`
+
+	// FolderID to work with.
+	// +kubebuilder:validation:Required
+	FolderID string `json:"folderId"`
+
+	// CloudID to work with.
+	// +kubebuilder:validation:Required
+	CloudID string `json:"cloudId"`
 }
 
 // A ProviderConfigStatus reflects the observed state of a ProviderConfig.
@@ -44,12 +72,11 @@ type ProviderConfigStatus struct {
 
 // +kubebuilder:object:root=true
 
-// A ProviderConfig configures a YC JET provider.
+// A ProviderConfig configures a Template provider.
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="SECRET-NAME",type="string",JSONPath=".spec.credentials.secretRef.name",priority=1
 // +kubebuilder:resource:scope=Cluster
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,provider,yandex-cloudjet}
 type ProviderConfig struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -74,7 +101,7 @@ type ProviderConfigList struct {
 // +kubebuilder:printcolumn:name="CONFIG-NAME",type="string",JSONPath=".providerConfigRef.name"
 // +kubebuilder:printcolumn:name="RESOURCE-KIND",type="string",JSONPath=".resourceRef.kind"
 // +kubebuilder:printcolumn:name="RESOURCE-NAME",type="string",JSONPath=".resourceRef.name"
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,provider,yandex-cloudjet}
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,provider,yc}
 type ProviderConfigUsage struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

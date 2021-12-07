@@ -164,6 +164,8 @@ spec:
                       - port
                       type: object
                     type: array
+                  name:
+                    type: string
                   regionId:
                     type: string
                   type:

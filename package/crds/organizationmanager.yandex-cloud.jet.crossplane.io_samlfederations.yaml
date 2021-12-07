@@ -76,6 +76,8 @@ spec:
                     additionalProperties:
                       type: string
                     type: object
+                  name:
+                    type: string
                   organizationId:
                     type: string
                   securitySettings:
@@ -93,6 +95,7 @@ spec:
                     type: string
                 required:
                 - issuer
+                - name
                 - organizationId
                 - ssoBinding
                 - ssoUrl

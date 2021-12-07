@@ -36,6 +36,9 @@ type ServiceAccountParameters struct {
 
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
 }
 
 // ServiceAccountSpec defines the desired state of ServiceAccount

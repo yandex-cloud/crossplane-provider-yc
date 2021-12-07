@@ -72,6 +72,8 @@ spec:
                     additionalProperties:
                       type: string
                     type: object
+                  name:
+                    type: string
                   rotationPeriod:
                     type: string
                 type: object

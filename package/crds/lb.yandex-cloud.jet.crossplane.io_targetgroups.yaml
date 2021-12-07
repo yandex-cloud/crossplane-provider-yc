@@ -70,6 +70,8 @@ spec:
                     additionalProperties:
                       type: string
                     type: object
+                  name:
+                    type: string
                   regionId:
                     type: string
                   target:

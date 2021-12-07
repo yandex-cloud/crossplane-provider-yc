@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: provider-jet-yc.preprod
+  namespace: crossplane-system
+  labels:
+    app: provider-jet-yc.preprod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: provider-jet-yc.preprod
+  template:
+    metadata:
+      labels:
+        app: provider-jet-yc.preprod
+    spec:
+      serviceAccountName: crossplane-yc-sa
+      containers:
+        - name: provider-jet-yc-controller
+          image: cr.yandex/crp1304vjoro2g3tgt28/crossplane-pre/provider-jet-yc-controller:0.1.2
+          args: [
+              '-d',  # Enable debug logs
+              '-l',  # Use leader election for production deployments
+          ]
+          ports:
+            - containerPort: 8080

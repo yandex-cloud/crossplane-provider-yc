@@ -445,6 +445,11 @@ func (in *NetworkLoadBalancerParameters) DeepCopyInto(out *NetworkLoadBalancerPa
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.RegionID != nil {
 		in, out := &in.RegionID, &out.RegionID
 		*out = new(string)
@@ -642,6 +647,11 @@ func (in *TargetGroupParameters) DeepCopyInto(out *TargetGroupParameters) {
 			}
 			(*out)[key] = outVal
 		}
+	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
 	}
 	if in.RegionID != nil {
 		in, out := &in.RegionID, &out.RegionID

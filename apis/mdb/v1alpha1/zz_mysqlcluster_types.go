@@ -162,6 +162,9 @@ type MysqlClusterParameters struct {
 	MysqlConfig map[string]*string `json:"mysqlConfig,omitempty" tf:"mysql_config,omitempty"`
 
 	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Required
 	NetworkID *string `json:"networkId" tf:"network_id,omitempty"`
 
 	// +kubebuilder:validation:Required

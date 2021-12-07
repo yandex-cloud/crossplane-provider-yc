@@ -176,6 +176,8 @@ spec:
                       - serviceAccountId
                       type: object
                     type: array
+                  name:
+                    type: string
                   objectStorage:
                     items:
                       properties:
@@ -206,6 +208,7 @@ spec:
                     type: array
                 required:
                 - function
+                - name
                 type: object
               providerConfigRef:
                 default:

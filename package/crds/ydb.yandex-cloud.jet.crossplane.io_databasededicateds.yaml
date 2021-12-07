@@ -88,6 +88,8 @@ spec:
                     type: array
                   locationId:
                     type: string
+                  name:
+                    type: string
                   networkId:
                     type: string
                   resourcePresetId:
@@ -127,6 +129,7 @@ spec:
                       type: string
                     type: array
                 required:
+                - name
                 - networkId
                 - resourcePresetId
                 - scalePolicy

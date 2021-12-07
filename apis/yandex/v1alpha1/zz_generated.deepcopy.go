@@ -218,6 +218,11 @@ func (in *FunctionParameters) DeepCopyInto(out *FunctionParameters) {
 		*out = new(int64)
 		**out = **in
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.Package != nil {
 		in, out := &in.Package, &out.Package
 		*out = make([]PackageParameters, len(*in))

@@ -75,6 +75,8 @@ spec:
                   minDiskSize:
                     format: int64
                     type: integer
+                  name:
+                    type: string
                   osType:
                     type: string
                   productIds:

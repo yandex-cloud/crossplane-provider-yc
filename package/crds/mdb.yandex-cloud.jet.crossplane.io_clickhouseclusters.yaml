@@ -474,6 +474,8 @@ spec:
                       - uri
                       type: object
                     type: array
+                  name:
+                    type: string
                   networkId:
                     type: string
                   securityGroupIds:
@@ -837,6 +839,7 @@ spec:
                 - clickhouse
                 - environment
                 - host
+                - name
                 - networkId
                 type: object
               providerConfigRef:

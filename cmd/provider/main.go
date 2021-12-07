@@ -23,15 +23,15 @@ import (
 	"github.com/crossplane-contrib/terrajet/pkg/terraform"
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
 	"github.com/crossplane/crossplane-runtime/pkg/ratelimiter"
-	tf "github.com/hashicorp/terraform-provider-hashicups/hashicups"
+	tf "github.com/yandex-cloud/terraform-provider-yandex/yandex"
 	"gopkg.in/alecthomas/kingpin.v2"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	"bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud/apis"
-	pconfig "bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud/config"
-	"bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud/internal/clients"
-	"bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud/internal/controller"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/apis"
+	pconfig "bb.yandex-team.ru/crossplane/provider-jet-yc/config"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/internal/clients"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller"
 )
 
 func main() {
@@ -47,7 +47,7 @@ func main() {
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 
 	zl := zap.New(zap.UseDevMode(*debug))
-	log := logging.NewLogrLogger(zl.WithName("provider-jet-yandex-cloud"))
+	log := logging.NewLogrLogger(zl.WithName("provider-jet-yc"))
 	if *debug {
 		// The controller-runtime runs with a no-op logger by default. It is
 		// *very* verbose even at info level, so we only provide it a real
@@ -62,7 +62,7 @@ func main() {
 
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
 		LeaderElection:   *leaderElection,
-		LeaderElectionID: "crossplane-leader-election-provider-jet-yandex-cloud",
+		LeaderElectionID: "crossplane-leader-election-provider-jet-yc",
 		SyncPeriod:       syncPeriod,
 	})
 	kingpin.FatalIfError(err, "Cannot create controller manager")

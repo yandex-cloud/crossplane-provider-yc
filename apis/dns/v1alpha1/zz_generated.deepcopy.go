@@ -112,6 +112,11 @@ func (in *RecordsetParameters) DeepCopyInto(out *RecordsetParameters) {
 			}
 		}
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.TTL != nil {
 		in, out := &in.TTL, &out.TTL
 		*out = new(int64)
@@ -279,6 +284,11 @@ func (in *ZoneParameters) DeepCopyInto(out *ZoneParameters) {
 			}
 			(*out)[key] = outVal
 		}
+	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
 	}
 	if in.PrivateNetworks != nil {
 		in, out := &in.PrivateNetworks, &out.PrivateNetworks

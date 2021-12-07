@@ -1,5 +1,3 @@
-// +build generate
-
 /*
 Copyright 2021 The Crossplane Authors.
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,11 +18,11 @@ import (
 	"os"
 	"path/filepath"
 
-	tf "github.com/hashicorp/terraform-provider-hashicups/hashicups"
+	tf "github.com/yandex-cloud/terraform-provider-yandex/yandex"
 
 	"github.com/crossplane-contrib/terrajet/pkg/pipeline"
 
-	"github.com/crossplane-contrib/provider-jet-template/config"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config"
 )
 
 func main() {

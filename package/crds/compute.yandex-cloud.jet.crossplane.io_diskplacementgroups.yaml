@@ -71,6 +71,8 @@ spec:
                     additionalProperties:
                       type: string
                     type: object
+                  name:
+                    type: string
                   zone:
                     type: string
                 type: object

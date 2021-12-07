@@ -81,6 +81,8 @@ spec:
                     additionalProperties:
                       type: string
                     type: object
+                  name:
+                    type: string
                 type: object
               providerConfigRef:
                 default:

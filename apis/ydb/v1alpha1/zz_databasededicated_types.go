@@ -60,6 +60,9 @@ type DatabaseDedicatedParameters struct {
 	LocationID *string `json:"locationId,omitempty" tf:"location_id,omitempty"`
 
 	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Required
 	NetworkID *string `json:"networkId" tf:"network_id,omitempty"`
 
 	// +kubebuilder:validation:Required

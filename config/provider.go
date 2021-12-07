@@ -23,7 +23,7 @@ import (
 
 const (
 	resourcePrefix = "yandex-cloud"
-	modulePath     = "bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud"
+	modulePath     = "bb.yandex-team.ru/crossplane/provider-jet-yc"
 )
 
 // GetProvider returns provider configuration

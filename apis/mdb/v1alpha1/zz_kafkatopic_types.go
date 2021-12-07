@@ -34,6 +34,9 @@ type KafkaTopicParameters_2 struct {
 	ClusterID *string `json:"clusterId" tf:"cluster_id,omitempty"`
 
 	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Required
 	Partitions *int64 `json:"partitions" tf:"partitions,omitempty"`
 
 	// +kubebuilder:validation:Required

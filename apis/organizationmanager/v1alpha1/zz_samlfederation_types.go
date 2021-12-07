@@ -50,6 +50,9 @@ type SamlFederationParameters struct {
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Required
 	OrganizationID *string `json:"organizationId" tf:"organization_id,omitempty"`
 
 	// +kubebuilder:validation:Optional

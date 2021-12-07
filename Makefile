@@ -1,14 +1,14 @@
 # ====================================================================================
 # Setup Project
 
-PROJECT_NAME := provider-jet-yandex-cloud
-PROJECT_REPO := github.com/crossplane-contrib/$(PROJECT_NAME)
+PROJECT_NAME := provider-jet-yc
+PROJECT_REPO := bb.yandex-team.ru/crossplane/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION := 1.0.11
-export TERRAFORM_PROVIDER_SOURCE := integrations/yc
+export TERRAFORM_PROVIDER_SOURCE := integrations/yandex
 export TERRAFORM_PROVIDER_VERSION := 0.67.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-yandex
-export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://releases.hashicorp.com/yandex-cloud/0.67.0
+export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://github.com/yandex-cloud/terraform-provider-yandex/releases/download/v0.67.0
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -50,7 +50,7 @@ GO111MODULE = on
 # Setup Images
 
 DOCKER_REGISTRY := crossplane
-IMAGES = provider-jet-yandex-cloud provider-jet-yandex-cloud-controller
+IMAGES = provider-jet-yc provider-jet-yc-controller
 -include build/makelib/image.mk
 
 # ====================================================================================

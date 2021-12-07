@@ -138,6 +138,9 @@ type InstanceParameters struct {
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	NetworkAccelerationType *string `json:"networkAccelerationType,omitempty" tf:"network_acceleration_type,omitempty"`
 
 	// +kubebuilder:validation:Required

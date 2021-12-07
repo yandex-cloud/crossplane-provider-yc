@@ -434,6 +434,11 @@ func (in *SymmetricKeyParameters) DeepCopyInto(out *SymmetricKeyParameters) {
 			(*out)[key] = outVal
 		}
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.RotationPeriod != nil {
 		in, out := &in.RotationPeriod, &out.RotationPeriod
 		*out = new(string)

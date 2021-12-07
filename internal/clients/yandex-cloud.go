@@ -18,8 +18,6 @@ package clients
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
 
 	"github.com/crossplane-contrib/terrajet/pkg/terraform"
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
@@ -27,28 +25,27 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"bb.yandex-team.ru/crossplane/provider-jet-yandex-cloud/apis/v1alpha1"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/apis/v1alpha1"
 )
 
 const (
-	keyUsername = "username"
-	keyPassword = "password"
-	keyHost     = "host"
+	folderID              = "folder_id"
+	cloudID               = "cloud_id"
+	serviceAccountKeyFile = "service_account_key_file"
 
-	// YC credentials environment variable names
-	envUsername = "HASHICUPS_USERNAME"
-	envPassword = "HASHICUPS_PASSWORD"
+	// errParseKeyData  = "could not parse key data"
+	// errCredsCreation = "could not create creds from key data"
 )
 
 const (
-	fmtEnvVar = "%s=%s"
+	// fmtEnvVar = "%s=%s"
 
 	// error messages
-	errNoProviderConfig     = "no providerConfigRef provided"
-	errGetProviderConfig    = "cannot get referenced ProviderConfig"
-	errTrackUsage           = "cannot track ProviderConfig usage"
-	errExtractCredentials   = "cannot extract credentials"
-	errUnmarshalCredentials = "cannot unmarshal yandex-cloud credentials as JSON"
+	errNoProviderConfig   = "no providerConfigRef provided"
+	errGetProviderConfig  = "cannot get referenced ProviderConfig"
+	errTrackUsage         = "cannot track ProviderConfig usage"
+	errExtractCredentials = "cannot extract credentials"
+	// errUnmarshalCredentials = "cannot unmarshal yc credentials as JSON"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -81,20 +78,13 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if err != nil {
 			return ps, errors.Wrap(err, errExtractCredentials)
 		}
-		yandexcloudCreds := map[string]string{}
-		if err := json.Unmarshal(data, &yandexcloudCreds); err != nil {
-			return ps, errors.Wrap(err, errUnmarshalCredentials)
-		}
 
 		// set provider configuration
-		ps.Configuration = map[string]interface{}{
-			"host": yandexcloudCreds[keyHost],
-		}
-		// set environment variables for sensitive provider configuration
-		ps.Env = []string{
-			fmt.Sprintf(fmtEnvVar, envUsername, yandexcloudCreds[keyUsername]),
-			fmt.Sprintf(fmtEnvVar, envPassword, yandexcloudCreds[keyPassword]),
-		}
+		ps.Configuration = map[string]interface{}{}
+		ps.Configuration[serviceAccountKeyFile] = string(data)
+		ps.Configuration[folderID] = pc.Spec.Credentials.FolderID
+		ps.Configuration[cloudID] = pc.Spec.Credentials.CloudID
+
 		return ps, nil
 	}
 }

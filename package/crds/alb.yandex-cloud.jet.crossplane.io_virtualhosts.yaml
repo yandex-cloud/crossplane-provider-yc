@@ -98,6 +98,8 @@ spec:
                       - name
                       type: object
                     type: array
+                  name:
+                    type: string
                   route:
                     items:
                       properties:
@@ -226,6 +228,7 @@ spec:
                     type: array
                 required:
                 - httpRouterId
+                - name
                 type: object
               providerConfigRef:
                 default:

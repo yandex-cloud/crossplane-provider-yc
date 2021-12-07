@@ -137,6 +137,16 @@ func (in *QueueParameters) DeepCopyInto(out *QueueParameters) {
 		*out = new(int64)
 		**out = **in
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
+	if in.NamePrefix != nil {
+		in, out := &in.NamePrefix, &out.NamePrefix
+		*out = new(string)
+		**out = **in
+	}
 	if in.ReceiveWaitTimeSeconds != nil {
 		in, out := &in.ReceiveWaitTimeSeconds, &out.ReceiveWaitTimeSeconds
 		*out = new(int64)

@@ -70,6 +70,9 @@ type FunctionParameters struct {
 	// +kubebuilder:validation:Required
 	Memory *int64 `json:"memory" tf:"memory,omitempty"`
 
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
 	// +kubebuilder:validation:Optional
 	Package []PackageParameters `json:"package,omitempty" tf:"package,omitempty"`
 

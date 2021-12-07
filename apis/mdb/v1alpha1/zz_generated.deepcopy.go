@@ -315,6 +315,11 @@ func (in *ClickhouseClusterParameters) DeepCopyInto(out *ClickhouseClusterParame
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
@@ -1571,6 +1576,11 @@ func (in *ElasticsearchClusterParameters) DeepCopyInto(out *ElasticsearchCluster
 			(*out)[key] = outVal
 		}
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
@@ -2016,6 +2026,11 @@ func (in *GreenplumClusterParameters) DeepCopyInto(out *GreenplumClusterParamete
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
 	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
@@ -2469,6 +2484,11 @@ func (in *KafkaClusterParameters) DeepCopyInto(out *KafkaClusterParameters) {
 			(*out)[key] = outVal
 		}
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
@@ -2920,6 +2940,11 @@ func (in *KafkaTopicParameters_2) DeepCopyInto(out *KafkaTopicParameters_2) {
 	*out = *in
 	if in.ClusterID != nil {
 		in, out := &in.ClusterID, &out.ClusterID
+		*out = new(string)
+		**out = **in
+	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
 		*out = new(string)
 		**out = **in
 	}
@@ -3755,6 +3780,11 @@ func (in *MongodbClusterParameters) DeepCopyInto(out *MongodbClusterParameters) 
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
@@ -4371,6 +4401,11 @@ func (in *MysqlClusterParameters) DeepCopyInto(out *MysqlClusterParameters) {
 			}
 			(*out)[key] = outVal
 		}
+	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
 	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
@@ -5216,6 +5251,11 @@ func (in *PostgresqlClusterParameters) DeepCopyInto(out *PostgresqlClusterParame
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
@@ -5859,6 +5899,11 @@ func (in *RedisClusterParameters) DeepCopyInto(out *RedisClusterParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
 	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
@@ -6599,6 +6644,11 @@ func (in *SqlserverClusterParameters) DeepCopyInto(out *SqlserverClusterParamete
 			}
 			(*out)[key] = outVal
 		}
+	}
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
 	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID

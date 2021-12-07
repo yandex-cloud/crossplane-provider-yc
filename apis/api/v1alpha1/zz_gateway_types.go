@@ -49,6 +49,9 @@ type GatewayParameters struct {
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Required
 	Spec *string `json:"spec" tf:"spec,omitempty"`
 }
 

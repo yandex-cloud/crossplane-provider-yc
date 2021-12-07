@@ -54,6 +54,9 @@ type DatabaseServerlessParameters struct {
 
 	// +kubebuilder:validation:Optional
 	LocationID *string `json:"locationId,omitempty" tf:"location_id,omitempty"`
+
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
 }
 
 // DatabaseServerlessSpec defines the desired state of DatabaseServerless

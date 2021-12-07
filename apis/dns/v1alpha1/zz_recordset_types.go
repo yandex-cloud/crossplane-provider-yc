@@ -34,6 +34,9 @@ type RecordsetParameters struct {
 	Data []*string `json:"data" tf:"data,omitempty"`
 
 	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Required
 	TTL *int64 `json:"ttl" tf:"ttl,omitempty"`
 
 	// +kubebuilder:validation:Required

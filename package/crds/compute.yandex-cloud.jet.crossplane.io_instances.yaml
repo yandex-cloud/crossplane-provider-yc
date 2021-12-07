@@ -109,6 +109,8 @@ spec:
                     additionalProperties:
                       type: string
                     type: object
+                  name:
+                    type: string
                   networkAccelerationType:
                     type: string
                   networkInterface:
