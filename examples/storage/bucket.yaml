@@ -6,18 +6,18 @@ spec:
   forProvider:
     accessKey: |+
       -----BEGIN PUBLIC KEY-----
-      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiGz9VfFufol/umosHJDC
-      WdT8P9A7/XCrvrrTEGUJqn9g62w20Ag/y1AyM+ZrjEtSNlJ8xbIoEA+nNYsHXAdC
-      LBli+p/yO5Wm/z9HZNMXfs7FlgRbFmdT9g+Oqt2uafFICpcmhSYnxMkbQN1dR64q
-      BxUQ+UWLmsLxOzgUZ5qCeVa0VClYP1wAxBvYO284d337OmnMiuDzgluA7HEhc+Uu
-      Xdv5836AI1l2yEgjk0BMUQN4XDSjUHQQ9XBx5K5XnXVlgUPSdYDb9I4YvZMKdLI6
-      NAzLTfvfmGV9OuI7xHWRk2kSAgZYiPQlJ5571mZDpe6KOTXJMlZmYomRrN/biMRO
-      5wIDAQAB
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8b4FRtJrADqV/q+WHT3m
+      Z1ojReGfrP5zaW0jssp6rMwHKbqKEvyB4ZEfUdRFSlvlPsi1tBvJWz95cb+UXWIv
+      6VmZtyfJ+6h3JMaFzeZQsYNiAoIqejjT/PSIoBp+NwgaG271gxH4GqsQ+TbJXf+z
+      FOW2wDScWjZVosg6avbVyjcC+T4RKqYa3+xwyjmrI6H2puEF5Tmmg3AckQfE4GQc
+      c8QGFdTtJTUsPStCj3oIRG1v/MLOW0MlQAfzmxQ26hWo1geDeB401+rtETEuyoUP
+      vJgTdepKyyTlHyftbBriTciGeTjKKlOTitczYuuV8Exk27EaEPJ3uvFVdUdpFWD1
+      cQIDAQAB
       -----END PUBLIC KEY-----
     secretKeySecretRef:
-      name: # todo
-      namespace: # todo
-      key: # todo
+      name: s3-sa-key-conn
+      namespace: crossplane-system
+      key: attribute.private_key
     bucket: "tf-test-bucket"
   providerConfigRef:
     name: default

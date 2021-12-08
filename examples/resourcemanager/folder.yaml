@@ -1,0 +1,11 @@
+apiVersion: resourcemanager.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Folder
+metadata:
+  name: provider-jet-yc-folder
+spec:
+  forProvider:
+    name: provider-jet-yc-folder
+    cloudId: b1gjk8shtb2smi1cgqdn
+    description: Folder created by provider-jet-yc
+  providerConfigRef:
+    name: default

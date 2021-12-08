@@ -21,6 +21,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -750,6 +751,16 @@ func (in *ServiceAccountKeyParameters) DeepCopyInto(out *ServiceAccountKeyParame
 		in, out := &in.ServiceAccountID, &out.ServiceAccountID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ServiceAccountIDRef != nil {
+		in, out := &in.ServiceAccountIDRef, &out.ServiceAccountIDRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.ServiceAccountIDSelector != nil {
+		in, out := &in.ServiceAccountIDSelector, &out.ServiceAccountIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 

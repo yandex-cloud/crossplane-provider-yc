@@ -5,7 +5,8 @@ metadata:
 spec:
   forProvider:
     name: provider-jet-yc-net-a
-    networkId: enp80bgbqi2funfch70a
+    networkIdRef:
+      name: provider-jet-yc-net
     v4CidrBlocks:
       - 10.0.0.0/24
     folderId: b1gl3b8gmea01lcfpifp
@@ -20,7 +21,8 @@ metadata:
 spec:
   forProvider:
     name: provider-jet-yc-net-b
-    networkId: enp80bgbqi2funfch70a
+    networkIdRef:
+      name: provider-jet-yc-net
     v4CidrBlocks:
       - 10.1.0.0/24
     folderId: b1gl3b8gmea01lcfpifp
@@ -35,7 +37,8 @@ metadata:
 spec:
   forProvider:
     name: provider-jet-yc-net-c
-    networkId: enp80bgbqi2funfch70a
+    networkIdRef:
+      name: provider-jet-yc-net
     v4CidrBlocks:
       - 10.2.0.0/24
     folderId: b1gl3b8gmea01lcfpifp

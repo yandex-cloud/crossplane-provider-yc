@@ -16,7 +16,8 @@ spec:
   forProvider:
     name: provider-jet-yc-pg
     environment: PRESTABLE
-    networkId: enp80bgbqi2funfch70a
+    networkIdRef:
+      name: provider-jet-yc-net
     config:
       - version: "12"
         resources:
@@ -51,7 +52,7 @@ spec:
           log_min_duration_statement: "5000"
     host:
       - zone: ru-central1-a
-        subnetId: e9bg5gtn4fr4t7r269vn
+        subnetId: e9b4bir2biatkf33vnju
     folderId: b1gl3b8gmea01lcfpifp
   providerConfigRef:
     name: default

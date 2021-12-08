@@ -49,8 +49,15 @@ type ServiceAccountKeyParameters struct {
 	// +kubebuilder:validation:Optional
 	PgpKey *string `json:"pgpKey,omitempty" tf:"pgp_key,omitempty"`
 
-	// +kubebuilder:validation:Required
-	ServiceAccountID *string `json:"serviceAccountId" tf:"service_account_id,omitempty"`
+	// +crossplane:generate:reference:type=ServiceAccount
+	// +kubebuilder:validation:Optional
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDRef *v1.Reference `json:"serviceAccountIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 }
 
 // ServiceAccountKeySpec defines the desired state of ServiceAccountKey

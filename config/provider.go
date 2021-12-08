@@ -19,6 +19,11 @@ package config
 import (
 	tjconfig "github.com/crossplane-contrib/terrajet/pkg/config"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/iam"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/mdb"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/storage"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
 )
 
 const (
@@ -48,7 +53,10 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 	)
 
 	for _, configure := range []func(provider *tjconfig.Provider){
-		// add custom config functions
+		vpc.Configure,
+		mdb.Configure,
+		iam.Configure,
+		storage.Configure,
 	} {
 		configure(pc)
 	}

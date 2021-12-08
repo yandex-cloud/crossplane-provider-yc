@@ -5,5 +5,6 @@ metadata:
 spec:
   forProvider:
     name: provider-jet-yc-net
+    folderId: b1gl3b8gmea01lcfpifp
   providerConfigRef:
     name: default

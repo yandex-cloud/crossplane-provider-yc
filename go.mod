@@ -8,7 +8,6 @@ require (
 	github.com/crossplane/crossplane-tools v0.0.0-20210916125540-071de511ae8e
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.8.0
 	github.com/pkg/errors v0.9.1
-	github.com/yandex-cloud/go-sdk v0.0.0-20211012083249-d09272b4a71c
 	github.com/yandex-cloud/terraform-provider-yandex v0.67.0
 	go.uber.org/multierr v1.7.0 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
