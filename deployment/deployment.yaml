@@ -18,7 +18,7 @@ spec:
       serviceAccountName: crossplane-yc-sa
       containers:
         - name: provider-jet-yc-controller
-          image: cr.yandex/crp1304vjoro2g3tgt28/crossplane-pre/provider-jet-yc-controller:0.1.6
+          image: cr.yandex/crp1304vjoro2g3tgt28/crossplane-pre/provider-jet-yc-controller:0.1.7
           args: [
               '-d',  # Enable debug logs
               '-l',  # Use leader election for production deployments

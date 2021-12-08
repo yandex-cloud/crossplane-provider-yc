@@ -22,53 +22,31 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/alb/v1alpha1"
-	v1alpha1api "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/api/v1alpha1"
-	v1alpha1compute "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/compute/v1alpha1"
+	v1alpha1 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/compute/v1alpha1"
 	v1alpha1container "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/container/v1alpha1"
-	v1alpha1dataproc "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/dataproc/v1alpha1"
 	v1alpha1dns "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/dns/v1alpha1"
-	v1alpha1function "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/function/v1alpha1"
 	v1alpha1iam "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1"
-	v1alpha1kms "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/kms/v1alpha1"
 	v1alpha1kubernetes "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/kubernetes/v1alpha1"
-	v1alpha1lb "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/lb/v1alpha1"
-	v1alpha1logging "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/logging/v1alpha1"
 	v1alpha1mdb "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/mdb/v1alpha1"
-	v1alpha1message "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/message/v1alpha1"
-	v1alpha1organizationmanager "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/organizationmanager/v1alpha1"
 	v1alpha1resourcemanager "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1"
 	v1alpha1storage "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/storage/v1alpha1"
 	v1alpha1apis "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/v1alpha1"
 	v1alpha1vpc "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1"
-	v1alpha1yandex "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/yandex/v1alpha1"
-	v1alpha1ydb "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/ydb/v1alpha1"
 )
 
 func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
-		v1alpha1api.SchemeBuilder.AddToScheme,
-		v1alpha1compute.SchemeBuilder.AddToScheme,
 		v1alpha1container.SchemeBuilder.AddToScheme,
-		v1alpha1dataproc.SchemeBuilder.AddToScheme,
 		v1alpha1dns.SchemeBuilder.AddToScheme,
-		v1alpha1function.SchemeBuilder.AddToScheme,
 		v1alpha1iam.SchemeBuilder.AddToScheme,
-		v1alpha1kms.SchemeBuilder.AddToScheme,
 		v1alpha1kubernetes.SchemeBuilder.AddToScheme,
-		v1alpha1lb.SchemeBuilder.AddToScheme,
-		v1alpha1logging.SchemeBuilder.AddToScheme,
 		v1alpha1mdb.SchemeBuilder.AddToScheme,
-		v1alpha1message.SchemeBuilder.AddToScheme,
-		v1alpha1organizationmanager.SchemeBuilder.AddToScheme,
 		v1alpha1resourcemanager.SchemeBuilder.AddToScheme,
 		v1alpha1storage.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
 		v1alpha1vpc.SchemeBuilder.AddToScheme,
-		v1alpha1yandex.SchemeBuilder.AddToScheme,
-		v1alpha1ydb.SchemeBuilder.AddToScheme,
 	)
 }
 

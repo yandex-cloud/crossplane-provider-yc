@@ -217,6 +217,16 @@ func (in *BucketParameters) DeepCopyInto(out *BucketParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.ServiceAccountKeyRef != nil {
+		in, out := &in.ServiceAccountKeyRef, &out.ServiceAccountKeyRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.ServiceAccountKeySelector != nil {
+		in, out := &in.ServiceAccountKeySelector, &out.ServiceAccountKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Versioning != nil {
 		in, out := &in.Versioning, &out.Versioning
 		*out = make([]VersioningParameters, len(*in))
@@ -752,6 +762,16 @@ func (in *ObjectParameters) DeepCopyInto(out *ObjectParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.BucketRef != nil {
+		in, out := &in.BucketRef, &out.BucketRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.BucketSelector != nil {
+		in, out := &in.BucketSelector, &out.BucketSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Content != nil {
 		in, out := &in.Content, &out.Content
 		*out = new(string)
@@ -776,6 +796,16 @@ func (in *ObjectParameters) DeepCopyInto(out *ObjectParameters) {
 		in, out := &in.SecretKeySecretRef, &out.SecretKeySecretRef
 		*out = new(v1.SecretKeySelector)
 		**out = **in
+	}
+	if in.ServiceAccountKeyRef != nil {
+		in, out := &in.ServiceAccountKeyRef, &out.ServiceAccountKeyRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.ServiceAccountKeySelector != nil {
+		in, out := &in.ServiceAccountKeySelector, &out.ServiceAccountKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Source != nil {
 		in, out := &in.Source, &out.Source

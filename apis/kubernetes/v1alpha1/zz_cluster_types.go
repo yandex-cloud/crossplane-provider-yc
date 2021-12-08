@@ -52,8 +52,15 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	KmsProvider []KmsProviderParameters `json:"kmsProvider,omitempty" tf:"kms_provider,omitempty"`
@@ -67,8 +74,15 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// +kubebuilder:validation:Required
-	NetworkID *string `json:"networkId" tf:"network_id,omitempty"`
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1.Network
+	// +kubebuilder:validation:Optional
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	NetworkImplementation []NetworkImplementationParameters `json:"networkImplementation,omitempty" tf:"network_implementation,omitempty"`
@@ -79,14 +93,28 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	NodeIPv4CidrMaskSize *int64 `json:"nodeIpv4CidrMaskSize,omitempty" tf:"node_ipv4_cidr_mask_size,omitempty"`
 
-	// +kubebuilder:validation:Required
-	NodeServiceAccountID *string `json:"nodeServiceAccountId" tf:"node_service_account_id,omitempty"`
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
+	// +kubebuilder:validation:Optional
+	NodeServiceAccountID *string `json:"nodeServiceAccountId,omitempty" tf:"node_service_account_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	NodeServiceAccountIDRef *v1.Reference `json:"nodeServiceAccountIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	NodeServiceAccountIDSelector *v1.Selector `json:"nodeServiceAccountIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	ReleaseChannel *string `json:"releaseChannel,omitempty" tf:"release_channel,omitempty"`
 
-	// +kubebuilder:validation:Required
-	ServiceAccountID *string `json:"serviceAccountId" tf:"service_account_id,omitempty"`
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
+	// +kubebuilder:validation:Optional
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDRef *v1.Reference `json:"serviceAccountIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	ServiceIPv4Range *string `json:"serviceIpv4Range,omitempty" tf:"service_ipv4_range,omitempty"`
@@ -217,8 +245,15 @@ type ZonalObservation struct {
 
 type ZonalParameters struct {
 
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`

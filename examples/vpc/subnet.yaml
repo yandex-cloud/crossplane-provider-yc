@@ -4,12 +4,13 @@ metadata:
   name: provider-jet-yc-subnet-a
 spec:
   forProvider:
-    name: provider-jet-yc-net-a
+    name: provider-jet-yc-subnet-a
     networkIdRef:
       name: provider-jet-yc-net
     v4CidrBlocks:
       - 10.0.0.0/24
-    folderId: b1gl3b8gmea01lcfpifp
+    folderIdRef:
+      name: provider-jet-yc-folder
     zone: ru-central1-a
   providerConfigRef:
     name: default
@@ -25,7 +26,8 @@ spec:
       name: provider-jet-yc-net
     v4CidrBlocks:
       - 10.1.0.0/24
-    folderId: b1gl3b8gmea01lcfpifp
+    folderIdRef:
+      name: provider-jet-yc-folder
     zone: ru-central1-b
   providerConfigRef:
     name: default
@@ -41,7 +43,8 @@ spec:
       name: provider-jet-yc-net
     v4CidrBlocks:
       - 10.2.0.0/24
-    folderId: b1gl3b8gmea01lcfpifp
+    folderIdRef:
+      name: provider-jet-yc-folder
     zone: ru-central1-c
   providerConfigRef:
     name: default

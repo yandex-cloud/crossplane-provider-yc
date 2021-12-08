@@ -21,6 +21,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -333,6 +334,16 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.FolderIDRef != nil {
+		in, out := &in.FolderIDRef, &out.FolderIDRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.FolderIDSelector != nil {
+		in, out := &in.FolderIDSelector, &out.FolderIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.KmsProvider != nil {
 		in, out := &in.KmsProvider, &out.KmsProvider
 		*out = make([]KmsProviderParameters, len(*in))
@@ -372,6 +383,16 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.NetworkIDRef != nil {
+		in, out := &in.NetworkIDRef, &out.NetworkIDRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.NetworkIDSelector != nil {
+		in, out := &in.NetworkIDSelector, &out.NetworkIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.NetworkImplementation != nil {
 		in, out := &in.NetworkImplementation, &out.NetworkImplementation
 		*out = make([]NetworkImplementationParameters, len(*in))
@@ -394,6 +415,16 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.NodeServiceAccountIDRef != nil {
+		in, out := &in.NodeServiceAccountIDRef, &out.NodeServiceAccountIDRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.NodeServiceAccountIDSelector != nil {
+		in, out := &in.NodeServiceAccountIDSelector, &out.NodeServiceAccountIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.ReleaseChannel != nil {
 		in, out := &in.ReleaseChannel, &out.ReleaseChannel
 		*out = new(string)
@@ -403,6 +434,16 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		in, out := &in.ServiceAccountID, &out.ServiceAccountID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ServiceAccountIDRef != nil {
+		in, out := &in.ServiceAccountIDRef, &out.ServiceAccountIDRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.ServiceAccountIDSelector != nil {
+		in, out := &in.ServiceAccountIDSelector, &out.ServiceAccountIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ServiceIPv4Range != nil {
 		in, out := &in.ServiceIPv4Range, &out.ServiceIPv4Range
@@ -1212,6 +1253,16 @@ func (in *NodeGroupParameters) DeepCopyInto(out *NodeGroupParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ClusterIDRef != nil {
+		in, out := &in.ClusterIDRef, &out.ClusterIDRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.ClusterIDSelector != nil {
+		in, out := &in.ClusterIDSelector, &out.ClusterIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.DeployPolicy != nil {
 		in, out := &in.DeployPolicy, &out.DeployPolicy
 		*out = make([]DeployPolicyParameters, len(*in))
@@ -1670,6 +1721,16 @@ func (in *ZonalParameters) DeepCopyInto(out *ZonalParameters) {
 		in, out := &in.SubnetID, &out.SubnetID
 		*out = new(string)
 		**out = **in
+	}
+	if in.SubnetIDRef != nil {
+		in, out := &in.SubnetIDRef, &out.SubnetIDRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.SubnetIDSelector != nil {
+		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Zone != nil {
 		in, out := &in.Zone, &out.Zone

@@ -42,8 +42,15 @@ type RecordsetParameters struct {
 	// +kubebuilder:validation:Required
 	Type *string `json:"type" tf:"type,omitempty"`
 
-	// +kubebuilder:validation:Required
-	ZoneID *string `json:"zoneId" tf:"zone_id,omitempty"`
+	// +crossplane:generate:reference:type=Zone
+	// +kubebuilder:validation:Optional
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ZoneIDRef *v1.Reference `json:"zoneIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	ZoneIDSelector *v1.Selector `json:"zoneIdSelector,omitempty" tf:"-"`
 }
 
 // RecordsetSpec defines the desired state of Recordset

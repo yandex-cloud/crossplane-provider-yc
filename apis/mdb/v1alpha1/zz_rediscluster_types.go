@@ -64,8 +64,15 @@ type RedisClusterHostParameters struct {
 	// +kubebuilder:validation:Optional
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
 
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Required
 	Zone *string `json:"zone" tf:"zone,omitempty"`

@@ -4,7 +4,8 @@ metadata:
   name: provider-jet-yc-recordset
 spec:
   forProvider:
-    zoneId: dns6b2hjpdh7bbb1lufl
+    zoneIdRef:
+      name: provider-jet-yc-zone
     name: provider-jet-yc-recordset
     type: "A"
     ttl: 200

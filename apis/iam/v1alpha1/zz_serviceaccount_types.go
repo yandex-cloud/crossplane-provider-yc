@@ -34,8 +34,15 @@ type ServiceAccountParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`

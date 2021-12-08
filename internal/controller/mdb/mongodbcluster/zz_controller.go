@@ -42,7 +42,9 @@ func Setup(mgr ctrl.Manager, l logging.Logger, rl workqueue.RateLimiter, s terra
 	name := managed.ControllerName(v1alpha1.MongodbCluster_GroupVersionKind.String())
 	r := managed.NewReconciler(mgr,
 		xpresource.ManagedKind(v1alpha1.MongodbCluster_GroupVersionKind),
-		managed.WithExternalConnecter(tjcontroller.NewConnector(mgr.GetClient(), ws, s, cfg.Resources["yandex_mdb_mongodb_cluster"])),
+		managed.WithExternalConnecter(tjcontroller.NewConnector(mgr.GetClient(), ws, s, cfg.Resources["yandex_mdb_mongodb_cluster"],
+			tjcontroller.WithCallbackProvider(tjcontroller.NewAPICallbacks(mgr, xpresource.ManagedKind(v1alpha1.MongodbCluster_GroupVersionKind))),
+		)),
 		managed.WithLogger(l.WithValues("controller", name)),
 		managed.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))),
 		managed.WithFinalizer(terraform.NewWorkspaceFinalizer(ws, xpresource.NewAPIFinalizer(mgr.GetClient(), managed.FinalizerName))),

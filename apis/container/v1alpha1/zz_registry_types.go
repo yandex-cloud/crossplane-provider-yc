@@ -33,8 +33,15 @@ type RegistryObservation struct {
 
 type RegistryParameters struct {
 
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`

@@ -196,8 +196,15 @@ type NodeGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	AllowedUnsafeSysctls []*string `json:"allowedUnsafeSysctls,omitempty" tf:"allowed_unsafe_sysctls,omitempty"`
 
-	// +kubebuilder:validation:Required
-	ClusterID *string `json:"clusterId" tf:"cluster_id,omitempty"`
+	// +crossplane:generate:reference:type=Cluster
+	// +kubebuilder:validation:Optional
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ClusterIDRef *v1.Reference `json:"clusterIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	DeployPolicy []DeployPolicyParameters `json:"deployPolicy,omitempty" tf:"deploy_policy,omitempty"`

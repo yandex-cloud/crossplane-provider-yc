@@ -75,62 +75,6 @@ func (mg *Registry) SetWriteConnectionSecretToReference(r *xpv1.SecretReference)
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
-// GetCondition of this RegistryIamBinding.
-func (mg *RegistryIamBinding) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
-	return mg.Status.GetCondition(ct)
-}
-
-// GetDeletionPolicy of this RegistryIamBinding.
-func (mg *RegistryIamBinding) GetDeletionPolicy() xpv1.DeletionPolicy {
-	return mg.Spec.DeletionPolicy
-}
-
-// GetProviderConfigReference of this RegistryIamBinding.
-func (mg *RegistryIamBinding) GetProviderConfigReference() *xpv1.Reference {
-	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this RegistryIamBinding.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *RegistryIamBinding) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
-}
-
-// GetWriteConnectionSecretToReference of this RegistryIamBinding.
-func (mg *RegistryIamBinding) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
-	return mg.Spec.WriteConnectionSecretToReference
-}
-
-// SetConditions of this RegistryIamBinding.
-func (mg *RegistryIamBinding) SetConditions(c ...xpv1.Condition) {
-	mg.Status.SetConditions(c...)
-}
-
-// SetDeletionPolicy of this RegistryIamBinding.
-func (mg *RegistryIamBinding) SetDeletionPolicy(r xpv1.DeletionPolicy) {
-	mg.Spec.DeletionPolicy = r
-}
-
-// SetProviderConfigReference of this RegistryIamBinding.
-func (mg *RegistryIamBinding) SetProviderConfigReference(r *xpv1.Reference) {
-	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this RegistryIamBinding.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *RegistryIamBinding) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
-}
-
-// SetWriteConnectionSecretToReference of this RegistryIamBinding.
-func (mg *RegistryIamBinding) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
-	mg.Spec.WriteConnectionSecretToReference = r
-}
-
 // GetCondition of this Repository.
 func (mg *Repository) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
@@ -184,61 +128,5 @@ func (mg *Repository) SetProviderReference(r *xpv1.Reference) {
 
 // SetWriteConnectionSecretToReference of this Repository.
 func (mg *Repository) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
-	mg.Spec.WriteConnectionSecretToReference = r
-}
-
-// GetCondition of this RepositoryIamBinding.
-func (mg *RepositoryIamBinding) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
-	return mg.Status.GetCondition(ct)
-}
-
-// GetDeletionPolicy of this RepositoryIamBinding.
-func (mg *RepositoryIamBinding) GetDeletionPolicy() xpv1.DeletionPolicy {
-	return mg.Spec.DeletionPolicy
-}
-
-// GetProviderConfigReference of this RepositoryIamBinding.
-func (mg *RepositoryIamBinding) GetProviderConfigReference() *xpv1.Reference {
-	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this RepositoryIamBinding.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *RepositoryIamBinding) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
-}
-
-// GetWriteConnectionSecretToReference of this RepositoryIamBinding.
-func (mg *RepositoryIamBinding) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
-	return mg.Spec.WriteConnectionSecretToReference
-}
-
-// SetConditions of this RepositoryIamBinding.
-func (mg *RepositoryIamBinding) SetConditions(c ...xpv1.Condition) {
-	mg.Status.SetConditions(c...)
-}
-
-// SetDeletionPolicy of this RepositoryIamBinding.
-func (mg *RepositoryIamBinding) SetDeletionPolicy(r xpv1.DeletionPolicy) {
-	mg.Spec.DeletionPolicy = r
-}
-
-// SetProviderConfigReference of this RepositoryIamBinding.
-func (mg *RepositoryIamBinding) SetProviderConfigReference(r *xpv1.Reference) {
-	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this RepositoryIamBinding.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *RepositoryIamBinding) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
-}
-
-// SetWriteConnectionSecretToReference of this RepositoryIamBinding.
-func (mg *RepositoryIamBinding) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

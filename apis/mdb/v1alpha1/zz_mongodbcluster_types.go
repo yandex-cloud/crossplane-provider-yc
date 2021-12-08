@@ -25,17 +25,17 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type ClusterConfigAccessObservation struct {
+type AccessObservation struct {
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
 }
 
-type ClusterConfigAccessParameters struct {
+type AccessParameters struct {
 }
 
-type ClusterConfigBackupWindowStartObservation struct {
+type BackupWindowStartObservation struct {
 }
 
-type ClusterConfigBackupWindowStartParameters struct {
+type BackupWindowStartParameters struct {
 
 	// +kubebuilder:validation:Optional
 	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
@@ -50,10 +50,10 @@ type ClusterConfigObservation struct {
 type ClusterConfigParameters struct {
 
 	// +kubebuilder:validation:Optional
-	Access []ClusterConfigAccessParameters `json:"access,omitempty" tf:"access,omitempty"`
+	Access []AccessParameters `json:"access,omitempty" tf:"access,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	BackupWindowStart []ClusterConfigBackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
+	BackupWindowStart []BackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	FeatureCompatibilityVersion *string `json:"featureCompatibilityVersion,omitempty" tf:"feature_compatibility_version,omitempty"`
@@ -62,22 +62,22 @@ type ClusterConfigParameters struct {
 	Version *string `json:"version" tf:"version,omitempty"`
 }
 
-type MongodbClusterDatabaseObservation struct {
+type DatabaseObservation struct {
 }
 
-type MongodbClusterDatabaseParameters struct {
+type DatabaseParameters struct {
 
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 }
 
-type MongodbClusterHostObservation struct {
+type HostObservation struct {
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
-type MongodbClusterHostParameters struct {
+type HostParameters struct {
 
 	// +kubebuilder:validation:Optional
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
@@ -88,8 +88,15 @@ type MongodbClusterHostParameters struct {
 	// +kubebuilder:validation:Optional
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
 
-	// +kubebuilder:validation:Required
-	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1.Network
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -98,10 +105,10 @@ type MongodbClusterHostParameters struct {
 	ZoneID *string `json:"zoneId" tf:"zone_id,omitempty"`
 }
 
-type MongodbClusterMaintenanceWindowObservation struct {
+type MaintenanceWindowObservation struct {
 }
 
-type MongodbClusterMaintenanceWindowParameters struct {
+type MaintenanceWindowParameters struct {
 
 	// +kubebuilder:validation:Optional
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
@@ -132,7 +139,7 @@ type MongodbClusterParameters struct {
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
 	// +kubebuilder:validation:Required
-	Database []MongodbClusterDatabaseParameters `json:"database" tf:"database,omitempty"`
+	Database []DatabaseParameters `json:"database" tf:"database,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
@@ -143,38 +150,64 @@ type MongodbClusterParameters struct {
 	// +kubebuilder:validation:Required
 	Environment *string `json:"environment" tf:"environment,omitempty"`
 
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
 	// +kubebuilder:validation:Required
-	Host []MongodbClusterHostParameters `json:"host" tf:"host,omitempty"`
+	Host []HostParameters `json:"host" tf:"host,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	MaintenanceWindow []MongodbClusterMaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+	MaintenanceWindow []MaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// +kubebuilder:validation:Required
-	NetworkID *string `json:"networkId" tf:"network_id,omitempty"`
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1.Network
+	// +kubebuilder:validation:Optional
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Required
-	Resources []MongodbClusterResourcesParameters `json:"resources" tf:"resources,omitempty"`
+	Resources []ResourcesParameters `json:"resources" tf:"resources,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// +kubebuilder:validation:Required
-	User []MongodbClusterUserParameters `json:"user" tf:"user,omitempty"`
+	User []UserParameters `json:"user" tf:"user,omitempty"`
 }
 
-type MongodbClusterResourcesObservation struct {
+type PermissionObservation struct {
 }
 
-type MongodbClusterResourcesParameters struct {
+type PermissionParameters struct {
+
+	// +kubebuilder:validation:Required
+	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
+}
+
+type ResourcesObservation struct {
+}
+
+type ResourcesParameters struct {
 
 	// +kubebuilder:validation:Required
 	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
@@ -186,10 +219,10 @@ type MongodbClusterResourcesParameters struct {
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
 }
 
-type MongodbClusterUserObservation struct {
+type UserObservation struct {
 }
 
-type MongodbClusterUserParameters struct {
+type UserParameters struct {
 
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
@@ -198,19 +231,7 @@ type MongodbClusterUserParameters struct {
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// +kubebuilder:validation:Optional
-	Permission []MongodbClusterUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
-}
-
-type MongodbClusterUserPermissionObservation struct {
-}
-
-type MongodbClusterUserPermissionParameters struct {
-
-	// +kubebuilder:validation:Required
-	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
+	Permission []PermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 // MongodbClusterSpec defines the desired state of MongodbCluster

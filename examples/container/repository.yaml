@@ -1,0 +1,9 @@
+apiVersion: container.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Repository
+metadata:
+  name: provider-jet-yc-repository
+spec:
+  forProvider:
+    name: <provider-jet-yc-registry.id>/test-repository
+  providerConfigRef:
+    name: default

@@ -49,6 +49,39 @@ type ConfigBackupWindowStartParameters struct {
 	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
 }
 
+type ConfigObservation struct {
+}
+
+type ConfigParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Access []ConfigAccessParameters `json:"access,omitempty" tf:"access,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Autofailover *bool `json:"autofailover,omitempty" tf:"autofailover,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	BackupRetainPeriodDays *int64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	BackupWindowStart []ConfigBackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	PerformanceDiagnostics []PerformanceDiagnosticsParameters `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	PoolerConfig []PoolerConfigParameters `json:"poolerConfig,omitempty" tf:"pooler_config,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	PostgresqlConfig map[string]*string `json:"postgresqlConfig,omitempty" tf:"postgresql_config,omitempty"`
+
+	// +kubebuilder:validation:Required
+	Resources []ConfigResourcesParameters `json:"resources" tf:"resources,omitempty"`
+
+	// +kubebuilder:validation:Required
+	Version *string `json:"version" tf:"version,omitempty"`
+}
+
 type ConfigResourcesObservation struct {
 }
 
@@ -103,39 +136,6 @@ type PoolerConfigParameters struct {
 	PoolingMode *string `json:"poolingMode,omitempty" tf:"pooling_mode,omitempty"`
 }
 
-type PostgresqlClusterConfigObservation struct {
-}
-
-type PostgresqlClusterConfigParameters struct {
-
-	// +kubebuilder:validation:Optional
-	Access []ConfigAccessParameters `json:"access,omitempty" tf:"access,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	Autofailover *bool `json:"autofailover,omitempty" tf:"autofailover,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	BackupRetainPeriodDays *int64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	BackupWindowStart []ConfigBackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	PerformanceDiagnostics []PerformanceDiagnosticsParameters `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	PoolerConfig []PoolerConfigParameters `json:"poolerConfig,omitempty" tf:"pooler_config,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	PostgresqlConfig map[string]*string `json:"postgresqlConfig,omitempty" tf:"postgresql_config,omitempty"`
-
-	// +kubebuilder:validation:Required
-	Resources []ConfigResourcesParameters `json:"resources" tf:"resources,omitempty"`
-
-	// +kubebuilder:validation:Required
-	Version *string `json:"version" tf:"version,omitempty"`
-}
-
 type PostgresqlClusterDatabaseObservation struct {
 }
 
@@ -179,8 +179,15 @@ type PostgresqlClusterHostParameters struct {
 	// +kubebuilder:validation:Optional
 	ReplicationSourceName *string `json:"replicationSourceName,omitempty" tf:"replication_source_name,omitempty"`
 
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Required
 	Zone *string `json:"zone" tf:"zone,omitempty"`
@@ -212,7 +219,7 @@ type PostgresqlClusterObservation struct {
 type PostgresqlClusterParameters struct {
 
 	// +kubebuilder:validation:Required
-	Config []PostgresqlClusterConfigParameters `json:"config" tf:"config,omitempty"`
+	Config []ConfigParameters `json:"config" tf:"config,omitempty"`
 
 	// +kubebuilder:validation:Required
 	Database []PostgresqlClusterDatabaseParameters `json:"database" tf:"database,omitempty"`
@@ -262,28 +269,13 @@ type PostgresqlClusterParameters struct {
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
-	Restore []PostgresqlClusterRestoreParameters `json:"restore,omitempty" tf:"restore,omitempty"`
+	Restore []RestoreParameters `json:"restore,omitempty" tf:"restore,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// +kubebuilder:validation:Required
 	User []PostgresqlClusterUserParameters `json:"user" tf:"user,omitempty"`
-}
-
-type PostgresqlClusterRestoreObservation struct {
-}
-
-type PostgresqlClusterRestoreParameters struct {
-
-	// +kubebuilder:validation:Required
-	BackupID *string `json:"backupId" tf:"backup_id,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	Time *string `json:"time,omitempty" tf:"time,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	TimeInclusive *bool `json:"timeInclusive,omitempty" tf:"time_inclusive,omitempty"`
 }
 
 type PostgresqlClusterUserObservation struct {
@@ -307,16 +299,31 @@ type PostgresqlClusterUserParameters struct {
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// +kubebuilder:validation:Optional
-	Permission []PostgresqlClusterUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+	Permission []UserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Settings map[string]*string `json:"settings,omitempty" tf:"settings,omitempty"`
 }
 
-type PostgresqlClusterUserPermissionObservation struct {
+type RestoreObservation struct {
 }
 
-type PostgresqlClusterUserPermissionParameters struct {
+type RestoreParameters struct {
+
+	// +kubebuilder:validation:Required
+	BackupID *string `json:"backupId" tf:"backup_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Time *string `json:"time,omitempty" tf:"time,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	TimeInclusive *bool `json:"timeInclusive,omitempty" tf:"time_inclusive,omitempty"`
+}
+
+type UserPermissionObservation struct {
+}
+
+type UserPermissionParameters struct {
 
 	// +kubebuilder:validation:Required
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`

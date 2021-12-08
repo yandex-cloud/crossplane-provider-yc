@@ -21,6 +21,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -131,6 +132,16 @@ func (in *RecordsetParameters) DeepCopyInto(out *RecordsetParameters) {
 		in, out := &in.ZoneID, &out.ZoneID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ZoneIDRef != nil {
+		in, out := &in.ZoneIDRef, &out.ZoneIDRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.ZoneIDSelector != nil {
+		in, out := &in.ZoneIDSelector, &out.ZoneIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -270,6 +281,16 @@ func (in *ZoneParameters) DeepCopyInto(out *ZoneParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.FolderIDRef != nil {
+		in, out := &in.FolderIDRef, &out.FolderIDRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.FolderIDSelector != nil {
+		in, out := &in.FolderIDSelector, &out.FolderIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -300,6 +321,16 @@ func (in *ZoneParameters) DeepCopyInto(out *ZoneParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.PrivateNetworksRefs != nil {
+		in, out := &in.PrivateNetworksRefs, &out.PrivateNetworksRefs
+		*out = make([]v1.Reference, len(*in))
+		copy(*out, *in)
+	}
+	if in.PrivateNetworksSelector != nil {
+		in, out := &in.PrivateNetworksSelector, &out.PrivateNetworksSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Public != nil {
 		in, out := &in.Public, &out.Public

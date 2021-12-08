@@ -22,10 +22,13 @@ import (
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
 )
 
-// Configure adds configurations for vpc group.
+// Configure adds configurations for mdb group.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_mdb_postgresql_cluster", func(r *config.Resource) {
 		r.References["network_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
+		}
+		r.References["host.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
 		}
 		r.References["folder_id"] = config.Reference{
@@ -35,6 +38,21 @@ func Configure(p *config.Provider) {
 	})
 	p.AddResourceConfigurator("yandex_mdb_redis_cluster", func(r *config.Resource) {
 		r.References["network_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
+		}
+		r.References["host.subnet_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
+		}
+		r.References["folder_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
+		}
+		r.UseAsync = true
+	})
+	p.AddResourceConfigurator("yandex_mdb_mongodb_cluster", func(r *config.Resource) {
+		r.References["network_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
+		}
+		r.References["host.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
 		}
 		r.References["folder_id"] = config.Reference{

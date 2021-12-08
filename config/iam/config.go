@@ -14,12 +14,29 @@ limitations under the License.
 package iam
 
 import (
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/resourcemanager"
+	"fmt"
 	"github.com/crossplane-contrib/terrajet/pkg/config"
 )
 
-// Configure adds configurations for vpc group.
+const (
+	// ApisPackagePath is the golang path for this package.
+	ApisPackagePath = "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1"
+)
+
+// Configure adds configurations for iam group.
 func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("yandex_iam_service_account", func(r *config.Resource) {
+		r.References["folder_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
+		}
+	})
 	p.AddResourceConfigurator("yandex_iam_service_account_key", func(r *config.Resource) {
+		r.References["service_account_id"] = config.Reference{
+			Type: "ServiceAccount",
+		}
+	})
+	p.AddResourceConfigurator("yandex_iam_service_account_iam_binding", func(r *config.Resource) {
 		r.References["service_account_id"] = config.Reference{
 			Type: "ServiceAccount",
 		}

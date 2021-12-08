@@ -4,16 +4,8 @@ metadata:
   name: provider-jet-yc-bucket
 spec:
   forProvider:
-    accessKey: |+
-      -----BEGIN PUBLIC KEY-----
-      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8b4FRtJrADqV/q+WHT3m
-      Z1ojReGfrP5zaW0jssp6rMwHKbqKEvyB4ZEfUdRFSlvlPsi1tBvJWz95cb+UXWIv
-      6VmZtyfJ+6h3JMaFzeZQsYNiAoIqejjT/PSIoBp+NwgaG271gxH4GqsQ+TbJXf+z
-      FOW2wDScWjZVosg6avbVyjcC+T4RKqYa3+xwyjmrI6H2puEF5Tmmg3AckQfE4GQc
-      c8QGFdTtJTUsPStCj3oIRG1v/MLOW0MlQAfzmxQ26hWo1geDeB401+rtETEuyoUP
-      vJgTdepKyyTlHyftbBriTciGeTjKKlOTitczYuuV8Exk27EaEPJ3uvFVdUdpFWD1
-      cQIDAQAB
-      -----END PUBLIC KEY-----
+    serviceAccountKeyRef:
+      name: provider-jet-sa-key
     secretKeySecretRef:
       name: s3-sa-key-conn
       namespace: crossplane-system

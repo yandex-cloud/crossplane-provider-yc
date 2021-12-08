@@ -17,6 +17,10 @@ limitations under the License.
 package config
 
 import (
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/compute"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/container"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/dns"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/kubernetes"
 	tjconfig "github.com/crossplane-contrib/terrajet/pkg/config"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
@@ -46,17 +50,44 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 
 	pc := tjconfig.NewProvider(tf.ResourcesMap, resourcePrefix, modulePath,
 		tjconfig.WithDefaultResourceFn(defaultResourceFn),
-		tjconfig.WithSkipList([]string{
-			"yandex_iot_core_device$",
-			"yandex_iot_core_registry",
+		//
+		// Use this config to generate all terraform provider resources
+		//
+		// tjconfig.WithSkipList([]string{
+		//   "yandex_iot_core_device$",
+		// 	 "yandex_iot_core_registry",
+		// }),
+		tjconfig.WithIncludeList([]string{
+			"yandex_vpc_network$",
+			"yandex_vpc_subnet$",
+			"yandex_compute_instance$",
+			"yandex_container_registry$",
+			"yandex_container_repository$",
+			"yandex_dns_zone$",
+			"yandex_dns_recordset$",
+			"yandex_iam_service_account$",
+			"yandex_iam_service_account_key$",
+			"yandex_iam_service_account_iam_member$",
+			"yandex_kubernetes_cluster$",
+			"yandex_kubernetes_node_group$",
+			"yandex_mdb_mongodb_cluster$",
+			"yandex_mdb_postgresql_cluster$",
+			"yandex_mdb_redis_cluster$",
+			"yandex_resourcemanager_folder$",
+			"yandex_storage_bucket$",
+			"yandex_storage_object$",
 		}),
 	)
 
 	for _, configure := range []func(provider *tjconfig.Provider){
-		vpc.Configure,
-		mdb.Configure,
+		compute.Configure,
+		container.Configure,
+		dns.Configure,
 		iam.Configure,
+		kubernetes.Configure,
+		mdb.Configure,
 		storage.Configure,
+		vpc.Configure,
 	} {
 		configure(pc)
 	}

@@ -125,8 +125,15 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
@@ -161,8 +168,15 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	SecondaryDisk []SecondaryDiskParameters `json:"secondaryDisk,omitempty" tf:"secondary_disk,omitempty"`
 
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDRef *v1.Reference `json:"serviceAccountIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
@@ -226,8 +240,15 @@ type NetworkInterfaceParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// +kubebuilder:validation:Required
-	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type PlacementPolicyObservation struct {

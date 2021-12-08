@@ -34,8 +34,15 @@ type ZoneParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -43,8 +50,15 @@ type ZoneParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
 	PrivateNetworks []*string `json:"privateNetworks,omitempty" tf:"private_networks,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	PrivateNetworksRefs []v1.Reference `json:"privateNetworksRefs,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	PrivateNetworksSelector *v1.Selector `json:"privateNetworksSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	Public *bool `json:"public,omitempty" tf:"public,omitempty"`

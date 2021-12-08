@@ -10,7 +10,7 @@ spec:
       label1: "label-1-value"
     zone: "example.com."
     public: false
-    privateNetworks:
-      - enp80bgbqi2funfch70a
+    privateNetworksRefs:
+      - name: provider-jet-yc-net
   providerConfigRef:
     name: default

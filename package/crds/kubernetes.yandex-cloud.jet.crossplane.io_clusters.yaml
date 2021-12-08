@@ -70,6 +70,29 @@ spec:
                     type: string
                   folderId:
                     type: string
+                  folderIdRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                    type: object
                   kmsProvider:
                     items:
                       properties:
@@ -138,6 +161,30 @@ spec:
                             properties:
                               subnetId:
                                 type: string
+                              subnetIdRef:
+                                description: A Reference to a named object.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              subnetIdSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
                               zone:
                                 type: string
                             type: object
@@ -148,6 +195,29 @@ spec:
                     type: string
                   networkId:
                     type: string
+                  networkIdRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                    type: object
                   networkImplementation:
                     items:
                       properties:
@@ -164,19 +234,62 @@ spec:
                     type: integer
                   nodeServiceAccountId:
                     type: string
+                  nodeServiceAccountIdRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  nodeServiceAccountIdSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                    type: object
                   releaseChannel:
                     type: string
                   serviceAccountId:
                     type: string
+                  serviceAccountIdRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  serviceAccountIdSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                    type: object
                   serviceIpv4Range:
                     type: string
                   serviceIpv6Range:
                     type: string
                 required:
                 - master
-                - networkId
-                - nodeServiceAccountId
-                - serviceAccountId
                 type: object
               providerConfigRef:
                 default:
