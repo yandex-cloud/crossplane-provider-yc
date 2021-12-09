@@ -128,8 +128,15 @@ type KmsProviderObservation struct {
 
 type KmsProviderParameters struct {
 
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/kms/v1alpha1.SymmetricKey
 	// +kubebuilder:validation:Optional
 	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	KeyIDRef *v1.Reference `json:"keyIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	KeyIDSelector *v1.Selector `json:"keyIdSelector,omitempty" tf:"-"`
 }
 
 type LocationObservation struct {

@@ -25,16 +25,23 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type ServiceAccountIamMemberObservation struct {
+type ServiceAccountStaticAccessKeyObservation struct {
+	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
+
+	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
+
+	EncryptedSecretKey *string `json:"encryptedSecretKey,omitempty" tf:"encrypted_secret_key,omitempty"`
+
+	KeyFingerprint *string `json:"keyFingerprint,omitempty" tf:"key_fingerprint,omitempty"`
 }
 
-type ServiceAccountIamMemberParameters struct {
+type ServiceAccountStaticAccessKeyParameters struct {
 
-	// +kubebuilder:validation:Required
-	Member *string `json:"member" tf:"member,omitempty"`
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// +kubebuilder:validation:Required
-	Role *string `json:"role" tf:"role,omitempty"`
+	// +kubebuilder:validation:Optional
+	PgpKey *string `json:"pgpKey,omitempty" tf:"pgp_key,omitempty"`
 
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +kubebuilder:validation:Optional
@@ -45,56 +52,53 @@ type ServiceAccountIamMemberParameters struct {
 
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
-
-	// +kubebuilder:validation:Optional
-	SleepAfter *int64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
-// ServiceAccountIamMemberSpec defines the desired state of ServiceAccountIamMember
-type ServiceAccountIamMemberSpec struct {
+// ServiceAccountStaticAccessKeySpec defines the desired state of ServiceAccountStaticAccessKey
+type ServiceAccountStaticAccessKeySpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ServiceAccountIamMemberParameters `json:"forProvider"`
+	ForProvider     ServiceAccountStaticAccessKeyParameters `json:"forProvider"`
 }
 
-// ServiceAccountIamMemberStatus defines the observed state of ServiceAccountIamMember.
-type ServiceAccountIamMemberStatus struct {
+// ServiceAccountStaticAccessKeyStatus defines the observed state of ServiceAccountStaticAccessKey.
+type ServiceAccountStaticAccessKeyStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ServiceAccountIamMemberObservation `json:"atProvider,omitempty"`
+	AtProvider        ServiceAccountStaticAccessKeyObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// ServiceAccountIamMember is the Schema for the ServiceAccountIamMembers API
+// ServiceAccountStaticAccessKey is the Schema for the ServiceAccountStaticAccessKeys API
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloudjet}
-type ServiceAccountIamMember struct {
+type ServiceAccountStaticAccessKey struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ServiceAccountIamMemberSpec   `json:"spec"`
-	Status            ServiceAccountIamMemberStatus `json:"status,omitempty"`
+	Spec              ServiceAccountStaticAccessKeySpec   `json:"spec"`
+	Status            ServiceAccountStaticAccessKeyStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// ServiceAccountIamMemberList contains a list of ServiceAccountIamMembers
-type ServiceAccountIamMemberList struct {
+// ServiceAccountStaticAccessKeyList contains a list of ServiceAccountStaticAccessKeys
+type ServiceAccountStaticAccessKeyList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []ServiceAccountIamMember `json:"items"`
+	Items           []ServiceAccountStaticAccessKey `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	ServiceAccountIamMember_Kind             = "ServiceAccountIamMember"
-	ServiceAccountIamMember_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: ServiceAccountIamMember_Kind}.String()
-	ServiceAccountIamMember_KindAPIVersion   = ServiceAccountIamMember_Kind + "." + CRDGroupVersion.String()
-	ServiceAccountIamMember_GroupVersionKind = CRDGroupVersion.WithKind(ServiceAccountIamMember_Kind)
+	ServiceAccountStaticAccessKey_Kind             = "ServiceAccountStaticAccessKey"
+	ServiceAccountStaticAccessKey_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: ServiceAccountStaticAccessKey_Kind}.String()
+	ServiceAccountStaticAccessKey_KindAPIVersion   = ServiceAccountStaticAccessKey_Kind + "." + CRDGroupVersion.String()
+	ServiceAccountStaticAccessKey_GroupVersionKind = CRDGroupVersion.WithKind(ServiceAccountStaticAccessKey_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&ServiceAccountIamMember{}, &ServiceAccountIamMemberList{})
+	SchemeBuilder.Register(&ServiceAccountStaticAccessKey{}, &ServiceAccountStaticAccessKeyList{})
 }

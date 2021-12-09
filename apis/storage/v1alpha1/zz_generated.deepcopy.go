@@ -157,6 +157,16 @@ func (in *BucketParameters) DeepCopyInto(out *BucketParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.AccessKeyRef != nil {
+		in, out := &in.AccessKeyRef, &out.AccessKeyRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.AccessKeySelector != nil {
+		in, out := &in.AccessKeySelector, &out.AccessKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Bucket != nil {
 		in, out := &in.Bucket, &out.Bucket
 		*out = new(string)
@@ -216,16 +226,6 @@ func (in *BucketParameters) DeepCopyInto(out *BucketParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
-	}
-	if in.ServiceAccountKeyRef != nil {
-		in, out := &in.ServiceAccountKeyRef, &out.ServiceAccountKeyRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.ServiceAccountKeySelector != nil {
-		in, out := &in.ServiceAccountKeySelector, &out.ServiceAccountKeySelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.Versioning != nil {
 		in, out := &in.Versioning, &out.Versioning
@@ -757,6 +757,16 @@ func (in *ObjectParameters) DeepCopyInto(out *ObjectParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.AccessKeyRef != nil {
+		in, out := &in.AccessKeyRef, &out.AccessKeyRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.AccessKeySelector != nil {
+		in, out := &in.AccessKeySelector, &out.AccessKeySelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Bucket != nil {
 		in, out := &in.Bucket, &out.Bucket
 		*out = new(string)
@@ -796,16 +806,6 @@ func (in *ObjectParameters) DeepCopyInto(out *ObjectParameters) {
 		in, out := &in.SecretKeySecretRef, &out.SecretKeySecretRef
 		*out = new(v1.SecretKeySelector)
 		**out = **in
-	}
-	if in.ServiceAccountKeyRef != nil {
-		in, out := &in.ServiceAccountKeyRef, &out.ServiceAccountKeyRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.ServiceAccountKeySelector != nil {
-		in, out := &in.ServiceAccountKeySelector, &out.ServiceAccountKeySelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.Source != nil {
 		in, out := &in.Source, &out.Source

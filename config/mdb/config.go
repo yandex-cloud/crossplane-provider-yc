@@ -29,7 +29,7 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
 		}
 		r.References["host.subnet_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.References["folder_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
@@ -41,7 +41,7 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
 		}
 		r.References["host.subnet_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.References["folder_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
@@ -53,7 +53,7 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
 		}
 		r.References["host.subnet_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.References["folder_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),

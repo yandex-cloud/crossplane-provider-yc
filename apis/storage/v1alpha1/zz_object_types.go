@@ -33,12 +33,16 @@ type ObjectParameters struct {
 	// +kubebuilder:validation:Optional
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
-	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1.ServiceAccountKey
+	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
 	// +crossplane:generate:reference:extractor=bb.yandex-team.ru/crossplane/provider-jet-yc/config/storage.ExtractPublicKey()
-	// +crossplane:generate:reference:refFieldName=ServiceAccountKeyRef
-	// +crossplane:generate:reference:selectorFieldName=ServiceAccountKeySelector
 	// +kubebuilder:validation:Optional
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	AccessKeyRef *v1.Reference `json:"accessKeyRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	AccessKeySelector *v1.Selector `json:"accessKeySelector,omitempty" tf:"-"`
 
 	// +crossplane:generate:reference:type=Bucket
 	// +kubebuilder:validation:Optional
@@ -64,12 +68,6 @@ type ObjectParameters struct {
 
 	// +kubebuilder:validation:Optional
 	SecretKeySecretRef *v1.SecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
-
-	// +kubebuilder:validation:Optional
-	ServiceAccountKeyRef *v1.Reference `json:"serviceAccountKeyRef,omitempty" tf:"-"`
-
-	// +kubebuilder:validation:Optional
-	ServiceAccountKeySelector *v1.Selector `json:"serviceAccountKeySelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`

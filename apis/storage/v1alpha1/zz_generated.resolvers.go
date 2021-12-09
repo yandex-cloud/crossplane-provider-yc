@@ -36,18 +36,18 @@ func (mg *Bucket) ResolveReferences(ctx context.Context, c client.Reader) error 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AccessKey),
 		Extract:      storage.ExtractPublicKey(),
-		Reference:    mg.Spec.ForProvider.ServiceAccountKeyRef,
-		Selector:     mg.Spec.ForProvider.ServiceAccountKeySelector,
+		Reference:    mg.Spec.ForProvider.AccessKeyRef,
+		Selector:     mg.Spec.ForProvider.AccessKeySelector,
 		To: reference.To{
-			List:    &v1alpha1.ServiceAccountKeyList{},
-			Managed: &v1alpha1.ServiceAccountKey{},
+			List:    &v1alpha1.ServiceAccountStaticAccessKeyList{},
+			Managed: &v1alpha1.ServiceAccountStaticAccessKey{},
 		},
 	})
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.AccessKey")
 	}
 	mg.Spec.ForProvider.AccessKey = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.ServiceAccountKeyRef = rsp.ResolvedReference
+	mg.Spec.ForProvider.AccessKeyRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -62,18 +62,18 @@ func (mg *Object) ResolveReferences(ctx context.Context, c client.Reader) error 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AccessKey),
 		Extract:      storage.ExtractPublicKey(),
-		Reference:    mg.Spec.ForProvider.ServiceAccountKeyRef,
-		Selector:     mg.Spec.ForProvider.ServiceAccountKeySelector,
+		Reference:    mg.Spec.ForProvider.AccessKeyRef,
+		Selector:     mg.Spec.ForProvider.AccessKeySelector,
 		To: reference.To{
-			List:    &v1alpha1.ServiceAccountKeyList{},
-			Managed: &v1alpha1.ServiceAccountKey{},
+			List:    &v1alpha1.ServiceAccountStaticAccessKeyList{},
+			Managed: &v1alpha1.ServiceAccountStaticAccessKey{},
 		},
 	})
 	if err != nil {
 		return errors.Wrap(err, "mg.Spec.ForProvider.AccessKey")
 	}
 	mg.Spec.ForProvider.AccessKey = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.ServiceAccountKeyRef = rsp.ResolvedReference
+	mg.Spec.ForProvider.AccessKeyRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Bucket),

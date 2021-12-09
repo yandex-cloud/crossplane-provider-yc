@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: postgresql
+  name: mongodb
   namespace: default
 type: Opaque
 data:
@@ -31,13 +31,13 @@ spec:
     user:
       - name: john
         passwordSecretRef:
-          name: postgresql
+          name: mongodb
           key: password
           namespace: default
         permission:
           - databaseName: testdb
     host:
-      - zone: ru-central1-a
+      - zoneId: ru-central1-a
         subnetIdRef:
           name: provider-jet-yc-subnet-a
     folderIdRef:

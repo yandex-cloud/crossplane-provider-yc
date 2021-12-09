@@ -6,12 +6,12 @@ spec:
   forProvider:
     contentBase64: MTIzNDU2Nzg=
     key: "cute-cat"
-    serviceAccountKeyRef:
-      name: provider-jet-sa-key
+    accessKeyRef:
+      name: provider-jet-yc-sa-static-key
     secretKeySecretRef:
-      name: s3-sa-key-conn
+      name: sa-key-conn
       namespace: crossplane-system
-      key: attribute.private_key
+      key: attribute.secret_key
     bucketRef:
       name: provider-jet-yc-bucket
   providerConfigRef:

@@ -27,6 +27,7 @@ spec:
     releaseChannel: RAPID
     networkPolicyProvider: CALICO
     kmsProvider:
-      - keyId: "<key-id>"
+      - keyIdRef:
+          name: provider-jet-yc-sk
   providerConfigRef:
     name: default

@@ -18,9 +18,10 @@ limitations under the License.
 package v1alpha1
 
 import (
-	v1alpha12 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1"
+	v1alpha13 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1"
+	v1alpha11 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/kms/v1alpha1"
 	v1alpha1 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1"
-	v1alpha11 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1"
+	v1alpha12 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1"
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
@@ -50,6 +51,24 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.KmsProvider); i3++ {
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KmsProvider[i3].KeyID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.KmsProvider[i3].KeyIDRef,
+			Selector:     mg.Spec.ForProvider.KmsProvider[i3].KeyIDSelector,
+			To: reference.To{
+				List:    &v1alpha11.SymmetricKeyList{},
+				Managed: &v1alpha11.SymmetricKey{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.KmsProvider[i3].KeyID")
+		}
+		mg.Spec.ForProvider.KmsProvider[i3].KeyID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.KmsProvider[i3].KeyIDRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Master); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Master[i3].Zonal); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -58,8 +77,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 				Reference:    mg.Spec.ForProvider.Master[i3].Zonal[i4].SubnetIDRef,
 				Selector:     mg.Spec.ForProvider.Master[i3].Zonal[i4].SubnetIDSelector,
 				To: reference.To{
-					List:    &v1alpha11.SubnetList{},
-					Managed: &v1alpha11.Subnet{},
+					List:    &v1alpha12.SubnetList{},
+					Managed: &v1alpha12.Subnet{},
 				},
 			})
 			if err != nil {
@@ -76,8 +95,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		Reference:    mg.Spec.ForProvider.NetworkIDRef,
 		Selector:     mg.Spec.ForProvider.NetworkIDSelector,
 		To: reference.To{
-			List:    &v1alpha11.NetworkList{},
-			Managed: &v1alpha11.Network{},
+			List:    &v1alpha12.NetworkList{},
+			Managed: &v1alpha12.Network{},
 		},
 	})
 	if err != nil {
@@ -92,8 +111,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		Reference:    mg.Spec.ForProvider.NodeServiceAccountIDRef,
 		Selector:     mg.Spec.ForProvider.NodeServiceAccountIDSelector,
 		To: reference.To{
-			List:    &v1alpha12.ServiceAccountList{},
-			Managed: &v1alpha12.ServiceAccount{},
+			List:    &v1alpha13.ServiceAccountList{},
+			Managed: &v1alpha13.ServiceAccount{},
 		},
 	})
 	if err != nil {
@@ -108,8 +127,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		Reference:    mg.Spec.ForProvider.ServiceAccountIDRef,
 		Selector:     mg.Spec.ForProvider.ServiceAccountIDSelector,
 		To: reference.To{
-			List:    &v1alpha12.ServiceAccountList{},
-			Managed: &v1alpha12.ServiceAccount{},
+			List:    &v1alpha13.ServiceAccountList{},
+			Managed: &v1alpha13.ServiceAccount{},
 		},
 	})
 	if err != nil {
@@ -126,8 +145,29 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
 	var err error
 
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.AllocationPolicy); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.AllocationPolicy[i3].Location); i4++ {
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AllocationPolicy[i3].Location[i4].SubnetID),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.ForProvider.AllocationPolicy[i3].Location[i4].SubnetIDRef,
+				Selector:     mg.Spec.ForProvider.AllocationPolicy[i3].Location[i4].SubnetIDSelector,
+				To: reference.To{
+					List:    &v1alpha12.SubnetList{},
+					Managed: &v1alpha12.Subnet{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.AllocationPolicy[i3].Location[i4].SubnetID")
+			}
+			mg.Spec.ForProvider.AllocationPolicy[i3].Location[i4].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.AllocationPolicy[i3].Location[i4].SubnetIDRef = rsp.ResolvedReference
+
+		}
+	}
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ClusterID),
 		Extract:      reference.ExternalName(),
@@ -143,6 +183,27 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 	}
 	mg.Spec.ForProvider.ClusterID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ClusterIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceTemplate); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface); i4++ {
+			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+				CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SubnetIds),
+				Extract:       reference.ExternalName(),
+				References:    mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SubnetIdsRefs,
+				Selector:      mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SubnetIdsSelector,
+				To: reference.To{
+					List:    &v1alpha12.SubnetList{},
+					Managed: &v1alpha12.Subnet{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SubnetIds")
+			}
+			mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SubnetIds = reference.ToPtrValues(mrsp.ResolvedValues)
+			mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SubnetIdsRefs = mrsp.ResolvedReferences
+
+		}
+	}
 
 	return nil
 }

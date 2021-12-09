@@ -186,3 +186,59 @@ func (mg *ServiceAccountKey) SetProviderReference(r *xpv1.Reference) {
 func (mg *ServiceAccountKey) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
+
+// GetCondition of this ServiceAccountStaticAccessKey.
+func (mg *ServiceAccountStaticAccessKey) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this ServiceAccountStaticAccessKey.
+func (mg *ServiceAccountStaticAccessKey) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetProviderConfigReference of this ServiceAccountStaticAccessKey.
+func (mg *ServiceAccountStaticAccessKey) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+/*
+GetProviderReference of this ServiceAccountStaticAccessKey.
+Deprecated: Use GetProviderConfigReference.
+*/
+func (mg *ServiceAccountStaticAccessKey) GetProviderReference() *xpv1.Reference {
+	return mg.Spec.ProviderReference
+}
+
+// GetWriteConnectionSecretToReference of this ServiceAccountStaticAccessKey.
+func (mg *ServiceAccountStaticAccessKey) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this ServiceAccountStaticAccessKey.
+func (mg *ServiceAccountStaticAccessKey) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this ServiceAccountStaticAccessKey.
+func (mg *ServiceAccountStaticAccessKey) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetProviderConfigReference of this ServiceAccountStaticAccessKey.
+func (mg *ServiceAccountStaticAccessKey) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+/*
+SetProviderReference of this ServiceAccountStaticAccessKey.
+Deprecated: Use SetProviderConfigReference.
+*/
+func (mg *ServiceAccountStaticAccessKey) SetProviderReference(r *xpv1.Reference) {
+	mg.Spec.ProviderReference = r
+}
+
+// SetWriteConnectionSecretToReference of this ServiceAccountStaticAccessKey.
+func (mg *ServiceAccountStaticAccessKey) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}

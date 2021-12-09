@@ -56,8 +56,8 @@ func (mg *MongodbCluster) ResolveReferences(ctx context.Context, c client.Reader
 			Reference:    mg.Spec.ForProvider.Host[i3].SubnetIDRef,
 			Selector:     mg.Spec.ForProvider.Host[i3].SubnetIDSelector,
 			To: reference.To{
-				List:    &v1alpha11.NetworkList{},
-				Managed: &v1alpha11.Network{},
+				List:    &v1alpha11.SubnetList{},
+				Managed: &v1alpha11.Subnet{},
 			},
 		})
 		if err != nil {
@@ -116,8 +116,8 @@ func (mg *PostgresqlCluster) ResolveReferences(ctx context.Context, c client.Rea
 			Reference:    mg.Spec.ForProvider.Host[i3].SubnetIDRef,
 			Selector:     mg.Spec.ForProvider.Host[i3].SubnetIDSelector,
 			To: reference.To{
-				List:    &v1alpha11.NetworkList{},
-				Managed: &v1alpha11.Network{},
+				List:    &v1alpha11.SubnetList{},
+				Managed: &v1alpha11.Subnet{},
 			},
 		})
 		if err != nil {
@@ -176,8 +176,8 @@ func (mg *RedisCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 			Reference:    mg.Spec.ForProvider.Host[i3].SubnetIDRef,
 			Selector:     mg.Spec.ForProvider.Host[i3].SubnetIDSelector,
 			To: reference.To{
-				List:    &v1alpha11.NetworkList{},
-				Managed: &v1alpha11.Network{},
+				List:    &v1alpha11.SubnetList{},
+				Managed: &v1alpha11.Subnet{},
 			},
 		})
 		if err != nil {

@@ -16,10 +16,11 @@ package storage
 import (
 	"fmt"
 
-	"github.com/crossplane-contrib/terrajet/pkg/config"
-	"github.com/crossplane-contrib/terrajet/pkg/resource"
 	xpref "github.com/crossplane/crossplane-runtime/pkg/reference"
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
+
+	"github.com/crossplane-contrib/terrajet/pkg/config"
+	"github.com/crossplane-contrib/terrajet/pkg/resource"
 
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/iam"
 )
@@ -28,18 +29,14 @@ import (
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_storage_bucket", func(r *config.Resource) {
 		r.References["access_key"] = config.Reference{
-			Type:              fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccountKey"),
-			Extractor:         ExtractPublicKeyFuncPath,
-			RefFieldName:      "ServiceAccountKeyRef",
-			SelectorFieldName: "ServiceAccountKeySelector",
+			Type:      fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccountStaticAccessKey"),
+			Extractor: ExtractPublicKeyFuncPath,
 		}
 	})
 	p.AddResourceConfigurator("yandex_storage_object", func(r *config.Resource) {
 		r.References["access_key"] = config.Reference{
-			Type:              fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccountKey"),
-			Extractor:         ExtractPublicKeyFuncPath,
-			RefFieldName:      "ServiceAccountKeyRef",
-			SelectorFieldName: "ServiceAccountKeySelector",
+			Type:      fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccountStaticAccessKey"),
+			Extractor: ExtractPublicKeyFuncPath,
 		}
 		r.References["bucket"] = config.Reference{
 			Type: "Bucket",
@@ -67,6 +64,9 @@ func ExtractPublicKey() xpref.ExtractValueFn {
 		if err != nil {
 			return ""
 		}
-		return o["publicKey"].(string)
+		if k := o["access_key"]; k != nil {
+			return k.(string)
+		}
+		return ""
 	}
 }

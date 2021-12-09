@@ -4,6 +4,6 @@ metadata:
   name: provider-jet-yc-repository
 spec:
   forProvider:
-    name: <provider-jet-yc-registry.id>/test-repository
+    name: crporanf0v66g7ketg06/test-repository
   providerConfigRef:
     name: default

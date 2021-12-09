@@ -14,11 +14,14 @@ limitations under the License.
 package kubernetes
 
 import (
+	"fmt"
+
+	"github.com/crossplane-contrib/terrajet/pkg/config"
+
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/iam"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/kms"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/resourcemanager"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
-	"fmt"
-	"github.com/crossplane-contrib/terrajet/pkg/config"
 )
 
 // Configure adds configurations for kubernetes group.
@@ -42,6 +45,9 @@ func Configure(p *config.Provider) {
 		r.References["master.zonal.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
+		r.References["kms_provider.key_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", kms.ApisPackagePath, "SymmetricKey"),
+		}
 		r.UseAsync = true
 	})
 	p.AddResourceConfigurator("yandex_kubernetes_node_group", func(r *config.Resource) {
@@ -51,7 +57,10 @@ func Configure(p *config.Provider) {
 		r.References["cluster_id"] = config.Reference{
 			Type: "Cluster",
 		}
-		r.References["allocationPolicy.location.subnet_id"] = config.Reference{
+		r.References["allocation_policy.location.subnet_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
+		}
+		r.References["instance_template.network_interface.subnet_ids"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.UseAsync = true

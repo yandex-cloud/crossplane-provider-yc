@@ -26,6 +26,7 @@ import (
 	v1alpha1container "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/container/v1alpha1"
 	v1alpha1dns "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/dns/v1alpha1"
 	v1alpha1iam "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1"
+	v1alpha1kms "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/kms/v1alpha1"
 	v1alpha1kubernetes "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/kubernetes/v1alpha1"
 	v1alpha1mdb "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/mdb/v1alpha1"
 	v1alpha1resourcemanager "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1"
@@ -41,6 +42,7 @@ func init() {
 		v1alpha1container.SchemeBuilder.AddToScheme,
 		v1alpha1dns.SchemeBuilder.AddToScheme,
 		v1alpha1iam.SchemeBuilder.AddToScheme,
+		v1alpha1kms.SchemeBuilder.AddToScheme,
 		v1alpha1kubernetes.SchemeBuilder.AddToScheme,
 		v1alpha1mdb.SchemeBuilder.AddToScheme,
 		v1alpha1resourcemanager.SchemeBuilder.AddToScheme,

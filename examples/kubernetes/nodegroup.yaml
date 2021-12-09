@@ -13,7 +13,7 @@ spec:
       - platformId: "standard-v2"
         networkInterface:
           - nat: true
-            subnetIdsRef:
+            subnetIdsRefs:
               - name: provider-jet-yc-subnet-a
         resources:
           - memory: 2
@@ -22,7 +22,7 @@ spec:
           - type: "network-hdd"
             size: 64
         schedulingPolicy:
-          preemptible: true
+          - preemptible: true
     scalePolicy:
       - fixedScale:
           - size: 1

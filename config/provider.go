@@ -17,14 +17,15 @@ limitations under the License.
 package config
 
 import (
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/compute"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/container"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/dns"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/kubernetes"
 	tjconfig "github.com/crossplane-contrib/terrajet/pkg/config"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/compute"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/container"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/dns"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/iam"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/kms"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/kubernetes"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/mdb"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/storage"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
@@ -67,6 +68,7 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 			"yandex_dns_recordset$",
 			"yandex_iam_service_account$",
 			"yandex_iam_service_account_key$",
+			"yandex_iam_service_account_static_access_key$",
 			"yandex_iam_service_account_iam_member$",
 			"yandex_kubernetes_cluster$",
 			"yandex_kubernetes_node_group$",
@@ -76,6 +78,7 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 			"yandex_resourcemanager_folder$",
 			"yandex_storage_bucket$",
 			"yandex_storage_object$",
+			"yandex_kms_symmetric_key$",
 		}),
 	)
 
@@ -88,6 +91,7 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 		mdb.Configure,
 		storage.Configure,
 		vpc.Configure,
+		kms.Configure,
 	} {
 		configure(pc)
 	}

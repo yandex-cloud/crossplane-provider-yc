@@ -14,12 +14,12 @@ limitations under the License.
 package dns
 
 import (
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
 	"fmt"
 
 	"github.com/crossplane-contrib/terrajet/pkg/config"
 
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/resourcemanager"
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
 )
 
 // Configure adds configurations for dns group.

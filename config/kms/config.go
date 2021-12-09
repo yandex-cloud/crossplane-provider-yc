@@ -11,7 +11,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package iam
+package kms
 
 import (
 	"fmt"
@@ -23,29 +23,14 @@ import (
 
 const (
 	// ApisPackagePath is the golang path for this package.
-	ApisPackagePath = "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1"
+	ApisPackagePath = "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/kms/v1alpha1"
 )
 
-// Configure adds configurations for iam group.
+// Configure adds configurations for kms group.
 func Configure(p *config.Provider) {
-	p.AddResourceConfigurator("yandex_iam_service_account", func(r *config.Resource) {
+	p.AddResourceConfigurator("yandex_kms_symmetric_key", func(r *config.Resource) {
 		r.References["folder_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
-		}
-	})
-	p.AddResourceConfigurator("yandex_iam_service_account_key", func(r *config.Resource) {
-		r.References["service_account_id"] = config.Reference{
-			Type: "ServiceAccount",
-		}
-	})
-	p.AddResourceConfigurator("yandex_iam_service_account_static_access_key", func(r *config.Resource) {
-		r.References["service_account_id"] = config.Reference{
-			Type: "ServiceAccount",
-		}
-	})
-	p.AddResourceConfigurator("yandex_iam_service_account_iam_member", func(r *config.Resource) {
-		r.References["service_account_id"] = config.Reference{
-			Type: "ServiceAccount",
 		}
 	})
 }

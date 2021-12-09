@@ -33,6 +33,8 @@ import (
 	serviceaccount "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/iam/serviceaccount"
 	serviceaccountiammember "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/iam/serviceaccountiammember"
 	serviceaccountkey "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/iam/serviceaccountkey"
+	serviceaccountstaticaccesskey "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/iam/serviceaccountstaticaccesskey"
+	symmetrickey "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/kms/symmetrickey"
 	cluster "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/kubernetes/cluster"
 	nodegroup "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/kubernetes/nodegroup"
 	mongodbcluster "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/mdb/mongodbcluster"
@@ -58,6 +60,8 @@ func Setup(mgr ctrl.Manager, l logging.Logger, wl workqueue.RateLimiter, ps terr
 		serviceaccount.Setup,
 		serviceaccountiammember.Setup,
 		serviceaccountkey.Setup,
+		serviceaccountstaticaccesskey.Setup,
+		symmetrickey.Setup,
 		cluster.Setup,
 		nodegroup.Setup,
 		mongodbcluster.Setup,

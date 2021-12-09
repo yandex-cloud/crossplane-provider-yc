@@ -4,12 +4,13 @@ metadata:
   name: provider-jet-yc-bucket
 spec:
   forProvider:
-    serviceAccountKeyRef:
-      name: provider-jet-sa-key
+    accessKeyRef:
+      name: provider-jet-yc-sa-static-key
     secretKeySecretRef:
-      name: s3-sa-key-conn
+      name: sa-key-conn
       namespace: crossplane-system
-      key: attribute.private_key
-    bucket: "tf-test-bucket"
+      key: attribute.secret_key
+    bucket: "vaspahomov-test-bucket"
+    acl: "public-read"
   providerConfigRef:
     name: default

@@ -14,37 +14,3 @@ spec:
     zone: ru-central1-a
   providerConfigRef:
     name: default
----
-apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
-kind: Subnet
-metadata:
-  name: provider-jet-yc-subnet-b
-spec:
-  forProvider:
-    name: provider-jet-yc-net-b
-    networkIdRef:
-      name: provider-jet-yc-net
-    v4CidrBlocks:
-      - 10.1.0.0/24
-    folderIdRef:
-      name: provider-jet-yc-folder
-    zone: ru-central1-b
-  providerConfigRef:
-    name: default
----
-apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
-kind: Subnet
-metadata:
-  name: provider-jet-yc-subnet-c
-spec:
-  forProvider:
-    name: provider-jet-yc-net-c
-    networkIdRef:
-      name: provider-jet-yc-net
-    v4CidrBlocks:
-      - 10.2.0.0/24
-    folderIdRef:
-      name: provider-jet-yc-folder
-    zone: ru-central1-c
-  providerConfigRef:
-    name: default
