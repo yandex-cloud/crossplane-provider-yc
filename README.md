@@ -7,6 +7,8 @@ managed resources for
 
 ## Getting Started
 
+### Install crossplane/provder-jet-yc
+
 Install crossplane:
 
 ```
@@ -32,11 +34,42 @@ Install crossplane CLI:
 curl -sL https://raw.githubusercontent.com/crossplane/crossplane/release-1.5/install.sh | sh
 ```
 
-Install the provider by using the following command after changing the image tag to
-the latest release
+Install the provider by using the following command after changing the image tag to the latest release
 
 ```
 kubectl crossplane install provider cr.yandex/crp0kch415f0lke009ft/crossplane/provider-jet-yc-amd64:v0.1.0
+```
+
+### Setup ProviderConfig
+
+Create service account:
+
+```
+yc iam service-account create --name <service-account>
+```
+
+Add roles to this service account:
+
+```shell
+yc resource-manager folder add-access-binding <folder-id> --role <role>
+```
+
+Request key:
+
+```shell
+yc iam key create --service-account-id <service-account-id> --output key.json
+```
+
+Create k8s secret:
+
+```shell
+kubectl create secret generic yc-creds -n "crossplane-system" --from-file=credentials=./key.json
+```
+
+Apply example ProviderConfig:
+
+```
+kubectl apply -f examples/providerconfig/providerconfig.yaml
 ```
 
 ## Report a Bug
