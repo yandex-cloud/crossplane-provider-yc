@@ -14,11 +14,7 @@ limitations under the License.
 package vpc
 
 import (
-	"fmt"
-
 	"github.com/crossplane-contrib/terrajet/pkg/config"
-
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/resourcemanager"
 )
 
 const (
@@ -31,14 +27,6 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_vpc_subnet", func(r *config.Resource) {
 		r.References["network_id"] = config.Reference{
 			Type: "Network",
-		}
-		r.References["folder_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
-		}
-	})
-	p.AddResourceConfigurator("yandex_vpc_network", func(r *config.Resource) {
-		r.References["folder_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
 		}
 	})
 }

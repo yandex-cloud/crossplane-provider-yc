@@ -20,13 +20,14 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/crossplane-contrib/terrajet/pkg/terraform"
-	"github.com/crossplane/crossplane-runtime/pkg/logging"
-	"github.com/crossplane/crossplane-runtime/pkg/ratelimiter"
 	tf "github.com/yandex-cloud/terraform-provider-yandex/yandex"
 	"gopkg.in/alecthomas/kingpin.v2"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
+
+	"github.com/crossplane-contrib/terrajet/pkg/terraform"
+	"github.com/crossplane/crossplane-runtime/pkg/logging"
+	"github.com/crossplane/crossplane-runtime/pkg/ratelimiter"
 
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/apis"
 	pconfig "bb.yandex-team.ru/crossplane/provider-jet-yc/config"

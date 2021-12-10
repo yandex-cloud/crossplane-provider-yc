@@ -1,19 +1,19 @@
 apiVersion: kubernetes.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Cluster
 metadata:
-  name: provider-jet-yc-cluster
+  name: example-cluster
 spec:
   forProvider:
-    name: provider-jet-yc-cluster
+    name: example-cluster
     description: provider-jet-yc cluster
     networkIdRef:
-      name: provider-jet-yc-net
+      name: example-net
     master:
       - version: "1.21"
         zonal:
           - zone: ru-central1-a
             subnetIdRef:
-              name: provider-jet-yc-subnet-a
+              name: example-subnet-a
         publicIp: true
         maintenancePolicy:
           - autoUpgrade: true
@@ -21,13 +21,13 @@ spec:
               - startTime: "15:00"
                 duration: "3h"
     serviceAccountIdRef:
-      name: provider-jet-yc-sa
+      name: example-sa
     nodeServiceAccountIdRef:
-      name: provider-jet-yc-sa
+      name: example-sa
     releaseChannel: RAPID
     networkPolicyProvider: CALICO
     kmsProvider:
       - keyIdRef:
-          name: provider-jet-yc-sk
+          name: example-sk
   providerConfigRef:
-    name: default
+    name: example

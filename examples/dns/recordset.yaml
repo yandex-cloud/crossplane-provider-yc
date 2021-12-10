@@ -1,15 +1,15 @@
 apiVersion: dns.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Recordset
 metadata:
-  name: provider-jet-yc-recordset
+  name: example-recordset
 spec:
   forProvider:
     zoneIdRef:
-      name: provider-jet-yc-zone
-    name: provider-jet-yc-recordset
+      name: example-zone
+    name: example-recordset
     type: "A"
     ttl: 200
     data:
       - "10.1.0.1"
   providerConfigRef:
-    name: default
+    name: example

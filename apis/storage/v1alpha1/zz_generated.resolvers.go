@@ -35,7 +35,7 @@ func (mg *Bucket) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AccessKey),
-		Extract:      storage.ExtractPublicKey(),
+		Extract:      storage.ExtractAccessKey(),
 		Reference:    mg.Spec.ForProvider.AccessKeyRef,
 		Selector:     mg.Spec.ForProvider.AccessKeySelector,
 		To: reference.To{
@@ -61,7 +61,7 @@ func (mg *Object) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AccessKey),
-		Extract:      storage.ExtractPublicKey(),
+		Extract:      storage.ExtractAccessKey(),
 		Reference:    mg.Spec.ForProvider.AccessKeyRef,
 		Selector:     mg.Spec.ForProvider.AccessKeySelector,
 		To: reference.To{

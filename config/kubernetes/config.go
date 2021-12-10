@@ -20,16 +20,12 @@ import (
 
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/iam"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/kms"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/resourcemanager"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
 )
 
 // Configure adds configurations for kubernetes group.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_kubernetes_cluster", func(r *config.Resource) {
-		r.References["folder_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
-		}
 		r.References["network_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
 		}
@@ -51,9 +47,6 @@ func Configure(p *config.Provider) {
 		r.UseAsync = true
 	})
 	p.AddResourceConfigurator("yandex_kubernetes_node_group", func(r *config.Resource) {
-		r.References["folder_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
-		}
 		r.References["cluster_id"] = config.Reference{
 			Type: "Cluster",
 		}

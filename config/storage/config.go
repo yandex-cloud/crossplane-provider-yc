@@ -48,13 +48,13 @@ const (
 	// APISPackagePath is the package path for generated APIs root package
 	APISPackagePath = "bb.yandex-team.ru/crossplane/provider-jet-yc/config/storage"
 	// ExtractPublicKeyFuncPath holds the Azure resource ID extractor func name
-	ExtractPublicKeyFuncPath = APISPackagePath + ".ExtractPublicKey()"
+	ExtractPublicKeyFuncPath = APISPackagePath + ".ExtractAccessKey()"
 )
 
-// ExtractPublicKey extracts the value of `spec.atProvider.publicKey`
+// ExtractAccessKey extracts the value of `spec.atProvider.accessKey`
 // from a Terraformed resource. If mr is not a Terraformed
 // resource, returns an empty string.
-func ExtractPublicKey() xpref.ExtractValueFn {
+func ExtractAccessKey() xpref.ExtractValueFn {
 	return func(mr xpresource.Managed) string {
 		tr, ok := mr.(resource.Terraformed)
 		if !ok {

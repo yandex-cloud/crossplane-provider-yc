@@ -1,10 +1,10 @@
 apiVersion: compute.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Instance
 metadata:
-  name: provider-jet-yc-instance
+  name: example-instance
 spec:
   forProvider:
-    name: provider-jet-yc-instance
+    name: example-instance
     platformId: standard-v1
     zone: ru-central1-a
     resources:
@@ -17,8 +17,8 @@ spec:
           - imageId: fd8ot0k0vde438jv0t8j
     networkInterface:
       - subnetIdRef:
-          name: provider-jet-yc-subnet-a
+          name: example-subnet-a
     metadata:
-      ssh-keys: "ubuntu:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3qNbyyaTD3+coOtSuXMzhdwrICTyAqZ2tWYGS9FDXN3XNMnL9Et7uIraQcAjJ0GOT9eXHI67ppdzbjtQZTNV7lqr+qqRhE9kG67WWvBwX5DtsS7EODv94k5w6lYQzlv/H6VubRciMqzjXnX9T1jjO2reDIlcS8F87PFCR9tNTCrsBW7Juo/DaSG/3p5k90ky/VkRaf/f5dbvOM4Swy7/hNC940iYIdZZ64fek1wZBT4fe0FscvlnK0QPFFSRDyk0VivJhFyhWen/Ea9dJiKXPQ+OVMPIVctE41WR6OPz3KMrEIQsgNHfXpFEs1u0TVGho96viwteqx/f3X8PFVWWJ vaspahomov@yandex-team.ru"
+      ssh-keys: "ubuntu:<public-key-data>"
   providerConfigRef:
-    name: default
+    name: example

@@ -18,7 +18,6 @@ import (
 
 	"github.com/crossplane-contrib/terrajet/pkg/config"
 
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/resourcemanager"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
 )
 
@@ -31,9 +30,6 @@ func Configure(p *config.Provider) {
 		r.References["host.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
-		r.References["folder_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
-		}
 		r.UseAsync = true
 	})
 	p.AddResourceConfigurator("yandex_mdb_redis_cluster", func(r *config.Resource) {
@@ -43,9 +39,6 @@ func Configure(p *config.Provider) {
 		r.References["host.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
-		r.References["folder_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
-		}
 		r.UseAsync = true
 	})
 	p.AddResourceConfigurator("yandex_mdb_mongodb_cluster", func(r *config.Resource) {
@@ -54,9 +47,6 @@ func Configure(p *config.Provider) {
 		}
 		r.References["host.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
-		}
-		r.References["folder_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
 		}
 		r.UseAsync = true
 	})

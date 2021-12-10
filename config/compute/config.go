@@ -19,7 +19,6 @@ import (
 	"github.com/crossplane-contrib/terrajet/pkg/config"
 
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/iam"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/resourcemanager"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
 )
 
@@ -28,9 +27,6 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_compute_instance", func(r *config.Resource) {
 		r.References["network_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
-		}
-		r.References["folder_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
 		}
 		r.References["service_account_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccount"),

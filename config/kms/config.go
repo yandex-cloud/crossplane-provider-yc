@@ -13,24 +13,7 @@ limitations under the License.
 
 package kms
 
-import (
-	"fmt"
-
-	"github.com/crossplane-contrib/terrajet/pkg/config"
-
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/resourcemanager"
-)
-
 const (
 	// ApisPackagePath is the golang path for this package.
 	ApisPackagePath = "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/kms/v1alpha1"
 )
-
-// Configure adds configurations for kms group.
-func Configure(p *config.Provider) {
-	p.AddResourceConfigurator("yandex_kms_symmetric_key", func(r *config.Resource) {
-		r.References["folder_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
-		}
-	})
-}

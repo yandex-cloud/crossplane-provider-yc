@@ -1,20 +1,20 @@
 apiVersion: kubernetes.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: NodeGroup
 metadata:
-  name: provider-jet-yc-nodegroup
+  name: example-nodegroup
 spec:
   forProvider:
     clusterIdRef:
-      name: provider-jet-yc-cluster
-    name: provider-jet-yc-cluster
-    description: provider-jet-yc cluster
+      name: example-cluster
+    name: example-cluster
+    description: provider-jet-yc nodegroup
     version: "1.21"
     instanceTemplate:
       - platformId: "standard-v2"
         networkInterface:
           - nat: true
             subnetIdsRefs:
-              - name: provider-jet-yc-subnet-a
+              - name: example-subnet-a
         resources:
           - memory: 2
             cores: 2
@@ -40,4 +40,4 @@ spec:
             duration: "4h30m"
             day: "friday"
   providerConfigRef:
-    name: default
+    name: example

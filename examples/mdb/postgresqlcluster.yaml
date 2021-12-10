@@ -11,13 +11,13 @@ data:
 apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: PostgresqlCluster
 metadata:
-  name: provider-jet-yc-pg
+  name: example-pg
 spec:
   forProvider:
-    name: provider-jet-yc-pg
+    name: example-pg
     environment: PRESTABLE
     networkIdRef:
-      name: provider-jet-yc-net
+      name: example-net
     config:
       - version: "12"
         resources:
@@ -53,8 +53,8 @@ spec:
     host:
       - zone: ru-central1-a
         subnetIdRef:
-          name: provider-jet-yc-subnet-a
+          name: example-subnet-a
     folderIdRef:
-      name: provider-jet-yc-folder
+      name: example-folder
   providerConfigRef:
-    name: default
+    name: example

@@ -1,14 +1,14 @@
 apiVersion: kms.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: SymmetricKey
 metadata:
-  name: provider-jet-yc-sk
+  name: example-sk
 spec:
   forProvider:
-    name: provider-jet-yc-sk
+    name: example-sk
     description: provider-jet-yc created KMS key
     defaultAlgorithm: AES_128
     rotationPeriod: 8760h
     folderIdRef:
-      name: provider-jet-yc-folder
+      name: example-folder
   providerConfigRef:
-    name: default
+    name: example

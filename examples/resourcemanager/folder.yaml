@@ -1,14 +1,12 @@
 apiVersion: resourcemanager.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Folder
 metadata:
-  name: provider-jet-yc-folder
-  annotations:
-    crossplane.io/external-name: b1gl3b8gmea01lcfpifp
+  name: example-folder
 spec:
   deletionPolicy: Orphan
   forProvider:
-    name: crossplane-preprod
-    cloudId: b1gjk8shtb2smi1cgqdn
-    description: Crossplane preprod
+    name: example-folder
+    cloudId: cloud-id
+    description: Example folder
   providerConfigRef:
-    name: default
+    name: example

@@ -18,24 +18,17 @@ import (
 
 	"github.com/crossplane-contrib/terrajet/pkg/config"
 
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/resourcemanager"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
 )
 
 // Configure adds configurations for dns group.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_dns_zone", func(r *config.Resource) {
-		r.References["folder_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
-		}
 		r.References["private_networks"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
 		}
 	})
 	p.AddResourceConfigurator("yandex_dns_recordset", func(r *config.Resource) {
-		r.References["folder_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
-		}
 		r.References["zone_id"] = config.Reference{
 			Type: "Zone",
 		}

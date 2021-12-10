@@ -11,13 +11,13 @@ data:
 apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: RedisCluster
 metadata:
-  name: provider-jet-yc-redis
+  name: example-redis
 spec:
   forProvider:
-    name: provider-jet-yc-redis
+    name: example-redis
     environment: PRESTABLE
     networkIdRef:
-      name: provider-jet-yc-net
+      name: example-net
     config:
       - passwordSecretRef:
           name: redis
@@ -32,8 +32,8 @@ spec:
     host:
       - zone: ru-central1-a
         subnetIdRef:
-          name: provider-jet-yc-subnet-a
+          name: example-subnet-a
     folderIdRef:
-      name: provider-jet-yc-folder
+      name: example-folder
   providerConfigRef:
-    name: default
+    name: example
