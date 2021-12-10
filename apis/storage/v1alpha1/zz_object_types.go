@@ -34,7 +34,7 @@ type ObjectParameters struct {
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
-	// +crossplane:generate:reference:extractor=bb.yandex-team.ru/crossplane/provider-jet-yc/config/storage.ExtractPublicKey()
+	// +crossplane:generate:reference:extractor=bb.yandex-team.ru/crossplane/provider-jet-yc/config/storage.ExtractAccessKey()
 	// +kubebuilder:validation:Optional
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
 

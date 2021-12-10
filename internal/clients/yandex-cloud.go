@@ -32,20 +32,14 @@ const (
 	folderID              = "folder_id"
 	cloudID               = "cloud_id"
 	serviceAccountKeyFile = "service_account_key_file"
-
-	// errParseKeyData  = "could not parse key data"
-	// errCredsCreation = "could not create creds from key data"
 )
 
 const (
-	// fmtEnvVar = "%s=%s"
-
 	// error messages
 	errNoProviderConfig   = "no providerConfigRef provided"
 	errGetProviderConfig  = "cannot get referenced ProviderConfig"
 	errTrackUsage         = "cannot track ProviderConfig usage"
 	errExtractCredentials = "cannot extract credentials"
-	// errUnmarshalCredentials = "cannot unmarshal yc credentials as JSON"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which

@@ -46,7 +46,7 @@ spec:
                 description: Credentials required to authenticate to this provider.
                 properties:
                   cloudId:
-                    description: CloudID to work with.
+                    description: CloudID - id of default cloud to work with.
                     type: string
                   env:
                     description: Env is a reference to an environment variable that
@@ -59,7 +59,7 @@ spec:
                     - name
                     type: object
                   folderId:
-                    description: FolderID to work with.
+                    description: FolderID - id of default folder to work with.
                     type: string
                   fs:
                     description: Fs is a reference to a filesystem location that contains
@@ -99,22 +99,8 @@ spec:
                     - Filesystem
                     type: string
                 required:
-                - cloudId
-                - folderId
                 - source
                 type: object
-              customEndopoint:
-                description: CustomEndpoint used in case Stage set to Custom.
-                type: string
-              stage:
-                description: Stage of this provider, should be one of Prod;Preprod;Custom.
-                  Empty value equals to Prod in YC API.
-                enum:
-                - None
-                - Prod
-                - Preprod
-                - Custom
-                type: string
             required:
             - credentials
             type: object

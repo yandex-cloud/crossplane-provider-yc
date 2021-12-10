@@ -26,27 +26,7 @@ import (
 type ProviderConfigSpec struct {
 	// Credentials required to authenticate to this provider.
 	Credentials ProviderCredentials `json:"credentials"`
-	// Stage of this provider, should be one of Prod;Preprod;Custom.
-	// Empty value equals to Prod in YC API.
-	// +kubebuilder:validation:Enum=None;Prod;Preprod;Custom
-	// +optional
-	Stage ProviderStage `json:"stage,omitempty"`
-	// CustomEndpoint used in case Stage set to Custom.
-	// +optional
-	CustomEndpoint string `json:"customEndopoint,omitempty"`
 }
-
-// ProviderStage is yandex.cloud stage to work with. One of Prod/Preprod/Custom
-type ProviderStage string
-
-const (
-	// ProviderStageProd - Prod ProviderStage
-	ProviderStageProd ProviderStage = "Prod"
-	// ProviderStagePreprod - Preprod ProviderStage
-	ProviderStagePreprod ProviderStage = "Preprod"
-	// ProviderStageCustom - Custom ProviderStage
-	ProviderStageCustom ProviderStage = "Custom"
-)
 
 // ProviderCredentials required to authenticate.
 type ProviderCredentials struct {
@@ -56,12 +36,12 @@ type ProviderCredentials struct {
 
 	xpv1.CommonCredentialSelectors `json:",inline"`
 
-	// FolderID to work with.
-	// +kubebuilder:validation:Required
+	// FolderID - id of default folder to work with.
+	// +kubebuilder:validation:Optional
 	FolderID string `json:"folderId"`
 
-	// CloudID to work with.
-	// +kubebuilder:validation:Required
+	// CloudID - id of default cloud to work with.
+	// +kubebuilder:validation:Optional
 	CloudID string `json:"cloudId"`
 }
 
