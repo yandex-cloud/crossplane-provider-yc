@@ -39,8 +39,6 @@ the latest release
 kubectl crossplane install provider cr.yandex/crp0kch415f0lke009ft/crossplane/provider-jet-yc-amd64:v0.1.0
 ```
 
-You can see the API reference [here](https://doc.crds.dev/github.com/crossplane-contrib/provider-jet-yc).
-
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please open
