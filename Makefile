@@ -49,7 +49,7 @@ GO111MODULE = on
 # ====================================================================================
 # Setup Images
 
-DOCKER_REGISTRY := crossplane
+DOCKER_REGISTRY := cr.yandex/crpq165pjbjiprv8pfri/crossplane
 IMAGES = provider-jet-yc provider-jet-yc-controller
 -include build/makelib/image.mk
 
