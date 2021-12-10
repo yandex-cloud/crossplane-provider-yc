@@ -4,4 +4,4 @@ metadata:
   name: provider-jet-yc
 spec:
   controller:
-    image: DOCKER_REGISTRY/provider-jet-yc-controller:VERSION
+    image: DOCKER_REGISTRY/provider-jet-yc-controller:0.0.1
