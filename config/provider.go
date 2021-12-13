@@ -17,19 +17,16 @@ limitations under the License.
 package config
 
 import (
-	"fmt"
-
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/crossplane-contrib/terrajet/pkg/config"
 	tjconfig "github.com/crossplane-contrib/terrajet/pkg/config"
 
+	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/common"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/compute"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/dns"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/iam"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/kubernetes"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/mdb"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/resourcemanager"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/storage"
 	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
 )
@@ -41,18 +38,8 @@ const (
 
 // GetProvider returns provider configuration
 func GetProvider(tf *schema.Provider) *tjconfig.Provider {
-	defaultResourceFn := func(name string, terraformResource *schema.Resource, opts ...tjconfig.ResourceOption) *tjconfig.Resource {
-		r := tjconfig.DefaultResource(name, terraformResource)
-		// Add any provider-specific defaulting here. For example:
-		r.ExternalName = tjconfig.IdentifierFromProvider
-		r.References["folder_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
-		}
-		return r
-	}
-
 	pc := tjconfig.NewProvider(tf.ResourcesMap, resourcePrefix, modulePath,
-		tjconfig.WithDefaultResourceFn(defaultResourceFn),
+		tjconfig.WithDefaultResourceFn(common.DefaultResourceFn),
 		tjconfig.WithIncludeList([]string{
 			"yandex_vpc_network$",
 			"yandex_vpc_subnet$",
@@ -71,6 +58,8 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 			"yandex_mdb_postgresql_cluster$",
 			"yandex_mdb_redis_cluster$",
 			"yandex_resourcemanager_folder$",
+			"yandex_resourcemanager_folder_iam_member$",
+			"yandex_resourcemanager_folder_iam_binding$",
 			"yandex_storage_bucket$",
 			"yandex_storage_object$",
 			"yandex_kms_symmetric_key$",

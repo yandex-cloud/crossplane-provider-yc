@@ -44,3 +44,6 @@ spec:
       name: example-folder
   providerConfigRef:
     name: example
+  writeConnectionSecretToRef:
+    name: mongodb-conn
+    namespace: default

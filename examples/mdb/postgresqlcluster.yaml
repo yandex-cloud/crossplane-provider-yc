@@ -58,3 +58,6 @@ spec:
       name: example-folder
   providerConfigRef:
     name: example
+  writeConnectionSecretToRef:
+    name: postgress-conn
+    namespace: default

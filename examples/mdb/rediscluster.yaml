@@ -37,3 +37,6 @@ spec:
       name: example-folder
   providerConfigRef:
     name: example
+  writeConnectionSecretToRef:
+    name: redis-conn
+    namespace: default

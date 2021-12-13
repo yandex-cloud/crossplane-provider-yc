@@ -42,6 +42,8 @@ import (
 	rediscluster "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/mdb/rediscluster"
 	providerconfig "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/providerconfig"
 	folder "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/resourcemanager/folder"
+	folderiambinding "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/resourcemanager/folderiambinding"
+	folderiammember "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/resourcemanager/folderiammember"
 	bucket "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/storage/bucket"
 	object "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/storage/object"
 	network "bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller/vpc/network"
@@ -69,6 +71,8 @@ func Setup(mgr ctrl.Manager, l logging.Logger, wl workqueue.RateLimiter, ps terr
 		rediscluster.Setup,
 		providerconfig.Setup,
 		folder.Setup,
+		folderiambinding.Setup,
+		folderiammember.Setup,
 		bucket.Setup,
 		object.Setup,
 		network.Setup,

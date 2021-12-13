@@ -3,7 +3,6 @@ kind: Folder
 metadata:
   name: example-folder
 spec:
-  deletionPolicy: Orphan
   forProvider:
     name: example-folder
     cloudId: cloud-id
