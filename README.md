@@ -2,8 +2,7 @@
 
 `provider-jet-yc` is a [Crossplane](https://crossplane.io/) provider that is built
 using [Terrajet](https://github.com/crossplane-contrib/terrajet) code generation tools and exposes XRM-conformant
-managed resources for
-[Yandex.Cloud](https://cloud.yandex.com/).
+managed resources for [Yandex.Cloud](https://cloud.yandex.com/).
 
 ## Getting Started
 
@@ -71,6 +70,50 @@ Apply example ProviderConfig:
 ```
 kubectl apply -f examples/providerconfig/providerconfig.yaml
 ```
+
+### Update crossplane/provder-jet-yc
+
+Update provider version on new tag (e.g. v0.1.2):
+
+```
+kubectl crossplane update provider crp0kch415f0lke009ft-crossplane-provider-jet-yc v0.1.2
+```
+
+## Useful things
+
+### Reconcile existing resources:
+
+Add existing resource id `metadata.annotations["crossplane.io/external-name"]`
+
+```yaml
+metadata:
+  annotations:
+    crossplane.io/external-name: <cloud-resource-id>
+```
+
+### Do not delete external resource with `kubectl delete`
+
+Add `spec.deletionPolicy: Orphan`
+
+```yaml
+spec:
+  deletionPolicy: Orphan
+```
+
+```shell
+❯ k explain Folder.spec.deletionPolicy
+KIND:     Folder
+VERSION:  resourcemanager.yandex-cloud.jet.crossplane.io/v1alpha1
+
+FIELD:    deletionPolicy <string>
+
+DESCRIPTION:
+     DeletionPolicy specifies what will happen to the underlying external when
+     this managed resource is deleted - either "Delete" or "Orphan" the external
+     resource.
+```
+
+You can enforce `deletionPolicy: Orphan` with gatekeeper if you need.
 
 ## Report a Bug
 
