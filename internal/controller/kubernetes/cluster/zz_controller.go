@@ -34,7 +34,7 @@ import (
 	tjcontroller "github.com/crossplane-contrib/terrajet/pkg/controller"
 	"github.com/crossplane-contrib/terrajet/pkg/terraform"
 
-	v1alpha1 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/kubernetes/v1alpha1"
+	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/kubernetes/v1alpha1"
 )
 
 // Setup adds a controller that reconciles Cluster managed resources.

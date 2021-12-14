@@ -54,7 +54,7 @@ type SubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	DhcpOptions []DhcpOptionsParameters `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
 
-	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 

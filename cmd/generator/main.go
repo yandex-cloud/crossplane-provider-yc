@@ -22,7 +22,7 @@ import (
 
 	"github.com/crossplane-contrib/terrajet/pkg/pipeline"
 
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config"
+	"github.com/yandex-cloud/provider-jet-yc/config"
 )
 
 func main() {

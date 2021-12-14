@@ -34,7 +34,7 @@ import (
 	tjcontroller "github.com/crossplane-contrib/terrajet/pkg/controller"
 	"github.com/crossplane-contrib/terrajet/pkg/terraform"
 
-	v1alpha1 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/mdb/v1alpha1"
+	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1"
 )
 
 // Setup adds a controller that reconciles PostgresqlCluster managed resources.
@@ -49,7 +49,6 @@ func Setup(mgr ctrl.Manager, l logging.Logger, rl workqueue.RateLimiter, s terra
 		managed.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))),
 		managed.WithFinalizer(terraform.NewWorkspaceFinalizer(ws, xpresource.NewAPIFinalizer(mgr.GetClient(), managed.FinalizerName))),
 		managed.WithTimeout(3*time.Minute),
-		managed.WithInitializers(),
 	)
 
 	return ctrl.NewControllerManagedBy(mgr).

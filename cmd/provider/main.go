@@ -29,10 +29,10 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
 	"github.com/crossplane/crossplane-runtime/pkg/ratelimiter"
 
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/apis"
-	pconfig "bb.yandex-team.ru/crossplane/provider-jet-yc/config"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/internal/clients"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/internal/controller"
+	"github.com/yandex-cloud/provider-jet-yc/apis"
+	pconfig "github.com/yandex-cloud/provider-jet-yc/config"
+	"github.com/yandex-cloud/provider-jet-yc/internal/clients"
+	"github.com/yandex-cloud/provider-jet-yc/internal/controller"
 )
 
 func main() {

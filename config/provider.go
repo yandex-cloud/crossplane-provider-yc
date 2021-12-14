@@ -21,19 +21,19 @@ import (
 
 	tjconfig "github.com/crossplane-contrib/terrajet/pkg/config"
 
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/common"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/compute"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/dns"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/iam"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/kubernetes"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/mdb"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/storage"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
+	"github.com/yandex-cloud/provider-jet-yc/config/common"
+	"github.com/yandex-cloud/provider-jet-yc/config/compute"
+	"github.com/yandex-cloud/provider-jet-yc/config/dns"
+	"github.com/yandex-cloud/provider-jet-yc/config/iam"
+	"github.com/yandex-cloud/provider-jet-yc/config/kubernetes"
+	"github.com/yandex-cloud/provider-jet-yc/config/mdb"
+	"github.com/yandex-cloud/provider-jet-yc/config/storage"
+	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
 )
 
 const (
 	resourcePrefix = "yandex-cloud"
-	modulePath     = "bb.yandex-team.ru/crossplane/provider-jet-yc"
+	modulePath     = "github.com/yandex-cloud/provider-jet-yc"
 )
 
 // GetProvider returns provider configuration

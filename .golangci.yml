@@ -2,7 +2,7 @@ run:
   deadline: 10m
 
   skip-files:
-  - "zz_\\..+\\.go$"
+    - "zz_\\..+\\.go$"
 
 output:
   # colored-line-number|line-number|json|tab|checkstyle|code-climate, default is "colored-line-number"
@@ -38,7 +38,7 @@ linters-settings:
   goimports:
     # put imports beginning with prefix after 3rd-party packages;
     # it's a comma-separated list of prefixes
-    local-prefixes: bb.yandex-team.ru/crossplane/provider-jet-yc
+    local-prefixes: github.com/yandex-cloud/provider-jet-yc
 
   gocyclo:
     # minimal code complexity to report, 30 by default (but we recommend 10-20)
@@ -136,7 +136,7 @@ issues:
         - gosec
         - scopelint
         - unparam
-    
+
     # Ease some gocritic warnings on test files.
     - path: _test\.go
       text: "(unnamedResult|exitAfterDefer)"
@@ -148,31 +148,31 @@ issues:
     # rather than using a pointer.
     - text: "(hugeParam|rangeValCopy):"
       linters:
-      - gocritic
+        - gocritic
 
     # This "TestMain should call os.Exit to set exit code" warning is not clever
     # enough to notice that we call a helper method that calls os.Exit.
     - text: "SA3000:"
       linters:
-      - staticcheck
+        - staticcheck
 
     - text: "k8s.io/api/core/v1"
       linters:
-      - goimports
+        - goimports
 
     # This is a "potential hardcoded credentials" warning. It's triggered by
     # any variable with 'secret' in the same, and thus hits a lot of false
     # positives in Kubernetes land where a Secret is an object type.
     - text: "G101:"
       linters:
-      - gosec
-      - gas
+        - gosec
+        - gas
 
     # This is an 'errors unhandled' warning that duplicates errcheck.
     - text: "G104:"
       linters:
-      - gosec
-      - gas
+        - gosec
+        - gas
 
   # Independently from option `exclude` we use default exclude patterns,
   # it can be disabled by this option. To list all

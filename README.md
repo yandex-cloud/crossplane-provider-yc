@@ -118,4 +118,4 @@ You can enforce `deletionPolicy: Orphan` with gatekeeper if you need.
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please open
-an [issue](https://github.com/crossplane/provider-jet-yc/issues).
+an [issue](https://github.com/yandex-cloud/provider-jet-yc/issues).

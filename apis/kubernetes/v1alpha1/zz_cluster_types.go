@@ -52,7 +52,7 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -74,7 +74,7 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1.Network
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
@@ -93,7 +93,7 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	NodeIPv4CidrMaskSize *int64 `json:"nodeIpv4CidrMaskSize,omitempty" tf:"node_ipv4_cidr_mask_size,omitempty"`
 
-	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
 	NodeServiceAccountID *string `json:"nodeServiceAccountId,omitempty" tf:"node_service_account_id,omitempty"`
 
@@ -106,7 +106,7 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ReleaseChannel *string `json:"releaseChannel,omitempty" tf:"release_channel,omitempty"`
 
-	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
@@ -128,7 +128,7 @@ type KmsProviderObservation struct {
 
 type KmsProviderParameters struct {
 
-	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/kms/v1alpha1.SymmetricKey
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/kms/v1alpha1.SymmetricKey
 	// +kubebuilder:validation:Optional
 	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
@@ -252,7 +252,7 @@ type ZonalObservation struct {
 
 type ZonalParameters struct {
 
-	// +crossplane:generate:reference:type=bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 

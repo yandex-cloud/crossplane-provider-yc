@@ -18,7 +18,7 @@ import (
 
 	"github.com/crossplane-contrib/terrajet/pkg/config"
 
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
+	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
 )
 
 func attrsToConnDetails(attr map[string]interface{}) (map[string][]byte, error) {
@@ -44,6 +44,9 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.UseAsync = true
+		r.ExternalName = config.ExternalName{
+			SetIdentifierArgumentFn: nil,
+		}
 		r.Sensitive.AdditionalConnectionDetailsFn = attrsToConnDetails
 	})
 	p.AddResourceConfigurator("yandex_mdb_redis_cluster", func(r *config.Resource) {

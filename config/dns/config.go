@@ -18,7 +18,7 @@ import (
 
 	"github.com/crossplane-contrib/terrajet/pkg/config"
 
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
+	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
 )
 
 // Configure adds configurations for dns group.

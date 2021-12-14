@@ -15,5 +15,5 @@ package resourcemanager
 
 const (
 	// ApisPackagePath is the golang path for this package.
-	ApisPackagePath = "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1"
+	ApisPackagePath = "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
 )

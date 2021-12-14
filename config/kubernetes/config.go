@@ -18,9 +18,9 @@ import (
 
 	"github.com/crossplane-contrib/terrajet/pkg/config"
 
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/iam"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/kms"
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/vpc"
+	"github.com/yandex-cloud/provider-jet-yc/config/iam"
+	"github.com/yandex-cloud/provider-jet-yc/config/kms"
+	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
 )
 
 // Configure adds configurations for kubernetes group.

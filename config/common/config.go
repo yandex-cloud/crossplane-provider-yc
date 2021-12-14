@@ -8,7 +8,7 @@ import (
 	"github.com/crossplane-contrib/terrajet/pkg/config"
 	tjconfig "github.com/crossplane-contrib/terrajet/pkg/config"
 
-	"bb.yandex-team.ru/crossplane/provider-jet-yc/config/resourcemanager"
+	"github.com/yandex-cloud/provider-jet-yc/config/resourcemanager"
 )
 
 // DefaultResourceFn returns a default resource configuration to be used while

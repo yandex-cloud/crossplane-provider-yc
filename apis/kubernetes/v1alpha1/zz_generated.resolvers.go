@@ -18,13 +18,13 @@ limitations under the License.
 package v1alpha1
 
 import (
-	v1alpha13 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1"
-	v1alpha11 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/kms/v1alpha1"
-	v1alpha1 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1"
-	v1alpha12 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1"
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
+	v1alpha13 "github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1"
+	v1alpha11 "github.com/yandex-cloud/provider-jet-yc/apis/kms/v1alpha1"
+	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
+	v1alpha12 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 

@@ -2,7 +2,7 @@
 # Setup Project
 
 PROJECT_NAME := provider-jet-yc
-PROJECT_REPO := bb.yandex-team.ru/crossplane/$(PROJECT_NAME)
+PROJECT_REPO := github.com/yandex-cloud/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION := 1.0.11
 export TERRAFORM_PROVIDER_SOURCE := integrations/yandex

@@ -22,17 +22,17 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/compute/v1alpha1"
-	v1alpha1container "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/container/v1alpha1"
-	v1alpha1dns "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/dns/v1alpha1"
-	v1alpha1iam "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/iam/v1alpha1"
-	v1alpha1kms "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/kms/v1alpha1"
-	v1alpha1kubernetes "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/kubernetes/v1alpha1"
-	v1alpha1mdb "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/mdb/v1alpha1"
-	v1alpha1resourcemanager "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/resourcemanager/v1alpha1"
-	v1alpha1storage "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/storage/v1alpha1"
-	v1alpha1apis "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/v1alpha1"
-	v1alpha1vpc "bb.yandex-team.ru/crossplane/provider-jet-yc/apis/vpc/v1alpha1"
+	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/compute/v1alpha1"
+	v1alpha1container "github.com/yandex-cloud/provider-jet-yc/apis/container/v1alpha1"
+	v1alpha1dns "github.com/yandex-cloud/provider-jet-yc/apis/dns/v1alpha1"
+	v1alpha1iam "github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1"
+	v1alpha1kms "github.com/yandex-cloud/provider-jet-yc/apis/kms/v1alpha1"
+	v1alpha1kubernetes "github.com/yandex-cloud/provider-jet-yc/apis/kubernetes/v1alpha1"
+	v1alpha1mdb "github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1"
+	v1alpha1resourcemanager "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
+	v1alpha1storage "github.com/yandex-cloud/provider-jet-yc/apis/storage/v1alpha1"
+	v1alpha1apis "github.com/yandex-cloud/provider-jet-yc/apis/v1alpha1"
+	v1alpha1vpc "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
 )
 
 func init() {

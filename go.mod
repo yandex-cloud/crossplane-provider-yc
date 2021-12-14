@@ -1,4 +1,4 @@
-module bb.yandex-team.ru/crossplane/provider-jet-yc
+module github.com/yandex-cloud/provider-jet-yc
 
 go 1.16
 
