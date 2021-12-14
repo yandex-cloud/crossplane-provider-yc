@@ -44,7 +44,6 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.UseAsync = true
-		r.ExternalName
 		r.Sensitive.AdditionalConnectionDetailsFn = attrsToConnDetails
 	})
 	p.AddResourceConfigurator("yandex_mdb_redis_cluster", func(r *config.Resource) {
