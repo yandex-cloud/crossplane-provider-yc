@@ -35,7 +35,7 @@ func Configure(p *config.Provider) {
 		r.References["node_service_account_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccount"),
 		}
-		r.References["master.regional.zone.location.subnet_id"] = config.Reference{
+		r.References["master.regional.location.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.References["master.zonal.subnet_id"] = config.Reference{

@@ -70,6 +70,28 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 
 	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Master); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Master[i3].Regional); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.Master[i3].Regional[i4].Location); i5++ {
+				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Master[i3].Regional[i4].Location[i5].SubnetID),
+					Extract:      reference.ExternalName(),
+					Reference:    mg.Spec.ForProvider.Master[i3].Regional[i4].Location[i5].SubnetIDRef,
+					Selector:     mg.Spec.ForProvider.Master[i3].Regional[i4].Location[i5].SubnetIDSelector,
+					To: reference.To{
+						List:    &v1alpha12.SubnetList{},
+						Managed: &v1alpha12.Subnet{},
+					},
+				})
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.Master[i3].Regional[i4].Location[i5].SubnetID")
+				}
+				mg.Spec.ForProvider.Master[i3].Regional[i4].Location[i5].SubnetID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.Master[i3].Regional[i4].Location[i5].SubnetIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Master); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Master[i3].Zonal); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Master[i3].Zonal[i4].SubnetID),

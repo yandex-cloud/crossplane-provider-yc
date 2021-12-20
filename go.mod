@@ -3,6 +3,7 @@ module github.com/yandex-cloud/provider-jet-yc
 go 1.16
 
 require (
+	github.com/benagricola/crossplane-composition-generator v0.0.0-20210505120457-1b2497dd442b
 	github.com/crossplane-contrib/terrajet v0.2.1
 	github.com/crossplane/crossplane-runtime v0.15.1-0.20211004150827-579c1833b513
 	github.com/crossplane/crossplane-tools v0.0.0-20210916125540-071de511ae8e

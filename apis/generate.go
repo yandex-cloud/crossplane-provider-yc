@@ -37,10 +37,14 @@ limitations under the License.
 // Generate crossplane-runtime methodsets (resource.Claim, etc)
 //go:generate go run -tags generate github.com/crossplane/crossplane-tools/cmd/angryjet generate-methodsets --header-file=../hack/boilerplate.go.txt ./...
 
+// Generate Composite Resources
+//go:generate go run -tags generate github.com/benagricola/crossplane-composition-generator
 package apis
 
 import (
 	_ "sigs.k8s.io/controller-tools/cmd/controller-gen" //nolint:typecheck
 
 	_ "github.com/crossplane/crossplane-tools/cmd/angryjet" //nolint:typecheck
+
+	_ "github.com/benagricola/crossplane-composition-generator" //nolint:typecheck
 )
