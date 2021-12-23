@@ -39,6 +39,22 @@ type ApplyServerSideEncryptionByDefaultParameters struct {
 
 type BucketObservation struct {
 	BucketDomainName *string `json:"bucketDomainName,omitempty" tf:"bucket_domain_name,omitempty"`
+
+	CorsRule []CorsRuleObservation `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
+
+	Grant []GrantObservation `json:"grant,omitempty" tf:"grant,omitempty"`
+
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	LifecycleRule []LifecycleRuleObservation `json:"lifecycleRule,omitempty" tf:"lifecycle_rule,omitempty"`
+
+	Logging []LoggingObservation `json:"logging,omitempty" tf:"logging,omitempty"`
+
+	ServerSideEncryptionConfiguration []ServerSideEncryptionConfigurationObservation `json:"serverSideEncryptionConfiguration,omitempty" tf:"server_side_encryption_configuration,omitempty"`
+
+	Versioning []VersioningObservation `json:"versioning,omitempty" tf:"versioning,omitempty"`
+
+	Website []WebsiteObservation `json:"website,omitempty" tf:"website,omitempty"`
 }
 
 type BucketParameters struct {
@@ -155,6 +171,13 @@ type GrantParameters struct {
 }
 
 type LifecycleRuleObservation struct {
+	Expiration []ExpirationObservation `json:"expiration,omitempty" tf:"expiration,omitempty"`
+
+	NoncurrentVersionExpiration []NoncurrentVersionExpirationObservation `json:"noncurrentVersionExpiration,omitempty" tf:"noncurrent_version_expiration,omitempty"`
+
+	NoncurrentVersionTransition []NoncurrentVersionTransitionObservation `json:"noncurrentVersionTransition,omitempty" tf:"noncurrent_version_transition,omitempty"`
+
+	Transition []TransitionObservation `json:"transition,omitempty" tf:"transition,omitempty"`
 }
 
 type LifecycleRuleParameters struct {
@@ -218,6 +241,7 @@ type NoncurrentVersionTransitionParameters struct {
 }
 
 type RuleObservation struct {
+	ApplyServerSideEncryptionByDefault []ApplyServerSideEncryptionByDefaultObservation `json:"applyServerSideEncryptionByDefault,omitempty" tf:"apply_server_side_encryption_by_default,omitempty"`
 }
 
 type RuleParameters struct {
@@ -227,6 +251,7 @@ type RuleParameters struct {
 }
 
 type ServerSideEncryptionConfigurationObservation struct {
+	Rule []RuleObservation `json:"rule,omitempty" tf:"rule,omitempty"`
 }
 
 type ServerSideEncryptionConfigurationParameters struct {

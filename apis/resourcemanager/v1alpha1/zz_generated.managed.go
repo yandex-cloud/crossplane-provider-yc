@@ -75,114 +75,114 @@ func (mg *Folder) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
-// GetCondition of this FolderIamBinding.
-func (mg *FolderIamBinding) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+// GetCondition of this FolderIAMBinding.
+func (mg *FolderIAMBinding) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
-// GetDeletionPolicy of this FolderIamBinding.
-func (mg *FolderIamBinding) GetDeletionPolicy() xpv1.DeletionPolicy {
+// GetDeletionPolicy of this FolderIAMBinding.
+func (mg *FolderIAMBinding) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetProviderConfigReference of this FolderIamBinding.
-func (mg *FolderIamBinding) GetProviderConfigReference() *xpv1.Reference {
+// GetProviderConfigReference of this FolderIAMBinding.
+func (mg *FolderIAMBinding) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 /*
-GetProviderReference of this FolderIamBinding.
+GetProviderReference of this FolderIAMBinding.
 Deprecated: Use GetProviderConfigReference.
 */
-func (mg *FolderIamBinding) GetProviderReference() *xpv1.Reference {
+func (mg *FolderIAMBinding) GetProviderReference() *xpv1.Reference {
 	return mg.Spec.ProviderReference
 }
 
-// GetWriteConnectionSecretToReference of this FolderIamBinding.
-func (mg *FolderIamBinding) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+// GetWriteConnectionSecretToReference of this FolderIAMBinding.
+func (mg *FolderIAMBinding) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
-// SetConditions of this FolderIamBinding.
-func (mg *FolderIamBinding) SetConditions(c ...xpv1.Condition) {
+// SetConditions of this FolderIAMBinding.
+func (mg *FolderIAMBinding) SetConditions(c ...xpv1.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
-// SetDeletionPolicy of this FolderIamBinding.
-func (mg *FolderIamBinding) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+// SetDeletionPolicy of this FolderIAMBinding.
+func (mg *FolderIAMBinding) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetProviderConfigReference of this FolderIamBinding.
-func (mg *FolderIamBinding) SetProviderConfigReference(r *xpv1.Reference) {
+// SetProviderConfigReference of this FolderIAMBinding.
+func (mg *FolderIAMBinding) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 /*
-SetProviderReference of this FolderIamBinding.
+SetProviderReference of this FolderIAMBinding.
 Deprecated: Use SetProviderConfigReference.
 */
-func (mg *FolderIamBinding) SetProviderReference(r *xpv1.Reference) {
+func (mg *FolderIAMBinding) SetProviderReference(r *xpv1.Reference) {
 	mg.Spec.ProviderReference = r
 }
 
-// SetWriteConnectionSecretToReference of this FolderIamBinding.
-func (mg *FolderIamBinding) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+// SetWriteConnectionSecretToReference of this FolderIAMBinding.
+func (mg *FolderIAMBinding) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
-// GetCondition of this FolderIamMember.
-func (mg *FolderIamMember) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+// GetCondition of this FolderIAMMember.
+func (mg *FolderIAMMember) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
-// GetDeletionPolicy of this FolderIamMember.
-func (mg *FolderIamMember) GetDeletionPolicy() xpv1.DeletionPolicy {
+// GetDeletionPolicy of this FolderIAMMember.
+func (mg *FolderIAMMember) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetProviderConfigReference of this FolderIamMember.
-func (mg *FolderIamMember) GetProviderConfigReference() *xpv1.Reference {
+// GetProviderConfigReference of this FolderIAMMember.
+func (mg *FolderIAMMember) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 /*
-GetProviderReference of this FolderIamMember.
+GetProviderReference of this FolderIAMMember.
 Deprecated: Use GetProviderConfigReference.
 */
-func (mg *FolderIamMember) GetProviderReference() *xpv1.Reference {
+func (mg *FolderIAMMember) GetProviderReference() *xpv1.Reference {
 	return mg.Spec.ProviderReference
 }
 
-// GetWriteConnectionSecretToReference of this FolderIamMember.
-func (mg *FolderIamMember) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+// GetWriteConnectionSecretToReference of this FolderIAMMember.
+func (mg *FolderIAMMember) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
-// SetConditions of this FolderIamMember.
-func (mg *FolderIamMember) SetConditions(c ...xpv1.Condition) {
+// SetConditions of this FolderIAMMember.
+func (mg *FolderIAMMember) SetConditions(c ...xpv1.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
-// SetDeletionPolicy of this FolderIamMember.
-func (mg *FolderIamMember) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+// SetDeletionPolicy of this FolderIAMMember.
+func (mg *FolderIAMMember) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetProviderConfigReference of this FolderIamMember.
-func (mg *FolderIamMember) SetProviderConfigReference(r *xpv1.Reference) {
+// SetProviderConfigReference of this FolderIAMMember.
+func (mg *FolderIAMMember) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 /*
-SetProviderReference of this FolderIamMember.
+SetProviderReference of this FolderIAMMember.
 Deprecated: Use SetProviderConfigReference.
 */
-func (mg *FolderIamMember) SetProviderReference(r *xpv1.Reference) {
+func (mg *FolderIAMMember) SetProviderReference(r *xpv1.Reference) {
 	mg.Spec.ProviderReference = r
 }
 
-// SetWriteConnectionSecretToReference of this FolderIamMember.
-func (mg *FolderIamMember) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+// SetWriteConnectionSecretToReference of this FolderIAMMember.
+func (mg *FolderIAMMember) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

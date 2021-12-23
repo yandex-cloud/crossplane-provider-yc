@@ -152,6 +152,9 @@ spec:
             description: RecordsetStatus defines the observed state of Recordset.
             properties:
               atProvider:
+                properties:
+                  id:
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.

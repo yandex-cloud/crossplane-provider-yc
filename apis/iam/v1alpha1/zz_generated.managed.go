@@ -75,59 +75,59 @@ func (mg *ServiceAccount) SetWriteConnectionSecretToReference(r *xpv1.SecretRefe
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
-// GetCondition of this ServiceAccountIamMember.
-func (mg *ServiceAccountIamMember) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+// GetCondition of this ServiceAccountIAMMember.
+func (mg *ServiceAccountIAMMember) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
-// GetDeletionPolicy of this ServiceAccountIamMember.
-func (mg *ServiceAccountIamMember) GetDeletionPolicy() xpv1.DeletionPolicy {
+// GetDeletionPolicy of this ServiceAccountIAMMember.
+func (mg *ServiceAccountIAMMember) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetProviderConfigReference of this ServiceAccountIamMember.
-func (mg *ServiceAccountIamMember) GetProviderConfigReference() *xpv1.Reference {
+// GetProviderConfigReference of this ServiceAccountIAMMember.
+func (mg *ServiceAccountIAMMember) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 /*
-GetProviderReference of this ServiceAccountIamMember.
+GetProviderReference of this ServiceAccountIAMMember.
 Deprecated: Use GetProviderConfigReference.
 */
-func (mg *ServiceAccountIamMember) GetProviderReference() *xpv1.Reference {
+func (mg *ServiceAccountIAMMember) GetProviderReference() *xpv1.Reference {
 	return mg.Spec.ProviderReference
 }
 
-// GetWriteConnectionSecretToReference of this ServiceAccountIamMember.
-func (mg *ServiceAccountIamMember) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+// GetWriteConnectionSecretToReference of this ServiceAccountIAMMember.
+func (mg *ServiceAccountIAMMember) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
-// SetConditions of this ServiceAccountIamMember.
-func (mg *ServiceAccountIamMember) SetConditions(c ...xpv1.Condition) {
+// SetConditions of this ServiceAccountIAMMember.
+func (mg *ServiceAccountIAMMember) SetConditions(c ...xpv1.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
-// SetDeletionPolicy of this ServiceAccountIamMember.
-func (mg *ServiceAccountIamMember) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+// SetDeletionPolicy of this ServiceAccountIAMMember.
+func (mg *ServiceAccountIAMMember) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetProviderConfigReference of this ServiceAccountIamMember.
-func (mg *ServiceAccountIamMember) SetProviderConfigReference(r *xpv1.Reference) {
+// SetProviderConfigReference of this ServiceAccountIAMMember.
+func (mg *ServiceAccountIAMMember) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 /*
-SetProviderReference of this ServiceAccountIamMember.
+SetProviderReference of this ServiceAccountIAMMember.
 Deprecated: Use SetProviderConfigReference.
 */
-func (mg *ServiceAccountIamMember) SetProviderReference(r *xpv1.Reference) {
+func (mg *ServiceAccountIAMMember) SetProviderReference(r *xpv1.Reference) {
 	mg.Spec.ProviderReference = r
 }
 
-// SetWriteConnectionSecretToReference of this ServiceAccountIamMember.
-func (mg *ServiceAccountIamMember) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+// SetWriteConnectionSecretToReference of this ServiceAccountIAMMember.
+func (mg *ServiceAccountIAMMember) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 

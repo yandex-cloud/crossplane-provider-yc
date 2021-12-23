@@ -51,8 +51,8 @@ func (mg *ServiceAccount) ResolveReferences(ctx context.Context, c client.Reader
 	return nil
 }
 
-// ResolveReferences of this ServiceAccountIamMember.
-func (mg *ServiceAccountIamMember) ResolveReferences(ctx context.Context, c client.Reader) error {
+// ResolveReferences of this ServiceAccountIAMMember.
+func (mg *ServiceAccountIAMMember) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse

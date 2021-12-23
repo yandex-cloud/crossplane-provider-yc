@@ -414,12 +414,76 @@ spec:
             properties:
               atProvider:
                 properties:
+                  config:
+                    items:
+                      properties:
+                        access:
+                          items:
+                            type: object
+                          type: array
+                        backupWindowStart:
+                          items:
+                            type: object
+                          type: array
+                        performanceDiagnostics:
+                          items:
+                            type: object
+                          type: array
+                        poolerConfig:
+                          items:
+                            type: object
+                          type: array
+                        resources:
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   createdAt:
                     type: string
+                  database:
+                    items:
+                      properties:
+                        extension:
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   health:
                     type: string
+                  host:
+                    items:
+                      properties:
+                        fqdn:
+                          type: string
+                        replicationSource:
+                          type: string
+                        role:
+                          type: string
+                      type: object
+                    type: array
+                  id:
+                    type: string
+                  maintenanceWindow:
+                    items:
+                      type: object
+                    type: array
+                  restore:
+                    items:
+                      type: object
+                    type: array
                   status:
                     type: string
+                  user:
+                    items:
+                      properties:
+                        permission:
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.

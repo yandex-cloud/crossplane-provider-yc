@@ -298,10 +298,31 @@ spec:
             properties:
               atProvider:
                 properties:
+                  config:
+                    items:
+                      type: object
+                    type: array
                   createdAt:
                     type: string
                   health:
                     type: string
+                  host:
+                    items:
+                      properties:
+                        fqdn:
+                          type: string
+                      type: object
+                    type: array
+                  id:
+                    type: string
+                  maintenanceWindow:
+                    items:
+                      type: object
+                    type: array
+                  resources:
+                    items:
+                      type: object
+                    type: array
                   status:
                     type: string
                 type: object

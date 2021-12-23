@@ -25,10 +25,11 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type ServiceAccountIamMemberObservation struct {
+type ServiceAccountIAMMemberObservation struct {
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
-type ServiceAccountIamMemberParameters struct {
+type ServiceAccountIAMMemberParameters struct {
 
 	// +kubebuilder:validation:Required
 	Member *string `json:"member" tf:"member,omitempty"`
@@ -50,51 +51,51 @@ type ServiceAccountIamMemberParameters struct {
 	SleepAfter *int64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
-// ServiceAccountIamMemberSpec defines the desired state of ServiceAccountIamMember
-type ServiceAccountIamMemberSpec struct {
+// ServiceAccountIAMMemberSpec defines the desired state of ServiceAccountIAMMember
+type ServiceAccountIAMMemberSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     ServiceAccountIamMemberParameters `json:"forProvider"`
+	ForProvider     ServiceAccountIAMMemberParameters `json:"forProvider"`
 }
 
-// ServiceAccountIamMemberStatus defines the observed state of ServiceAccountIamMember.
-type ServiceAccountIamMemberStatus struct {
+// ServiceAccountIAMMemberStatus defines the observed state of ServiceAccountIAMMember.
+type ServiceAccountIAMMemberStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        ServiceAccountIamMemberObservation `json:"atProvider,omitempty"`
+	AtProvider        ServiceAccountIAMMemberObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// ServiceAccountIamMember is the Schema for the ServiceAccountIamMembers API
+// ServiceAccountIAMMember is the Schema for the ServiceAccountIAMMembers API
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloudjet}
-type ServiceAccountIamMember struct {
+type ServiceAccountIAMMember struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ServiceAccountIamMemberSpec   `json:"spec"`
-	Status            ServiceAccountIamMemberStatus `json:"status,omitempty"`
+	Spec              ServiceAccountIAMMemberSpec   `json:"spec"`
+	Status            ServiceAccountIAMMemberStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// ServiceAccountIamMemberList contains a list of ServiceAccountIamMembers
-type ServiceAccountIamMemberList struct {
+// ServiceAccountIAMMemberList contains a list of ServiceAccountIAMMembers
+type ServiceAccountIAMMemberList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []ServiceAccountIamMember `json:"items"`
+	Items           []ServiceAccountIAMMember `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	ServiceAccountIamMember_Kind             = "ServiceAccountIamMember"
-	ServiceAccountIamMember_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: ServiceAccountIamMember_Kind}.String()
-	ServiceAccountIamMember_KindAPIVersion   = ServiceAccountIamMember_Kind + "." + CRDGroupVersion.String()
-	ServiceAccountIamMember_GroupVersionKind = CRDGroupVersion.WithKind(ServiceAccountIamMember_Kind)
+	ServiceAccountIAMMember_Kind             = "ServiceAccountIAMMember"
+	ServiceAccountIAMMember_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: ServiceAccountIAMMember_Kind}.String()
+	ServiceAccountIAMMember_KindAPIVersion   = ServiceAccountIAMMember_Kind + "." + CRDGroupVersion.String()
+	ServiceAccountIAMMember_GroupVersionKind = CRDGroupVersion.WithKind(ServiceAccountIAMMember_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&ServiceAccountIamMember{}, &ServiceAccountIamMemberList{})
+	SchemeBuilder.Register(&ServiceAccountIAMMember{}, &ServiceAccountIAMMemberList{})
 }

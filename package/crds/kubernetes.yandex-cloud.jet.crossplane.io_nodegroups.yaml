@@ -320,9 +320,14 @@ spec:
                     type: array
                   version:
                     type: string
+                  versionInfo:
+                    items:
+                      type: object
+                    type: array
                 required:
                 - instanceTemplate
                 - scalePolicy
+                - versionInfo
                 type: object
               providerConfigRef:
                 default:
@@ -373,10 +378,72 @@ spec:
             properties:
               atProvider:
                 properties:
+                  allocationPolicy:
+                    items:
+                      properties:
+                        location:
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   createdAt:
+                    type: string
+                  deployPolicy:
+                    items:
+                      type: object
+                    type: array
+                  id:
                     type: string
                   instanceGroupId:
                     type: string
+                  instanceTemplate:
+                    items:
+                      properties:
+                        bootDisk:
+                          items:
+                            type: object
+                          type: array
+                        networkInterface:
+                          items:
+                            type: object
+                          type: array
+                        placementPolicy:
+                          items:
+                            type: object
+                          type: array
+                        resources:
+                          items:
+                            type: object
+                          type: array
+                        schedulingPolicy:
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  maintenancePolicy:
+                    items:
+                      properties:
+                        maintenanceWindow:
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  scalePolicy:
+                    items:
+                      properties:
+                        autoScale:
+                          items:
+                            type: object
+                          type: array
+                        fixedScale:
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   status:
                     type: string
                   versionInfo:

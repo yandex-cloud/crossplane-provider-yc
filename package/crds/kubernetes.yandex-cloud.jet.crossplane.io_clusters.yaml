@@ -204,6 +204,10 @@ spec:
                           type: array
                         version:
                           type: string
+                        versionInfo:
+                          items:
+                            type: object
+                          type: array
                         zonal:
                           items:
                             properties:
@@ -237,6 +241,8 @@ spec:
                                 type: string
                             type: object
                           type: array
+                      required:
+                      - versionInfo
                       type: object
                     type: array
                   name:
@@ -392,8 +398,73 @@ spec:
                     type: string
                   health:
                     type: string
+                  id:
+                    type: string
+                  kmsProvider:
+                    items:
+                      type: object
+                    type: array
                   logGroupId:
                     type: string
+                  master:
+                    items:
+                      properties:
+                        clusterCaCertificate:
+                          type: string
+                        externalV4Address:
+                          type: string
+                        externalV4Endpoint:
+                          type: string
+                        internalV4Address:
+                          type: string
+                        internalV4Endpoint:
+                          type: string
+                        maintenancePolicy:
+                          items:
+                            properties:
+                              maintenanceWindow:
+                                items:
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        regional:
+                          items:
+                            properties:
+                              location:
+                                items:
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        versionInfo:
+                          items:
+                            properties:
+                              currentVersion:
+                                type: string
+                              newRevisionAvailable:
+                                type: boolean
+                              newRevisionSummary:
+                                type: string
+                              versionDeprecated:
+                                type: boolean
+                            type: object
+                          type: array
+                        zonal:
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  networkImplementation:
+                    items:
+                      properties:
+                        cilium:
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   status:
                     type: string
                 type: object

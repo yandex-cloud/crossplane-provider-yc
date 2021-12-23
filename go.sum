@@ -196,8 +196,6 @@ github.com/cpuguy83/go-md2man/v2 v2.0.0/go.mod h1:maD7wRr/U5Z6m/iR4s+kqSMx2CaBsr
 github.com/creack/pty v1.1.7/go.mod h1:lj5s0c3V2DBrqTV7llrYr5NG6My20zk30Fl46Y7DoTY=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/creack/pty v1.1.11/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
-github.com/crossplane-contrib/terrajet v0.2.1 h1:oTdBSYyHlKfWiwGBM9hClYU/BdWhMz490xwfQBDv11Q=
-github.com/crossplane-contrib/terrajet v0.2.1/go.mod h1:RUsskXE63KZE7EcvZ7WK4UzBQjc1+7IhelK+/gIa/Go=
 github.com/crossplane/crossplane-runtime v0.15.1-0.20211004150827-579c1833b513 h1:Sk3QurYYpy8x3c0DvTh9iGYFSv8WgdhnjCalNqNqlRI=
 github.com/crossplane/crossplane-runtime v0.15.1-0.20211004150827-579c1833b513/go.mod h1:gKix9Gq5kRzVe/4XOpwlFgG7OurzrYayviJxWZakhw0=
 github.com/crossplane/crossplane-tools v0.0.0-20210916125540-071de511ae8e h1:7UM4E9gNEzJ22JgRZqY2KBlkdMCAiHmKS96rcLANdME=
@@ -958,6 +956,8 @@ github.com/valyala/bytebufferpool v1.0.0/go.mod h1:6bBcMArwyJ5K/AmCkWv1jt77kVWyC
 github.com/valyala/fasthttp v1.30.0/go.mod h1:2rsYD01CKFrjjsvFxx75KlEUNpWNBY9JWD3K/7o2Cus=
 github.com/valyala/quicktemplate v1.7.0/go.mod h1:sqKJnoaOF88V07vkO+9FL8fb9uZg/VPSJnLYn+LmLk8=
 github.com/valyala/tcplisten v1.0.0/go.mod h1:T0xQ8SeCZGxckz9qRXTfG43PvQ/mcWh7FwZEA7Ioqkc=
+github.com/vaspahomov/terrajet v0.2.1-0.20211223134935-8a430ba9ff4d h1:fgCzKhoYORIAsdqyp4rRvKmZqvUV36kfiFxFn1WQgh4=
+github.com/vaspahomov/terrajet v0.2.1-0.20211223134935-8a430ba9ff4d/go.mod h1:PtluFveO/xgdlUqAiy9KEA9i1Yl/5BYrrfzQDCRt5WM=
 github.com/viki-org/dnscache v0.0.0-20130720023526-c70c1f23c5d8/go.mod h1:dniwbG03GafCjFohMDmz6Zc6oCuiqgH6tGNyXTkHzXE=
 github.com/vmihailenco/msgpack v3.3.3+incompatible/go.mod h1:fy3FlTQTDXWkZ7Bh6AcGMlsjHatGryHQYUTf1ShIgkk=
 github.com/vmihailenco/msgpack v4.0.4+incompatible h1:dSLoQfGFAo3F6OoNhwUmLwVgaUXK79GlxNBwueZn0xI=

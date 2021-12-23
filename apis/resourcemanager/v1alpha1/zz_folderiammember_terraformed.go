@@ -25,18 +25,18 @@ import (
 	"github.com/crossplane-contrib/terrajet/pkg/resource/json"
 )
 
-// GetTerraformResourceType returns Terraform resource type for this FolderIamMember
-func (mg *FolderIamMember) GetTerraformResourceType() string {
+// GetTerraformResourceType returns Terraform resource type for this FolderIAMMember
+func (mg *FolderIAMMember) GetTerraformResourceType() string {
 	return "yandex_resourcemanager_folder_iam_member"
 }
 
-// GetConnectionDetailsMapping for this FolderIamMember
-func (tr *FolderIamMember) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this FolderIAMMember
+func (tr *FolderIAMMember) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this FolderIamMember
-func (tr *FolderIamMember) GetObservation() (map[string]interface{}, error) {
+// GetObservation of this FolderIAMMember
+func (tr *FolderIAMMember) GetObservation() (map[string]interface{}, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -45,8 +45,8 @@ func (tr *FolderIamMember) GetObservation() (map[string]interface{}, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this FolderIamMember
-func (tr *FolderIamMember) SetObservation(obs map[string]interface{}) error {
+// SetObservation for this FolderIAMMember
+func (tr *FolderIAMMember) SetObservation(obs map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -54,8 +54,16 @@ func (tr *FolderIamMember) SetObservation(obs map[string]interface{}) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetParameters of this FolderIamMember
-func (tr *FolderIamMember) GetParameters() (map[string]interface{}, error) {
+// GetID returns ID of underlying Terraform resource of this FolderIAMMember
+func (tr *FolderIAMMember) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this FolderIAMMember
+func (tr *FolderIAMMember) GetParameters() (map[string]interface{}, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -64,8 +72,8 @@ func (tr *FolderIamMember) GetParameters() (map[string]interface{}, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this FolderIamMember
-func (tr *FolderIamMember) SetParameters(params map[string]interface{}) error {
+// SetParameters for this FolderIAMMember
+func (tr *FolderIAMMember) SetParameters(params map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -73,10 +81,10 @@ func (tr *FolderIamMember) SetParameters(params map[string]interface{}) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// LateInitialize this FolderIamMember using its observed tfState.
+// LateInitialize this FolderIAMMember using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *FolderIamMember) LateInitialize(attrs []byte) (bool, error) {
-	params := &FolderIamMemberParameters{}
+func (tr *FolderIAMMember) LateInitialize(attrs []byte) (bool, error) {
+	params := &FolderIAMMemberParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -87,6 +95,6 @@ func (tr *FolderIamMember) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *FolderIamMember) GetTerraformSchemaVersion() int {
+func (tr *FolderIAMMember) GetTerraformSchemaVersion() int {
 	return 0
 }

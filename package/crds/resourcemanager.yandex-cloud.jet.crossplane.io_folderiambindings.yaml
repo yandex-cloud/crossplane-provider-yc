@@ -12,8 +12,8 @@ spec:
     - crossplane
     - managed
     - yandex-cloudjet
-    kind: FolderIamBinding
-    listKind: FolderIamBindingList
+    kind: FolderIAMBinding
+    listKind: FolderIAMBindingList
     plural: folderiambindings
     singular: folderiambinding
   scope: Cluster
@@ -34,7 +34,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: FolderIamBinding is the Schema for the FolderIamBindings API
+        description: FolderIAMBinding is the Schema for the FolderIAMBindings API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -49,7 +49,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: FolderIamBindingSpec defines the desired state of FolderIamBinding
+            description: FolderIAMBindingSpec defines the desired state of FolderIAMBinding
             properties:
               deletionPolicy:
                 default: Delete
@@ -145,9 +145,12 @@ spec:
             - forProvider
             type: object
           status:
-            description: FolderIamBindingStatus defines the observed state of FolderIamBinding.
+            description: FolderIAMBindingStatus defines the observed state of FolderIAMBinding.
             properties:
               atProvider:
+                properties:
+                  id:
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.

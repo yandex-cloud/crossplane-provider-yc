@@ -36,7 +36,15 @@ type ClusterObservation struct {
 
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	KmsProvider []KmsProviderObservation `json:"kmsProvider,omitempty" tf:"kms_provider,omitempty"`
+
 	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
+
+	Master []MasterObservation `json:"master,omitempty" tf:"master,omitempty"`
+
+	NetworkImplementation []NetworkImplementationObservation `json:"networkImplementation,omitempty" tf:"network_implementation,omitempty"`
 
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
@@ -159,6 +167,7 @@ type LocationParameters struct {
 }
 
 type MaintenancePolicyObservation struct {
+	MaintenanceWindow []MaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 }
 
 type MaintenancePolicyParameters struct {
@@ -186,7 +195,7 @@ type MaintenanceWindowParameters struct {
 }
 
 type MasterObservation struct {
-	ClusterCaCertificate *string `json:"clusterCaCertificate,omitempty" tf:"cluster_ca_certificate,omitempty"`
+	ClusterCACertificate *string `json:"clusterCaCertificate,omitempty" tf:"cluster_ca_certificate,omitempty"`
 
 	ExternalV4Address *string `json:"externalV4Address,omitempty" tf:"external_v4_address,omitempty"`
 
@@ -196,7 +205,13 @@ type MasterObservation struct {
 
 	InternalV4Endpoint *string `json:"internalV4Endpoint,omitempty" tf:"internal_v4_endpoint,omitempty"`
 
+	MaintenancePolicy []MaintenancePolicyObservation `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
+
+	Regional []RegionalObservation `json:"regional,omitempty" tf:"regional,omitempty"`
+
 	VersionInfo []VersionInfoObservation `json:"versionInfo,omitempty" tf:"version_info,omitempty"`
+
+	Zonal []ZonalObservation `json:"zonal,omitempty" tf:"zonal,omitempty"`
 }
 
 type MasterParameters struct {
@@ -216,11 +231,15 @@ type MasterParameters struct {
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 
+	// +kubebuilder:validation:Required
+	VersionInfo []VersionInfoParameters `json:"versionInfo" tf:"version_info,omitempty"`
+
 	// +kubebuilder:validation:Optional
 	Zonal []ZonalParameters `json:"zonal,omitempty" tf:"zonal,omitempty"`
 }
 
 type NetworkImplementationObservation struct {
+	Cilium []CiliumObservation `json:"cilium,omitempty" tf:"cilium,omitempty"`
 }
 
 type NetworkImplementationParameters struct {
@@ -230,6 +249,7 @@ type NetworkImplementationParameters struct {
 }
 
 type RegionalObservation struct {
+	Location []LocationObservation `json:"location,omitempty" tf:"location,omitempty"`
 }
 
 type RegionalParameters struct {

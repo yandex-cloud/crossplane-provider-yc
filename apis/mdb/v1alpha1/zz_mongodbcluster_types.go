@@ -45,6 +45,9 @@ type BackupWindowStartParameters struct {
 }
 
 type ClusterConfigObservation struct {
+	Access []AccessObservation `json:"access,omitempty" tf:"access,omitempty"`
+
+	BackupWindowStart []BackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 }
 
 type ClusterConfigParameters struct {
@@ -121,13 +124,27 @@ type MaintenanceWindowParameters struct {
 }
 
 type MongodbClusterObservation struct {
+	ClusterConfig []ClusterConfigObservation `json:"clusterConfig,omitempty" tf:"cluster_config,omitempty"`
+
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	Database []DatabaseObservation `json:"database,omitempty" tf:"database,omitempty"`
+
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
+
+	Host []HostObservation `json:"host,omitempty" tf:"host,omitempty"`
+
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	MaintenanceWindow []MaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+
+	Resources []ResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
 	Sharded *bool `json:"sharded,omitempty" tf:"sharded,omitempty"`
 
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	User []UserObservation `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type MongodbClusterParameters struct {
@@ -220,6 +237,7 @@ type ResourcesParameters struct {
 }
 
 type UserObservation struct {
+	Permission []PermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type UserParameters struct {

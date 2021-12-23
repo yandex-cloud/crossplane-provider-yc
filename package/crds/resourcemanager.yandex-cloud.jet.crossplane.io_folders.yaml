@@ -124,6 +124,8 @@ spec:
                 properties:
                   createdAt:
                     type: string
+                  id:
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.

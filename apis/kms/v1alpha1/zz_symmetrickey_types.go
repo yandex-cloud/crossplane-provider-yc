@@ -28,6 +28,8 @@ import (
 type SymmetricKeyObservation struct {
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
 	RotatedAt *string `json:"rotatedAt,omitempty" tf:"rotated_at,omitempty"`
 
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`

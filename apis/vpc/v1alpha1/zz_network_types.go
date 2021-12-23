@@ -30,6 +30,8 @@ type NetworkObservation struct {
 
 	DefaultSecurityGroupID *string `json:"defaultSecurityGroupId,omitempty" tf:"default_security_group_id,omitempty"`
 
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 }
 

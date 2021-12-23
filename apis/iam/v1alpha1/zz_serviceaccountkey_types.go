@@ -30,6 +30,8 @@ type ServiceAccountKeyObservation struct {
 
 	EncryptedPrivateKey *string `json:"encryptedPrivateKey,omitempty" tf:"encrypted_private_key,omitempty"`
 
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
 	KeyFingerprint *string `json:"keyFingerprint,omitempty" tf:"key_fingerprint,omitempty"`
 
 	PublicKey *string `json:"publicKey,omitempty" tf:"public_key,omitempty"`

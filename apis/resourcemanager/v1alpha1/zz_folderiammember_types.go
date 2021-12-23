@@ -25,10 +25,11 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type FolderIamMemberObservation struct {
+type FolderIAMMemberObservation struct {
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
-type FolderIamMemberParameters struct {
+type FolderIAMMemberParameters struct {
 
 	// +crossplane:generate:reference:type=Folder
 	// +kubebuilder:validation:Optional
@@ -50,51 +51,51 @@ type FolderIamMemberParameters struct {
 	SleepAfter *int64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
-// FolderIamMemberSpec defines the desired state of FolderIamMember
-type FolderIamMemberSpec struct {
+// FolderIAMMemberSpec defines the desired state of FolderIAMMember
+type FolderIAMMemberSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     FolderIamMemberParameters `json:"forProvider"`
+	ForProvider     FolderIAMMemberParameters `json:"forProvider"`
 }
 
-// FolderIamMemberStatus defines the observed state of FolderIamMember.
-type FolderIamMemberStatus struct {
+// FolderIAMMemberStatus defines the observed state of FolderIAMMember.
+type FolderIAMMemberStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        FolderIamMemberObservation `json:"atProvider,omitempty"`
+	AtProvider        FolderIAMMemberObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// FolderIamMember is the Schema for the FolderIamMembers API
+// FolderIAMMember is the Schema for the FolderIAMMembers API
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloudjet}
-type FolderIamMember struct {
+type FolderIAMMember struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              FolderIamMemberSpec   `json:"spec"`
-	Status            FolderIamMemberStatus `json:"status,omitempty"`
+	Spec              FolderIAMMemberSpec   `json:"spec"`
+	Status            FolderIAMMemberStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// FolderIamMemberList contains a list of FolderIamMembers
-type FolderIamMemberList struct {
+// FolderIAMMemberList contains a list of FolderIAMMembers
+type FolderIAMMemberList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []FolderIamMember `json:"items"`
+	Items           []FolderIAMMember `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	FolderIamMember_Kind             = "FolderIamMember"
-	FolderIamMember_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: FolderIamMember_Kind}.String()
-	FolderIamMember_KindAPIVersion   = FolderIamMember_Kind + "." + CRDGroupVersion.String()
-	FolderIamMember_GroupVersionKind = CRDGroupVersion.WithKind(FolderIamMember_Kind)
+	FolderIAMMember_Kind             = "FolderIAMMember"
+	FolderIAMMember_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: FolderIAMMember_Kind}.String()
+	FolderIAMMember_KindAPIVersion   = FolderIAMMember_Kind + "." + CRDGroupVersion.String()
+	FolderIAMMember_GroupVersionKind = CRDGroupVersion.WithKind(FolderIAMMember_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&FolderIamMember{}, &FolderIamMemberList{})
+	SchemeBuilder.Register(&FolderIAMMember{}, &FolderIAMMemberList{})
 }

@@ -337,14 +337,62 @@ spec:
             properties:
               atProvider:
                 properties:
+                  clusterConfig:
+                    items:
+                      properties:
+                        access:
+                          items:
+                            properties:
+                              dataLens:
+                                type: boolean
+                            type: object
+                          type: array
+                        backupWindowStart:
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   createdAt:
                     type: string
+                  database:
+                    items:
+                      type: object
+                    type: array
                   health:
                     type: string
+                  host:
+                    items:
+                      properties:
+                        health:
+                          type: string
+                        name:
+                          type: string
+                      type: object
+                    type: array
+                  id:
+                    type: string
+                  maintenanceWindow:
+                    items:
+                      type: object
+                    type: array
+                  resources:
+                    items:
+                      type: object
+                    type: array
                   sharded:
                     type: boolean
                   status:
                     type: string
+                  user:
+                    items:
+                      properties:
+                        permission:
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.

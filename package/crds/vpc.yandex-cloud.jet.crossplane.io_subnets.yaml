@@ -197,6 +197,12 @@ spec:
                 properties:
                   createdAt:
                     type: string
+                  dhcpOptions:
+                    items:
+                      type: object
+                    type: array
+                  id:
+                    type: string
                   v6CidrBlocks:
                     items:
                       type: string

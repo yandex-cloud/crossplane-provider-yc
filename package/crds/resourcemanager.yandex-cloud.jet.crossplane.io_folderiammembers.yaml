@@ -12,8 +12,8 @@ spec:
     - crossplane
     - managed
     - yandex-cloudjet
-    kind: FolderIamMember
-    listKind: FolderIamMemberList
+    kind: FolderIAMMember
+    listKind: FolderIAMMemberList
     plural: folderiammembers
     singular: folderiammember
   scope: Cluster
@@ -34,7 +34,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: FolderIamMember is the Schema for the FolderIamMembers API
+        description: FolderIAMMember is the Schema for the FolderIAMMembers API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -49,7 +49,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: FolderIamMemberSpec defines the desired state of FolderIamMember
+            description: FolderIAMMemberSpec defines the desired state of FolderIAMMember
             properties:
               deletionPolicy:
                 default: Delete
@@ -143,9 +143,12 @@ spec:
             - forProvider
             type: object
           status:
-            description: FolderIamMemberStatus defines the observed state of FolderIamMember.
+            description: FolderIAMMemberStatus defines the observed state of FolderIAMMember.
             properties:
               atProvider:
+                properties:
+                  id:
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.
