@@ -110,19 +110,26 @@ func fqdns(attr map[string]interface{}) []string {
 	return result
 }
 
-func connDetails(attr map[string]interface{}) (map[string][]byte, error) {
-	conn := make(map[string][]byte)
-	for i, v := range fqdns(attr) {
-		conn[fmt.Sprintf("attribute.host.%d.fqdn", i)] = []byte(v)
+func hostnames(attr map[string]interface{}) []string {
+	hostsInterface, ok := attr["host"]
+	if !ok {
+		return nil
 	}
-	for i, v := range usernames(attr) {
-		conn[fmt.Sprintf("attribute.user.%d.name", i)] = []byte(v)
+	hosts, ok := hostsInterface.([]interface{})
+	if !ok {
+		return nil
 	}
-	for i, v := range databases(attr) {
-		conn[fmt.Sprintf("attribute.database.%d.name", i)] = []byte(v)
+	result := make([]string, len(hosts))
+	for i, hostInterface := range hosts {
+		host, ok := hostInterface.(map[string]interface{})
+		if !ok {
+			continue
+		}
+		if fqdn, ok := host["name"].(string); ok {
+			result[i] = fqdn
+		}
 	}
-
-	return conn, nil
+	return result
 }
 
 func postgresqlConnectionStrings(attr map[string]interface{}) map[string]string {
@@ -141,6 +148,70 @@ func postgresqlConnectionStrings(attr map[string]interface{}) map[string]string 
 	return connstrings
 }
 
+func mongodbConnectionStrings(attr map[string]interface{}) map[string]string {
+	connstrings := make(map[string]string)
+	hosts := hostnames(attr)
+	for _, db := range databases(attr) {
+		ps := passwords(attr)
+		for i, u := range usernames(attr) {
+			password := ps[i]
+			connstrings[fmt.Sprintf("connection-string.%s.%s", u, db)] =
+				fmt.Sprintf(
+					"mongodb://%s:%s@%s/%s",
+					u, password, strings.Join(hosts, ","), db)
+		}
+	}
+	return connstrings
+}
+
+func postgresqlConnDetails(attr map[string]interface{}) map[string][]byte {
+	conn := make(map[string][]byte)
+	for i, v := range fqdns(attr) {
+		conn[fmt.Sprintf("attribute.host.%d.fqdn", i)] = []byte(v)
+	}
+	for i, v := range usernames(attr) {
+		conn[fmt.Sprintf("attribute.user.%d.name", i)] = []byte(v)
+	}
+	for i, v := range databases(attr) {
+		conn[fmt.Sprintf("attribute.database.%d.name", i)] = []byte(v)
+	}
+	for k, v := range postgresqlConnectionStrings(attr) {
+		conn[k] = []byte(v)
+	}
+
+	return conn
+}
+
+func mongodbConnDetails(attr map[string]interface{}) map[string][]byte {
+	conn := make(map[string][]byte)
+	for i, v := range hostnames(attr) {
+		conn[fmt.Sprintf("attribute.host.%d.name", i)] = []byte(v)
+	}
+	for i, v := range usernames(attr) {
+		conn[fmt.Sprintf("attribute.user.%d.name", i)] = []byte(v)
+	}
+	for i, v := range databases(attr) {
+		conn[fmt.Sprintf("attribute.database.%d.name", i)] = []byte(v)
+	}
+	for k, v := range mongodbConnectionStrings(attr) {
+		conn[k] = []byte(v)
+	}
+
+	return conn
+}
+
+func redisConnDetails(attr map[string]interface{}) map[string][]byte {
+	conn := make(map[string][]byte)
+	for i, v := range fqdns(attr) {
+		conn[fmt.Sprintf("attribute.host.%d.fqdn", i)] = []byte(v)
+	}
+	for i, v := range databases(attr) {
+		conn[fmt.Sprintf("attribute.database.%d.name", i)] = []byte(v)
+	}
+
+	return conn
+}
+
 // Configure adds configurations for mdb group.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_mdb_postgresql_cluster", func(r *config.Resource) {
@@ -152,14 +223,7 @@ func Configure(p *config.Provider) {
 		}
 		r.UseAsync = true
 		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
-			conn, err := connDetails(attr)
-			if err != nil {
-				return nil, err
-			}
-			for k, v := range postgresqlConnectionStrings(attr) {
-				conn[k] = []byte(v)
-			}
-			return conn, nil
+			return postgresqlConnDetails(attr), nil
 		}
 	})
 	p.AddResourceConfigurator("yandex_mdb_redis_cluster", func(r *config.Resource) {
@@ -170,7 +234,9 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.UseAsync = true
-		r.Sensitive.AdditionalConnectionDetailsFn = connDetails
+		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
+			return redisConnDetails(attr), nil
+		}
 	})
 	p.AddResourceConfigurator("yandex_mdb_mongodb_cluster", func(r *config.Resource) {
 		r.References["network_id"] = config.Reference{
@@ -180,6 +246,8 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.UseAsync = true
-		r.Sensitive.AdditionalConnectionDetailsFn = connDetails
+		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
+			return mongodbConnDetails(attr), nil
+		}
 	})
 }

@@ -132,11 +132,11 @@ func Test_connDetails(t *testing.T) {
 	}}
 	for _, tt := range tests {
 		t.Run("", func(t *testing.T) {
-			got, _ := connDetails(tt.attr)
+			got := postgresqlConnDetails(tt.attr)
 			if !reflect.DeepEqual(got, tt.want) {
 				gotJSON, _ := json.MarshalIndent(got, "", "  ")
 				wantJSON, _ := json.MarshalIndent(tt.want, "", "  ")
-				t.Errorf("connDetails() got = %s, want %s", gotJSON, wantJSON)
+				t.Errorf("postgresqlConnDetails() got = %s, want %s", gotJSON, wantJSON)
 			}
 		})
 	}
