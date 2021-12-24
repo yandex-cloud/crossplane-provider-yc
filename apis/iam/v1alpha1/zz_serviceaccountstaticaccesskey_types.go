@@ -32,6 +32,8 @@ type ServiceAccountStaticAccessKeyObservation struct {
 
 	EncryptedSecretKey *string `json:"encryptedSecretKey,omitempty" tf:"encrypted_secret_key,omitempty"`
 
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
 	KeyFingerprint *string `json:"keyFingerprint,omitempty" tf:"key_fingerprint,omitempty"`
 }
 

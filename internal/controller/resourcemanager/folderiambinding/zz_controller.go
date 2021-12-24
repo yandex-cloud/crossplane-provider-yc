@@ -37,11 +37,11 @@ import (
 	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
 )
 
-// Setup adds a controller that reconciles FolderIamBinding managed resources.
+// Setup adds a controller that reconciles FolderIAMBinding managed resources.
 func Setup(mgr ctrl.Manager, l logging.Logger, rl workqueue.RateLimiter, s terraform.SetupFn, ws *terraform.WorkspaceStore, cfg *tjconfig.Provider, concurrency int) error {
-	name := managed.ControllerName(v1alpha1.FolderIamBinding_GroupVersionKind.String())
+	name := managed.ControllerName(v1alpha1.FolderIAMBinding_GroupVersionKind.String())
 	r := managed.NewReconciler(mgr,
-		xpresource.ManagedKind(v1alpha1.FolderIamBinding_GroupVersionKind),
+		xpresource.ManagedKind(v1alpha1.FolderIAMBinding_GroupVersionKind),
 		managed.WithExternalConnecter(tjcontroller.NewConnector(mgr.GetClient(), ws, s, cfg.Resources["yandex_resourcemanager_folder_iam_binding"])),
 		managed.WithLogger(l.WithValues("controller", name)),
 		managed.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))),
@@ -53,6 +53,6 @@ func Setup(mgr ctrl.Manager, l logging.Logger, rl workqueue.RateLimiter, s terra
 	return ctrl.NewControllerManagedBy(mgr).
 		Named(name).
 		WithOptions(controller.Options{RateLimiter: rl, MaxConcurrentReconciles: concurrency}).
-		For(&v1alpha1.FolderIamBinding{}).
+		For(&v1alpha1.FolderIAMBinding{}).
 		Complete(r)
 }

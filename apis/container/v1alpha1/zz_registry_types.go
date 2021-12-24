@@ -28,6 +28,8 @@ import (
 type RegistryObservation struct {
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 

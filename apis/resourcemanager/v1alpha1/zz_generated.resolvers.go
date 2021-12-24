@@ -24,8 +24,8 @@ import (
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-// ResolveReferences of this FolderIamBinding.
-func (mg *FolderIamBinding) ResolveReferences(ctx context.Context, c client.Reader) error {
+// ResolveReferences of this FolderIAMBinding.
+func (mg *FolderIAMBinding) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
@@ -50,8 +50,8 @@ func (mg *FolderIamBinding) ResolveReferences(ctx context.Context, c client.Read
 	return nil
 }
 
-// ResolveReferences of this FolderIamMember.
-func (mg *FolderIamMember) ResolveReferences(ctx context.Context, c client.Reader) error {
+// ResolveReferences of this FolderIAMMember.
+func (mg *FolderIAMMember) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse

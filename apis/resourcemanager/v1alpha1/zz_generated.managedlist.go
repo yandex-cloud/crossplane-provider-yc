@@ -19,8 +19,8 @@ package v1alpha1
 
 import resource "github.com/crossplane/crossplane-runtime/pkg/resource"
 
-// GetItems of this FolderIamBindingList.
-func (l *FolderIamBindingList) GetItems() []resource.Managed {
+// GetItems of this FolderIAMBindingList.
+func (l *FolderIAMBindingList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -28,8 +28,8 @@ func (l *FolderIamBindingList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this FolderIamMemberList.
-func (l *FolderIamMemberList) GetItems() []resource.Managed {
+// GetItems of this FolderIAMMemberList.
+func (l *FolderIAMMemberList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

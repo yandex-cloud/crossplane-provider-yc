@@ -335,6 +335,63 @@ spec:
                 properties:
                   bucketDomainName:
                     type: string
+                  corsRule:
+                    items:
+                      type: object
+                    type: array
+                  grant:
+                    items:
+                      type: object
+                    type: array
+                  id:
+                    type: string
+                  lifecycleRule:
+                    items:
+                      properties:
+                        expiration:
+                          items:
+                            type: object
+                          type: array
+                        noncurrentVersionExpiration:
+                          items:
+                            type: object
+                          type: array
+                        noncurrentVersionTransition:
+                          items:
+                            type: object
+                          type: array
+                        transition:
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  logging:
+                    items:
+                      type: object
+                    type: array
+                  serverSideEncryptionConfiguration:
+                    items:
+                      properties:
+                        rule:
+                          items:
+                            properties:
+                              applyServerSideEncryptionByDefault:
+                                items:
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  versioning:
+                    items:
+                      type: object
+                    type: array
+                  website:
+                    items:
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.

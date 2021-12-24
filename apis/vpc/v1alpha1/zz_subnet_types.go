@@ -43,6 +43,10 @@ type DhcpOptionsParameters struct {
 type SubnetObservation struct {
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	DhcpOptions []DhcpOptionsObservation `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
+
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }
 

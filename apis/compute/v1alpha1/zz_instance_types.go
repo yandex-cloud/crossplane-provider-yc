@@ -26,6 +26,7 @@ import (
 )
 
 type BootDiskObservation struct {
+	InitializeParams []InitializeParamsObservation `json:"initializeParams,omitempty" tf:"initialize_params,omitempty"`
 }
 
 type BootDiskParameters struct {
@@ -107,9 +108,23 @@ type InitializeParamsParameters struct {
 }
 
 type InstanceObservation struct {
+	BootDisk []BootDiskObservation `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
+
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
+
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	NetworkInterface []NetworkInterfaceObservation `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
+
+	PlacementPolicy []PlacementPolicyObservation `json:"placementPolicy,omitempty" tf:"placement_policy,omitempty"`
+
+	Resources []ResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
+
+	SchedulingPolicy []SchedulingPolicyObservation `json:"schedulingPolicy,omitempty" tf:"scheduling_policy,omitempty"`
+
+	SecondaryDisk []SecondaryDiskObservation `json:"secondaryDisk,omitempty" tf:"secondary_disk,omitempty"`
 
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
@@ -182,10 +197,10 @@ type InstanceParameters struct {
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
-type NatDNSRecordObservation struct {
+type NATDNSRecordObservation struct {
 }
 
-type NatDNSRecordParameters struct {
+type NATDNSRecordParameters struct {
 
 	// +kubebuilder:validation:Optional
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
@@ -201,11 +216,17 @@ type NatDNSRecordParameters struct {
 }
 
 type NetworkInterfaceObservation struct {
+	DNSRecord []DNSRecordObservation `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
+
+	IPv6DNSRecord []IPv6DNSRecordObservation `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
+
 	Index *int64 `json:"index,omitempty" tf:"index,omitempty"`
 
 	MacAddress *string `json:"macAddress,omitempty" tf:"mac_address,omitempty"`
 
-	NatIPVersion *string `json:"natIpVersion,omitempty" tf:"nat_ip_version,omitempty"`
+	NATDNSRecord []NATDNSRecordObservation `json:"natDnsRecord,omitempty" tf:"nat_dns_record,omitempty"`
+
+	NATIPVersion *string `json:"natIpVersion,omitempty" tf:"nat_ip_version,omitempty"`
 }
 
 type NetworkInterfaceParameters struct {
@@ -229,13 +250,13 @@ type NetworkInterfaceParameters struct {
 	IPv6DNSRecord []IPv6DNSRecordParameters `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	Nat *bool `json:"nat,omitempty" tf:"nat,omitempty"`
+	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	NatDNSRecord []NatDNSRecordParameters `json:"natDnsRecord,omitempty" tf:"nat_dns_record,omitempty"`
+	NATDNSRecord []NATDNSRecordParameters `json:"natDnsRecord,omitempty" tf:"nat_dns_record,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	NatIPAddress *string `json:"natIpAddress,omitempty" tf:"nat_ip_address,omitempty"`
+	NATIPAddress *string `json:"natIpAddress,omitempty" tf:"nat_ip_address,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`

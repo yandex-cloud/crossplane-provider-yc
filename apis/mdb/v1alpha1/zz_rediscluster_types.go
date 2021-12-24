@@ -94,9 +94,19 @@ type RedisClusterMaintenanceWindowParameters struct {
 }
 
 type RedisClusterObservation struct {
+	Config []RedisClusterConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
+
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
+
+	Host []RedisClusterHostObservation `json:"host,omitempty" tf:"host,omitempty"`
+
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	MaintenanceWindow []RedisClusterMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+
+	Resources []RedisClusterResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }

@@ -25,18 +25,18 @@ import (
 	"github.com/crossplane-contrib/terrajet/pkg/resource/json"
 )
 
-// GetTerraformResourceType returns Terraform resource type for this ServiceAccountIamMember
-func (mg *ServiceAccountIamMember) GetTerraformResourceType() string {
+// GetTerraformResourceType returns Terraform resource type for this ServiceAccountIAMMember
+func (mg *ServiceAccountIAMMember) GetTerraformResourceType() string {
 	return "yandex_iam_service_account_iam_member"
 }
 
-// GetConnectionDetailsMapping for this ServiceAccountIamMember
-func (tr *ServiceAccountIamMember) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this ServiceAccountIAMMember
+func (tr *ServiceAccountIAMMember) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this ServiceAccountIamMember
-func (tr *ServiceAccountIamMember) GetObservation() (map[string]interface{}, error) {
+// GetObservation of this ServiceAccountIAMMember
+func (tr *ServiceAccountIAMMember) GetObservation() (map[string]interface{}, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -45,8 +45,8 @@ func (tr *ServiceAccountIamMember) GetObservation() (map[string]interface{}, err
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this ServiceAccountIamMember
-func (tr *ServiceAccountIamMember) SetObservation(obs map[string]interface{}) error {
+// SetObservation for this ServiceAccountIAMMember
+func (tr *ServiceAccountIAMMember) SetObservation(obs map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -54,8 +54,16 @@ func (tr *ServiceAccountIamMember) SetObservation(obs map[string]interface{}) er
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetParameters of this ServiceAccountIamMember
-func (tr *ServiceAccountIamMember) GetParameters() (map[string]interface{}, error) {
+// GetID returns ID of underlying Terraform resource of this ServiceAccountIAMMember
+func (tr *ServiceAccountIAMMember) GetID() string {
+	if tr.Status.AtProvider.ID == nil {
+		return ""
+	}
+	return *tr.Status.AtProvider.ID
+}
+
+// GetParameters of this ServiceAccountIAMMember
+func (tr *ServiceAccountIAMMember) GetParameters() (map[string]interface{}, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -64,8 +72,8 @@ func (tr *ServiceAccountIamMember) GetParameters() (map[string]interface{}, erro
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this ServiceAccountIamMember
-func (tr *ServiceAccountIamMember) SetParameters(params map[string]interface{}) error {
+// SetParameters for this ServiceAccountIAMMember
+func (tr *ServiceAccountIAMMember) SetParameters(params map[string]interface{}) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -73,10 +81,10 @@ func (tr *ServiceAccountIamMember) SetParameters(params map[string]interface{}) 
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// LateInitialize this ServiceAccountIamMember using its observed tfState.
+// LateInitialize this ServiceAccountIAMMember using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *ServiceAccountIamMember) LateInitialize(attrs []byte) (bool, error) {
-	params := &ServiceAccountIamMemberParameters{}
+func (tr *ServiceAccountIAMMember) LateInitialize(attrs []byte) (bool, error) {
+	params := &ServiceAccountIAMMemberParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -87,6 +95,6 @@ func (tr *ServiceAccountIamMember) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *ServiceAccountIamMember) GetTerraformSchemaVersion() int {
+func (tr *ServiceAccountIAMMember) GetTerraformSchemaVersion() int {
 	return 0
 }

@@ -364,10 +364,61 @@ spec:
             properties:
               atProvider:
                 properties:
+                  bootDisk:
+                    items:
+                      properties:
+                        initializeParams:
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   createdAt:
                     type: string
                   fqdn:
                     type: string
+                  id:
+                    type: string
+                  networkInterface:
+                    items:
+                      properties:
+                        dnsRecord:
+                          items:
+                            type: object
+                          type: array
+                        index:
+                          format: int64
+                          type: integer
+                        ipv6DnsRecord:
+                          items:
+                            type: object
+                          type: array
+                        macAddress:
+                          type: string
+                        natDnsRecord:
+                          items:
+                            type: object
+                          type: array
+                        natIpVersion:
+                          type: string
+                      type: object
+                    type: array
+                  placementPolicy:
+                    items:
+                      type: object
+                    type: array
+                  resources:
+                    items:
+                      type: object
+                    type: array
+                  schedulingPolicy:
+                    items:
+                      type: object
+                    type: array
+                  secondaryDisk:
+                    items:
+                      type: object
+                    type: array
                   status:
                     type: string
                 type: object

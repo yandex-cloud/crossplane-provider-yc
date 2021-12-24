@@ -25,10 +25,11 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type FolderIamBindingObservation struct {
+type FolderIAMBindingObservation struct {
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
-type FolderIamBindingParameters struct {
+type FolderIAMBindingParameters struct {
 
 	// +crossplane:generate:reference:type=Folder
 	// +kubebuilder:validation:Optional
@@ -50,51 +51,51 @@ type FolderIamBindingParameters struct {
 	SleepAfter *int64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
-// FolderIamBindingSpec defines the desired state of FolderIamBinding
-type FolderIamBindingSpec struct {
+// FolderIAMBindingSpec defines the desired state of FolderIAMBinding
+type FolderIAMBindingSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     FolderIamBindingParameters `json:"forProvider"`
+	ForProvider     FolderIAMBindingParameters `json:"forProvider"`
 }
 
-// FolderIamBindingStatus defines the observed state of FolderIamBinding.
-type FolderIamBindingStatus struct {
+// FolderIAMBindingStatus defines the observed state of FolderIAMBinding.
+type FolderIAMBindingStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        FolderIamBindingObservation `json:"atProvider,omitempty"`
+	AtProvider        FolderIAMBindingObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// FolderIamBinding is the Schema for the FolderIamBindings API
+// FolderIAMBinding is the Schema for the FolderIAMBindings API
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloudjet}
-type FolderIamBinding struct {
+type FolderIAMBinding struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              FolderIamBindingSpec   `json:"spec"`
-	Status            FolderIamBindingStatus `json:"status,omitempty"`
+	Spec              FolderIAMBindingSpec   `json:"spec"`
+	Status            FolderIAMBindingStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// FolderIamBindingList contains a list of FolderIamBindings
-type FolderIamBindingList struct {
+// FolderIAMBindingList contains a list of FolderIAMBindings
+type FolderIAMBindingList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []FolderIamBinding `json:"items"`
+	Items           []FolderIAMBinding `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	FolderIamBinding_Kind             = "FolderIamBinding"
-	FolderIamBinding_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: FolderIamBinding_Kind}.String()
-	FolderIamBinding_KindAPIVersion   = FolderIamBinding_Kind + "." + CRDGroupVersion.String()
-	FolderIamBinding_GroupVersionKind = CRDGroupVersion.WithKind(FolderIamBinding_Kind)
+	FolderIAMBinding_Kind             = "FolderIAMBinding"
+	FolderIAMBinding_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: FolderIAMBinding_Kind}.String()
+	FolderIAMBinding_KindAPIVersion   = FolderIAMBinding_Kind + "." + CRDGroupVersion.String()
+	FolderIAMBinding_GroupVersionKind = CRDGroupVersion.WithKind(FolderIAMBinding_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&FolderIamBinding{}, &FolderIamBindingList{})
+	SchemeBuilder.Register(&FolderIAMBinding{}, &FolderIAMBindingList{})
 }

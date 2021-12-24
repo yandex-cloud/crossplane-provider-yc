@@ -149,6 +149,8 @@ spec:
                     type: string
                   defaultSecurityGroupId:
                     type: string
+                  id:
+                    type: string
                   subnetIds:
                     items:
                       type: string

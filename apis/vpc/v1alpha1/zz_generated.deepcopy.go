@@ -155,6 +155,11 @@ func (in *NetworkObservation) DeepCopyInto(out *NetworkObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
+		*out = new(string)
+		**out = **in
+	}
 	if in.SubnetIds != nil {
 		in, out := &in.SubnetIds, &out.SubnetIds
 		*out = make([]*string, len(*in))
@@ -331,6 +336,16 @@ func (in *SubnetObservation) DeepCopyInto(out *SubnetObservation) {
 	*out = *in
 	if in.CreatedAt != nil {
 		in, out := &in.CreatedAt, &out.CreatedAt
+		*out = new(string)
+		**out = **in
+	}
+	if in.DhcpOptions != nil {
+		in, out := &in.DhcpOptions, &out.DhcpOptions
+		*out = make([]DhcpOptionsObservation, len(*in))
+		copy(*out, *in)
+	}
+	if in.ID != nil {
+		in, out := &in.ID, &out.ID
 		*out = new(string)
 		**out = **in
 	}

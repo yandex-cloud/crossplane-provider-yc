@@ -193,6 +193,9 @@ spec:
             description: ObjectStatus defines the observed state of Object.
             properties:
               atProvider:
+                properties:
+                  id:
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.

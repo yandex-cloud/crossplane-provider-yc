@@ -50,6 +50,15 @@ type ConfigBackupWindowStartParameters struct {
 }
 
 type ConfigObservation struct {
+	Access []ConfigAccessObservation `json:"access,omitempty" tf:"access,omitempty"`
+
+	BackupWindowStart []ConfigBackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
+
+	PerformanceDiagnostics []PerformanceDiagnosticsObservation `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
+
+	PoolerConfig []PoolerConfigObservation `json:"poolerConfig,omitempty" tf:"pooler_config,omitempty"`
+
+	Resources []ConfigResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type ConfigParameters struct {
@@ -137,6 +146,7 @@ type PoolerConfigParameters struct {
 }
 
 type PostgresqlClusterDatabaseObservation struct {
+	Extension []ExtensionObservation `json:"extension,omitempty" tf:"extension,omitempty"`
 }
 
 type PostgresqlClusterDatabaseParameters struct {
@@ -209,11 +219,25 @@ type PostgresqlClusterMaintenanceWindowParameters struct {
 }
 
 type PostgresqlClusterObservation struct {
+	Config []ConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
+
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
+
+	Database []PostgresqlClusterDatabaseObservation `json:"database,omitempty" tf:"database,omitempty"`
 
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
+	Host []PostgresqlClusterHostObservation `json:"host,omitempty" tf:"host,omitempty"`
+
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	MaintenanceWindow []PostgresqlClusterMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+
+	Restore []RestoreObservation `json:"restore,omitempty" tf:"restore,omitempty"`
+
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	User []PostgresqlClusterUserObservation `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type PostgresqlClusterParameters struct {
@@ -279,6 +303,7 @@ type PostgresqlClusterParameters struct {
 }
 
 type PostgresqlClusterUserObservation struct {
+	Permission []UserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type PostgresqlClusterUserParameters struct {

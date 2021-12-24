@@ -45,6 +45,7 @@ type AllocationPolicyLocationParameters struct {
 }
 
 type AllocationPolicyObservation struct {
+	Location []AllocationPolicyLocationObservation `json:"location,omitempty" tf:"location,omitempty"`
 }
 
 type AllocationPolicyParameters struct {
@@ -102,6 +103,15 @@ type FixedScaleParameters struct {
 }
 
 type InstanceTemplateObservation struct {
+	BootDisk []BootDiskObservation `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
+
+	NetworkInterface []NetworkInterfaceObservation `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
+
+	PlacementPolicy []PlacementPolicyObservation `json:"placementPolicy,omitempty" tf:"placement_policy,omitempty"`
+
+	Resources []ResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
+
+	SchedulingPolicy []SchedulingPolicyObservation `json:"schedulingPolicy,omitempty" tf:"scheduling_policy,omitempty"`
 }
 
 type InstanceTemplateParameters struct {
@@ -113,7 +123,7 @@ type InstanceTemplateParameters struct {
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	Nat *bool `json:"nat,omitempty" tf:"nat,omitempty"`
+	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	NetworkAccelerationType *string `json:"networkAccelerationType,omitempty" tf:"network_acceleration_type,omitempty"`
@@ -161,7 +171,7 @@ type NetworkInterfaceParameters struct {
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	Nat *bool `json:"nat,omitempty" tf:"nat,omitempty"`
+	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
@@ -178,6 +188,7 @@ type NetworkInterfaceParameters struct {
 }
 
 type NodeGroupMaintenancePolicyObservation struct {
+	MaintenanceWindow []MaintenancePolicyMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 }
 
 type NodeGroupMaintenancePolicyParameters struct {
@@ -193,9 +204,21 @@ type NodeGroupMaintenancePolicyParameters struct {
 }
 
 type NodeGroupObservation struct {
+	AllocationPolicy []AllocationPolicyObservation `json:"allocationPolicy,omitempty" tf:"allocation_policy,omitempty"`
+
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	DeployPolicy []DeployPolicyObservation `json:"deployPolicy,omitempty" tf:"deploy_policy,omitempty"`
+
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
 	InstanceGroupID *string `json:"instanceGroupId,omitempty" tf:"instance_group_id,omitempty"`
+
+	InstanceTemplate []InstanceTemplateObservation `json:"instanceTemplate,omitempty" tf:"instance_template,omitempty"`
+
+	MaintenancePolicy []NodeGroupMaintenancePolicyObservation `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
+
+	ScalePolicy []ScalePolicyObservation `json:"scalePolicy,omitempty" tf:"scale_policy,omitempty"`
 
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
@@ -249,6 +272,9 @@ type NodeGroupParameters struct {
 
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+
+	// +kubebuilder:validation:Required
+	VersionInfo []NodeGroupVersionInfoParameters `json:"versionInfo" tf:"version_info,omitempty"`
 }
 
 type NodeGroupVersionInfoObservation struct {
@@ -292,6 +318,9 @@ type ResourcesParameters struct {
 }
 
 type ScalePolicyObservation struct {
+	AutoScale []AutoScaleObservation `json:"autoScale,omitempty" tf:"auto_scale,omitempty"`
+
+	FixedScale []FixedScaleObservation `json:"fixedScale,omitempty" tf:"fixed_scale,omitempty"`
 }
 
 type ScalePolicyParameters struct {
