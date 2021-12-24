@@ -21,15 +21,82 @@ import (
 	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
 )
 
-func attrsToConnDetails(attr map[string]interface{}) (map[string][]byte, error) {
-	conn := make(map[string][]byte)
-	for k, v := range attr {
-		strValue, ok := v.(string)
-		// Do not fail on non string fields
+func usernames(attr map[string]interface{}) map[string]string {
+	usersInterface, ok := attr["user"]
+	if !ok {
+		return nil
+	}
+	users, ok := usersInterface.([]interface{})
+	if !ok {
+		return nil
+	}
+	result := make(map[string]string)
+	for i, userInterface := range users {
+		user, ok := userInterface.(map[string]interface{})
 		if !ok {
 			continue
 		}
-		conn[k] = []byte(strValue)
+		if username, ok := user["name"].(string); ok {
+			result[fmt.Sprintf("attribute.user.%d.name", i)] = username
+		}
+	}
+	return result
+}
+
+func databases(attr map[string]interface{}) map[string]string {
+	databasesInterface, ok := attr["database"]
+	if !ok {
+		return nil
+	}
+	databases, ok := databasesInterface.([]interface{})
+	if !ok {
+		return nil
+	}
+	result := make(map[string]string)
+	for i, databaseInterface := range databases {
+		database, ok := databaseInterface.(map[string]interface{})
+		if !ok {
+			continue
+		}
+		if databaseName, ok := database["name"].(string); ok {
+			result[fmt.Sprintf("attribute.database.%d.name", i)] = databaseName
+		}
+	}
+	return result
+}
+
+func fqdns(attr map[string]interface{}) map[string]string {
+	hostsInterface, ok := attr["host"]
+	if !ok {
+		return nil
+	}
+	hosts, ok := hostsInterface.([]interface{})
+	if !ok {
+		return nil
+	}
+	result := make(map[string]string)
+	for i, hostInterface := range hosts {
+		host, ok := hostInterface.(map[string]interface{})
+		if !ok {
+			continue
+		}
+		if fqdn, ok := host["fqdn"].(string); ok {
+			result[fmt.Sprintf("attribute.host.%d.fqdn", i)] = fqdn
+		}
+	}
+	return result
+}
+
+func connDetails(attr map[string]interface{}) (map[string][]byte, error) {
+	conn := make(map[string][]byte)
+	for k, v := range fqdns(attr) {
+		conn[k] = []byte(v)
+	}
+	for k, v := range usernames(attr) {
+		conn[k] = []byte(v)
+	}
+	for k, v := range databases(attr) {
+		conn[k] = []byte(v)
 	}
 	return conn, nil
 }
@@ -44,7 +111,7 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.UseAsync = true
-		r.Sensitive.AdditionalConnectionDetailsFn = attrsToConnDetails
+		r.Sensitive.AdditionalConnectionDetailsFn = connDetails
 	})
 	p.AddResourceConfigurator("yandex_mdb_redis_cluster", func(r *config.Resource) {
 		r.References["network_id"] = config.Reference{
@@ -54,7 +121,7 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.UseAsync = true
-		r.Sensitive.AdditionalConnectionDetailsFn = attrsToConnDetails
+		r.Sensitive.AdditionalConnectionDetailsFn = connDetails
 	})
 	p.AddResourceConfigurator("yandex_mdb_mongodb_cluster", func(r *config.Resource) {
 		r.References["network_id"] = config.Reference{
@@ -64,6 +131,6 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.UseAsync = true
-		r.Sensitive.AdditionalConnectionDetailsFn = attrsToConnDetails
+		r.Sensitive.AdditionalConnectionDetailsFn = connDetails
 	})
 }
