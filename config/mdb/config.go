@@ -15,13 +15,14 @@ package mdb
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/crossplane-contrib/terrajet/pkg/config"
 
 	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
 )
 
-func usernames(attr map[string]interface{}) map[string]string {
+func usernames(attr map[string]interface{}) []string {
 	usersInterface, ok := attr["user"]
 	if !ok {
 		return nil
@@ -30,20 +31,42 @@ func usernames(attr map[string]interface{}) map[string]string {
 	if !ok {
 		return nil
 	}
-	result := make(map[string]string)
+	result := make([]string, len(users))
 	for i, userInterface := range users {
 		user, ok := userInterface.(map[string]interface{})
 		if !ok {
 			continue
 		}
 		if username, ok := user["name"].(string); ok {
-			result[fmt.Sprintf("attribute.user.%d.name", i)] = username
+			result[i] = username
 		}
 	}
 	return result
 }
 
-func databases(attr map[string]interface{}) map[string]string {
+func passwords(attr map[string]interface{}) []string {
+	usersInterface, ok := attr["user"]
+	if !ok {
+		return nil
+	}
+	users, ok := usersInterface.([]interface{})
+	if !ok {
+		return nil
+	}
+	result := make([]string, len(users))
+	for i, userInterface := range users {
+		user, ok := userInterface.(map[string]interface{})
+		if !ok {
+			continue
+		}
+		if password, ok := user["password"].(string); ok {
+			result[i] = password
+		}
+	}
+	return result
+}
+
+func databases(attr map[string]interface{}) []string {
 	databasesInterface, ok := attr["database"]
 	if !ok {
 		return nil
@@ -52,20 +75,20 @@ func databases(attr map[string]interface{}) map[string]string {
 	if !ok {
 		return nil
 	}
-	result := make(map[string]string)
+	result := make([]string, len(databases))
 	for i, databaseInterface := range databases {
 		database, ok := databaseInterface.(map[string]interface{})
 		if !ok {
 			continue
 		}
 		if databaseName, ok := database["name"].(string); ok {
-			result[fmt.Sprintf("attribute.database.%d.name", i)] = databaseName
+			result[i] = databaseName
 		}
 	}
 	return result
 }
 
-func fqdns(attr map[string]interface{}) map[string]string {
+func fqdns(attr map[string]interface{}) []string {
 	hostsInterface, ok := attr["host"]
 	if !ok {
 		return nil
@@ -74,14 +97,14 @@ func fqdns(attr map[string]interface{}) map[string]string {
 	if !ok {
 		return nil
 	}
-	result := make(map[string]string)
+	result := make([]string, len(hosts))
 	for i, hostInterface := range hosts {
 		host, ok := hostInterface.(map[string]interface{})
 		if !ok {
 			continue
 		}
 		if fqdn, ok := host["fqdn"].(string); ok {
-			result[fmt.Sprintf("attribute.host.%d.fqdn", i)] = fqdn
+			result[i] = fqdn
 		}
 	}
 	return result
@@ -89,16 +112,33 @@ func fqdns(attr map[string]interface{}) map[string]string {
 
 func connDetails(attr map[string]interface{}) (map[string][]byte, error) {
 	conn := make(map[string][]byte)
-	for k, v := range fqdns(attr) {
-		conn[k] = []byte(v)
+	for i, v := range fqdns(attr) {
+		conn[fmt.Sprintf("attribute.host.%d.fqdn", i)] = []byte(v)
 	}
-	for k, v := range usernames(attr) {
-		conn[k] = []byte(v)
+	for i, v := range usernames(attr) {
+		conn[fmt.Sprintf("attribute.user.%d.name", i)] = []byte(v)
 	}
-	for k, v := range databases(attr) {
-		conn[k] = []byte(v)
+	for i, v := range databases(attr) {
+		conn[fmt.Sprintf("attribute.database.%d.name", i)] = []byte(v)
 	}
+
 	return conn, nil
+}
+
+func postgresqlConnectionStrings(attr map[string]interface{}) map[string]string {
+	connstrings := make(map[string]string)
+	hosts := fqdns(attr)
+	for _, db := range databases(attr) {
+		ps := passwords(attr)
+		for i, u := range usernames(attr) {
+			password := ps[i]
+			connstrings[fmt.Sprintf("connection-string.%s.%s", u, db)] =
+				fmt.Sprintf(
+					"host=%s port=6432 sslmode=verify-full dbname=%s user=%s target_session_attrs=read-write password=%s",
+					strings.Join(hosts, ","), db, u, password)
+		}
+	}
+	return connstrings
 }
 
 // Configure adds configurations for mdb group.
@@ -111,7 +151,16 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.UseAsync = true
-		r.Sensitive.AdditionalConnectionDetailsFn = connDetails
+		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
+			conn, err := connDetails(attr)
+			if err != nil {
+				return nil, err
+			}
+			for k, v := range postgresqlConnectionStrings(attr) {
+				conn[k] = []byte(v)
+			}
+			return conn, nil
+		}
 	})
 	p.AddResourceConfigurator("yandex_mdb_redis_cluster", func(r *config.Resource) {
 		r.References["network_id"] = config.Reference{

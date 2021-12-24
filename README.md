@@ -36,7 +36,7 @@ curl -sL https://raw.githubusercontent.com/crossplane/crossplane/release-1.5/ins
 Install the provider by using the following command after changing the image tag to the latest release
 
 ```
-kubectl crossplane install provider cr.yandex/crp0kch415f0lke009ft/crossplane/provider-jet-yc:v0.1.6
+kubectl crossplane install provider cr.yandex/crp0kch415f0lke009ft/crossplane/provider-jet-yc:v0.1.8
 ```
 
 ### Setup ProviderConfig
