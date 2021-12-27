@@ -958,6 +958,8 @@ github.com/valyala/quicktemplate v1.7.0/go.mod h1:sqKJnoaOF88V07vkO+9FL8fb9uZg/V
 github.com/valyala/tcplisten v1.0.0/go.mod h1:T0xQ8SeCZGxckz9qRXTfG43PvQ/mcWh7FwZEA7Ioqkc=
 github.com/vaspahomov/terrajet v0.2.1-0.20211223134935-8a430ba9ff4d h1:fgCzKhoYORIAsdqyp4rRvKmZqvUV36kfiFxFn1WQgh4=
 github.com/vaspahomov/terrajet v0.2.1-0.20211223134935-8a430ba9ff4d/go.mod h1:PtluFveO/xgdlUqAiy9KEA9i1Yl/5BYrrfzQDCRt5WM=
+github.com/vaspahomov/terrajet v0.2.1-0.20211227133237-d3f06c64cd49 h1:YlOqptlVYg2fbG+H8f4bkPr7ASbDDi+5GD2yQbOdkPg=
+github.com/vaspahomov/terrajet v0.2.1-0.20211227133237-d3f06c64cd49/go.mod h1:PtluFveO/xgdlUqAiy9KEA9i1Yl/5BYrrfzQDCRt5WM=
 github.com/viki-org/dnscache v0.0.0-20130720023526-c70c1f23c5d8/go.mod h1:dniwbG03GafCjFohMDmz6Zc6oCuiqgH6tGNyXTkHzXE=
 github.com/vmihailenco/msgpack v3.3.3+incompatible/go.mod h1:fy3FlTQTDXWkZ7Bh6AcGMlsjHatGryHQYUTf1ShIgkk=
 github.com/vmihailenco/msgpack v4.0.4+incompatible h1:dSLoQfGFAo3F6OoNhwUmLwVgaUXK79GlxNBwueZn0xI=
