@@ -51,22 +51,22 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
 
-	for i3 := 0; i3 < len(mg.Spec.ForProvider.KmsProvider); i3++ {
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.KMSProvider); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KmsProvider[i3].KeyID),
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KMSProvider[i3].KeyID),
 			Extract:      reference.ExternalName(),
-			Reference:    mg.Spec.ForProvider.KmsProvider[i3].KeyIDRef,
-			Selector:     mg.Spec.ForProvider.KmsProvider[i3].KeyIDSelector,
+			Reference:    mg.Spec.ForProvider.KMSProvider[i3].KeyIDRef,
+			Selector:     mg.Spec.ForProvider.KMSProvider[i3].KeyIDSelector,
 			To: reference.To{
 				List:    &v1alpha11.SymmetricKeyList{},
 				Managed: &v1alpha11.SymmetricKey{},
 			},
 		})
 		if err != nil {
-			return errors.Wrap(err, "mg.Spec.ForProvider.KmsProvider[i3].KeyID")
+			return errors.Wrap(err, "mg.Spec.ForProvider.KMSProvider[i3].KeyID")
 		}
-		mg.Spec.ForProvider.KmsProvider[i3].KeyID = reference.ToPtrValue(rsp.ResolvedValue)
-		mg.Spec.ForProvider.KmsProvider[i3].KeyIDRef = rsp.ResolvedReference
+		mg.Spec.ForProvider.KMSProvider[i3].KeyID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.KMSProvider[i3].KeyIDRef = rsp.ResolvedReference
 
 	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Master); i3++ {

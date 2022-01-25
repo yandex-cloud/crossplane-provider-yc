@@ -38,7 +38,7 @@ type ClusterObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	KmsProvider []KmsProviderObservation `json:"kmsProvider,omitempty" tf:"kms_provider,omitempty"`
+	KMSProvider []KMSProviderObservation `json:"kmsProvider,omitempty" tf:"kms_provider,omitempty"`
 
 	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
 
@@ -71,7 +71,7 @@ type ClusterParameters struct {
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
-	KmsProvider []KmsProviderParameters `json:"kmsProvider,omitempty" tf:"kms_provider,omitempty"`
+	KMSProvider []KMSProviderParameters `json:"kmsProvider,omitempty" tf:"kms_provider,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -131,10 +131,10 @@ type ClusterParameters struct {
 	ServiceIPv6Range *string `json:"serviceIpv6Range,omitempty" tf:"service_ipv6_range,omitempty"`
 }
 
-type KmsProviderObservation struct {
+type KMSProviderObservation struct {
 }
 
-type KmsProviderParameters struct {
+type KMSProviderParameters struct {
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/kms/v1alpha1.SymmetricKey
 	// +kubebuilder:validation:Optional

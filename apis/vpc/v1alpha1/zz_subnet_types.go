@@ -25,10 +25,10 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type DhcpOptionsObservation struct {
+type DHCPOptionsObservation struct {
 }
 
-type DhcpOptionsParameters struct {
+type DHCPOptionsParameters struct {
 
 	// +kubebuilder:validation:Optional
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
@@ -43,7 +43,7 @@ type DhcpOptionsParameters struct {
 type SubnetObservation struct {
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	DhcpOptions []DhcpOptionsObservation `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
+	DHCPOptions []DHCPOptionsObservation `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -53,10 +53,10 @@ type SubnetObservation struct {
 type SubnetParameters struct {
 
 	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+	DHCPOptions []DHCPOptionsParameters `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	DhcpOptions []DhcpOptionsParameters `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional

@@ -25,9 +25,10 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	"github.com/crossplane-contrib/terrajet/pkg/terraform"
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
 	"github.com/crossplane/crossplane-runtime/pkg/ratelimiter"
+
+	"github.com/crossplane/terrajet/pkg/terraform"
 
 	"github.com/yandex-cloud/provider-jet-yc/apis"
 	pconfig "github.com/yandex-cloud/provider-jet-yc/config"

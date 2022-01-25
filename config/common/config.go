@@ -5,8 +5,8 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/crossplane-contrib/terrajet/pkg/config"
-	tjconfig "github.com/crossplane-contrib/terrajet/pkg/config"
+	"github.com/crossplane/terrajet/pkg/config"
+	tjconfig "github.com/crossplane/terrajet/pkg/config"
 
 	"github.com/yandex-cloud/provider-jet-yc/config/resourcemanager"
 )

@@ -20,7 +20,7 @@ import (
 
 	tf "github.com/yandex-cloud/terraform-provider-yandex/yandex"
 
-	"github.com/crossplane-contrib/terrajet/pkg/pipeline"
+	"github.com/crossplane/terrajet/pkg/pipeline"
 
 	"github.com/yandex-cloud/provider-jet-yc/config"
 )

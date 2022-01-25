@@ -19,11 +19,12 @@ package clients
 import (
 	"context"
 
-	"github.com/crossplane-contrib/terrajet/pkg/terraform"
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+
+	"github.com/crossplane/terrajet/pkg/terraform"
 
 	"github.com/yandex-cloud/provider-jet-yc/apis/v1alpha1"
 )

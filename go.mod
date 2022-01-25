@@ -4,9 +4,9 @@ go 1.16
 
 require (
 	github.com/benagricola/crossplane-composition-generator v0.0.0-20210505120457-1b2497dd442b
-	github.com/crossplane-contrib/terrajet v0.2.1
 	github.com/crossplane/crossplane-runtime v0.15.1-0.20211004150827-579c1833b513
 	github.com/crossplane/crossplane-tools v0.0.0-20210916125540-071de511ae8e
+	github.com/crossplane/terrajet v0.3.2
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.8.0
 	github.com/pkg/errors v0.9.1
 	github.com/yandex-cloud/terraform-provider-yandex v0.67.0
@@ -21,5 +21,4 @@ require (
 // Comment out the line below instead of the above, if your Terraform provider
 // uses an old version (<v2) of github.com/hashicorp/terraform-plugin-sdk.
 // replace github.com/hashicorp/terraform-plugin-sdk => github.com/turkenh/terraform-plugin-sdk v1.17.2-patch1
-// replace github.com/crossplane-contrib/terrajet => github.com/vaspahomov/terrajet v0.2.1-0.20211223134935-8a430ba9ff4d
-replace github.com/crossplane-contrib/terrajet => github.com/vaspahomov/terrajet v0.2.1-0.20211227133237-d3f06c64cd49
+replace github.com/crossplane/terrajet => github.com/vaspahomov/terrajet v0.2.1-0.20220125080740-848ebdbf1a26

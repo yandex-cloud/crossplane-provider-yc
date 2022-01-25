@@ -17,7 +17,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/crossplane-contrib/terrajet/pkg/config"
+	"github.com/crossplane/terrajet/pkg/config"
 
 	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
 )

@@ -14,7 +14,7 @@ limitations under the License.
 package iam
 
 import (
-	"github.com/crossplane-contrib/terrajet/pkg/config"
+	"github.com/crossplane/terrajet/pkg/config"
 )
 
 const (

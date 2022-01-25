@@ -31,7 +31,7 @@ type ApplyServerSideEncryptionByDefaultObservation struct {
 type ApplyServerSideEncryptionByDefaultParameters struct {
 
 	// +kubebuilder:validation:Required
-	KmsMasterKeyID *string `json:"kmsMasterKeyId" tf:"kms_master_key_id,omitempty"`
+	KMSMasterKeyID *string `json:"kmsMasterKeyId" tf:"kms_master_key_id,omitempty"`
 
 	// +kubebuilder:validation:Required
 	SseAlgorithm *string `json:"sseAlgorithm" tf:"sse_algorithm,omitempty"`
