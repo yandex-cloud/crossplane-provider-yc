@@ -158,6 +158,15 @@ spec:
                                 type: string
                             type: object
                           type: array
+                        containerRuntime:
+                          items:
+                            properties:
+                              type:
+                                type: string
+                            required:
+                            - type
+                            type: object
+                          type: array
                         metadata:
                           additionalProperties:
                             type: string
@@ -401,6 +410,10 @@ spec:
                     items:
                       properties:
                         bootDisk:
+                          items:
+                            type: object
+                          type: array
+                        containerRuntime:
                           items:
                             type: object
                           type: array

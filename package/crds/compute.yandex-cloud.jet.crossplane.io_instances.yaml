@@ -76,6 +76,9 @@ spec:
                         initializeParams:
                           items:
                             properties:
+                              blockSize:
+                                format: int64
+                                type: integer
                               description:
                                 type: string
                               imageId:

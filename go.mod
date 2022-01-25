@@ -7,9 +7,9 @@ require (
 	github.com/crossplane/crossplane-runtime v0.15.1-0.20211004150827-579c1833b513
 	github.com/crossplane/crossplane-tools v0.0.0-20210916125540-071de511ae8e
 	github.com/crossplane/terrajet v0.3.2
-	github.com/hashicorp/terraform-plugin-sdk/v2 v2.8.0
+	github.com/hashicorp/terraform-plugin-sdk/v2 v2.10.0
 	github.com/pkg/errors v0.9.1
-	github.com/yandex-cloud/terraform-provider-yandex v0.67.0
+	github.com/yandex-cloud/terraform-provider-yandex v0.70.0
 	go.uber.org/multierr v1.7.0 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/apimachinery v0.22.0

@@ -89,6 +89,9 @@ type InitializeParamsObservation struct {
 type InitializeParamsParameters struct {
 
 	// +kubebuilder:validation:Optional
+	BlockSize *int64 `json:"blockSize,omitempty" tf:"block_size,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +kubebuilder:validation:Optional

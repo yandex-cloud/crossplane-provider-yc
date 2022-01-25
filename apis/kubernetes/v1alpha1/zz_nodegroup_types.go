@@ -81,6 +81,15 @@ type BootDiskParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
+type ContainerRuntimeObservation struct {
+}
+
+type ContainerRuntimeParameters struct {
+
+	// +kubebuilder:validation:Required
+	Type *string `json:"type" tf:"type,omitempty"`
+}
+
 type DeployPolicyObservation struct {
 }
 
@@ -105,6 +114,8 @@ type FixedScaleParameters struct {
 type InstanceTemplateObservation struct {
 	BootDisk []BootDiskObservation `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
 
+	ContainerRuntime []ContainerRuntimeObservation `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
+
 	NetworkInterface []NetworkInterfaceObservation `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
 
 	PlacementPolicy []PlacementPolicyObservation `json:"placementPolicy,omitempty" tf:"placement_policy,omitempty"`
@@ -118,6 +129,9 @@ type InstanceTemplateParameters struct {
 
 	// +kubebuilder:validation:Optional
 	BootDisk []BootDiskParameters `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ContainerRuntime []ContainerRuntimeParameters `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`

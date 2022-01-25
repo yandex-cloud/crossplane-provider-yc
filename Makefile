@@ -6,9 +6,9 @@ PROJECT_REPO := github.com/yandex-cloud/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION := 1.0.11
 export TERRAFORM_PROVIDER_SOURCE := integrations/yandex
-export TERRAFORM_PROVIDER_VERSION := 0.67.0
+export TERRAFORM_PROVIDER_VERSION := 0.70.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-yandex
-export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://github.com/yandex-cloud/terraform-provider-yandex/releases/download/v0.67.0
+export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://github.com/yandex-cloud/terraform-provider-yandex/releases/download/v$(TERRAFORM_PROVIDER_VERSION)
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
