@@ -30,7 +30,8 @@ kubectl get all -n crossplane-system
 Install crossplane CLI:
 
 ```shell
-curl -sL https://raw.githubusercontent.com/crossplane/crossplane/release-1.5/install.sh | sh
+curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | sh
+sudo mv kubectl-crossplane $(dirname $(which kubectl))
 ```
 
 Install the provider by using the following command after changing the image tag to the latest release
