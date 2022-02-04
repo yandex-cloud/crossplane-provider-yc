@@ -46,7 +46,10 @@ import (
 	folderiammember "github.com/yandex-cloud/provider-jet-yc/internal/controller/resourcemanager/folderiammember"
 	bucket "github.com/yandex-cloud/provider-jet-yc/internal/controller/storage/bucket"
 	object "github.com/yandex-cloud/provider-jet-yc/internal/controller/storage/object"
+	defaultsecuritygroup "github.com/yandex-cloud/provider-jet-yc/internal/controller/vpc/defaultsecuritygroup"
 	network "github.com/yandex-cloud/provider-jet-yc/internal/controller/vpc/network"
+	securitygroup "github.com/yandex-cloud/provider-jet-yc/internal/controller/vpc/securitygroup"
+	securitygrouprule "github.com/yandex-cloud/provider-jet-yc/internal/controller/vpc/securitygrouprule"
 	subnet "github.com/yandex-cloud/provider-jet-yc/internal/controller/vpc/subnet"
 )
 
@@ -75,7 +78,10 @@ func Setup(mgr ctrl.Manager, l logging.Logger, wl workqueue.RateLimiter, ps terr
 		folderiammember.Setup,
 		bucket.Setup,
 		object.Setup,
+		defaultsecuritygroup.Setup,
 		network.Setup,
+		securitygroup.Setup,
+		securitygrouprule.Setup,
 		subnet.Setup,
 	} {
 		if err := setup(mgr, l, wl, ps, ws, cfg, concurrency); err != nil {

@@ -29,4 +29,19 @@ func Configure(p *config.Provider) {
 			Type: "Network",
 		}
 	})
+	p.AddResourceConfigurator("yandex_vpc_default_security_group", func(r *config.Resource) {
+		r.References["network_id"] = config.Reference{
+			Type: "Network",
+		}
+	})
+	p.AddResourceConfigurator("yandex_vpc_security_group", func(r *config.Resource) {
+		r.References["network_id"] = config.Reference{
+			Type: "Network",
+		}
+	})
+	p.AddResourceConfigurator("yandex_vpc_security_group_rule", func(r *config.Resource) {
+		r.References["security_group_id"] = config.Reference{
+			Type: "SecurityGroup",
+		}
+	})
 }
