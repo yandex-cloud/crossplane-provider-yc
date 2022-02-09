@@ -1,0 +1,34 @@
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: DefaultSecurityGroup
+metadata:
+  name: example-sg
+spec:
+  forProvider:
+    name: example-sg
+    folderIdRef:
+      name: example-folder
+    networkIDRef:
+      name: example-net
+    ingress:
+      - protocol: TCP
+        description: "rule1 description"
+        v4CidrBlocks:
+          - "10.0.1.0/24"
+          - "10.0.2.0/24"
+        port: 8080
+    egress:
+      - protocol: ANY
+        description: "rule2 description"
+        v4CidrBlocks:
+          - "10.0.1.0/24"
+          - "10.0.2.0/24"
+        fromPort: 8090
+        toPort: 8099
+      - protocol: UDP
+        description: "rule3 description"
+        v4CidrBlocks:
+          - "10.0.1.0/24"
+        fromPort: 8090
+        toPort: 8099
+  providerConfigRef:
+    name: example

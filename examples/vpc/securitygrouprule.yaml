@@ -1,0 +1,20 @@
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: SecurityGroupRule
+metadata:
+  name: example-sg-rule
+spec:
+  forProvider:
+    name: example-sg-rule
+    folderIdRef:
+      name: example-folder
+    securityGroupIDRef:
+      name: example-sg
+    direction: ingress
+    v4CidrBlocks:
+      - "10.0.1.0/24"
+      - "10.0.2.0/24"
+    port: 8080
+    protocol: TCP
+    description: "rule1 description"
+  providerConfigRef:
+    name: example

@@ -1,10 +1,11 @@
-apiVersion: resourcemanager.yandex-cloud.jet.crossplane.io/v1alpha1
-kind: FolderIamMember
+apiVersion: iam.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: FolderIamBinding
 metadata:
   name: crossplane-preprod
 spec:
   forProvider:
-    member: serviceAccount:<sa-id>
+    serviceAccountRefs:
+      - name: example-sa
     role: editor
     folderIdRef:
       name: example-folder
