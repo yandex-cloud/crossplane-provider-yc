@@ -22,8 +22,94 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
 	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
+	iam "github.com/yandex-cloud/provider-jet-yc/config/iam"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
+
+// ResolveReferences of this FolderIAMBinding.
+func (mg *FolderIAMBinding) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.FolderIDRef,
+		Selector:     mg.Spec.ForProvider.FolderIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.FolderList{},
+			Managed: &v1alpha1.Folder{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
+	}
+	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Members),
+		Extract:       iam.ServiceAccountRefValue(),
+		References:    mg.Spec.ForProvider.ServiceAccountsRef,
+		Selector:      mg.Spec.ForProvider.ServiceAccountsSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Members")
+	}
+	mg.Spec.ForProvider.Members = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.ServiceAccountsRef = mrsp.ResolvedReferences
+
+	return nil
+}
+
+// ResolveReferences of this FolderIAMMember.
+func (mg *FolderIAMMember) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.FolderIDRef,
+		Selector:     mg.Spec.ForProvider.FolderIDSelector,
+		To: reference.To{
+			List:    &v1alpha1.FolderList{},
+			Managed: &v1alpha1.Folder{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
+	}
+	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Member),
+		Extract:      iam.ServiceAccountRefValue(),
+		Reference:    mg.Spec.ForProvider.ServiceAccountRef,
+		Selector:     mg.Spec.ForProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Member")
+	}
+	mg.Spec.ForProvider.Member = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ServiceAccountRef = rsp.ResolvedReference
+
+	return nil
+}
 
 // ResolveReferences of this ServiceAccount.
 func (mg *ServiceAccount) ResolveReferences(ctx context.Context, c client.Reader) error {
@@ -57,6 +143,22 @@ func (mg *ServiceAccountIAMMember) ResolveReferences(ctx context.Context, c clie
 
 	var rsp reference.ResolutionResponse
 	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Member),
+		Extract:      iam.ServiceAccountRefValue(),
+		Reference:    mg.Spec.ForProvider.ServiceAccountRef,
+		Selector:     mg.Spec.ForProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Member")
+	}
+	mg.Spec.ForProvider.Member = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ServiceAccountRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ServiceAccountID),

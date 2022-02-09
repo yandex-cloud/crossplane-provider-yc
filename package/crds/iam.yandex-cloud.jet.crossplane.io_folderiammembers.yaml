@@ -4,18 +4,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.6.2
   creationTimestamp: null
-  name: folderiambindings.resourcemanager.yandex-cloud.jet.crossplane.io
+  name: folderiammembers.iam.yandex-cloud.jet.crossplane.io
 spec:
-  group: resourcemanager.yandex-cloud.jet.crossplane.io
+  group: iam.yandex-cloud.jet.crossplane.io
   names:
     categories:
     - crossplane
     - managed
     - yandex-cloudjet
-    kind: FolderIAMBinding
-    listKind: FolderIAMBindingList
-    plural: folderiambindings
-    singular: folderiambinding
+    kind: FolderIAMMember
+    listKind: FolderIAMMemberList
+    plural: folderiammembers
+    singular: folderiammember
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -34,7 +34,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: FolderIAMBinding is the Schema for the FolderIAMBindings API
+        description: FolderIAMMember is the Schema for the FolderIAMMembers API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -49,7 +49,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: FolderIAMBindingSpec defines the desired state of FolderIAMBinding
+            description: FolderIAMMemberSpec defines the desired state of FolderIAMMember
             properties:
               deletionPolicy:
                 default: Delete
@@ -87,17 +87,37 @@ spec:
                           is selected.
                         type: object
                     type: object
-                  members:
-                    items:
-                      type: string
-                    type: array
+                  member:
+                    type: string
                   role:
                     type: string
+                  serviceAccountRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  serviceAccountSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                    type: object
                   sleepAfter:
                     format: int64
                     type: integer
                 required:
-                - members
                 - role
                 type: object
               providerConfigRef:
@@ -145,7 +165,7 @@ spec:
             - forProvider
             type: object
           status:
-            description: FolderIAMBindingStatus defines the observed state of FolderIAMBinding.
+            description: FolderIAMMemberStatus defines the observed state of FolderIAMMember.
             properties:
               atProvider:
                 properties:

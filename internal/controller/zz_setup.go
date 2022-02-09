@@ -30,6 +30,8 @@ import (
 	repository "github.com/yandex-cloud/provider-jet-yc/internal/controller/container/repository"
 	recordset "github.com/yandex-cloud/provider-jet-yc/internal/controller/dns/recordset"
 	zone "github.com/yandex-cloud/provider-jet-yc/internal/controller/dns/zone"
+	folderiambinding "github.com/yandex-cloud/provider-jet-yc/internal/controller/iam/folderiambinding"
+	folderiammember "github.com/yandex-cloud/provider-jet-yc/internal/controller/iam/folderiammember"
 	serviceaccount "github.com/yandex-cloud/provider-jet-yc/internal/controller/iam/serviceaccount"
 	serviceaccountiammember "github.com/yandex-cloud/provider-jet-yc/internal/controller/iam/serviceaccountiammember"
 	serviceaccountkey "github.com/yandex-cloud/provider-jet-yc/internal/controller/iam/serviceaccountkey"
@@ -42,8 +44,6 @@ import (
 	rediscluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/rediscluster"
 	providerconfig "github.com/yandex-cloud/provider-jet-yc/internal/controller/providerconfig"
 	folder "github.com/yandex-cloud/provider-jet-yc/internal/controller/resourcemanager/folder"
-	folderiambinding "github.com/yandex-cloud/provider-jet-yc/internal/controller/resourcemanager/folderiambinding"
-	folderiammember "github.com/yandex-cloud/provider-jet-yc/internal/controller/resourcemanager/folderiammember"
 	bucket "github.com/yandex-cloud/provider-jet-yc/internal/controller/storage/bucket"
 	object "github.com/yandex-cloud/provider-jet-yc/internal/controller/storage/object"
 	defaultsecuritygroup "github.com/yandex-cloud/provider-jet-yc/internal/controller/vpc/defaultsecuritygroup"
@@ -62,6 +62,8 @@ func Setup(mgr ctrl.Manager, l logging.Logger, wl workqueue.RateLimiter, ps terr
 		repository.Setup,
 		recordset.Setup,
 		zone.Setup,
+		folderiambinding.Setup,
+		folderiammember.Setup,
 		serviceaccount.Setup,
 		serviceaccountiammember.Setup,
 		serviceaccountkey.Setup,
@@ -74,8 +76,6 @@ func Setup(mgr ctrl.Manager, l logging.Logger, wl workqueue.RateLimiter, ps terr
 		rediscluster.Setup,
 		providerconfig.Setup,
 		folder.Setup,
-		folderiambinding.Setup,
-		folderiammember.Setup,
 		bucket.Setup,
 		object.Setup,
 		defaultsecuritygroup.Setup,

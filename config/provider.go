@@ -27,6 +27,7 @@ import (
 	"github.com/yandex-cloud/provider-jet-yc/config/iam"
 	"github.com/yandex-cloud/provider-jet-yc/config/kubernetes"
 	"github.com/yandex-cloud/provider-jet-yc/config/mdb"
+	"github.com/yandex-cloud/provider-jet-yc/config/resourcemanager"
 	"github.com/yandex-cloud/provider-jet-yc/config/storage"
 	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
 )
@@ -77,6 +78,7 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 		mdb.Configure,
 		storage.Configure,
 		vpc.Configure,
+		resourcemanager.Configure,
 	} {
 		configure(pc)
 	}

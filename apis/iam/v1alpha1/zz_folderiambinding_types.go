@@ -31,7 +31,7 @@ type FolderIAMBindingObservation struct {
 
 type FolderIAMBindingParameters struct {
 
-	// +crossplane:generate:reference:type=Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -41,11 +41,21 @@ type FolderIAMBindingParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// +kubebuilder:validation:Required
-	Members []*string `json:"members" tf:"members,omitempty"`
+	// +crossplane:generate:reference:type=ServiceAccount
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/iam.ServiceAccountRefValue()
+	// +crossplane:generate:reference:refFieldName=ServiceAccountsRef
+	// +crossplane:generate:reference:selectorFieldName=ServiceAccountsSelector
+	// +kubebuilder:validation:Optional
+	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
 	// +kubebuilder:validation:Required
 	Role *string `json:"role" tf:"role,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ServiceAccountsRef []v1.Reference `json:"serviceAccountsRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	ServiceAccountsSelector *v1.Selector `json:"serviceAccountsSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	SleepAfter *int64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`

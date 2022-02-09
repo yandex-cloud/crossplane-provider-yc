@@ -13,7 +13,37 @@ limitations under the License.
 
 package resourcemanager
 
+import (
+	"fmt"
+
+	"github.com/crossplane/terrajet/pkg/config"
+
+	"github.com/yandex-cloud/provider-jet-yc/config/iam"
+)
+
 const (
 	// ApisPackagePath is the golang path for this package.
 	ApisPackagePath = "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
 )
+
+// Configure adds configurations for resourcemanager group.
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("yandex_resourcemanager_folder_iam_member", func(r *config.Resource) {
+		r.ShortGroup = "iam"
+		r.References["member"] = config.Reference{
+			Type:              "ServiceAccount",
+			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
+			RefFieldName:      "ServiceAccountRef",
+			SelectorFieldName: "ServiceAccountSelector",
+		}
+	})
+	p.AddResourceConfigurator("yandex_resourcemanager_folder_iam_binding", func(r *config.Resource) {
+		r.ShortGroup = "iam"
+		r.References["members"] = config.Reference{
+			Type:              "ServiceAccount",
+			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
+			RefFieldName:      "ServiceAccountsRef",
+			SelectorFieldName: "ServiceAccountsSelector",
+		}
+	})
+}

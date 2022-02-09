@@ -31,8 +31,12 @@ type ServiceAccountIAMMemberObservation struct {
 
 type ServiceAccountIAMMemberParameters struct {
 
-	// +kubebuilder:validation:Required
-	Member *string `json:"member" tf:"member,omitempty"`
+	// +crossplane:generate:reference:type=ServiceAccount
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/iam.ServiceAccountRefValue()
+	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
+	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
+	// +kubebuilder:validation:Optional
+	Member *string `json:"member,omitempty" tf:"member,omitempty"`
 
 	// +kubebuilder:validation:Required
 	Role *string `json:"role" tf:"role,omitempty"`
@@ -46,6 +50,12 @@ type ServiceAccountIAMMemberParameters struct {
 
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	ServiceAccountRef *v1.Reference `json:"serviceAccountRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	ServiceAccountSelector *v1.Selector `json:"serviceAccountSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	SleepAfter *int64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`

@@ -22,7 +22,10 @@ func DefaultResourceFn(name string, terraformResource *schema.Resource, opts ...
 }
 
 func defaultFolderIDFn(r *tjconfig.Resource) {
-	if r.ShortGroup != "resourcemanager" {
+	if r.ShortGroup != "resourcemanager" ||
+		// Fix for group change from "resourcemanager" to "iam"
+		r.Name == "yandex_resourcemanager_folder_iam_member" ||
+		r.Name == "yandex_resourcemanager_folder_iam_binding" {
 		r.References["folder_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
 		}
