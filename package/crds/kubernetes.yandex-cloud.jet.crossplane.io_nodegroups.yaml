@@ -329,14 +329,9 @@ spec:
                     type: array
                   version:
                     type: string
-                  versionInfo:
-                    items:
-                      type: object
-                    type: array
                 required:
                 - instanceTemplate
                 - scalePolicy
-                - versionInfo
                 type: object
               providerConfigRef:
                 default:

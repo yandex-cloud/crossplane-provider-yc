@@ -231,9 +231,6 @@ type MasterParameters struct {
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 
-	// +kubebuilder:validation:Required
-	VersionInfo []VersionInfoParameters `json:"versionInfo" tf:"version_info,omitempty"`
-
 	// +kubebuilder:validation:Optional
 	Zonal []ZonalParameters `json:"zonal,omitempty" tf:"zonal,omitempty"`
 }

@@ -286,9 +286,6 @@ type NodeGroupParameters struct {
 
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
-
-	// +kubebuilder:validation:Required
-	VersionInfo []NodeGroupVersionInfoParameters `json:"versionInfo" tf:"version_info,omitempty"`
 }
 
 type NodeGroupVersionInfoObservation struct {

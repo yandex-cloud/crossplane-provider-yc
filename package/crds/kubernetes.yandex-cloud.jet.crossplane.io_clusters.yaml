@@ -204,10 +204,6 @@ spec:
                           type: array
                         version:
                           type: string
-                        versionInfo:
-                          items:
-                            type: object
-                          type: array
                         zonal:
                           items:
                             properties:
@@ -241,8 +237,6 @@ spec:
                                 type: string
                             type: object
                           type: array
-                      required:
-                      - versionInfo
                       type: object
                     type: array
                   name:

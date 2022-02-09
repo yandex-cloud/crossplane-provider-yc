@@ -1119,11 +1119,6 @@ func (in *MasterParameters) DeepCopyInto(out *MasterParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.VersionInfo != nil {
-		in, out := &in.VersionInfo, &out.VersionInfo
-		*out = make([]VersionInfoParameters, len(*in))
-		copy(*out, *in)
-	}
 	if in.Zonal != nil {
 		in, out := &in.Zonal, &out.Zonal
 		*out = make([]ZonalParameters, len(*in))
@@ -1565,11 +1560,6 @@ func (in *NodeGroupParameters) DeepCopyInto(out *NodeGroupParameters) {
 		in, out := &in.Version, &out.Version
 		*out = new(string)
 		**out = **in
-	}
-	if in.VersionInfo != nil {
-		in, out := &in.VersionInfo, &out.VersionInfo
-		*out = make([]NodeGroupVersionInfoParameters, len(*in))
-		copy(*out, *in)
 	}
 }
 
