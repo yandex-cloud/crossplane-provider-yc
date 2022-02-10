@@ -64,7 +64,7 @@ func ServiceAccountRefValue() reference.ExtractValueFn {
 	return func(mg resource.Managed) string {
 		return func(mg metav1.Object) string {
 			externalName := meta.GetExternalName(mg)
-			return fmt.Sprintf("serviceaccount:%s", externalName)
+			return fmt.Sprintf("serviceAccount:%s", externalName)
 		}(mg)
 	}
 }
