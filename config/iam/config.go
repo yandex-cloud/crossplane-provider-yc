@@ -20,7 +20,6 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/reference"
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/crossplane/terrajet/pkg/config"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 const (
@@ -62,9 +61,9 @@ func Configure(p *config.Provider) {
 // ServiceAccountRefValue returns an extractor that returns templated value with service account id of ServiceAccount.
 func ServiceAccountRefValue() reference.ExtractValueFn {
 	return func(mg resource.Managed) string {
-		return func(mg metav1.Object) string {
-			externalName := meta.GetExternalName(mg)
+		if externalName := meta.GetExternalName(mg); externalName != "" {
 			return fmt.Sprintf("serviceAccount:%s", externalName)
-		}(mg)
+		}
+		return ""
 	}
 }
