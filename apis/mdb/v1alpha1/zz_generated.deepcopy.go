@@ -864,6 +864,16 @@ func (in *MongodbClusterParameters) DeepCopyInto(out *MongodbClusterParameters) 
 			}
 		}
 	}
+	if in.SecurityGroupIdsRefs != nil {
+		in, out := &in.SecurityGroupIdsRefs, &out.SecurityGroupIdsRefs
+		*out = make([]v1.Reference, len(*in))
+		copy(*out, *in)
+	}
+	if in.SecurityGroupIdsSelector != nil {
+		in, out := &in.SecurityGroupIdsSelector, &out.SecurityGroupIdsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.User != nil {
 		in, out := &in.User, &out.User
 		*out = make([]UserParameters, len(*in))
@@ -1491,6 +1501,16 @@ func (in *PostgresqlClusterParameters) DeepCopyInto(out *PostgresqlClusterParame
 			}
 		}
 	}
+	if in.SecurityGroupIdsRefs != nil {
+		in, out := &in.SecurityGroupIdsRefs, &out.SecurityGroupIdsRefs
+		*out = make([]v1.Reference, len(*in))
+		copy(*out, *in)
+	}
+	if in.SecurityGroupIdsSelector != nil {
+		in, out := &in.SecurityGroupIdsSelector, &out.SecurityGroupIdsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.User != nil {
 		in, out := &in.User, &out.User
 		*out = make([]PostgresqlClusterUserParameters, len(*in))
@@ -2021,6 +2041,16 @@ func (in *RedisClusterParameters) DeepCopyInto(out *RedisClusterParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.SecurityGroupIdsRefs != nil {
+		in, out := &in.SecurityGroupIdsRefs, &out.SecurityGroupIdsRefs
+		*out = make([]v1.Reference, len(*in))
+		copy(*out, *in)
+	}
+	if in.SecurityGroupIdsSelector != nil {
+		in, out := &in.SecurityGroupIdsSelector, &out.SecurityGroupIdsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Sharded != nil {
 		in, out := &in.Sharded, &out.Sharded

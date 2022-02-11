@@ -33,6 +33,7 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -90,6 +91,24 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 
 			}
 		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Master); i3++ {
+		mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+			CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Master[i3].SecurityGroupIds),
+			Extract:       reference.ExternalName(),
+			References:    mg.Spec.ForProvider.Master[i3].SecurityGroupIdsRefs,
+			Selector:      mg.Spec.ForProvider.Master[i3].SecurityGroupIdsSelector,
+			To: reference.To{
+				List:    &v1alpha12.SecurityGroupList{},
+				Managed: &v1alpha12.SecurityGroup{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.Master[i3].SecurityGroupIds")
+		}
+		mg.Spec.ForProvider.Master[i3].SecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+		mg.Spec.ForProvider.Master[i3].SecurityGroupIdsRefs = mrsp.ResolvedReferences
+
 	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Master); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Master[i3].Zonal); i4++ {
@@ -206,6 +225,26 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 	mg.Spec.ForProvider.ClusterID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ClusterIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceTemplate); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface); i4++ {
+			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+				CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SecurityGroupIds),
+				Extract:       reference.ExternalName(),
+				References:    mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SecurityGroupIdsRefs,
+				Selector:      mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SecurityGroupIdsSelector,
+				To: reference.To{
+					List:    &v1alpha12.SecurityGroupList{},
+					Managed: &v1alpha12.SecurityGroup{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SecurityGroupIds")
+			}
+			mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+			mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SecurityGroupIdsRefs = mrsp.ResolvedReferences
+
+		}
+	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.InstanceTemplate); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface); i4++ {
 			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{

@@ -34,6 +34,9 @@ func Configure(p *config.Provider) {
 		r.References["network_interface.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
+		r.References["network_interface.security_group_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
+		}
 		r.UseAsync = true
 	})
 }

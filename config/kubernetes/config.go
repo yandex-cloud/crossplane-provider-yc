@@ -41,6 +41,9 @@ func Configure(p *config.Provider) {
 		r.References["master.zonal.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
+		r.References["master.security_group_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
+		}
 		r.References["kms_provider.key_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", kms.ApisPackagePath, "SymmetricKey"),
 		}
@@ -55,6 +58,9 @@ func Configure(p *config.Provider) {
 		}
 		r.References["instance_template.network_interface.subnet_ids"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
+		}
+		r.References["instance_template.network_interface.security_group_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
 		}
 		r.UseAsync = true
 	})

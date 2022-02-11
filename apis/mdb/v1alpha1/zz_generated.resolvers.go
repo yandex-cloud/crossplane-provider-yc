@@ -31,6 +31,7 @@ func (mg *MongodbCluster) ResolveReferences(ctx context.Context, c client.Reader
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -82,6 +83,22 @@ func (mg *MongodbCluster) ResolveReferences(ctx context.Context, c client.Reader
 	}
 	mg.Spec.ForProvider.NetworkID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NetworkIDRef = rsp.ResolvedReference
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.SecurityGroupIds),
+		Extract:       reference.ExternalName(),
+		References:    mg.Spec.ForProvider.SecurityGroupIdsRefs,
+		Selector:      mg.Spec.ForProvider.SecurityGroupIdsSelector,
+		To: reference.To{
+			List:    &v1alpha11.SecurityGroupList{},
+			Managed: &v1alpha11.SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SecurityGroupIds")
+	}
+	mg.Spec.ForProvider.SecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.SecurityGroupIdsRefs = mrsp.ResolvedReferences
 
 	return nil
 }
@@ -91,6 +108,7 @@ func (mg *PostgresqlCluster) ResolveReferences(ctx context.Context, c client.Rea
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -142,6 +160,22 @@ func (mg *PostgresqlCluster) ResolveReferences(ctx context.Context, c client.Rea
 	}
 	mg.Spec.ForProvider.NetworkID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NetworkIDRef = rsp.ResolvedReference
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.SecurityGroupIds),
+		Extract:       reference.ExternalName(),
+		References:    mg.Spec.ForProvider.SecurityGroupIdsRefs,
+		Selector:      mg.Spec.ForProvider.SecurityGroupIdsSelector,
+		To: reference.To{
+			List:    &v1alpha11.SecurityGroupList{},
+			Managed: &v1alpha11.SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SecurityGroupIds")
+	}
+	mg.Spec.ForProvider.SecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.SecurityGroupIdsRefs = mrsp.ResolvedReferences
 
 	return nil
 }
@@ -151,6 +185,7 @@ func (mg *RedisCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -202,6 +237,22 @@ func (mg *RedisCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 	}
 	mg.Spec.ForProvider.NetworkID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.NetworkIDRef = rsp.ResolvedReference
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.SecurityGroupIds),
+		Extract:       reference.ExternalName(),
+		References:    mg.Spec.ForProvider.SecurityGroupIdsRefs,
+		Selector:      mg.Spec.ForProvider.SecurityGroupIdsSelector,
+		To: reference.To{
+			List:    &v1alpha11.SecurityGroupList{},
+			Managed: &v1alpha11.SecurityGroup{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SecurityGroupIds")
+	}
+	mg.Spec.ForProvider.SecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.SecurityGroupIdsRefs = mrsp.ResolvedReferences
 
 	return nil
 }

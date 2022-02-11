@@ -221,6 +221,9 @@ func Configure(p *config.Provider) {
 		r.References["host.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
+		r.References["security_group_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
+		}
 		r.UseAsync = true
 		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
 			return postgresqlConnDetails(attr), nil
@@ -233,6 +236,9 @@ func Configure(p *config.Provider) {
 		r.References["host.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
+		r.References["security_group_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
+		}
 		r.UseAsync = true
 		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
 			return redisConnDetails(attr), nil
@@ -244,6 +250,9 @@ func Configure(p *config.Provider) {
 		}
 		r.References["host.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
+		}
+		r.References["security_group_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
 		}
 		r.UseAsync = true
 		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {

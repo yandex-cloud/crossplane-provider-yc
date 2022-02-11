@@ -32,6 +32,7 @@ func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) erro
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -50,6 +51,24 @@ func (mg *Instance) ResolveReferences(ctx context.Context, c client.Reader) erro
 	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.NetworkInterface); i3++ {
+		mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+			CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.NetworkInterface[i3].SecurityGroupIds),
+			Extract:       reference.ExternalName(),
+			References:    mg.Spec.ForProvider.NetworkInterface[i3].SecurityGroupIdsRefs,
+			Selector:      mg.Spec.ForProvider.NetworkInterface[i3].SecurityGroupIdsSelector,
+			To: reference.To{
+				List:    &v1alpha11.SecurityGroupList{},
+				Managed: &v1alpha11.SecurityGroup{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.NetworkInterface[i3].SecurityGroupIds")
+		}
+		mg.Spec.ForProvider.NetworkInterface[i3].SecurityGroupIds = reference.ToPtrValues(mrsp.ResolvedValues)
+		mg.Spec.ForProvider.NetworkInterface[i3].SecurityGroupIdsRefs = mrsp.ResolvedReferences
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.NetworkInterface); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NetworkInterface[i3].SubnetID),
