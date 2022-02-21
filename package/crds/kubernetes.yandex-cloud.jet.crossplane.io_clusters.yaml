@@ -63,12 +63,19 @@ spec:
               forProvider:
                 properties:
                   clusterIpv4Range:
+                    description: (Optional) CIDR block. IP range for allocating pod
+                      addresses.
                     type: string
                   clusterIpv6Range:
+                    description: (Optional) Identical to cluster_ipv4_range but for
+                      IPv6 protocol.
                     type: string
                   description:
+                    description: (Optional) A description of the Kubernetes cluster.
                     type: string
                   folderId:
+                    description: (Optional) The ID of the folder that the Kubernetes
+                      cluster belongs to.
                     type: string
                   folderIdRef:
                     description: A Reference to a named object.
@@ -94,9 +101,11 @@ spec:
                         type: object
                     type: object
                   kmsProvider:
+                    description: (Optional) cluster KMS provider parameters.
                     items:
                       properties:
                         keyId:
+                          description: KMS key ID.
                           type: string
                         keyIdRef:
                           description: A Reference to a named object.
@@ -127,16 +136,28 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
+                    description: (Optional) A set of key/value label pairs to assign
+                      to the Kubernetes cluster.
                     type: object
                   master:
+                    description: Kubernetes master configuration options. The structure
+                      is documented below.
                     items:
                       properties:
                         maintenancePolicy:
+                          description: (Optional) (Computed) Maintenance policy for
+                            Kubernetes master.
                           items:
                             properties:
                               autoUpgrade:
+                                description: (Required) Boolean flag that specifies
+                                  if master can be upgraded automatically. When omitted,
+                                  default value is TRUE.
                                 type: boolean
                               maintenanceWindow:
+                                description: (Optional) (Computed) This structure
+                                  specifies maintenance window, when update for master
+                                  is allowed. When omitted, it defaults to any time.
                                 items:
                                   properties:
                                     day:
@@ -155,14 +176,25 @@ spec:
                             type: object
                           type: array
                         publicIp:
+                          description: (Optional) (Computed) Boolean flag. When `true`,
+                            Kubernetes master will have visible ipv4 address.
                           type: boolean
                         regional:
+                          description: (Optional) Initialize parameters for Regional
+                            Master (highly available master). The structure is documented
+                            below.
                           items:
                             properties:
                               location:
+                                description: Array of locations, where master instances
+                                  will be allocated. The structure is documented below.
                                 items:
                                   properties:
                                     subnetId:
+                                      description: (Optional) ID of the subnet. If
+                                        no ID is specified, and there only one subnet
+                                        in specified zone, an address in this subnet
+                                        will be allocated.
                                       type: string
                                     subnetIdRef:
                                       description: A Reference to a named object.
@@ -189,16 +221,23 @@ spec:
                                           type: object
                                       type: object
                                     zone:
+                                      description: (Optional) ID of the availability
+                                        zone.
                                       type: string
                                   type: object
                                 type: array
                               region:
+                                description: (Required) Name of availability region
+                                  (e.g. "ru-central1"), where master instances will
+                                  be allocated.
                                 type: string
                             required:
                             - region
                             type: object
                           type: array
                         securityGroupIds:
+                          description: (Optional) List of security group IDs to which
+                            the Kubernetes cluster belongs.
                           items:
                             type: string
                           type: array
@@ -229,11 +268,19 @@ spec:
                               type: object
                           type: object
                         version:
+                          description: (Optional) (Computed) Version of Kubernetes
+                            that will be used for master.
                           type: string
                         zonal:
+                          description: (Optional) Initialize parameters for Zonal
+                            Master (single node master). The structure is documented
+                            below.
                           items:
                             properties:
                               subnetId:
+                                description: (Optional) ID of the subnet. If no ID
+                                  is specified, and there only one subnet in specified
+                                  zone, an address in this subnet will be allocated.
                                 type: string
                               subnetIdRef:
                                 description: A Reference to a named object.
@@ -260,14 +307,17 @@ spec:
                                     type: object
                                 type: object
                               zone:
+                                description: (Optional) ID of the availability zone.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   name:
+                    description: (Optional) Name of a specific Kubernetes cluster.
                     type: string
                   networkId:
+                    description: (Optional) The ID of the cluster network.
                     type: string
                   networkIdRef:
                     description: A Reference to a named object.
@@ -293,20 +343,31 @@ spec:
                         type: object
                     type: object
                   networkImplementation:
+                    description: (Optional) Network Implementation options. The structure
+                      is documented below.
                     items:
                       properties:
                         cilium:
+                          description: (Optional) Cilium network implementation configuration.
+                            No options exist.
                           items:
                             type: object
                           type: array
                       type: object
                     type: array
                   networkPolicyProvider:
+                    description: '(Optional) Network policy provider for the cluster.
+                      Possible values: `CALICO`.'
                     type: string
                   nodeIpv4CidrMaskSize:
+                    description: (Optional) Size of the masks that are assigned to
+                      each node in the cluster. Effectively limits maximum number
+                      of pods for each node.
                     format: int64
                     type: integer
                   nodeServiceAccountId:
+                    description: Service account to be used by the worker nodes of
+                      the Kubernetes cluster
                     type: string
                   nodeServiceAccountIdRef:
                     description: A Reference to a named object.
@@ -332,8 +393,11 @@ spec:
                         type: object
                     type: object
                   releaseChannel:
+                    description: Cluster release channel.
                     type: string
                   serviceAccountId:
+                    description: Service account to be used for provisioning Compute
+                      Cloud and VPC resources
                     type: string
                   serviceAccountIdRef:
                     description: A Reference to a named object.
@@ -359,8 +423,12 @@ spec:
                         type: object
                     type: object
                   serviceIpv4Range:
+                    description: (Optional) CIDR block. IP range Kubernetes service
+                      Kubernetes cluster
                     type: string
                   serviceIpv6Range:
+                    description: (Optional) Identical to service_ipv4_range but for
+                      IPv6 protocol.
                     type: string
                 required:
                 - master
@@ -415,77 +483,122 @@ spec:
               atProvider:
                 properties:
                   createdAt:
+                    description: (Computed) The Kubernetes cluster creation timestamp.
                     type: string
                   health:
+                    description: (Computed) Health of the Kubernetes cluster.
                     type: string
                   id:
                     type: string
                   kmsProvider:
+                    description: (Optional) cluster KMS provider parameters.
                     items:
                       type: object
                     type: array
                   logGroupId:
+                    description: Log group where cluster stores cluster system logs,
+                      like audit, events, or controlplane logs.
                     type: string
                   master:
+                    description: Kubernetes master configuration options. The structure
+                      is documented below.
                     items:
                       properties:
                         clusterCaCertificate:
+                          description: (Computed) PEM-encoded public certificate that
+                            is the root of trust for the Kubernetes cluster.
                           type: string
                         externalV4Address:
+                          description: (Computed) An IPv4 external network address
+                            that is assigned to the master.
                           type: string
                         externalV4Endpoint:
+                          description: (Computed) External endpoint that can be used
+                            to access Kubernetes cluster API from the internet (outside
+                            of the cloud).
                           type: string
                         internalV4Address:
+                          description: (Computed) An IPv4 internal network address
+                            that is assigned to the master.
                           type: string
                         internalV4Endpoint:
+                          description: (Computed) Internal endpoint that can be used
+                            to connect to the master from cloud networks.
                           type: string
                         maintenancePolicy:
+                          description: (Optional) (Computed) Maintenance policy for
+                            Kubernetes master.
                           items:
                             properties:
                               maintenanceWindow:
+                                description: (Optional) (Computed) This structure
+                                  specifies maintenance window, when update for master
+                                  is allowed. When omitted, it defaults to any time.
                                 items:
                                   type: object
                                 type: array
                             type: object
                           type: array
                         regional:
+                          description: (Optional) Initialize parameters for Regional
+                            Master (highly available master). The structure is documented
+                            below.
                           items:
                             properties:
                               location:
+                                description: Array of locations, where master instances
+                                  will be allocated. The structure is documented below.
                                 items:
                                   type: object
                                 type: array
                             type: object
                           type: array
                         versionInfo:
+                          description: (Computed) Information about cluster version.
+                            The structure is documented below.
                           items:
                             properties:
                               currentVersion:
+                                description: Current Kubernetes version, major.minor
+                                  (e.g. 1.15).
                                 type: string
                               newRevisionAvailable:
+                                description: Boolean flag.
                                 type: boolean
                               newRevisionSummary:
+                                description: Human readable description of the changes
+                                  to be applied
                                 type: string
                               versionDeprecated:
+                                description: Boolean flag. The current version is
+                                  on the deprecation schedule,
                                 type: boolean
                             type: object
                           type: array
                         zonal:
+                          description: (Optional) Initialize parameters for Zonal
+                            Master (single node master). The structure is documented
+                            below.
                           items:
                             type: object
                           type: array
                       type: object
                     type: array
                   networkImplementation:
+                    description: (Optional) Network Implementation options. The structure
+                      is documented below.
                     items:
                       properties:
                         cilium:
+                          description: (Optional) Cilium network implementation configuration.
+                            No options exist.
                           items:
                             type: object
                           type: array
                       type: object
                     type: array
                   status:
+                    description: (Computed)Status of the Kubernetes cluster.
                     type: string
                 type: object
               conditions:

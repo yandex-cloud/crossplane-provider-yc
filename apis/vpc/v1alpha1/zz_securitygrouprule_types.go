@@ -26,6 +26,7 @@ import (
 )
 
 type SecurityGroupRuleObservation struct {
+	// Id of the rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 

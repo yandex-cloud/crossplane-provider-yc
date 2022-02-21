@@ -172,6 +172,7 @@ spec:
               atProvider:
                 properties:
                   id:
+                    description: Id of the rule.
                     type: string
                 type: object
               conditions:

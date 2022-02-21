@@ -63,12 +63,20 @@ spec:
               forProvider:
                 properties:
                   allocationPolicy:
+                    description: This argument specify subnets (zones), that will
+                      be used by node group compute instances. The structure is documented
+                      below.
                     items:
                       properties:
                         location:
+                          description: Repeated field, that specify subnets (zones),
+                            that will be used by node group compute instances. The
+                            structure is documented below.
                           items:
                             properties:
                               subnetId:
+                                description: ID of the subnet, that will be used by
+                                  one compute instance in node group.
                                 type: string
                               subnetIdRef:
                                 description: A Reference to a named object.
@@ -95,16 +103,23 @@ spec:
                                     type: object
                                 type: object
                               zone:
+                                description: ID of the availability zone where for
+                                  one compute instance in node group.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   allowedUnsafeSysctls:
+                    description: (Optional, Forces new resource) A list of allowed
+                      unsafe sysctl parameters for this node group. For more details
+                      see [documentation](https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster/).
                     items:
                       type: string
                     type: array
                   clusterId:
+                    description: (Required) The ID of the Kubernetes cluster that
+                      this node group belongs to.
                     type: string
                   clusterIdRef:
                     description: A Reference to a named object.
@@ -130,12 +145,19 @@ spec:
                         type: object
                     type: object
                   deployPolicy:
+                    description: Deploy policy of the node group. The structure is
+                      documented below.
                     items:
                       properties:
                         maxExpansion:
+                          description: The maximum number of instances that can be
+                            temporarily allocated above the group's target size during
+                            the update.
                           format: int64
                           type: integer
                         maxUnavailable:
+                          description: The maximum number of running instances that
+                            can be taken offline during update.
                           format: int64
                           type: integer
                       required:
@@ -144,24 +166,36 @@ spec:
                       type: object
                     type: array
                   description:
+                    description: (Optional) A description of the Kubernetes node group.
                     type: string
                   instanceTemplate:
+                    description: (Required) Template used to create compute instances
+                      in this Kubernetes node group. The structure is documented below.
                     items:
                       properties:
                         bootDisk:
+                          description: The specifications for boot disks that will
+                            be attached to the instance. The structure is documented
+                            below.
                           items:
                             properties:
                               size:
+                                description: 'The size of the disk in GB. Allowed
+                                  minimal size: 64 GB.'
                                 format: int64
                                 type: integer
                               type:
+                                description: The disk type.
                                 type: string
                             type: object
                           type: array
                         containerRuntime:
+                          description: (Optional) Container runtime configuration.
+                            The structure is documented below.
                           items:
                             properties:
                               type:
+                                description: The disk type.
                                 type: string
                             required:
                             - type
@@ -170,21 +204,40 @@ spec:
                         metadata:
                           additionalProperties:
                             type: string
+                          description: The set of metadata `key:value` pairs assigned
+                            to this instance template. This includes custom metadata
+                            and predefined keys.
                           type: object
                         nat:
+                          description: Boolean flag, enables NAT for node group compute
+                            instances.
                           type: boolean
                         networkAccelerationType:
+                          description: '(Optional) Type of network acceleration. Values:
+                            `standard`, `software_accelerated`.'
                           type: string
                         networkInterface:
+                          description: An array with the network interfaces that will
+                            be attached to the instance. The structure is documented
+                            below.
                           items:
                             properties:
                               ipv4:
+                                description: (Optional) Allocate an IPv4 address for
+                                  the interface. The default value is `true`.
                                 type: boolean
                               ipv6:
+                                description: (Optional) If true, allocate an IPv6
+                                  address for the interface. The address will be automatically
+                                  assigned from the specified subnet.
                                 type: boolean
                               nat:
+                                description: Boolean flag, enables NAT for node group
+                                  compute instances.
                                 type: boolean
                               securityGroupIds:
+                                description: (Optional) Security group ids for network
+                                  interface.
                                 items:
                                   type: string
                                 type: array
@@ -215,6 +268,7 @@ spec:
                                     type: object
                                 type: object
                               subnetIds:
+                                description: The IDs of the subnets.
                                 items:
                                   type: string
                                 type: array
@@ -247,15 +301,21 @@ spec:
                             type: object
                           type: array
                         placementPolicy:
+                          description: (Optional) The placement policy configuration.
+                            The structure is documented below.
                           items:
                             properties:
                               placementGroupId:
+                                description: (Optional) Specifies the id of the Placement
+                                  Group to assign to the instances.
                                 type: string
                             required:
                             - placementGroupId
                             type: object
                           type: array
                         platformId:
+                          description: The ID of the hardware platform configuration
+                            for the node group compute instances.
                           type: string
                         resources:
                           items:
@@ -274,9 +334,13 @@ spec:
                             type: object
                           type: array
                         schedulingPolicy:
+                          description: The scheduling policy for the instances in
+                            node group. The structure is documented below.
                           items:
                             properties:
                               preemptible:
+                                description: Specifies if the instance is preemptible.
+                                  Defaults to false.
                                 type: boolean
                             type: object
                           type: array
@@ -285,15 +349,25 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
+                    description: (Optional) A set of key/value label pairs assigned
+                      to the Kubernetes node group.
                     type: object
                   maintenancePolicy:
+                    description: (Optional) (Computed) Maintenance policy for this
+                      Kubernetes node group.
                     items:
                       properties:
                         autoRepair:
                           type: boolean
                         autoUpgrade:
+                          description: (Required) Boolean flag that specifies if node
+                            group can be upgraded automatically. When omitted, default
+                            value is TRUE.
                           type: boolean
                         maintenanceWindow:
+                          description: (Optional) (Computed) Set of day intervals,
+                            when maintenance is allowed for this node group. When
+                            omitted, it defaults to any time.
                           items:
                             properties:
                               day:
@@ -313,28 +387,45 @@ spec:
                       type: object
                     type: array
                   name:
+                    description: (Optional) Name of a specific Kubernetes node group.
                     type: string
                   nodeLabels:
                     additionalProperties:
                       type: string
+                    description: (Optional, Forces new resource) A set of key/value
+                      label pairs, that are assigned to all the nodes of this Kubernetes
+                      node group.
                     type: object
                   nodeTaints:
+                    description: (Optional, Forces new resource) A list of Kubernetes
+                      taints, that are applied to all the nodes of this Kubernetes
+                      node group.
                     items:
                       type: string
                     type: array
                   scalePolicy:
+                    description: (Required) Scale policy of the node group. The structure
+                      is documented below.
                     items:
                       properties:
                         autoScale:
+                          description: Scale policy for an autoscaled node group.
+                            The structure is documented below.
                           items:
                             properties:
                               initial:
+                                description: Initial number of instances in the node
+                                  group.
                                 format: int64
                                 type: integer
                               max:
+                                description: Maximum number of instances in the node
+                                  group.
                                 format: int64
                                 type: integer
                               min:
+                                description: Minimum number of instances in the node
+                                  group.
                                 format: int64
                                 type: integer
                             required:
@@ -344,9 +435,13 @@ spec:
                             type: object
                           type: array
                         fixedScale:
+                          description: Scale policy for a fixed scale node group.
+                            The structure is documented below.
                           items:
                             properties:
                               size:
+                                description: 'The size of the disk in GB. Allowed
+                                  minimal size: 64 GB.'
                                 format: int64
                                 type: integer
                             type: object
@@ -354,6 +449,8 @@ spec:
                       type: object
                     type: array
                   version:
+                    description: (Optional) Version of Kubernetes that will be used
+                      for Kubernetes node group.
                     type: string
                 required:
                 - instanceTemplate
@@ -409,40 +506,63 @@ spec:
               atProvider:
                 properties:
                   allocationPolicy:
+                    description: This argument specify subnets (zones), that will
+                      be used by node group compute instances. The structure is documented
+                      below.
                     items:
                       properties:
                         location:
+                          description: Repeated field, that specify subnets (zones),
+                            that will be used by node group compute instances. The
+                            structure is documented below.
                           items:
                             type: object
                           type: array
                       type: object
                     type: array
                   createdAt:
+                    description: (Computed) The Kubernetes node group creation timestamp.
                     type: string
                   deployPolicy:
+                    description: Deploy policy of the node group. The structure is
+                      documented below.
                     items:
                       type: object
                     type: array
                   id:
                     type: string
                   instanceGroupId:
+                    description: (Computed) ID of instance group that is used to manage
+                      this Kubernetes node group.
                     type: string
                   instanceTemplate:
+                    description: (Required) Template used to create compute instances
+                      in this Kubernetes node group. The structure is documented below.
                     items:
                       properties:
                         bootDisk:
+                          description: The specifications for boot disks that will
+                            be attached to the instance. The structure is documented
+                            below.
                           items:
                             type: object
                           type: array
                         containerRuntime:
+                          description: (Optional) Container runtime configuration.
+                            The structure is documented below.
                           items:
                             type: object
                           type: array
                         networkInterface:
+                          description: An array with the network interfaces that will
+                            be attached to the instance. The structure is documented
+                            below.
                           items:
                             type: object
                           type: array
                         placementPolicy:
+                          description: (Optional) The placement policy configuration.
+                            The structure is documented below.
                           items:
                             type: object
                           type: array
@@ -451,45 +571,68 @@ spec:
                             type: object
                           type: array
                         schedulingPolicy:
+                          description: The scheduling policy for the instances in
+                            node group. The structure is documented below.
                           items:
                             type: object
                           type: array
                       type: object
                     type: array
                   maintenancePolicy:
+                    description: (Optional) (Computed) Maintenance policy for this
+                      Kubernetes node group.
                     items:
                       properties:
                         maintenanceWindow:
+                          description: (Optional) (Computed) Set of day intervals,
+                            when maintenance is allowed for this node group. When
+                            omitted, it defaults to any time.
                           items:
                             type: object
                           type: array
                       type: object
                     type: array
                   scalePolicy:
+                    description: (Required) Scale policy of the node group. The structure
+                      is documented below.
                     items:
                       properties:
                         autoScale:
+                          description: Scale policy for an autoscaled node group.
+                            The structure is documented below.
                           items:
                             type: object
                           type: array
                         fixedScale:
+                          description: Scale policy for a fixed scale node group.
+                            The structure is documented below.
                           items:
                             type: object
                           type: array
                       type: object
                     type: array
                   status:
+                    description: (Computed) Status of the Kubernetes node group.
                     type: string
                   versionInfo:
+                    description: (Computed) Information about Kubernetes node group
+                      version. The structure is documented below.
                     items:
                       properties:
                         currentVersion:
+                          description: Current Kubernetes version, major.minor (e.g.
+                            1.15).
                           type: string
                         newRevisionAvailable:
+                          description: True/false flag.
                           type: boolean
                         newRevisionSummary:
+                          description: Human readable description of the changes to
+                            be applied
                           type: string
                         versionDeprecated:
+                          description: True/false flag. The current version is on
+                            the deprecation schedule,
                           type: boolean
                       type: object
                     type: array

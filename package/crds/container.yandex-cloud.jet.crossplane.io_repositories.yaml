@@ -63,6 +63,9 @@ spec:
               forProvider:
                 properties:
                   name:
+                    description: A name of the repository. The name of the repository
+                      should start with id of a container registry and match the name
+                      of the images that will be pushed in the repository.
                     type: string
                 type: object
               providerConfigRef:

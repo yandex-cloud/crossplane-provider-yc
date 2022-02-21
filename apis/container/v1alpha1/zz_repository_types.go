@@ -32,6 +32,7 @@ type RepositoryObservation struct {
 type RepositoryParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository. 
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 

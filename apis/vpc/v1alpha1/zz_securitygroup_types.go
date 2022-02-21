@@ -26,6 +26,7 @@ import (
 )
 
 type SecurityGroupEgressObservation struct {
+	// Id of the rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
@@ -63,6 +64,7 @@ type SecurityGroupEgressParameters struct {
 }
 
 type SecurityGroupIngressObservation struct {
+	// Id of the rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
@@ -100,14 +102,17 @@ type SecurityGroupIngressParameters struct {
 }
 
 type SecurityGroupObservation struct {
+	// Creation timestamp of this security group.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
 	Egress []SecurityGroupEgressObservation `json:"egress,omitempty" tf:"egress,omitempty"`
 
+	// Id of the rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	Ingress []SecurityGroupIngressObservation `json:"ingress,omitempty" tf:"ingress,omitempty"`
 
+	// Status of this security group.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 

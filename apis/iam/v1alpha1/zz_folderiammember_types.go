@@ -33,6 +33,7 @@ type FolderIAMMemberParameters struct {
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
+	// (Required) ID of the folder to attach a policy to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -46,9 +47,11 @@ type FolderIAMMemberParameters struct {
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
 	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
 	// +kubebuilder:validation:Optional
+	// (Required) The identity that will be granted the privilege that is specified in the `role` field.
 	Member *string `json:"member,omitempty" tf:"member,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) The role that should be assigned.
 	Role *string `json:"role" tf:"role,omitempty"`
 
 	// +kubebuilder:validation:Optional

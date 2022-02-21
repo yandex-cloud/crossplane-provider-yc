@@ -26,8 +26,10 @@ import (
 )
 
 type NetworkObservation struct {
+	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// ID of default Security Group of this network.
 	DefaultSecurityGroupID *string `json:"defaultSecurityGroupId,omitempty" tf:"default_security_group_id,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -38,10 +40,12 @@ type NetworkObservation struct {
 type NetworkParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) An optional description of this resource. Provide this property when
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
+	// (Optional) ID of the folder that the resource belongs to. If it
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -51,9 +55,11 @@ type NetworkParameters struct {
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Labels to apply to this network. A list of key/value pairs.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Name of the network. Provided by the client when the network is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 

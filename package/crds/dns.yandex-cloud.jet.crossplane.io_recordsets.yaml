@@ -63,17 +63,25 @@ spec:
               forProvider:
                 properties:
                   data:
+                    description: (Optional) The string data for the records in this
+                      record set.
                     items:
                       type: string
                     type: array
                   name:
+                    description: (Required) The DNS name this record set will apply
+                      to.
                     type: string
                   ttl:
+                    description: (Optional) The time-to-live of this record set (seconds).
                     format: int64
                     type: integer
                   type:
+                    description: (Required) The DNS record set type.
                     type: string
                   zoneId:
+                    description: (Required) The id of the zone in which this record
+                      set will reside.
                     type: string
                   zoneIdRef:
                     description: A Reference to a named object.

@@ -31,35 +31,43 @@ type DHCPOptionsObservation struct {
 type DHCPOptionsParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Domain name.
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Domain name server IP addresses.
 	DomainNameServers []*string `json:"domainNameServers,omitempty" tf:"domain_name_servers,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) NTP server IP addresses.
 	NtpServers []*string `json:"ntpServers,omitempty" tf:"ntp_servers,omitempty"`
 }
 
 type SubnetObservation struct {
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// (Optional) Options for DHCP client. The structure is documented below.
 	DHCPOptions []DHCPOptionsObservation `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// An optional list of blocks of IPv6 addresses that are owned by this subnet.
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }
 
 type SubnetParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Options for DHCP client. The structure is documented below.
 	DHCPOptions []DHCPOptionsParameters `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) An optional description of the subnet. Provide this property when
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
+	// (Optional) The ID of the folder to which the resource belongs.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -69,13 +77,16 @@ type SubnetParameters struct {
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Labels to assign to this subnet. A list of key/value pairs.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Name of the subnet. Provided by the client when the subnet is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// +crossplane:generate:reference:type=Network
 	// +kubebuilder:validation:Optional
+	// (Required) ID of the network this subnet belongs to.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -85,12 +96,15 @@ type SubnetParameters struct {
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) The ID of the route table to assign to this subnet. Assigned route table should
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) A list of blocks of internal IPv4 addresses that are owned by this subnet.
 	V4CidrBlocks []*string `json:"v4CidrBlocks" tf:"v4_cidr_blocks,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Required) Name of the Yandex.Cloud zone for this subnet.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 

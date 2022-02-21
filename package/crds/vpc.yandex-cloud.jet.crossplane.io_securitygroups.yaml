@@ -243,24 +243,29 @@ spec:
               atProvider:
                 properties:
                   createdAt:
+                    description: Creation timestamp of this security group.
                     type: string
                   egress:
                     items:
                       properties:
                         id:
+                          description: Id of the rule.
                           type: string
                       type: object
                     type: array
                   id:
+                    description: Id of the rule.
                     type: string
                   ingress:
                     items:
                       properties:
                         id:
+                          description: Id of the rule.
                           type: string
                       type: object
                     type: array
                   status:
+                    description: Status of this security group.
                     type: string
                 type: object
               conditions:

@@ -63,10 +63,15 @@ spec:
               forProvider:
                 properties:
                   defaultAlgorithm:
+                    description: (Optional) Encryption algorithm to be used with a
+                      new key version,
                     type: string
                   description:
+                    description: (Optional) An optional description of the key.
                     type: string
                   folderId:
+                    description: (Optional) The ID of the folder that the resource
+                      belongs to. If it
                     type: string
                   folderIdRef:
                     description: A Reference to a named object.
@@ -94,10 +99,15 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
+                    description: (Optional) A set of key/value label pairs to assign
+                      to the key.
                     type: object
                   name:
+                    description: (Optional) Name of the key.
                     type: string
                   rotationPeriod:
+                    description: (Optional) Interval between automatic rotations.
+                      To disable automatic rotation, omit this parameter.
                     type: string
                 type: object
               providerConfigRef:
@@ -150,12 +160,15 @@ spec:
               atProvider:
                 properties:
                   createdAt:
+                    description: Creation timestamp of the key.
                     type: string
                   id:
                     type: string
                   rotatedAt:
+                    description: Last rotation timestamp of the key.
                     type: string
                   status:
+                    description: The status of the key.
                     type: string
                 type: object
               conditions:

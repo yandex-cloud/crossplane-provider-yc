@@ -34,10 +34,12 @@ type ServiceAccountObservation struct {
 type ServiceAccountParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Description of the service account.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
+	// (Optional) ID of the folder that the service account will be created in.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -47,6 +49,7 @@ type ServiceAccountParameters struct {
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Required
+	// (Required) Name of the service account.
 	Name *string `json:"name" tf:"name,omitempty"`
 }
 

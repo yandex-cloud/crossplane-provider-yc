@@ -63,14 +63,25 @@ spec:
               forProvider:
                 properties:
                   cloudId:
+                    description: (Optional) Cloud that the resource belongs to. If
+                      value is omitted, the default provider Cloud ID is used. (Optional)
+                      Cloud that the resource belongs to. If value is omitted, the
+                      default provider Cloud ID is used.
                     type: string
                   description:
+                    description: (Optional) A description of the Folder. (Optional)
+                      A description of the Folder.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
+                    description: (Optional) A set of key/value label pairs to assign
+                      to the Folder. (Optional) A set of key/value label pairs to
+                      assign to the Folder.
                     type: object
                   name:
+                    description: (Optional) The name of the Folder. (Optional) The
+                      name of the Folder.
                     type: string
                 type: object
               providerConfigRef:

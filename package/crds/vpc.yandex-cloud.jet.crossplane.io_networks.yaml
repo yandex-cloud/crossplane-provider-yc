@@ -63,8 +63,12 @@ spec:
               forProvider:
                 properties:
                   description:
+                    description: (Optional) An optional description of this resource.
+                      Provide this property when
                     type: string
                   folderId:
+                    description: (Optional) ID of the folder that the resource belongs
+                      to. If it
                     type: string
                   folderIdRef:
                     description: A Reference to a named object.
@@ -92,8 +96,12 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
+                    description: (Optional) Labels to apply to this network. A list
+                      of key/value pairs.
                     type: object
                   name:
+                    description: (Optional) Name of the network. Provided by the client
+                      when the network is created.
                     type: string
                 type: object
               providerConfigRef:
@@ -146,8 +154,10 @@ spec:
               atProvider:
                 properties:
                   createdAt:
+                    description: Creation timestamp of the key.
                     type: string
                   defaultSecurityGroupId:
+                    description: ID of default Security Group of this network.
                     type: string
                   id:
                     type: string

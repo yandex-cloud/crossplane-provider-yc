@@ -4,4 +4,4 @@ metadata:
   name: provider-jet-yc
 spec:
   controller:
-    image: cr.yandex/crp0kch415f0lke009ft/crossplane/provider-jet-yc-controller:v0.1.18
+    image: cr.yandex/crp0kch415f0lke009ft/crossplane/provider-jet-yc-controller:v0.1.19

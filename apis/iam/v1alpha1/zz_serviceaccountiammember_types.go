@@ -36,13 +36,16 @@ type ServiceAccountIAMMemberParameters struct {
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
 	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
 	// +kubebuilder:validation:Optional
+	// (Required) Identity that will be granted the privilege in `role`.
 	Member *string `json:"member,omitempty" tf:"member,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) The role that should be applied. Only one
 	Role *string `json:"role" tf:"role,omitempty"`
 
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +kubebuilder:validation:Optional
+	// (Required) The service account ID to apply a policy to.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
 	// +kubebuilder:validation:Optional

@@ -63,8 +63,11 @@ spec:
               forProvider:
                 properties:
                   description:
+                    description: (Optional) Description of the DNS zone.
                     type: string
                   folderId:
+                    description: (Optional) ID of the folder to create a zone in.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: A Reference to a named object.
@@ -92,10 +95,16 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
+                    description: (Optional) A set of key/value label pairs to assign
+                      to the DNS zone.
                     type: object
                   name:
+                    description: (Optional) User assigned name of a specific resource.
+                      Must be unique within the folder.
                     type: string
                   privateNetworks:
+                    description: (Optional) For privately visible zones, the set of
+                      Virtual Private Cloud resources that the zone is visible from.
                     items:
                       type: string
                     type: array
@@ -125,8 +134,13 @@ spec:
                         type: object
                     type: object
                   public:
+                    description: '(Optional) The zone''s visibility: public zones
+                      are exposed to the Internet, while private zones are visible
+                      only to Virtual Private Cloud resources.'
                     type: boolean
                   zone:
+                    description: (Required) The DNS name of this zone, e.g. "example.com.".
+                      Must ends with dot.
                     type: string
                 required:
                 - zone
@@ -181,8 +195,10 @@ spec:
               atProvider:
                 properties:
                   createdAt:
+                    description: (Computed) The DNS zone creation timestamp.
                     type: string
                   id:
+                    description: (Computed) ID of a new DNS zone.
                     type: string
                 type: object
               conditions:

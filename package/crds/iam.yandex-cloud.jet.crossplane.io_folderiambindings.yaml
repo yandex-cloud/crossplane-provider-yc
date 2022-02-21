@@ -63,6 +63,7 @@ spec:
               forProvider:
                 properties:
                   folderId:
+                    description: (Required) ID of the folder to attach a policy to.
                     type: string
                   folderIdRef:
                     description: A Reference to a named object.
@@ -88,10 +89,14 @@ spec:
                         type: object
                     type: object
                   members:
+                    description: (Required) An array of identities that will be granted
+                      the privilege that is specified in the `role` field.
                     items:
                       type: string
                     type: array
                   role:
+                    description: (Required) The role that should be assigned. Only
+                      one
                     type: string
                   serviceAccountsRef:
                     items:

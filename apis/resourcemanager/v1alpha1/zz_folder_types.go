@@ -34,15 +34,23 @@ type FolderObservation struct {
 type FolderParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Cloud that the resource belongs to. If value is omitted, the default provider Cloud ID is used.
+	// (Optional) Cloud that the resource belongs to. If value is omitted, the default provider Cloud ID is used.
 	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) A description of the Folder.
+	// (Optional) A description of the Folder.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) A set of key/value label pairs to assign to the Folder.
+	// (Optional) A set of key/value label pairs to assign to the Folder.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) The name of the Folder.
+	// (Optional) The name of the Folder.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 

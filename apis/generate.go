@@ -31,6 +31,34 @@ limitations under the License.
 // Run Terrajet generator
 //go:generate go run -tags generate ../cmd/generator/main.go ..
 
+// Generate description for resources
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/kubernetes_cluster.html.markdown ./kubernetes/v1alpha1/zz_cluster_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/kubernetes_node_group.html.markdown ./kubernetes/v1alpha1/zz_nodegroup_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/compute_instance.html.markdown ./compute/v1alpha1/zz_instance_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/container_registry.html.markdown ./container/v1alpha1/zz_registry_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/container_repository.html.markdown ./container/v1alpha1/zz_repository_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/dns_zone.html.markdown ./dns/v1alpha1/zz_zone_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/dns_recordset.html.markdown ./dns/v1alpha1/zz_recordset_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/kms_symmetric_key.html.markdown ./kms/v1alpha1/zz_symmetrickey_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/mdb_postgresql_cluster.html.markdown ./mdb/v1alpha1/zz_postgresqlcluster_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/mdb_mongodb_cluster.html.markdown ./mdb/v1alpha1/zz_mongodbcluster_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/mdb_redis_cluster.html.markdown ./mdb/v1alpha1/zz_rediscluster_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/storage_bucket.html.markdown ./storage/v1alpha1/zz_bucket_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/storage_object.html.markdown ./storage/v1alpha1/zz_object_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/vpc_network.html.markdown ./vpc/v1alpha1/zz_network_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/vpc_subnet.html.markdown ./vpc/v1alpha1/zz_subnet_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/vpc_security_group.html.markdown ./vpc/v1alpha1/zz_securitygroup_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/vpc_default_security_group.html.markdown ./vpc/v1alpha1/zz_defaultsecuritygroup_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/vpc_security_group_rule.html.markdown ./vpc/v1alpha1/zz_securitygrouprule_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/resourcemanager_folder.html.markdown ./resourcemanager/v1alpha1/zz_folder_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/resourcemanager_folder.html.markdown ./resourcemanager/v1alpha1/zz_folder_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/resourcemanager_folder_iam_binding.html.markdown ./iam/v1alpha1/zz_folderiambinding_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/resourcemanager_folder_iam_member.html.markdown ./iam/v1alpha1/zz_folderiammember_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/iam_service_account.html.markdown ./iam/v1alpha1/zz_serviceaccount_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/iam_service_account_iam_member.html.markdown ./iam/v1alpha1/zz_serviceaccountiammember_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/iam_service_account_key.html.markdown ./iam/v1alpha1/zz_serviceaccountkey_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/iam_service_account_static_access_key.html.markdown ./iam/v1alpha1/zz_serviceaccountstaticaccesskey_types.go
+
 // Generate deepcopy methodsets and CRD manifests
 //go:generate go run -tags generate sigs.k8s.io/controller-tools/cmd/controller-gen object:headerFile=../hack/boilerplate.go.txt paths=./... crd:trivialVersions=true,allowDangerousTypes=true,crdVersions=v1 output:artifacts:config=../package/crds
 

@@ -26,16 +26,20 @@ import (
 )
 
 type DefaultSecurityGroupObservation struct {
+	// Creation timestamp of this security group.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
 	Egress []EgressObservation `json:"egress,omitempty" tf:"egress,omitempty"`
 
+	// Id of the security group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	Ingress []IngressObservation `json:"ingress,omitempty" tf:"ingress,omitempty"`
 
+	// Name of this security group.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Status of this security group.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
@@ -75,6 +79,7 @@ type DefaultSecurityGroupParameters struct {
 }
 
 type EgressObservation struct {
+	// Id of the security group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
@@ -112,6 +117,7 @@ type EgressParameters struct {
 }
 
 type IngressObservation struct {
+	// Id of the security group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 

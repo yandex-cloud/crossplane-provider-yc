@@ -63,23 +63,32 @@ spec:
               forProvider:
                 properties:
                   description:
+                    description: (Optional) An optional description of the subnet.
+                      Provide this property when
                     type: string
                   dhcpOptions:
+                    description: (Optional) Options for DHCP client. The structure
+                      is documented below.
                     items:
                       properties:
                         domainName:
+                          description: (Optional) Domain name.
                           type: string
                         domainNameServers:
+                          description: (Optional) Domain name server IP addresses.
                           items:
                             type: string
                           type: array
                         ntpServers:
+                          description: (Optional) NTP server IP addresses.
                           items:
                             type: string
                           type: array
                       type: object
                     type: array
                   folderId:
+                    description: (Optional) The ID of the folder to which the resource
+                      belongs.
                     type: string
                   folderIdRef:
                     description: A Reference to a named object.
@@ -107,10 +116,16 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
+                    description: (Optional) Labels to assign to this subnet. A list
+                      of key/value pairs.
                     type: object
                   name:
+                    description: (Optional) Name of the subnet. Provided by the client
+                      when the subnet is created.
                     type: string
                   networkId:
+                    description: (Required) ID of the network this subnet belongs
+                      to.
                     type: string
                   networkIdRef:
                     description: A Reference to a named object.
@@ -136,12 +151,18 @@ spec:
                         type: object
                     type: object
                   routeTableId:
+                    description: (Optional) The ID of the route table to assign to
+                      this subnet. Assigned route table should
                     type: string
                   v4CidrBlocks:
+                    description: (Required) A list of blocks of internal IPv4 addresses
+                      that are owned by this subnet.
                     items:
                       type: string
                     type: array
                   zone:
+                    description: (Required) Name of the Yandex.Cloud zone for this
+                      subnet.
                     type: string
                 required:
                 - v4CidrBlocks
@@ -198,12 +219,16 @@ spec:
                   createdAt:
                     type: string
                   dhcpOptions:
+                    description: (Optional) Options for DHCP client. The structure
+                      is documented below.
                     items:
                       type: object
                     type: array
                   id:
                     type: string
                   v6CidrBlocks:
+                    description: An optional list of blocks of IPv6 addresses that
+                      are owned by this subnet.
                     items:
                       type: string
                     type: array

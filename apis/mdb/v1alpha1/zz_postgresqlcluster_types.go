@@ -31,9 +31,11 @@ type ConfigAccessObservation struct {
 type ConfigAccessParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Allow access for [Yandex DataLens](https://cloud.yandex.com/services/datalens).
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// Allows access for [SQL queries in the management console](https://cloud.yandex.com/docs/managed-postgresql/operations/web-sql-query)
 	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
 }
 
@@ -43,51 +45,67 @@ type ConfigBackupWindowStartObservation struct {
 type ConfigBackupWindowStartParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) The hour at which backup will be started (UTC).
 	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) The minute at which backup will be started (UTC).
 	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
 }
 
 type ConfigObservation struct {
+	// (Optional) Access policy to the PostgreSQL cluster. The structure is documented below.
 	Access []ConfigAccessObservation `json:"access,omitempty" tf:"access,omitempty"`
 
+	// (Optional) Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	BackupWindowStart []ConfigBackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
+	// (Optional) Cluster performance diagnostics settings. The structure is documented below. [YC Documentation](https://cloud.yandex.com/docs/managed-postgresql/grpc/cluster_service#PerformanceDiagnostics)
 	PerformanceDiagnostics []PerformanceDiagnosticsObservation `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
 
+	// (Optional) Configuration of the connection pooler. The structure is documented below.
 	PoolerConfig []PoolerConfigObservation `json:"poolerConfig,omitempty" tf:"pooler_config,omitempty"`
 
+	// (Required) Resources allocated to hosts of the PostgreSQL cluster. The structure is documented below.
 	Resources []ConfigResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type ConfigParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Access policy to the PostgreSQL cluster. The structure is documented below.
 	Access []ConfigAccessParameters `json:"access,omitempty" tf:"access,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Configuration setting which enables/disables autofailover in cluster.
 	Autofailover *bool `json:"autofailover,omitempty" tf:"autofailover,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) The period in days during which backups are stored.
 	BackupRetainPeriodDays *int64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	BackupWindowStart []ConfigBackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Cluster performance diagnostics settings. The structure is documented below. [YC Documentation](https://cloud.yandex.com/docs/managed-postgresql/grpc/cluster_service#PerformanceDiagnostics)
 	PerformanceDiagnostics []PerformanceDiagnosticsParameters `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Configuration of the connection pooler. The structure is documented below.
 	PoolerConfig []PoolerConfigParameters `json:"poolerConfig,omitempty" tf:"pooler_config,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) PostgreSQL cluster config. Detail info in "postresql config" section (documented below).
 	PostgresqlConfig map[string]*string `json:"postgresqlConfig,omitempty" tf:"postgresql_config,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) Resources allocated to hosts of the PostgreSQL cluster. The structure is documented below.
 	Resources []ConfigResourcesParameters `json:"resources" tf:"resources,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13)
 	Version *string `json:"version" tf:"version,omitempty"`
 }
 
@@ -97,9 +115,11 @@ type ConfigResourcesObservation struct {
 type ConfigResourcesParameters struct {
 
 	// +kubebuilder:validation:Required
+	// (Required) Volume of the storage available to a PostgreSQL host, in gigabytes.
 	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Required) Type of the storage of PostgreSQL hosts.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
 	// +kubebuilder:validation:Required
@@ -112,9 +132,11 @@ type ExtensionObservation struct {
 type ExtensionParameters struct {
 
 	// +kubebuilder:validation:Required
+	// (Required) Name of the PostgreSQL cluster. Provided by the client when the cluster is created.
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Required) Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13)
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -124,12 +146,15 @@ type PerformanceDiagnosticsObservation struct {
 type PerformanceDiagnosticsParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// Enable performance diagnostics
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 	SessionsSamplingInterval *int64 `json:"sessionsSamplingInterval" tf:"sessions_sampling_interval,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
 	StatementsSamplingInterval *int64 `json:"statementsSamplingInterval" tf:"statements_sampling_interval,omitempty"`
 }
 
@@ -139,37 +164,47 @@ type PoolerConfigObservation struct {
 type PoolerConfigParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Setting `pool_discard` [parameter in Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool_discard-yesno).
 	PoolDiscard *bool `json:"poolDiscard,omitempty" tf:"pool_discard,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Mode that the connection pooler is working in. See descriptions of all modes in the [documentation for Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool-string.
 	PoolingMode *string `json:"poolingMode,omitempty" tf:"pooling_mode,omitempty"`
 }
 
 type PostgresqlClusterDatabaseObservation struct {
+	// (Optional) Set of database extensions. The structure is documented below
 	Extension []ExtensionObservation `json:"extension,omitempty" tf:"extension,omitempty"`
 }
 
 type PostgresqlClusterDatabaseParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Set of database extensions. The structure is documented below
 	Extension []ExtensionParameters `json:"extension,omitempty" tf:"extension,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) POSIX locale for string sorting order. Forbidden to change in an existing database.
 	LcCollate *string `json:"lcCollate,omitempty" tf:"lc_collate,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) POSIX locale for character classification. Forbidden to change in an existing database.
 	LcType *string `json:"lcType,omitempty" tf:"lc_type,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) Name of the PostgreSQL cluster. Provided by the client when the cluster is created.
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	Owner *string `json:"owner" tf:"owner,omitempty"`
 }
 
 type PostgresqlClusterHostObservation struct {
+	// (Computed) The fully qualified domain name of the host.
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
+	// (Computed) Host replication source (fqdn), when replication_source is empty then host is in HA group.
 	ReplicationSource *string `json:"replicationSource,omitempty" tf:"replication_source,omitempty"`
 
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
@@ -178,19 +213,24 @@ type PostgresqlClusterHostObservation struct {
 type PostgresqlClusterHostParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Sets whether the host should get a public IP address on creation. It can be changed on the fly only when `name` is set.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Required) Name of the PostgreSQL cluster. Provided by the client when the cluster is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// Host priority in HA group. It works only when `name` is set.
 	Priority *int64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Host replication source name points to host's `name` from which this host should replicate. When not set then host in HA group. It works only when `name` is set.
 	ReplicationSourceName *string `json:"replicationSourceName,omitempty" tf:"replication_source_name,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
+	// (Optional) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -200,6 +240,7 @@ type PostgresqlClusterHostParameters struct {
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Required
+	// (Required) The availability zone where the PostgreSQL host will be created.
 	Zone *string `json:"zone" tf:"zone,omitempty"`
 }
 
@@ -209,56 +250,74 @@ type PostgresqlClusterMaintenanceWindowObservation struct {
 type PostgresqlClusterMaintenanceWindowParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Day of the week (in `DDD` format). Allowed values: "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
 	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 type PostgresqlClusterObservation struct {
+	// (Required) Configuration of the PostgreSQL cluster. The structure is documented below.
 	Config []ConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
 
+	// Timestamp of cluster creation.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// (Required) A database of the PostgreSQL cluster. The structure is documented below.
 	Database []PostgresqlClusterDatabaseObservation `json:"database,omitempty" tf:"database,omitempty"`
 
+	// Aggregated health of the cluster.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
+	// (Required) A host of the PostgreSQL cluster. The structure is documented below.
 	Host []PostgresqlClusterHostObservation `json:"host,omitempty" tf:"host,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Optional) Maintenance policy of the PostgreSQL cluster. The structure is documented below.
 	MaintenanceWindow []PostgresqlClusterMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
+	// (Optional, ForceNew) The cluster will be created from the specified backup. The structure is documented below.
 	Restore []RestoreObservation `json:"restore,omitempty" tf:"restore,omitempty"`
 
+	// Status of the cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
+	// (Required) A user of the PostgreSQL cluster. The structure is documented below.
 	User []PostgresqlClusterUserObservation `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type PostgresqlClusterParameters struct {
 
 	// +kubebuilder:validation:Required
+	// (Required) Configuration of the PostgreSQL cluster. The structure is documented below.
 	Config []ConfigParameters `json:"config" tf:"config,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) A database of the PostgreSQL cluster. The structure is documented below.
 	Database []PostgresqlClusterDatabaseParameters `json:"database" tf:"database,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Inhibits deletion of the cluster.  Can be either `true` or `false`.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Description of the PostgreSQL cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) Deployment environment of the PostgreSQL cluster.
 	Environment *string `json:"environment" tf:"environment,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
+	// (Optional) The ID of the folder that the resource belongs to. If it is unset, the default provider `folder_id` is used for create.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -268,22 +327,28 @@ type PostgresqlClusterParameters struct {
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Required
+	// (Required) A host of the PostgreSQL cluster. The structure is documented below.
 	Host []PostgresqlClusterHostParameters `json:"host" tf:"host,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) It sets name of master host. It works only when `host.name` is set.
 	HostMasterName *string `json:"hostMasterName,omitempty" tf:"host_master_name,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) A set of key/value label pairs to assign to the PostgreSQL cluster.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Maintenance policy of the PostgreSQL cluster. The structure is documented below.
 	MaintenanceWindow []PostgresqlClusterMaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) Name of the PostgreSQL cluster. Provided by the client when the cluster is created.
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
+	// (Required) ID of the network, to which the PostgreSQL cluster belongs.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -293,10 +358,12 @@ type PostgresqlClusterParameters struct {
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional, ForceNew) The cluster will be created from the specified backup. The structure is documented below.
 	Restore []RestoreParameters `json:"restore,omitempty" tf:"restore,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
+	// (Optional) A set of ids of security groups assigned to hosts of the cluster.
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -306,34 +373,42 @@ type PostgresqlClusterParameters struct {
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Required
+	// (Required) A user of the PostgreSQL cluster. The structure is documented below.
 	User []PostgresqlClusterUserParameters `json:"user" tf:"user,omitempty"`
 }
 
 type PostgresqlClusterUserObservation struct {
+	// (Optional) Set of permissions granted to the user. The structure is documented below.
 	Permission []UserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type PostgresqlClusterUserParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) The maximum number of connections per user. (Default 50)
 	ConnLimit *int64 `json:"connLimit,omitempty" tf:"conn_limit,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) List of the user's grants.
 	Grants []*string `json:"grants,omitempty" tf:"grants,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) User's ability to login.
 	Login *bool `json:"login,omitempty" tf:"login,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) Name of the PostgreSQL cluster. Provided by the client when the cluster is created.
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// +kubebuilder:validation:Required
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Set of permissions granted to the user. The structure is documented below.
 	Permission []UserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Map of user settings. List of settings is documented below.
 	Settings map[string]*string `json:"settings,omitempty" tf:"settings,omitempty"`
 }
 
@@ -343,12 +418,15 @@ type RestoreObservation struct {
 type RestoreParameters struct {
 
 	// +kubebuilder:validation:Required
+	// (Required, ForceNew) Backup ID. The cluster will be created from the specified backup. [How to get a list of PostgreSQL backups](https://cloud.yandex.com/docs/managed-postgresql/operations/cluster-backups). 
 	BackupID *string `json:"backupId" tf:"backup_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional, ForceNew) Timestamp of the moment to which the PostgreSQL cluster should be restored. (Format: "2006-01-02T15:04:05" - UTC). When not set, current time is used.
 	Time *string `json:"time,omitempty" tf:"time,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional, ForceNew) Flag that indicates whether a database should be restored to the first backup point available just after the timestamp specified in the [time] field instead of just before.  
 	TimeInclusive *bool `json:"timeInclusive,omitempty" tf:"time_inclusive,omitempty"`
 }
 
@@ -358,6 +436,7 @@ type UserPermissionObservation struct {
 type UserPermissionParameters struct {
 
 	// +kubebuilder:validation:Required
+	// (Required) The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 }
 

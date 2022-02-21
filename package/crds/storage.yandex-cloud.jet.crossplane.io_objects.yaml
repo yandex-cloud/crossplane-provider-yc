@@ -63,6 +63,8 @@ spec:
               forProvider:
                 properties:
                   accessKey:
+                    description: (Optional) The access key to use when applying changes.
+                      If omitted, `storage_access_key` specified in config is used.
                     type: string
                   accessKeyRef:
                     description: A Reference to a named object.
@@ -88,8 +90,11 @@ spec:
                         type: object
                     type: object
                   acl:
+                    description: (Optional) The [predefined ACL](https://cloud.yandex.com/docs/storage/concepts/acl#predefined_acls)
+                      to apply. Defaults to `private`.
                     type: string
                   bucket:
+                    description: (Required) The name of the containing bucket.
                     type: string
                   bucketRef:
                     description: A Reference to a named object.
@@ -115,12 +120,27 @@ spec:
                         type: object
                     type: object
                   content:
+                    description: (Optional, conflicts with `source` and `content_base64`)
+                      Literal string value to use as the object content, which will
+                      be uploaded as UTF-8-encoded text.
                     type: string
                   contentBase64:
+                    description: (Optional, conflicts with `source` and `content`)
+                      Base64-encoded data that will be decoded and uploaded as raw
+                      bytes for the object content. This allows safely uploading non-UTF8
+                      binary data, but is recommended only for small content such
+                      as the result of the `gzipbase64` function with small text strings.
+                      For larger objects, use `source` to stream the content from
+                      a disk file.
                     type: string
                   contentType:
+                    description: (Optional) A standard MIME type describing the format
+                      of the object data, e.g. `application/octet-stream`. All Valid
+                      MIME Types are valid for this input.
                     type: string
                   key:
+                    description: (Required) The name of the object once it is in the
+                      bucket.
                     type: string
                   secretKeySecretRef:
                     description: A SecretKeySelector is a reference to a secret key
@@ -141,6 +161,9 @@ spec:
                     - namespace
                     type: object
                   source:
+                    description: (Optional, conflicts with `content` and `content_base64`)
+                      The path to a file that will be read and uploaded as raw bytes
+                      for the object content.
                     type: string
                 required:
                 - key
@@ -195,6 +218,7 @@ spec:
               atProvider:
                 properties:
                   id:
+                    description: The `key` of the resource.
                     type: string
                 type: object
               conditions:
