@@ -32,7 +32,7 @@ type RedisClusterConfigParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Number of databases (changing requires redis-server restart).
-	Databases *int64 `json:"databases,omitempty" tf:"databases,omitempty"`
+	Databases *float64 `json:"databases,omitempty" tf:"databases,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Redis key eviction policy for a dataset that reaches maximum memory.
@@ -47,15 +47,15 @@ type RedisClusterConfigParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Log slow queries below this number in microseconds.
-	SlowlogLogSlowerThan *int64 `json:"slowlogLogSlowerThan,omitempty" tf:"slowlog_log_slower_than,omitempty"`
+	SlowlogLogSlowerThan *float64 `json:"slowlogLogSlowerThan,omitempty" tf:"slowlog_log_slower_than,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Slow queries log length.
-	SlowlogMaxLen *int64 `json:"slowlogMaxLen,omitempty" tf:"slowlog_max_len,omitempty"`
+	SlowlogMaxLen *float64 `json:"slowlogMaxLen,omitempty" tf:"slowlog_max_len,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Close the connection after a client is idle for N seconds.
-	Timeout *int64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
+	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// (Required) Version of Redis (5.0, 6.0 or 6.2).
@@ -97,7 +97,7 @@ type RedisClusterMaintenanceWindowParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
-	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
+	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// (Required) Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
@@ -105,9 +105,6 @@ type RedisClusterMaintenanceWindowParameters struct {
 }
 
 type RedisClusterObservation struct {
-	// (Required) Configuration of the Redis cluster. The structure is documented below.
-	Config []RedisClusterConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
-
 	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
@@ -118,11 +115,6 @@ type RedisClusterObservation struct {
 	Host []RedisClusterHostObservation `json:"host,omitempty" tf:"host,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	MaintenanceWindow []RedisClusterMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
-
-	// (Required) Resources allocated to hosts of the Redis cluster. The structure is documented below.
-	Resources []RedisClusterResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
 	// Status of the cluster. Can be either `CREATING`, `STARTING`, `RUNNING`, `UPDATING`, `STOPPING`, `STOPPED`, `ERROR` or `STATUS_UNKNOWN`.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
@@ -214,7 +206,7 @@ type RedisClusterResourcesParameters struct {
 
 	// +kubebuilder:validation:Required
 	// (Required) Volume of the storage available to a host, in gigabytes.
-	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
+	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Type of the storage of Redis hosts - environment default is used if missing.
@@ -244,7 +236,7 @@ type RedisClusterStatus struct {
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloudjet}
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type RedisCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

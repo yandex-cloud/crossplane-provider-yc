@@ -43,29 +43,8 @@ type BucketObservation struct {
 	// The bucket domain name.
 	BucketDomainName *string `json:"bucketDomainName,omitempty" tf:"bucket_domain_name,omitempty"`
 
-	// (Optional) A rule of [Cross-Origin Resource Sharing](https://cloud.yandex.com/docs/storage/cors/) (documented below).
-	CorsRule []CorsRuleObservation `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
-
-	// (Optional) An [ACL policy grant](https://cloud.yandex.com/docs/storage/concepts/acl#permissions-types). Conflicts with `acl`.
-	Grant []GrantObservation `json:"grant,omitempty" tf:"grant,omitempty"`
-
 	// (Optional) Unique identifier for the rule. Must be less than or equal to 255 characters in length.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// (Optional) A configuration of [object lifecycle management](https://cloud.yandex.com/docs/storage/concepts/lifecycles) (documented below).
-	LifecycleRule []LifecycleRuleObservation `json:"lifecycleRule,omitempty" tf:"lifecycle_rule,omitempty"`
-
-	// (Optional) A settings of [bucket logging](https://cloud.yandex.com/docs/storage/concepts/server-logs) (documented below).
-	Logging []LoggingObservation `json:"logging,omitempty" tf:"logging,omitempty"`
-
-	// (Optional) A configuration of server-side encryption for the bucket (documented below)
-	ServerSideEncryptionConfiguration []ServerSideEncryptionConfigurationObservation `json:"serverSideEncryptionConfiguration,omitempty" tf:"server_side_encryption_configuration,omitempty"`
-
-	// (Optional) A state of [versioning](https://cloud.yandex.com/docs/storage/concepts/versioning) (documented below)
-	Versioning []VersioningObservation `json:"versioning,omitempty" tf:"versioning,omitempty"`
-
-	// (Optional) A [website object](https://cloud.yandex.com/docs/storage/concepts/hosting) (documented below).
-	Website []WebsiteObservation `json:"website,omitempty" tf:"website,omitempty"`
 }
 
 type BucketParameters struct {
@@ -164,7 +143,7 @@ type CorsRuleParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Specifies time in seconds that browser can cache the response for a preflight request.
-	MaxAgeSeconds *int64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
+	MaxAgeSeconds *float64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
 }
 
 type ExpirationObservation struct {
@@ -178,7 +157,7 @@ type ExpirationParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Specifies the number of days after object creation when the specific rule action takes effect.
-	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) On a versioned bucket (versioning-enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
@@ -205,24 +184,13 @@ type GrantParameters struct {
 }
 
 type LifecycleRuleObservation struct {
-	// (Optional) Specifies a period in the object's expire (documented below).
-	Expiration []ExpirationObservation `json:"expiration,omitempty" tf:"expiration,omitempty"`
-
-	// (Optional) Specifies when noncurrent object versions expire (documented below).
-	NoncurrentVersionExpiration []NoncurrentVersionExpirationObservation `json:"noncurrentVersionExpiration,omitempty" tf:"noncurrent_version_expiration,omitempty"`
-
-	// (Optional) Specifies when noncurrent object versions transitions (documented below).
-	NoncurrentVersionTransition []NoncurrentVersionTransitionObservation `json:"noncurrentVersionTransition,omitempty" tf:"noncurrent_version_transition,omitempty"`
-
-	// (Optional) Specifies a period in the object's transitions (documented below).
-	Transition []TransitionObservation `json:"transition,omitempty" tf:"transition,omitempty"`
 }
 
 type LifecycleRuleParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
-	AbortIncompleteMultipartUploadDays *int64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
+	AbortIncompleteMultipartUploadDays *float64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// (Optional) Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
@@ -274,7 +242,7 @@ type NoncurrentVersionExpirationParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Specifies the number of days after object creation when the specific rule action takes effect.
-	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 }
 
 type NoncurrentVersionTransitionObservation struct {
@@ -284,7 +252,7 @@ type NoncurrentVersionTransitionParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Specifies the number of days after object creation when the specific rule action takes effect.
-	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// (Required) Specifies the storage class to which you want the object to transition. Can only be `COLD` or `STANDARD_IA`.
@@ -292,8 +260,6 @@ type NoncurrentVersionTransitionParameters struct {
 }
 
 type RuleObservation struct {
-	// (Required) A single object for setting server-side encryption by default. (documented below)
-	ApplyServerSideEncryptionByDefault []ApplyServerSideEncryptionByDefaultObservation `json:"applyServerSideEncryptionByDefault,omitempty" tf:"apply_server_side_encryption_by_default,omitempty"`
 }
 
 type RuleParameters struct {
@@ -304,8 +270,6 @@ type RuleParameters struct {
 }
 
 type ServerSideEncryptionConfigurationObservation struct {
-	// (Required) A single object for server-side encryption by default configuration. (documented below)
-	Rule []RuleObservation `json:"rule,omitempty" tf:"rule,omitempty"`
 }
 
 type ServerSideEncryptionConfigurationParameters struct {
@@ -326,7 +290,7 @@ type TransitionParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Specifies the number of days after object creation when the specific rule action takes effect.
-	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// (Required) Specifies the storage class to which you want the object to transition. Can only be `COLD` or `STANDARD_IA`.
@@ -385,7 +349,7 @@ type BucketStatus struct {
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloudjet}
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type Bucket struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

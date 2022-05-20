@@ -46,9 +46,6 @@ type DHCPOptionsParameters struct {
 type SubnetObservation struct {
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Optional) Options for DHCP client. The structure is documented below.
-	DHCPOptions []DHCPOptionsObservation `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
-
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// An optional list of blocks of IPv6 addresses that are owned by this subnet.
@@ -128,7 +125,7 @@ type SubnetStatus struct {
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloudjet}
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type Subnet struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

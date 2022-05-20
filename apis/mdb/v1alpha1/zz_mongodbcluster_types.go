@@ -40,19 +40,16 @@ type BackupWindowStartParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) The hour at which backup will be started.
-	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
+	Hours *float64 `json:"hours,omitempty" tf:"hours,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) The minute at which backup will be started.
-	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
+	Minutes *float64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
 }
 
 type ClusterConfigObservation struct {
 	// (Optional) Access policy to the MongoDB cluster. The structure is documented below.
 	Access []AccessObservation `json:"access,omitempty" tf:"access,omitempty"`
-
-	// (Optional) Time to start the daily backup, in the UTC timezone. The structure is documented below.
-	BackupWindowStart []BackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 }
 
 type ClusterConfigParameters struct {
@@ -136,7 +133,7 @@ type MaintenanceWindowParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
-	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
+	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// (Optional) type of mongo daemon which runs on this host (mongod, mongos or monogcfg). Defaults to mongod.
@@ -150,9 +147,6 @@ type MongodbClusterObservation struct {
 	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Required) A database of the MongoDB cluster. The structure is documented below.
-	Database []DatabaseObservation `json:"database,omitempty" tf:"database,omitempty"`
-
 	// (Computed) The health of the host.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
@@ -161,19 +155,11 @@ type MongodbClusterObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	MaintenanceWindow []MaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
-
-	// (Required) Resources allocated to hosts of the MongoDB cluster. The structure is documented below.
-	Resources []ResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
-
 	// MongoDB Cluster mode enabled/disabled.
 	Sharded *bool `json:"sharded,omitempty" tf:"sharded,omitempty"`
 
 	// Status of the cluster. Can be either `CREATING`, `STARTING`, `RUNNING`, `UPDATING`, `STOPPING`, `STOPPED`, `ERROR` or `STATUS_UNKNOWN`.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
-
-	// (Required) A user of the MongoDB cluster. The structure is documented below.
-	User []UserObservation `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type MongodbClusterParameters struct {
@@ -280,7 +266,7 @@ type ResourcesParameters struct {
 
 	// +kubebuilder:validation:Required
 	// (Required) Volume of the storage available to a MongoDB host, in gigabytes.
-	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
+	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// (Required) Type of the storage of MongoDB hosts.
@@ -291,8 +277,6 @@ type ResourcesParameters struct {
 }
 
 type UserObservation struct {
-	// (Optional) Set of permissions granted to the user. The structure is documented below.
-	Permission []PermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type UserParameters struct {
@@ -329,7 +313,7 @@ type MongodbClusterStatus struct {
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloudjet}
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type MongodbCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

@@ -61,7 +61,7 @@ type FolderIAMBindingParameters struct {
 	ServiceAccountsSelector *v1.Selector `json:"serviceAccountsSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
-	SleepAfter *int64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
+	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 // FolderIAMBindingSpec defines the desired state of FolderIAMBinding
@@ -84,7 +84,7 @@ type FolderIAMBindingStatus struct {
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloudjet}
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type FolderIAMBinding struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

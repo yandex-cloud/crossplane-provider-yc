@@ -1,8 +1,9 @@
+---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.6.2
+    controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
   name: nodegroups.kubernetes.yandex-cloud.jet.crossplane.io
 spec:
@@ -11,7 +12,7 @@ spec:
     categories:
     - crossplane
     - managed
-    - yandex-cloudjet
+    - yandex-cloud
     kind: NodeGroup
     listKind: NodeGroupList
     plural: nodegroups
@@ -153,13 +154,11 @@ spec:
                           description: The maximum number of instances that can be
                             temporarily allocated above the group's target size during
                             the update.
-                          format: int64
-                          type: integer
+                          type: number
                         maxUnavailable:
                           description: The maximum number of running instances that
                             can be taken offline during update.
-                          format: int64
-                          type: integer
+                          type: number
                       required:
                       - maxExpansion
                       - maxUnavailable
@@ -182,8 +181,7 @@ spec:
                               size:
                                 description: 'The size of the disk in GB. Allowed
                                   minimal size: 64 GB.'
-                                format: int64
-                                type: integer
+                                type: number
                               type:
                                 description: The disk type.
                                 type: string
@@ -321,14 +319,11 @@ spec:
                           items:
                             properties:
                               coreFraction:
-                                format: int64
-                                type: integer
+                                type: number
                               cores:
-                                format: int64
-                                type: integer
+                                type: number
                               gpus:
-                                format: int64
-                                type: integer
+                                type: number
                               memory:
                                 type: number
                             type: object
@@ -416,18 +411,15 @@ spec:
                               initial:
                                 description: Initial number of instances in the node
                                   group.
-                                format: int64
-                                type: integer
+                                type: number
                               max:
                                 description: Maximum number of instances in the node
                                   group.
-                                format: int64
-                                type: integer
+                                type: number
                               min:
                                 description: Minimum number of instances in the node
                                   group.
-                                format: int64
-                                type: integer
+                                type: number
                             required:
                             - initial
                             - max
@@ -442,8 +434,7 @@ spec:
                               size:
                                 description: 'The size of the disk in GB. Allowed
                                   minimal size: 64 GB.'
-                                format: int64
-                                type: integer
+                                type: number
                             type: object
                           type: array
                       type: object
@@ -480,12 +471,64 @@ spec:
                 required:
                 - name
                 type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
               writeConnectionSecretToRef:
                 description: WriteConnectionSecretToReference specifies the namespace
                   and name of a Secret to which any connection details for this managed
                   resource should be written. Connection details frequently include
                   the endpoint, username, and password required to connect to the
-                  managed resource.
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
                 properties:
                   name:
                     description: Name of the secret.
@@ -505,112 +548,15 @@ spec:
             properties:
               atProvider:
                 properties:
-                  allocationPolicy:
-                    description: This argument specify subnets (zones), that will
-                      be used by node group compute instances. The structure is documented
-                      below.
-                    items:
-                      properties:
-                        location:
-                          description: Repeated field, that specify subnets (zones),
-                            that will be used by node group compute instances. The
-                            structure is documented below.
-                          items:
-                            type: object
-                          type: array
-                      type: object
-                    type: array
                   createdAt:
                     description: (Computed) The Kubernetes node group creation timestamp.
                     type: string
-                  deployPolicy:
-                    description: Deploy policy of the node group. The structure is
-                      documented below.
-                    items:
-                      type: object
-                    type: array
                   id:
                     type: string
                   instanceGroupId:
                     description: (Computed) ID of instance group that is used to manage
                       this Kubernetes node group.
                     type: string
-                  instanceTemplate:
-                    description: (Required) Template used to create compute instances
-                      in this Kubernetes node group. The structure is documented below.
-                    items:
-                      properties:
-                        bootDisk:
-                          description: The specifications for boot disks that will
-                            be attached to the instance. The structure is documented
-                            below.
-                          items:
-                            type: object
-                          type: array
-                        containerRuntime:
-                          description: (Optional) Container runtime configuration.
-                            The structure is documented below.
-                          items:
-                            type: object
-                          type: array
-                        networkInterface:
-                          description: An array with the network interfaces that will
-                            be attached to the instance. The structure is documented
-                            below.
-                          items:
-                            type: object
-                          type: array
-                        placementPolicy:
-                          description: (Optional) The placement policy configuration.
-                            The structure is documented below.
-                          items:
-                            type: object
-                          type: array
-                        resources:
-                          items:
-                            type: object
-                          type: array
-                        schedulingPolicy:
-                          description: The scheduling policy for the instances in
-                            node group. The structure is documented below.
-                          items:
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  maintenancePolicy:
-                    description: (Optional) (Computed) Maintenance policy for this
-                      Kubernetes node group.
-                    items:
-                      properties:
-                        maintenanceWindow:
-                          description: (Optional) (Computed) Set of day intervals,
-                            when maintenance is allowed for this node group. When
-                            omitted, it defaults to any time.
-                          items:
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  scalePolicy:
-                    description: (Required) Scale policy of the node group. The structure
-                      is documented below.
-                    items:
-                      properties:
-                        autoScale:
-                          description: Scale policy for an autoscaled node group.
-                            The structure is documented below.
-                          items:
-                            type: object
-                          type: array
-                        fixedScale:
-                          description: Scale policy for a fixed scale node group.
-                            The structure is documented below.
-                          items:
-                            type: object
-                          type: array
-                      type: object
-                    type: array
                   status:
                     description: (Computed) Status of the Kubernetes node group.
                     type: string

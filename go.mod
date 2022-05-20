@@ -4,21 +4,14 @@ go 1.16
 
 require (
 	github.com/benagricola/crossplane-composition-generator v0.0.0-20210505120457-1b2497dd442b
-	github.com/crossplane/crossplane-runtime v0.15.1-0.20211004150827-579c1833b513
-	github.com/crossplane/crossplane-tools v0.0.0-20210916125540-071de511ae8e
-	github.com/crossplane/terrajet v0.3.2
+	github.com/crossplane/crossplane-runtime v0.15.1-0.20220315141414-988c9ba9c255
+	github.com/crossplane/crossplane-tools v0.0.0-20220310165030-1f43fc12793e
+	github.com/crossplane/terrajet v0.4.0-rc.0.0.20220512072756-6e78c0471d62
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.10.0
 	github.com/pkg/errors v0.9.1
-	github.com/yandex-cloud/terraform-provider-yandex v0.70.0
-	go.uber.org/multierr v1.7.0 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/apimachinery v0.23.0
 	k8s.io/client-go v0.23.0
 	sigs.k8s.io/controller-runtime v0.11.0
-	sigs.k8s.io/controller-tools v0.6.2
+	sigs.k8s.io/controller-tools v0.8.0
 )
-
-// Comment out the line below instead of the above, if your Terraform provider
-// uses an old version (<v2) of github.com/hashicorp/terraform-plugin-sdk.
-// replace github.com/hashicorp/terraform-plugin-sdk => github.com/turkenh/terraform-plugin-sdk v1.17.2-patch1
-replace github.com/crossplane/terrajet => github.com/vaspahomov/terrajet v0.2.1-0.20220209091856-160cf326a980

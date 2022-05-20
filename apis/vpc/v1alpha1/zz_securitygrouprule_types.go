@@ -39,13 +39,13 @@ type SecurityGroupRuleParameters struct {
 	Direction *string `json:"direction" tf:"direction,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	FromPort *int64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
+	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	Port *int64 `json:"port,omitempty" tf:"port,omitempty"`
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
@@ -67,7 +67,7 @@ type SecurityGroupRuleParameters struct {
 	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
-	ToPort *int64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
+	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
@@ -96,7 +96,7 @@ type SecurityGroupRuleStatus struct {
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloudjet}
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type SecurityGroupRule struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

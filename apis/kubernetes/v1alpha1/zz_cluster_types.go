@@ -40,17 +40,11 @@ type ClusterObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Optional) cluster KMS provider parameters.
-	KMSProvider []KMSProviderObservation `json:"kmsProvider,omitempty" tf:"kms_provider,omitempty"`
-
 	// Log group where cluster stores cluster system logs, like audit, events, or controlplane logs.
 	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
 
 	// Kubernetes master configuration options. The structure is documented below.
 	Master []MasterObservation `json:"master,omitempty" tf:"master,omitempty"`
-
-	// (Optional) Network Implementation options. The structure is documented below.
-	NetworkImplementation []NetworkImplementationObservation `json:"networkImplementation,omitempty" tf:"network_implementation,omitempty"`
 
 	// (Computed)Status of the Kubernetes cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
@@ -118,7 +112,7 @@ type ClusterParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
-	NodeIPv4CidrMaskSize *int64 `json:"nodeIpv4CidrMaskSize,omitempty" tf:"node_ipv4_cidr_mask_size,omitempty"`
+	NodeIPv4CidrMaskSize *float64 `json:"nodeIpv4CidrMaskSize,omitempty" tf:"node_ipv4_cidr_mask_size,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
@@ -194,8 +188,6 @@ type LocationParameters struct {
 }
 
 type MaintenancePolicyObservation struct {
-	// (Optional) (Computed) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time.
-	MaintenanceWindow []MaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 }
 
 type MaintenancePolicyParameters struct {
@@ -240,17 +232,8 @@ type MasterObservation struct {
 	// (Computed) Internal endpoint that can be used to connect to the master from cloud networks. 
 	InternalV4Endpoint *string `json:"internalV4Endpoint,omitempty" tf:"internal_v4_endpoint,omitempty"`
 
-	// (Optional) (Computed) Maintenance policy for Kubernetes master.
-	MaintenancePolicy []MaintenancePolicyObservation `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
-
-	// (Optional) Initialize parameters for Regional Master (highly available master). The structure is documented below.
-	Regional []RegionalObservation `json:"regional,omitempty" tf:"regional,omitempty"`
-
 	// (Computed) Information about cluster version. The structure is documented below.
 	VersionInfo []VersionInfoObservation `json:"versionInfo,omitempty" tf:"version_info,omitempty"`
-
-	// (Optional) Initialize parameters for Zonal Master (single node master). The structure is documented below.
-	Zonal []ZonalObservation `json:"zonal,omitempty" tf:"zonal,omitempty"`
 }
 
 type MasterParameters struct {
@@ -288,8 +271,6 @@ type MasterParameters struct {
 }
 
 type NetworkImplementationObservation struct {
-	// (Optional) Cilium network implementation configuration. No options exist.
-	Cilium []CiliumObservation `json:"cilium,omitempty" tf:"cilium,omitempty"`
 }
 
 type NetworkImplementationParameters struct {
@@ -300,8 +281,6 @@ type NetworkImplementationParameters struct {
 }
 
 type RegionalObservation struct {
-	// Array of locations, where master instances will be allocated. The structure is documented below.
-	Location []LocationObservation `json:"location,omitempty" tf:"location,omitempty"`
 }
 
 type RegionalParameters struct {
@@ -373,7 +352,7 @@ type ClusterStatus struct {
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloudjet}
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type Cluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

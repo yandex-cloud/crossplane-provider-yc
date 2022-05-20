@@ -334,7 +334,7 @@ func (in *EgressParameters) DeepCopyInto(out *EgressParameters) {
 	}
 	if in.FromPort != nil {
 		in, out := &in.FromPort, &out.FromPort
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.Labels != nil {
@@ -354,7 +354,7 @@ func (in *EgressParameters) DeepCopyInto(out *EgressParameters) {
 	}
 	if in.Port != nil {
 		in, out := &in.Port, &out.Port
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.PredefinedTarget != nil {
@@ -374,7 +374,7 @@ func (in *EgressParameters) DeepCopyInto(out *EgressParameters) {
 	}
 	if in.ToPort != nil {
 		in, out := &in.ToPort, &out.ToPort
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.V4CidrBlocks != nil {
@@ -441,7 +441,7 @@ func (in *IngressParameters) DeepCopyInto(out *IngressParameters) {
 	}
 	if in.FromPort != nil {
 		in, out := &in.FromPort, &out.FromPort
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.Labels != nil {
@@ -461,7 +461,7 @@ func (in *IngressParameters) DeepCopyInto(out *IngressParameters) {
 	}
 	if in.Port != nil {
 		in, out := &in.Port, &out.Port
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.PredefinedTarget != nil {
@@ -481,7 +481,7 @@ func (in *IngressParameters) DeepCopyInto(out *IngressParameters) {
 	}
 	if in.ToPort != nil {
 		in, out := &in.ToPort, &out.ToPort
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.V4CidrBlocks != nil {
@@ -764,7 +764,7 @@ func (in *SecurityGroupEgressParameters) DeepCopyInto(out *SecurityGroupEgressPa
 	}
 	if in.FromPort != nil {
 		in, out := &in.FromPort, &out.FromPort
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.Labels != nil {
@@ -784,7 +784,7 @@ func (in *SecurityGroupEgressParameters) DeepCopyInto(out *SecurityGroupEgressPa
 	}
 	if in.Port != nil {
 		in, out := &in.Port, &out.Port
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.PredefinedTarget != nil {
@@ -804,7 +804,7 @@ func (in *SecurityGroupEgressParameters) DeepCopyInto(out *SecurityGroupEgressPa
 	}
 	if in.ToPort != nil {
 		in, out := &in.ToPort, &out.ToPort
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.V4CidrBlocks != nil {
@@ -871,7 +871,7 @@ func (in *SecurityGroupIngressParameters) DeepCopyInto(out *SecurityGroupIngress
 	}
 	if in.FromPort != nil {
 		in, out := &in.FromPort, &out.FromPort
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.Labels != nil {
@@ -891,7 +891,7 @@ func (in *SecurityGroupIngressParameters) DeepCopyInto(out *SecurityGroupIngress
 	}
 	if in.Port != nil {
 		in, out := &in.Port, &out.Port
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.PredefinedTarget != nil {
@@ -911,7 +911,7 @@ func (in *SecurityGroupIngressParameters) DeepCopyInto(out *SecurityGroupIngress
 	}
 	if in.ToPort != nil {
 		in, out := &in.ToPort, &out.ToPort
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.V4CidrBlocks != nil {
@@ -1202,7 +1202,7 @@ func (in *SecurityGroupRuleParameters) DeepCopyInto(out *SecurityGroupRuleParame
 	}
 	if in.FromPort != nil {
 		in, out := &in.FromPort, &out.FromPort
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.Labels != nil {
@@ -1222,7 +1222,7 @@ func (in *SecurityGroupRuleParameters) DeepCopyInto(out *SecurityGroupRuleParame
 	}
 	if in.Port != nil {
 		in, out := &in.Port, &out.Port
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.PredefinedTarget != nil {
@@ -1257,7 +1257,7 @@ func (in *SecurityGroupRuleParameters) DeepCopyInto(out *SecurityGroupRuleParame
 	}
 	if in.ToPort != nil {
 		in, out := &in.ToPort, &out.ToPort
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.V4CidrBlocks != nil {
@@ -1428,11 +1428,6 @@ func (in *SubnetObservation) DeepCopyInto(out *SubnetObservation) {
 		in, out := &in.CreatedAt, &out.CreatedAt
 		*out = new(string)
 		**out = **in
-	}
-	if in.DHCPOptions != nil {
-		in, out := &in.DHCPOptions, &out.DHCPOptions
-		*out = make([]DHCPOptionsObservation, len(*in))
-		copy(*out, *in)
 	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID

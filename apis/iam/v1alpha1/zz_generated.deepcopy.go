@@ -151,7 +151,7 @@ func (in *FolderIAMBindingParameters) DeepCopyInto(out *FolderIAMBindingParamete
 	}
 	if in.SleepAfter != nil {
 		in, out := &in.SleepAfter, &out.SleepAfter
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 }
@@ -319,7 +319,7 @@ func (in *FolderIAMMemberParameters) DeepCopyInto(out *FolderIAMMemberParameters
 	}
 	if in.SleepAfter != nil {
 		in, out := &in.SleepAfter, &out.SleepAfter
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 }
@@ -514,7 +514,7 @@ func (in *ServiceAccountIAMMemberParameters) DeepCopyInto(out *ServiceAccountIAM
 	}
 	if in.SleepAfter != nil {
 		in, out := &in.SleepAfter, &out.SleepAfter
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 }

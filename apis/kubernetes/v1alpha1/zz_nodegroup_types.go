@@ -47,8 +47,6 @@ type AllocationPolicyLocationParameters struct {
 }
 
 type AllocationPolicyObservation struct {
-	// Repeated field, that specify subnets (zones), that will be used by node group compute instances. The structure is documented below.   
-	Location []AllocationPolicyLocationObservation `json:"location,omitempty" tf:"location,omitempty"`
 }
 
 type AllocationPolicyParameters struct {
@@ -65,15 +63,15 @@ type AutoScaleParameters struct {
 
 	// +kubebuilder:validation:Required
 	// Initial number of instances in the node group.
-	Initial *int64 `json:"initial" tf:"initial,omitempty"`
+	Initial *float64 `json:"initial" tf:"initial,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// Maximum number of instances in the node group.
-	Max *int64 `json:"max" tf:"max,omitempty"`
+	Max *float64 `json:"max" tf:"max,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// Minimum number of instances in the node group.
-	Min *int64 `json:"min" tf:"min,omitempty"`
+	Min *float64 `json:"min" tf:"min,omitempty"`
 }
 
 type BootDiskObservation struct {
@@ -83,7 +81,7 @@ type BootDiskParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// The size of the disk in GB. Allowed minimal size: 64 GB.
-	Size *int64 `json:"size,omitempty" tf:"size,omitempty"`
+	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// The disk type.
@@ -107,11 +105,11 @@ type DeployPolicyParameters struct {
 
 	// +kubebuilder:validation:Required
 	// The maximum number of instances that can be temporarily allocated above the group's target size during the update.
-	MaxExpansion *int64 `json:"maxExpansion" tf:"max_expansion,omitempty"`
+	MaxExpansion *float64 `json:"maxExpansion" tf:"max_expansion,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// The maximum number of running instances that can be taken offline during update.
-	MaxUnavailable *int64 `json:"maxUnavailable" tf:"max_unavailable,omitempty"`
+	MaxUnavailable *float64 `json:"maxUnavailable" tf:"max_unavailable,omitempty"`
 }
 
 type FixedScaleObservation struct {
@@ -121,26 +119,10 @@ type FixedScaleParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// The size of the disk in GB. Allowed minimal size: 64 GB.
-	Size *int64 `json:"size,omitempty" tf:"size,omitempty"`
+	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 }
 
 type InstanceTemplateObservation struct {
-	// The specifications for boot disks that will be attached to the instance. The structure is documented below.
-	BootDisk []BootDiskObservation `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
-
-	// (Optional) Container runtime configuration. The structure is documented below.
-	ContainerRuntime []ContainerRuntimeObservation `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
-
-	// An array with the network interfaces that will be attached to the instance. The structure is documented below.
-	NetworkInterface []NetworkInterfaceObservation `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
-
-	// (Optional) The placement policy configuration. The structure is documented below.
-	PlacementPolicy []PlacementPolicyObservation `json:"placementPolicy,omitempty" tf:"placement_policy,omitempty"`
-
-	Resources []ResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
-
-	// The scheduling policy for the instances in node group. The structure is documented below.
-	SchedulingPolicy []SchedulingPolicyObservation `json:"schedulingPolicy,omitempty" tf:"scheduling_policy,omitempty"`
 }
 
 type InstanceTemplateParameters struct {
@@ -241,8 +223,6 @@ type NetworkInterfaceParameters struct {
 }
 
 type NodeGroupMaintenancePolicyObservation struct {
-	// (Optional) (Computed) Set of day intervals, when maintenance is allowed for this node group. When omitted, it defaults to any time. 
-	MaintenanceWindow []MaintenancePolicyMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 }
 
 type NodeGroupMaintenancePolicyParameters struct {
@@ -260,28 +240,13 @@ type NodeGroupMaintenancePolicyParameters struct {
 }
 
 type NodeGroupObservation struct {
-	// This argument specify subnets (zones), that will be used by node group compute instances. The structure is documented below.
-	AllocationPolicy []AllocationPolicyObservation `json:"allocationPolicy,omitempty" tf:"allocation_policy,omitempty"`
-
 	// (Computed) The Kubernetes node group creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
-
-	// Deploy policy of the node group. The structure is documented below.
-	DeployPolicy []DeployPolicyObservation `json:"deployPolicy,omitempty" tf:"deploy_policy,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// (Computed) ID of instance group that is used to manage this Kubernetes node group.
 	InstanceGroupID *string `json:"instanceGroupId,omitempty" tf:"instance_group_id,omitempty"`
-
-	// (Required) Template used to create compute instances in this Kubernetes node group. The structure is documented below.
-	InstanceTemplate []InstanceTemplateObservation `json:"instanceTemplate,omitempty" tf:"instance_template,omitempty"`
-
-	// (Optional) (Computed) Maintenance policy for this Kubernetes node group.
-	MaintenancePolicy []NodeGroupMaintenancePolicyObservation `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
-
-	// (Required) Scale policy of the node group. The structure is documented below.
-	ScalePolicy []ScalePolicyObservation `json:"scalePolicy,omitempty" tf:"scale_policy,omitempty"`
 
 	// (Computed) Status of the Kubernetes node group.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
@@ -385,24 +350,19 @@ type ResourcesObservation struct {
 type ResourcesParameters struct {
 
 	// +kubebuilder:validation:Optional
-	CoreFraction *int64 `json:"coreFraction,omitempty" tf:"core_fraction,omitempty"`
+	CoreFraction *float64 `json:"coreFraction,omitempty" tf:"core_fraction,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	Cores *int64 `json:"cores,omitempty" tf:"cores,omitempty"`
+	Cores *float64 `json:"cores,omitempty" tf:"cores,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	Gpus *int64 `json:"gpus,omitempty" tf:"gpus,omitempty"`
+	Gpus *float64 `json:"gpus,omitempty" tf:"gpus,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Memory *float64 `json:"memory,omitempty" tf:"memory,omitempty"`
 }
 
 type ScalePolicyObservation struct {
-	// Scale policy for an autoscaled node group. The structure is documented below.
-	AutoScale []AutoScaleObservation `json:"autoScale,omitempty" tf:"auto_scale,omitempty"`
-
-	// Scale policy for a fixed scale node group. The structure is documented below.
-	FixedScale []FixedScaleObservation `json:"fixedScale,omitempty" tf:"fixed_scale,omitempty"`
 }
 
 type ScalePolicyParameters struct {
@@ -446,7 +406,7 @@ type NodeGroupStatus struct {
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloudjet}
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type NodeGroup struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

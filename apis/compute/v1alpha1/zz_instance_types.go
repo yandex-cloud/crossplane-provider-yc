@@ -26,8 +26,6 @@ import (
 )
 
 type BootDiskObservation struct {
-	// (Optional) Parameters for a new disk that will be created
-	InitializeParams []InitializeParamsObservation `json:"initializeParams,omitempty" tf:"initialize_params,omitempty"`
 }
 
 type BootDiskParameters struct {
@@ -72,7 +70,7 @@ type DNSRecordParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) DNS record TTL. in seconds
-	TTL *int64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
+	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type IPv6DNSRecordObservation struct {
@@ -94,7 +92,7 @@ type IPv6DNSRecordParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) DNS record TTL. in seconds
-	TTL *int64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
+	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type InitializeParamsObservation struct {
@@ -103,7 +101,7 @@ type InitializeParamsObservation struct {
 type InitializeParamsParameters struct {
 
 	// +kubebuilder:validation:Optional
-	BlockSize *int64 `json:"blockSize,omitempty" tf:"block_size,omitempty"`
+	BlockSize *float64 `json:"blockSize,omitempty" tf:"block_size,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Description of the instance.
@@ -119,7 +117,7 @@ type InitializeParamsParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Size of the disk in GB.
-	Size *int64 `json:"size,omitempty" tf:"size,omitempty"`
+	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) A snapshot to initialize this disk from.
@@ -131,9 +129,6 @@ type InitializeParamsParameters struct {
 }
 
 type InstanceObservation struct {
-	// (Required) The boot disk for the instance. The structure is documented below.
-	BootDisk []BootDiskObservation `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
-
 	// Creation timestamp of the instance.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
@@ -144,18 +139,6 @@ type InstanceObservation struct {
 
 	// (Required) Networks to attach to the instance. This can
 	NetworkInterface []NetworkInterfaceObservation `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
-
-	// (Optional) The placement policy configuration. The structure is documented below.
-	PlacementPolicy []PlacementPolicyObservation `json:"placementPolicy,omitempty" tf:"placement_policy,omitempty"`
-
-	// (Required) Compute resources that are allocated for the instance. The structure is documented below.
-	Resources []ResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
-
-	// (Optional) Scheduling policy configuration. The structure is documented below.
-	SchedulingPolicy []SchedulingPolicyObservation `json:"schedulingPolicy,omitempty" tf:"scheduling_policy,omitempty"`
-
-	// (Optional) A list of disks to attach to the instance. The structure is documented below.
-	SecondaryDisk []SecondaryDiskObservation `json:"secondaryDisk,omitempty" tf:"secondary_disk,omitempty"`
 
 	// The status of this instance.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
@@ -265,22 +248,13 @@ type NATDNSRecordParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) DNS record TTL. in seconds
-	TTL *int64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
+	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type NetworkInterfaceObservation struct {
-	// (Optional) List of configurations for creating ipv4 DNS records. The structure is documented below.
-	DNSRecord []DNSRecordObservation `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
-
-	// (Optional) List of configurations for creating ipv6 DNS records. The structure is documented below.
-	IPv6DNSRecord []IPv6DNSRecordObservation `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
-
-	Index *int64 `json:"index,omitempty" tf:"index,omitempty"`
+	Index *float64 `json:"index,omitempty" tf:"index,omitempty"`
 
 	MacAddress *string `json:"macAddress,omitempty" tf:"mac_address,omitempty"`
-
-	// (Optional) List of configurations for creating ipv4 NAT DNS records. The structure is documented below.
-	NATDNSRecord []NATDNSRecordObservation `json:"natDnsRecord,omitempty" tf:"nat_dns_record,omitempty"`
 
 	NATIPVersion *string `json:"natIpVersion,omitempty" tf:"nat_ip_version,omitempty"`
 }
@@ -363,14 +337,14 @@ type ResourcesParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) If provided, specifies baseline performance for a core as a percent.
-	CoreFraction *int64 `json:"coreFraction,omitempty" tf:"core_fraction,omitempty"`
+	CoreFraction *float64 `json:"coreFraction,omitempty" tf:"core_fraction,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// (Required) CPU cores for the instance.
-	Cores *int64 `json:"cores" tf:"cores,omitempty"`
+	Cores *float64 `json:"cores" tf:"cores,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	Gpus *int64 `json:"gpus,omitempty" tf:"gpus,omitempty"`
+	Gpus *float64 `json:"gpus,omitempty" tf:"gpus,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// (Required) Memory size in GB.
@@ -429,7 +403,7 @@ type InstanceStatus struct {
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
-// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloudjet}
+// +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type Instance struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

@@ -17,7 +17,8 @@ limitations under the License.
 package config
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	// Note(ezgidemirel): we are importing this to embed provider schema document
+	_ "embed"
 
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 
@@ -32,14 +33,19 @@ import (
 	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
 )
 
+//go:embed schema.json
+var providerSchema string
+
 const (
 	resourcePrefix = "yandex-cloud"
 	modulePath     = "github.com/yandex-cloud/provider-jet-yc"
 )
 
 // GetProvider returns provider configuration
-func GetProvider(tf *schema.Provider) *tjconfig.Provider {
-	pc := tjconfig.NewProvider(tf.ResourcesMap, resourcePrefix, modulePath,
+func GetProvider() *tjconfig.Provider {
+	pc := tjconfig.NewProviderWithSchema([]byte(providerSchema), resourcePrefix, modulePath,
+		tjconfig.WithShortName("yandex-cloud"),
+		tjconfig.WithRootGroup("yandex-cloud.jet.crossplane.io"),
 		tjconfig.WithDefaultResourceFn(common.DefaultResourceFn),
 		tjconfig.WithIncludeList([]string{
 			"yandex_vpc_network$",

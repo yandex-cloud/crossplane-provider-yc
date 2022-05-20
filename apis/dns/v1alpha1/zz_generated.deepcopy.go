@@ -126,7 +126,7 @@ func (in *RecordsetParameters) DeepCopyInto(out *RecordsetParameters) {
 	}
 	if in.TTL != nil {
 		in, out := &in.TTL, &out.TTL
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 	if in.Type != nil {

@@ -18,8 +18,6 @@ import (
 	"os"
 	"path/filepath"
 
-	tf "github.com/yandex-cloud/terraform-provider-yandex/yandex"
-
 	"github.com/crossplane/terrajet/pkg/pipeline"
 
 	"github.com/yandex-cloud/provider-jet-yc/config"
@@ -29,9 +27,10 @@ func main() {
 	if len(os.Args) < 2 || os.Args[1] == "" {
 		panic("root directory is required to be given as argument")
 	}
-	absRootDir, err := filepath.Abs(os.Args[1])
+	rootDir := os.Args[1]
+	absRootDir, err := filepath.Abs(rootDir)
 	if err != nil {
-		panic(fmt.Sprintf("cannot calculate the absolute path of %s", os.Args[1]))
+		panic(fmt.Sprintf("cannot calculate the absolute path with %s", rootDir))
 	}
-	pipeline.Run(config.GetProvider(tf.Provider()), absRootDir)
+	pipeline.Run(config.GetProvider(), absRootDir)
 }
