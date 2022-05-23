@@ -73,6 +73,21 @@ type DNSRecordParameters struct {
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
+type HostAffinityRulesObservation struct {
+}
+
+type HostAffinityRulesParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key"`
+
+	// +kubebuilder:validation:Optional
+	Op *string `json:"op,omitempty" tf:"op"`
+
+	// +kubebuilder:validation:Optional
+	Values []*string `json:"values,omitempty" tf:"values"`
+}
+
 type IPv6DNSRecordObservation struct {
 }
 
@@ -145,6 +160,9 @@ type InstanceObservation struct {
 }
 
 type InstanceParameters struct {
+
+	// +kubebuilder:validation:Optional
+	AllowRecreate *bool `json:"allowRecreate,omitempty" tf:"allow_recreate,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) If true, allows Terraform to stop the instance in order to update its properties.
@@ -325,9 +343,12 @@ type PlacementPolicyObservation struct {
 
 type PlacementPolicyParameters struct {
 
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
+	HostAffinityRules []HostAffinityRulesParameters `json:"hostAffinityRules,omitempty" tf:"host_affinity_rules,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	// (Optional) Specifies the id of the Placement Group to assign to the instance.
-	PlacementGroupID *string `json:"placementGroupId" tf:"placement_group_id,omitempty"`
+	PlacementGroupID *string `json:"placementGroupId,omitempty" tf:"placement_group_id,omitempty"`
 }
 
 type ResourcesObservation struct {

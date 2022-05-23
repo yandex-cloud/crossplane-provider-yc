@@ -33,6 +33,18 @@ type AccessObservation struct {
 type AccessParameters struct {
 }
 
+type AuditLogObservation struct {
+}
+
+type AuditLogParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Filter *string `json:"filter,omitempty" tf:"filter,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	RuntimeConfiguration *bool `json:"runtimeConfiguration,omitempty" tf:"runtime_configuration,omitempty"`
+}
+
 type BackupWindowStartObservation struct {
 }
 
@@ -65,6 +77,9 @@ type ClusterConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	// (Optional) Feature compatibility version of MongoDB. If not provided version is taken. Can be either `5.0`, `4.4`, `4.2` and `4.0`.
 	FeatureCompatibilityVersion *string `json:"featureCompatibilityVersion,omitempty" tf:"feature_compatibility_version,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Mongod []MongodParameters `json:"mongod,omitempty" tf:"mongod,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// (Optional) Version of the MongoDB server software. Can be either `4.0`, `4.2`, `4.4`, `4.4-enterprise`, `5.0` and `5.0-enterprise`.
@@ -122,6 +137,27 @@ type HostParameters struct {
 	ZoneID *string `json:"zoneId" tf:"zone_id,omitempty"`
 }
 
+type KmipObservation struct {
+}
+
+type KmipParameters struct {
+
+	// +kubebuilder:validation:Optional
+	ClientCertificate *string `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	KeyIdentifier *string `json:"keyIdentifier,omitempty" tf:"key_identifier,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ServerCA *string `json:"serverCa,omitempty" tf:"server_ca,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ServerName *string `json:"serverName,omitempty" tf:"server_name,omitempty"`
+}
+
 type MaintenanceWindowObservation struct {
 }
 
@@ -138,6 +174,21 @@ type MaintenanceWindowParameters struct {
 	// +kubebuilder:validation:Required
 	// (Optional) type of mongo daemon which runs on this host (mongod, mongos or monogcfg). Defaults to mongod.
 	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type MongodObservation struct {
+}
+
+type MongodParameters struct {
+
+	// +kubebuilder:validation:Optional
+	AuditLog []AuditLogParameters `json:"auditLog,omitempty" tf:"audit_log,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Security []SecurityParameters `json:"security,omitempty" tf:"security,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SetParameter []SetParameterParameters `json:"setParameter,omitempty" tf:"set_parameter,omitempty"`
 }
 
 type MongodbClusterObservation struct {
@@ -274,6 +325,27 @@ type ResourcesParameters struct {
 
 	// +kubebuilder:validation:Required
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
+}
+
+type SecurityObservation struct {
+}
+
+type SecurityParameters struct {
+
+	// +kubebuilder:validation:Optional
+	EnableEncryption *bool `json:"enableEncryption,omitempty" tf:"enable_encryption,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Kmip []KmipParameters `json:"kmip,omitempty" tf:"kmip,omitempty"`
+}
+
+type SetParameterObservation struct {
+}
+
+type SetParameterParameters struct {
+
+	// +kubebuilder:validation:Optional
+	AuditAuthorizationSuccess *bool `json:"auditAuthorizationSuccess,omitempty" tf:"audit_authorization_success,omitempty"`
 }
 
 type UserObservation struct {

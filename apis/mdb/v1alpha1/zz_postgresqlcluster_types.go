@@ -35,6 +35,9 @@ type ConfigAccessParameters struct {
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	Serverless *bool `json:"serverless,omitempty" tf:"serverless,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	// Allows access for [SQL queries in the management console](https://cloud.yandex.com/docs/managed-postgresql/operations/web-sql-query)
 	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
 }

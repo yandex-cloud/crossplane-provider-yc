@@ -175,6 +175,9 @@ type RedisClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
+	// +kubebuilder:validation:Optional
+	PersistenceMode *string `json:"persistenceMode,omitempty" tf:"persistence_mode,omitempty"`
+
 	// +kubebuilder:validation:Required
 	// (Required) Resources allocated to hosts of the Redis cluster. The structure is documented below.
 	Resources []RedisClusterResourcesParameters `json:"resources" tf:"resources,omitempty"`

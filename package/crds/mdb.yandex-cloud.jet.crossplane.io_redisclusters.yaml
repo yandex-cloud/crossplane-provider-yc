@@ -254,6 +254,8 @@ spec:
                           is selected.
                         type: object
                     type: object
+                  persistenceMode:
+                    type: string
                   resources:
                     description: (Required) Resources allocated to hosts of the Redis
                       cluster. The structure is documented below.

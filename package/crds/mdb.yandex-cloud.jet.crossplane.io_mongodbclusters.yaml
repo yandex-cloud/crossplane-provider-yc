@@ -94,6 +94,49 @@ spec:
                             MongoDB. If not provided version is taken. Can be either
                             `5.0`, `4.4`, `4.2` and `4.0`.
                           type: string
+                        mongod:
+                          items:
+                            properties:
+                              auditLog:
+                                items:
+                                  properties:
+                                    filter:
+                                      type: string
+                                    runtimeConfiguration:
+                                      type: boolean
+                                  type: object
+                                type: array
+                              security:
+                                items:
+                                  properties:
+                                    enableEncryption:
+                                      type: boolean
+                                    kmip:
+                                      items:
+                                        properties:
+                                          clientCertificate:
+                                            type: string
+                                          keyIdentifier:
+                                            type: string
+                                          port:
+                                            type: number
+                                          serverCa:
+                                            type: string
+                                          serverName:
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              setParameter:
+                                items:
+                                  properties:
+                                    auditAuthorizationSuccess:
+                                      type: boolean
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                         version:
                           description: (Optional) Version of the MongoDB server software.
                             Can be either `4.0`, `4.2`, `4.4`, `4.4-enterprise`, `5.0`

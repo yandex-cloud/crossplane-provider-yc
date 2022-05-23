@@ -63,6 +63,8 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  allowRecreate:
+                    type: boolean
                   allowStoppingForUpdate:
                     description: (Optional) If true, allows Terraform to stop the
                       instance in order to update its properties.
@@ -339,12 +341,23 @@ spec:
                       structure is documented below.
                     items:
                       properties:
+                        hostAffinityRules:
+                          items:
+                            properties:
+                              key:
+                                type: string
+                              op:
+                                type: string
+                              values:
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
                         placementGroupId:
                           description: (Optional) Specifies the id of the Placement
                             Group to assign to the instance.
                           type: string
-                      required:
-                      - placementGroupId
                       type: object
                     type: array
                   platformId:

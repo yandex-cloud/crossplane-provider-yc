@@ -76,6 +76,8 @@ spec:
                               dataLens:
                                 description: (Optional) Allow access for [Yandex DataLens](https://cloud.yandex.com/services/datalens).
                                 type: boolean
+                              serverless:
+                                type: boolean
                               webSql:
                                 description: Allows access for [SQL queries in the
                                   management console](https://cloud.yandex.com/docs/managed-postgresql/operations/web-sql-query)
