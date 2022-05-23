@@ -9,6 +9,10 @@ metadata:
 spec:
   group: yandex-cloud.jet.crossplane.io
   names:
+    categories:
+    - crossplane
+    - managed
+    - yandex-cloud
     kind: ProviderConfig
     listKind: ProviderConfigList
     plural: providerconfigs
