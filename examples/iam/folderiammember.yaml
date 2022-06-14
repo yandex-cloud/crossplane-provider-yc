@@ -1,5 +1,5 @@
 apiVersion: iam.yandex-cloud.jet.crossplane.io/v1alpha1
-kind: FolderIamMember
+kind: FolderIAMMember
 metadata:
   name: crossplane-preprod
 spec:
