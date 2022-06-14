@@ -36,7 +36,12 @@ import (
 	cluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/kubernetes/cluster"
 	nodegroup "github.com/yandex-cloud/provider-jet-yc/internal/controller/kubernetes/nodegroup"
 	mongodbcluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mongodbcluster"
+	mysqlcluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mysqlcluster"
+	mysqldatabase "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mysqldatabase"
+	mysqluser "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mysqluser"
 	postgresqlcluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/postgresqlcluster"
+	postgresqldatabase "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/postgresqldatabase"
+	postgresqluser "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/postgresqluser"
 	rediscluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/rediscluster"
 	providerconfig "github.com/yandex-cloud/provider-jet-yc/internal/controller/providerconfig"
 	folder "github.com/yandex-cloud/provider-jet-yc/internal/controller/resourcemanager/folder"
@@ -68,7 +73,12 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		cluster.Setup,
 		nodegroup.Setup,
 		mongodbcluster.Setup,
+		mysqlcluster.Setup,
+		mysqldatabase.Setup,
+		mysqluser.Setup,
 		postgresqlcluster.Setup,
+		postgresqldatabase.Setup,
+		postgresqluser.Setup,
 		rediscluster.Setup,
 		providerconfig.Setup,
 		folder.Setup,

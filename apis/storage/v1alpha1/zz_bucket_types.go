@@ -25,6 +25,18 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AnonymousAccessFlagsObservation struct {
+}
+
+type AnonymousAccessFlagsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	List *bool `json:"list,omitempty" tf:"list,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Read *bool `json:"read,omitempty" tf:"read,omitempty"`
+}
+
 type ApplyServerSideEncryptionByDefaultObservation struct {
 }
 
@@ -66,6 +78,9 @@ type BucketParameters struct {
 	AccessKeySelector *v1.Selector `json:"accessKeySelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	AnonymousAccessFlags []AnonymousAccessFlagsParameters `json:"anonymousAccessFlags,omitempty" tf:"anonymous_access_flags,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	// (Optional, Forces new resource) The name of the bucket. If omitted, Terraform will assign a random, unique name.
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
@@ -78,6 +93,19 @@ type BucketParameters struct {
 	CorsRule []CorsRuleParameters `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
+
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +kubebuilder:validation:Optional
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
 	// (Optional, Default: `false`) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are *not* recoverable.
 	ForceDestroy *bool `json:"forceDestroy,omitempty" tf:"force_destroy,omitempty"`
 
@@ -86,12 +114,18 @@ type BucketParameters struct {
 	Grant []GrantParameters `json:"grant,omitempty" tf:"grant,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	HTTPS []HTTPSParameters `json:"https,omitempty" tf:"https,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	// (Optional) A configuration of [object lifecycle management](https://cloud.yandex.com/docs/storage/concepts/lifecycles) (documented below).
 	LifecycleRule []LifecycleRuleParameters `json:"lifecycleRule,omitempty" tf:"lifecycle_rule,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) A settings of [bucket logging](https://cloud.yandex.com/docs/storage/concepts/server-logs) (documented below).
 	Logging []LoggingParameters `json:"logging,omitempty" tf:"logging,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
@@ -181,6 +215,15 @@ type GrantParameters struct {
 
 	// +kubebuilder:validation:Optional
 	URI *string `json:"uri,omitempty" tf:"uri,omitempty"`
+}
+
+type HTTPSObservation struct {
+}
+
+type HTTPSParameters struct {
+
+	// +kubebuilder:validation:Required
+	CertificateID *string `json:"certificateId" tf:"certificate_id,omitempty"`
 }
 
 type LifecycleRuleObservation struct {

@@ -79,7 +79,7 @@ type ConfigParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Cluster performance diagnostics settings. The structure is documented below. [YC Documentation](https://cloud.yandex.com/docs/managed-postgresql/grpc/cluster_service#PerformanceDiagnostics)
-	PerformanceDiagnostics []PerformanceDiagnosticsParameters `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
+	PerformanceDiagnostics []ConfigPerformanceDiagnosticsParameters `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Configuration of the connection pooler. The structure is documented below.
@@ -96,6 +96,24 @@ type ConfigParameters struct {
 	// +kubebuilder:validation:Required
 	// (Required) Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13)
 	Version *string `json:"version" tf:"version,omitempty"`
+}
+
+type ConfigPerformanceDiagnosticsObservation struct {
+}
+
+type ConfigPerformanceDiagnosticsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	// Enable performance diagnostics
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// +kubebuilder:validation:Required
+	// Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+	SessionsSamplingInterval *float64 `json:"sessionsSamplingInterval" tf:"sessions_sampling_interval,omitempty"`
+
+	// +kubebuilder:validation:Required
+	// Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+	StatementsSamplingInterval *float64 `json:"statementsSamplingInterval" tf:"statements_sampling_interval,omitempty"`
 }
 
 type ConfigResourcesObservation struct {
@@ -127,24 +145,6 @@ type ExtensionParameters struct {
 	// +kubebuilder:validation:Optional
 	// (Required) Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13)
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
-}
-
-type PerformanceDiagnosticsObservation struct {
-}
-
-type PerformanceDiagnosticsParameters struct {
-
-	// +kubebuilder:validation:Optional
-	// Enable performance diagnostics
-	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
-
-	// +kubebuilder:validation:Required
-	// Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
-	SessionsSamplingInterval *float64 `json:"sessionsSamplingInterval" tf:"sessions_sampling_interval,omitempty"`
-
-	// +kubebuilder:validation:Required
-	// Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
-	StatementsSamplingInterval *float64 `json:"statementsSamplingInterval" tf:"statements_sampling_interval,omitempty"`
 }
 
 type PoolerConfigObservation struct {
@@ -271,9 +271,9 @@ type PostgresqlClusterParameters struct {
 	// (Required) Configuration of the PostgreSQL cluster. The structure is documented below.
 	Config []ConfigParameters `json:"config" tf:"config,omitempty"`
 
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	// (Required) A database of the PostgreSQL cluster. The structure is documented below.
-	Database []PostgresqlClusterDatabaseParameters `json:"database" tf:"database,omitempty"`
+	Database []PostgresqlClusterDatabaseParameters `json:"database,omitempty" tf:"database,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Inhibits deletion of the cluster.  Can be either `true` or `false`.
@@ -301,6 +301,9 @@ type PostgresqlClusterParameters struct {
 	// +kubebuilder:validation:Required
 	// (Required) A host of the PostgreSQL cluster. The structure is documented below.
 	Host []PostgresqlClusterHostParameters `json:"host" tf:"host,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	HostGroupIds []*string `json:"hostGroupIds,omitempty" tf:"host_group_ids,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) It sets name of master host. It works only when `host.name` is set.
@@ -331,7 +334,7 @@ type PostgresqlClusterParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional, ForceNew) The cluster will be created from the specified backup. The structure is documented below.
-	Restore []RestoreParameters `json:"restore,omitempty" tf:"restore,omitempty"`
+	Restore []PostgresqlClusterRestoreParameters `json:"restore,omitempty" tf:"restore,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
@@ -344,9 +347,27 @@ type PostgresqlClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	// (Required) A user of the PostgreSQL cluster. The structure is documented below.
-	User []PostgresqlClusterUserParameters `json:"user" tf:"user,omitempty"`
+	User []PostgresqlClusterUserParameters `json:"user,omitempty" tf:"user,omitempty"`
+}
+
+type PostgresqlClusterRestoreObservation struct {
+}
+
+type PostgresqlClusterRestoreParameters struct {
+
+	// +kubebuilder:validation:Required
+	// (Required, ForceNew) Backup ID. The cluster will be created from the specified backup. [How to get a list of PostgreSQL backups](https://cloud.yandex.com/docs/managed-postgresql/operations/cluster-backups). 
+	BackupID *string `json:"backupId" tf:"backup_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional, ForceNew) Timestamp of the moment to which the PostgreSQL cluster should be restored. (Format: "2006-01-02T15:04:05" - UTC). When not set, current time is used.
+	Time *string `json:"time,omitempty" tf:"time,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional, ForceNew) Flag that indicates whether a database should be restored to the first backup point available just after the timestamp specified in the [time] field instead of just before.  
+	TimeInclusive *bool `json:"timeInclusive,omitempty" tf:"time_inclusive,omitempty"`
 }
 
 type PostgresqlClusterUserObservation struct {
@@ -375,35 +396,17 @@ type PostgresqlClusterUserParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Set of permissions granted to the user. The structure is documented below.
-	Permission []UserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+	Permission []PostgresqlClusterUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Map of user settings. List of settings is documented below.
 	Settings map[string]*string `json:"settings,omitempty" tf:"settings,omitempty"`
 }
 
-type RestoreObservation struct {
+type PostgresqlClusterUserPermissionObservation struct {
 }
 
-type RestoreParameters struct {
-
-	// +kubebuilder:validation:Required
-	// (Required, ForceNew) Backup ID. The cluster will be created from the specified backup. [How to get a list of PostgreSQL backups](https://cloud.yandex.com/docs/managed-postgresql/operations/cluster-backups). 
-	BackupID *string `json:"backupId" tf:"backup_id,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Optional, ForceNew) Timestamp of the moment to which the PostgreSQL cluster should be restored. (Format: "2006-01-02T15:04:05" - UTC). When not set, current time is used.
-	Time *string `json:"time,omitempty" tf:"time,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Optional, ForceNew) Flag that indicates whether a database should be restored to the first backup point available just after the timestamp specified in the [time] field instead of just before.  
-	TimeInclusive *bool `json:"timeInclusive,omitempty" tf:"time_inclusive,omitempty"`
-}
-
-type UserPermissionObservation struct {
-}
-
-type UserPermissionParameters struct {
+type PostgresqlClusterUserPermissionParameters struct {
 
 	// +kubebuilder:validation:Required
 	// (Required) The name of the database that the permission grants access to.

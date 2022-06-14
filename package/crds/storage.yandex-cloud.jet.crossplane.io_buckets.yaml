@@ -95,6 +95,15 @@ spec:
                     description: (Optional) The [predefined ACL](https://cloud.yandex.com/docs/storage/concepts/acl#predefined_acls)
                       to apply. Defaults to `private`. Conflicts with `grant`.
                     type: string
+                  anonymousAccessFlags:
+                    items:
+                      properties:
+                        list:
+                          type: boolean
+                        read:
+                          type: boolean
+                      type: object
+                    type: array
                   bucket:
                     description: (Optional, Forces new resource) The name of the bucket.
                       If omitted, Terraform will assign a random, unique name.
@@ -139,6 +148,33 @@ spec:
                       - allowedOrigins
                       type: object
                     type: array
+                  defaultStorageClass:
+                    type: string
+                  folderId:
+                    type: string
+                  folderIdRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                    type: object
                   forceDestroy:
                     description: '(Optional, Default: `false`) A boolean that indicates
                       all objects should be deleted from the bucket so that the bucket
@@ -164,6 +200,15 @@ spec:
                       required:
                       - permissions
                       - type
+                      type: object
+                    type: array
+                  https:
+                    items:
+                      properties:
+                        certificateId:
+                          type: string
+                      required:
+                      - certificateId
                       type: object
                     type: array
                   lifecycleRule:
@@ -286,6 +331,8 @@ spec:
                       - targetBucket
                       type: object
                     type: array
+                  maxSize:
+                    type: number
                   policy:
                     type: string
                   secretKeySecretRef:

@@ -229,6 +229,42 @@ func Configure(p *config.Provider) {
 			return postgresqlConnDetails(attr), nil
 		}
 	})
+	p.AddResourceConfigurator("yandex_mdb_postgresql_database", func(r *config.Resource) {
+		r.References["cluster_id"] = config.Reference{
+			Type: "PostgresqlCluster",
+		}
+		r.UseAsync = true
+	})
+	p.AddResourceConfigurator("yandex_mdb_postgresql_user", func(r *config.Resource) {
+		r.References["cluster_id"] = config.Reference{
+			Type: "PostgresqlCluster",
+		}
+		r.UseAsync = true
+	})
+	p.AddResourceConfigurator("yandex_mdb_mysql_cluster", func(r *config.Resource) {
+		r.References["network_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
+		}
+		r.References["host.subnet_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
+		}
+		r.References["security_group_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
+		}
+		r.UseAsync = true
+	})
+	p.AddResourceConfigurator("yandex_mdb_mysql_database", func(r *config.Resource) {
+		r.References["cluster_id"] = config.Reference{
+			Type: "MysqlCluster",
+		}
+		r.UseAsync = true
+	})
+	p.AddResourceConfigurator("yandex_mdb_mysql_user", func(r *config.Resource) {
+		r.References["cluster_id"] = config.Reference{
+			Type: "MysqlCluster",
+		}
+		r.UseAsync = true
+	})
 	p.AddResourceConfigurator("yandex_mdb_redis_cluster", func(r *config.Resource) {
 		r.References["network_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),

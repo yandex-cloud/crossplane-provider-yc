@@ -22,6 +22,7 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
 	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1"
+	v1alpha11 "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
 	storage "github.com/yandex-cloud/provider-jet-yc/config/storage"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -48,6 +49,22 @@ func (mg *Bucket) ResolveReferences(ctx context.Context, c client.Reader) error 
 	}
 	mg.Spec.ForProvider.AccessKey = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.AccessKeyRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.FolderIDRef,
+		Selector:     mg.Spec.ForProvider.FolderIDSelector,
+		To: reference.To{
+			List:    &v1alpha11.FolderList{},
+			Managed: &v1alpha11.Folder{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
+	}
+	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
 
 	return nil
 }
