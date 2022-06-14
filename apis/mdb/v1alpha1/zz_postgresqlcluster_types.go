@@ -35,10 +35,11 @@ type ConfigAccessParameters struct {
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// Allow access for [connection to managed databases from functions](https://cloud.yandex.com/docs/functions/operations/database-connection)
 	Serverless *bool `json:"serverless,omitempty" tf:"serverless,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	// Allows access for [SQL queries in the management console](https://cloud.yandex.com/docs/managed-postgresql/operations/web-sql-query)
+	// Allow access for [SQL queries in the management console](https://cloud.yandex.com/docs/managed-postgresql/operations/web-sql-query)
 	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
 }
 
@@ -78,7 +79,7 @@ type ConfigParameters struct {
 	BackupWindowStart []ConfigBackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	// (Optional) Cluster performance diagnostics settings. The structure is documented below. [YC Documentation](https://cloud.yandex.com/docs/managed-postgresql/grpc/cluster_service#PerformanceDiagnostics)
+	// (Optional) Cluster performance diagnostics settings. The structure is documented below. [YC Documentation](https://cloud.yandex.com/en-ru/docs/managed-postgresql/api-ref/grpc/cluster_service#PerformanceDiagnostics)
 	PerformanceDiagnostics []ConfigPerformanceDiagnosticsParameters `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -94,7 +95,7 @@ type ConfigParameters struct {
 	Resources []ConfigResourcesParameters `json:"resources" tf:"resources,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// (Required) Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13)
+	// (Required) Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 14)
 	Version *string `json:"version" tf:"version,omitempty"`
 }
 
@@ -143,7 +144,7 @@ type ExtensionParameters struct {
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	// (Required) Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13)
+	// (Required) Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 14)
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -167,15 +168,12 @@ type PostgresqlClusterDatabaseObservation struct {
 type PostgresqlClusterDatabaseParameters struct {
 
 	// +kubebuilder:validation:Optional
-	// (Optional) Set of database extensions. The structure is documented below
 	Extension []ExtensionParameters `json:"extension,omitempty" tf:"extension,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	// (Optional) POSIX locale for string sorting order. Forbidden to change in an existing database.
 	LcCollate *string `json:"lcCollate,omitempty" tf:"lc_collate,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	// (Optional) POSIX locale for character classification. Forbidden to change in an existing database.
 	LcType *string `json:"lcType,omitempty" tf:"lc_type,omitempty"`
 
 	// +kubebuilder:validation:Required
@@ -183,7 +181,6 @@ type PostgresqlClusterDatabaseParameters struct {
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// +kubebuilder:validation:Required
-	// (Required) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	Owner *string `json:"owner" tf:"owner,omitempty"`
 }
 
@@ -272,7 +269,7 @@ type PostgresqlClusterParameters struct {
 	Config []ConfigParameters `json:"config" tf:"config,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	// (Required) A database of the PostgreSQL cluster. The structure is documented below.
+	// (Deprecated) To manage databases, please switch to using a separate resource type `yandex_mdb_postgresql_database`.
 	Database []PostgresqlClusterDatabaseParameters `json:"database,omitempty" tf:"database,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -348,7 +345,7 @@ type PostgresqlClusterParameters struct {
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
-	// (Required) A user of the PostgreSQL cluster. The structure is documented below.
+	// (Deprecated) To manage users, please switch to using a separate resource type `yandex_mdb_postgresql_user`.
 	User []PostgresqlClusterUserParameters `json:"user,omitempty" tf:"user,omitempty"`
 }
 
@@ -376,15 +373,12 @@ type PostgresqlClusterUserObservation struct {
 type PostgresqlClusterUserParameters struct {
 
 	// +kubebuilder:validation:Optional
-	// (Optional) The maximum number of connections per user. (Default 50)
 	ConnLimit *float64 `json:"connLimit,omitempty" tf:"conn_limit,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	// (Optional) List of the user's grants.
 	Grants []*string `json:"grants,omitempty" tf:"grants,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	// (Optional) User's ability to login.
 	Login *bool `json:"login,omitempty" tf:"login,omitempty"`
 
 	// +kubebuilder:validation:Required
@@ -395,11 +389,9 @@ type PostgresqlClusterUserParameters struct {
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// +kubebuilder:validation:Optional
-	// (Optional) Set of permissions granted to the user. The structure is documented below.
 	Permission []PostgresqlClusterUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	// (Optional) Map of user settings. List of settings is documented below.
 	Settings map[string]*string `json:"settings,omitempty" tf:"settings,omitempty"`
 }
 
@@ -409,7 +401,6 @@ type PostgresqlClusterUserPermissionObservation struct {
 type PostgresqlClusterUserPermissionParameters struct {
 
 	// +kubebuilder:validation:Required
-	// (Required) The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 }
 

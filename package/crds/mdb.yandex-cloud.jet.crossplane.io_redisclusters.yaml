@@ -255,6 +255,7 @@ spec:
                         type: object
                     type: object
                   persistenceMode:
+                    description: (Optional) Persistence mode.
                     type: string
                   resources:
                     description: (Required) Resources allocated to hosts of the Redis
@@ -311,7 +312,7 @@ spec:
                     description: (Optional) Redis Cluster mode enabled/disabled.
                     type: boolean
                   tlsEnabled:
-                    description: (Optional) tls support mode enabled/disabled.
+                    description: (Optional) TLS support mode enabled/disabled.
                     type: boolean
                 required:
                 - config

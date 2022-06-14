@@ -39,6 +39,7 @@ type AuditLogObservation struct {
 type AuditLogParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Configuration of the audit log filter in JSON format.
 	Filter *string `json:"filter,omitempty" tf:"filter,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -79,6 +80,7 @@ type ClusterConfigParameters struct {
 	FeatureCompatibilityVersion *string `json:"featureCompatibilityVersion,omitempty" tf:"feature_compatibility_version,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Configuration of the mongod service. The structure is documented below.
 	Mongod []MongodParameters `json:"mongod,omitempty" tf:"mongod,omitempty"`
 
 	// +kubebuilder:validation:Required
@@ -143,18 +145,23 @@ type KmipObservation struct {
 type KmipParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Required) String containing the client certificate used for authenticating MongoDB to the KMIP server.
 	ClientCertificate *string `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Unique KMIP identifier for an existing key within the KMIP server.
 	KeyIdentifier *string `json:"keyIdentifier,omitempty" tf:"key_identifier,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Port number to use to communicate with the KMIP server. Default: 5696
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Required) Path to CA File. Used for validating secure client connection to KMIP server.
 	ServerCA *string `json:"serverCa,omitempty" tf:"server_ca,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Required) Hostname or IP address of the KMIP server to connect to.
 	ServerName *string `json:"serverName,omitempty" tf:"server_name,omitempty"`
 }
 
@@ -182,12 +189,15 @@ type MongodObservation struct {
 type MongodParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) A set of audit log settings 
 	AuditLog []AuditLogParameters `json:"auditLog,omitempty" tf:"audit_log,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) A set of MongoDB Security settings
 	Security []SecurityParameters `json:"security,omitempty" tf:"security,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) A set of MongoDB Server Parameters 
 	SetParameter []SetParameterParameters `json:"setParameter,omitempty" tf:"set_parameter,omitempty"`
 }
 
@@ -333,9 +343,11 @@ type SecurityObservation struct {
 type SecurityParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Enables the encryption for the WiredTiger storage engine. Can be either true or false.
 	EnableEncryption *bool `json:"enableEncryption,omitempty" tf:"enable_encryption,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Configuration of the third party key management appliance via the Key Management Interoperability Protocol (KMIP)
 	Kmip []KmipParameters `json:"kmip,omitempty" tf:"kmip,omitempty"`
 }
 
@@ -345,6 +357,7 @@ type SetParameterObservation struct {
 type SetParameterParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Enables the auditing of authorization successes. Can be either true or false.
 	AuditAuthorizationSuccess *bool `json:"auditAuthorizationSuccess,omitempty" tf:"audit_authorization_success,omitempty"`
 }
 

@@ -42,24 +42,30 @@ type PostgresqlUserParameters struct {
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) The maximum number of connections per user. (Default 50)
 	ConnLimit *float64 `json:"connLimit,omitempty" tf:"conn_limit,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) List of the user's grants.
 	Grants []*string `json:"grants,omitempty" tf:"grants,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) User's ability to login.
 	Login *bool `json:"login,omitempty" tf:"login,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) The name of the user.
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// +kubebuilder:validation:Required
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Set of permissions granted to the user. The structure is documented below.
 	Permission []PostgresqlUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Map of user settings. List of settings is documented below.
 	Settings map[string]*string `json:"settings,omitempty" tf:"settings,omitempty"`
 }
 
@@ -69,6 +75,7 @@ type PostgresqlUserPermissionObservation struct {
 type PostgresqlUserPermissionParameters struct {
 
 	// +kubebuilder:validation:Required
+	// (Required) The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 }
 

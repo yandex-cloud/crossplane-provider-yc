@@ -95,43 +95,75 @@ spec:
                             `5.0`, `4.4`, `4.2` and `4.0`.
                           type: string
                         mongod:
+                          description: (Optional) Configuration of the mongod service.
+                            The structure is documented below.
                           items:
                             properties:
                               auditLog:
+                                description: (Optional) A set of audit log settings
                                 items:
                                   properties:
                                     filter:
+                                      description: (Optional) Configuration of the
+                                        audit log filter in JSON format.
                                       type: string
                                     runtimeConfiguration:
                                       type: boolean
                                   type: object
                                 type: array
                               security:
+                                description: (Optional) A set of MongoDB Security
+                                  settings
                                 items:
                                   properties:
                                     enableEncryption:
+                                      description: (Optional) Enables the encryption
+                                        for the WiredTiger storage engine. Can be
+                                        either true or false.
                                       type: boolean
                                     kmip:
+                                      description: (Optional) Configuration of the
+                                        third party key management appliance via the
+                                        Key Management Interoperability Protocol (KMIP)
                                       items:
                                         properties:
                                           clientCertificate:
+                                            description: (Required) String containing
+                                              the client certificate used for authenticating
+                                              MongoDB to the KMIP server.
                                             type: string
                                           keyIdentifier:
+                                            description: (Optional) Unique KMIP identifier
+                                              for an existing key within the KMIP
+                                              server.
                                             type: string
                                           port:
+                                            description: '(Optional) Port number to
+                                              use to communicate with the KMIP server.
+                                              Default: 5696'
                                             type: number
                                           serverCa:
+                                            description: (Required) Path to CA File.
+                                              Used for validating secure client connection
+                                              to KMIP server.
                                             type: string
                                           serverName:
+                                            description: (Required) Hostname or IP
+                                              address of the KMIP server to connect
+                                              to.
                                             type: string
                                         type: object
                                       type: array
                                   type: object
                                 type: array
                               setParameter:
+                                description: (Optional) A set of MongoDB Server Parameters
                                 items:
                                   properties:
                                     auditAuthorizationSuccess:
+                                      description: (Optional) Enables the auditing
+                                        of authorization successes. Can be either
+                                        true or false.
                                       type: boolean
                                   type: object
                                 type: array

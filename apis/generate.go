@@ -41,6 +41,11 @@ limitations under the License.
 //go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/dns_recordset.html.markdown ./dns/v1alpha1/zz_recordset_types.go
 //go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/kms_symmetric_key.html.markdown ./kms/v1alpha1/zz_symmetrickey_types.go
 //go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/mdb_postgresql_cluster.html.markdown ./mdb/v1alpha1/zz_postgresqlcluster_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/mdb_postgresql_user.html.markdown ./mdb/v1alpha1/zz_postgresqluser_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/mdb_postgresql_database.html.markdown ./mdb/v1alpha1/zz_postgresqldatabase_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/mdb_mysql_cluster.html.markdown ./mdb/v1alpha1/zz_mysqlcluster_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/mdb_mysql_user.html.markdown ./mdb/v1alpha1/zz_mysqluser_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/mdb_mysql_database.html.markdown ./mdb/v1alpha1/zz_mysqldatabase_types.go
 //go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/mdb_mongodb_cluster.html.markdown ./mdb/v1alpha1/zz_mongodbcluster_types.go
 //go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/mdb_redis_cluster.html.markdown ./mdb/v1alpha1/zz_rediscluster_types.go
 //go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/storage_bucket.html.markdown ./storage/v1alpha1/zz_bucket_types.go

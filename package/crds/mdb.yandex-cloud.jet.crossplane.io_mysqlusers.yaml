@@ -64,6 +64,9 @@ spec:
               forProvider:
                 properties:
                   authenticationPlugin:
+                    description: '(Optional) Authentication plugin. Allowed values:
+                      `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD`
+                      (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`)'
                     type: string
                   clusterId:
                     type: string
@@ -91,23 +94,31 @@ spec:
                         type: object
                     type: object
                   connectionLimits:
+                    description: (Optional) User's connection limits. The structure
+                      is documented below.
                     items:
                       properties:
                         maxConnectionsPerHour:
+                          description: Max connections per hour.
                           type: number
                         maxQuestionsPerHour:
+                          description: Max questions per hour.
                           type: number
                         maxUpdatesPerHour:
+                          description: Max updates per hour.
                           type: number
                         maxUserConnections:
+                          description: Max user connections.
                           type: number
                       type: object
                     type: array
                   globalPermissions:
+                    description: (Optional) List user's global permissions
                     items:
                       type: string
                     type: array
                   name:
+                    description: (Required) The name of the user.
                     type: string
                   passwordSecretRef:
                     description: A SecretKeySelector is a reference to a secret key
@@ -128,11 +139,16 @@ spec:
                     - namespace
                     type: object
                   permission:
+                    description: (Optional) Set of permissions granted to the user.
+                      The structure is documented below.
                     items:
                       properties:
                         databaseName:
+                          description: (Required) The name of the database that the
+                            permission grants access to.
                           type: string
                         roles:
+                          description: (Optional) List user's roles in the database.
                           items:
                             type: string
                           type: array

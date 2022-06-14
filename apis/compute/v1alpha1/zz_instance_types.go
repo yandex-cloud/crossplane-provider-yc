@@ -79,9 +79,11 @@ type HostAffinityRulesObservation struct {
 type HostAffinityRulesParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Required) Affinity label or one of reserved values - `yc.hostId`, `yc.hostGroupId`.
 	Key *string `json:"key,omitempty" tf:"key"`
 
 	// +kubebuilder:validation:Optional
+	// (Required) Affinity action. The only value supported is `IN`.
 	Op *string `json:"op,omitempty" tf:"op"`
 
 	// +kubebuilder:validation:Optional
@@ -344,6 +346,7 @@ type PlacementPolicyObservation struct {
 type PlacementPolicyParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) List of host affinity rules. The structure is documented below.
 	HostAffinityRules []HostAffinityRulesParameters `json:"hostAffinityRules,omitempty" tf:"host_affinity_rules,omitempty"`
 
 	// +kubebuilder:validation:Optional

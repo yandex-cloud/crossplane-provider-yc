@@ -42,6 +42,7 @@ type MySQLDatabaseParameters struct {
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Required
+	// (Required) The name of the database.
 	Name *string `json:"name" tf:"name,omitempty"`
 }
 

@@ -31,9 +31,11 @@ type AnonymousAccessFlagsObservation struct {
 type AnonymousAccessFlagsParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Allows to list object in bucket anonymously.
 	List *bool `json:"list,omitempty" tf:"list,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Allows to read objects in bucket anonymously.
 	Read *bool `json:"read,omitempty" tf:"read,omitempty"`
 }
 
@@ -78,6 +80,7 @@ type BucketParameters struct {
 	AccessKeySelector *v1.Selector `json:"accessKeySelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Provides various access to objects.
 	AnonymousAccessFlags []AnonymousAccessFlagsParameters `json:"anonymousAccessFlags,omitempty" tf:"anonymous_access_flags,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -93,10 +96,12 @@ type BucketParameters struct {
 	CorsRule []CorsRuleParameters `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Storage class which is used for storing objects by default.
 	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
+	// (Optional) Allow to create bucket in different folder.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -114,6 +119,7 @@ type BucketParameters struct {
 	Grant []GrantParameters `json:"grant,omitempty" tf:"grant,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Manages https certificates for bucket. See [https](https://cloud.yandex.com/en-ru/docs/storage/operations/hosting/certificate) for more infomation.
 	HTTPS []HTTPSParameters `json:"https,omitempty" tf:"https,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -125,6 +131,7 @@ type BucketParameters struct {
 	Logging []LoggingParameters `json:"logging,omitempty" tf:"logging,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) The size of bucket, in bytes. See [size limiting](https://cloud.yandex.com/en-ru/docs/storage/operations/buckets/limit-max-volume) for more information.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
 	// +kubebuilder:validation:Optional

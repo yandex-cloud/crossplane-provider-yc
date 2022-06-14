@@ -342,11 +342,17 @@ spec:
                     items:
                       properties:
                         hostAffinityRules:
+                          description: (Optional) List of host affinity rules. The
+                            structure is documented below.
                           items:
                             properties:
                               key:
+                                description: (Required) Affinity label or one of reserved
+                                  values - `yc.hostId`, `yc.hostGroupId`.
                                 type: string
                               op:
+                                description: (Required) Affinity action. The only
+                                  value supported is `IN`.
                                 type: string
                               values:
                                 items:

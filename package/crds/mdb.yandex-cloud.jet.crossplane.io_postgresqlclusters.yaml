@@ -77,9 +77,11 @@ spec:
                                 description: (Optional) Allow access for [Yandex DataLens](https://cloud.yandex.com/services/datalens).
                                 type: boolean
                               serverless:
+                                description: Allow access for [connection to managed
+                                  databases from functions](https://cloud.yandex.com/docs/functions/operations/database-connection)
                                 type: boolean
                               webSql:
-                                description: Allows access for [SQL queries in the
+                                description: Allow access for [SQL queries in the
                                   management console](https://cloud.yandex.com/docs/managed-postgresql/operations/web-sql-query)
                                 type: boolean
                             type: object
@@ -109,7 +111,7 @@ spec:
                           type: array
                         performanceDiagnostics:
                           description: (Optional) Cluster performance diagnostics
-                            settings. The structure is documented below. [YC Documentation](https://cloud.yandex.com/docs/managed-postgresql/grpc/cluster_service#PerformanceDiagnostics)
+                            settings. The structure is documented below. [YC Documentation](https://cloud.yandex.com/en-ru/docs/managed-postgresql/api-ref/grpc/cluster_service#PerformanceDiagnostics)
                           items:
                             properties:
                               enabled:
@@ -173,7 +175,7 @@ spec:
                         version:
                           description: '(Required) Version of the PostgreSQL cluster.
                             (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c,
-                            13)'
+                            13, 14)'
                           type: string
                       required:
                       - resources
@@ -181,13 +183,11 @@ spec:
                       type: object
                     type: array
                   database:
-                    description: (Required) A database of the PostgreSQL cluster.
-                      The structure is documented below.
+                    description: (Deprecated) To manage databases, please switch to
+                      using a separate resource type `yandex_mdb_postgresql_database`.
                     items:
                       properties:
                         extension:
-                          description: (Optional) Set of database extensions. The
-                            structure is documented below
                           items:
                             properties:
                               name:
@@ -197,28 +197,21 @@ spec:
                               version:
                                 description: '(Required) Version of the PostgreSQL
                                   cluster. (allowed versions are: 10, 10-1c, 11, 11-1c,
-                                  12, 12-1c, 13)'
+                                  12, 12-1c, 13, 14)'
                                 type: string
                             required:
                             - name
                             type: object
                           type: array
                         lcCollate:
-                          description: (Optional) POSIX locale for string sorting
-                            order. Forbidden to change in an existing database.
                           type: string
                         lcType:
-                          description: (Optional) POSIX locale for character classification.
-                            Forbidden to change in an existing database.
                           type: string
                         name:
                           description: (Required) Name of the PostgreSQL cluster.
                             Provided by the client when the cluster is created.
                           type: string
                         owner:
-                          description: (Required) Name of the user assigned as the
-                            owner of the database. Forbidden to change in an existing
-                            database.
                           type: string
                       required:
                       - name
@@ -451,21 +444,17 @@ spec:
                         type: object
                     type: object
                   user:
-                    description: (Required) A user of the PostgreSQL cluster. The
-                      structure is documented below.
+                    description: (Deprecated) To manage users, please switch to using
+                      a separate resource type `yandex_mdb_postgresql_user`.
                     items:
                       properties:
                         connLimit:
-                          description: (Optional) The maximum number of connections
-                            per user. (Default 50)
                           type: number
                         grants:
-                          description: (Optional) List of the user's grants.
                           items:
                             type: string
                           type: array
                         login:
-                          description: (Optional) User's ability to login.
                           type: boolean
                         name:
                           description: (Required) Name of the PostgreSQL cluster.
@@ -490,13 +479,9 @@ spec:
                           - namespace
                           type: object
                         permission:
-                          description: (Optional) Set of permissions granted to the
-                            user. The structure is documented below.
                           items:
                             properties:
                               databaseName:
-                                description: (Required) The name of the database that
-                                  the permission grants access to.
                                 type: string
                             required:
                             - databaseName
@@ -505,8 +490,6 @@ spec:
                         settings:
                           additionalProperties:
                             type: string
-                          description: (Optional) Map of user settings. List of settings
-                            is documented below.
                           type: object
                       required:
                       - name

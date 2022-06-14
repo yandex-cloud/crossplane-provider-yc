@@ -176,6 +176,7 @@ type RedisClusterParameters struct {
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Persistence mode.
 	PersistenceMode *string `json:"persistenceMode,omitempty" tf:"persistence_mode,omitempty"`
 
 	// +kubebuilder:validation:Required
@@ -198,7 +199,7 @@ type RedisClusterParameters struct {
 	Sharded *bool `json:"sharded,omitempty" tf:"sharded,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	// (Optional) tls support mode enabled/disabled.
+	// (Optional) TLS support mode enabled/disabled.
 	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 }
 

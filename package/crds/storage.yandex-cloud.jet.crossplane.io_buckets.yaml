@@ -96,11 +96,16 @@ spec:
                       to apply. Defaults to `private`. Conflicts with `grant`.
                     type: string
                   anonymousAccessFlags:
+                    description: (Optional) Provides various access to objects.
                     items:
                       properties:
                         list:
+                          description: (Optional) Allows to list object in bucket
+                            anonymously.
                           type: boolean
                         read:
+                          description: (Optional) Allows to read objects in bucket
+                            anonymously.
                           type: boolean
                       type: object
                     type: array
@@ -149,8 +154,11 @@ spec:
                       type: object
                     type: array
                   defaultStorageClass:
+                    description: (Optional) Storage class which is used for storing
+                      objects by default.
                     type: string
                   folderId:
+                    description: (Optional) Allow to create bucket in different folder.
                     type: string
                   folderIdRef:
                     description: A Reference to a named object.
@@ -203,6 +211,9 @@ spec:
                       type: object
                     type: array
                   https:
+                    description: (Optional) Manages https certificates for bucket.
+                      See [https](https://cloud.yandex.com/en-ru/docs/storage/operations/hosting/certificate)
+                      for more infomation.
                     items:
                       properties:
                         certificateId:
@@ -332,6 +343,9 @@ spec:
                       type: object
                     type: array
                   maxSize:
+                    description: (Optional) The size of bucket, in bytes. See [size
+                      limiting](https://cloud.yandex.com/en-ru/docs/storage/operations/buckets/limit-max-volume)
+                      for more information.
                     type: number
                   policy:
                     type: string

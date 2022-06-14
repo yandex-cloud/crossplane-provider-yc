@@ -89,6 +89,7 @@ spec:
                         type: object
                     type: object
                   name:
+                    description: (Required) The name of the database.
                     type: string
                 required:
                 - name

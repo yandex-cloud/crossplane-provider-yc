@@ -89,14 +89,19 @@ spec:
                         type: object
                     type: object
                   connLimit:
+                    description: (Optional) The maximum number of connections per
+                      user. (Default 50)
                     type: number
                   grants:
+                    description: (Optional) List of the user's grants.
                     items:
                       type: string
                     type: array
                   login:
+                    description: (Optional) User's ability to login.
                     type: boolean
                   name:
+                    description: (Required) The name of the user.
                     type: string
                   passwordSecretRef:
                     description: A SecretKeySelector is a reference to a secret key
@@ -117,9 +122,13 @@ spec:
                     - namespace
                     type: object
                   permission:
+                    description: (Optional) Set of permissions granted to the user.
+                      The structure is documented below.
                     items:
                       properties:
                         databaseName:
+                          description: (Required) The name of the database that the
+                            permission grants access to.
                           type: string
                       required:
                       - databaseName
@@ -128,6 +137,8 @@ spec:
                   settings:
                     additionalProperties:
                       type: string
+                    description: (Optional) Map of user settings. List of settings
+                      is documented below.
                     type: object
                 required:
                 - name

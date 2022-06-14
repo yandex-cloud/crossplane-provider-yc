@@ -31,9 +31,11 @@ type PostgresqlDatabaseExtensionObservation struct {
 type PostgresqlDatabaseExtensionParameters struct {
 
 	// +kubebuilder:validation:Required
+	// (Required) The name of the database.
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Version of the extension.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -54,18 +56,23 @@ type PostgresqlDatabaseParameters struct {
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Set of database extensions. The structure is documented below
 	Extension []PostgresqlDatabaseExtensionParameters `json:"extension,omitempty" tf:"extension,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) POSIX locale for string sorting order. Forbidden to change in an existing database.
 	LcCollate *string `json:"lcCollate,omitempty" tf:"lc_collate,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) POSIX locale for character classification. Forbidden to change in an existing database.
 	LcType *string `json:"lcType,omitempty" tf:"lc_type,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) The name of the database.
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	Owner *string `json:"owner" tf:"owner,omitempty"`
 }
 
