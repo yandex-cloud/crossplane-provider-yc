@@ -255,13 +255,13 @@ func Configure(p *config.Provider) {
 	})
 	p.AddResourceConfigurator("yandex_mdb_mysql_database", func(r *config.Resource) {
 		r.References["cluster_id"] = config.Reference{
-			Type: "MysqlCluster",
+			Type: "MySQLCluster",
 		}
 		r.UseAsync = true
 	})
 	p.AddResourceConfigurator("yandex_mdb_mysql_user", func(r *config.Resource) {
 		r.References["cluster_id"] = config.Reference{
-			Type: "MysqlCluster",
+			Type: "MySQLCluster",
 		}
 		r.UseAsync = true
 	})

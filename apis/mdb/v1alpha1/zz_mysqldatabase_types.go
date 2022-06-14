@@ -31,7 +31,7 @@ type MySQLDatabaseObservation struct {
 
 type MySQLDatabaseParameters struct {
 
-	// +crossplane:generate:reference:type=MysqlCluster
+	// +crossplane:generate:reference:type=MySQLCluster
 	// +kubebuilder:validation:Optional
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 

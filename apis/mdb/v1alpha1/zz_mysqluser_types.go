@@ -52,7 +52,7 @@ type MySQLUserParameters struct {
 	// +kubebuilder:validation:Optional
 	AuthenticationPlugin *string `json:"authenticationPlugin,omitempty" tf:"authentication_plugin,omitempty"`
 
-	// +crossplane:generate:reference:type=MysqlCluster
+	// +crossplane:generate:reference:type=MySQLCluster
 	// +kubebuilder:validation:Optional
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 

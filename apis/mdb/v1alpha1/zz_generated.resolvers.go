@@ -193,8 +193,8 @@ func (mg *MySQLDatabase) ResolveReferences(ctx context.Context, c client.Reader)
 		Reference:    mg.Spec.ForProvider.ClusterIDRef,
 		Selector:     mg.Spec.ForProvider.ClusterIDSelector,
 		To: reference.To{
-			List:    &MysqlClusterList{},
-			Managed: &MysqlCluster{},
+			List:    &MySQLClusterList{},
+			Managed: &MySQLCluster{},
 		},
 	})
 	if err != nil {
@@ -219,8 +219,8 @@ func (mg *MySQLUser) ResolveReferences(ctx context.Context, c client.Reader) err
 		Reference:    mg.Spec.ForProvider.ClusterIDRef,
 		Selector:     mg.Spec.ForProvider.ClusterIDSelector,
 		To: reference.To{
-			List:    &MysqlClusterList{},
-			Managed: &MysqlCluster{},
+			List:    &MySQLClusterList{},
+			Managed: &MySQLCluster{},
 		},
 	})
 	if err != nil {
