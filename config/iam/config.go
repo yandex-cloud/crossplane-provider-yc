@@ -14,6 +14,7 @@ limitations under the License.
 package iam
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/crossplane/crossplane-runtime/pkg/meta"
@@ -31,11 +32,47 @@ const (
 	ServiceAccountRefValueFn = "ServiceAccountRefValue()"
 )
 
+func serviceAccountKey(attr map[string]interface{}) []byte {
+	if _, ok := attr["id"]; !ok {
+		return nil
+	}
+	if _, ok := attr["service_account_id"]; !ok {
+		return nil
+	}
+	if _, ok := attr["created_at"]; !ok {
+		return nil
+	}
+	if _, ok := attr["key_algorithm"]; !ok {
+		return nil
+	}
+	if _, ok := attr["public_key"]; !ok {
+		return nil
+	}
+	if _, ok := attr["private_key"]; !ok {
+		return nil
+	}
+	result := map[string]string{
+		"id":                 attr["id"].(string),
+		"service_account_id": attr["service_account_id"].(string),
+		"created_at":         attr["created_at"].(string),
+		"key_algorithm":      attr["key_algorithm"].(string),
+		"public_key":         attr["public_key"].(string),
+		"private_key":        attr["private_key"].(string),
+	}
+	encoded, _ := json.Marshal(result)
+	return encoded
+}
+
 // Configure adds configurations for iam group.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_iam_service_account_key", func(r *config.Resource) {
 		r.References["service_account_id"] = config.Reference{
 			Type: "ServiceAccount",
+		}
+		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
+			return map[string][]byte{
+				"service_account_key": serviceAccountKey(attr),
+			}, nil
 		}
 	})
 	p.AddResourceConfigurator("yandex_iam_service_account_static_access_key", func(r *config.Resource) {
