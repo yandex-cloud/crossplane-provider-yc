@@ -32,6 +32,7 @@ import (
 const (
 	folderID              = "folder_id"
 	cloudID               = "cloud_id"
+	endpoint              = "endpoint"
 	serviceAccountKeyFile = "service_account_key_file"
 )
 
@@ -79,6 +80,7 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		ps.Configuration[serviceAccountKeyFile] = string(data)
 		ps.Configuration[folderID] = pc.Spec.Credentials.FolderID
 		ps.Configuration[cloudID] = pc.Spec.Credentials.CloudID
+		ps.Configuration[endpoint] = pc.Spec.Credentials.Endpoint
 
 		return ps, nil
 	}

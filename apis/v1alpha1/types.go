@@ -42,6 +42,9 @@ type ProviderCredentials struct {
 	// CloudID - id of default cloud to work with.
 	// +kubebuilder:validation:Optional
 	CloudID string `json:"cloudId"`
+
+	// +kubebuilder:validation:Optional
+	Endpoint string `json:"endpoint,omitempty"`
 }
 
 // A ProviderConfigStatus reflects the observed state of a ProviderConfig.
