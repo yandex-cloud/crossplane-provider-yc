@@ -63,6 +63,15 @@ func serviceAccountKey(attr map[string]interface{}) []byte {
 	return encoded
 }
 
+func serviceAccountStaticKey(attr map[string]interface{}) (map[string][]byte, error) {
+	if _, ok := attr["access_key"]; !ok {
+		return nil, nil
+	}
+	return map[string][]byte{
+		"attribute.access_key": []byte(attr["access_key"].(string)),
+	}, nil
+}
+
 // Configure adds configurations for iam group.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_iam_service_account_key", func(r *config.Resource) {
@@ -79,6 +88,7 @@ func Configure(p *config.Provider) {
 		r.References["service_account_id"] = config.Reference{
 			Type: "ServiceAccount",
 		}
+		r.Sensitive.AdditionalConnectionDetailsFn = serviceAccountStaticKey
 	})
 	p.AddResourceConfigurator("yandex_iam_service_account_iam_member", func(r *config.Resource) {
 		r.References["service_account_id"] = config.Reference{
