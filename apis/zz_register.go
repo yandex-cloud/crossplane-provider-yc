@@ -24,6 +24,7 @@ import (
 
 	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/compute/v1alpha1"
 	v1alpha1container "github.com/yandex-cloud/provider-jet-yc/apis/container/v1alpha1"
+	v1alpha1datatransfer "github.com/yandex-cloud/provider-jet-yc/apis/datatransfer/v1alpha1"
 	v1alpha1dns "github.com/yandex-cloud/provider-jet-yc/apis/dns/v1alpha1"
 	v1alpha1iam "github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1"
 	v1alpha1kms "github.com/yandex-cloud/provider-jet-yc/apis/kms/v1alpha1"
@@ -33,6 +34,7 @@ import (
 	v1alpha1storage "github.com/yandex-cloud/provider-jet-yc/apis/storage/v1alpha1"
 	v1alpha1apis "github.com/yandex-cloud/provider-jet-yc/apis/v1alpha1"
 	v1alpha1vpc "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
+	v1alpha1ydb "github.com/yandex-cloud/provider-jet-yc/apis/ydb/v1alpha1"
 )
 
 func init() {
@@ -40,6 +42,7 @@ func init() {
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
 		v1alpha1container.SchemeBuilder.AddToScheme,
+		v1alpha1datatransfer.SchemeBuilder.AddToScheme,
 		v1alpha1dns.SchemeBuilder.AddToScheme,
 		v1alpha1iam.SchemeBuilder.AddToScheme,
 		v1alpha1kms.SchemeBuilder.AddToScheme,
@@ -49,6 +52,7 @@ func init() {
 		v1alpha1storage.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
 		v1alpha1vpc.SchemeBuilder.AddToScheme,
+		v1alpha1ydb.SchemeBuilder.AddToScheme,
 	)
 }
 

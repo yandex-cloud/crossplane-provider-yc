@@ -63,6 +63,10 @@ limitations under the License.
 //go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/iam_service_account_iam_member.html.markdown ./iam/v1alpha1/zz_serviceaccountiammember_types.go
 //go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/iam_service_account_key.html.markdown ./iam/v1alpha1/zz_serviceaccountkey_types.go
 //go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/iam_service_account_static_access_key.html.markdown ./iam/v1alpha1/zz_serviceaccountstaticaccesskey_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/datatransfer_endpoint.html.markdown ./datatransfer/v1alpha1/zz_endpoint_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/datatransfer_transfer.html.markdown ./datatransfer/v1alpha1/zz_transfer_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/ydb_database_dedicated.html.markdown ./ydb/v1alpha1/zz_databasededicated_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/ydb_database_serverless.html.markdown ./ydb/v1alpha1/zz_databaseserverless_types.go
 
 // Generate deepcopy methodsets and CRD manifests
 //go:generate go run -tags generate sigs.k8s.io/controller-tools/cmd/controller-gen object:headerFile=../hack/boilerplate.go.txt paths=./... crd:allowDangerousTypes=true,crdVersions=v1 output:artifacts:config=../package/crds

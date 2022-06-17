@@ -22,6 +22,11 @@ import (
 	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
 )
 
+const (
+	// ApisPackagePath is the golang path for this package.
+	ApisPackagePath = "github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1"
+)
+
 func usernames(attr map[string]interface{}) []string {
 	usersInterface, ok := attr["user"]
 	if !ok {

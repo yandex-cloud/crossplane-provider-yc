@@ -24,6 +24,7 @@ import (
 
 	"github.com/yandex-cloud/provider-jet-yc/config/common"
 	"github.com/yandex-cloud/provider-jet-yc/config/compute"
+	"github.com/yandex-cloud/provider-jet-yc/config/datatransfer"
 	"github.com/yandex-cloud/provider-jet-yc/config/dns"
 	"github.com/yandex-cloud/provider-jet-yc/config/iam"
 	"github.com/yandex-cloud/provider-jet-yc/config/kubernetes"
@@ -31,6 +32,7 @@ import (
 	"github.com/yandex-cloud/provider-jet-yc/config/resourcemanager"
 	"github.com/yandex-cloud/provider-jet-yc/config/storage"
 	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
+	"github.com/yandex-cloud/provider-jet-yc/config/ydb"
 )
 
 //go:embed schema.json
@@ -78,11 +80,16 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_storage_bucket$",
 			"yandex_storage_object$",
 			"yandex_kms_symmetric_key$",
+			"yandex_datatransfer_endpoint$",
+			"yandex_datatransfer_transfer$",
+			"yandex_ydb_database_dedicated$",
+			"yandex_ydb_database_serverless$",
 		}),
 	)
 
 	for _, configure := range []func(provider *tjconfig.Provider){
 		compute.Configure,
+		datatransfer.Configure,
 		dns.Configure,
 		iam.Configure,
 		kubernetes.Configure,
@@ -90,6 +97,7 @@ func GetProvider() *tjconfig.Provider {
 		storage.Configure,
 		vpc.Configure,
 		resourcemanager.Configure,
+		ydb.Configure,
 	} {
 		configure(pc)
 	}
