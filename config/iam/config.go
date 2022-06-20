@@ -67,8 +67,12 @@ func serviceAccountStaticKey(attr map[string]interface{}) (map[string][]byte, er
 	if _, ok := attr["access_key"]; !ok {
 		return nil, nil
 	}
+	if _, ok := attr["access_key_id"]; !ok {
+		return nil, nil
+	}
 	return map[string][]byte{
-		"attribute.access_key": []byte(attr["access_key"].(string)),
+		"attribute.access_key":    []byte(attr["access_key"].(string)),
+		"attribute.access_key_id": []byte(attr["access_key_id"].(string)),
 	}, nil
 }
 

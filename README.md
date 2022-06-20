@@ -37,7 +37,7 @@ sudo mv kubectl-crossplane $(dirname $(which kubectl))
 Install the provider by using the following command after changing the image tag to the latest release
 
 ```
-kubectl crossplane install provider cr.yandex/crp0kch415f0lke009ft/crossplane/provider-jet-yc:v0.1.26
+kubectl crossplane install provider cr.yandex/crp0kch415f0lke009ft/crossplane/provider-jet-yc:v0.1.27
 ```
 
 ### Setup ProviderConfig
@@ -74,10 +74,10 @@ kubectl apply -f examples/providerconfig/providerconfig.yaml
 
 ### Update crossplane/provder-jet-yc
 
-Update provider version on new tag (e.g. v0.1.26):
+Update provider version on new tag (e.g. v0.1.27):
 
 ```
-kubectl crossplane update provider crp0kch415f0lke009ft-crossplane-provider-jet-yc v0.1.26
+kubectl crossplane update provider crp0kch415f0lke009ft-crossplane-provider-jet-yc v0.1.27
 ```
 
 ## Useful things
