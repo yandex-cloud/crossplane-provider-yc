@@ -154,6 +154,9 @@ type InstanceObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Optional) List of local disks that are attached to the instance. Structure is documented below.
+	LocalDisk []LocalDiskObservation `json:"localDisk,omitempty" tf:"local_disk,omitempty"`
+
 	// (Required) Networks to attach to the instance. This can
 	NetworkInterface []NetworkInterfaceObservation `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
 
@@ -196,6 +199,10 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	// (Optional) A set of key/value label pairs to assign to the instance.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) List of local disks that are attached to the instance. Structure is documented below.
+	LocalDisk []LocalDiskParameters `json:"localDisk,omitempty" tf:"local_disk,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Metadata key/value pairs to make available from
@@ -247,6 +254,18 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	// (Optional) The availability zone where the virtual machine will be created. If it is not provided,
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
+}
+
+type LocalDiskObservation struct {
+	// (Optional) Name that can be used to access an attached disk.
+	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
+}
+
+type LocalDiskParameters struct {
+
+	// +kubebuilder:validation:Required
+	// (Required) Size of the disk, specified in bytes.
+	SizeBytes *float64 `json:"sizeBytes" tf:"size_bytes,omitempty"`
 }
 
 type NATDNSRecordObservation struct {

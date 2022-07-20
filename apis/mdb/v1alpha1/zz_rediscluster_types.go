@@ -31,6 +31,12 @@ type RedisClusterConfigObservation struct {
 type RedisClusterConfigParameters struct {
 
 	// +kubebuilder:validation:Optional
+	ClientOutputBufferLimitNormal *string `json:"clientOutputBufferLimitNormal,omitempty" tf:"client_output_buffer_limit_normal,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ClientOutputBufferLimitPubsub *string `json:"clientOutputBufferLimitPubsub,omitempty" tf:"client_output_buffer_limit_pubsub,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	// (Optional) Number of databases (changing requires redis-server restart).
 	Databases *float64 `json:"databases,omitempty" tf:"databases,omitempty"`
 
@@ -67,6 +73,12 @@ type RedisClusterHostObservation struct {
 }
 
 type RedisClusterHostParameters struct {
+
+	// +kubebuilder:validation:Optional
+	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ReplicaPriority *float64 `json:"replicaPriority,omitempty" tf:"replica_priority,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`

@@ -68,6 +68,10 @@ spec:
                       structure is documented below.
                     items:
                       properties:
+                        clientOutputBufferLimitNormal:
+                          type: string
+                        clientOutputBufferLimitPubsub:
+                          type: string
                         databases:
                           description: (Optional) Number of databases (changing requires
                             redis-server restart).
@@ -160,6 +164,10 @@ spec:
                       is documented below.
                     items:
                       properties:
+                        assignPublicIp:
+                          type: boolean
+                        replicaPriority:
+                          type: number
                         shardName:
                           type: string
                         subnetId:

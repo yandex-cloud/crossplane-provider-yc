@@ -161,6 +161,18 @@ spec:
                     description: (Optional) A set of key/value label pairs to assign
                       to the instance.
                     type: object
+                  localDisk:
+                    description: (Optional) List of local disks that are attached
+                      to the instance. Structure is documented below.
+                    items:
+                      properties:
+                        sizeBytes:
+                          description: (Required) Size of the disk, specified in bytes.
+                          type: number
+                      required:
+                      - sizeBytes
+                      type: object
+                    type: array
                   metadata:
                     additionalProperties:
                       type: string
@@ -574,6 +586,17 @@ spec:
                     type: string
                   id:
                     type: string
+                  localDisk:
+                    description: (Optional) List of local disks that are attached
+                      to the instance. Structure is documented below.
+                    items:
+                      properties:
+                        deviceName:
+                          description: (Optional) Name that can be used to access
+                            an attached disk.
+                          type: string
+                      type: object
+                    type: array
                   networkInterface:
                     description: (Required) Networks to attach to the instance. This
                       can
