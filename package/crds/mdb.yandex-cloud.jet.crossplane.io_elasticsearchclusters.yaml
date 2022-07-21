@@ -65,6 +65,8 @@ spec:
               forProvider:
                 properties:
                   config:
+                    description: (Required) Configuration of the Elasticsearch cluster.
+                      The structure is documented below.
                     items:
                       properties:
                         adminPasswordSecretRef:
@@ -86,14 +88,23 @@ spec:
                           - namespace
                           type: object
                         dataNode:
+                          description: (Required) Configuration for Elasticsearch
+                            data nodes subcluster. The structure is documented below.
                           items:
                             properties:
                               resources:
+                                description: (Required) Resources allocated to hosts
+                                  of the Elasticsearch data nodes subcluster. The
+                                  structure is documented below.
                                 items:
                                   properties:
                                     diskSize:
+                                      description: (Required) Volume of the storage
+                                        available to a host, in gigabytes.
                                       type: number
                                     diskTypeId:
+                                      description: (Required) Type of the storage
+                                        of Elasticsearch hosts.
                                       type: string
                                     resourcePresetId:
                                       type: string
@@ -108,16 +119,27 @@ spec:
                             type: object
                           type: array
                         edition:
+                          description: (Optional) Edition of Elasticsearch. For more
+                            information, see [the official documentation](https://cloud.yandex.com/en-ru/docs/managed-elasticsearch/concepts/es-editions).
                           type: string
                         masterNode:
+                          description: (Optional) Configuration for Elasticsearch
+                            master nodes subcluster. The structure is documented below.
                           items:
                             properties:
                               resources:
+                                description: (Required) Resources allocated to hosts
+                                  of the Elasticsearch data nodes subcluster. The
+                                  structure is documented below.
                                 items:
                                   properties:
                                     diskSize:
+                                      description: (Required) Volume of the storage
+                                        available to a host, in gigabytes.
                                       type: number
                                     diskTypeId:
+                                      description: (Required) Type of the storage
+                                        of Elasticsearch hosts.
                                       type: string
                                     resourcePresetId:
                                       type: string
@@ -132,10 +154,13 @@ spec:
                             type: object
                           type: array
                         plugins:
+                          description: (Optional) A set of Elasticsearch plugins to
+                            install.
                           items:
                             type: string
                           type: array
                         version:
+                          description: (Optional) Version of Elasticsearch.
                           type: string
                       required:
                       - adminPasswordSecretRef
@@ -143,12 +168,20 @@ spec:
                       type: object
                     type: array
                   deletionProtection:
+                    description: (Optional) Inhibits deletion of the cluster.  Can
+                      be either `true` or `false`.
                     type: boolean
                   description:
+                    description: (Optional) Description of the Elasticsearch cluster.
                     type: string
                   environment:
+                    description: (Required) Deployment environment of the Elasticsearch
+                      cluster. Can be either `PRESTABLE` or `PRODUCTION`.
                     type: string
                   folderId:
+                    description: (Optional) The ID of the folder that the resource
+                      belongs to. If it is not provided, the default provider folder
+                      is used.
                     type: string
                   folderIdRef:
                     description: A Reference to a named object.
@@ -174,11 +207,15 @@ spec:
                         type: object
                     type: object
                   host:
+                    description: (Required) A host of the Elasticsearch cluster. The
+                      structure is documented below.
                     items:
                       properties:
                         assignPublicIp:
                           type: boolean
                         name:
+                          description: (Required) Name of the Elasticsearch cluster.
+                            Provided by the client when the cluster is created.
                           type: string
                         subnetId:
                           type: string
@@ -207,8 +244,12 @@ spec:
                               type: object
                           type: object
                         type:
+                          description: (Required) The type of the host to be deployed.
+                            Can be either `DATA_NODE` or `MASTER_NODE`.
                           type: string
                         zone:
+                          description: (Required) The availability zone where the
+                            Elasticsearch host will be created.
                           type: string
                       required:
                       - name
@@ -219,23 +260,36 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
+                    description: (Optional) A set of key/value label pairs to assign
+                      to the Elasticsearch cluster.
                     type: object
                   maintenanceWindow:
                     items:
                       properties:
                         day:
+                          description: '(Optional) Day of week for maintenance window
+                            if window type is weekly. Possible values: `MON`, `TUE`,
+                            `WED`, `THU`, `FRI`, `SAT`, `SUN`.'
                           type: string
                         hour:
+                          description: (Optional) Hour of day in UTC time zone (1-24)
+                            for maintenance window if window type is weekly.
                           type: number
                         type:
+                          description: (Required) The type of the host to be deployed.
+                            Can be either `DATA_NODE` or `MASTER_NODE`.
                           type: string
                       required:
                       - type
                       type: object
                     type: array
                   name:
+                    description: (Required) Name of the Elasticsearch cluster. Provided
+                      by the client when the cluster is created.
                     type: string
                   networkId:
+                    description: (Required) ID of the network, to which the Elasticsearch
+                      cluster belongs.
                     type: string
                   networkIdRef:
                     description: A Reference to a named object.
@@ -261,6 +315,8 @@ spec:
                         type: object
                     type: object
                   securityGroupIds:
+                    description: (Optional) A set of ids of security groups assigned
+                      to hosts of the cluster.
                     items:
                       type: string
                     type: array
@@ -290,6 +346,8 @@ spec:
                         type: object
                     type: object
                   serviceAccountId:
+                    description: (Optional) ID of the service account authorized for
+                      this cluster.
                     type: string
                   serviceAccountIdRef:
                     description: A Reference to a named object.
@@ -422,10 +480,15 @@ spec:
               atProvider:
                 properties:
                   createdAt:
+                    description: Creation timestamp of the key.
                     type: string
                   health:
+                    description: Aggregated health of the cluster. Can be either `ALIVE`,
+                      `DEGRADED`, `DEAD` or `HEALTH_UNKNOWN`.
                     type: string
                   host:
+                    description: (Required) A host of the Elasticsearch cluster. The
+                      structure is documented below.
                     items:
                       properties:
                         fqdn:
@@ -435,6 +498,9 @@ spec:
                   id:
                     type: string
                   status:
+                    description: Status of the cluster. Can be either `CREATING`,
+                      `STARTING`, `RUNNING`, `UPDATING`, `STOPPING`, `STOPPED`, `ERROR`
+                      or `STATUS_UNKNOWN`.
                     type: string
                 type: object
               conditions:

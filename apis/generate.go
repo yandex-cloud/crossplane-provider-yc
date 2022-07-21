@@ -67,6 +67,9 @@ limitations under the License.
 //go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/datatransfer_transfer.html.markdown ./datatransfer/v1alpha1/zz_transfer_types.go
 //go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/ydb_database_dedicated.html.markdown ./ydb/v1alpha1/zz_databasededicated_types.go
 //go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/ydb_database_serverless.html.markdown ./ydb/v1alpha1/zz_databaseserverless_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/ydb_database_serverless.html.markdown ./ydb/v1alpha1/zz_databaseserverless_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/vpc_address.html.markdown ./vpc/v1alpha1/zz_address_types.go
+//go:generate ../terraform-docs-parser.py ../terraform-provider-yandex/website/docs/r/mdb_elasticsearch_cluster.html.markdown ./mdb/v1alpha1/zz_elasticsearchcluster_types.go
 
 // Generate deepcopy methodsets and CRD manifests
 //go:generate go run -tags generate sigs.k8s.io/controller-tools/cmd/controller-gen object:headerFile=../hack/boilerplate.go.txt paths=./... crd:allowDangerousTypes=true,crdVersions=v1 output:artifacts:config=../package/crds

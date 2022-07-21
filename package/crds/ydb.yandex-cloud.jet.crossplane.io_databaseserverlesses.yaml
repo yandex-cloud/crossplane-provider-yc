@@ -66,11 +66,13 @@ spec:
                 properties:
                   description:
                     description: (Optional) A description for the Yandex Database
-                      serverless cluster.
+                      serverless cluster. (Optional) A description for the Yandex
+                      Database serverless cluster.
                     type: string
                   folderId:
                     description: (Optional) ID of the folder that the Yandex Database
-                      serverless cluster belongs to.
+                      serverless cluster belongs to. (Optional) ID of the folder that
+                      the Yandex Database serverless cluster belongs to.
                     type: string
                   folderIdRef:
                     description: A Reference to a named object.
@@ -99,14 +101,18 @@ spec:
                     additionalProperties:
                       type: string
                     description: (Optional) A set of key/value label pairs to assign
-                      to the Yandex Database serverless cluster.
+                      to the Yandex Database serverless cluster. (Optional) A set
+                      of key/value label pairs to assign to the Yandex Database serverless
+                      cluster.
                     type: object
                   locationId:
                     description: (Optional) Location ID for the Yandex Database serverless
+                      cluster. (Optional) Location ID for the Yandex Database serverless
                       cluster.
                     type: string
                   name:
                     description: (Required) Name for the Yandex Database serverless
+                      cluster. (Required) Name for the Yandex Database serverless
                       cluster.
                     type: string
                 required:
@@ -215,30 +221,38 @@ spec:
                 properties:
                   createdAt:
                     description: The Yandex Database serverless cluster creation timestamp.
+                      The Yandex Database serverless cluster creation timestamp.
                     type: string
                   databasePath:
                     description: Full database path of the Yandex Database serverless
+                      cluster. Full database path of the Yandex Database serverless
                       cluster.
                     type: string
                   documentApiEndpoint:
                     description: Document API endpoint of the Yandex Database serverless
+                      cluster. Document API endpoint of the Yandex Database serverless
                       cluster.
                     type: string
                   id:
-                    description: ID of the Yandex Database serverless cluster.
+                    description: ID of the Yandex Database serverless cluster. ID
+                      of the Yandex Database serverless cluster.
                     type: string
                   status:
                     description: Status of the Yandex Database serverless cluster.
+                      Status of the Yandex Database serverless cluster.
                     type: string
                   tlsEnabled:
                     description: Whether TLS is enabled for the Yandex Database serverless
+                      cluster. Whether TLS is enabled for the Yandex Database serverless
                       cluster.
                     type: boolean
                   ydbApiEndpoint:
                     description: API endpoint of the Yandex Database serverless cluster.
+                      API endpoint of the Yandex Database serverless cluster.
                     type: string
                   ydbFullEndpoint:
                     description: Full endpoint of the Yandex Database serverless cluster.
+                      Full endpoint of the Yandex Database serverless cluster.
                     type: string
                 type: object
               conditions:

@@ -27,26 +27,34 @@ import (
 
 type DatabaseServerlessObservation struct {
 	// The Yandex Database serverless cluster creation timestamp.
+	// The Yandex Database serverless cluster creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// Full database path of the Yandex Database serverless cluster.
 	// Full database path of the Yandex Database serverless cluster.
 	DatabasePath *string `json:"databasePath,omitempty" tf:"database_path,omitempty"`
 
 	// Document API endpoint of the Yandex Database serverless cluster.
+	// Document API endpoint of the Yandex Database serverless cluster.
 	DocumentAPIEndpoint *string `json:"documentApiEndpoint,omitempty" tf:"document_api_endpoint,omitempty"`
 
+	// ID of the Yandex Database serverless cluster.
 	// ID of the Yandex Database serverless cluster.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Status of the Yandex Database serverless cluster.
+	// Status of the Yandex Database serverless cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
+	// Whether TLS is enabled for the Yandex Database serverless cluster.
 	// Whether TLS is enabled for the Yandex Database serverless cluster.
 	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 
 	// API endpoint of the Yandex Database serverless cluster.
+	// API endpoint of the Yandex Database serverless cluster.
 	YdbAPIEndpoint *string `json:"ydbApiEndpoint,omitempty" tf:"ydb_api_endpoint,omitempty"`
 
+	// Full endpoint of the Yandex Database serverless cluster.
 	// Full endpoint of the Yandex Database serverless cluster.
 	YdbFullEndpoint *string `json:"ydbFullEndpoint,omitempty" tf:"ydb_full_endpoint,omitempty"`
 }
@@ -55,10 +63,12 @@ type DatabaseServerlessParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) A description for the Yandex Database serverless cluster.
+	// (Optional) A description for the Yandex Database serverless cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
+	// (Optional) ID of the folder that the Yandex Database serverless cluster belongs to.
 	// (Optional) ID of the folder that the Yandex Database serverless cluster belongs to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -70,13 +80,16 @@ type DatabaseServerlessParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) A set of key/value label pairs to assign to the Yandex Database serverless cluster.
+	// (Optional) A set of key/value label pairs to assign to the Yandex Database serverless cluster.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Location ID for the Yandex Database serverless cluster.
+	// (Optional) Location ID for the Yandex Database serverless cluster.
 	LocationID *string `json:"locationId,omitempty" tf:"location_id,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) Name for the Yandex Database serverless cluster.
 	// (Required) Name for the Yandex Database serverless cluster.
 	Name *string `json:"name" tf:"name,omitempty"`
 }

@@ -69,8 +69,10 @@ spec:
                     items:
                       properties:
                         clientOutputBufferLimitNormal:
+                          description: (Optional) Normal clients output buffer limits.
                           type: string
                         clientOutputBufferLimitPubsub:
+                          description: (Optional) Pubsub clients output buffer limits.
                           type: string
                         databases:
                           description: (Optional) Number of databases (changing requires
@@ -165,8 +167,12 @@ spec:
                     items:
                       properties:
                         assignPublicIp:
+                          description: (Optional) Sets whether the host should get
+                            a public IP address or not.
                           type: boolean
                         replicaPriority:
+                          description: (Optional) Replica priority of a current replica
+                            (usable for non-sharded only).
                           type: number
                         shardName:
                           type: string

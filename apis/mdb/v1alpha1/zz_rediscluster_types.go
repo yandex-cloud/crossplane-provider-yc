@@ -31,9 +31,11 @@ type RedisClusterConfigObservation struct {
 type RedisClusterConfigParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Normal clients output buffer limits.
 	ClientOutputBufferLimitNormal *string `json:"clientOutputBufferLimitNormal,omitempty" tf:"client_output_buffer_limit_normal,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Pubsub clients output buffer limits.
 	ClientOutputBufferLimitPubsub *string `json:"clientOutputBufferLimitPubsub,omitempty" tf:"client_output_buffer_limit_pubsub,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -75,9 +77,11 @@ type RedisClusterHostObservation struct {
 type RedisClusterHostParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Sets whether the host should get a public IP address or not.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Replica priority of a current replica (usable for non-sharded only).
 	ReplicaPriority *float64 `json:"replicaPriority,omitempty" tf:"replica_priority,omitempty"`
 
 	// +kubebuilder:validation:Optional

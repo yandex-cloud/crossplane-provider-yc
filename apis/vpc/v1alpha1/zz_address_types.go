@@ -26,27 +26,34 @@ import (
 )
 
 type AddressObservation struct {
+	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// (Optional) spec of IP v4 address
 	ExternalIPv4Address []ExternalIPv4AddressObservation `json:"externalIpv4Address,omitempty" tf:"external_ipv4_address,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// `false` means that address is ephemeral.
 	Reserved *bool `json:"reserved,omitempty" tf:"reserved,omitempty"`
 
+	// `true` if address is used.
 	Used *bool `json:"used,omitempty" tf:"used,omitempty"`
 }
 
 type AddressParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) An optional description of this resource. Provide this property when
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) spec of IP v4 address
 	ExternalIPv4Address []ExternalIPv4AddressParameters `json:"externalIpv4Address,omitempty" tf:"external_ipv4_address,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
+	// (Optional) ID of the folder that the resource belongs to. If it
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -56,25 +63,31 @@ type AddressParameters struct {
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Labels to apply to this resource. A list of key/value pairs.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Name of the address. Provided by the client when the address is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type ExternalIPv4AddressObservation struct {
+	// Allocated IP address.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 }
 
 type ExternalIPv4AddressParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Enable DDOS protection. Possible values are: "qrator"
 	DdosProtectionProvider *string `json:"ddosProtectionProvider,omitempty" tf:"ddos_protection_provider,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Wanted outgoing smtp capability.
 	OutgoingSMTPCapability *string `json:"outgoingSmtpCapability,omitempty" tf:"outgoing_smtp_capability,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// Zone for allocating address.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 

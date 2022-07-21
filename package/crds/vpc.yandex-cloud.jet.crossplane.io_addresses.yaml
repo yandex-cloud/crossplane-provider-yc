@@ -64,19 +64,28 @@ spec:
               forProvider:
                 properties:
                   description:
+                    description: (Optional) An optional description of this resource.
+                      Provide this property when
                     type: string
                   externalIpv4Address:
+                    description: (Optional) spec of IP v4 address
                     items:
                       properties:
                         ddosProtectionProvider:
+                          description: '(Optional) Enable DDOS protection. Possible
+                            values are: "qrator"'
                           type: string
                         outgoingSmtpCapability:
+                          description: (Optional) Wanted outgoing smtp capability.
                           type: string
                         zoneId:
+                          description: Zone for allocating address.
                           type: string
                       type: object
                     type: array
                   folderId:
+                    description: (Optional) ID of the folder that the resource belongs
+                      to. If it
                     type: string
                   folderIdRef:
                     description: A Reference to a named object.
@@ -104,8 +113,12 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
+                    description: (Optional) Labels to apply to this resource. A list
+                      of key/value pairs.
                     type: object
                   name:
+                    description: (Optional) Name of the address. Provided by the client
+                      when the address is created.
                     type: string
                 type: object
               providerConfigRef:
@@ -210,19 +223,24 @@ spec:
               atProvider:
                 properties:
                   createdAt:
+                    description: Creation timestamp of the key.
                     type: string
                   externalIpv4Address:
+                    description: (Optional) spec of IP v4 address
                     items:
                       properties:
                         address:
+                          description: Allocated IP address.
                           type: string
                       type: object
                     type: array
                   id:
                     type: string
                   reserved:
+                    description: '`false` means that address is ephemeral.'
                     type: boolean
                   used:
+                    description: '`true` if address is used.'
                     type: boolean
                 type: object
               conditions:
