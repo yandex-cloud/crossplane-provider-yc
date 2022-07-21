@@ -37,6 +37,7 @@ import (
 	symmetrickey "github.com/yandex-cloud/provider-jet-yc/internal/controller/kms/symmetrickey"
 	cluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/kubernetes/cluster"
 	nodegroup "github.com/yandex-cloud/provider-jet-yc/internal/controller/kubernetes/nodegroup"
+	elasticsearchcluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/elasticsearchcluster"
 	mongodbcluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mongodbcluster"
 	mysqlcluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mysqlcluster"
 	mysqldatabase "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mysqldatabase"
@@ -49,6 +50,7 @@ import (
 	folder "github.com/yandex-cloud/provider-jet-yc/internal/controller/resourcemanager/folder"
 	bucket "github.com/yandex-cloud/provider-jet-yc/internal/controller/storage/bucket"
 	object "github.com/yandex-cloud/provider-jet-yc/internal/controller/storage/object"
+	address "github.com/yandex-cloud/provider-jet-yc/internal/controller/vpc/address"
 	defaultsecuritygroup "github.com/yandex-cloud/provider-jet-yc/internal/controller/vpc/defaultsecuritygroup"
 	network "github.com/yandex-cloud/provider-jet-yc/internal/controller/vpc/network"
 	securitygroup "github.com/yandex-cloud/provider-jet-yc/internal/controller/vpc/securitygroup"
@@ -78,6 +80,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		symmetrickey.Setup,
 		cluster.Setup,
 		nodegroup.Setup,
+		elasticsearchcluster.Setup,
 		mongodbcluster.Setup,
 		mysqlcluster.Setup,
 		mysqldatabase.Setup,
@@ -90,6 +93,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		folder.Setup,
 		bucket.Setup,
 		object.Setup,
+		address.Setup,
 		defaultsecuritygroup.Setup,
 		network.Setup,
 		securitygroup.Setup,

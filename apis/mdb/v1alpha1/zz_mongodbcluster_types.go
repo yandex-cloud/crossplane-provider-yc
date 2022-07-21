@@ -98,7 +98,51 @@ type DatabaseParameters struct {
 	Name *string `json:"name" tf:"name,omitempty"`
 }
 
-type HostObservation struct {
+type KmipObservation struct {
+}
+
+type KmipParameters struct {
+
+	// +kubebuilder:validation:Optional
+	// (Required) String containing the client certificate used for authenticating MongoDB to the KMIP server.
+	ClientCertificate *string `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) Unique KMIP identifier for an existing key within the KMIP server.
+	KeyIdentifier *string `json:"keyIdentifier,omitempty" tf:"key_identifier,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) Port number to use to communicate with the KMIP server. Default: 5696
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Required) Path to CA File. Used for validating secure client connection to KMIP server.
+	ServerCA *string `json:"serverCa,omitempty" tf:"server_ca,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Required) Hostname or IP address of the KMIP server to connect to.
+	ServerName *string `json:"serverName,omitempty" tf:"server_name,omitempty"`
+}
+
+type MongodObservation struct {
+}
+
+type MongodParameters struct {
+
+	// +kubebuilder:validation:Optional
+	// (Optional) A set of audit log settings 
+	AuditLog []AuditLogParameters `json:"auditLog,omitempty" tf:"audit_log,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) A set of MongoDB Security settings
+	Security []SecurityParameters `json:"security,omitempty" tf:"security,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) A set of MongoDB Server Parameters 
+	SetParameter []SetParameterParameters `json:"setParameter,omitempty" tf:"set_parameter,omitempty"`
+}
+
+type MongodbClusterHostObservation struct {
 	// (Computed) The health of the host.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
@@ -106,7 +150,7 @@ type HostObservation struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
-type HostParameters struct {
+type MongodbClusterHostParameters struct {
 
 	// +kubebuilder:validation:Optional
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
@@ -139,36 +183,10 @@ type HostParameters struct {
 	ZoneID *string `json:"zoneId" tf:"zone_id,omitempty"`
 }
 
-type KmipObservation struct {
+type MongodbClusterMaintenanceWindowObservation struct {
 }
 
-type KmipParameters struct {
-
-	// +kubebuilder:validation:Optional
-	// (Required) String containing the client certificate used for authenticating MongoDB to the KMIP server.
-	ClientCertificate *string `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Optional) Unique KMIP identifier for an existing key within the KMIP server.
-	KeyIdentifier *string `json:"keyIdentifier,omitempty" tf:"key_identifier,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Optional) Port number to use to communicate with the KMIP server. Default: 5696
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Required) Path to CA File. Used for validating secure client connection to KMIP server.
-	ServerCA *string `json:"serverCa,omitempty" tf:"server_ca,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Required) Hostname or IP address of the KMIP server to connect to.
-	ServerName *string `json:"serverName,omitempty" tf:"server_name,omitempty"`
-}
-
-type MaintenanceWindowObservation struct {
-}
-
-type MaintenanceWindowParameters struct {
+type MongodbClusterMaintenanceWindowParameters struct {
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
@@ -183,24 +201,6 @@ type MaintenanceWindowParameters struct {
 	Type *string `json:"type" tf:"type,omitempty"`
 }
 
-type MongodObservation struct {
-}
-
-type MongodParameters struct {
-
-	// +kubebuilder:validation:Optional
-	// (Optional) A set of audit log settings 
-	AuditLog []AuditLogParameters `json:"auditLog,omitempty" tf:"audit_log,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Optional) A set of MongoDB Security settings
-	Security []SecurityParameters `json:"security,omitempty" tf:"security,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Optional) A set of MongoDB Server Parameters 
-	SetParameter []SetParameterParameters `json:"setParameter,omitempty" tf:"set_parameter,omitempty"`
-}
-
 type MongodbClusterObservation struct {
 	// (Required) Configuration of the MongoDB subcluster. The structure is documented below.
 	ClusterConfig []ClusterConfigObservation `json:"clusterConfig,omitempty" tf:"cluster_config,omitempty"`
@@ -212,7 +212,7 @@ type MongodbClusterObservation struct {
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
 	// (Required) A host of the MongoDB cluster. The structure is documented below.
-	Host []HostObservation `json:"host,omitempty" tf:"host,omitempty"`
+	Host []MongodbClusterHostObservation `json:"host,omitempty" tf:"host,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -262,14 +262,14 @@ type MongodbClusterParameters struct {
 
 	// +kubebuilder:validation:Required
 	// (Required) A host of the MongoDB cluster. The structure is documented below.
-	Host []HostParameters `json:"host" tf:"host,omitempty"`
+	Host []MongodbClusterHostParameters `json:"host" tf:"host,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) A set of key/value label pairs to assign to the MongoDB cluster.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	MaintenanceWindow []MaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+	MaintenanceWindow []MongodbClusterMaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
 	// +kubebuilder:validation:Required
 	// (Required) Name of the MongoDB cluster. Provided by the client when the cluster is created.
@@ -288,7 +288,7 @@ type MongodbClusterParameters struct {
 
 	// +kubebuilder:validation:Required
 	// (Required) Resources allocated to hosts of the MongoDB cluster. The structure is documented below.
-	Resources []ResourcesParameters `json:"resources" tf:"resources,omitempty"`
+	Resources []MongodbClusterResourcesParameters `json:"resources" tf:"resources,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
@@ -306,6 +306,23 @@ type MongodbClusterParameters struct {
 	User []UserParameters `json:"user" tf:"user,omitempty"`
 }
 
+type MongodbClusterResourcesObservation struct {
+}
+
+type MongodbClusterResourcesParameters struct {
+
+	// +kubebuilder:validation:Required
+	// (Required) Volume of the storage available to a MongoDB host, in gigabytes.
+	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
+
+	// +kubebuilder:validation:Required
+	// (Required) Type of the storage of MongoDB hosts.
+	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
+
+	// +kubebuilder:validation:Required
+	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
+}
+
 type PermissionObservation struct {
 }
 
@@ -318,23 +335,6 @@ type PermissionParameters struct {
 	// +kubebuilder:validation:Optional
 	// (Optional) The roles of the user in this database. For more information see [the official documentation](https://cloud.yandex.com/docs/managed-mongodb/concepts/users-and-roles).
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
-}
-
-type ResourcesObservation struct {
-}
-
-type ResourcesParameters struct {
-
-	// +kubebuilder:validation:Required
-	// (Required) Volume of the storage available to a MongoDB host, in gigabytes.
-	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
-
-	// +kubebuilder:validation:Required
-	// (Required) Type of the storage of MongoDB hosts.
-	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
-
-	// +kubebuilder:validation:Required
-	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
 }
 
 type SecurityObservation struct {

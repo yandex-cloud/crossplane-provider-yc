@@ -57,48 +57,6 @@ type ConfigBackupWindowStartParameters struct {
 	Minutes *float64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
 }
 
-type ConfigObservation struct {
-}
-
-type ConfigParameters struct {
-
-	// +kubebuilder:validation:Optional
-	// (Optional) Access policy to the PostgreSQL cluster. The structure is documented below.
-	Access []ConfigAccessParameters `json:"access,omitempty" tf:"access,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Optional) Configuration setting which enables/disables autofailover in cluster.
-	Autofailover *bool `json:"autofailover,omitempty" tf:"autofailover,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Optional) The period in days during which backups are stored.
-	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Optional) Time to start the daily backup, in the UTC timezone. The structure is documented below.
-	BackupWindowStart []ConfigBackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Optional) Cluster performance diagnostics settings. The structure is documented below. [YC Documentation](https://cloud.yandex.com/en-ru/docs/managed-postgresql/api-ref/grpc/cluster_service#PerformanceDiagnostics)
-	PerformanceDiagnostics []ConfigPerformanceDiagnosticsParameters `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Optional) Configuration of the connection pooler. The structure is documented below.
-	PoolerConfig []PoolerConfigParameters `json:"poolerConfig,omitempty" tf:"pooler_config,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	// (Optional) PostgreSQL cluster config. Detail info in "postresql config" section (documented below).
-	PostgresqlConfig map[string]*string `json:"postgresqlConfig,omitempty" tf:"postgresql_config,omitempty"`
-
-	// +kubebuilder:validation:Required
-	// (Required) Resources allocated to hosts of the PostgreSQL cluster. The structure is documented below.
-	Resources []ConfigResourcesParameters `json:"resources" tf:"resources,omitempty"`
-
-	// +kubebuilder:validation:Required
-	// (Required) Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 14)
-	Version *string `json:"version" tf:"version,omitempty"`
-}
-
 type ConfigPerformanceDiagnosticsObservation struct {
 }
 
@@ -160,6 +118,48 @@ type PoolerConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	// (Optional) Mode that the connection pooler is working in. See descriptions of all modes in the [documentation for Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool-string.
 	PoolingMode *string `json:"poolingMode,omitempty" tf:"pooling_mode,omitempty"`
+}
+
+type PostgresqlClusterConfigObservation struct {
+}
+
+type PostgresqlClusterConfigParameters struct {
+
+	// +kubebuilder:validation:Optional
+	// (Optional) Access policy to the PostgreSQL cluster. The structure is documented below.
+	Access []ConfigAccessParameters `json:"access,omitempty" tf:"access,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) Configuration setting which enables/disables autofailover in cluster.
+	Autofailover *bool `json:"autofailover,omitempty" tf:"autofailover,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) The period in days during which backups are stored.
+	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) Time to start the daily backup, in the UTC timezone. The structure is documented below.
+	BackupWindowStart []ConfigBackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) Cluster performance diagnostics settings. The structure is documented below. [YC Documentation](https://cloud.yandex.com/en-ru/docs/managed-postgresql/api-ref/grpc/cluster_service#PerformanceDiagnostics)
+	PerformanceDiagnostics []ConfigPerformanceDiagnosticsParameters `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) Configuration of the connection pooler. The structure is documented below.
+	PoolerConfig []PoolerConfigParameters `json:"poolerConfig,omitempty" tf:"pooler_config,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) PostgreSQL cluster config. Detail info in "postresql config" section (documented below).
+	PostgresqlConfig map[string]*string `json:"postgresqlConfig,omitempty" tf:"postgresql_config,omitempty"`
+
+	// +kubebuilder:validation:Required
+	// (Required) Resources allocated to hosts of the PostgreSQL cluster. The structure is documented below.
+	Resources []ConfigResourcesParameters `json:"resources" tf:"resources,omitempty"`
+
+	// +kubebuilder:validation:Required
+	// (Required) Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 14)
+	Version *string `json:"version" tf:"version,omitempty"`
 }
 
 type PostgresqlClusterDatabaseObservation struct {
@@ -266,7 +266,7 @@ type PostgresqlClusterParameters struct {
 
 	// +kubebuilder:validation:Required
 	// (Required) Configuration of the PostgreSQL cluster. The structure is documented below.
-	Config []ConfigParameters `json:"config" tf:"config,omitempty"`
+	Config []PostgresqlClusterConfigParameters `json:"config" tf:"config,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Deprecated) To manage databases, please switch to using a separate resource type `yandex_mdb_postgresql_database`.

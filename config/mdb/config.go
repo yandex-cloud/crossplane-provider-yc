@@ -19,6 +19,7 @@ import (
 
 	"github.com/crossplane/terrajet/pkg/config"
 
+	"github.com/yandex-cloud/provider-jet-yc/config/iam"
 	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
 )
 
@@ -294,6 +295,24 @@ func Configure(p *config.Provider) {
 		}
 		r.References["security_group_ids"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
+		}
+		r.UseAsync = true
+		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
+			return mongodbConnDetails(attr), nil
+		}
+	})
+	p.AddResourceConfigurator("yandex_mdb_elasticsearch_cluster", func(r *config.Resource) {
+		r.References["network_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
+		}
+		r.References["host.subnet_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
+		}
+		r.References["security_group_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
+		}
+		r.References["service_account_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccount"),
 		}
 		r.UseAsync = true
 		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
