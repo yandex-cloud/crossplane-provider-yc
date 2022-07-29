@@ -696,6 +696,7 @@ type MySQLSourceParameters struct {
 	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractUsername()
 	// +kubebuilder:validation:Optional
 	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
@@ -844,6 +845,7 @@ type MySQLTargetParameters struct {
 	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractUsername()
 	// +kubebuilder:validation:Optional
 	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
@@ -1147,6 +1149,7 @@ type PostgresSourceParameters struct {
 	SlotGigabyteLagLimit *float64 `json:"slotGigabyteLagLimit,omitempty" tf:"slot_gigabyte_lag_limit,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractUsername()
 	// +kubebuilder:validation:Optional
 	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
@@ -1283,6 +1286,7 @@ type PostgresTargetParameters struct {
 	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractUsername()
 	// +kubebuilder:validation:Optional
 	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`

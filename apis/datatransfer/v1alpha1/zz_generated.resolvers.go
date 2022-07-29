@@ -24,6 +24,7 @@ import (
 	v1alpha12 "github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1"
 	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
 	v1alpha11 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
+	datatransfer "github.com/yandex-cloud/provider-jet-yc/config/datatransfer"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -269,7 +270,7 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].MySQLSource); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].User),
-				Extract:      reference.ExternalName(),
+				Extract:      datatransfer.ExtractUsername(),
 				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].UserRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].UserSelector,
 				To: reference.To{
@@ -375,7 +376,7 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].MySQLTarget); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].User),
-				Extract:      reference.ExternalName(),
+				Extract:      datatransfer.ExtractUsername(),
 				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].UserRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].UserSelector,
 				To: reference.To{
@@ -481,7 +482,7 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].PostgresSource); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].User),
-				Extract:      reference.ExternalName(),
+				Extract:      datatransfer.ExtractUsername(),
 				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].UserRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].UserSelector,
 				To: reference.To{
@@ -587,7 +588,7 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].PostgresTarget); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].User),
-				Extract:      reference.ExternalName(),
+				Extract:      datatransfer.ExtractUsername(),
 				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].UserRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].UserSelector,
 				To: reference.To{

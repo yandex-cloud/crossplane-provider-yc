@@ -16,7 +16,11 @@ package datatransfer
 import (
 	"fmt"
 
+	xpref "github.com/crossplane/crossplane-runtime/pkg/reference"
+	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
+
 	"github.com/crossplane/terrajet/pkg/config"
+	"github.com/crossplane/terrajet/pkg/resource"
 
 	"github.com/yandex-cloud/provider-jet-yc/config/mdb"
 	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
@@ -71,7 +75,8 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.References["settings.mysql_source.user"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLUser"),
+			Type:      fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLUser"),
+			Extractor: ExtractUsernameFunc,
 		}
 		r.References["settings.mysql_source.database"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLDatabase"),
@@ -83,7 +88,8 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.References["settings.mysql_target.user"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLUser"),
+			Type:      fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLUser"),
+			Extractor: ExtractUsernameFunc,
 		}
 		r.References["settings.mysql_target.database"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLDatabase"),
@@ -95,7 +101,8 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.References["settings.postgres_source.user"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlUser"),
+			Type:      fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlUser"),
+			Extractor: ExtractUsernameFunc,
 		}
 		r.References["settings.postgres_source.database"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlDatabase"),
@@ -107,7 +114,8 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
 		r.References["settings.postgres_target.user"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlUser"),
+			Type:      fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlUser"),
+			Extractor: ExtractUsernameFunc,
 		}
 		r.References["settings.postgres_target.database"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlDatabase"),
@@ -131,4 +139,32 @@ func Configure(p *config.Provider) {
 		}
 		r.UseAsync = true
 	})
+}
+
+const (
+	// APISPackagePath is the package path for generated APIs root package
+	APISPackagePath = "github.com/yandex-cloud/provider-jet-yc/config/datatransfer"
+
+	// ExtractUsernameFunc extracts username from MySQLUser or PotgresqlUser resource
+	ExtractUsernameFunc = APISPackagePath + ".ExtractUsername()"
+)
+
+// ExtractUsername extracts the value of `spec.forProvider.name`
+// from a Terraformed resource. If mr is not a Terraformed
+// resource, returns an empty string.
+func ExtractUsername() xpref.ExtractValueFn {
+	return func(mr xpresource.Managed) string {
+		tr, ok := mr.(resource.Terraformed)
+		if !ok {
+			return ""
+		}
+		o, err := tr.GetParameters()
+		if err != nil {
+			return ""
+		}
+		if k := o["name"]; k != nil {
+			return k.(string)
+		}
+		return ""
+	}
 }
