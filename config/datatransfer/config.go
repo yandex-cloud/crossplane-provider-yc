@@ -70,14 +70,50 @@ func Configure(p *config.Provider) {
 		r.References["settings.mysql_source.connection.on_premise.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
+		r.References["settings.mysql_source.user"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLUser"),
+		}
+		r.References["settings.mysql_source.database"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLDatabase"),
+		}
+		r.References["settings.mysql_source.security_groups"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
+		}
 		r.References["settings.mysql_target.connection.on_premise.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
+		}
+		r.References["settings.mysql_target.user"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLUser"),
+		}
+		r.References["settings.mysql_target.database"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLDatabase"),
+		}
+		r.References["settings.mysql_target.security_groups"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
 		}
 		r.References["settings.postgres_source.connection.on_premise.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
+		r.References["settings.postgres_source.user"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlUser"),
+		}
+		r.References["settings.postgres_source.database"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlDatabase"),
+		}
+		r.References["settings.postgres_source.security_groups"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
+		}
 		r.References["settings.postgres_target.connection.on_premise.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
+		}
+		r.References["settings.postgres_target.user"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlUser"),
+		}
+		r.References["settings.postgres_target.database"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlDatabase"),
+		}
+		r.References["settings.postgres_target.security_groups"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
 		}
 		r.References["settings.mongo_source.connection.connection_options.on_premise.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),

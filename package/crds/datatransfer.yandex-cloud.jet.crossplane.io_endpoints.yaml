@@ -1042,6 +1042,30 @@ spec:
                               database:
                                 description: (Required) Name of the database to transfer.
                                 type: string
+                              databaseRef:
+                                description: A Reference to a named object.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              databaseSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
                               excludeTablesRegex:
                                 description: (Optional) Opposite of `include_table_regex`.
                                   The tables matching the specified regular expressions
@@ -1104,6 +1128,32 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                              securityGroupsRefs:
+                                items:
+                                  description: A Reference to a named object.
+                                  properties:
+                                    name:
+                                      description: Name of the referenced object.
+                                      type: string
+                                  required:
+                                  - name
+                                  type: object
+                                type: array
+                              securityGroupsSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
                               serviceDatabase:
                                 type: string
                               timezone:
@@ -1115,6 +1165,30 @@ spec:
                               user:
                                 description: (Required) User for the database access.
                                 type: string
+                              userRef:
+                                description: A Reference to a named object.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              userSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
                             type: object
                           type: array
                         mysqlTarget:
@@ -1246,6 +1320,30 @@ spec:
                               database:
                                 description: (Required) Name of the database to transfer.
                                 type: string
+                              databaseRef:
+                                description: A Reference to a named object.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              databaseSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
                               password:
                                 description: (Required) Password for the database
                                   access. This is a block with a single field named
@@ -1279,6 +1377,32 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                              securityGroupsRefs:
+                                items:
+                                  description: A Reference to a named object.
+                                  properties:
+                                    name:
+                                      description: Name of the referenced object.
+                                      type: string
+                                  required:
+                                  - name
+                                  type: object
+                                type: array
+                              securityGroupsSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
                               skipConstraintChecks:
                                 description: (Optional) When true, disables foreign
                                   key checks. See [foreign_key_checks](https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_foreign_key_checks).
@@ -1298,6 +1422,30 @@ spec:
                               user:
                                 description: (Required) User for the database access.
                                 type: string
+                              userRef:
+                                description: A Reference to a named object.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              userSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
                             type: object
                           type: array
                         postgresSource:
@@ -1429,6 +1577,30 @@ spec:
                               database:
                                 description: (Required) Name of the database to transfer.
                                 type: string
+                              databaseRef:
+                                description: A Reference to a named object.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              databaseSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
                               excludeTables:
                                 description: List of tables which will not be transfered,
                                   formatted as `schemaname.tablename`.
@@ -1517,6 +1689,32 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                              securityGroupsRefs:
+                                items:
+                                  description: A Reference to a named object.
+                                  properties:
+                                    name:
+                                      description: Name of the referenced object.
+                                      type: string
+                                  required:
+                                  - name
+                                  type: object
+                                type: array
+                              securityGroupsSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
                               serviceSchema:
                                 description: (Optional) Name of the database schema
                                   in which auxiliary tables needed for the transfer
@@ -1532,6 +1730,30 @@ spec:
                               user:
                                 description: (Required) User for the database access.
                                 type: string
+                              userRef:
+                                description: A Reference to a named object.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              userSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
                             type: object
                           type: array
                         postgresTarget:
@@ -1663,6 +1885,30 @@ spec:
                               database:
                                 description: (Required) Name of the database to transfer.
                                 type: string
+                              databaseRef:
+                                description: A Reference to a named object.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              databaseSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
                               password:
                                 description: (Required) Password for the database
                                   access. This is a block with a single field named
@@ -1696,9 +1942,59 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                              securityGroupsRefs:
+                                items:
+                                  description: A Reference to a named object.
+                                  properties:
+                                    name:
+                                      description: Name of the referenced object.
+                                      type: string
+                                  required:
+                                  - name
+                                  type: object
+                                type: array
+                              securityGroupsSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
                               user:
                                 description: (Required) User for the database access.
                                 type: string
+                              userRef:
+                                description: A Reference to a named object.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              userSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
                             type: object
                           type: array
                       type: object

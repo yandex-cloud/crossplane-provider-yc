@@ -1833,6 +1833,16 @@ func (in *MySQLSourceParameters) DeepCopyInto(out *MySQLSourceParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DatabaseRef != nil {
+		in, out := &in.DatabaseRef, &out.DatabaseRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.DatabaseSelector != nil {
+		in, out := &in.DatabaseSelector, &out.DatabaseSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.ExcludeTablesRegex != nil {
 		in, out := &in.ExcludeTablesRegex, &out.ExcludeTablesRegex
 		*out = make([]*string, len(*in))
@@ -1880,6 +1890,16 @@ func (in *MySQLSourceParameters) DeepCopyInto(out *MySQLSourceParameters) {
 			}
 		}
 	}
+	if in.SecurityGroupsRefs != nil {
+		in, out := &in.SecurityGroupsRefs, &out.SecurityGroupsRefs
+		*out = make([]v1.Reference, len(*in))
+		copy(*out, *in)
+	}
+	if in.SecurityGroupsSelector != nil {
+		in, out := &in.SecurityGroupsSelector, &out.SecurityGroupsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.ServiceDatabase != nil {
 		in, out := &in.ServiceDatabase, &out.ServiceDatabase
 		*out = new(string)
@@ -1894,6 +1914,16 @@ func (in *MySQLSourceParameters) DeepCopyInto(out *MySQLSourceParameters) {
 		in, out := &in.User, &out.User
 		*out = new(string)
 		**out = **in
+	}
+	if in.UserRef != nil {
+		in, out := &in.UserRef, &out.UserRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.UserSelector != nil {
+		in, out := &in.UserSelector, &out.UserSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -2199,6 +2229,16 @@ func (in *MySQLTargetParameters) DeepCopyInto(out *MySQLTargetParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.DatabaseRef != nil {
+		in, out := &in.DatabaseRef, &out.DatabaseRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.DatabaseSelector != nil {
+		in, out := &in.DatabaseSelector, &out.DatabaseSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Password != nil {
 		in, out := &in.Password, &out.Password
 		*out = make([]MySQLTargetPasswordParameters, len(*in))
@@ -2222,6 +2262,16 @@ func (in *MySQLTargetParameters) DeepCopyInto(out *MySQLTargetParameters) {
 			}
 		}
 	}
+	if in.SecurityGroupsRefs != nil {
+		in, out := &in.SecurityGroupsRefs, &out.SecurityGroupsRefs
+		*out = make([]v1.Reference, len(*in))
+		copy(*out, *in)
+	}
+	if in.SecurityGroupsSelector != nil {
+		in, out := &in.SecurityGroupsSelector, &out.SecurityGroupsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SkipConstraintChecks != nil {
 		in, out := &in.SkipConstraintChecks, &out.SkipConstraintChecks
 		*out = new(bool)
@@ -2236,6 +2286,16 @@ func (in *MySQLTargetParameters) DeepCopyInto(out *MySQLTargetParameters) {
 		in, out := &in.User, &out.User
 		*out = new(string)
 		**out = **in
+	}
+	if in.UserRef != nil {
+		in, out := &in.UserRef, &out.UserRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.UserSelector != nil {
+		in, out := &in.UserSelector, &out.UserSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -2943,6 +3003,16 @@ func (in *PostgresSourceParameters) DeepCopyInto(out *PostgresSourceParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.DatabaseRef != nil {
+		in, out := &in.DatabaseRef, &out.DatabaseRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.DatabaseSelector != nil {
+		in, out := &in.DatabaseSelector, &out.DatabaseSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.ExcludeTables != nil {
 		in, out := &in.ExcludeTables, &out.ExcludeTables
 		*out = make([]*string, len(*in))
@@ -2990,6 +3060,16 @@ func (in *PostgresSourceParameters) DeepCopyInto(out *PostgresSourceParameters) 
 			}
 		}
 	}
+	if in.SecurityGroupsRefs != nil {
+		in, out := &in.SecurityGroupsRefs, &out.SecurityGroupsRefs
+		*out = make([]v1.Reference, len(*in))
+		copy(*out, *in)
+	}
+	if in.SecurityGroupsSelector != nil {
+		in, out := &in.SecurityGroupsSelector, &out.SecurityGroupsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.ServiceSchema != nil {
 		in, out := &in.ServiceSchema, &out.ServiceSchema
 		*out = new(string)
@@ -3004,6 +3084,16 @@ func (in *PostgresSourceParameters) DeepCopyInto(out *PostgresSourceParameters) 
 		in, out := &in.User, &out.User
 		*out = new(string)
 		**out = **in
+	}
+	if in.UserRef != nil {
+		in, out := &in.UserRef, &out.UserRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.UserSelector != nil {
+		in, out := &in.UserSelector, &out.UserSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 
@@ -3309,6 +3399,16 @@ func (in *PostgresTargetParameters) DeepCopyInto(out *PostgresTargetParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.DatabaseRef != nil {
+		in, out := &in.DatabaseRef, &out.DatabaseRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.DatabaseSelector != nil {
+		in, out := &in.DatabaseSelector, &out.DatabaseSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Password != nil {
 		in, out := &in.Password, &out.Password
 		*out = make([]PostgresTargetPasswordParameters, len(*in))
@@ -3327,10 +3427,30 @@ func (in *PostgresTargetParameters) DeepCopyInto(out *PostgresTargetParameters) 
 			}
 		}
 	}
+	if in.SecurityGroupsRefs != nil {
+		in, out := &in.SecurityGroupsRefs, &out.SecurityGroupsRefs
+		*out = make([]v1.Reference, len(*in))
+		copy(*out, *in)
+	}
+	if in.SecurityGroupsSelector != nil {
+		in, out := &in.SecurityGroupsSelector, &out.SecurityGroupsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.User != nil {
 		in, out := &in.User, &out.User
 		*out = new(string)
 		**out = **in
+	}
+	if in.UserRef != nil {
+		in, out := &in.UserRef, &out.UserRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.UserSelector != nil {
+		in, out := &in.UserSelector, &out.UserSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 

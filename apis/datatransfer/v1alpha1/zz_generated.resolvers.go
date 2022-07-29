@@ -32,6 +32,7 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -225,6 +226,66 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		}
 	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].MySQLSource); i4++ {
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].Database),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].DatabaseRef,
+				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].DatabaseSelector,
+				To: reference.To{
+					List:    &v1alpha12.MySQLDatabaseList{},
+					Managed: &v1alpha12.MySQLDatabase{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].Database")
+			}
+			mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].Database = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].DatabaseRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].MySQLSource); i4++ {
+			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+				CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].SecurityGroups),
+				Extract:       reference.ExternalName(),
+				References:    mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].SecurityGroupsRefs,
+				Selector:      mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].SecurityGroupsSelector,
+				To: reference.To{
+					List:    &v1alpha11.SecurityGroupList{},
+					Managed: &v1alpha11.SecurityGroup{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].SecurityGroups")
+			}
+			mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].SecurityGroups = reference.ToPtrValues(mrsp.ResolvedValues)
+			mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].SecurityGroupsRefs = mrsp.ResolvedReferences
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].MySQLSource); i4++ {
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].User),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].UserRef,
+				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].UserSelector,
+				To: reference.To{
+					List:    &v1alpha12.MySQLUserList{},
+					Managed: &v1alpha12.MySQLUser{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].User")
+			}
+			mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].User = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].UserRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].MySQLTarget); i4++ {
 			for i5 := 0; i5 < len(mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].Connection); i5++ {
 				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -268,6 +329,66 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 
 				}
 			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].MySQLTarget); i4++ {
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].Database),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].DatabaseRef,
+				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].DatabaseSelector,
+				To: reference.To{
+					List:    &v1alpha12.MySQLDatabaseList{},
+					Managed: &v1alpha12.MySQLDatabase{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].Database")
+			}
+			mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].Database = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].DatabaseRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].MySQLTarget); i4++ {
+			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+				CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].SecurityGroups),
+				Extract:       reference.ExternalName(),
+				References:    mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].SecurityGroupsRefs,
+				Selector:      mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].SecurityGroupsSelector,
+				To: reference.To{
+					List:    &v1alpha11.SecurityGroupList{},
+					Managed: &v1alpha11.SecurityGroup{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].SecurityGroups")
+			}
+			mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].SecurityGroups = reference.ToPtrValues(mrsp.ResolvedValues)
+			mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].SecurityGroupsRefs = mrsp.ResolvedReferences
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].MySQLTarget); i4++ {
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].User),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].UserRef,
+				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].UserSelector,
+				To: reference.To{
+					List:    &v1alpha12.MySQLUserList{},
+					Managed: &v1alpha12.MySQLUser{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].User")
+			}
+			mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].User = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].UserRef = rsp.ResolvedReference
+
 		}
 	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
@@ -317,6 +438,66 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		}
 	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].PostgresSource); i4++ {
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].Database),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].DatabaseRef,
+				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].DatabaseSelector,
+				To: reference.To{
+					List:    &v1alpha12.PostgresqlDatabaseList{},
+					Managed: &v1alpha12.PostgresqlDatabase{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].Database")
+			}
+			mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].Database = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].DatabaseRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].PostgresSource); i4++ {
+			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+				CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].SecurityGroups),
+				Extract:       reference.ExternalName(),
+				References:    mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].SecurityGroupsRefs,
+				Selector:      mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].SecurityGroupsSelector,
+				To: reference.To{
+					List:    &v1alpha11.SecurityGroupList{},
+					Managed: &v1alpha11.SecurityGroup{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].SecurityGroups")
+			}
+			mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].SecurityGroups = reference.ToPtrValues(mrsp.ResolvedValues)
+			mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].SecurityGroupsRefs = mrsp.ResolvedReferences
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].PostgresSource); i4++ {
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].User),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].UserRef,
+				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].UserSelector,
+				To: reference.To{
+					List:    &v1alpha12.PostgresqlUserList{},
+					Managed: &v1alpha12.PostgresqlUser{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].User")
+			}
+			mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].User = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].UserRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].PostgresTarget); i4++ {
 			for i5 := 0; i5 < len(mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].Connection); i5++ {
 				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -360,6 +541,66 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 
 				}
 			}
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].PostgresTarget); i4++ {
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].Database),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].DatabaseRef,
+				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].DatabaseSelector,
+				To: reference.To{
+					List:    &v1alpha12.PostgresqlDatabaseList{},
+					Managed: &v1alpha12.PostgresqlDatabase{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].Database")
+			}
+			mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].Database = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].DatabaseRef = rsp.ResolvedReference
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].PostgresTarget); i4++ {
+			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+				CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].SecurityGroups),
+				Extract:       reference.ExternalName(),
+				References:    mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].SecurityGroupsRefs,
+				Selector:      mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].SecurityGroupsSelector,
+				To: reference.To{
+					List:    &v1alpha11.SecurityGroupList{},
+					Managed: &v1alpha11.SecurityGroup{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].SecurityGroups")
+			}
+			mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].SecurityGroups = reference.ToPtrValues(mrsp.ResolvedValues)
+			mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].SecurityGroupsRefs = mrsp.ResolvedReferences
+
+		}
+	}
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].PostgresTarget); i4++ {
+			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].User),
+				Extract:      reference.ExternalName(),
+				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].UserRef,
+				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].UserSelector,
+				To: reference.To{
+					List:    &v1alpha12.PostgresqlUserList{},
+					Managed: &v1alpha12.PostgresqlUser{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].User")
+			}
+			mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].User = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].UserRef = rsp.ResolvedReference
+
 		}
 	}
 

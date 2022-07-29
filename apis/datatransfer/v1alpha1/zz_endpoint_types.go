@@ -650,9 +650,16 @@ type MySQLSourceParameters struct {
 	// (Required) Connection settings. The structure is documented below.
 	Connection []MySQLSourceConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
 	// +kubebuilder:validation:Optional
 	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	DatabaseRef *v1.Reference `json:"databaseRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	DatabaseSelector *v1.Selector `json:"databaseSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Opposite of `include_table_regex`. The tables matching the specified regular expressions will not be transferred.
@@ -670,9 +677,16 @@ type MySQLSourceParameters struct {
 	// (Required) Password for the database access. This is a block with a single field named `raw` which should contain the password.
 	Password []MySQLSourcePasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	// (Optional) List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SecurityGroupsRefs []v1.Reference `json:"securityGroupsRefs,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	ServiceDatabase *string `json:"serviceDatabase,omitempty" tf:"service_database,omitempty"`
@@ -681,9 +695,16 @@ type MySQLSourceParameters struct {
 	// (Optional) Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.
 	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
 	// +kubebuilder:validation:Optional
 	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	UserRef *v1.Reference `json:"userRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
 }
 
 type MySQLSourcePasswordObservation struct {
@@ -784,9 +805,16 @@ type MySQLTargetParameters struct {
 	// (Required) Connection settings. The structure is documented below.
 	Connection []MySQLTargetConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
 	// +kubebuilder:validation:Optional
 	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	DatabaseRef *v1.Reference `json:"databaseRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	DatabaseSelector *v1.Selector `json:"databaseSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	// (Required) Password for the database access. This is a block with a single field named `raw` which should contain the password.
@@ -796,9 +824,16 @@ type MySQLTargetParameters struct {
 	// (Optional) [sql_mode](https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html) to use when interacting with the server. Defaults to "NO_AUTO_VALUE_ON_ZERO,NO_DIR_IN_CREATE,NO_ENGINE_SUBSTITUTION".
 	SQLMode *string `json:"sqlMode,omitempty" tf:"sql_mode,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	// (Optional) List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SecurityGroupsRefs []v1.Reference `json:"securityGroupsRefs,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) When true, disables foreign key checks. See [foreign_key_checks](https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_foreign_key_checks). False by default.
@@ -808,9 +843,16 @@ type MySQLTargetParameters struct {
 	// (Optional) Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.
 	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
 	// +kubebuilder:validation:Optional
 	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	UserRef *v1.Reference `json:"userRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
 }
 
 type MySQLTargetPasswordObservation struct {
@@ -1058,9 +1100,16 @@ type PostgresSourceParameters struct {
 	// (Required) Connection settings. The structure is documented below.
 	Connection []PostgresSourceConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlDatabase
 	// +kubebuilder:validation:Optional
 	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	DatabaseRef *v1.Reference `json:"databaseRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	DatabaseSelector *v1.Selector `json:"databaseSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	// List of tables which will not be transfered, formatted as `schemaname.tablename`.
@@ -1078,9 +1127,16 @@ type PostgresSourceParameters struct {
 	// (Required) Password for the database access. This is a block with a single field named `raw` which should contain the password.
 	Password []PostgresSourcePasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	// (Optional) List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SecurityGroupsRefs []v1.Reference `json:"securityGroupsRefs,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Name of the database schema in which auxiliary tables needed for the transfer will be created. Empty `service_schema` implies schema "public".
@@ -1090,9 +1146,16 @@ type PostgresSourceParameters struct {
 	// (Optional) Maximum WAL size held by the replication slot, in gigabytes. Exceeding this limit will result in a replication failure and deletion of the replication slot. Unlimited by default.
 	SlotGigabyteLagLimit *float64 `json:"slotGigabyteLagLimit,omitempty" tf:"slot_gigabyte_lag_limit,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
 	// +kubebuilder:validation:Optional
 	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	UserRef *v1.Reference `json:"userRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
 }
 
 type PostgresSourcePasswordObservation struct {
@@ -1193,21 +1256,42 @@ type PostgresTargetParameters struct {
 	// (Required) Connection settings. The structure is documented below.
 	Connection []PostgresTargetConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlDatabase
 	// +kubebuilder:validation:Optional
 	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	DatabaseRef *v1.Reference `json:"databaseRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	DatabaseSelector *v1.Selector `json:"databaseSelector,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
 	// (Required) Password for the database access. This is a block with a single field named `raw` which should contain the password.
 	Password []PostgresTargetPasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	// (Optional) List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	SecurityGroupsRefs []v1.Reference `json:"securityGroupsRefs,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
+
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
+	// +kubebuilder:validation:Optional
 	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	UserRef *v1.Reference `json:"userRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
 }
 
 type PostgresTargetPasswordObservation struct {
