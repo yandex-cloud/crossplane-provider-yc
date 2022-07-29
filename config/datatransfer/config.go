@@ -25,7 +25,6 @@ import (
 // Configure adds configurations for datatransfer group.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_datatransfer_endpoint", func(r *config.Resource) {
-
 		r.References["settings.postgres_target.connection.mdb_cluster_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlCluster"),
 		}
@@ -44,7 +43,6 @@ func Configure(p *config.Provider) {
 		r.References["settings.mongo_source.connection.connection_options.mdb_cluster_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MongodbCluster"),
 		}
-
 		r.References["settings.mysql_target.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
@@ -69,7 +67,6 @@ func Configure(p *config.Provider) {
 		r.References["settings.clickhouse_source.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
-
 		r.References["settings.mysql_source.connection.on_premise.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
@@ -96,5 +93,6 @@ func Configure(p *config.Provider) {
 		r.References["target_id"] = config.Reference{
 			Type: "Endpoint",
 		}
+		r.UseAsync = true
 	})
 }
