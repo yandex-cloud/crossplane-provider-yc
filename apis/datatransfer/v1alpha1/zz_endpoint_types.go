@@ -651,6 +651,7 @@ type MySQLSourceParameters struct {
 	Connection []MySQLSourceConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
@@ -696,7 +697,7 @@ type MySQLSourceParameters struct {
 	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractUsername()
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
@@ -807,6 +808,7 @@ type MySQLTargetParameters struct {
 	Connection []MySQLTargetConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
@@ -845,7 +847,7 @@ type MySQLTargetParameters struct {
 	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractUsername()
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
@@ -1103,6 +1105,7 @@ type PostgresSourceParameters struct {
 	Connection []PostgresSourceConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
@@ -1149,7 +1152,7 @@ type PostgresSourceParameters struct {
 	SlotGigabyteLagLimit *float64 `json:"slotGigabyteLagLimit,omitempty" tf:"slot_gigabyte_lag_limit,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractUsername()
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
@@ -1260,6 +1263,7 @@ type PostgresTargetParameters struct {
 	Connection []PostgresTargetConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
@@ -1286,7 +1290,7 @@ type PostgresTargetParameters struct {
 	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractUsername()
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`

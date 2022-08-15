@@ -76,10 +76,11 @@ func Configure(p *config.Provider) {
 		}
 		r.References["settings.mysql_source.user"] = config.Reference{
 			Type:      fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLUser"),
-			Extractor: ExtractUsernameFunc,
+			Extractor: ExtractSpecNameFunc,
 		}
 		r.References["settings.mysql_source.database"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLDatabase"),
+			Type:      fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLDatabase"),
+			Extractor: ExtractSpecNameFunc,
 		}
 		r.References["settings.mysql_source.security_groups"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
@@ -89,10 +90,11 @@ func Configure(p *config.Provider) {
 		}
 		r.References["settings.mysql_target.user"] = config.Reference{
 			Type:      fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLUser"),
-			Extractor: ExtractUsernameFunc,
+			Extractor: ExtractSpecNameFunc,
 		}
 		r.References["settings.mysql_target.database"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLDatabase"),
+			Type:      fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "MySQLDatabase"),
+			Extractor: ExtractSpecNameFunc,
 		}
 		r.References["settings.mysql_target.security_groups"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
@@ -102,10 +104,11 @@ func Configure(p *config.Provider) {
 		}
 		r.References["settings.postgres_source.user"] = config.Reference{
 			Type:      fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlUser"),
-			Extractor: ExtractUsernameFunc,
+			Extractor: ExtractSpecNameFunc,
 		}
 		r.References["settings.postgres_source.database"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlDatabase"),
+			Type:      fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlDatabase"),
+			Extractor: ExtractSpecNameFunc,
 		}
 		r.References["settings.postgres_source.security_groups"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
@@ -115,10 +118,11 @@ func Configure(p *config.Provider) {
 		}
 		r.References["settings.postgres_target.user"] = config.Reference{
 			Type:      fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlUser"),
-			Extractor: ExtractUsernameFunc,
+			Extractor: ExtractSpecNameFunc,
 		}
 		r.References["settings.postgres_target.database"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlDatabase"),
+			Type:      fmt.Sprintf("%s.%s", mdb.ApisPackagePath, "PostgresqlDatabase"),
+			Extractor: ExtractSpecNameFunc,
 		}
 		r.References["settings.postgres_target.security_groups"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
@@ -145,14 +149,14 @@ const (
 	// APISPackagePath is the package path for generated APIs root package
 	APISPackagePath = "github.com/yandex-cloud/provider-jet-yc/config/datatransfer"
 
-	// ExtractUsernameFunc extracts username from MySQLUser or PotgresqlUser resource
-	ExtractUsernameFunc = APISPackagePath + ".ExtractUsername()"
+	// ExtractSpecNameFunc extracts username from MySQLUser or PotgresqlUser resource
+	ExtractSpecNameFunc = APISPackagePath + ".ExtractSpecName()"
 )
 
-// ExtractUsername extracts the value of `spec.forProvider.name`
+// ExtractSpecName extracts the value of `spec.forProvider.name`
 // from a Terraformed resource. If mr is not a Terraformed
 // resource, returns an empty string.
-func ExtractUsername() xpref.ExtractValueFn {
+func ExtractSpecName() xpref.ExtractValueFn {
 	return func(mr xpresource.Managed) string {
 		tr, ok := mr.(resource.Terraformed)
 		if !ok {

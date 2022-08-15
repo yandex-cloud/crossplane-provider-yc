@@ -230,7 +230,7 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].MySQLSource); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].Database),
-				Extract:      reference.ExternalName(),
+				Extract:      datatransfer.ExtractSpecName(),
 				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].DatabaseRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].DatabaseSelector,
 				To: reference.To{
@@ -270,7 +270,7 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].MySQLSource); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].User),
-				Extract:      datatransfer.ExtractUsername(),
+				Extract:      datatransfer.ExtractSpecName(),
 				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].UserRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].UserSelector,
 				To: reference.To{
@@ -336,7 +336,7 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].MySQLTarget); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].Database),
-				Extract:      reference.ExternalName(),
+				Extract:      datatransfer.ExtractSpecName(),
 				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].DatabaseRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].DatabaseSelector,
 				To: reference.To{
@@ -376,7 +376,7 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].MySQLTarget); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].User),
-				Extract:      datatransfer.ExtractUsername(),
+				Extract:      datatransfer.ExtractSpecName(),
 				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].UserRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].UserSelector,
 				To: reference.To{
@@ -442,7 +442,7 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].PostgresSource); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].Database),
-				Extract:      reference.ExternalName(),
+				Extract:      datatransfer.ExtractSpecName(),
 				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].DatabaseRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].DatabaseSelector,
 				To: reference.To{
@@ -482,7 +482,7 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].PostgresSource); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].User),
-				Extract:      datatransfer.ExtractUsername(),
+				Extract:      datatransfer.ExtractSpecName(),
 				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].UserRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].UserSelector,
 				To: reference.To{
@@ -548,7 +548,7 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].PostgresTarget); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].Database),
-				Extract:      reference.ExternalName(),
+				Extract:      datatransfer.ExtractSpecName(),
 				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].DatabaseRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].DatabaseSelector,
 				To: reference.To{
@@ -588,7 +588,7 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].PostgresTarget); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].User),
-				Extract:      datatransfer.ExtractUsername(),
+				Extract:      datatransfer.ExtractSpecName(),
 				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].UserRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].UserSelector,
 				To: reference.To{
