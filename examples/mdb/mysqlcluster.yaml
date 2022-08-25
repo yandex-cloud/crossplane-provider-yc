@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgresql
+  namespace: default
+type: Opaque
+data:
+  # 12345678
+  password: MTIzNDU2Nzg=
+---
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: PostgresqlCluster
+metadata:
+  name: example-pg
+spec:
+  forProvider:
+    name: example-pg
+    environment: PRESTABLE
+    networkIdRef:
+      name: example-net
+    config:
+      - version: "12"
+        resources:
+          - diskSize: 16
+            diskTypeId: network-hdd
+            resourcePresetId: s2.micro
+        postgresqlConfig:
+          max_connections: "395"
+          enable_parallel_hash: "true"
+          vacuum_cleanup_index_scale_factor: "0.2"
+          autovacuum_vacuum_scale_factor: "0.34"
+          default_transaction_isolation: "TRANSACTION_ISOLATION_READ_COMMITTED"
+          shared_preload_libraries: SHARED_PRELOAD_LIBRARIES_AUTO_EXPLAIN
+    maintenanceWindow:
+      - type: WEEKLY
+        day: SAT
+        hour: 12
+    database:
+      - name: db_name
+        owner: user1
+    user:
+      - name: user1
+        passwordSecretRef:
+          name: postgresql
+          key: password
+          namespace: default
+        connLimit: 50
+        permission:
+          - databaseName: db_name
+        settings:
+          default_transaction_isolation: "read committed"
+          log_min_duration_statement: "5000"
+    host:
+      - zone: ru-central1-a
+        subnetIdRef:
+          name: example-subnet-a
+    folderIdRef:
+      name: example-folder
+  providerConfigRef:
+    name: example
+  writeConnectionSecretToRef:
+    name: postgress-conn
+    namespace: default

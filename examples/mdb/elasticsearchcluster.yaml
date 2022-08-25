@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgresql
+  namespace: default
+type: Opaque
+data:
+  # 12345678
+  password: MTIzNDU2Nzg=
+---
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: MySQLCluster
+metadata:
+  name: example-mysql
+spec:
+  forProvider:
+    name: example-mysql
+    environment: PRESTABLE
+    networkIdRef:
+      name: example-net
+    resources:
+      - diskSize: 16
+        diskTypeId: network-hdd
+        resourcePresetId: s2.micro
+    version: "8.0"
+    mysqlConfig:
+      sql_mode: "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+      max_connections: "100"
+      default_authentication_plugin: "MYSQL_NATIVE_PASSWORD"
+      innodb_print_all_deadlocks: "true"
+    maintenanceWindow:
+      - type: WEEKLY
+        day: SAT
+        hour: 12
+    database:
+      - name: db_name
+    user:
+      - name: user1
+        passwordSecretRef:
+          name: postgresql
+          key: password
+          namespace: default
+        permission:
+          - databaseName: db_name
+    host:
+      - zone: ru-central1-a
+        subnetIdRef:
+          name: example-subnet-a
+    folderIdRef:
+      name: crossplane-test
+  writeConnectionSecretToRef:
+    name: mysql-conn
+    namespace: default

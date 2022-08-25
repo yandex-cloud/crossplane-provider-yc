@@ -154,6 +154,21 @@ func postgresqlConnectionStrings(attr map[string]interface{}) map[string]string 
 	return connstrings
 }
 
+func mysqlConnectionStrings(attr map[string]interface{}) map[string]string {
+	connstrings := make(map[string]string)
+	for _, db := range databases(attr) {
+		ps := passwords(attr)
+		for i, u := range usernames(attr) {
+			password := ps[i]
+			for _, host := range fqdns(attr) {
+				connstrings[fmt.Sprintf("connection-string.%s.%s.%s", u, db, host)] =
+					fmt.Sprintf("mysql://%s:%s@%s/%s", u, password, host, db)
+			}
+		}
+	}
+	return connstrings
+}
+
 func mongodbConnectionStrings(attr map[string]interface{}) map[string]string {
 	connstrings := make(map[string]string)
 	hosts := hostnames(attr)
@@ -165,6 +180,23 @@ func mongodbConnectionStrings(attr map[string]interface{}) map[string]string {
 				fmt.Sprintf(
 					"mongodb://%s:%s@%s/%s",
 					u, password, strings.Join(hosts, ","), db)
+		}
+	}
+	return connstrings
+}
+
+func elasticsearchConnectionStrings(attr map[string]interface{}) map[string]string {
+	connstrings := make(map[string]string)
+	for _, db := range databases(attr) {
+		ps := passwords(attr)
+		for i, u := range usernames(attr) {
+			password := ps[i]
+			for _, host := range fqdns(attr) {
+				connstrings[fmt.Sprintf("connection-string.%s.%s.%s", u, db, host)] =
+					fmt.Sprintf("https://%s:%s@%s:9200/%s",
+						u, password, host, db)
+			}
+
 		}
 	}
 	return connstrings
@@ -188,6 +220,24 @@ func postgresqlConnDetails(attr map[string]interface{}) map[string][]byte {
 	return conn
 }
 
+func mysqlConnDetails(attr map[string]interface{}) map[string][]byte {
+	conn := make(map[string][]byte)
+	for i, v := range fqdns(attr) {
+		conn[fmt.Sprintf("attribute.host.%d.fqdn", i)] = []byte(v)
+	}
+	for i, v := range usernames(attr) {
+		conn[fmt.Sprintf("attribute.user.%d.name", i)] = []byte(v)
+	}
+	for i, v := range databases(attr) {
+		conn[fmt.Sprintf("attribute.database.%d.name", i)] = []byte(v)
+	}
+	for k, v := range mysqlConnectionStrings(attr) {
+		conn[k] = []byte(v)
+	}
+
+	return conn
+}
+
 func mongodbConnDetails(attr map[string]interface{}) map[string][]byte {
 	conn := make(map[string][]byte)
 	for i, v := range hostnames(attr) {
@@ -203,6 +253,31 @@ func mongodbConnDetails(attr map[string]interface{}) map[string][]byte {
 		conn[k] = []byte(v)
 	}
 
+	return conn
+}
+
+func elasticsearchConnDetails(attr map[string]interface{}) map[string][]byte {
+	conn := make(map[string][]byte)
+	for i, v := range hostnames(attr) {
+		conn[fmt.Sprintf("attribute.host.%d.name", i)] = []byte(v)
+	}
+	for i, v := range usernames(attr) {
+		conn[fmt.Sprintf("attribute.user.%d.name", i)] = []byte(v)
+	}
+	for i, v := range databases(attr) {
+		conn[fmt.Sprintf("attribute.database.%d.name", i)] = []byte(v)
+	}
+	for i, v := range fqdns(attr) {
+		conn[fmt.Sprintf("attribute.fqdn.%d.name", i)] = []byte(v)
+	}
+	for k, v := range elasticsearchConnectionStrings(attr) {
+		conn[k] = []byte(v)
+	}
+	if clusterID, ok := attr["id"]; ok {
+		if clusterIDString, ok := clusterID.(string); ok {
+			conn["attribute.id"] = []byte(clusterIDString)
+		}
+	}
 	return conn
 }
 
@@ -258,6 +333,9 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
 		}
 		r.UseAsync = true
+		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
+			return mysqlConnDetails(attr), nil
+		}
 	})
 	p.AddResourceConfigurator("yandex_mdb_mysql_database", func(r *config.Resource) {
 		r.References["cluster_id"] = config.Reference{
@@ -316,7 +394,7 @@ func Configure(p *config.Provider) {
 		}
 		r.UseAsync = true
 		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
-			return mongodbConnDetails(attr), nil
+			return elasticsearchConnDetails(attr), nil
 		}
 	})
 }
