@@ -22,7 +22,8 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/compute/v1alpha1"
+	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/alb/v1alpha1"
+	v1alpha1compute "github.com/yandex-cloud/provider-jet-yc/apis/compute/v1alpha1"
 	v1alpha1container "github.com/yandex-cloud/provider-jet-yc/apis/container/v1alpha1"
 	v1alpha1datatransfer "github.com/yandex-cloud/provider-jet-yc/apis/datatransfer/v1alpha1"
 	v1alpha1dns "github.com/yandex-cloud/provider-jet-yc/apis/dns/v1alpha1"
@@ -41,6 +42,7 @@ func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1compute.SchemeBuilder.AddToScheme,
 		v1alpha1container.SchemeBuilder.AddToScheme,
 		v1alpha1datatransfer.SchemeBuilder.AddToScheme,
 		v1alpha1dns.SchemeBuilder.AddToScheme,

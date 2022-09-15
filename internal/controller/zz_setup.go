@@ -21,6 +21,11 @@ import (
 
 	"github.com/crossplane/terrajet/pkg/controller"
 
+	backendgroup "github.com/yandex-cloud/provider-jet-yc/internal/controller/alb/backendgroup"
+	httprouter "github.com/yandex-cloud/provider-jet-yc/internal/controller/alb/httprouter"
+	loadbalancer "github.com/yandex-cloud/provider-jet-yc/internal/controller/alb/loadbalancer"
+	targetgroup "github.com/yandex-cloud/provider-jet-yc/internal/controller/alb/targetgroup"
+	virtualhost "github.com/yandex-cloud/provider-jet-yc/internal/controller/alb/virtualhost"
 	instance "github.com/yandex-cloud/provider-jet-yc/internal/controller/compute/instance"
 	registry "github.com/yandex-cloud/provider-jet-yc/internal/controller/container/registry"
 	repository "github.com/yandex-cloud/provider-jet-yc/internal/controller/container/repository"
@@ -64,6 +69,11 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		backendgroup.Setup,
+		httprouter.Setup,
+		loadbalancer.Setup,
+		targetgroup.Setup,
+		virtualhost.Setup,
 		instance.Setup,
 		registry.Setup,
 		repository.Setup,

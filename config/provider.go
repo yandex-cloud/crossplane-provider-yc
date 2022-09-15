@@ -22,6 +22,7 @@ import (
 
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 
+	"github.com/yandex-cloud/provider-jet-yc/config/alb"
 	"github.com/yandex-cloud/provider-jet-yc/config/common"
 	"github.com/yandex-cloud/provider-jet-yc/config/compute"
 	"github.com/yandex-cloud/provider-jet-yc/config/datatransfer"
@@ -50,6 +51,11 @@ func GetProvider() *tjconfig.Provider {
 		tjconfig.WithRootGroup("yandex-cloud.jet.crossplane.io"),
 		tjconfig.WithDefaultResourceFn(common.DefaultResourceFn),
 		tjconfig.WithIncludeList([]string{
+			"yandex_alb_backend_group$",
+			"yandex_alb_http_router$",
+			"yandex_alb_load_balancer$",
+			"yandex_alb_target_group$",
+			"yandex_alb_virtual_host$",
 			"yandex_vpc_network$",
 			"yandex_vpc_subnet$",
 			"yandex_compute_instance$",
@@ -90,6 +96,7 @@ func GetProvider() *tjconfig.Provider {
 	)
 
 	for _, configure := range []func(provider *tjconfig.Provider){
+		alb.Configure,
 		compute.Configure,
 		datatransfer.Configure,
 		dns.Configure,
