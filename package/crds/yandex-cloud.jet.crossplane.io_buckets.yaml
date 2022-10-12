@@ -1,0 +1,611 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: buckets.yandex-cloud.jet.crossplane.io
+spec:
+  group: yandex-cloud.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - yandex-cloud
+    kind: Bucket
+    listKind: BucketList
+    plural: buckets
+    singular: bucket
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Bucket is the Schema for the Buckets API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: BucketSpec defines the desired state of Bucket
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  accessKey:
+                    description: (Optional) The access key to use when applying changes.
+                      If omitted, `storage_access_key` specified in provider config
+                      is used.
+                    type: string
+                  accessKeyRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  accessKeySelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                    type: object
+                  acl:
+                    description: (Optional) The [predefined ACL](https://cloud.yandex.com/docs/storage/concepts/acl#predefined_acls)
+                      to apply. Defaults to `private`. Conflicts with `grant`.
+                    type: string
+                  anonymousAccessFlags:
+                    description: (Optional) Provides various access to objects.
+                    items:
+                      properties:
+                        list:
+                          description: (Optional) Allows to list object in bucket
+                            anonymously.
+                          type: boolean
+                        read:
+                          description: (Optional) Allows to read objects in bucket
+                            anonymously.
+                          type: boolean
+                      type: object
+                    type: array
+                  bucket:
+                    description: (Optional, Forces new resource) The name of the bucket.
+                      If omitted, Terraform will assign a random, unique name.
+                    type: string
+                  bucketPrefix:
+                    description: (Optional, Forces new resource) Creates a unique
+                      bucket name beginning with the specified prefix. Conflicts with
+                      `bucket`.
+                    type: string
+                  corsRule:
+                    description: (Optional) A rule of [Cross-Origin Resource Sharing](https://cloud.yandex.com/docs/storage/cors/)
+                      (documented below).
+                    items:
+                      properties:
+                        allowedHeaders:
+                          description: (Optional) Specifies which headers are allowed.
+                          items:
+                            type: string
+                          type: array
+                        allowedMethods:
+                          description: (Required) Specifies which methods are allowed.
+                            Can be `GET`, `PUT`, `POST`, `DELETE` or `HEAD`.
+                          items:
+                            type: string
+                          type: array
+                        allowedOrigins:
+                          description: (Required) Specifies which origins are allowed.
+                          items:
+                            type: string
+                          type: array
+                        exposeHeaders:
+                          description: (Optional) Specifies expose header in the response.
+                          items:
+                            type: string
+                          type: array
+                        maxAgeSeconds:
+                          description: (Optional) Specifies time in seconds that browser
+                            can cache the response for a preflight request.
+                          type: number
+                      required:
+                      - allowedMethods
+                      - allowedOrigins
+                      type: object
+                    type: array
+                  defaultStorageClass:
+                    description: (Optional) Storage class which is used for storing
+                      objects by default.
+                    type: string
+                  folderId:
+                    description: (Optional) Allow to create bucket in different folder.
+                    type: string
+                  folderIdRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                    type: object
+                  forceDestroy:
+                    description: '(Optional, Default: `false`) A boolean that indicates
+                      all objects should be deleted from the bucket so that the bucket
+                      can be destroyed without error. These objects are *not* recoverable.'
+                    type: boolean
+                  grant:
+                    description: (Optional) An [ACL policy grant](https://cloud.yandex.com/docs/storage/concepts/acl#permissions-types).
+                      Conflicts with `acl`.
+                    items:
+                      properties:
+                        id:
+                          description: (Optional) Unique identifier for the rule.
+                            Must be less than or equal to 255 characters in length.
+                          type: string
+                        permissions:
+                          items:
+                            type: string
+                          type: array
+                        type:
+                          type: string
+                        uri:
+                          type: string
+                      required:
+                      - permissions
+                      - type
+                      type: object
+                    type: array
+                  https:
+                    description: (Optional) Manages https certificates for bucket.
+                      See [https](https://cloud.yandex.com/en-ru/docs/storage/operations/hosting/certificate)
+                      for more infomation.
+                    items:
+                      properties:
+                        certificateId:
+                          type: string
+                      required:
+                      - certificateId
+                      type: object
+                    type: array
+                  lifecycleRule:
+                    description: (Optional) A configuration of [object lifecycle management](https://cloud.yandex.com/docs/storage/concepts/lifecycles)
+                      (documented below).
+                    items:
+                      properties:
+                        abortIncompleteMultipartUploadDays:
+                          description: (Optional) Specifies the number of days after
+                            initiating a multipart upload when the multipart upload
+                            must be completed.
+                          type: number
+                        enabled:
+                          description: (Optional) Enable versioning. Once you version-enable
+                            a bucket, it can never return to an unversioned state.
+                            You can, however, suspend versioning on that bucket.
+                          type: boolean
+                        expiration:
+                          description: (Optional) Specifies a period in the object's
+                            expire (documented below).
+                          items:
+                            properties:
+                              date:
+                                description: (Optional) Specifies the date after which
+                                  you want the corresponding action to take effect.
+                                type: string
+                              days:
+                                description: (Optional) Specifies the number of days
+                                  after object creation when the specific rule action
+                                  takes effect.
+                                type: number
+                              expiredObjectDeleteMarker:
+                                description: (Optional) On a versioned bucket (versioning-enabled
+                                  or versioning-suspended bucket), you can add this
+                                  element in the lifecycle configuration to direct
+                                  Object Storage to delete expired object delete markers.
+                                type: boolean
+                            type: object
+                          type: array
+                        id:
+                          description: (Optional) Unique identifier for the rule.
+                            Must be less than or equal to 255 characters in length.
+                          type: string
+                        noncurrentVersionExpiration:
+                          description: (Optional) Specifies when noncurrent object
+                            versions expire (documented below).
+                          items:
+                            properties:
+                              days:
+                                description: (Optional) Specifies the number of days
+                                  after object creation when the specific rule action
+                                  takes effect.
+                                type: number
+                            type: object
+                          type: array
+                        noncurrentVersionTransition:
+                          description: (Optional) Specifies when noncurrent object
+                            versions transitions (documented below).
+                          items:
+                            properties:
+                              days:
+                                description: (Optional) Specifies the number of days
+                                  after object creation when the specific rule action
+                                  takes effect.
+                                type: number
+                              storageClass:
+                                description: (Required) Specifies the storage class
+                                  to which you want the object to transition. Can
+                                  only be `COLD` or `STANDARD_IA`.
+                                type: string
+                            required:
+                            - storageClass
+                            type: object
+                          type: array
+                        prefix:
+                          description: (Optional) Object key prefix identifying one
+                            or more objects to which the rule applies.
+                          type: string
+                        transition:
+                          description: (Optional) Specifies a period in the object's
+                            transitions (documented below).
+                          items:
+                            properties:
+                              date:
+                                description: (Optional) Specifies the date after which
+                                  you want the corresponding action to take effect.
+                                type: string
+                              days:
+                                description: (Optional) Specifies the number of days
+                                  after object creation when the specific rule action
+                                  takes effect.
+                                type: number
+                              storageClass:
+                                description: (Required) Specifies the storage class
+                                  to which you want the object to transition. Can
+                                  only be `COLD` or `STANDARD_IA`.
+                                type: string
+                            required:
+                            - storageClass
+                            type: object
+                          type: array
+                      required:
+                      - enabled
+                      type: object
+                    type: array
+                  logging:
+                    description: (Optional) A settings of [bucket logging](https://cloud.yandex.com/docs/storage/concepts/server-logs)
+                      (documented below).
+                    items:
+                      properties:
+                        targetBucket:
+                          description: (Required) The name of the bucket that will
+                            receive the log objects.
+                          type: string
+                        targetPrefix:
+                          description: (Optional) To specify a key prefix for log
+                            objects.
+                          type: string
+                      required:
+                      - targetBucket
+                      type: object
+                    type: array
+                  maxSize:
+                    description: (Optional) The size of bucket, in bytes. See [size
+                      limiting](https://cloud.yandex.com/en-ru/docs/storage/operations/buckets/limit-max-volume)
+                      for more information.
+                    type: number
+                  policy:
+                    type: string
+                  secretKeySecretRef:
+                    description: A SecretKeySelector is a reference to a secret key
+                      in an arbitrary namespace.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  serverSideEncryptionConfiguration:
+                    description: (Optional) A configuration of server-side encryption
+                      for the bucket (documented below)
+                    items:
+                      properties:
+                        rule:
+                          description: (Required) A single object for server-side
+                            encryption by default configuration. (documented below)
+                          items:
+                            properties:
+                              applyServerSideEncryptionByDefault:
+                                description: (Required) A single object for setting
+                                  server-side encryption by default. (documented below)
+                                items:
+                                  properties:
+                                    kmsMasterKeyId:
+                                      description: (Optional) The KMS master key ID
+                                        used for the SSE-KMS encryption.
+                                      type: string
+                                    sseAlgorithm:
+                                      description: (Required) The server-side encryption
+                                        algorithm to use. Single valid value is `aws:kms`
+                                      type: string
+                                  required:
+                                  - kmsMasterKeyId
+                                  - sseAlgorithm
+                                  type: object
+                                type: array
+                            required:
+                            - applyServerSideEncryptionByDefault
+                            type: object
+                          type: array
+                      required:
+                      - rule
+                      type: object
+                    type: array
+                  versioning:
+                    description: (Optional) A state of [versioning](https://cloud.yandex.com/docs/storage/concepts/versioning)
+                      (documented below)
+                    items:
+                      properties:
+                        enabled:
+                          description: (Optional) Enable versioning. Once you version-enable
+                            a bucket, it can never return to an unversioned state.
+                            You can, however, suspend versioning on that bucket.
+                          type: boolean
+                      type: object
+                    type: array
+                  website:
+                    description: (Optional) A [website object](https://cloud.yandex.com/docs/storage/concepts/hosting)
+                      (documented below).
+                    items:
+                      properties:
+                        errorDocument:
+                          description: (Optional) An absolute path to the document
+                            to return in case of a 4XX error.
+                          type: string
+                        indexDocument:
+                          description: (Required, unless using `redirect_all_requests_to`)
+                            Storage returns this index document when requests are
+                            made to the root domain or any of the subfolders.
+                          type: string
+                        redirectAllRequestsTo:
+                          description: (Optional) A hostname to redirect all website
+                            requests for this bucket to. Hostname can optionally be
+                            prefixed with a protocol (`http://` or `https://`) to
+                            use when redirecting requests. The default is the protocol
+                            that is used in the original request.
+                          type: string
+                        routingRules:
+                          description: (Optional) A json array containing [routing
+                            rules](https://cloud.yandex.com/docs/storage/s3/api-ref/hosting/upload#request-scheme)
+                            describing redirect behavior and when redirects are applied.
+                          type: string
+                      type: object
+                    type: array
+                  websiteDomain:
+                    description: The domain of the website endpoint, if the bucket
+                      is configured with a website. If not, this will be an empty
+                      string.
+                    type: string
+                  websiteEndpoint:
+                    description: The website endpoint, if the bucket is configured
+                      with a website. If not, this will be an empty string.
+                    type: string
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: BucketStatus defines the observed state of Bucket.
+            properties:
+              atProvider:
+                properties:
+                  bucketDomainName:
+                    description: The bucket domain name.
+                    type: string
+                  id:
+                    description: (Optional) Unique identifier for the rule. Must be
+                      less than or equal to 255 characters in length.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
