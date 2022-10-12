@@ -1,0 +1,1075 @@
+<p>Packages:</p>
+<ul>
+<li>
+<a href="#yandex-cloud.jet.crossplane.io%2fv1alpha1">yandex-cloud.jet.crossplane.io/v1alpha1</a>
+</li>
+</ul>
+<h2 id="yandex-cloud.jet.crossplane.io/v1alpha1">yandex-cloud.jet.crossplane.io/v1alpha1</h2>
+<div>
+<p>Package v1alpha1 contains the core resources of the yandex-cloud jet provider.</p>
+</div>
+Resource Types:
+<ul></ul>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicated">DatabaseDedicated
+</h3>
+<div>
+<p>DatabaseDedicated is the Schema for the DatabaseDedicateds API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedSpec">
+DatabaseDedicatedSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedParameters">
+DatabaseDedicatedParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedStatus">
+DatabaseDedicatedStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedObservation">DatabaseDedicatedObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedStatus">DatabaseDedicatedStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>createdAt</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>The Yandex Database cluster creation timestamp.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>databasePath</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Full database path of the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Region ID for the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Status of the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tlsEnabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Whether TLS is enabled for the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ydbApiEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>API endpoint of the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ydbFullEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Full endpoint of the Yandex Database cluster.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedParameters">DatabaseDedicatedParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedSpec">DatabaseDedicatedSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>assignPublicIps</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) Whether public IP addresses should be assigned to the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>description</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) A description for the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) ID of the folder that the Yandex Database cluster belongs to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br/>
+<em>
+map[string]*string
+</em>
+</td>
+<td>
+<p>(Optional) A set of key/value label pairs to assign to the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>location</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.LocationParameters">
+[]LocationParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Location for the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>locationId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Location ID for the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>networkId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) ID of the network to attach the Yandex Database cluster to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>networkIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>networkIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>resourcePresetId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) The Yandex Database cluster preset.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scalePolicy</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ScalePolicyParameters">
+[]ScalePolicyParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Scaling policy for the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storageConfig</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.StorageConfigParameters">
+[]StorageConfigParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) A list of storage configuration options for the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIds</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Required) List of subnet IDs to attach the Yandex Database cluster to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdsRefs</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+[]github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdsSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedSpec">DatabaseDedicatedSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicated">DatabaseDedicated</a>)
+</p>
+<div>
+<p>DatabaseDedicatedSpec defines the desired state of DatabaseDedicated</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedParameters">
+DatabaseDedicatedParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedStatus">DatabaseDedicatedStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicated">DatabaseDedicated</a>)
+</p>
+<div>
+<p>DatabaseDedicatedStatus defines the observed state of DatabaseDedicated.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceStatus</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>atProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedObservation">
+DatabaseDedicatedObservation
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerless">DatabaseServerless
+</h3>
+<div>
+<p>DatabaseServerless is the Schema for the DatabaseServerlesss API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerlessSpec">
+DatabaseServerlessSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerlessParameters">
+DatabaseServerlessParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerlessStatus">
+DatabaseServerlessStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerlessObservation">DatabaseServerlessObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerlessStatus">DatabaseServerlessStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>createdAt</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>The Yandex Database serverless cluster creation timestamp.
+The Yandex Database serverless cluster creation timestamp.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>databasePath</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Full database path of the Yandex Database serverless cluster.
+Full database path of the Yandex Database serverless cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>documentApiEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Document API endpoint of the Yandex Database serverless cluster.
+Document API endpoint of the Yandex Database serverless cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>ID of the Yandex Database serverless cluster.
+ID of the Yandex Database serverless cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Status of the Yandex Database serverless cluster.
+Status of the Yandex Database serverless cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tlsEnabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Whether TLS is enabled for the Yandex Database serverless cluster.
+Whether TLS is enabled for the Yandex Database serverless cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ydbApiEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>API endpoint of the Yandex Database serverless cluster.
+API endpoint of the Yandex Database serverless cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ydbFullEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Full endpoint of the Yandex Database serverless cluster.
+Full endpoint of the Yandex Database serverless cluster.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerlessParameters">DatabaseServerlessParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerlessSpec">DatabaseServerlessSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>description</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) A description for the Yandex Database serverless cluster.
+(Optional) A description for the Yandex Database serverless cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) ID of the folder that the Yandex Database serverless cluster belongs to.
+(Optional) ID of the folder that the Yandex Database serverless cluster belongs to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br/>
+<em>
+map[string]*string
+</em>
+</td>
+<td>
+<p>(Optional) A set of key/value label pairs to assign to the Yandex Database serverless cluster.
+(Optional) A set of key/value label pairs to assign to the Yandex Database serverless cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>locationId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Location ID for the Yandex Database serverless cluster.
+(Optional) Location ID for the Yandex Database serverless cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name for the Yandex Database serverless cluster.
+(Required) Name for the Yandex Database serverless cluster.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerlessSpec">DatabaseServerlessSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerless">DatabaseServerless</a>)
+</p>
+<div>
+<p>DatabaseServerlessSpec defines the desired state of DatabaseServerless</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerlessParameters">
+DatabaseServerlessParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerlessStatus">DatabaseServerlessStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerless">DatabaseServerless</a>)
+</p>
+<div>
+<p>DatabaseServerlessStatus defines the observed state of DatabaseServerless.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceStatus</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>atProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseServerlessObservation">
+DatabaseServerlessObservation
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.FixedScaleObservation">FixedScaleObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.FixedScaleParameters">FixedScaleParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ScalePolicyParameters">ScalePolicyParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>size</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) Number of instances for the Yandex Database cluster.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.LocationObservation">LocationObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.LocationParameters">LocationParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedParameters">DatabaseDedicatedParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>region</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RegionParameters">
+[]RegionParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Region for the Yandex Database cluster.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RegionObservation">RegionObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RegionParameters">RegionParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.LocationParameters">LocationParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Region ID for the Yandex Database cluster.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ScalePolicyObservation">ScalePolicyObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ScalePolicyParameters">ScalePolicyParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedParameters">DatabaseDedicatedParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>fixedScale</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.FixedScaleParameters">
+[]FixedScaleParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Fixed scaling policy for the Yandex Database cluster.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.StorageConfigObservation">StorageConfigObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.StorageConfigParameters">StorageConfigParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DatabaseDedicatedParameters">DatabaseDedicatedParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>groupCount</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) Amount of storage groups of selected type for the Yandex Database cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storageTypeId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Storage type ID for the Yandex Database cluster.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<p><em>
+Generated with <code>gen-crd-api-reference-docs</code>
+on git commit <code>86a79e9</code>.
+</em></p>

@@ -1,0 +1,543 @@
+<p>Packages:</p>
+<ul>
+<li>
+<a href="#yandex-cloud.jet.crossplane.io%2fv1alpha1">yandex-cloud.jet.crossplane.io/v1alpha1</a>
+</li>
+</ul>
+<h2 id="yandex-cloud.jet.crossplane.io/v1alpha1">yandex-cloud.jet.crossplane.io/v1alpha1</h2>
+<div>
+<p>Package v1alpha1 contains the core resources of the yandex-cloud jet provider.</p>
+</div>
+Resource Types:
+<ul></ul>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.Registry">Registry
+</h3>
+<div>
+<p>Registry is the Schema for the Registrys API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RegistrySpec">
+RegistrySpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RegistryParameters">
+RegistryParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RegistryStatus">
+RegistryStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RegistryObservation">RegistryObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RegistryStatus">RegistryStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>createdAt</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Creation timestamp of the registry.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Status of the registry.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RegistryParameters">RegistryParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RegistrySpec">RegistrySpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>folderId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Folder that the resource belongs to. If value is omitted, the default provider folder is used.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br/>
+<em>
+map[string]*string
+</em>
+</td>
+<td>
+<p>(Optional) A set of key/value label pairs to assign to the registry.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) A name of the registry.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RegistrySpec">RegistrySpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Registry">Registry</a>)
+</p>
+<div>
+<p>RegistrySpec defines the desired state of Registry</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RegistryParameters">
+RegistryParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RegistryStatus">RegistryStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Registry">Registry</a>)
+</p>
+<div>
+<p>RegistryStatus defines the observed state of Registry.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceStatus</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>atProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RegistryObservation">
+RegistryObservation
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.Repository">Repository
+</h3>
+<div>
+<p>Repository is the Schema for the Repositorys API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RepositorySpec">
+RepositorySpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RepositoryParameters">
+RepositoryParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RepositoryStatus">
+RepositoryStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RepositoryObservation">RepositoryObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RepositoryStatus">RepositoryStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RepositoryParameters">RepositoryParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RepositorySpec">RepositorySpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RepositorySpec">RepositorySpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Repository">Repository</a>)
+</p>
+<div>
+<p>RepositorySpec defines the desired state of Repository</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RepositoryParameters">
+RepositoryParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RepositoryStatus">RepositoryStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Repository">Repository</a>)
+</p>
+<div>
+<p>RepositoryStatus defines the observed state of Repository.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceStatus</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>atProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RepositoryObservation">
+RepositoryObservation
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<p><em>
+Generated with <code>gen-crd-api-reference-docs</code>
+on git commit <code>86a79e9</code>.
+</em></p>

@@ -1,0 +1,669 @@
+<p>Packages:</p>
+<ul>
+<li>
+<a href="#yandex-cloud.jet.crossplane.io%2fv1alpha1">yandex-cloud.jet.crossplane.io/v1alpha1</a>
+</li>
+</ul>
+<h2 id="yandex-cloud.jet.crossplane.io/v1alpha1">yandex-cloud.jet.crossplane.io/v1alpha1</h2>
+<div>
+<p>Package v1alpha1 contains the core resources of the yandex-cloud jet provider.</p>
+</div>
+Resource Types:
+<ul></ul>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.Recordset">Recordset
+</h3>
+<div>
+<p>Recordset is the Schema for the Recordsets API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetSpec">
+RecordsetSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetParameters">
+RecordsetParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetStatus">
+RecordsetStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetObservation">RecordsetObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetStatus">RecordsetStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetParameters">RecordsetParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetSpec">RecordsetSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>data</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) The string data for the records in this record set.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) The DNS name this record set will apply to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ttl</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) The time-to-live of this record set (seconds).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>type</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) The DNS record set type.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>zoneId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) The id of the zone in which this record set will reside.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>zoneIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>zoneIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetSpec">RecordsetSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Recordset">Recordset</a>)
+</p>
+<div>
+<p>RecordsetSpec defines the desired state of Recordset</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetParameters">
+RecordsetParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetStatus">RecordsetStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Recordset">Recordset</a>)
+</p>
+<div>
+<p>RecordsetStatus defines the observed state of Recordset.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceStatus</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>atProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetObservation">
+RecordsetObservation
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.Zone">Zone
+</h3>
+<div>
+<p>Zone is the Schema for the Zones API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneSpec">
+ZoneSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneParameters">
+ZoneParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneStatus">
+ZoneStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ZoneObservation">ZoneObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneStatus">ZoneStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>createdAt</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Computed) The DNS zone creation timestamp.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Computed) ID of a new DNS zone.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ZoneParameters">ZoneParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneSpec">ZoneSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>description</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Description of the DNS zone.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) ID of the folder to create a zone in. If it is not provided, the default provider folder is used.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br/>
+<em>
+map[string]*string
+</em>
+</td>
+<td>
+<p>(Optional) A set of key/value label pairs to assign to the DNS zone.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) User assigned name of a specific resource. Must be unique within the folder.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>privateNetworks</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>privateNetworksRefs</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+[]github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>privateNetworksSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>public</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) The zone&rsquo;s visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>zone</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) The DNS name of this zone, e.g. &ldquo;example.com.&rdquo;. Must ends with dot.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ZoneSpec">ZoneSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Zone">Zone</a>)
+</p>
+<div>
+<p>ZoneSpec defines the desired state of Zone</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneParameters">
+ZoneParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ZoneStatus">ZoneStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Zone">Zone</a>)
+</p>
+<div>
+<p>ZoneStatus defines the observed state of Zone.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceStatus</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>atProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneObservation">
+ZoneObservation
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<p><em>
+Generated with <code>gen-crd-api-reference-docs</code>
+on git commit <code>86a79e9</code>.
+</em></p>

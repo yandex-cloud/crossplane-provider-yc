@@ -1,0 +1,4961 @@
+<p>Packages:</p>
+<ul>
+<li>
+<a href="#yandex-cloud.jet.crossplane.io%2fv1alpha1">yandex-cloud.jet.crossplane.io/v1alpha1</a>
+</li>
+</ul>
+<h2 id="yandex-cloud.jet.crossplane.io/v1alpha1">yandex-cloud.jet.crossplane.io/v1alpha1</h2>
+<div>
+<p>Package v1alpha1 contains the core resources of the yandex-cloud jet provider.</p>
+</div>
+Resource Types:
+<ul></ul>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.AltNamesObservation">AltNamesObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.AltNamesParameters">AltNamesParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseTargetParameters">ClickhouseTargetParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>fromName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>toName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseSourceObservation">ClickhouseSourceObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseSourceParameters">ClickhouseSourceParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.SettingsParameters">SettingsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>connection</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionParameters">
+[]ConnectionParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Connection settings. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>excludeTables</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>List of tables which will not be transfered, formatted as <code>schemaname.tablename</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>includeTables</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>List of tables to transfer, formatted as <code>schemaname.tablename</code>. If omitted or an empty list is specified, all tables will be transferred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroups</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) List of security groups that the transfer associated with this endpoint should use.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseTargetConnectionObservation">ClickhouseTargetConnectionObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseTargetConnectionParameters">ClickhouseTargetConnectionParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseTargetParameters">ClickhouseTargetParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>connectionOptions</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsParameters">
+[]ConnectionConnectionOptionsParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseTargetObservation">ClickhouseTargetObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseTargetParameters">ClickhouseTargetParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.SettingsParameters">SettingsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>altNames</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.AltNamesParameters">
+[]AltNamesParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Table renaming rules. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>cleanupPolicy</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) How to clean collections when activating the transfer. One of &ldquo;DISABLED&rdquo;, &ldquo;DROP&rdquo; or &ldquo;TRUNCATE&rdquo;.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>clickhouseClusterName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Name of the ClickHouse cluster. For managed ClickHouse clusters defaults to managed cluster ID.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>connection</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseTargetConnectionParameters">
+[]ClickhouseTargetConnectionParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Connection settings. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroups</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) List of security groups that the transfer associated with this endpoint should use.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sharding</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ShardingParameters">
+[]ShardingParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Shard selection rules for the data being transferred. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.CollectionsObservation">CollectionsObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.CollectionsParameters">CollectionsParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceParameters">MongoSourceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>collectionName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Collection name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>databaseName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Database name.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ColumnValueHashObservation">ColumnValueHashObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ColumnValueHashParameters">ColumnValueHashParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ShardingParameters">ShardingParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>columnName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>The name of the column to calculate hash from.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsObservation">ConnectionConnectionOptionsObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsOnPremiseObservation">ConnectionConnectionOptionsOnPremiseObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsOnPremiseParameters">ConnectionConnectionOptionsOnPremiseParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceConnectionConnectionOptionsParameters">MongoSourceConnectionConnectionOptionsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>hosts</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>port</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) Port for the database connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>replicaSet</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Replica set name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tlsMode</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseTLSModeParameters">
+[]ConnectionOptionsOnPremiseTLSModeParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsOnPremiseTLSModeObservation">ConnectionConnectionOptionsOnPremiseTLSModeObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsOnPremiseTLSModeParameters">ConnectionConnectionOptionsOnPremiseTLSModeParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionConnectionOptionsOnPremiseParameters">MongoTargetConnectionConnectionOptionsOnPremiseParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseTLSModeDisabledParameters">
+[]ConnectionOptionsOnPremiseTLSModeDisabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>Empty block designating that the connection is not secured, i.e. plaintext connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseTLSModeEnabledParameters">
+[]ConnectionOptionsOnPremiseTLSModeEnabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsParameters">ConnectionConnectionOptionsParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseTargetConnectionParameters">ClickhouseTargetConnectionParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>database</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the database to transfer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Identifier of the Managed PostgreSQL cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>onPremise</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseParameters">
+[]ConnectionOptionsOnPremiseParameters
+</a>
+</em>
+</td>
+<td>
+<p>Connection settings of the on-premise PostgreSQL server.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>password</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsPasswordParameters">
+[]ConnectionOptionsPasswordParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Password for the database access. This is a block with a single field named <code>raw</code> which should contain the password.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>user</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) User for the database access.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsPasswordObservation">ConnectionConnectionOptionsPasswordObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsPasswordParameters">ConnectionConnectionOptionsPasswordParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceConnectionConnectionOptionsParameters">MongoSourceConnectionConnectionOptionsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>rawSecretRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.SecretKeySelector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionObservation">ConnectionObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseObservation">ConnectionOnPremiseObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseParameters">ConnectionOnPremiseParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLSourceConnectionParameters">MySQLSourceConnectionParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>hosts</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>port</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) Port for the database connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>tlsMode</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseTLSModeParameters">
+[]ConnectionOnPremiseTLSModeParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseTLSModeDisabledObservation">ConnectionOnPremiseTLSModeDisabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseTLSModeDisabledParameters">ConnectionOnPremiseTLSModeDisabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseTLSModeParameters">ConnectionOnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseTLSModeEnabledObservation">ConnectionOnPremiseTLSModeEnabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseTLSModeEnabledParameters">ConnectionOnPremiseTLSModeEnabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseTLSModeParameters">ConnectionOnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>caCertificate</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) X.509 certificate of the certificate authority which issued the server&rsquo;s certificate, in PEM format. If empty, the server&rsquo;s certificate must be signed by a well-known CA.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseTLSModeObservation">ConnectionOnPremiseTLSModeObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseTLSModeParameters">ConnectionOnPremiseTLSModeParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseParameters">ConnectionOnPremiseParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseTLSModeDisabledParameters">
+[]ConnectionOnPremiseTLSModeDisabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>Empty block designating that the connection is not secured, i.e. plaintext connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseTLSModeEnabledParameters">
+[]ConnectionOnPremiseTLSModeEnabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsObservation">ConnectionOptionsObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseObservation">ConnectionOptionsOnPremiseObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseParameters">ConnectionOptionsOnPremiseParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsParameters">ConnectionConnectionOptionsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>httpPort</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) TCP port number for the HTTP interface of the ClickHouse server.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nativePort</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) TCP port number for the native interface of the ClickHouse server.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>shards</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseShardsParameters">
+[]OnPremiseShardsParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) The list of ClickHouse shards. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tlsMode</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseTLSModeParameters">
+[]OnPremiseTLSModeParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseTLSModeDisabledObservation">ConnectionOptionsOnPremiseTLSModeDisabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseTLSModeDisabledParameters">ConnectionOptionsOnPremiseTLSModeDisabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsOnPremiseTLSModeParameters">ConnectionConnectionOptionsOnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseTLSModeEnabledObservation">ConnectionOptionsOnPremiseTLSModeEnabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseTLSModeEnabledParameters">ConnectionOptionsOnPremiseTLSModeEnabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsOnPremiseTLSModeParameters">ConnectionConnectionOptionsOnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>caCertificate</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) X.509 certificate of the certificate authority which issued the server&rsquo;s certificate, in PEM format. If empty, the server&rsquo;s certificate must be signed by a well-known CA.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseTLSModeObservation">ConnectionOptionsOnPremiseTLSModeObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseTLSModeParameters">ConnectionOptionsOnPremiseTLSModeParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsOnPremiseParameters">ConnectionConnectionOptionsOnPremiseParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseTLSModeDisabledParameters">
+[]OnPremiseTLSModeDisabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>Empty block designating that the connection is not secured, i.e. plaintext connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseTLSModeEnabledParameters">
+[]OnPremiseTLSModeEnabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsParameters">ConnectionOptionsParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionParameters">ConnectionParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>database</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the database to transfer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Identifier of the Managed PostgreSQL cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>onPremise</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseParameters">
+[]OnPremiseParameters
+</a>
+</em>
+</td>
+<td>
+<p>Connection settings of the on-premise PostgreSQL server.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>password</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PasswordParameters">
+[]PasswordParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Password for the database access. This is a block with a single field named <code>raw</code> which should contain the password.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>user</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) User for the database access.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsPasswordObservation">ConnectionOptionsPasswordObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsPasswordParameters">ConnectionOptionsPasswordParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsParameters">ConnectionConnectionOptionsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>rawSecretRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.SecretKeySelector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionParameters">ConnectionParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseSourceParameters">ClickhouseSourceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>connectionOptions</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsParameters">
+[]ConnectionOptionsParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.DisabledObservation">DisabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.DisabledParameters">DisabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.TLSModeParameters">TLSModeParameters</a>)
+</p>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.EnabledObservation">EnabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.EnabledParameters">EnabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.TLSModeParameters">TLSModeParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>caCertificate</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) X.509 certificate of the certificate authority which issued the server&rsquo;s certificate, in PEM format. If empty, the server&rsquo;s certificate must be signed by a well-known CA.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.Endpoint">Endpoint
+</h3>
+<div>
+<p>Endpoint is the Schema for the Endpoints API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.EndpointSpec">
+EndpointSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.EndpointParameters">
+EndpointParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.EndpointStatus">
+EndpointStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.EndpointObservation">EndpointObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.EndpointStatus">EndpointStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Computed) Identifier of a new Data Transfer endpoint.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.EndpointParameters">EndpointParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.EndpointSpec">EndpointSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>description</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Arbitrary description text for the endpoint.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) ID of the folder to create the endpoint in. If it is not provided, the default provider folder is used.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br/>
+<em>
+map[string]*string
+</em>
+</td>
+<td>
+<p>(Optional) A set of key/value label pairs to assign to the Data Transfer endpoint.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the endpoint.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>settings</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.SettingsParameters">
+[]SettingsParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Settings for the endpoint. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.EndpointSpec">EndpointSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Endpoint">Endpoint</a>)
+</p>
+<div>
+<p>EndpointSpec defines the desired state of Endpoint</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.EndpointParameters">
+EndpointParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.EndpointStatus">EndpointStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Endpoint">Endpoint</a>)
+</p>
+<div>
+<p>EndpointStatus defines the observed state of Endpoint.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceStatus</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>atProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.EndpointObservation">
+EndpointObservation
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ExcludedCollectionsObservation">ExcludedCollectionsObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ExcludedCollectionsParameters">ExcludedCollectionsParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceParameters">MongoSourceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>collectionName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Collection name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>databaseName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Database name.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceConnectionConnectionOptionsObservation">MongoSourceConnectionConnectionOptionsObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceConnectionConnectionOptionsParameters">MongoSourceConnectionConnectionOptionsParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceConnectionParameters">MongoSourceConnectionParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>authSource</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the database associated with the credentials.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Identifier of the Managed PostgreSQL cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>onPremise</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsOnPremiseParameters">
+[]ConnectionConnectionOptionsOnPremiseParameters
+</a>
+</em>
+</td>
+<td>
+<p>Connection settings of the on-premise PostgreSQL server.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>password</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsPasswordParameters">
+[]ConnectionConnectionOptionsPasswordParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Password for the database access. This is a block with a single field named <code>raw</code> which should contain the password.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>user</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) User for the database access.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceConnectionObservation">MongoSourceConnectionObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceConnectionParameters">MongoSourceConnectionParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceParameters">MongoSourceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>connectionOptions</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceConnectionConnectionOptionsParameters">
+[]MongoSourceConnectionConnectionOptionsParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceObservation">MongoSourceObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceParameters">MongoSourceParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.SettingsParameters">SettingsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>collections</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.CollectionsParameters">
+[]CollectionsParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) The list of the MongoDB collections that should be transferred. If omitted, all available collections will be transferred. The structure of the list item is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>connection</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceConnectionParameters">
+[]MongoSourceConnectionParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Connection settings. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>excludedCollections</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ExcludedCollectionsParameters">
+[]ExcludedCollectionsParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) The list of the MongoDB collections that should not be transferred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>secondaryPreferredMode</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) whether the secondary server should be preferred to the primary when copying data.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroups</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) List of security groups that the transfer associated with this endpoint should use.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionConnectionOptionsObservation">MongoTargetConnectionConnectionOptionsObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionConnectionOptionsOnPremiseObservation">MongoTargetConnectionConnectionOptionsOnPremiseObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionConnectionOptionsOnPremiseParameters">MongoTargetConnectionConnectionOptionsOnPremiseParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionConnectionOptionsParameters">MongoTargetConnectionConnectionOptionsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>hosts</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>port</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) Port for the database connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>replicaSet</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Replica set name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tlsMode</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionConnectionOptionsOnPremiseTLSModeParameters">
+[]ConnectionConnectionOptionsOnPremiseTLSModeParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionConnectionOptionsParameters">MongoTargetConnectionConnectionOptionsParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionParameters">MongoTargetConnectionParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>authSource</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the database associated with the credentials.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Identifier of the Managed PostgreSQL cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>onPremise</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionConnectionOptionsOnPremiseParameters">
+[]MongoTargetConnectionConnectionOptionsOnPremiseParameters
+</a>
+</em>
+</td>
+<td>
+<p>Connection settings of the on-premise PostgreSQL server.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>password</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionConnectionOptionsPasswordParameters">
+[]MongoTargetConnectionConnectionOptionsPasswordParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Password for the database access. This is a block with a single field named <code>raw</code> which should contain the password.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>user</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) User for the database access.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionConnectionOptionsPasswordObservation">MongoTargetConnectionConnectionOptionsPasswordObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionConnectionOptionsPasswordParameters">MongoTargetConnectionConnectionOptionsPasswordParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionConnectionOptionsParameters">MongoTargetConnectionConnectionOptionsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>rawSecretRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.SecretKeySelector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionObservation">MongoTargetConnectionObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionParameters">MongoTargetConnectionParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetParameters">MongoTargetParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>connectionOptions</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionConnectionOptionsParameters">
+[]MongoTargetConnectionConnectionOptionsParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetObservation">MongoTargetObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetParameters">MongoTargetParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.SettingsParameters">SettingsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>cleanupPolicy</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) How to clean collections when activating the transfer. One of &ldquo;DISABLED&rdquo;, &ldquo;DROP&rdquo; or &ldquo;TRUNCATE&rdquo;.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>connection</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetConnectionParameters">
+[]MongoTargetConnectionParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Connection settings. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>database</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the database to transfer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroups</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) List of security groups that the transfer associated with this endpoint should use.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLSourceConnectionObservation">MySQLSourceConnectionObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLSourceConnectionParameters">MySQLSourceConnectionParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLSourceParameters">MySQLSourceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>mdbClusterId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Identifier of the Managed PostgreSQL cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>onPremise</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOnPremiseParameters">
+[]ConnectionOnPremiseParameters
+</a>
+</em>
+</td>
+<td>
+<p>Connection settings of the on-premise PostgreSQL server.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLSourceObservation">MySQLSourceObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLSourceParameters">MySQLSourceParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.SettingsParameters">SettingsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>connection</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLSourceConnectionParameters">
+[]MySQLSourceConnectionParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Connection settings. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>database</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the database to transfer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>databaseRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>databaseSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>excludeTablesRegex</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) Opposite of <code>include_table_regex</code>. The tables matching the specified regular expressions will not be transferred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>includeTablesRegex</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) List of regular expressions of table names which should be transferred. A table name is formatted as schemaname.tablename. For example, a single regular expression may look like <code>^mydb.employees$</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>objectTransferSettings</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ObjectTransferSettingsParameters">
+[]ObjectTransferSettingsParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Defines which database schema objects should be transferred, e.g. views, functions, etc.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>password</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLSourcePasswordParameters">
+[]MySQLSourcePasswordParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Password for the database access. This is a block with a single field named <code>raw</code> which should contain the password.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroups</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) List of security groups that the transfer associated with this endpoint should use.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroupsRefs</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+[]github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroupsSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceDatabase</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>timezone</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>user</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) User for the database access.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>userRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>userSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLSourcePasswordObservation">MySQLSourcePasswordObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLSourcePasswordParameters">MySQLSourcePasswordParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLSourceParameters">MySQLSourceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>rawSecretRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.SecretKeySelector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionObservation">MySQLTargetConnectionObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseObservation">MySQLTargetConnectionOnPremiseObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseParameters">MySQLTargetConnectionOnPremiseParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionParameters">MySQLTargetConnectionParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>hosts</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>port</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) Port for the database connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>tlsMode</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseTLSModeParameters">
+[]MySQLTargetConnectionOnPremiseTLSModeParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseTLSModeDisabledObservation">MySQLTargetConnectionOnPremiseTLSModeDisabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseTLSModeDisabledParameters">MySQLTargetConnectionOnPremiseTLSModeDisabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseTLSModeParameters">MySQLTargetConnectionOnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseTLSModeEnabledObservation">MySQLTargetConnectionOnPremiseTLSModeEnabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseTLSModeEnabledParameters">MySQLTargetConnectionOnPremiseTLSModeEnabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseTLSModeParameters">MySQLTargetConnectionOnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>caCertificate</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) X.509 certificate of the certificate authority which issued the server&rsquo;s certificate, in PEM format. If empty, the server&rsquo;s certificate must be signed by a well-known CA.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseTLSModeObservation">MySQLTargetConnectionOnPremiseTLSModeObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseTLSModeParameters">MySQLTargetConnectionOnPremiseTLSModeParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseParameters">MySQLTargetConnectionOnPremiseParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseTLSModeDisabledParameters">
+[]MySQLTargetConnectionOnPremiseTLSModeDisabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>Empty block designating that the connection is not secured, i.e. plaintext connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseTLSModeEnabledParameters">
+[]MySQLTargetConnectionOnPremiseTLSModeEnabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionParameters">MySQLTargetConnectionParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetParameters">MySQLTargetParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>mdbClusterId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Identifier of the Managed PostgreSQL cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>onPremise</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionOnPremiseParameters">
+[]MySQLTargetConnectionOnPremiseParameters
+</a>
+</em>
+</td>
+<td>
+<p>Connection settings of the on-premise PostgreSQL server.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetObservation">MySQLTargetObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetParameters">MySQLTargetParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.SettingsParameters">SettingsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>connection</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetConnectionParameters">
+[]MySQLTargetConnectionParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Connection settings. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>database</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the database to transfer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>databaseRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>databaseSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>password</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetPasswordParameters">
+[]MySQLTargetPasswordParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Password for the database access. This is a block with a single field named <code>raw</code> which should contain the password.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sqlMode</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) <a href="https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html">sql_mode</a> to use when interacting with the server. Defaults to &ldquo;NO_AUTO_VALUE_ON_ZERO,NO_DIR_IN_CREATE,NO_ENGINE_SUBSTITUTION&rdquo;.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroups</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) List of security groups that the transfer associated with this endpoint should use.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroupsRefs</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+[]github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroupsSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>skipConstraintChecks</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) When true, disables foreign key checks. See <a href="https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_foreign_key_checks">foreign_key_checks</a>. False by default.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>timezone</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>user</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) User for the database access.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>userRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>userSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetPasswordObservation">MySQLTargetPasswordObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetPasswordParameters">MySQLTargetPasswordParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetParameters">MySQLTargetParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>rawSecretRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.SecretKeySelector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ObjectTransferSettingsObservation">ObjectTransferSettingsObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ObjectTransferSettingsParameters">ObjectTransferSettingsParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLSourceParameters">MySQLSourceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>routine</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>trigger</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>view</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseObservation">OnPremiseObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseParameters">OnPremiseParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsParameters">ConnectionOptionsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>httpPort</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) TCP port number for the HTTP interface of the ClickHouse server.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nativePort</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) TCP port number for the native interface of the ClickHouse server.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>shards</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ShardsParameters">
+[]ShardsParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) The list of ClickHouse shards. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tlsMode</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.TLSModeParameters">
+[]TLSModeParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseShardsObservation">OnPremiseShardsObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseShardsParameters">OnPremiseShardsParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseParameters">ConnectionOptionsOnPremiseParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>hosts</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the endpoint.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseTLSModeDisabledObservation">OnPremiseTLSModeDisabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseTLSModeDisabledParameters">OnPremiseTLSModeDisabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseTLSModeParameters">ConnectionOptionsOnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseTLSModeEnabledObservation">OnPremiseTLSModeEnabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseTLSModeEnabledParameters">OnPremiseTLSModeEnabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseTLSModeParameters">ConnectionOptionsOnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>caCertificate</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) X.509 certificate of the certificate authority which issued the server&rsquo;s certificate, in PEM format. If empty, the server&rsquo;s certificate must be signed by a well-known CA.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseTLSModeObservation">OnPremiseTLSModeObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseTLSModeParameters">OnPremiseTLSModeParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsOnPremiseParameters">ConnectionOptionsOnPremiseParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.TLSModeDisabledParameters">
+[]TLSModeDisabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>Empty block designating that the connection is not secured, i.e. plaintext connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.TLSModeEnabledParameters">
+[]TLSModeEnabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PasswordObservation">PasswordObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PasswordParameters">PasswordParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ConnectionOptionsParameters">ConnectionOptionsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>rawSecretRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.SecretKeySelector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionObservation">PostgresSourceConnectionObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseObservation">PostgresSourceConnectionOnPremiseObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseParameters">PostgresSourceConnectionOnPremiseParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionParameters">PostgresSourceConnectionParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>hosts</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>port</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) Port for the database connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>tlsMode</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseTLSModeParameters">
+[]PostgresSourceConnectionOnPremiseTLSModeParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseTLSModeDisabledObservation">PostgresSourceConnectionOnPremiseTLSModeDisabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseTLSModeDisabledParameters">PostgresSourceConnectionOnPremiseTLSModeDisabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseTLSModeParameters">PostgresSourceConnectionOnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseTLSModeEnabledObservation">PostgresSourceConnectionOnPremiseTLSModeEnabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseTLSModeEnabledParameters">PostgresSourceConnectionOnPremiseTLSModeEnabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseTLSModeParameters">PostgresSourceConnectionOnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>caCertificate</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) X.509 certificate of the certificate authority which issued the server&rsquo;s certificate, in PEM format. If empty, the server&rsquo;s certificate must be signed by a well-known CA.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseTLSModeObservation">PostgresSourceConnectionOnPremiseTLSModeObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseTLSModeParameters">PostgresSourceConnectionOnPremiseTLSModeParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseParameters">PostgresSourceConnectionOnPremiseParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseTLSModeDisabledParameters">
+[]PostgresSourceConnectionOnPremiseTLSModeDisabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>Empty block designating that the connection is not secured, i.e. plaintext connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseTLSModeEnabledParameters">
+[]PostgresSourceConnectionOnPremiseTLSModeEnabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionParameters">PostgresSourceConnectionParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceParameters">PostgresSourceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>mdbClusterId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Identifier of the Managed PostgreSQL cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>onPremise</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionOnPremiseParameters">
+[]PostgresSourceConnectionOnPremiseParameters
+</a>
+</em>
+</td>
+<td>
+<p>Connection settings of the on-premise PostgreSQL server.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceObjectTransferSettingsObservation">PostgresSourceObjectTransferSettingsObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceObjectTransferSettingsParameters">PostgresSourceObjectTransferSettingsParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceParameters">PostgresSourceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>cast</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>collation</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>constraint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>defaultValues</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>fkConstraint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>function</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>index</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>materializedView</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>policy</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>primaryKey</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>rule</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>sequence</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>sequenceOwnedBy</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>table</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>trigger</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>type</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>view</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceObservation">PostgresSourceObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceParameters">PostgresSourceParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.SettingsParameters">SettingsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>connection</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceConnectionParameters">
+[]PostgresSourceConnectionParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Connection settings. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>database</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the database to transfer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>databaseRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>databaseSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>excludeTables</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>List of tables which will not be transfered, formatted as <code>schemaname.tablename</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>includeTables</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>List of tables to transfer, formatted as <code>schemaname.tablename</code>. If omitted or an empty list is specified, all tables will be transferred.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>objectTransferSettings</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceObjectTransferSettingsParameters">
+[]PostgresSourceObjectTransferSettingsParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Defines which database schema objects should be transferred, e.g. views, functions, etc.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>password</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourcePasswordParameters">
+[]PostgresSourcePasswordParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Password for the database access. This is a block with a single field named <code>raw</code> which should contain the password.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroups</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) List of security groups that the transfer associated with this endpoint should use.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroupsRefs</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+[]github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroupsSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceSchema</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Name of the database schema in which auxiliary tables needed for the transfer will be created. Empty <code>service_schema</code> implies schema &ldquo;public&rdquo;.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>slotGigabyteLagLimit</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) Maximum WAL size held by the replication slot, in gigabytes. Exceeding this limit will result in a replication failure and deletion of the replication slot. Unlimited by default.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>user</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) User for the database access.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>userRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>userSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourcePasswordObservation">PostgresSourcePasswordObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourcePasswordParameters">PostgresSourcePasswordParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceParameters">PostgresSourceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>rawSecretRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.SecretKeySelector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionObservation">PostgresTargetConnectionObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseObservation">PostgresTargetConnectionOnPremiseObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseParameters">PostgresTargetConnectionOnPremiseParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionParameters">PostgresTargetConnectionParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>hosts</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>port</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) Port for the database connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>tlsMode</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseTLSModeParameters">
+[]PostgresTargetConnectionOnPremiseTLSModeParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseTLSModeDisabledObservation">PostgresTargetConnectionOnPremiseTLSModeDisabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseTLSModeDisabledParameters">PostgresTargetConnectionOnPremiseTLSModeDisabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseTLSModeParameters">PostgresTargetConnectionOnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseTLSModeEnabledObservation">PostgresTargetConnectionOnPremiseTLSModeEnabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseTLSModeEnabledParameters">PostgresTargetConnectionOnPremiseTLSModeEnabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseTLSModeParameters">PostgresTargetConnectionOnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>caCertificate</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) X.509 certificate of the certificate authority which issued the server&rsquo;s certificate, in PEM format. If empty, the server&rsquo;s certificate must be signed by a well-known CA.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseTLSModeObservation">PostgresTargetConnectionOnPremiseTLSModeObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseTLSModeParameters">PostgresTargetConnectionOnPremiseTLSModeParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseParameters">PostgresTargetConnectionOnPremiseParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseTLSModeDisabledParameters">
+[]PostgresTargetConnectionOnPremiseTLSModeDisabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>Empty block designating that the connection is not secured, i.e. plaintext connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseTLSModeEnabledParameters">
+[]PostgresTargetConnectionOnPremiseTLSModeEnabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionParameters">PostgresTargetConnectionParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetParameters">PostgresTargetParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>mdbClusterId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Identifier of the Managed PostgreSQL cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>mdbClusterIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>onPremise</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionOnPremiseParameters">
+[]PostgresTargetConnectionOnPremiseParameters
+</a>
+</em>
+</td>
+<td>
+<p>Connection settings of the on-premise PostgreSQL server.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetObservation">PostgresTargetObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetParameters">PostgresTargetParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.SettingsParameters">SettingsParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>connection</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetConnectionParameters">
+[]PostgresTargetConnectionParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Connection settings. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>database</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the database to transfer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>databaseRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>databaseSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>password</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetPasswordParameters">
+[]PostgresTargetPasswordParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Password for the database access. This is a block with a single field named <code>raw</code> which should contain the password.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroups</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) List of security groups that the transfer associated with this endpoint should use.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroupsRefs</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+[]github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroupsSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>user</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) User for the database access.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>userRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>userSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetPasswordObservation">PostgresTargetPasswordObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetPasswordParameters">PostgresTargetPasswordParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetParameters">PostgresTargetParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>rawSecretRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.SecretKeySelector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.SettingsObservation">SettingsObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.SettingsParameters">SettingsParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.EndpointParameters">EndpointParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>clickhouseSource</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseSourceParameters">
+[]ClickhouseSourceParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>clickhouseTarget</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseTargetParameters">
+[]ClickhouseTargetParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>mongoSource</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoSourceParameters">
+[]MongoSourceParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>mongoTarget</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MongoTargetParameters">
+[]MongoTargetParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>mysqlSource</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLSourceParameters">
+[]MySQLSourceParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Settings specific to the MySQL source endpoint.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mysqlTarget</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.MySQLTargetParameters">
+[]MySQLTargetParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Settings specific to the MySQL target endpoint.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>postgresSource</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresSourceParameters">
+[]PostgresSourceParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Settings specific to the PostgreSQL source endpoint.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>postgresTarget</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.PostgresTargetParameters">
+[]PostgresTargetParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Settings specific to the PostgreSQL target endpoint.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ShardingObservation">ShardingObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ShardingParameters">ShardingParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ClickhouseTargetParameters">ClickhouseTargetParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>columnValueHash</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ColumnValueHashParameters">
+[]ColumnValueHashParameters
+</a>
+</em>
+</td>
+<td>
+<p>Shard data by the hash value of the specified column. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>transferId</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.TransferIDParameters">
+[]TransferIDParameters
+</a>
+</em>
+</td>
+<td>
+<p>Shard data by ID of the transfer.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ShardsObservation">ShardsObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ShardsParameters">ShardsParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseParameters">OnPremiseParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>hosts</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the endpoint.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.TLSModeDisabledObservation">TLSModeDisabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.TLSModeDisabledParameters">TLSModeDisabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseTLSModeParameters">OnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.TLSModeEnabledObservation">TLSModeEnabledObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.TLSModeEnabledParameters">TLSModeEnabledParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseTLSModeParameters">OnPremiseTLSModeParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>caCertificate</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) X.509 certificate of the certificate authority which issued the server&rsquo;s certificate, in PEM format. If empty, the server&rsquo;s certificate must be signed by a well-known CA.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.TLSModeObservation">TLSModeObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.TLSModeParameters">TLSModeParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.OnPremiseParameters">OnPremiseParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.DisabledParameters">
+[]DisabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>Empty block designating that the connection is not secured, i.e. plaintext connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.EnabledParameters">
+[]EnabledParameters
+</a>
+</em>
+</td>
+<td>
+<p>If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.Transfer">Transfer
+</h3>
+<div>
+<p>Transfer is the Schema for the Transfers API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.TransferSpec">
+TransferSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.TransferParameters">
+TransferParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.TransferStatus">
+TransferStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.TransferIDObservation">TransferIDObservation
+</h3>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.TransferIDParameters">TransferIDParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ShardingParameters">ShardingParameters</a>)
+</p>
+<div>
+</div>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.TransferObservation">TransferObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.TransferStatus">TransferStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Computed) Identifier of a new Data Transfer transfer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>warning</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Computed) Error description if transfer has any errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.TransferParameters">TransferParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.TransferSpec">TransferSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>description</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Arbitrary description text for the transfer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) ID of the folder to create the transfer in. If it is not provided, the default provider folder is used.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br/>
+<em>
+map[string]*string
+</em>
+</td>
+<td>
+<p>(Optional) A set of key/value label pairs to assign to the Data Transfer transfer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Name of the transfer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sourceId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) ID of the source endpoint for the transfer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sourceIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>sourceIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>targetId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) ID of the target endpoint for the transfer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>targetIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>targetIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>type</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Type of the transfer. One of &ldquo;SNAPSHOT_ONLY&rdquo;, &ldquo;INCREMENT_ONLY&rdquo;, &ldquo;SNAPSHOT_AND_INCREMENT&rdquo;.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.TransferSpec">TransferSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Transfer">Transfer</a>)
+</p>
+<div>
+<p>TransferSpec defines the desired state of Transfer</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.TransferParameters">
+TransferParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.TransferStatus">TransferStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Transfer">Transfer</a>)
+</p>
+<div>
+<p>TransferStatus defines the observed state of Transfer.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceStatus</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>atProvider</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.TransferObservation">
+TransferObservation
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<p><em>
+Generated with <code>gen-crd-api-reference-docs</code>
+on git commit <code>86a79e9</code>.
+</em></p>

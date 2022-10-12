@@ -1,0 +1,397 @@
+<p>Packages:</p>
+<ul>
+<li>
+<a href="#yandex-cloud.jet.crossplane.io%2fv1alpha1">yandex-cloud.jet.crossplane.io/v1alpha1</a>
+</li>
+</ul>
+<h2 id="yandex-cloud.jet.crossplane.io/v1alpha1">yandex-cloud.jet.crossplane.io/v1alpha1</h2>
+<div>
+<p>Package v1alpha1 contains the core resources of the yandex-cloud jet provider.</p>
+</div>
+Resource Types:
+<ul></ul>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ProviderConfig">ProviderConfig
+</h3>
+<div>
+<p>A ProviderConfig configures a Template provider.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ProviderConfigSpec">
+ProviderConfigSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>credentials</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ProviderCredentials">
+ProviderCredentials
+</a>
+</em>
+</td>
+<td>
+<p>Credentials required to authenticate to this provider.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ProviderConfigStatus">
+ProviderConfigStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ProviderConfigSpec">ProviderConfigSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ProviderConfig">ProviderConfig</a>)
+</p>
+<div>
+<p>A ProviderConfigSpec defines the desired state of a ProviderConfig.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>credentials</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ProviderCredentials">
+ProviderCredentials
+</a>
+</em>
+</td>
+<td>
+<p>Credentials required to authenticate to this provider.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ProviderConfigStatus">ProviderConfigStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ProviderConfig">ProviderConfig</a>)
+</p>
+<div>
+<p>A ProviderConfigStatus reflects the observed state of a ProviderConfig.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ProviderConfigStatus</code><br/>
+<em>
+github.com/crossplane/crossplane-runtime/apis/common/v1.ProviderConfigStatus
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ProviderConfigStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ProviderConfigUsage">ProviderConfigUsage
+</h3>
+<div>
+<p>A ProviderConfigUsage indicates that a resource is using a ProviderConfig.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>ProviderConfigUsage</code><br/>
+<em>
+github.com/crossplane/crossplane-runtime/apis/common/v1.ProviderConfigUsage
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ProviderConfigUsage</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ProviderCredentials">ProviderCredentials
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ProviderConfigSpec">ProviderConfigSpec</a>)
+</p>
+<div>
+<p>ProviderCredentials required to authenticate.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>source</code><br/>
+<em>
+github.com/crossplane/crossplane-runtime/apis/common/v1.CredentialsSource
+</em>
+</td>
+<td>
+<p>Source of the provider credentials.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>CommonCredentialSelectors</code><br/>
+<em>
+github.com/crossplane/crossplane-runtime/apis/common/v1.CommonCredentialSelectors
+</em>
+</td>
+<td>
+<p>
+(Members of <code>CommonCredentialSelectors</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>FolderID - id of default folder to work with.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>cloudId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>CloudID - id of default cloud to work with.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>endpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.StoreConfig">StoreConfig
+</h3>
+<div>
+<p>A StoreConfig configures how GCP controller should store connection details.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.StoreConfigSpec">
+StoreConfigSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>SecretStoreConfig</code><br/>
+<em>
+github.com/crossplane/crossplane-runtime/apis/common/v1.SecretStoreConfig
+</em>
+</td>
+<td>
+<p>
+(Members of <code>SecretStoreConfig</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.StoreConfigStatus">
+StoreConfigStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.StoreConfigSpec">StoreConfigSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.StoreConfig">StoreConfig</a>)
+</p>
+<div>
+<p>A StoreConfigSpec defines the desired state of a ProviderConfig.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>SecretStoreConfig</code><br/>
+<em>
+github.com/crossplane/crossplane-runtime/apis/common/v1.SecretStoreConfig
+</em>
+</td>
+<td>
+<p>
+(Members of <code>SecretStoreConfig</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.StoreConfigStatus">StoreConfigStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.StoreConfig">StoreConfig</a>)
+</p>
+<div>
+<p>A StoreConfigStatus represents the status of a StoreConfig.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ConditionedStatus</code><br/>
+<em>
+github.com/crossplane/crossplane-runtime/apis/common/v1.ConditionedStatus
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ConditionedStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<p><em>
+Generated with <code>gen-crd-api-reference-docs</code>
+on git commit <code>86a79e9</code>.
+</em></p>

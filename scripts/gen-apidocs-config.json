@@ -46,6 +46,10 @@
         {
             "typeMatchPrefix": "v1.ResourceStatus",
             "docsURLTemplate": "https://github.com/crossplane/crossplane-runtime/apis/common/v1"
+        },
+        {
+            "typeMatchPrefix": "v1.SecretKeySelector",
+            "docsURLTemplate": "https://github.com/crossplane/crossplane-runtime/apis/common/v1"
         }
     ],
     "typeDisplayNamePrefixOverrides": {

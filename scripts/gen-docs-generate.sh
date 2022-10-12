@@ -11,6 +11,11 @@ do
         continue
     fi
 
-    ../scripts/gen-sh.sh "../docs/"$dir"_doc.html" ./apis/$dir/v1alpha1
+    if [ $dir = "v1alpha1" ]; then
+        ../scripts/gen-sh.sh "./docs/"$dir"_doc.html" ./apis/v1alpha1
+        continue
+    fi
+
+    ../scripts/gen-sh.sh "./docs/"$dir"_doc.html" ./apis/$dir/v1alpha1
     #echo "GENERATED " "docs/"$dir"_doc.html"
 done
