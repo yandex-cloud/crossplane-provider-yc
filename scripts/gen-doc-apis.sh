@@ -18,6 +18,7 @@ do
     fi
 
     export FORDOC=$dir".yandex-cloud.jet.crossplane.io"
+    export service=$dir
     cat ../scripts/doc.go.tmpl | envsubst > $dir/"v1alpha1"/"doc.go"
 
     #cp "v1alpha1/doc.go" $dir/"v1alpha1"

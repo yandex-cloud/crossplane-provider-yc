@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// Package v1alpha1 contains the iam resources of the yandex-cloud jet provider.
 // +kubebuilder:object:generate=true
 // +groupName=iam.yandex-cloud.jet.crossplane.io
 // +versionName=v1alpha1
