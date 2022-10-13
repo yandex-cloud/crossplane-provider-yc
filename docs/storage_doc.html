@@ -1,0 +1,1673 @@
+<p>Packages:</p>
+<ul>
+<li>
+<a href="#storage.yandex-cloud.jet.crossplane.io%2fv1alpha1">storage.yandex-cloud.jet.crossplane.io/v1alpha1</a>
+</li>
+</ul>
+<h2 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1">storage.yandex-cloud.jet.crossplane.io/v1alpha1</h2>
+<div>
+</div>
+Resource Types:
+<ul></ul>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.AnonymousAccessFlagsObservation">AnonymousAccessFlagsObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.AnonymousAccessFlagsParameters">AnonymousAccessFlagsParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketParameters">BucketParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>list</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) Allows to list object in bucket anonymously.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>read</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) Allows to read objects in bucket anonymously.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.ApplyServerSideEncryptionByDefaultObservation">ApplyServerSideEncryptionByDefaultObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.ApplyServerSideEncryptionByDefaultParameters">ApplyServerSideEncryptionByDefaultParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.RuleParameters">RuleParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>kmsMasterKeyId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) The KMS master key ID used for the SSE-KMS encryption.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sseAlgorithm</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) The server-side encryption algorithm to use. Single valid value is <code>aws:kms</code></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.Bucket">Bucket
+</h3>
+<div>
+<p>Bucket is the Schema for the Buckets API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketSpec">
+BucketSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketParameters">
+BucketParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketStatus">
+BucketStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketObservation">BucketObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketStatus">BucketStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>bucketDomainName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>The bucket domain name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Unique identifier for the rule. Must be less than or equal to 255 characters in length.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketParameters">BucketParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketSpec">BucketSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>acl</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) The <a href="https://cloud.yandex.com/docs/storage/concepts/acl#predefined_acls">predefined ACL</a> to apply. Defaults to <code>private</code>. Conflicts with <code>grant</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>accessKey</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) The access key to use when applying changes. If omitted, <code>storage_access_key</code> specified in provider config is used.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>accessKeyRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>accessKeySelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>anonymousAccessFlags</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.AnonymousAccessFlagsParameters">
+[]AnonymousAccessFlagsParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Provides various access to objects.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>bucket</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional, Forces new resource) The name of the bucket. If omitted, Terraform will assign a random, unique name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>bucketPrefix</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional, Forces new resource) Creates a unique bucket name beginning with the specified prefix. Conflicts with <code>bucket</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>corsRule</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.CorsRuleParameters">
+[]CorsRuleParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) A rule of <a href="https://cloud.yandex.com/docs/storage/cors/">Cross-Origin Resource Sharing</a> (documented below).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>defaultStorageClass</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Storage class which is used for storing objects by default.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Allow to create bucket in different folder.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>forceDestroy</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional, Default: <code>false</code>) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are <em>not</em> recoverable.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grant</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.GrantParameters">
+[]GrantParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) An <a href="https://cloud.yandex.com/docs/storage/concepts/acl#permissions-types">ACL policy grant</a>. Conflicts with <code>acl</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>https</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.HTTPSParameters">
+[]HTTPSParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Manages https certificates for bucket. See <a href="https://cloud.yandex.com/en-ru/docs/storage/operations/hosting/certificate">https</a> for more infomation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>lifecycleRule</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.LifecycleRuleParameters">
+[]LifecycleRuleParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) A configuration of <a href="https://cloud.yandex.com/docs/storage/concepts/lifecycles">object lifecycle management</a> (documented below).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>logging</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.LoggingParameters">
+[]LoggingParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) A settings of <a href="https://cloud.yandex.com/docs/storage/concepts/server-logs">bucket logging</a> (documented below).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>maxSize</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) The size of bucket, in bytes. See <a href="https://cloud.yandex.com/en-ru/docs/storage/operations/buckets/limit-max-volume">size limiting</a> for more information.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>policy</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>secretKeySecretRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.SecretKeySelector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>serverSideEncryptionConfiguration</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.ServerSideEncryptionConfigurationParameters">
+[]ServerSideEncryptionConfigurationParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) A configuration of server-side encryption for the bucket (documented below)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>versioning</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.VersioningParameters">
+[]VersioningParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) A state of <a href="https://cloud.yandex.com/docs/storage/concepts/versioning">versioning</a> (documented below)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>website</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.WebsiteParameters">
+[]WebsiteParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) A <a href="https://cloud.yandex.com/docs/storage/concepts/hosting">website object</a> (documented below).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>websiteDomain</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>websiteEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketSpec">BucketSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.Bucket">Bucket</a>)
+</p>
+<div>
+<p>BucketSpec defines the desired state of Bucket</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketParameters">
+BucketParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketStatus">BucketStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.Bucket">Bucket</a>)
+</p>
+<div>
+<p>BucketStatus defines the observed state of Bucket.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceStatus</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>atProvider</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketObservation">
+BucketObservation
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.CorsRuleObservation">CorsRuleObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.CorsRuleParameters">CorsRuleParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketParameters">BucketParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>allowedHeaders</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) Specifies which headers are allowed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>allowedMethods</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Required) Specifies which methods are allowed. Can be <code>GET</code>, <code>PUT</code>, <code>POST</code>, <code>DELETE</code> or <code>HEAD</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>allowedOrigins</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Required) Specifies which origins are allowed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>exposeHeaders</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) Specifies expose header in the response.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>maxAgeSeconds</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) Specifies time in seconds that browser can cache the response for a preflight request.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.ExpirationObservation">ExpirationObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.ExpirationParameters">ExpirationParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.LifecycleRuleParameters">LifecycleRuleParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>date</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Specifies the date after which you want the corresponding action to take effect.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>days</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) Specifies the number of days after object creation when the specific rule action takes effect.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>expiredObjectDeleteMarker</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) On a versioned bucket (versioning-enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.GrantObservation">GrantObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.GrantParameters">GrantParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketParameters">BucketParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Unique identifier for the rule. Must be less than or equal to 255 characters in length.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>permissions</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>type</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>uri</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.HTTPSObservation">HTTPSObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.HTTPSParameters">HTTPSParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketParameters">BucketParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>certificateId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.LifecycleRuleObservation">LifecycleRuleObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.LifecycleRuleParameters">LifecycleRuleParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketParameters">BucketParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>abortIncompleteMultipartUploadDays</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>expiration</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.ExpirationParameters">
+[]ExpirationParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Specifies a period in the object&rsquo;s expire (documented below).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Unique identifier for the rule. Must be less than or equal to 255 characters in length.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>noncurrentVersionExpiration</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.NoncurrentVersionExpirationParameters">
+[]NoncurrentVersionExpirationParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Specifies when noncurrent object versions expire (documented below).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>noncurrentVersionTransition</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.NoncurrentVersionTransitionParameters">
+[]NoncurrentVersionTransitionParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Specifies when noncurrent object versions transitions (documented below).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>prefix</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Object key prefix identifying one or more objects to which the rule applies.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>transition</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.TransitionParameters">
+[]TransitionParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Specifies a period in the object&rsquo;s transitions (documented below).</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.LoggingObservation">LoggingObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.LoggingParameters">LoggingParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketParameters">BucketParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>targetBucket</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) The name of the bucket that will receive the log objects.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>targetPrefix</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) To specify a key prefix for log objects.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.NoncurrentVersionExpirationObservation">NoncurrentVersionExpirationObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.NoncurrentVersionExpirationParameters">NoncurrentVersionExpirationParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.LifecycleRuleParameters">LifecycleRuleParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>days</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) Specifies the number of days after object creation when the specific rule action takes effect.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.NoncurrentVersionTransitionObservation">NoncurrentVersionTransitionObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.NoncurrentVersionTransitionParameters">NoncurrentVersionTransitionParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.LifecycleRuleParameters">LifecycleRuleParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>days</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) Specifies the number of days after object creation when the specific rule action takes effect.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storageClass</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Specifies the storage class to which you want the object to transition. Can only be <code>COLD</code> or <code>STANDARD_IA</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.Object">Object
+</h3>
+<div>
+<p>Object is the Schema for the Objects API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.ObjectSpec">
+ObjectSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.ObjectParameters">
+ObjectParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.ObjectStatus">
+ObjectStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.ObjectObservation">ObjectObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.ObjectStatus">ObjectStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>The <code>key</code> of the resource.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.ObjectParameters">ObjectParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.ObjectSpec">ObjectSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>acl</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) The <a href="https://cloud.yandex.com/docs/storage/concepts/acl#predefined_acls">predefined ACL</a> to apply. Defaults to <code>private</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>accessKey</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) The access key to use when applying changes. If omitted, <code>storage_access_key</code> specified in config is used.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>accessKeyRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>accessKeySelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>bucket</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) The name of the containing bucket.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>bucketRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>bucketSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>content</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional, conflicts with <code>source</code> and <code>content_base64</code>) Literal string value to use as the object content, which will be uploaded as UTF-8-encoded text.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>contentBase64</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional, conflicts with <code>source</code> and <code>content</code>) Base64-encoded data that will be decoded and uploaded as raw bytes for the object content. This allows safely uploading non-UTF8 binary data, but is recommended only for small content such as the result of the <code>gzipbase64</code> function with small text strings. For larger objects, use <code>source</code> to stream the content from a disk file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>contentType</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) A standard MIME type describing the format of the object data, e.g. <code>application/octet-stream</code>. All Valid MIME Types are valid for this input.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>key</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) The name of the object once it is in the bucket.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>secretKeySecretRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.SecretKeySelector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>source</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional, conflicts with <code>content</code> and <code>content_base64</code>) The path to a file that will be read and uploaded as raw bytes for the object content.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.ObjectSpec">ObjectSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.Object">Object</a>)
+</p>
+<div>
+<p>ObjectSpec defines the desired state of Object</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.ObjectParameters">
+ObjectParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.ObjectStatus">ObjectStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.Object">Object</a>)
+</p>
+<div>
+<p>ObjectStatus defines the observed state of Object.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceStatus</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>atProvider</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.ObjectObservation">
+ObjectObservation
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.RuleObservation">RuleObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.RuleParameters">RuleParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.ServerSideEncryptionConfigurationParameters">ServerSideEncryptionConfigurationParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>applyServerSideEncryptionByDefault</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.ApplyServerSideEncryptionByDefaultParameters">
+[]ApplyServerSideEncryptionByDefaultParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) A single object for setting server-side encryption by default. (documented below)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.ServerSideEncryptionConfigurationObservation">ServerSideEncryptionConfigurationObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.ServerSideEncryptionConfigurationParameters">ServerSideEncryptionConfigurationParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketParameters">BucketParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>rule</code><br/>
+<em>
+<a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.RuleParameters">
+[]RuleParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) A single object for server-side encryption by default configuration. (documented below)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.TransitionObservation">TransitionObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.TransitionParameters">TransitionParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.LifecycleRuleParameters">LifecycleRuleParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>date</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Specifies the date after which you want the corresponding action to take effect.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>days</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) Specifies the number of days after object creation when the specific rule action takes effect.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storageClass</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Specifies the storage class to which you want the object to transition. Can only be <code>COLD</code> or <code>STANDARD_IA</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.VersioningObservation">VersioningObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.VersioningParameters">VersioningParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketParameters">BucketParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.WebsiteObservation">WebsiteObservation
+</h3>
+<div>
+</div>
+<h3 id="storage.yandex-cloud.jet.crossplane.io/v1alpha1.WebsiteParameters">WebsiteParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#storage.yandex-cloud.jet.crossplane.io/v1alpha1.BucketParameters">BucketParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>errorDocument</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) An absolute path to the document to return in case of a 4XX error.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>indexDocument</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required, unless using <code>redirect_all_requests_to</code>) Storage returns this index document when requests are made to the root domain or any of the subfolders.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>redirectAllRequestsTo</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (<code>http://</code> or <code>https://</code>) to use when redirecting requests. The default is the protocol that is used in the original request.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>routingRules</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) A json array containing <a href="https://cloud.yandex.com/docs/storage/s3/api-ref/hosting/upload#request-scheme">routing rules</a> describing redirect behavior and when redirects are applied.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<p><em>
+Generated with <code>gen-crd-api-reference-docs</code>
+on git commit <code>704ffe9</code>.
+</em></p>

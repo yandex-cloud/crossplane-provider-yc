@@ -1,0 +1,1487 @@
+<p>Packages:</p>
+<ul>
+<li>
+<a href="#compute.yandex-cloud.jet.crossplane.io%2fv1alpha1">compute.yandex-cloud.jet.crossplane.io/v1alpha1</a>
+</li>
+</ul>
+<h2 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1">compute.yandex-cloud.jet.crossplane.io/v1alpha1</h2>
+<div>
+</div>
+Resource Types:
+<ul></ul>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.BootDiskObservation">BootDiskObservation
+</h3>
+<div>
+</div>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.BootDiskParameters">BootDiskParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceParameters">InstanceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>autoDelete</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) Defines whether the disk will be auto-deleted when the instance</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>deviceName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Name that can be used to access an attached disk.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>diskId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) The ID of the existing disk (such as those managed by</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>initializeParams</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InitializeParamsParameters">
+[]InitializeParamsParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Parameters for a new disk that will be created</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mode</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Type of access to the disk resource. By default, a disk is attached in <code>READ_WRITE</code> mode.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.DNSRecordObservation">DNSRecordObservation
+</h3>
+<div>
+</div>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.DNSRecordParameters">DNSRecordParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.NetworkInterfaceParameters">NetworkInterfaceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>dnsZoneId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) DNS zone ID (if not set, private zone used).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>fqdn</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) DNS record FQDN (must have a dot at the end).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ptr</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) When set to true, also create a PTR DNS record.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ttl</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) DNS record TTL. in seconds</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.HostAffinityRulesObservation">HostAffinityRulesObservation
+</h3>
+<div>
+</div>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.HostAffinityRulesParameters">HostAffinityRulesParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.PlacementPolicyParameters">PlacementPolicyParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>key</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Affinity label or one of reserved values - <code>yc.hostId</code>, <code>yc.hostGroupId</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>op</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) Affinity action. The only value supported is <code>IN</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>values</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.IPv6DNSRecordObservation">IPv6DNSRecordObservation
+</h3>
+<div>
+</div>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.IPv6DNSRecordParameters">IPv6DNSRecordParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.NetworkInterfaceParameters">NetworkInterfaceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>dnsZoneId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) DNS zone ID (if not set, private zone used).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>fqdn</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) DNS record FQDN (must have a dot at the end).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ptr</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) When set to true, also create a PTR DNS record.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ttl</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) DNS record TTL. in seconds</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.InitializeParamsObservation">InitializeParamsObservation
+</h3>
+<div>
+</div>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.InitializeParamsParameters">InitializeParamsParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.BootDiskParameters">BootDiskParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>blockSize</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>description</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Description of the instance.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>imageId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) A disk image to initialize this disk from.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Resource name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>size</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) Size of the disk in GB.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>snapshotId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) A snapshot to initialize this disk from.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>type</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Disk type.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.Instance">Instance
+</h3>
+<div>
+<p>Instance is the Schema for the Instances API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceSpec">
+InstanceSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceParameters">
+InstanceParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceStatus">
+InstanceStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceObservation">InstanceObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceStatus">InstanceStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>createdAt</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Creation timestamp of the instance.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>fqdn</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) DNS record FQDN (must have a dot at the end).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>localDisk</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.LocalDiskObservation">
+[]LocalDiskObservation
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) List of local disks that are attached to the instance. Structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>networkInterface</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.NetworkInterfaceObservation">
+[]NetworkInterfaceObservation
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Networks to attach to the instance. This can</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>The status of this instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceParameters">InstanceParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceSpec">InstanceSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>allowRecreate</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>allowStoppingForUpdate</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) If true, allows Terraform to stop the instance in order to update its properties.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>bootDisk</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.BootDiskParameters">
+[]BootDiskParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) The boot disk for the instance. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>description</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Description of the instance.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) The ID of the folder that the resource belongs to. If it</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>hostname</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Host name for the instance. This field is used to generate the instance <code>fqdn</code> value.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br/>
+<em>
+map[string]*string
+</em>
+</td>
+<td>
+<p>(Optional) A set of key/value label pairs to assign to the instance.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>localDisk</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.LocalDiskParameters">
+[]LocalDiskParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) List of local disks that are attached to the instance. Structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+map[string]*string
+</em>
+</td>
+<td>
+<p>(Optional) Metadata key/value pairs to make available from</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Resource name.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>networkAccelerationType</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Type of network acceleration. The default is <code>standard</code>. Values: <code>standard</code>, <code>software_accelerated</code></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>networkInterface</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.NetworkInterfaceParameters">
+[]NetworkInterfaceParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Networks to attach to the instance. This can</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>placementPolicy</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.PlacementPolicyParameters">
+[]PlacementPolicyParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) The placement policy configuration. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>platformId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) The type of virtual machine to create. The default is &lsquo;standard-v1&rsquo;.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>resources</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.ResourcesParameters">
+[]ResourcesParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Required) Compute resources that are allocated for the instance. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>schedulingPolicy</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.SchedulingPolicyParameters">
+[]SchedulingPolicyParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) Scheduling policy configuration. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>secondaryDisk</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.SecondaryDiskParameters">
+[]SecondaryDiskParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) A list of disks to attach to the instance. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceAccountId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) ID of the service account authorized for this instance.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceAccountIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceAccountIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>zone</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) The availability zone where the virtual machine will be created. If it is not provided,</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceSpec">InstanceSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.Instance">Instance</a>)
+</p>
+<div>
+<p>InstanceSpec defines the desired state of Instance</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceParameters">
+InstanceParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceStatus">InstanceStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.Instance">Instance</a>)
+</p>
+<div>
+<p>InstanceStatus defines the observed state of Instance.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceStatus</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>atProvider</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceObservation">
+InstanceObservation
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.LocalDiskObservation">LocalDiskObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceObservation">InstanceObservation</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>deviceName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Name that can be used to access an attached disk.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.LocalDiskParameters">LocalDiskParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceParameters">InstanceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>sizeBytes</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) Size of the disk, specified in bytes.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.NATDNSRecordObservation">NATDNSRecordObservation
+</h3>
+<div>
+</div>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.NATDNSRecordParameters">NATDNSRecordParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.NetworkInterfaceParameters">NetworkInterfaceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>dnsZoneId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) DNS zone ID (if not set, private zone used).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>fqdn</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) DNS record FQDN (must have a dot at the end).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ptr</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) When set to true, also create a PTR DNS record.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ttl</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) DNS record TTL. in seconds</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.NetworkInterfaceObservation">NetworkInterfaceObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceObservation">InstanceObservation</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>index</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>macAddress</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>natIpVersion</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.NetworkInterfaceParameters">NetworkInterfaceParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceParameters">InstanceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>dnsRecord</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.DNSRecordParameters">
+[]DNSRecordParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) List of configurations for creating ipv4 DNS records. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ipAddress</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) The private IP address to assign to the instance. If</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ipv4</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) Allocate an IPv4 address for the interface. The default value is <code>true</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ipv6</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) If true, allocate an IPv6 address for the interface.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ipv6Address</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) The private IPv6 address to assign to the instance.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ipv6DnsRecord</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.IPv6DNSRecordParameters">
+[]IPv6DNSRecordParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) List of configurations for creating ipv6 DNS records. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nat</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) Provide a public address, for instance, to access the internet over NAT.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>natDnsRecord</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.NATDNSRecordParameters">
+[]NATDNSRecordParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) List of configurations for creating ipv4 NAT DNS records. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>natIpAddress</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroupIds</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>(Optional) Security group ids for network interface.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroupIdsRefs</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+[]github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityGroupIdsSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Required) ID of the subnet to attach this</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>subnetIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.PlacementPolicyObservation">PlacementPolicyObservation
+</h3>
+<div>
+</div>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.PlacementPolicyParameters">PlacementPolicyParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceParameters">InstanceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>hostAffinityRules</code><br/>
+<em>
+<a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.HostAffinityRulesParameters">
+[]HostAffinityRulesParameters
+</a>
+</em>
+</td>
+<td>
+<p>(Optional) List of host affinity rules. The structure is documented below.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>placementGroupId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Specifies the id of the Placement Group to assign to the instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.ResourcesObservation">ResourcesObservation
+</h3>
+<div>
+</div>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.ResourcesParameters">ResourcesParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceParameters">InstanceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>coreFraction</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Optional) If provided, specifies baseline performance for a core as a percent.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>cores</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) CPU cores for the instance.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>gpus</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>memory</code><br/>
+<em>
+float64
+</em>
+</td>
+<td>
+<p>(Required) Memory size in GB.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.SchedulingPolicyObservation">SchedulingPolicyObservation
+</h3>
+<div>
+</div>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.SchedulingPolicyParameters">SchedulingPolicyParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceParameters">InstanceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>preemptible</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) Specifies if the instance is preemptible. Defaults to false.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.SecondaryDiskObservation">SecondaryDiskObservation
+</h3>
+<div>
+</div>
+<h3 id="compute.yandex-cloud.jet.crossplane.io/v1alpha1.SecondaryDiskParameters">SecondaryDiskParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#compute.yandex-cloud.jet.crossplane.io/v1alpha1.InstanceParameters">InstanceParameters</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>autoDelete</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>(Optional) Defines whether the disk will be auto-deleted when the instance</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>deviceName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Name that can be used to access an attached disk.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>diskId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) The ID of the existing disk (such as those managed by</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mode</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Type of access to the disk resource. By default, a disk is attached in <code>READ_WRITE</code> mode.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<p><em>
+Generated with <code>gen-crd-api-reference-docs</code>
+on git commit <code>704ffe9</code>.
+</em></p>

@@ -4,3 +4,6 @@
 [submodule "terraform-provider-yandex"]
 	path = terraform-provider-yandex
 	url = git@github.com:yandex-cloud/terraform-provider-yandex.git
+[submodule "gen-crd-api-reference-docs"]
+	path = gen-crd-api-reference-docs
+	url = https://github.com/ahmetb/gen-crd-api-reference-docs

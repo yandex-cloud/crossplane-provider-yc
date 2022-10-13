@@ -1,0 +1,357 @@
+<p>Packages:</p>
+<ul>
+<li>
+<a href="#kms.yandex-cloud.jet.crossplane.io%2fv1alpha1">kms.yandex-cloud.jet.crossplane.io/v1alpha1</a>
+</li>
+</ul>
+<h2 id="kms.yandex-cloud.jet.crossplane.io/v1alpha1">kms.yandex-cloud.jet.crossplane.io/v1alpha1</h2>
+<div>
+</div>
+Resource Types:
+<ul></ul>
+<h3 id="kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKey">SymmetricKey
+</h3>
+<div>
+<p>SymmetricKey is the Schema for the SymmetricKeys API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKeySpec">
+SymmetricKeySpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKeyParameters">
+SymmetricKeyParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKeyStatus">
+SymmetricKeyStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKeyObservation">SymmetricKeyObservation
+</h3>
+<p>
+(<em>Appears on:</em><a href="#kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKeyStatus">SymmetricKeyStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>createdAt</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Creation timestamp of the key.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>id</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>rotatedAt</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Last rotation timestamp of the key.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>The status of the key.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKeyParameters">SymmetricKeyParameters
+</h3>
+<p>
+(<em>Appears on:</em><a href="#kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKeySpec">SymmetricKeySpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>defaultAlgorithm</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Encryption algorithm to be used with a new key version,</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>description</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) An optional description of the key.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderId</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) The ID of the folder that the resource belongs to. If it</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdRef</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Reference
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>folderIdSelector</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br/>
+<em>
+map[string]*string
+</em>
+</td>
+<td>
+<p>(Optional) A set of key/value label pairs to assign to the key.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Name of the key.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>rotationPeriod</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>(Optional) Interval between automatic rotations. To disable automatic rotation, omit this parameter.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKeySpec">SymmetricKeySpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKey">SymmetricKey</a>)
+</p>
+<div>
+<p>SymmetricKeySpec defines the desired state of SymmetricKey</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceSpec</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>forProvider</code><br/>
+<em>
+<a href="#kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKeyParameters">
+SymmetricKeyParameters
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKeyStatus">SymmetricKeyStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKey">SymmetricKey</a>)
+</p>
+<div>
+<p>SymmetricKeyStatus defines the observed state of SymmetricKey.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ResourceStatus</code><br/>
+<em>
+<a href="https://github.com/crossplane/crossplane-runtime/apis/common/v1">
+github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ResourceStatus</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>atProvider</code><br/>
+<em>
+<a href="#kms.yandex-cloud.jet.crossplane.io/v1alpha1.SymmetricKeyObservation">
+SymmetricKeyObservation
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<p><em>
+Generated with <code>gen-crd-api-reference-docs</code>
+on git commit <code>704ffe9</code>.
+</em></p>
