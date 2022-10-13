@@ -80,8 +80,6 @@ limitations under the License.
 
 // Generate Composite Resources
 //go:generate go run -tags generate github.com/benagricola/crossplane-composition-generator
-
-// Generate html docs for crds
 //go:generate ../scripts/gen-doc-apis.sh
 //go:generate ../scripts/gen-docs-generate.sh
 package apis

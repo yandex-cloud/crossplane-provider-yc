@@ -11,6 +11,10 @@ do
         continue
     fi
 
+    if [ -f "../docs/"$dir"_doc.html" ]; then
+        continue
+    fi
+
     if [ $dir = "v1alpha1" ]; then
         ../scripts/gen-sh.sh "./docs/"$dir"_doc.html" ./apis/v1alpha1
         continue

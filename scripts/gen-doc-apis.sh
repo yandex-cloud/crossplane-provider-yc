@@ -14,9 +14,12 @@ do
 
     # if file exists, then skip
     if [ -f $dir/"v1alpha1"/"doc.go" ]; then
-        continue
+        rm $dir/"v1alpha1"/"doc.go"
     fi
 
-    cp "v1alpha1/doc.go" $dir/"v1alpha1"
+    export FORDOC=$dir".yandex-cloud.jet.crossplane.io"
+    cat ../scripts/doc.go.tmpl | envsubst > $dir/"v1alpha1"/"doc.go"
+
+    #cp "v1alpha1/doc.go" $dir/"v1alpha1"
     echo "COPIED doc.go to " $dir/"v1alpha1"
 done

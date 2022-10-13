@@ -1,0 +1,632 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: nodegroups.kubernetes.yandex-cloud.jet.crossplane.io
+spec:
+  group: kubernetes.yandex-cloud.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - yandex-cloud
+    kind: NodeGroup
+    listKind: NodeGroupList
+    plural: nodegroups
+    singular: nodegroup
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: NodeGroup is the Schema for the NodeGroups API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: NodeGroupSpec defines the desired state of NodeGroup
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  allocationPolicy:
+                    description: This argument specify subnets (zones), that will
+                      be used by node group compute instances. The structure is documented
+                      below.
+                    items:
+                      properties:
+                        location:
+                          description: Repeated field, that specify subnets (zones),
+                            that will be used by node group compute instances. The
+                            structure is documented below.
+                          items:
+                            properties:
+                              subnetId:
+                                description: ID of the subnet, that will be used by
+                                  one compute instance in node group.
+                                type: string
+                              subnetIdRef:
+                                description: A Reference to a named object.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                required:
+                                - name
+                                type: object
+                              subnetIdSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
+                              zone:
+                                description: ID of the availability zone where for
+                                  one compute instance in node group.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  allowedUnsafeSysctls:
+                    description: (Optional, Forces new resource) A list of allowed
+                      unsafe sysctl parameters for this node group. For more details
+                      see [documentation](https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster/).
+                    items:
+                      type: string
+                    type: array
+                  clusterId:
+                    description: (Required) The ID of the Kubernetes cluster that
+                      this node group belongs to.
+                    type: string
+                  clusterIdRef:
+                    description: A Reference to a named object.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  clusterIdSelector:
+                    description: A Selector selects an object.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                    type: object
+                  deployPolicy:
+                    description: Deploy policy of the node group. The structure is
+                      documented below.
+                    items:
+                      properties:
+                        maxExpansion:
+                          description: The maximum number of instances that can be
+                            temporarily allocated above the group's target size during
+                            the update.
+                          type: number
+                        maxUnavailable:
+                          description: The maximum number of running instances that
+                            can be taken offline during update.
+                          type: number
+                      required:
+                      - maxExpansion
+                      - maxUnavailable
+                      type: object
+                    type: array
+                  description:
+                    description: (Optional) A description of the Kubernetes node group.
+                    type: string
+                  instanceTemplate:
+                    description: (Required) Template used to create compute instances
+                      in this Kubernetes node group. The structure is documented below.
+                    items:
+                      properties:
+                        bootDisk:
+                          description: The specifications for boot disks that will
+                            be attached to the instance. The structure is documented
+                            below.
+                          items:
+                            properties:
+                              size:
+                                description: 'The size of the disk in GB. Allowed
+                                  minimal size: 64 GB.'
+                                type: number
+                              type:
+                                description: The disk type.
+                                type: string
+                            type: object
+                          type: array
+                        containerRuntime:
+                          description: (Optional) Container runtime configuration.
+                            The structure is documented below.
+                          items:
+                            properties:
+                              type:
+                                description: The disk type.
+                                type: string
+                            required:
+                            - type
+                            type: object
+                          type: array
+                        metadata:
+                          additionalProperties:
+                            type: string
+                          description: The set of metadata `key:value` pairs assigned
+                            to this instance template. This includes custom metadata
+                            and predefined keys.
+                          type: object
+                        nat:
+                          description: Boolean flag, enables NAT for node group compute
+                            instances.
+                          type: boolean
+                        networkAccelerationType:
+                          description: '(Optional) Type of network acceleration. Values:
+                            `standard`, `software_accelerated`.'
+                          type: string
+                        networkInterface:
+                          description: An array with the network interfaces that will
+                            be attached to the instance. The structure is documented
+                            below.
+                          items:
+                            properties:
+                              ipv4:
+                                description: (Optional) Allocate an IPv4 address for
+                                  the interface. The default value is `true`.
+                                type: boolean
+                              ipv6:
+                                description: (Optional) If true, allocate an IPv6
+                                  address for the interface. The address will be automatically
+                                  assigned from the specified subnet.
+                                type: boolean
+                              nat:
+                                description: Boolean flag, enables NAT for node group
+                                  compute instances.
+                                type: boolean
+                              securityGroupIds:
+                                description: (Optional) Security group ids for network
+                                  interface.
+                                items:
+                                  type: string
+                                type: array
+                              securityGroupIdsRefs:
+                                items:
+                                  description: A Reference to a named object.
+                                  properties:
+                                    name:
+                                      description: Name of the referenced object.
+                                      type: string
+                                  required:
+                                  - name
+                                  type: object
+                                type: array
+                              securityGroupIdsSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
+                              subnetIds:
+                                description: The IDs of the subnets.
+                                items:
+                                  type: string
+                                type: array
+                              subnetIdsRefs:
+                                items:
+                                  description: A Reference to a named object.
+                                  properties:
+                                    name:
+                                      description: Name of the referenced object.
+                                      type: string
+                                  required:
+                                  - name
+                                  type: object
+                                type: array
+                              subnetIdsSelector:
+                                description: A Selector selects an object.
+                                properties:
+                                  matchControllerRef:
+                                    description: MatchControllerRef ensures an object
+                                      with the same controller reference as the selecting
+                                      object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                type: object
+                            type: object
+                          type: array
+                        placementPolicy:
+                          description: (Optional) The placement policy configuration.
+                            The structure is documented below.
+                          items:
+                            properties:
+                              placementGroupId:
+                                description: (Optional) Specifies the id of the Placement
+                                  Group to assign to the instances.
+                                type: string
+                            required:
+                            - placementGroupId
+                            type: object
+                          type: array
+                        platformId:
+                          description: The ID of the hardware platform configuration
+                            for the node group compute instances.
+                          type: string
+                        resources:
+                          items:
+                            properties:
+                              coreFraction:
+                                type: number
+                              cores:
+                                type: number
+                              gpus:
+                                type: number
+                              memory:
+                                type: number
+                            type: object
+                          type: array
+                        schedulingPolicy:
+                          description: The scheduling policy for the instances in
+                            node group. The structure is documented below.
+                          items:
+                            properties:
+                              preemptible:
+                                description: Specifies if the instance is preemptible.
+                                  Defaults to false.
+                                type: boolean
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: (Optional) A set of key/value label pairs assigned
+                      to the Kubernetes node group.
+                    type: object
+                  maintenancePolicy:
+                    description: (Optional) (Computed) Maintenance policy for this
+                      Kubernetes node group.
+                    items:
+                      properties:
+                        autoRepair:
+                          type: boolean
+                        autoUpgrade:
+                          description: (Required) Boolean flag that specifies if node
+                            group can be upgraded automatically. When omitted, default
+                            value is TRUE.
+                          type: boolean
+                        maintenanceWindow:
+                          description: (Optional) (Computed) Set of day intervals,
+                            when maintenance is allowed for this node group. When
+                            omitted, it defaults to any time.
+                          items:
+                            properties:
+                              day:
+                                type: string
+                              duration:
+                                type: string
+                              startTime:
+                                type: string
+                            required:
+                            - duration
+                            - startTime
+                            type: object
+                          type: array
+                      required:
+                      - autoRepair
+                      - autoUpgrade
+                      type: object
+                    type: array
+                  name:
+                    description: (Optional) Name of a specific Kubernetes node group.
+                    type: string
+                  nodeLabels:
+                    additionalProperties:
+                      type: string
+                    description: (Optional, Forces new resource) A set of key/value
+                      label pairs, that are assigned to all the nodes of this Kubernetes
+                      node group.
+                    type: object
+                  nodeTaints:
+                    description: (Optional, Forces new resource) A list of Kubernetes
+                      taints, that are applied to all the nodes of this Kubernetes
+                      node group.
+                    items:
+                      type: string
+                    type: array
+                  scalePolicy:
+                    description: (Required) Scale policy of the node group. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        autoScale:
+                          description: Scale policy for an autoscaled node group.
+                            The structure is documented below.
+                          items:
+                            properties:
+                              initial:
+                                description: Initial number of instances in the node
+                                  group.
+                                type: number
+                              max:
+                                description: Maximum number of instances in the node
+                                  group.
+                                type: number
+                              min:
+                                description: Minimum number of instances in the node
+                                  group.
+                                type: number
+                            required:
+                            - initial
+                            - max
+                            - min
+                            type: object
+                          type: array
+                        fixedScale:
+                          description: Scale policy for a fixed scale node group.
+                            The structure is documented below.
+                          items:
+                            properties:
+                              size:
+                                description: 'The size of the disk in GB. Allowed
+                                  minimal size: 64 GB.'
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  version:
+                    description: (Optional) Version of Kubernetes that will be used
+                      for Kubernetes node group.
+                    type: string
+                required:
+                - instanceTemplate
+                - scalePolicy
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: NodeGroupStatus defines the observed state of NodeGroup.
+            properties:
+              atProvider:
+                properties:
+                  createdAt:
+                    description: (Computed) The Kubernetes node group creation timestamp.
+                    type: string
+                  id:
+                    type: string
+                  instanceGroupId:
+                    description: (Computed) ID of instance group that is used to manage
+                      this Kubernetes node group.
+                    type: string
+                  status:
+                    description: (Computed) Status of the Kubernetes node group.
+                    type: string
+                  versionInfo:
+                    description: (Computed) Information about Kubernetes node group
+                      version. The structure is documented below.
+                    items:
+                      properties:
+                        currentVersion:
+                          description: Current Kubernetes version, major.minor (e.g.
+                            1.15).
+                          type: string
+                        newRevisionAvailable:
+                          description: True/false flag.
+                          type: boolean
+                        newRevisionSummary:
+                          description: Human readable description of the changes to
+                            be applied
+                          type: string
+                        versionDeprecated:
+                          description: True/false flag. The current version is on
+                            the deprecation schedule,
+                          type: boolean
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

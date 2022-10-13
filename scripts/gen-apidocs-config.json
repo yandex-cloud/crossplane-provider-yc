@@ -50,6 +50,30 @@
         {
             "typeMatchPrefix": "v1.SecretKeySelector",
             "docsURLTemplate": "https://github.com/crossplane/crossplane-runtime/apis/common/v1"
+        },
+        {
+            "typeMatchPrefix": "v1.ProviderConfigStatus",
+            "docsURLTemplate": "https://github.com/crossplane/crossplane-runtime/apis/common/v1"
+        },
+        {
+            "typeMatchPrefix": "v1.ConditionedStatus",
+            "docsURLTemplate": "https://github.com/crossplane/crossplane-runtime/apis/common/v1"
+        },
+        {
+            "typeMatchPrefix": "v1.SecretStoreConfig",
+            "docsURLTemplate": "https://github.com/crossplane/crossplane-runtime/apis/common/v1"
+        },
+        {
+            "typeMatchPrefix": "v1.CommonCredentialSelectors",
+            "docsURLTemplate": "https://github.com/crossplane/crossplane-runtime/apis/common/v1"
+        },
+        {
+            "typeMatchPrefix": "v1.CredentialsSource",
+            "docsURLTemplate": "https://github.com/crossplane/crossplane-runtime/apis/common/v1"
+        },
+        {
+            "typeMatchPrefix": "v1.ProviderConfigUsage",
+            "docsURLTemplate": "https://github.com/crossplane/crossplane-runtime/apis/common/v1"
         }
     ],
     "typeDisplayNamePrefixOverrides": {

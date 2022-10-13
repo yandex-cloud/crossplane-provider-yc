@@ -1,16 +1,15 @@
 <p>Packages:</p>
 <ul>
 <li>
-<a href="#yandex-cloud.jet.crossplane.io%2fv1alpha1">yandex-cloud.jet.crossplane.io/v1alpha1</a>
+<a href="#dns.yandex-cloud.jet.crossplane.io%2fv1alpha1">dns.yandex-cloud.jet.crossplane.io/v1alpha1</a>
 </li>
 </ul>
-<h2 id="yandex-cloud.jet.crossplane.io/v1alpha1">yandex-cloud.jet.crossplane.io/v1alpha1</h2>
+<h2 id="dns.yandex-cloud.jet.crossplane.io/v1alpha1">dns.yandex-cloud.jet.crossplane.io/v1alpha1</h2>
 <div>
-<p>Package v1alpha1 contains the core resources of the yandex-cloud jet provider.</p>
 </div>
 Resource Types:
 <ul></ul>
-<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.Recordset">Recordset
+<h3 id="dns.yandex-cloud.jet.crossplane.io/v1alpha1.Recordset">Recordset
 </h3>
 <div>
 <p>Recordset is the Schema for the Recordsets API</p>
@@ -41,7 +40,7 @@ Refer to the Kubernetes API documentation for the fields of the
 <td>
 <code>spec</code><br/>
 <em>
-<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetSpec">
+<a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetSpec">
 RecordsetSpec
 </a>
 </em>
@@ -69,7 +68,7 @@ github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
 <td>
 <code>forProvider</code><br/>
 <em>
-<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetParameters">
+<a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetParameters">
 RecordsetParameters
 </a>
 </em>
@@ -84,7 +83,7 @@ RecordsetParameters
 <td>
 <code>status</code><br/>
 <em>
-<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetStatus">
+<a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetStatus">
 RecordsetStatus
 </a>
 </em>
@@ -94,10 +93,10 @@ RecordsetStatus
 </tr>
 </tbody>
 </table>
-<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetObservation">RecordsetObservation
+<h3 id="dns.yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetObservation">RecordsetObservation
 </h3>
 <p>
-(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetStatus">RecordsetStatus</a>)
+(<em>Appears on:</em><a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetStatus">RecordsetStatus</a>)
 </p>
 <div>
 </div>
@@ -121,10 +120,10 @@ string
 </tr>
 </tbody>
 </table>
-<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetParameters">RecordsetParameters
+<h3 id="dns.yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetParameters">RecordsetParameters
 </h3>
 <p>
-(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetSpec">RecordsetSpec</a>)
+(<em>Appears on:</em><a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetSpec">RecordsetSpec</a>)
 </p>
 <div>
 </div>
@@ -217,10 +216,10 @@ github.com/crossplane/crossplane-runtime/apis/common/v1.Selector
 </tr>
 </tbody>
 </table>
-<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetSpec">RecordsetSpec
+<h3 id="dns.yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetSpec">RecordsetSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Recordset">Recordset</a>)
+(<em>Appears on:</em><a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.Recordset">Recordset</a>)
 </p>
 <div>
 <p>RecordsetSpec defines the desired state of Recordset</p>
@@ -252,7 +251,7 @@ github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
 <td>
 <code>forProvider</code><br/>
 <em>
-<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetParameters">
+<a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetParameters">
 RecordsetParameters
 </a>
 </em>
@@ -262,10 +261,10 @@ RecordsetParameters
 </tr>
 </tbody>
 </table>
-<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetStatus">RecordsetStatus
+<h3 id="dns.yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetStatus">RecordsetStatus
 </h3>
 <p>
-(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Recordset">Recordset</a>)
+(<em>Appears on:</em><a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.Recordset">Recordset</a>)
 </p>
 <div>
 <p>RecordsetStatus defines the observed state of Recordset.</p>
@@ -297,7 +296,7 @@ github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
 <td>
 <code>atProvider</code><br/>
 <em>
-<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetObservation">
+<a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.RecordsetObservation">
 RecordsetObservation
 </a>
 </em>
@@ -307,7 +306,7 @@ RecordsetObservation
 </tr>
 </tbody>
 </table>
-<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.Zone">Zone
+<h3 id="dns.yandex-cloud.jet.crossplane.io/v1alpha1.Zone">Zone
 </h3>
 <div>
 <p>Zone is the Schema for the Zones API</p>
@@ -338,7 +337,7 @@ Refer to the Kubernetes API documentation for the fields of the
 <td>
 <code>spec</code><br/>
 <em>
-<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneSpec">
+<a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.ZoneSpec">
 ZoneSpec
 </a>
 </em>
@@ -366,7 +365,7 @@ github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
 <td>
 <code>forProvider</code><br/>
 <em>
-<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneParameters">
+<a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.ZoneParameters">
 ZoneParameters
 </a>
 </em>
@@ -381,7 +380,7 @@ ZoneParameters
 <td>
 <code>status</code><br/>
 <em>
-<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneStatus">
+<a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.ZoneStatus">
 ZoneStatus
 </a>
 </em>
@@ -391,10 +390,10 @@ ZoneStatus
 </tr>
 </tbody>
 </table>
-<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ZoneObservation">ZoneObservation
+<h3 id="dns.yandex-cloud.jet.crossplane.io/v1alpha1.ZoneObservation">ZoneObservation
 </h3>
 <p>
-(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneStatus">ZoneStatus</a>)
+(<em>Appears on:</em><a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.ZoneStatus">ZoneStatus</a>)
 </p>
 <div>
 </div>
@@ -430,10 +429,10 @@ string
 </tr>
 </tbody>
 </table>
-<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ZoneParameters">ZoneParameters
+<h3 id="dns.yandex-cloud.jet.crossplane.io/v1alpha1.ZoneParameters">ZoneParameters
 </h3>
 <p>
-(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneSpec">ZoneSpec</a>)
+(<em>Appears on:</em><a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.ZoneSpec">ZoneSpec</a>)
 </p>
 <div>
 </div>
@@ -572,10 +571,10 @@ string
 </tr>
 </tbody>
 </table>
-<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ZoneSpec">ZoneSpec
+<h3 id="dns.yandex-cloud.jet.crossplane.io/v1alpha1.ZoneSpec">ZoneSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Zone">Zone</a>)
+(<em>Appears on:</em><a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.Zone">Zone</a>)
 </p>
 <div>
 <p>ZoneSpec defines the desired state of Zone</p>
@@ -607,7 +606,7 @@ github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceSpec
 <td>
 <code>forProvider</code><br/>
 <em>
-<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneParameters">
+<a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.ZoneParameters">
 ZoneParameters
 </a>
 </em>
@@ -617,10 +616,10 @@ ZoneParameters
 </tr>
 </tbody>
 </table>
-<h3 id="yandex-cloud.jet.crossplane.io/v1alpha1.ZoneStatus">ZoneStatus
+<h3 id="dns.yandex-cloud.jet.crossplane.io/v1alpha1.ZoneStatus">ZoneStatus
 </h3>
 <p>
-(<em>Appears on:</em><a href="#yandex-cloud.jet.crossplane.io/v1alpha1.Zone">Zone</a>)
+(<em>Appears on:</em><a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.Zone">Zone</a>)
 </p>
 <div>
 <p>ZoneStatus defines the observed state of Zone.</p>
@@ -652,7 +651,7 @@ github.com/crossplane/crossplane-runtime/apis/common/v1.ResourceStatus
 <td>
 <code>atProvider</code><br/>
 <em>
-<a href="#yandex-cloud.jet.crossplane.io/v1alpha1.ZoneObservation">
+<a href="#dns.yandex-cloud.jet.crossplane.io/v1alpha1.ZoneObservation">
 ZoneObservation
 </a>
 </em>
@@ -665,5 +664,5 @@ ZoneObservation
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>86a79e9</code>.
+on git commit <code>704ffe9</code>.
 </em></p>
