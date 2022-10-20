@@ -30,6 +30,7 @@ import (
 	"github.com/yandex-cloud/provider-jet-yc/config/iam"
 	"github.com/yandex-cloud/provider-jet-yc/config/kubernetes"
 	"github.com/yandex-cloud/provider-jet-yc/config/mdb"
+	ymq "github.com/yandex-cloud/provider-jet-yc/config/message"
 	"github.com/yandex-cloud/provider-jet-yc/config/resourcemanager"
 	"github.com/yandex-cloud/provider-jet-yc/config/storage"
 	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
@@ -92,6 +93,7 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_datatransfer_transfer$",
 			"yandex_ydb_database_dedicated$",
 			"yandex_ydb_database_serverless$",
+			"yandex_message_queue$",
 		}),
 	)
 
@@ -107,6 +109,7 @@ func GetProvider() *tjconfig.Provider {
 		vpc.Configure,
 		resourcemanager.Configure,
 		ydb.Configure,
+		ymq.Configure,
 	} {
 		configure(pc)
 	}
