@@ -1,0 +1,15 @@
+apiVersion: message.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Queue
+metadata:
+  name: queue-example
+spec:
+  forProvider:
+    name: queue-example
+
+    secretKeySecretRef:
+      name: sa-key-conn
+      namespace: crossplane-system
+      key: attribute.secret_key
+
+    accessKeyRef:
+      name: example-sa-static-key

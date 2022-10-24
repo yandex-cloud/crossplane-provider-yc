@@ -51,6 +51,7 @@ import (
 	postgresqldatabase "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/postgresqldatabase"
 	postgresqluser "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/postgresqluser"
 	rediscluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/rediscluster"
+	queue "github.com/yandex-cloud/provider-jet-yc/internal/controller/message/queue"
 	providerconfig "github.com/yandex-cloud/provider-jet-yc/internal/controller/providerconfig"
 	folder "github.com/yandex-cloud/provider-jet-yc/internal/controller/resourcemanager/folder"
 	bucket "github.com/yandex-cloud/provider-jet-yc/internal/controller/storage/bucket"
@@ -99,6 +100,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		postgresqldatabase.Setup,
 		postgresqluser.Setup,
 		rediscluster.Setup,
+		queue.Setup,
 		providerconfig.Setup,
 		folder.Setup,
 		bucket.Setup,
