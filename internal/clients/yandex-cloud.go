@@ -24,7 +24,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/crossplane/terrajet/pkg/terraform"
+	"github.com/upbound/upjet/pkg/terraform"
 
 	"github.com/yandex-cloud/provider-jet-yc/apis/v1alpha1"
 )

@@ -20,10 +20,10 @@ import (
 	// Note(ezgidemirel): we are importing this to embed provider schema document
 	_ "embed"
 
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
+	tjconfig "github.com/upbound/upjet/pkg/config"
 
 	"github.com/yandex-cloud/provider-jet-yc/config/alb"
-	"github.com/yandex-cloud/provider-jet-yc/config/common"
+	// "github.com/yandex-cloud/provider-jet-yc/config/common"
 	"github.com/yandex-cloud/provider-jet-yc/config/compute"
 	"github.com/yandex-cloud/provider-jet-yc/config/datatransfer"
 	"github.com/yandex-cloud/provider-jet-yc/config/dns"
@@ -47,10 +47,10 @@ const (
 
 // GetProvider returns provider configuration
 func GetProvider() *tjconfig.Provider {
-	pc := tjconfig.NewProviderWithSchema([]byte(providerSchema), resourcePrefix, modulePath,
+	pc := tjconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte{},
 		tjconfig.WithShortName("yandex-cloud"),
 		tjconfig.WithRootGroup("yandex-cloud.jet.crossplane.io"),
-		tjconfig.WithDefaultResourceFn(common.DefaultResourceFn),
+		tjconfig.WithDefaultResourceOptions(),
 		tjconfig.WithIncludeList([]string{
 			"yandex_alb_backend_group$",
 			"yandex_alb_http_router$",

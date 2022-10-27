@@ -121,7 +121,7 @@ func (in *QueueParameters) DeepCopyInto(out *QueueParameters) {
 	if in.AccessKeyRef != nil {
 		in, out := &in.AccessKeyRef, &out.AccessKeyRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.AccessKeySelector != nil {
 		in, out := &in.AccessKeySelector, &out.AccessKeySelector
@@ -151,16 +151,6 @@ func (in *QueueParameters) DeepCopyInto(out *QueueParameters) {
 	if in.MessageRetentionSeconds != nil {
 		in, out := &in.MessageRetentionSeconds, &out.MessageRetentionSeconds
 		*out = new(float64)
-		**out = **in
-	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
-	if in.NamePrefix != nil {
-		in, out := &in.NamePrefix, &out.NamePrefix
-		*out = new(string)
 		**out = **in
 	}
 	if in.ReceiveWaitTimeSeconds != nil {

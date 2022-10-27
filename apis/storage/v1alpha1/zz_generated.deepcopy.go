@@ -206,7 +206,7 @@ func (in *BucketParameters) DeepCopyInto(out *BucketParameters) {
 	if in.AccessKeyRef != nil {
 		in, out := &in.AccessKeyRef, &out.AccessKeyRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.AccessKeySelector != nil {
 		in, out := &in.AccessKeySelector, &out.AccessKeySelector
@@ -246,16 +246,6 @@ func (in *BucketParameters) DeepCopyInto(out *BucketParameters) {
 		in, out := &in.FolderID, &out.FolderID
 		*out = new(string)
 		**out = **in
-	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.ForceDestroy != nil {
 		in, out := &in.ForceDestroy, &out.ForceDestroy
@@ -885,7 +875,7 @@ func (in *ObjectParameters) DeepCopyInto(out *ObjectParameters) {
 	if in.AccessKeyRef != nil {
 		in, out := &in.AccessKeyRef, &out.AccessKeyRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.AccessKeySelector != nil {
 		in, out := &in.AccessKeySelector, &out.AccessKeySelector
@@ -900,7 +890,7 @@ func (in *ObjectParameters) DeepCopyInto(out *ObjectParameters) {
 	if in.BucketRef != nil {
 		in, out := &in.BucketRef, &out.BucketRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.BucketSelector != nil {
 		in, out := &in.BucketSelector, &out.BucketSelector

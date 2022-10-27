@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Address is the Schema for the Addresss API
+        description: Address is the Schema for the Addresss API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,62 +64,24 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: (Optional) An optional description of this resource.
-                      Provide this property when
                     type: string
                   externalIpv4Address:
-                    description: (Optional) spec of IP v4 address
                     items:
                       properties:
                         ddosProtectionProvider:
-                          description: '(Optional) Enable DDOS protection. Possible
-                            values are: "qrator"'
                           type: string
                         outgoingSmtpCapability:
-                          description: (Optional) Wanted outgoing smtp capability.
                           type: string
                         zoneId:
-                          description: Zone for allocating address.
                           type: string
                       type: object
                     type: array
                   folderId:
-                    description: (Optional) ID of the folder that the resource belongs
-                      to. If it
                     type: string
-                  folderIdRef:
-                    description: A Reference to a named object.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                    required:
-                    - name
-                    type: object
-                  folderIdSelector:
-                    description: A Selector selects an object.
-                    properties:
-                      matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                    type: object
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) Labels to apply to this resource. A list
-                      of key/value pairs.
                     type: object
-                  name:
-                    description: (Optional) Name of the address. Provided by the client
-                      when the address is created.
-                    type: string
                 type: object
               providerConfigRef:
                 default:
@@ -131,6 +93,31 @@ spec:
                   name:
                     description: Name of the referenced object.
                     type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
                 required:
                 - name
                 type: object
@@ -142,6 +129,31 @@ spec:
                   name:
                     description: Name of the referenced object.
                     type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
                 required:
                 - name
                 type: object
@@ -161,6 +173,31 @@ spec:
                       name:
                         description: Name of the referenced object.
                         type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
                     required:
                     - name
                     type: object
@@ -223,24 +260,19 @@ spec:
               atProvider:
                 properties:
                   createdAt:
-                    description: Creation timestamp of the key.
                     type: string
                   externalIpv4Address:
-                    description: (Optional) spec of IP v4 address
                     items:
                       properties:
                         address:
-                          description: Allocated IP address.
                           type: string
                       type: object
                     type: array
                   id:
                     type: string
                   reserved:
-                    description: '`false` means that address is ephemeral.'
                     type: boolean
                   used:
-                    description: '`true` if address is used.'
                     type: boolean
                 type: object
               conditions:

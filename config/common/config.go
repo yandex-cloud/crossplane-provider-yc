@@ -5,16 +5,17 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/crossplane/terrajet/pkg/config"
-	tjconfig "github.com/crossplane/terrajet/pkg/config"
+	"github.com/upbound/upjet/pkg/config"
+	tjconfig "github.com/upbound/upjet/pkg/config"
+	registry "github.com/upbound/upjet/pkg/registry"
 
 	"github.com/yandex-cloud/provider-jet-yc/config/resourcemanager"
 )
 
 // DefaultResourceFn returns a default resource configuration to be used while
 // building resource configurations.
-func DefaultResourceFn(name string, terraformResource *schema.Resource, opts ...tjconfig.ResourceOption) *tjconfig.Resource {
-	r := tjconfig.DefaultResource(name, terraformResource)
+func DefaultResourceFn(name string, terraformResource *schema.Resource,terraformRegistry *registry.Resource, opts ...tjconfig.ResourceOption) *tjconfig.Resource {
+	r := tjconfig.DefaultResource(name, terraformResource, terraformRegistry)
 	// Add any provider-specific defaulting here. For example:
 	r.ExternalName = tjconfig.IdentifierFromProvider
 	defaultFolderIDFn(r)

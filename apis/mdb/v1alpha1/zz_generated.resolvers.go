@@ -21,9 +21,8 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1alpha12 "github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1"
-	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
-	v1alpha11 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
+	v1alpha11 "github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1"
+	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -35,22 +34,6 @@ func (mg *ElasticsearchCluster) ResolveReferences(ctx context.Context, c client.
 	var mrsp reference.MultiResolutionResponse
 	var err error
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
-
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Host); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Host[i3].SubnetID),
@@ -58,8 +41,8 @@ func (mg *ElasticsearchCluster) ResolveReferences(ctx context.Context, c client.
 			Reference:    mg.Spec.ForProvider.Host[i3].SubnetIDRef,
 			Selector:     mg.Spec.ForProvider.Host[i3].SubnetIDSelector,
 			To: reference.To{
-				List:    &v1alpha11.SubnetList{},
-				Managed: &v1alpha11.Subnet{},
+				List:    &v1alpha1.SubnetList{},
+				Managed: &v1alpha1.Subnet{},
 			},
 		})
 		if err != nil {
@@ -75,8 +58,8 @@ func (mg *ElasticsearchCluster) ResolveReferences(ctx context.Context, c client.
 		Reference:    mg.Spec.ForProvider.NetworkIDRef,
 		Selector:     mg.Spec.ForProvider.NetworkIDSelector,
 		To: reference.To{
-			List:    &v1alpha11.NetworkList{},
-			Managed: &v1alpha11.Network{},
+			List:    &v1alpha1.NetworkList{},
+			Managed: &v1alpha1.Network{},
 		},
 	})
 	if err != nil {
@@ -91,8 +74,8 @@ func (mg *ElasticsearchCluster) ResolveReferences(ctx context.Context, c client.
 		References:    mg.Spec.ForProvider.SecurityGroupIdsRefs,
 		Selector:      mg.Spec.ForProvider.SecurityGroupIdsSelector,
 		To: reference.To{
-			List:    &v1alpha11.SecurityGroupList{},
-			Managed: &v1alpha11.SecurityGroup{},
+			List:    &v1alpha1.SecurityGroupList{},
+			Managed: &v1alpha1.SecurityGroup{},
 		},
 	})
 	if err != nil {
@@ -107,8 +90,8 @@ func (mg *ElasticsearchCluster) ResolveReferences(ctx context.Context, c client.
 		Reference:    mg.Spec.ForProvider.ServiceAccountIDRef,
 		Selector:     mg.Spec.ForProvider.ServiceAccountIDSelector,
 		To: reference.To{
-			List:    &v1alpha12.ServiceAccountList{},
-			Managed: &v1alpha12.ServiceAccount{},
+			List:    &v1alpha11.ServiceAccountList{},
+			Managed: &v1alpha11.ServiceAccount{},
 		},
 	})
 	if err != nil {
@@ -128,22 +111,6 @@ func (mg *MongodbCluster) ResolveReferences(ctx context.Context, c client.Reader
 	var mrsp reference.MultiResolutionResponse
 	var err error
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
-
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Host); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Host[i3].SubnetID),
@@ -151,8 +118,8 @@ func (mg *MongodbCluster) ResolveReferences(ctx context.Context, c client.Reader
 			Reference:    mg.Spec.ForProvider.Host[i3].SubnetIDRef,
 			Selector:     mg.Spec.ForProvider.Host[i3].SubnetIDSelector,
 			To: reference.To{
-				List:    &v1alpha11.SubnetList{},
-				Managed: &v1alpha11.Subnet{},
+				List:    &v1alpha1.SubnetList{},
+				Managed: &v1alpha1.Subnet{},
 			},
 		})
 		if err != nil {
@@ -168,8 +135,8 @@ func (mg *MongodbCluster) ResolveReferences(ctx context.Context, c client.Reader
 		Reference:    mg.Spec.ForProvider.NetworkIDRef,
 		Selector:     mg.Spec.ForProvider.NetworkIDSelector,
 		To: reference.To{
-			List:    &v1alpha11.NetworkList{},
-			Managed: &v1alpha11.Network{},
+			List:    &v1alpha1.NetworkList{},
+			Managed: &v1alpha1.Network{},
 		},
 	})
 	if err != nil {
@@ -184,8 +151,8 @@ func (mg *MongodbCluster) ResolveReferences(ctx context.Context, c client.Reader
 		References:    mg.Spec.ForProvider.SecurityGroupIdsRefs,
 		Selector:      mg.Spec.ForProvider.SecurityGroupIdsSelector,
 		To: reference.To{
-			List:    &v1alpha11.SecurityGroupList{},
-			Managed: &v1alpha11.SecurityGroup{},
+			List:    &v1alpha1.SecurityGroupList{},
+			Managed: &v1alpha1.SecurityGroup{},
 		},
 	})
 	if err != nil {
@@ -205,22 +172,6 @@ func (mg *MySQLCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 	var mrsp reference.MultiResolutionResponse
 	var err error
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
-
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Host); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Host[i3].SubnetID),
@@ -228,8 +179,8 @@ func (mg *MySQLCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 			Reference:    mg.Spec.ForProvider.Host[i3].SubnetIDRef,
 			Selector:     mg.Spec.ForProvider.Host[i3].SubnetIDSelector,
 			To: reference.To{
-				List:    &v1alpha11.SubnetList{},
-				Managed: &v1alpha11.Subnet{},
+				List:    &v1alpha1.SubnetList{},
+				Managed: &v1alpha1.Subnet{},
 			},
 		})
 		if err != nil {
@@ -245,8 +196,8 @@ func (mg *MySQLCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 		Reference:    mg.Spec.ForProvider.NetworkIDRef,
 		Selector:     mg.Spec.ForProvider.NetworkIDSelector,
 		To: reference.To{
-			List:    &v1alpha11.NetworkList{},
-			Managed: &v1alpha11.Network{},
+			List:    &v1alpha1.NetworkList{},
+			Managed: &v1alpha1.Network{},
 		},
 	})
 	if err != nil {
@@ -261,8 +212,8 @@ func (mg *MySQLCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 		References:    mg.Spec.ForProvider.SecurityGroupIdsRefs,
 		Selector:      mg.Spec.ForProvider.SecurityGroupIdsSelector,
 		To: reference.To{
-			List:    &v1alpha11.SecurityGroupList{},
-			Managed: &v1alpha11.SecurityGroup{},
+			List:    &v1alpha1.SecurityGroupList{},
+			Managed: &v1alpha1.SecurityGroup{},
 		},
 	})
 	if err != nil {
@@ -334,22 +285,6 @@ func (mg *PostgresqlCluster) ResolveReferences(ctx context.Context, c client.Rea
 	var mrsp reference.MultiResolutionResponse
 	var err error
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
-
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Host); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Host[i3].SubnetID),
@@ -357,8 +292,8 @@ func (mg *PostgresqlCluster) ResolveReferences(ctx context.Context, c client.Rea
 			Reference:    mg.Spec.ForProvider.Host[i3].SubnetIDRef,
 			Selector:     mg.Spec.ForProvider.Host[i3].SubnetIDSelector,
 			To: reference.To{
-				List:    &v1alpha11.SubnetList{},
-				Managed: &v1alpha11.Subnet{},
+				List:    &v1alpha1.SubnetList{},
+				Managed: &v1alpha1.Subnet{},
 			},
 		})
 		if err != nil {
@@ -374,8 +309,8 @@ func (mg *PostgresqlCluster) ResolveReferences(ctx context.Context, c client.Rea
 		Reference:    mg.Spec.ForProvider.NetworkIDRef,
 		Selector:     mg.Spec.ForProvider.NetworkIDSelector,
 		To: reference.To{
-			List:    &v1alpha11.NetworkList{},
-			Managed: &v1alpha11.Network{},
+			List:    &v1alpha1.NetworkList{},
+			Managed: &v1alpha1.Network{},
 		},
 	})
 	if err != nil {
@@ -390,8 +325,8 @@ func (mg *PostgresqlCluster) ResolveReferences(ctx context.Context, c client.Rea
 		References:    mg.Spec.ForProvider.SecurityGroupIdsRefs,
 		Selector:      mg.Spec.ForProvider.SecurityGroupIdsSelector,
 		To: reference.To{
-			List:    &v1alpha11.SecurityGroupList{},
-			Managed: &v1alpha11.SecurityGroup{},
+			List:    &v1alpha1.SecurityGroupList{},
+			Managed: &v1alpha1.SecurityGroup{},
 		},
 	})
 	if err != nil {
@@ -463,22 +398,6 @@ func (mg *RedisCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 	var mrsp reference.MultiResolutionResponse
 	var err error
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
-
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Host); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Host[i3].SubnetID),
@@ -486,8 +405,8 @@ func (mg *RedisCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 			Reference:    mg.Spec.ForProvider.Host[i3].SubnetIDRef,
 			Selector:     mg.Spec.ForProvider.Host[i3].SubnetIDSelector,
 			To: reference.To{
-				List:    &v1alpha11.SubnetList{},
-				Managed: &v1alpha11.Subnet{},
+				List:    &v1alpha1.SubnetList{},
+				Managed: &v1alpha1.Subnet{},
 			},
 		})
 		if err != nil {
@@ -503,8 +422,8 @@ func (mg *RedisCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 		Reference:    mg.Spec.ForProvider.NetworkIDRef,
 		Selector:     mg.Spec.ForProvider.NetworkIDSelector,
 		To: reference.To{
-			List:    &v1alpha11.NetworkList{},
-			Managed: &v1alpha11.Network{},
+			List:    &v1alpha1.NetworkList{},
+			Managed: &v1alpha1.Network{},
 		},
 	})
 	if err != nil {
@@ -519,8 +438,8 @@ func (mg *RedisCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 		References:    mg.Spec.ForProvider.SecurityGroupIdsRefs,
 		Selector:      mg.Spec.ForProvider.SecurityGroupIdsSelector,
 		To: reference.To{
-			List:    &v1alpha11.SecurityGroupList{},
-			Managed: &v1alpha11.SecurityGroup{},
+			List:    &v1alpha1.SecurityGroupList{},
+			Managed: &v1alpha1.SecurityGroup{},
 		},
 	})
 	if err != nil {

@@ -23,7 +23,7 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/event"
 	"github.com/crossplane/crossplane-runtime/pkg/reconciler/providerconfig"
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
-	"github.com/crossplane/terrajet/pkg/controller"
+	"github.com/upbound/upjet/pkg/controller"
 
 	"github.com/yandex-cloud/provider-jet-yc/apis/v1alpha1"
 )

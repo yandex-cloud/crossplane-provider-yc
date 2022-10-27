@@ -16,7 +16,7 @@ package dns
 import (
 	"fmt"
 
-	"github.com/crossplane/terrajet/pkg/config"
+	"github.com/upbound/upjet/pkg/config"
 
 	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
 )

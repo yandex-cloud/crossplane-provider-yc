@@ -18,7 +18,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/crossplane/terrajet/pkg/pipeline"
+	"github.com/upbound/upjet/pkg/pipeline"
 
 	"github.com/yandex-cloud/provider-jet-yc/config"
 )

@@ -119,11 +119,6 @@ func (in *RecordsetParameters) DeepCopyInto(out *RecordsetParameters) {
 			}
 		}
 	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
 	if in.TTL != nil {
 		in, out := &in.TTL, &out.TTL
 		*out = new(float64)
@@ -142,7 +137,7 @@ func (in *RecordsetParameters) DeepCopyInto(out *RecordsetParameters) {
 	if in.ZoneIDRef != nil {
 		in, out := &in.ZoneIDRef, &out.ZoneIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ZoneIDSelector != nil {
 		in, out := &in.ZoneIDSelector, &out.ZoneIDSelector
@@ -292,16 +287,6 @@ func (in *ZoneParameters) DeepCopyInto(out *ZoneParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -317,11 +302,6 @@ func (in *ZoneParameters) DeepCopyInto(out *ZoneParameters) {
 			(*out)[key] = outVal
 		}
 	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
 	if in.PrivateNetworks != nil {
 		in, out := &in.PrivateNetworks, &out.PrivateNetworks
 		*out = make([]*string, len(*in))
@@ -336,7 +316,9 @@ func (in *ZoneParameters) DeepCopyInto(out *ZoneParameters) {
 	if in.PrivateNetworksRefs != nil {
 		in, out := &in.PrivateNetworksRefs, &out.PrivateNetworksRefs
 		*out = make([]v1.Reference, len(*in))
-		copy(*out, *in)
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.PrivateNetworksSelector != nil {
 		in, out := &in.PrivateNetworksSelector, &out.PrivateNetworksSelector

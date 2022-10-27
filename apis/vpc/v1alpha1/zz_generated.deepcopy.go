@@ -147,16 +147,6 @@ func (in *AddressParameters) DeepCopyInto(out *AddressParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -171,11 +161,6 @@ func (in *AddressParameters) DeepCopyInto(out *AddressParameters) {
 			}
 			(*out)[key] = outVal
 		}
-	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
 	}
 }
 
@@ -366,11 +351,6 @@ func (in *DefaultSecurityGroupObservation) DeepCopyInto(out *DefaultSecurityGrou
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
 	if in.Status != nil {
 		in, out := &in.Status, &out.Status
 		*out = new(string)
@@ -408,16 +388,6 @@ func (in *DefaultSecurityGroupParameters) DeepCopyInto(out *DefaultSecurityGroup
 		*out = new(string)
 		**out = **in
 	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.Ingress != nil {
 		in, out := &in.Ingress, &out.Ingress
 		*out = make([]IngressParameters, len(*in))
@@ -448,7 +418,7 @@ func (in *DefaultSecurityGroupParameters) DeepCopyInto(out *DefaultSecurityGroup
 	if in.NetworkIDRef != nil {
 		in, out := &in.NetworkIDRef, &out.NetworkIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.NetworkIDSelector != nil {
 		in, out := &in.NetworkIDSelector, &out.NetworkIDSelector
@@ -878,16 +848,6 @@ func (in *NetworkParameters) DeepCopyInto(out *NetworkParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -902,11 +862,6 @@ func (in *NetworkParameters) DeepCopyInto(out *NetworkParameters) {
 			}
 			(*out)[key] = outVal
 		}
-	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
 	}
 }
 
@@ -1291,16 +1246,6 @@ func (in *SecurityGroupParameters) DeepCopyInto(out *SecurityGroupParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.Ingress != nil {
 		in, out := &in.Ingress, &out.Ingress
 		*out = make([]SecurityGroupIngressParameters, len(*in))
@@ -1323,11 +1268,6 @@ func (in *SecurityGroupParameters) DeepCopyInto(out *SecurityGroupParameters) {
 			(*out)[key] = outVal
 		}
 	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
@@ -1336,7 +1276,7 @@ func (in *SecurityGroupParameters) DeepCopyInto(out *SecurityGroupParameters) {
 	if in.NetworkIDRef != nil {
 		in, out := &in.NetworkIDRef, &out.NetworkIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.NetworkIDSelector != nil {
 		in, out := &in.NetworkIDSelector, &out.NetworkIDSelector
@@ -1495,7 +1435,7 @@ func (in *SecurityGroupRuleParameters) DeepCopyInto(out *SecurityGroupRuleParame
 	if in.SecurityGroupIDRef != nil {
 		in, out := &in.SecurityGroupIDRef, &out.SecurityGroupIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.SecurityGroupIDSelector != nil {
 		in, out := &in.SecurityGroupIDSelector, &out.SecurityGroupIDSelector
@@ -1724,16 +1664,6 @@ func (in *SubnetParameters) DeepCopyInto(out *SubnetParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -1749,11 +1679,6 @@ func (in *SubnetParameters) DeepCopyInto(out *SubnetParameters) {
 			(*out)[key] = outVal
 		}
 	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
@@ -1762,7 +1687,7 @@ func (in *SubnetParameters) DeepCopyInto(out *SubnetParameters) {
 	if in.NetworkIDRef != nil {
 		in, out := &in.NetworkIDRef, &out.NetworkIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.NetworkIDSelector != nil {
 		in, out := &in.NetworkIDSelector, &out.NetworkIDSelector

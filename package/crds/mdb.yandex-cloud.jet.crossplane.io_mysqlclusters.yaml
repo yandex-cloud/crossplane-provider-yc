@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: MySQLCluster is the Schema for the MySQLClusters API
+        description: MySQLCluster is the Schema for the MySQLClusters API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,130 +64,94 @@ spec:
               forProvider:
                 properties:
                   access:
-                    description: (Optional) Access policy to the MySQL cluster. The
-                      structure is documented below.
                     items:
                       properties:
                         dataLens:
-                          description: (Optional) Allow access for [Yandex DataLens](https://cloud.yandex.com/services/datalens).
                           type: boolean
                         webSql:
-                          description: Allows access for [SQL queries in the management
-                            console](https://cloud.yandex.com/docs/managed-mysql/operations/web-sql-query).
                           type: boolean
                       type: object
                     type: array
                   allowRegenerationHost:
                     type: boolean
                   backupWindowStart:
-                    description: (Optional) Time to start the daily backup, in the
-                      UTC. The structure is documented below.
                     items:
                       properties:
                         hours:
-                          description: (Optional) The hour at which backup will be
-                            started.
                           type: number
                         minutes:
-                          description: (Optional) The minute at which backup will
-                            be started.
                           type: number
                       type: object
                     type: array
                   database:
-                    description: (Deprecated) To manage databases, please switch to
-                      using a separate resource type `yandex_mdb_mysql_databases`.
                     items:
                       properties:
                         name:
-                          description: (Required) Name of the MySQL cluster. Provided
-                            by the client when the cluster is created.
                           type: string
                       required:
                       - name
                       type: object
                     type: array
                   deletionProtection:
-                    description: (Optional) Inhibits deletion of the cluster.  Can
-                      be either `true` or `false`.
                     type: boolean
                   description:
-                    description: (Optional) Description of the MySQL cluster.
                     type: string
                   environment:
-                    description: (Required) Deployment environment of the MySQL cluster.
                     type: string
                   folderId:
-                    description: (Optional) The ID of the folder that the resource
-                      belongs to. If it
                     type: string
-                  folderIdRef:
-                    description: A Reference to a named object.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                    required:
-                    - name
-                    type: object
-                  folderIdSelector:
-                    description: A Selector selects an object.
-                    properties:
-                      matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                    type: object
                   host:
-                    description: (Required) A host of the MySQL cluster. The structure
-                      is documented below.
                     items:
                       properties:
                         assignPublicIp:
-                          description: (Optional) Sets whether the host should get
-                            a public IP address. It can be changed on the fly only
-                            when `name` is set.
                           type: boolean
                         backupPriority:
-                          description: (Optional) Host backup priority. Value is between
-                            0 and 100, default is 0.
                           type: number
                         name:
-                          description: (Required) Name of the MySQL cluster. Provided
-                            by the client when the cluster is created.
                           type: string
                         priority:
-                          description: (Optional) Host master promotion priority.
-                            Value is between 0 and 100, default is 0.
                           type: number
                         replicationSourceName:
-                          description: (Optional) Host replication source name points
-                            to host's `name` from which this host should replicate.
-                            When not set then host in HA group. It works only when
-                            `name` is set.
                           type: string
                         subnetId:
-                          description: (Optional) The ID of the subnet, to which the
-                            host belongs. The subnet must be a part of the network
-                            to which the cluster belongs.
                           type: string
                         subnetIdRef:
-                          description: A Reference to a named object.
+                          description: Reference to a Subnet in vpc to populate subnetId.
                           properties:
                             name:
                               description: Name of the referenced object.
                               type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: Resolution specifies whether resolution
+                                    of this reference is required. The default is
+                                    'Required', which means the reconcile will fail
+                                    if the reference cannot be resolved. 'Optional'
+                                    means this reference will be a no-op if it cannot
+                                    be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: Resolve specifies when this reference
+                                    should be resolved. The default is 'IfNotPresent',
+                                    which will attempt to resolve the reference only
+                                    when the corresponding field is not present. Use
+                                    'Always' to resolve the reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
                           required:
                           - name
                           type: object
                         subnetIdSelector:
-                          description: A Selector selects an object.
+                          description: Selector for a Subnet in vpc to populate subnetId.
                           properties:
                             matchControllerRef:
                               description: MatchControllerRef ensures an object with
@@ -200,10 +164,34 @@ spec:
                               description: MatchLabels ensures an object with matching
                                 labels is selected.
                               type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: Resolution specifies whether resolution
+                                    of this reference is required. The default is
+                                    'Required', which means the reconcile will fail
+                                    if the reference cannot be resolved. 'Optional'
+                                    means this reference will be a no-op if it cannot
+                                    be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: Resolve specifies when this reference
+                                    should be resolved. The default is 'IfNotPresent',
+                                    which will attempt to resolve the reference only
+                                    when the corresponding field is not present. Use
+                                    'Always' to resolve the reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
                           type: object
                         zone:
-                          description: (Required) The availability zone where the
-                            MySQL host will be created.
                           type: string
                       required:
                       - zone
@@ -216,27 +204,15 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) A set of key/value label pairs to assign
-                      to the MySQL cluster.
                     type: object
                   maintenanceWindow:
-                    description: (Optional) Maintenance policy of the MySQL cluster.
-                      The structure is documented below.
                     items:
                       properties:
                         day:
-                          description: '(Optional) Day of the week (in `DDD` format).
-                            Allowed values: "MON", "TUE", "WED", "THU", "FRI", "SAT",
-                            "SUN"'
                           type: string
                         hour:
-                          description: (Optional) Hour of the day in UTC (in `HH`
-                            format). Allowed value is between 0 and 23.
                           type: number
                         type:
-                          description: (Required) Type of maintenance window. Can
-                            be either `ANYTIME` or `WEEKLY`. A day and hour of window
-                            need to be specified with weekly window.
                           type: string
                       required:
                       - type
@@ -245,28 +221,45 @@ spec:
                   mysqlConfig:
                     additionalProperties:
                       type: string
-                    description: (Optional) MySQL cluster config. Detail info in "MySQL
-                      config" section (documented below).
                     type: object
-                  name:
-                    description: (Required) Name of the MySQL cluster. Provided by
-                      the client when the cluster is created.
-                    type: string
                   networkId:
-                    description: (Required) ID of the network, to which the MySQL
-                      cluster uses.
                     type: string
                   networkIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Network in vpc to populate networkId.
                     properties:
                       name:
                         description: Name of the referenced object.
                         type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
                     required:
                     - name
                     type: object
                   networkIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Network in vpc to populate networkId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -278,22 +271,40 @@ spec:
                         description: MatchLabels ensures an object with matching labels
                           is selected.
                         type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
                     type: object
                   performanceDiagnostics:
-                    description: (Optional) Cluster performance diagnostics settings.
-                      The structure is documented below. [YC Documentation](https://cloud.yandex.com/en-ru/docs/managed-mysql/api-ref/grpc/cluster_service#PerformanceDiagnostics)
                     items:
                       properties:
                         enabled:
-                          description: Enable performance diagnostics
                           type: boolean
                         sessionsSamplingInterval:
-                          description: Interval (in seconds) for my_stat_activity
-                            sampling Acceptable values are 1 to 86400, inclusive.
                           type: number
                         statementsSamplingInterval:
-                          description: Interval (in seconds) for my_stat_statements
-                            sampling Acceptable values are 1 to 86400, inclusive.
                           type: number
                       required:
                       - sessionsSamplingInterval
@@ -301,16 +312,11 @@ spec:
                       type: object
                     type: array
                   resources:
-                    description: (Required) Resources allocated to hosts of the MySQL
-                      cluster. The structure is documented below.
                     items:
                       properties:
                         diskSize:
-                          description: (Required) Volume of the storage available
-                            to a MySQL host, in gigabytes.
                           type: number
                         diskTypeId:
-                          description: (Required) Type of the storage of MySQL hosts.
                           type: string
                         resourcePresetId:
                           type: string
@@ -321,44 +327,60 @@ spec:
                       type: object
                     type: array
                   restore:
-                    description: (Optional, ForceNew) The cluster will be created
-                      from the specified backup. The structure is documented below.
                     items:
                       properties:
                         backupId:
-                          description: (Required, ForceNew) Backup ID. The cluster
-                            will be created from the specified backup. [How to get
-                            a list of MySQL backups](https://cloud.yandex.com/docs/managed-mysql/operations/cluster-backups).
                           type: string
                         time:
-                          description: '(Optional, ForceNew) Timestamp of the moment
-                            to which the MySQL cluster should be restored. (Format:
-                            "2006-01-02T15:04:05" - UTC). When not set, current time
-                            is used.'
                           type: string
                       required:
                       - backupId
                       type: object
                     type: array
                   securityGroupIds:
-                    description: (Optional) A set of ids of security groups assigned
-                      to hosts of the cluster.
                     items:
                       type: string
                     type: array
                   securityGroupIdsRefs:
+                    description: References to SecurityGroup in vpc to populate securityGroupIds.
                     items:
                       description: A Reference to a named object.
                       properties:
                         name:
                           description: Name of the referenced object.
                           type: string
+                        policy:
+                          description: Policies for referencing.
+                          properties:
+                            resolution:
+                              default: Required
+                              description: Resolution specifies whether resolution
+                                of this reference is required. The default is 'Required',
+                                which means the reconcile will fail if the reference
+                                cannot be resolved. 'Optional' means this reference
+                                will be a no-op if it cannot be resolved.
+                              enum:
+                              - Required
+                              - Optional
+                              type: string
+                            resolve:
+                              description: Resolve specifies when this reference should
+                                be resolved. The default is 'IfNotPresent', which
+                                will attempt to resolve the reference only when the
+                                corresponding field is not present. Use 'Always' to
+                                resolve the reference on every reconcile.
+                              enum:
+                              - Always
+                              - IfNotPresent
+                              type: string
+                          type: object
                       required:
                       - name
                       type: object
                     type: array
                   securityGroupIdsSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a list of SecurityGroup in vpc to populate
+                      securityGroupIds.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -370,45 +392,55 @@ spec:
                         description: MatchLabels ensures an object with matching labels
                           is selected.
                         type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
                     type: object
                   user:
-                    description: (Deprecated) To manage users, please switch to using
-                      a separate resource type `yandex_mdb_mysql_user`.
                     items:
                       properties:
                         authenticationPlugin:
-                          description: '(Optional) Authentication plugin. Allowed
-                            values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`,
-                            `SHA256_PASSWORD` (for version 5.7 `MYSQL_NATIVE_PASSWORD`,
-                            `SHA256_PASSWORD`)'
                           type: string
                         connectionLimits:
-                          description: (Optional) User's connection limits. The structure
-                            is documented below.
                           items:
                             properties:
                               maxConnectionsPerHour:
-                                description: Max connections per hour.
                                 type: number
                               maxQuestionsPerHour:
-                                description: Max questions per hour.
                                 type: number
                               maxUpdatesPerHour:
-                                description: Max updates per hour.
                                 type: number
                               maxUserConnections:
-                                description: Max user connections.
                                 type: number
                             type: object
                           type: array
                         globalPermissions:
-                          description: (Optional) List user's global permissions
                           items:
                             type: string
                           type: array
                         name:
-                          description: (Required) Name of the MySQL cluster. Provided
-                            by the client when the cluster is created.
                           type: string
                         passwordSecretRef:
                           description: A SecretKeySelector is a reference to a secret
@@ -429,16 +461,11 @@ spec:
                           - namespace
                           type: object
                         permission:
-                          description: (Optional) Set of permissions granted to the
-                            user. The structure is documented below.
                           items:
                             properties:
                               databaseName:
-                                description: (Required) The name of the database that
-                                  the permission grants access to.
                                 type: string
                               roles:
-                                description: (Optional) List user's roles in the database.
                                 items:
                                   type: string
                                 type: array
@@ -452,13 +479,10 @@ spec:
                       type: object
                     type: array
                   version:
-                    description: '(Required) Version of the MySQL cluster. (allowed
-                      versions are: 5.7, 8.0)'
                     type: string
                 required:
                 - environment
                 - host
-                - name
                 - resources
                 - version
                 type: object
@@ -472,6 +496,31 @@ spec:
                   name:
                     description: Name of the referenced object.
                     type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
                 required:
                 - name
                 type: object
@@ -483,6 +532,31 @@ spec:
                   name:
                     description: Name of the referenced object.
                     type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
                 required:
                 - name
                 type: object
@@ -502,6 +576,31 @@ spec:
                       name:
                         description: Name of the referenced object.
                         type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
                     required:
                     - name
                     type: object
@@ -564,30 +663,21 @@ spec:
               atProvider:
                 properties:
                   createdAt:
-                    description: Creation timestamp of the cluster.
                     type: string
                   health:
-                    description: Aggregated health of the cluster.
                     type: string
                   host:
-                    description: (Required) A host of the MySQL cluster. The structure
-                      is documented below.
                     items:
                       properties:
                         fqdn:
-                          description: (Computed) The fully qualified domain name
-                            of the host.
                           type: string
                         replicationSource:
-                          description: (Computed) Host replication source (fqdn),
-                            when replication_source is empty then host is in HA group.
                           type: string
                       type: object
                     type: array
                   id:
                     type: string
                   status:
-                    description: Status of the cluster.
                     type: string
                 type: object
               conditions:

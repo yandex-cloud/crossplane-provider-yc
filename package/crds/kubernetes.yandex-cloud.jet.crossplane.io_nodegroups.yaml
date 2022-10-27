@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: NodeGroup is the Schema for the NodeGroups API
+        description: NodeGroup is the Schema for the NodeGroups API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,32 +64,53 @@ spec:
               forProvider:
                 properties:
                   allocationPolicy:
-                    description: This argument specify subnets (zones), that will
-                      be used by node group compute instances. The structure is documented
-                      below.
                     items:
                       properties:
                         location:
-                          description: Repeated field, that specify subnets (zones),
-                            that will be used by node group compute instances. The
-                            structure is documented below.
                           items:
                             properties:
                               subnetId:
-                                description: ID of the subnet, that will be used by
-                                  one compute instance in node group.
                                 type: string
                               subnetIdRef:
-                                description: A Reference to a named object.
+                                description: Reference to a Subnet in vpc to populate
+                                  subnetId.
                                 properties:
                                   name:
                                     description: Name of the referenced object.
                                     type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: Resolution specifies whether
+                                          resolution of this reference is required.
+                                          The default is 'Required', which means the
+                                          reconcile will fail if the reference cannot
+                                          be resolved. 'Optional' means this reference
+                                          will be a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: Resolve specifies when this reference
+                                          should be resolved. The default is 'IfNotPresent',
+                                          which will attempt to resolve the reference
+                                          only when the corresponding field is not
+                                          present. Use 'Always' to resolve the reference
+                                          on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
                                 required:
                                 - name
                                 type: object
                               subnetIdSelector:
-                                description: A Selector selects an object.
+                                description: Selector for a Subnet in vpc to populate
+                                  subnetId.
                                 properties:
                                   matchControllerRef:
                                     description: MatchControllerRef ensures an object
@@ -102,37 +123,82 @@ spec:
                                     description: MatchLabels ensures an object with
                                       matching labels is selected.
                                     type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: Resolution specifies whether
+                                          resolution of this reference is required.
+                                          The default is 'Required', which means the
+                                          reconcile will fail if the reference cannot
+                                          be resolved. 'Optional' means this reference
+                                          will be a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: Resolve specifies when this reference
+                                          should be resolved. The default is 'IfNotPresent',
+                                          which will attempt to resolve the reference
+                                          only when the corresponding field is not
+                                          present. Use 'Always' to resolve the reference
+                                          on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
                                 type: object
                               zone:
-                                description: ID of the availability zone where for
-                                  one compute instance in node group.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   allowedUnsafeSysctls:
-                    description: (Optional, Forces new resource) A list of allowed
-                      unsafe sysctl parameters for this node group. For more details
-                      see [documentation](https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster/).
                     items:
                       type: string
                     type: array
                   clusterId:
-                    description: (Required) The ID of the Kubernetes cluster that
-                      this node group belongs to.
                     type: string
                   clusterIdRef:
-                    description: A Reference to a named object.
+                    description: Reference to a Cluster to populate clusterId.
                     properties:
                       name:
                         description: Name of the referenced object.
                         type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
                     required:
                     - name
                     type: object
                   clusterIdSelector:
-                    description: A Selector selects an object.
+                    description: Selector for a Cluster to populate clusterId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -144,20 +210,38 @@ spec:
                         description: MatchLabels ensures an object with matching labels
                           is selected.
                         type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
                     type: object
                   deployPolicy:
-                    description: Deploy policy of the node group. The structure is
-                      documented below.
                     items:
                       properties:
                         maxExpansion:
-                          description: The maximum number of instances that can be
-                            temporarily allocated above the group's target size during
-                            the update.
                           type: number
                         maxUnavailable:
-                          description: The maximum number of running instances that
-                            can be taken offline during update.
                           type: number
                       required:
                       - maxExpansion
@@ -165,35 +249,23 @@ spec:
                       type: object
                     type: array
                   description:
-                    description: (Optional) A description of the Kubernetes node group.
                     type: string
                   instanceTemplate:
-                    description: (Required) Template used to create compute instances
-                      in this Kubernetes node group. The structure is documented below.
                     items:
                       properties:
                         bootDisk:
-                          description: The specifications for boot disks that will
-                            be attached to the instance. The structure is documented
-                            below.
                           items:
                             properties:
                               size:
-                                description: 'The size of the disk in GB. Allowed
-                                  minimal size: 64 GB.'
                                 type: number
                               type:
-                                description: The disk type.
                                 type: string
                             type: object
                           type: array
                         containerRuntime:
-                          description: (Optional) Container runtime configuration.
-                            The structure is documented below.
                           items:
                             properties:
                               type:
-                                description: The disk type.
                                 type: string
                             required:
                             - type
@@ -202,56 +274,69 @@ spec:
                         metadata:
                           additionalProperties:
                             type: string
-                          description: The set of metadata `key:value` pairs assigned
-                            to this instance template. This includes custom metadata
-                            and predefined keys.
                           type: object
                         nat:
-                          description: Boolean flag, enables NAT for node group compute
-                            instances.
                           type: boolean
                         networkAccelerationType:
-                          description: '(Optional) Type of network acceleration. Values:
-                            `standard`, `software_accelerated`.'
                           type: string
                         networkInterface:
-                          description: An array with the network interfaces that will
-                            be attached to the instance. The structure is documented
-                            below.
                           items:
                             properties:
                               ipv4:
-                                description: (Optional) Allocate an IPv4 address for
-                                  the interface. The default value is `true`.
                                 type: boolean
                               ipv6:
-                                description: (Optional) If true, allocate an IPv6
-                                  address for the interface. The address will be automatically
-                                  assigned from the specified subnet.
                                 type: boolean
                               nat:
-                                description: Boolean flag, enables NAT for node group
-                                  compute instances.
                                 type: boolean
                               securityGroupIds:
-                                description: (Optional) Security group ids for network
-                                  interface.
                                 items:
                                   type: string
                                 type: array
                               securityGroupIdsRefs:
+                                description: References to SecurityGroup in vpc to
+                                  populate securityGroupIds.
                                 items:
                                   description: A Reference to a named object.
                                   properties:
                                     name:
                                       description: Name of the referenced object.
                                       type: string
+                                    policy:
+                                      description: Policies for referencing.
+                                      properties:
+                                        resolution:
+                                          default: Required
+                                          description: Resolution specifies whether
+                                            resolution of this reference is required.
+                                            The default is 'Required', which means
+                                            the reconcile will fail if the reference
+                                            cannot be resolved. 'Optional' means this
+                                            reference will be a no-op if it cannot
+                                            be resolved.
+                                          enum:
+                                          - Required
+                                          - Optional
+                                          type: string
+                                        resolve:
+                                          description: Resolve specifies when this
+                                            reference should be resolved. The default
+                                            is 'IfNotPresent', which will attempt
+                                            to resolve the reference only when the
+                                            corresponding field is not present. Use
+                                            'Always' to resolve the reference on every
+                                            reconcile.
+                                          enum:
+                                          - Always
+                                          - IfNotPresent
+                                          type: string
+                                      type: object
                                   required:
                                   - name
                                   type: object
                                 type: array
                               securityGroupIdsSelector:
-                                description: A Selector selects an object.
+                                description: Selector for a list of SecurityGroup
+                                  in vpc to populate securityGroupIds.
                                 properties:
                                   matchControllerRef:
                                     description: MatchControllerRef ensures an object
@@ -264,25 +349,83 @@ spec:
                                     description: MatchLabels ensures an object with
                                       matching labels is selected.
                                     type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: Resolution specifies whether
+                                          resolution of this reference is required.
+                                          The default is 'Required', which means the
+                                          reconcile will fail if the reference cannot
+                                          be resolved. 'Optional' means this reference
+                                          will be a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: Resolve specifies when this reference
+                                          should be resolved. The default is 'IfNotPresent',
+                                          which will attempt to resolve the reference
+                                          only when the corresponding field is not
+                                          present. Use 'Always' to resolve the reference
+                                          on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
                                 type: object
                               subnetIds:
-                                description: The IDs of the subnets.
                                 items:
                                   type: string
                                 type: array
                               subnetIdsRefs:
+                                description: References to Subnet in vpc to populate
+                                  subnetIds.
                                 items:
                                   description: A Reference to a named object.
                                   properties:
                                     name:
                                       description: Name of the referenced object.
                                       type: string
+                                    policy:
+                                      description: Policies for referencing.
+                                      properties:
+                                        resolution:
+                                          default: Required
+                                          description: Resolution specifies whether
+                                            resolution of this reference is required.
+                                            The default is 'Required', which means
+                                            the reconcile will fail if the reference
+                                            cannot be resolved. 'Optional' means this
+                                            reference will be a no-op if it cannot
+                                            be resolved.
+                                          enum:
+                                          - Required
+                                          - Optional
+                                          type: string
+                                        resolve:
+                                          description: Resolve specifies when this
+                                            reference should be resolved. The default
+                                            is 'IfNotPresent', which will attempt
+                                            to resolve the reference only when the
+                                            corresponding field is not present. Use
+                                            'Always' to resolve the reference on every
+                                            reconcile.
+                                          enum:
+                                          - Always
+                                          - IfNotPresent
+                                          type: string
+                                      type: object
                                   required:
                                   - name
                                   type: object
                                 type: array
                               subnetIdsSelector:
-                                description: A Selector selects an object.
+                                description: Selector for a list of Subnet in vpc
+                                  to populate subnetIds.
                                 properties:
                                   matchControllerRef:
                                     description: MatchControllerRef ensures an object
@@ -295,25 +438,46 @@ spec:
                                     description: MatchLabels ensures an object with
                                       matching labels is selected.
                                     type: object
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: Resolution specifies whether
+                                          resolution of this reference is required.
+                                          The default is 'Required', which means the
+                                          reconcile will fail if the reference cannot
+                                          be resolved. 'Optional' means this reference
+                                          will be a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: Resolve specifies when this reference
+                                          should be resolved. The default is 'IfNotPresent',
+                                          which will attempt to resolve the reference
+                                          only when the corresponding field is not
+                                          present. Use 'Always' to resolve the reference
+                                          on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
                                 type: object
                             type: object
                           type: array
                         placementPolicy:
-                          description: (Optional) The placement policy configuration.
-                            The structure is documented below.
                           items:
                             properties:
                               placementGroupId:
-                                description: (Optional) Specifies the id of the Placement
-                                  Group to assign to the instances.
                                 type: string
                             required:
                             - placementGroupId
                             type: object
                           type: array
                         platformId:
-                          description: The ID of the hardware platform configuration
-                            for the node group compute instances.
                           type: string
                         resources:
                           items:
@@ -329,13 +493,9 @@ spec:
                             type: object
                           type: array
                         schedulingPolicy:
-                          description: The scheduling policy for the instances in
-                            node group. The structure is documented below.
                           items:
                             properties:
                               preemptible:
-                                description: Specifies if the instance is preemptible.
-                                  Defaults to false.
                                 type: boolean
                             type: object
                           type: array
@@ -344,25 +504,15 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) A set of key/value label pairs assigned
-                      to the Kubernetes node group.
                     type: object
                   maintenancePolicy:
-                    description: (Optional) (Computed) Maintenance policy for this
-                      Kubernetes node group.
                     items:
                       properties:
                         autoRepair:
                           type: boolean
                         autoUpgrade:
-                          description: (Required) Boolean flag that specifies if node
-                            group can be upgraded automatically. When omitted, default
-                            value is TRUE.
                           type: boolean
                         maintenanceWindow:
-                          description: (Optional) (Computed) Set of day intervals,
-                            when maintenance is allowed for this node group. When
-                            omitted, it defaults to any time.
                           items:
                             properties:
                               day:
@@ -381,44 +531,25 @@ spec:
                       - autoUpgrade
                       type: object
                     type: array
-                  name:
-                    description: (Optional) Name of a specific Kubernetes node group.
-                    type: string
                   nodeLabels:
                     additionalProperties:
                       type: string
-                    description: (Optional, Forces new resource) A set of key/value
-                      label pairs, that are assigned to all the nodes of this Kubernetes
-                      node group.
                     type: object
                   nodeTaints:
-                    description: (Optional, Forces new resource) A list of Kubernetes
-                      taints, that are applied to all the nodes of this Kubernetes
-                      node group.
                     items:
                       type: string
                     type: array
                   scalePolicy:
-                    description: (Required) Scale policy of the node group. The structure
-                      is documented below.
                     items:
                       properties:
                         autoScale:
-                          description: Scale policy for an autoscaled node group.
-                            The structure is documented below.
                           items:
                             properties:
                               initial:
-                                description: Initial number of instances in the node
-                                  group.
                                 type: number
                               max:
-                                description: Maximum number of instances in the node
-                                  group.
                                 type: number
                               min:
-                                description: Minimum number of instances in the node
-                                  group.
                                 type: number
                             required:
                             - initial
@@ -427,21 +558,15 @@ spec:
                             type: object
                           type: array
                         fixedScale:
-                          description: Scale policy for a fixed scale node group.
-                            The structure is documented below.
                           items:
                             properties:
                               size:
-                                description: 'The size of the disk in GB. Allowed
-                                  minimal size: 64 GB.'
                                 type: number
                             type: object
                           type: array
                       type: object
                     type: array
                   version:
-                    description: (Optional) Version of Kubernetes that will be used
-                      for Kubernetes node group.
                     type: string
                 required:
                 - instanceTemplate
@@ -457,6 +582,31 @@ spec:
                   name:
                     description: Name of the referenced object.
                     type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
                 required:
                 - name
                 type: object
@@ -468,6 +618,31 @@ spec:
                   name:
                     description: Name of the referenced object.
                     type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
                 required:
                 - name
                 type: object
@@ -487,6 +662,31 @@ spec:
                       name:
                         description: Name of the referenced object.
                         type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
                     required:
                     - name
                     type: object
@@ -549,36 +749,23 @@ spec:
               atProvider:
                 properties:
                   createdAt:
-                    description: (Computed) The Kubernetes node group creation timestamp.
                     type: string
                   id:
                     type: string
                   instanceGroupId:
-                    description: (Computed) ID of instance group that is used to manage
-                      this Kubernetes node group.
                     type: string
                   status:
-                    description: (Computed) Status of the Kubernetes node group.
                     type: string
                   versionInfo:
-                    description: (Computed) Information about Kubernetes node group
-                      version. The structure is documented below.
                     items:
                       properties:
                         currentVersion:
-                          description: Current Kubernetes version, major.minor (e.g.
-                            1.15).
                           type: string
                         newRevisionAvailable:
-                          description: True/false flag.
                           type: boolean
                         newRevisionSummary:
-                          description: Human readable description of the changes to
-                            be applied
                           type: string
                         versionDeprecated:
-                          description: True/false flag. The current version is on
-                            the deprecation schedule,
                           type: boolean
                       type: object
                     type: array
