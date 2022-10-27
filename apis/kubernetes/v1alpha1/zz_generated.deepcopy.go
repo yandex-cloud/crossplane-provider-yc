@@ -52,7 +52,7 @@ func (in *AllocationPolicyLocationParameters) DeepCopyInto(out *AllocationPolicy
 	if in.SubnetIDRef != nil {
 		in, out := &in.SubnetIDRef, &out.SubnetIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.SubnetIDSelector != nil {
 		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
@@ -357,16 +357,6 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.KMSProvider != nil {
 		in, out := &in.KMSProvider, &out.KMSProvider
 		*out = make([]KMSProviderParameters, len(*in))
@@ -396,11 +386,6 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
@@ -409,7 +394,7 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 	if in.NetworkIDRef != nil {
 		in, out := &in.NetworkIDRef, &out.NetworkIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.NetworkIDSelector != nil {
 		in, out := &in.NetworkIDSelector, &out.NetworkIDSelector
@@ -441,7 +426,7 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 	if in.NodeServiceAccountIDRef != nil {
 		in, out := &in.NodeServiceAccountIDRef, &out.NodeServiceAccountIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.NodeServiceAccountIDSelector != nil {
 		in, out := &in.NodeServiceAccountIDSelector, &out.NodeServiceAccountIDSelector
@@ -461,7 +446,7 @@ func (in *ClusterParameters) DeepCopyInto(out *ClusterParameters) {
 	if in.ServiceAccountIDRef != nil {
 		in, out := &in.ServiceAccountIDRef, &out.ServiceAccountIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ServiceAccountIDSelector != nil {
 		in, out := &in.ServiceAccountIDSelector, &out.ServiceAccountIDSelector
@@ -762,7 +747,7 @@ func (in *KMSProviderParameters) DeepCopyInto(out *KMSProviderParameters) {
 	if in.KeyIDRef != nil {
 		in, out := &in.KeyIDRef, &out.KeyIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.KeyIDSelector != nil {
 		in, out := &in.KeyIDSelector, &out.KeyIDSelector
@@ -807,7 +792,7 @@ func (in *LocationParameters) DeepCopyInto(out *LocationParameters) {
 	if in.SubnetIDRef != nil {
 		in, out := &in.SubnetIDRef, &out.SubnetIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.SubnetIDSelector != nil {
 		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector
@@ -1046,7 +1031,9 @@ func (in *MasterParameters) DeepCopyInto(out *MasterParameters) {
 	if in.SecurityGroupIdsRefs != nil {
 		in, out := &in.SecurityGroupIdsRefs, &out.SecurityGroupIdsRefs
 		*out = make([]v1.Reference, len(*in))
-		copy(*out, *in)
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.SecurityGroupIdsSelector != nil {
 		in, out := &in.SecurityGroupIdsSelector, &out.SecurityGroupIdsSelector
@@ -1159,7 +1146,9 @@ func (in *NetworkInterfaceParameters) DeepCopyInto(out *NetworkInterfaceParamete
 	if in.SecurityGroupIdsRefs != nil {
 		in, out := &in.SecurityGroupIdsRefs, &out.SecurityGroupIdsRefs
 		*out = make([]v1.Reference, len(*in))
-		copy(*out, *in)
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.SecurityGroupIdsSelector != nil {
 		in, out := &in.SecurityGroupIdsSelector, &out.SecurityGroupIdsSelector
@@ -1180,7 +1169,9 @@ func (in *NetworkInterfaceParameters) DeepCopyInto(out *NetworkInterfaceParamete
 	if in.SubnetIdsRefs != nil {
 		in, out := &in.SubnetIdsRefs, &out.SubnetIdsRefs
 		*out = make([]v1.Reference, len(*in))
-		copy(*out, *in)
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.SubnetIdsSelector != nil {
 		in, out := &in.SubnetIdsSelector, &out.SubnetIdsSelector
@@ -1376,7 +1367,7 @@ func (in *NodeGroupParameters) DeepCopyInto(out *NodeGroupParameters) {
 	if in.ClusterIDRef != nil {
 		in, out := &in.ClusterIDRef, &out.ClusterIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ClusterIDSelector != nil {
 		in, out := &in.ClusterIDSelector, &out.ClusterIDSelector
@@ -1423,11 +1414,6 @@ func (in *NodeGroupParameters) DeepCopyInto(out *NodeGroupParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
-	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
 	}
 	if in.NodeLabels != nil {
 		in, out := &in.NodeLabels, &out.NodeLabels
@@ -1845,7 +1831,7 @@ func (in *ZonalParameters) DeepCopyInto(out *ZonalParameters) {
 	if in.SubnetIDRef != nil {
 		in, out := &in.SubnetIDRef, &out.SubnetIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.SubnetIDSelector != nil {
 		in, out := &in.SubnetIDSelector, &out.SubnetIDSelector

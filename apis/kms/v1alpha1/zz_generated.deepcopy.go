@@ -22,7 +22,6 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -138,16 +137,6 @@ func (in *SymmetricKeyParameters) DeepCopyInto(out *SymmetricKeyParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -162,11 +151,6 @@ func (in *SymmetricKeyParameters) DeepCopyInto(out *SymmetricKeyParameters) {
 			}
 			(*out)[key] = outVal
 		}
-	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
 	}
 	if in.RotationPeriod != nil {
 		in, out := &in.RotationPeriod, &out.RotationPeriod

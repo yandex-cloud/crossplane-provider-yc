@@ -21,9 +21,8 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1alpha12 "github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1"
-	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
-	v1alpha11 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
+	v1alpha11 "github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1"
+	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
 	datatransfer "github.com/yandex-cloud/provider-jet-yc/config/datatransfer"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -36,22 +35,6 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 	var mrsp reference.MultiResolutionResponse
 	var err error
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
-
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Settings); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Settings[i3].ClickhouseSource); i4++ {
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
@@ -60,8 +43,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				Reference:    mg.Spec.ForProvider.Settings[i3].ClickhouseSource[i4].SubnetIDRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].ClickhouseSource[i4].SubnetIDSelector,
 				To: reference.To{
-					List:    &v1alpha11.SubnetList{},
-					Managed: &v1alpha11.Subnet{},
+					List:    &v1alpha1.SubnetList{},
+					Managed: &v1alpha1.Subnet{},
 				},
 			})
 			if err != nil {
@@ -80,8 +63,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				Reference:    mg.Spec.ForProvider.Settings[i3].ClickhouseTarget[i4].SubnetIDRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].ClickhouseTarget[i4].SubnetIDSelector,
 				To: reference.To{
-					List:    &v1alpha11.SubnetList{},
-					Managed: &v1alpha11.Subnet{},
+					List:    &v1alpha1.SubnetList{},
+					Managed: &v1alpha1.Subnet{},
 				},
 			})
 			if err != nil {
@@ -102,8 +85,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 						Reference:    mg.Spec.ForProvider.Settings[i3].MongoSource[i4].Connection[i5].ConnectionOptions[i6].MdbClusterIDRef,
 						Selector:     mg.Spec.ForProvider.Settings[i3].MongoSource[i4].Connection[i5].ConnectionOptions[i6].MdbClusterIDSelector,
 						To: reference.To{
-							List:    &v1alpha12.MongodbClusterList{},
-							Managed: &v1alpha12.MongodbCluster{},
+							List:    &v1alpha11.MongodbClusterList{},
+							Managed: &v1alpha11.MongodbCluster{},
 						},
 					})
 					if err != nil {
@@ -124,8 +107,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				Reference:    mg.Spec.ForProvider.Settings[i3].MongoSource[i4].SubnetIDRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].MongoSource[i4].SubnetIDSelector,
 				To: reference.To{
-					List:    &v1alpha11.SubnetList{},
-					Managed: &v1alpha11.Subnet{},
+					List:    &v1alpha1.SubnetList{},
+					Managed: &v1alpha1.Subnet{},
 				},
 			})
 			if err != nil {
@@ -146,8 +129,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 						Reference:    mg.Spec.ForProvider.Settings[i3].MongoTarget[i4].Connection[i5].ConnectionOptions[i6].MdbClusterIDRef,
 						Selector:     mg.Spec.ForProvider.Settings[i3].MongoTarget[i4].Connection[i5].ConnectionOptions[i6].MdbClusterIDSelector,
 						To: reference.To{
-							List:    &v1alpha12.MongodbClusterList{},
-							Managed: &v1alpha12.MongodbCluster{},
+							List:    &v1alpha11.MongodbClusterList{},
+							Managed: &v1alpha11.MongodbCluster{},
 						},
 					})
 					if err != nil {
@@ -168,8 +151,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				Reference:    mg.Spec.ForProvider.Settings[i3].MongoTarget[i4].SubnetIDRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].MongoTarget[i4].SubnetIDSelector,
 				To: reference.To{
-					List:    &v1alpha11.SubnetList{},
-					Managed: &v1alpha11.Subnet{},
+					List:    &v1alpha1.SubnetList{},
+					Managed: &v1alpha1.Subnet{},
 				},
 			})
 			if err != nil {
@@ -189,8 +172,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 					Reference:    mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].Connection[i5].MdbClusterIDRef,
 					Selector:     mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].Connection[i5].MdbClusterIDSelector,
 					To: reference.To{
-						List:    &v1alpha12.MySQLClusterList{},
-						Managed: &v1alpha12.MySQLCluster{},
+						List:    &v1alpha11.MySQLClusterList{},
+						Managed: &v1alpha11.MySQLCluster{},
 					},
 				})
 				if err != nil {
@@ -212,8 +195,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 						Reference:    mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].Connection[i5].OnPremise[i6].SubnetIDRef,
 						Selector:     mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].Connection[i5].OnPremise[i6].SubnetIDSelector,
 						To: reference.To{
-							List:    &v1alpha11.SubnetList{},
-							Managed: &v1alpha11.Subnet{},
+							List:    &v1alpha1.SubnetList{},
+							Managed: &v1alpha1.Subnet{},
 						},
 					})
 					if err != nil {
@@ -234,8 +217,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].DatabaseRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].DatabaseSelector,
 				To: reference.To{
-					List:    &v1alpha12.MySQLDatabaseList{},
-					Managed: &v1alpha12.MySQLDatabase{},
+					List:    &v1alpha11.MySQLDatabaseList{},
+					Managed: &v1alpha11.MySQLDatabase{},
 				},
 			})
 			if err != nil {
@@ -254,8 +237,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				References:    mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].SecurityGroupsRefs,
 				Selector:      mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].SecurityGroupsSelector,
 				To: reference.To{
-					List:    &v1alpha11.SecurityGroupList{},
-					Managed: &v1alpha11.SecurityGroup{},
+					List:    &v1alpha1.SecurityGroupList{},
+					Managed: &v1alpha1.SecurityGroup{},
 				},
 			})
 			if err != nil {
@@ -274,8 +257,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].UserRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLSource[i4].UserSelector,
 				To: reference.To{
-					List:    &v1alpha12.MySQLUserList{},
-					Managed: &v1alpha12.MySQLUser{},
+					List:    &v1alpha11.MySQLUserList{},
+					Managed: &v1alpha11.MySQLUser{},
 				},
 			})
 			if err != nil {
@@ -295,8 +278,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 					Reference:    mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].Connection[i5].MdbClusterIDRef,
 					Selector:     mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].Connection[i5].MdbClusterIDSelector,
 					To: reference.To{
-						List:    &v1alpha12.MySQLClusterList{},
-						Managed: &v1alpha12.MySQLCluster{},
+						List:    &v1alpha11.MySQLClusterList{},
+						Managed: &v1alpha11.MySQLCluster{},
 					},
 				})
 				if err != nil {
@@ -318,8 +301,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 						Reference:    mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].Connection[i5].OnPremise[i6].SubnetIDRef,
 						Selector:     mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].Connection[i5].OnPremise[i6].SubnetIDSelector,
 						To: reference.To{
-							List:    &v1alpha11.SubnetList{},
-							Managed: &v1alpha11.Subnet{},
+							List:    &v1alpha1.SubnetList{},
+							Managed: &v1alpha1.Subnet{},
 						},
 					})
 					if err != nil {
@@ -340,8 +323,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].DatabaseRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].DatabaseSelector,
 				To: reference.To{
-					List:    &v1alpha12.MySQLDatabaseList{},
-					Managed: &v1alpha12.MySQLDatabase{},
+					List:    &v1alpha11.MySQLDatabaseList{},
+					Managed: &v1alpha11.MySQLDatabase{},
 				},
 			})
 			if err != nil {
@@ -360,8 +343,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				References:    mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].SecurityGroupsRefs,
 				Selector:      mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].SecurityGroupsSelector,
 				To: reference.To{
-					List:    &v1alpha11.SecurityGroupList{},
-					Managed: &v1alpha11.SecurityGroup{},
+					List:    &v1alpha1.SecurityGroupList{},
+					Managed: &v1alpha1.SecurityGroup{},
 				},
 			})
 			if err != nil {
@@ -380,8 +363,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				Reference:    mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].UserRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].MySQLTarget[i4].UserSelector,
 				To: reference.To{
-					List:    &v1alpha12.MySQLUserList{},
-					Managed: &v1alpha12.MySQLUser{},
+					List:    &v1alpha11.MySQLUserList{},
+					Managed: &v1alpha11.MySQLUser{},
 				},
 			})
 			if err != nil {
@@ -401,8 +384,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 					Reference:    mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].Connection[i5].MdbClusterIDRef,
 					Selector:     mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].Connection[i5].MdbClusterIDSelector,
 					To: reference.To{
-						List:    &v1alpha12.PostgresqlClusterList{},
-						Managed: &v1alpha12.PostgresqlCluster{},
+						List:    &v1alpha11.PostgresqlClusterList{},
+						Managed: &v1alpha11.PostgresqlCluster{},
 					},
 				})
 				if err != nil {
@@ -424,8 +407,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 						Reference:    mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].Connection[i5].OnPremise[i6].SubnetIDRef,
 						Selector:     mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].Connection[i5].OnPremise[i6].SubnetIDSelector,
 						To: reference.To{
-							List:    &v1alpha11.SubnetList{},
-							Managed: &v1alpha11.Subnet{},
+							List:    &v1alpha1.SubnetList{},
+							Managed: &v1alpha1.Subnet{},
 						},
 					})
 					if err != nil {
@@ -446,8 +429,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].DatabaseRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].DatabaseSelector,
 				To: reference.To{
-					List:    &v1alpha12.PostgresqlDatabaseList{},
-					Managed: &v1alpha12.PostgresqlDatabase{},
+					List:    &v1alpha11.PostgresqlDatabaseList{},
+					Managed: &v1alpha11.PostgresqlDatabase{},
 				},
 			})
 			if err != nil {
@@ -466,8 +449,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				References:    mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].SecurityGroupsRefs,
 				Selector:      mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].SecurityGroupsSelector,
 				To: reference.To{
-					List:    &v1alpha11.SecurityGroupList{},
-					Managed: &v1alpha11.SecurityGroup{},
+					List:    &v1alpha1.SecurityGroupList{},
+					Managed: &v1alpha1.SecurityGroup{},
 				},
 			})
 			if err != nil {
@@ -486,8 +469,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].UserRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresSource[i4].UserSelector,
 				To: reference.To{
-					List:    &v1alpha12.PostgresqlUserList{},
-					Managed: &v1alpha12.PostgresqlUser{},
+					List:    &v1alpha11.PostgresqlUserList{},
+					Managed: &v1alpha11.PostgresqlUser{},
 				},
 			})
 			if err != nil {
@@ -507,8 +490,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 					Reference:    mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].Connection[i5].MdbClusterIDRef,
 					Selector:     mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].Connection[i5].MdbClusterIDSelector,
 					To: reference.To{
-						List:    &v1alpha12.PostgresqlClusterList{},
-						Managed: &v1alpha12.PostgresqlCluster{},
+						List:    &v1alpha11.PostgresqlClusterList{},
+						Managed: &v1alpha11.PostgresqlCluster{},
 					},
 				})
 				if err != nil {
@@ -530,8 +513,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 						Reference:    mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].Connection[i5].OnPremise[i6].SubnetIDRef,
 						Selector:     mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].Connection[i5].OnPremise[i6].SubnetIDSelector,
 						To: reference.To{
-							List:    &v1alpha11.SubnetList{},
-							Managed: &v1alpha11.Subnet{},
+							List:    &v1alpha1.SubnetList{},
+							Managed: &v1alpha1.Subnet{},
 						},
 					})
 					if err != nil {
@@ -552,8 +535,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].DatabaseRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].DatabaseSelector,
 				To: reference.To{
-					List:    &v1alpha12.PostgresqlDatabaseList{},
-					Managed: &v1alpha12.PostgresqlDatabase{},
+					List:    &v1alpha11.PostgresqlDatabaseList{},
+					Managed: &v1alpha11.PostgresqlDatabase{},
 				},
 			})
 			if err != nil {
@@ -572,8 +555,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				References:    mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].SecurityGroupsRefs,
 				Selector:      mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].SecurityGroupsSelector,
 				To: reference.To{
-					List:    &v1alpha11.SecurityGroupList{},
-					Managed: &v1alpha11.SecurityGroup{},
+					List:    &v1alpha1.SecurityGroupList{},
+					Managed: &v1alpha1.SecurityGroup{},
 				},
 			})
 			if err != nil {
@@ -592,8 +575,8 @@ func (mg *Endpoint) ResolveReferences(ctx context.Context, c client.Reader) erro
 				Reference:    mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].UserRef,
 				Selector:     mg.Spec.ForProvider.Settings[i3].PostgresTarget[i4].UserSelector,
 				To: reference.To{
-					List:    &v1alpha12.PostgresqlUserList{},
-					Managed: &v1alpha12.PostgresqlUser{},
+					List:    &v1alpha11.PostgresqlUserList{},
+					Managed: &v1alpha11.PostgresqlUser{},
 				},
 			})
 			if err != nil {
@@ -614,22 +597,6 @@ func (mg *Transfer) ResolveReferences(ctx context.Context, c client.Reader) erro
 
 	var rsp reference.ResolutionResponse
 	var err error
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SourceID),

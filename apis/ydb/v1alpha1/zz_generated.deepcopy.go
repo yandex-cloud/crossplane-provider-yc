@@ -153,16 +153,6 @@ func (in *DatabaseDedicatedParameters) DeepCopyInto(out *DatabaseDedicatedParame
 		*out = new(string)
 		**out = **in
 	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -190,11 +180,6 @@ func (in *DatabaseDedicatedParameters) DeepCopyInto(out *DatabaseDedicatedParame
 		*out = new(string)
 		**out = **in
 	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
-		*out = new(string)
-		**out = **in
-	}
 	if in.NetworkID != nil {
 		in, out := &in.NetworkID, &out.NetworkID
 		*out = new(string)
@@ -203,7 +188,7 @@ func (in *DatabaseDedicatedParameters) DeepCopyInto(out *DatabaseDedicatedParame
 	if in.NetworkIDRef != nil {
 		in, out := &in.NetworkIDRef, &out.NetworkIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.NetworkIDSelector != nil {
 		in, out := &in.NetworkIDSelector, &out.NetworkIDSelector
@@ -243,7 +228,9 @@ func (in *DatabaseDedicatedParameters) DeepCopyInto(out *DatabaseDedicatedParame
 	if in.SubnetIdsRefs != nil {
 		in, out := &in.SubnetIdsRefs, &out.SubnetIdsRefs
 		*out = make([]v1.Reference, len(*in))
-		copy(*out, *in)
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.SubnetIdsSelector != nil {
 		in, out := &in.SubnetIdsSelector, &out.SubnetIdsSelector
@@ -423,16 +410,6 @@ func (in *DatabaseServerlessParameters) DeepCopyInto(out *DatabaseServerlessPara
 		*out = new(string)
 		**out = **in
 	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -450,11 +427,6 @@ func (in *DatabaseServerlessParameters) DeepCopyInto(out *DatabaseServerlessPara
 	}
 	if in.LocationID != nil {
 		in, out := &in.LocationID, &out.LocationID
-		*out = new(string)
-		**out = **in
-	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
 		*out = new(string)
 		**out = **in
 	}

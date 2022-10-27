@@ -21,8 +21,7 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
-	v1alpha11 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
+	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -30,25 +29,8 @@ import (
 func (mg *BackendGroup) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
 
-	var rsp reference.ResolutionResponse
 	var mrsp reference.MultiResolutionResponse
 	var err error
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
 
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.GRPCBackend); i3++ {
 		mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
@@ -108,32 +90,6 @@ func (mg *BackendGroup) ResolveReferences(ctx context.Context, c client.Reader) 
 	return nil
 }
 
-// ResolveReferences of this HTTPRouter.
-func (mg *HTTPRouter) ResolveReferences(ctx context.Context, c client.Reader) error {
-	r := reference.NewAPIResolver(c, mg)
-
-	var rsp reference.ResolutionResponse
-	var err error
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
-
-	return nil
-}
-
 // ResolveReferences of this LoadBalancer.
 func (mg *LoadBalancer) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
@@ -150,8 +106,8 @@ func (mg *LoadBalancer) ResolveReferences(ctx context.Context, c client.Reader) 
 				Reference:    mg.Spec.ForProvider.AllocationPolicy[i3].Location[i4].SubnetIDRef,
 				Selector:     mg.Spec.ForProvider.AllocationPolicy[i3].Location[i4].SubnetIDSelector,
 				To: reference.To{
-					List:    &v1alpha11.SubnetList{},
-					Managed: &v1alpha11.Subnet{},
+					List:    &v1alpha1.SubnetList{},
+					Managed: &v1alpha1.Subnet{},
 				},
 			})
 			if err != nil {
@@ -162,22 +118,6 @@ func (mg *LoadBalancer) ResolveReferences(ctx context.Context, c client.Reader) 
 
 		}
 	}
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
-
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Listener); i3++ {
 		for i4 := 0; i4 < len(mg.Spec.ForProvider.Listener[i3].Endpoint); i4++ {
 			for i5 := 0; i5 < len(mg.Spec.ForProvider.Listener[i3].Endpoint[i4].Address); i5++ {
@@ -188,8 +128,8 @@ func (mg *LoadBalancer) ResolveReferences(ctx context.Context, c client.Reader) 
 						Reference:    mg.Spec.ForProvider.Listener[i3].Endpoint[i4].Address[i5].InternalIPv4Address[i6].SubnetIDRef,
 						Selector:     mg.Spec.ForProvider.Listener[i3].Endpoint[i4].Address[i5].InternalIPv4Address[i6].SubnetIDSelector,
 						To: reference.To{
-							List:    &v1alpha11.SubnetList{},
-							Managed: &v1alpha11.Subnet{},
+							List:    &v1alpha1.SubnetList{},
+							Managed: &v1alpha1.Subnet{},
 						},
 					})
 					if err != nil {
@@ -208,8 +148,8 @@ func (mg *LoadBalancer) ResolveReferences(ctx context.Context, c client.Reader) 
 		Reference:    mg.Spec.ForProvider.NetworkIDRef,
 		Selector:     mg.Spec.ForProvider.NetworkIDSelector,
 		To: reference.To{
-			List:    &v1alpha11.NetworkList{},
-			Managed: &v1alpha11.Network{},
+			List:    &v1alpha1.NetworkList{},
+			Managed: &v1alpha1.Network{},
 		},
 	})
 	if err != nil {
@@ -224,8 +164,8 @@ func (mg *LoadBalancer) ResolveReferences(ctx context.Context, c client.Reader) 
 		References:    mg.Spec.ForProvider.SecurityGroupIdsRefs,
 		Selector:      mg.Spec.ForProvider.SecurityGroupIdsSelector,
 		To: reference.To{
-			List:    &v1alpha11.SecurityGroupList{},
-			Managed: &v1alpha11.SecurityGroup{},
+			List:    &v1alpha1.SecurityGroupList{},
+			Managed: &v1alpha1.SecurityGroup{},
 		},
 	})
 	if err != nil {
@@ -244,22 +184,6 @@ func (mg *TargetGroup) ResolveReferences(ctx context.Context, c client.Reader) e
 	var rsp reference.ResolutionResponse
 	var err error
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
-
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Target); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Target[i3].SubnetID),
@@ -267,8 +191,8 @@ func (mg *TargetGroup) ResolveReferences(ctx context.Context, c client.Reader) e
 			Reference:    mg.Spec.ForProvider.Target[i3].SubnetIDRef,
 			Selector:     mg.Spec.ForProvider.Target[i3].SubnetIDSelector,
 			To: reference.To{
-				List:    &v1alpha11.SubnetList{},
-				Managed: &v1alpha11.Subnet{},
+				List:    &v1alpha1.SubnetList{},
+				Managed: &v1alpha1.Subnet{},
 			},
 		})
 		if err != nil {

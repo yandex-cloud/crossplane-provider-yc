@@ -21,10 +21,9 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1alpha13 "github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1"
-	v1alpha11 "github.com/yandex-cloud/provider-jet-yc/apis/kms/v1alpha1"
-	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
-	v1alpha12 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
+	v1alpha12 "github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1"
+	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/kms/v1alpha1"
+	v1alpha11 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -36,22 +35,6 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	var mrsp reference.MultiResolutionResponse
 	var err error
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
-
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.KMSProvider); i3++ {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.KMSProvider[i3].KeyID),
@@ -59,8 +42,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 			Reference:    mg.Spec.ForProvider.KMSProvider[i3].KeyIDRef,
 			Selector:     mg.Spec.ForProvider.KMSProvider[i3].KeyIDSelector,
 			To: reference.To{
-				List:    &v1alpha11.SymmetricKeyList{},
-				Managed: &v1alpha11.SymmetricKey{},
+				List:    &v1alpha1.SymmetricKeyList{},
+				Managed: &v1alpha1.SymmetricKey{},
 			},
 		})
 		if err != nil {
@@ -79,8 +62,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 					Reference:    mg.Spec.ForProvider.Master[i3].Regional[i4].Location[i5].SubnetIDRef,
 					Selector:     mg.Spec.ForProvider.Master[i3].Regional[i4].Location[i5].SubnetIDSelector,
 					To: reference.To{
-						List:    &v1alpha12.SubnetList{},
-						Managed: &v1alpha12.Subnet{},
+						List:    &v1alpha11.SubnetList{},
+						Managed: &v1alpha11.Subnet{},
 					},
 				})
 				if err != nil {
@@ -99,8 +82,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 			References:    mg.Spec.ForProvider.Master[i3].SecurityGroupIdsRefs,
 			Selector:      mg.Spec.ForProvider.Master[i3].SecurityGroupIdsSelector,
 			To: reference.To{
-				List:    &v1alpha12.SecurityGroupList{},
-				Managed: &v1alpha12.SecurityGroup{},
+				List:    &v1alpha11.SecurityGroupList{},
+				Managed: &v1alpha11.SecurityGroup{},
 			},
 		})
 		if err != nil {
@@ -118,8 +101,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 				Reference:    mg.Spec.ForProvider.Master[i3].Zonal[i4].SubnetIDRef,
 				Selector:     mg.Spec.ForProvider.Master[i3].Zonal[i4].SubnetIDSelector,
 				To: reference.To{
-					List:    &v1alpha12.SubnetList{},
-					Managed: &v1alpha12.Subnet{},
+					List:    &v1alpha11.SubnetList{},
+					Managed: &v1alpha11.Subnet{},
 				},
 			})
 			if err != nil {
@@ -136,8 +119,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		Reference:    mg.Spec.ForProvider.NetworkIDRef,
 		Selector:     mg.Spec.ForProvider.NetworkIDSelector,
 		To: reference.To{
-			List:    &v1alpha12.NetworkList{},
-			Managed: &v1alpha12.Network{},
+			List:    &v1alpha11.NetworkList{},
+			Managed: &v1alpha11.Network{},
 		},
 	})
 	if err != nil {
@@ -152,8 +135,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		Reference:    mg.Spec.ForProvider.NodeServiceAccountIDRef,
 		Selector:     mg.Spec.ForProvider.NodeServiceAccountIDSelector,
 		To: reference.To{
-			List:    &v1alpha13.ServiceAccountList{},
-			Managed: &v1alpha13.ServiceAccount{},
+			List:    &v1alpha12.ServiceAccountList{},
+			Managed: &v1alpha12.ServiceAccount{},
 		},
 	})
 	if err != nil {
@@ -168,8 +151,8 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		Reference:    mg.Spec.ForProvider.ServiceAccountIDRef,
 		Selector:     mg.Spec.ForProvider.ServiceAccountIDSelector,
 		To: reference.To{
-			List:    &v1alpha13.ServiceAccountList{},
-			Managed: &v1alpha13.ServiceAccount{},
+			List:    &v1alpha12.ServiceAccountList{},
+			Managed: &v1alpha12.ServiceAccount{},
 		},
 	})
 	if err != nil {
@@ -197,8 +180,8 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 				Reference:    mg.Spec.ForProvider.AllocationPolicy[i3].Location[i4].SubnetIDRef,
 				Selector:     mg.Spec.ForProvider.AllocationPolicy[i3].Location[i4].SubnetIDSelector,
 				To: reference.To{
-					List:    &v1alpha12.SubnetList{},
-					Managed: &v1alpha12.Subnet{},
+					List:    &v1alpha11.SubnetList{},
+					Managed: &v1alpha11.Subnet{},
 				},
 			})
 			if err != nil {
@@ -233,8 +216,8 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 				References:    mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SecurityGroupIdsRefs,
 				Selector:      mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SecurityGroupIdsSelector,
 				To: reference.To{
-					List:    &v1alpha12.SecurityGroupList{},
-					Managed: &v1alpha12.SecurityGroup{},
+					List:    &v1alpha11.SecurityGroupList{},
+					Managed: &v1alpha11.SecurityGroup{},
 				},
 			})
 			if err != nil {
@@ -253,8 +236,8 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 				References:    mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SubnetIdsRefs,
 				Selector:      mg.Spec.ForProvider.InstanceTemplate[i3].NetworkInterface[i4].SubnetIdsSelector,
 				To: reference.To{
-					List:    &v1alpha12.SubnetList{},
-					Managed: &v1alpha12.Subnet{},
+					List:    &v1alpha11.SubnetList{},
+					Managed: &v1alpha11.Subnet{},
 				},
 			})
 			if err != nil {

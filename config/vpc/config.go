@@ -14,7 +14,7 @@ limitations under the License.
 package vpc
 
 import (
-	"github.com/crossplane/terrajet/pkg/config"
+	"github.com/upbound/upjet/pkg/config"
 )
 
 const (

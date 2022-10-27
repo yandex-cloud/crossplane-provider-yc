@@ -113,16 +113,6 @@ func (in *FolderIAMBindingParameters) DeepCopyInto(out *FolderIAMBindingParamete
 		*out = new(string)
 		**out = **in
 	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.Members != nil {
 		in, out := &in.Members, &out.Members
 		*out = make([]*string, len(*in))
@@ -142,7 +132,9 @@ func (in *FolderIAMBindingParameters) DeepCopyInto(out *FolderIAMBindingParamete
 	if in.ServiceAccountsRef != nil {
 		in, out := &in.ServiceAccountsRef, &out.ServiceAccountsRef
 		*out = make([]v1.Reference, len(*in))
-		copy(*out, *in)
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
 	}
 	if in.ServiceAccountsSelector != nil {
 		in, out := &in.ServiceAccountsSelector, &out.ServiceAccountsSelector
@@ -287,16 +279,6 @@ func (in *FolderIAMMemberParameters) DeepCopyInto(out *FolderIAMMemberParameters
 		*out = new(string)
 		**out = **in
 	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.Member != nil {
 		in, out := &in.Member, &out.Member
 		*out = new(string)
@@ -310,7 +292,7 @@ func (in *FolderIAMMemberParameters) DeepCopyInto(out *FolderIAMMemberParameters
 	if in.ServiceAccountRef != nil {
 		in, out := &in.ServiceAccountRef, &out.ServiceAccountRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ServiceAccountSelector != nil {
 		in, out := &in.ServiceAccountSelector, &out.ServiceAccountSelector
@@ -495,7 +477,7 @@ func (in *ServiceAccountIAMMemberParameters) DeepCopyInto(out *ServiceAccountIAM
 	if in.ServiceAccountIDRef != nil {
 		in, out := &in.ServiceAccountIDRef, &out.ServiceAccountIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ServiceAccountIDSelector != nil {
 		in, out := &in.ServiceAccountIDSelector, &out.ServiceAccountIDSelector
@@ -505,7 +487,7 @@ func (in *ServiceAccountIAMMemberParameters) DeepCopyInto(out *ServiceAccountIAM
 	if in.ServiceAccountRef != nil {
 		in, out := &in.ServiceAccountRef, &out.ServiceAccountRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ServiceAccountSelector != nil {
 		in, out := &in.ServiceAccountSelector, &out.ServiceAccountSelector
@@ -693,7 +675,7 @@ func (in *ServiceAccountKeyParameters) DeepCopyInto(out *ServiceAccountKeyParame
 	if in.ServiceAccountIDRef != nil {
 		in, out := &in.ServiceAccountIDRef, &out.ServiceAccountIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ServiceAccountIDSelector != nil {
 		in, out := &in.ServiceAccountIDSelector, &out.ServiceAccountIDSelector
@@ -813,21 +795,6 @@ func (in *ServiceAccountParameters) DeepCopyInto(out *ServiceAccountParameters) 
 	}
 	if in.FolderID != nil {
 		in, out := &in.FolderID, &out.FolderID
-		*out = new(string)
-		**out = **in
-	}
-	if in.FolderIDRef != nil {
-		in, out := &in.FolderIDRef, &out.FolderIDRef
-		*out = new(v1.Reference)
-		**out = **in
-	}
-	if in.FolderIDSelector != nil {
-		in, out := &in.FolderIDSelector, &out.FolderIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.Name != nil {
-		in, out := &in.Name, &out.Name
 		*out = new(string)
 		**out = **in
 	}
@@ -980,7 +947,7 @@ func (in *ServiceAccountStaticAccessKeyParameters) DeepCopyInto(out *ServiceAcco
 	if in.ServiceAccountIDRef != nil {
 		in, out := &in.ServiceAccountIDRef, &out.ServiceAccountIDRef
 		*out = new(v1.Reference)
-		**out = **in
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ServiceAccountIDSelector != nil {
 		in, out := &in.ServiceAccountIDSelector, &out.ServiceAccountIDSelector

@@ -21,8 +21,7 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
-	v1alpha11 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
+	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -35,29 +34,13 @@ func (mg *DatabaseDedicated) ResolveReferences(ctx context.Context, c client.Rea
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NetworkID),
 		Extract:      reference.ExternalName(),
 		Reference:    mg.Spec.ForProvider.NetworkIDRef,
 		Selector:     mg.Spec.ForProvider.NetworkIDSelector,
 		To: reference.To{
-			List:    &v1alpha11.NetworkList{},
-			Managed: &v1alpha11.Network{},
+			List:    &v1alpha1.NetworkList{},
+			Managed: &v1alpha1.Network{},
 		},
 	})
 	if err != nil {
@@ -72,8 +55,8 @@ func (mg *DatabaseDedicated) ResolveReferences(ctx context.Context, c client.Rea
 		References:    mg.Spec.ForProvider.SubnetIdsRefs,
 		Selector:      mg.Spec.ForProvider.SubnetIdsSelector,
 		To: reference.To{
-			List:    &v1alpha11.SubnetList{},
-			Managed: &v1alpha11.Subnet{},
+			List:    &v1alpha1.SubnetList{},
+			Managed: &v1alpha1.Subnet{},
 		},
 	})
 	if err != nil {
@@ -81,32 +64,6 @@ func (mg *DatabaseDedicated) ResolveReferences(ctx context.Context, c client.Rea
 	}
 	mg.Spec.ForProvider.SubnetIds = reference.ToPtrValues(mrsp.ResolvedValues)
 	mg.Spec.ForProvider.SubnetIdsRefs = mrsp.ResolvedReferences
-
-	return nil
-}
-
-// ResolveReferences of this DatabaseServerless.
-func (mg *DatabaseServerless) ResolveReferences(ctx context.Context, c client.Reader) error {
-	r := reference.NewAPIResolver(c, mg)
-
-	var rsp reference.ResolutionResponse
-	var err error
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
 
 	return nil
 }

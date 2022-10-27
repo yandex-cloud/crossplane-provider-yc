@@ -21,8 +21,7 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
-	v1alpha11 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
+	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -56,25 +55,8 @@ func (mg *Recordset) ResolveReferences(ctx context.Context, c client.Reader) err
 func (mg *Zone) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
 
-	var rsp reference.ResolutionResponse
 	var mrsp reference.MultiResolutionResponse
 	var err error
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Reference:    mg.Spec.ForProvider.FolderIDRef,
-		Selector:     mg.Spec.ForProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.FolderID")
-	}
-	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
 
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.PrivateNetworks),
@@ -82,8 +64,8 @@ func (mg *Zone) ResolveReferences(ctx context.Context, c client.Reader) error {
 		References:    mg.Spec.ForProvider.PrivateNetworksRefs,
 		Selector:      mg.Spec.ForProvider.PrivateNetworksSelector,
 		To: reference.To{
-			List:    &v1alpha11.NetworkList{},
-			Managed: &v1alpha11.Network{},
+			List:    &v1alpha1.NetworkList{},
+			Managed: &v1alpha1.Network{},
 		},
 	})
 	if err != nil {
