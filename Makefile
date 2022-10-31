@@ -126,7 +126,7 @@ $(TERRAFORM_PROVIDER_SCHEMA): $(TERRAFORM)
 
 
 pull-docs:
-	@if [ ! -d "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))" ]; then \
+	@if [ true ]; then \
 		echo "fkfkfk" \
 		git clone -c advice.detachedHead=false --depth 1 --filter=blob:none --branch "v$(TERRAFORM_PROVIDER_VERSION)" --sparse "$(TERRAFORM_PROVIDER_REPO)" "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))"; \
 	fi
