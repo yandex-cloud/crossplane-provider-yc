@@ -26,8 +26,10 @@ import (
 )
 
 type NetworkObservation struct {
+	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// ID of default Security Group of this network.
 	DefaultSecurityGroupID *string `json:"defaultSecurityGroupId,omitempty" tf:"default_security_group_id,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -38,12 +40,15 @@ type NetworkObservation struct {
 type NetworkParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) An optional description of this resource. Provide this property when
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) ID of the folder that the resource belongs to. If it
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Labels to apply to this network. A list of key/value pairs.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 }
 

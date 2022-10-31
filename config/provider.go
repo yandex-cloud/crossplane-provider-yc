@@ -40,6 +40,9 @@ import (
 //go:embed schema.json
 var providerSchema string
 
+//go: embed provider-metadata.yaml
+var providerMetadata []byte
+
 const (
 	resourcePrefix = "yandex-cloud"
 	modulePath     = "github.com/yandex-cloud/provider-jet-yc"
@@ -47,7 +50,7 @@ const (
 
 // GetProvider returns provider configuration
 func GetProvider() *tjconfig.Provider {
-	pc := tjconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte{},
+	pc := tjconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, providerMetadata,
 		tjconfig.WithShortName("yandex-cloud"),
 		tjconfig.WithRootGroup("yandex-cloud.jet.crossplane.io"),
 		tjconfig.WithDefaultResourceOptions(),

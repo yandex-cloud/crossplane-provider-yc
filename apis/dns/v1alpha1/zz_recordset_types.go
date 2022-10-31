@@ -32,16 +32,20 @@ type RecordsetObservation struct {
 type RecordsetParameters struct {
 
 	// +kubebuilder:validation:Required
+	// (Optional) The string data for the records in this record set.
 	Data []*string `json:"data" tf:"data,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Optional) The time-to-live of this record set (seconds).
 	TTL *float64 `json:"ttl" tf:"ttl,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) The DNS record set type.
 	Type *string `json:"type" tf:"type,omitempty"`
 
 	// +crossplane:generate:reference:type=Zone
 	// +kubebuilder:validation:Optional
+	// (Required) The id of the zone in which this record set will reside.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 
 	// Reference to a Zone to populate zoneId.

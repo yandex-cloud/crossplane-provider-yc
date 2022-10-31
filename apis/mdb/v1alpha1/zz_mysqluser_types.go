@@ -31,15 +31,19 @@ type MySQLUserConnectionLimitsObservation struct {
 type MySQLUserConnectionLimitsParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// Max connections per hour.
 	MaxConnectionsPerHour *float64 `json:"maxConnectionsPerHour,omitempty" tf:"max_connections_per_hour,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// Max questions per hour.
 	MaxQuestionsPerHour *float64 `json:"maxQuestionsPerHour,omitempty" tf:"max_questions_per_hour,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// Max updates per hour.
 	MaxUpdatesPerHour *float64 `json:"maxUpdatesPerHour,omitempty" tf:"max_updates_per_hour,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// Max user connections.
 	MaxUserConnections *float64 `json:"maxUserConnections,omitempty" tf:"max_user_connections,omitempty"`
 }
 
@@ -50,6 +54,7 @@ type MySQLUserObservation struct {
 type MySQLUserParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`)
 	AuthenticationPlugin *string `json:"authenticationPlugin,omitempty" tf:"authentication_plugin,omitempty"`
 
 	// +crossplane:generate:reference:type=MySQLCluster
@@ -65,15 +70,18 @@ type MySQLUserParameters struct {
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) User's connection limits. The structure is documented below.
 	ConnectionLimits []MySQLUserConnectionLimitsParameters `json:"connectionLimits,omitempty" tf:"connection_limits,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) List user's global permissions     
 	GlobalPermissions []*string `json:"globalPermissions,omitempty" tf:"global_permissions,omitempty"`
 
 	// +kubebuilder:validation:Required
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Set of permissions granted to the user. The structure is documented below.
 	Permission []MySQLUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
@@ -83,9 +91,11 @@ type MySQLUserPermissionObservation struct {
 type MySQLUserPermissionParameters struct {
 
 	// +kubebuilder:validation:Required
+	// (Required) The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) List user's roles in the database.
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 

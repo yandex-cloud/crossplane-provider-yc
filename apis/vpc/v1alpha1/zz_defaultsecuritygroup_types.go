@@ -26,16 +26,19 @@ import (
 )
 
 type DefaultSecurityGroupObservation struct {
+	// Creation timestamp of this security group.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Egress []EgressObservation `json:"egress,omitempty" tf:"egress,omitempty"`
 
+	// Id of the security group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Ingress []IngressObservation `json:"ingress,omitempty" tf:"ingress,omitempty"`
 
+	// Status of this security group.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
@@ -70,6 +73,7 @@ type DefaultSecurityGroupParameters struct {
 }
 
 type EgressObservation struct {
+	// Id of the security group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
@@ -107,6 +111,7 @@ type EgressParameters struct {
 }
 
 type IngressObservation struct {
+	// Id of the security group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 

@@ -26,17 +26,20 @@ import (
 )
 
 type ObjectObservation struct {
+	// The `key` of the resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type ObjectParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) The [predefined ACL](https://cloud.yandex.com/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`.
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/storage.ExtractAccessKey()
 	// +kubebuilder:validation:Optional
+	// (Optional) The access key to use when applying changes. If omitted, `storage_access_key` specified in config is used.
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
 
 	// Reference to a ServiceAccountStaticAccessKey in iam to populate accessKey.
@@ -49,6 +52,7 @@ type ObjectParameters struct {
 
 	// +crossplane:generate:reference:type=Bucket
 	// +kubebuilder:validation:Optional
+	// (Required) The name of the containing bucket.
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
 	// Reference to a Bucket to populate bucket.
@@ -60,21 +64,26 @@ type ObjectParameters struct {
 	BucketSelector *v1.Selector `json:"bucketSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional, conflicts with `source` and `content_base64`) Literal string value to use as the object content, which will be uploaded as UTF-8-encoded text.
 	Content *string `json:"content,omitempty" tf:"content,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional, conflicts with `source` and `content`) Base64-encoded data that will be decoded and uploaded as raw bytes for the object content. This allows safely uploading non-UTF8 binary data, but is recommended only for small content such as the result of the `gzipbase64` function with small text strings. For larger objects, use `source` to stream the content from a disk file.
 	ContentBase64 *string `json:"contentBase64,omitempty" tf:"content_base64,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) A standard MIME type describing the format of the object data, e.g. `application/octet-stream`. All Valid MIME Types are valid for this input.
 	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) The name of the object once it is in the bucket.
 	Key *string `json:"key" tf:"key,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	SecretKeySecretRef *v1.SecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional, conflicts with `content` and `content_base64`) The path to a file that will be read and uploaded as raw bytes for the object content.
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 }
 

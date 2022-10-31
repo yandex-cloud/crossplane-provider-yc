@@ -26,24 +26,30 @@ import (
 )
 
 type TransferObservation struct {
+	// (Computed) Identifier of a new Data Transfer transfer.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Computed) Error description if transfer has any errors.
 	Warning *string `json:"warning,omitempty" tf:"warning,omitempty"`
 }
 
 type TransferParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Arbitrary description text for the transfer.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) ID of the folder to create the transfer in. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) A set of key/value label pairs to assign to the Data Transfer transfer.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +crossplane:generate:reference:type=Endpoint
 	// +kubebuilder:validation:Optional
+	// (Optional) ID of the source endpoint for the transfer.
 	SourceID *string `json:"sourceId,omitempty" tf:"source_id,omitempty"`
 
 	// Reference to a Endpoint to populate sourceId.
@@ -56,6 +62,7 @@ type TransferParameters struct {
 
 	// +crossplane:generate:reference:type=Endpoint
 	// +kubebuilder:validation:Optional
+	// (Optional) ID of the target endpoint for the transfer.
 	TargetID *string `json:"targetId,omitempty" tf:"target_id,omitempty"`
 
 	// Reference to a Endpoint to populate targetId.
@@ -67,6 +74,7 @@ type TransferParameters struct {
 	TargetIDSelector *v1.Selector `json:"targetIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
+	// (Required) Type of the transfer. One of "SNAPSHOT_ONLY", "INCREMENT_ONLY", "SNAPSHOT_AND_INCREMENT".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 

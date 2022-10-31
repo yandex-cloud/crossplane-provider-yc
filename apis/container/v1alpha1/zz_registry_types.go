@@ -26,19 +26,23 @@ import (
 )
 
 type RegistryObservation struct {
+	// Creation timestamp of the registry.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Status of the registry.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type RegistryParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Folder that the resource belongs to. If value is omitted, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) A set of key/value label pairs to assign to the registry.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 }
 
