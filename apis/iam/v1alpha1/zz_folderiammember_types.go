@@ -32,6 +32,7 @@ type FolderIAMMemberObservation struct {
 type FolderIAMMemberParameters struct {
 
 	// +kubebuilder:validation:Required
+	// (Required) ID of the folder to attach a policy to.
 	FolderID *string `json:"folderId" tf:"folder_id,omitempty"`
 
 	// +crossplane:generate:reference:type=ServiceAccount
@@ -39,9 +40,11 @@ type FolderIAMMemberParameters struct {
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
 	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
 	// +kubebuilder:validation:Optional
+	// (Required) The identity that will be granted the privilege that is specified in the `role` field.
 	Member *string `json:"member,omitempty" tf:"member,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) The role that should be assigned.
 	Role *string `json:"role" tf:"role,omitempty"`
 
 	// Reference to a ServiceAccount to populate member.

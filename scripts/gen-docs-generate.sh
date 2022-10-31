@@ -20,6 +20,11 @@ do
         continue
     fi
 
+    if [ $dir = "v1beta1" ]; then
+        ../scripts/gen-sh.sh "./docs/"$dir"_doc.html" ./apis/v1beta1
+        continue
+    fi
+
     ../scripts/gen-sh.sh "./docs/"$dir"_doc.html" ./apis/$dir/v1alpha1
     #echo "GENERATED " "docs/"$dir"_doc.html"
 done

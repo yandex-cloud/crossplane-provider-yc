@@ -26,30 +26,38 @@ import (
 )
 
 type SymmetricKeyObservation struct {
+	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Last rotation timestamp of the key.
 	RotatedAt *string `json:"rotatedAt,omitempty" tf:"rotated_at,omitempty"`
 
+	// The status of the key.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type SymmetricKeyParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Encryption algorithm to be used with a new key version, 
 	DefaultAlgorithm *string `json:"defaultAlgorithm,omitempty" tf:"default_algorithm,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) An optional description of the key. 
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) The ID of the folder that the resource belongs to. If it
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) A set of key/value label pairs to assign to the key.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Interval between automatic rotations. To disable automatic rotation, omit this parameter.
 	RotationPeriod *string `json:"rotationPeriod,omitempty" tf:"rotation_period,omitempty"`
 }
 

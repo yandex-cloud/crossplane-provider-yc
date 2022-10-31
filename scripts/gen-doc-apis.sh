@@ -12,6 +12,11 @@ do
         continue
     fi
 
+    # if it is v1alpha1, then skip
+    if [ $dir = v1beta1 ]; then
+        continue
+    fi
+
     # if file exists, then skip
     if [ -f $dir/"v1alpha1"/"doc.go" ]; then
         rm $dir/"v1alpha1"/"doc.go"

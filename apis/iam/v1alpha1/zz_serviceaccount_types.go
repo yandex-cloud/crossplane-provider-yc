@@ -34,9 +34,11 @@ type ServiceAccountObservation struct {
 type ServiceAccountParameters struct {
 
 	// +kubebuilder:validation:Optional
+	// (Optional) Description of the service account.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// (Optional) ID of the folder that the service account will be created in.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 }
 
