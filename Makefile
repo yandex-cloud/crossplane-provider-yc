@@ -57,6 +57,23 @@ IMAGES = provider-jet-yc provider-jet-yc-controller
 -include build/makelib/image.mk
 
 # ====================================================================================
+# Setup Upbound Docs
+
+updoc-upload:
+	@$(INFO) uploading docs for v$(VERSION_MAJOR).$(VERSION_MINOR)
+	@go run github.com/upbound/official-providers/updoc/cmd upload \
+        --docs-dir=$(ROOT_DIR)/docs \
+        --name=$(PROJECT_NAME) \
+        --version=v$(VERSION_MAJOR).$(VERSION_MINOR) \
+        --bucket-name=$(BUCKET_NAME) \
+        --cdn-domain=$(CDN_DOMAIN) || $(FAIL)
+	@$(OK) uploaded docs for v$(VERSION_MAJOR).$(VERSION_MINOR)
+
+ifneq ($(filter release-%,$(BRANCH_NAME)),)
+publish.artifacts: updoc-upload
+endif
+
+# ====================================================================================
 # Targets
 
 # run `make help` to see the targets and options
@@ -126,7 +143,7 @@ $(TERRAFORM_PROVIDER_SCHEMA): $(TERRAFORM)
 
 
 pull-docs:
-	@if [ true ]; then \
+	@if [ ! -d "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))" ]; then \
 		echo "fkfkfk" \
 		git clone -c advice.detachedHead=false --depth 1 --filter=blob:none --branch "v$(TERRAFORM_PROVIDER_VERSION)" --sparse "$(TERRAFORM_PROVIDER_REPO)" "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))"; \
 	fi
