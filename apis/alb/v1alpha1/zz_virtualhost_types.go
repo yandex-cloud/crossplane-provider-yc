@@ -295,6 +295,9 @@ type VirtualHostParameters struct {
 	// +kubebuilder:validation:Optional
 	ModifyResponseHeaders []ModifyResponseHeadersParameters `json:"modifyResponseHeaders,omitempty" tf:"modify_response_headers,omitempty"`
 
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
 	// +kubebuilder:validation:Optional
 	Route []RouteParameters `json:"route,omitempty" tf:"route,omitempty"`
 }

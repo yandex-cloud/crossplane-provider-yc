@@ -36,6 +36,10 @@ type RecordsetParameters struct {
 	Data []*string `json:"data" tf:"data,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) The DNS name this record set will apply to.
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Required
 	// (Optional) The time-to-live of this record set (seconds).
 	TTL *float64 `json:"ttl" tf:"ttl,omitempty"`
 

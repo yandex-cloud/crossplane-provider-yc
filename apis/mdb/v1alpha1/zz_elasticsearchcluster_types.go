@@ -99,9 +99,18 @@ type ElasticsearchClusterParameters struct {
 	// (Required) Deployment environment of the Elasticsearch cluster. Can be either `PRESTABLE` or `PRODUCTION`.
 	Environment *string `json:"environment" tf:"environment,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	// (Optional) The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	// (Required) A host of the Elasticsearch cluster. The structure is documented below.
@@ -113,6 +122,10 @@ type ElasticsearchClusterParameters struct {
 
 	// +kubebuilder:validation:Optional
 	MaintenanceWindow []MaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+
+	// +kubebuilder:validation:Required
+	// (Required) Name of the Elasticsearch cluster. Provided by the client when the cluster is created.
+	Name *string `json:"name" tf:"name,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional

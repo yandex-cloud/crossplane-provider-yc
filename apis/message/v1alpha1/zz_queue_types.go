@@ -62,6 +62,12 @@ type QueueParameters struct {
 	MessageRetentionSeconds *float64 `json:"messageRetentionSeconds,omitempty" tf:"message_retention_seconds,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	NamePrefix *string `json:"namePrefix,omitempty" tf:"name_prefix,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	ReceiveWaitTimeSeconds *float64 `json:"receiveWaitTimeSeconds,omitempty" tf:"receive_wait_time_seconds,omitempty"`
 
 	// +kubebuilder:validation:Optional

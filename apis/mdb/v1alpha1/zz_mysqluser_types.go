@@ -78,6 +78,10 @@ type MySQLUserParameters struct {
 	GlobalPermissions []*string `json:"globalPermissions,omitempty" tf:"global_permissions,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) The name of the user.
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Required
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// +kubebuilder:validation:Optional

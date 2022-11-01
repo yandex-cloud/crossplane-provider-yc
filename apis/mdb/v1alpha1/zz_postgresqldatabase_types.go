@@ -70,6 +70,10 @@ type PostgresqlDatabaseParameters struct {
 	LcType *string `json:"lcType,omitempty" tf:"lc_type,omitempty"`
 
 	// +kubebuilder:validation:Required
+	// (Required) The name of the database.
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Required
 	// (Required) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	Owner *string `json:"owner" tf:"owner,omitempty"`
 }

@@ -101,9 +101,18 @@ type BucketParameters struct {
 	// (Optional) Storage class which is used for storing objects by default.
 	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	// (Optional) Allow to create bucket in different folder.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional, Default: `false`) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are *not* recoverable.

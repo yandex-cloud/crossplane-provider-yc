@@ -31,9 +31,18 @@ type FolderIAMMemberObservation struct {
 
 type FolderIAMMemberParameters struct {
 
-	// +kubebuilder:validation:Required
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +kubebuilder:validation:Optional
 	// (Required) ID of the folder to attach a policy to.
-	FolderID *string `json:"folderId" tf:"folder_id,omitempty"`
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/iam.ServiceAccountRefValue()

@@ -39,13 +39,26 @@ type TransferParameters struct {
 	// (Optional) Arbitrary description text for the transfer.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	// (Optional) ID of the folder to create the transfer in. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
 	// +kubebuilder:validation:Optional
 	// (Optional) A set of key/value label pairs to assign to the Data Transfer transfer.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Required) Name of the transfer.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// +crossplane:generate:reference:type=Endpoint
 	// +kubebuilder:validation:Optional

@@ -287,9 +287,18 @@ type PostgresqlClusterParameters struct {
 	// (Required) Deployment environment of the PostgreSQL cluster.
 	Environment *string `json:"environment" tf:"environment,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	// (Optional) The ID of the folder that the resource belongs to. If it is unset, the default provider `folder_id` is used for create.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Required
 	// (Required) A host of the PostgreSQL cluster. The structure is documented below.
@@ -309,6 +318,10 @@ type PostgresqlClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	// (Optional) Maintenance policy of the PostgreSQL cluster. The structure is documented below.
 	MaintenanceWindow []PostgresqlClusterMaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+
+	// +kubebuilder:validation:Required
+	// (Required) Name of the PostgreSQL cluster. Provided by the client when the cluster is created.
+	Name *string `json:"name" tf:"name,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional

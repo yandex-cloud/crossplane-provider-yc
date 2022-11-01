@@ -37,13 +37,26 @@ type RegistryObservation struct {
 
 type RegistryParameters struct {
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	// (Optional) Folder that the resource belongs to. If value is omitted, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
 	// +kubebuilder:validation:Optional
 	// (Optional) A set of key/value label pairs to assign to the registry.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) A name of the registry.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 // RegistrySpec defines the desired state of Registry

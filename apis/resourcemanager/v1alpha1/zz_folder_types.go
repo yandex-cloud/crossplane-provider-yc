@@ -47,6 +47,11 @@ type FolderParameters struct {
 	// (Optional) A set of key/value label pairs to assign to the Folder.
 	// (Optional) A set of key/value label pairs to assign to the Folder.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) The name of the Folder.
+	// (Optional) The name of the Folder.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 // FolderSpec defines the desired state of Folder

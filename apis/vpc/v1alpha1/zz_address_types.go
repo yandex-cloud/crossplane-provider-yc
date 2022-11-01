@@ -52,13 +52,26 @@ type AddressParameters struct {
 	// (Optional) spec of IP v4 address
 	ExternalIPv4Address []ExternalIPv4AddressParameters `json:"externalIpv4Address,omitempty" tf:"external_ipv4_address,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	// (Optional) ID of the folder that the resource belongs to. If it
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
 	// +kubebuilder:validation:Optional
 	// (Optional) Labels to apply to this resource. A list of key/value pairs.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) Name of the address. Provided by the client when the address is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type ExternalIPv4AddressObservation struct {

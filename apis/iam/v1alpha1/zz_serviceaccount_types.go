@@ -37,9 +37,22 @@ type ServiceAccountParameters struct {
 	// (Optional) Description of the service account.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	// (Optional) ID of the folder that the service account will be created in.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Required
+	// (Required) Name of the service account.
+	Name *string `json:"name" tf:"name,omitempty"`
 }
 
 // ServiceAccountSpec defines the desired state of ServiceAccount

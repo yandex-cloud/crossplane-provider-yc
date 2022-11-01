@@ -65,9 +65,18 @@ type ClusterParameters struct {
 	// (Optional) A description of the Kubernetes cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	// (Optional) The ID of the folder that the Kubernetes cluster belongs to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) cluster KMS provider parameters.
@@ -80,6 +89,10 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Required
 	// Kubernetes master configuration options. The structure is documented below.
 	Master []MasterParameters `json:"master" tf:"master,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) Name of a specific Kubernetes cluster.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
