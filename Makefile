@@ -10,7 +10,7 @@ export TERRAFORM_PROVIDER_VERSION := 0.76.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-yandex
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://terraform-mirror.yandexcloud.net/
 export TERRAFORM_PROVIDER_HOST := hashicorp-releases.yandexcloud.net
-export TERRAFORM_PROVIDER_REPO ?= https://github.com/yandex-cloud/terraform-provider-yandex 
+export TERRAFORM_PROVIDER_REPO ?= https://github.com/yandex-cloud/terraform-provider-yandex
 export TERRAFORM_DOCS_PATH ?= website/docs/r
 
 PLATFORMS ?= linux_amd64 linux_arm64
@@ -144,10 +144,10 @@ $(TERRAFORM_PROVIDER_SCHEMA): $(TERRAFORM)
 
 pull-docs:
 	@if [ ! -d "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))" ]; then \
-		echo "fkfkfk" \
 		git clone -c advice.detachedHead=false --depth 1 --filter=blob:none --branch "v$(TERRAFORM_PROVIDER_VERSION)" --sparse "$(TERRAFORM_PROVIDER_REPO)" "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))"; \
 	fi
 	@git -C "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))" sparse-checkout set "$(TERRAFORM_DOCS_PATH)"
+	@./scripts/add_subcategory_html.sh
 
 generate.init: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs
 

@@ -183,9 +183,18 @@ type InstanceParameters struct {
 	// (Optional) Description of the instance.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	// (Optional) The ID of the folder that the resource belongs to. If it
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Host name for the instance. This field is used to generate the instance `fqdn` value. 
@@ -202,6 +211,10 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	// (Optional) Metadata key/value pairs to make available from
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// (Optional) Resource name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	// (Optional) Type of network acceleration. The default is `standard`. Values: `standard`, `software_accelerated`

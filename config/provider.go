@@ -23,6 +23,8 @@ import (
 	tjconfig "github.com/upbound/upjet/pkg/config"
 
 	"github.com/yandex-cloud/provider-jet-yc/config/alb"
+	"github.com/yandex-cloud/provider-jet-yc/config/common"
+
 	// "github.com/yandex-cloud/provider-jet-yc/config/common"
 	"github.com/yandex-cloud/provider-jet-yc/config/compute"
 	"github.com/yandex-cloud/provider-jet-yc/config/datatransfer"
@@ -53,7 +55,7 @@ func GetProvider() *tjconfig.Provider {
 	pc := tjconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, providerMetadata,
 		tjconfig.WithShortName("yandex-cloud"),
 		tjconfig.WithRootGroup("yandex-cloud.jet.crossplane.io"),
-		tjconfig.WithDefaultResourceOptions(),
+		tjconfig.WithDefaultResourceOptions(common.DefaultResourceOverrides()),
 		tjconfig.WithIncludeList([]string{
 			"yandex_alb_backend_group$",
 			"yandex_alb_http_router$",

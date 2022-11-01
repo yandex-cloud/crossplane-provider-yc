@@ -38,6 +38,9 @@ type DefaultSecurityGroupObservation struct {
 	// +kubebuilder:validation:Optional
 	Ingress []IngressObservation `json:"ingress,omitempty" tf:"ingress,omitempty"`
 
+	// Name of this security group.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
 	// Status of this security group.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
@@ -50,8 +53,17 @@ type DefaultSecurityGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	Egress []EgressParameters `json:"egress,omitempty" tf:"egress,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	Ingress []IngressParameters `json:"ingress,omitempty" tf:"ingress,omitempty"`

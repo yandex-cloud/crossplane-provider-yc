@@ -1,0 +1,963 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: postgresqlclusters.mdb.yandex-cloud.jet.crossplane.io
+spec:
+  group: mdb.yandex-cloud.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - yandex-cloud
+    kind: PostgresqlCluster
+    listKind: PostgresqlClusterList
+    plural: postgresqlclusters
+    singular: postgresqlcluster
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: PostgresqlCluster is the Schema for the PostgresqlClusters API.
+          <no value>
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: PostgresqlClusterSpec defines the desired state of PostgresqlCluster
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  config:
+                    description: (Required) Configuration of the PostgreSQL cluster.
+                      The structure is documented below.
+                    items:
+                      properties:
+                        access:
+                          description: (Optional) Access policy to the PostgreSQL
+                            cluster. The structure is documented below.
+                          items:
+                            properties:
+                              dataLens:
+                                description: (Optional) Allow access for [Yandex DataLens](https://cloud.yandex.com/services/datalens).
+                                type: boolean
+                              serverless:
+                                description: Allow access for [connection to managed
+                                  databases from functions](https://cloud.yandex.com/docs/functions/operations/database-connection)
+                                type: boolean
+                              webSql:
+                                description: Allow access for [SQL queries in the
+                                  management console](https://cloud.yandex.com/docs/managed-postgresql/operations/web-sql-query)
+                                type: boolean
+                            type: object
+                          type: array
+                        autofailover:
+                          description: (Optional) Configuration setting which enables/disables
+                            autofailover in cluster.
+                          type: boolean
+                        backupRetainPeriodDays:
+                          description: (Optional) The period in days during which
+                            backups are stored.
+                          type: number
+                        backupWindowStart:
+                          description: (Optional) Time to start the daily backup,
+                            in the UTC timezone. The structure is documented below.
+                          items:
+                            properties:
+                              hours:
+                                description: (Optional) The hour at which backup will
+                                  be started (UTC).
+                                type: number
+                              minutes:
+                                description: (Optional) The minute at which backup
+                                  will be started (UTC).
+                                type: number
+                            type: object
+                          type: array
+                        performanceDiagnostics:
+                          description: (Optional) Cluster performance diagnostics
+                            settings. The structure is documented below. [YC Documentation](https://cloud.yandex.com/en-ru/docs/managed-postgresql/api-ref/grpc/cluster_service#PerformanceDiagnostics)
+                          items:
+                            properties:
+                              enabled:
+                                description: Enable performance diagnostics
+                                type: boolean
+                              sessionsSamplingInterval:
+                                description: Interval (in seconds) for pg_stat_activity
+                                  sampling Acceptable values are 1 to 86400, inclusive.
+                                type: number
+                              statementsSamplingInterval:
+                                description: Interval (in seconds) for pg_stat_statements
+                                  sampling Acceptable values are 1 to 86400, inclusive.
+                                type: number
+                            required:
+                            - sessionsSamplingInterval
+                            - statementsSamplingInterval
+                            type: object
+                          type: array
+                        poolerConfig:
+                          description: (Optional) Configuration of the connection
+                            pooler. The structure is documented below.
+                          items:
+                            properties:
+                              poolDiscard:
+                                description: (Optional) Setting `pool_discard` [parameter
+                                  in Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool_discard-yesno).
+                                type: boolean
+                              poolingMode:
+                                description: (Optional) Mode that the connection pooler
+                                  is working in. See descriptions of all modes in
+                                  the [documentation for Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool-string.
+                                type: string
+                            type: object
+                          type: array
+                        postgresqlConfig:
+                          additionalProperties:
+                            type: string
+                          description: (Optional) PostgreSQL cluster config. Detail
+                            info in "postresql config" section (documented below).
+                          type: object
+                        resources:
+                          description: (Required) Resources allocated to hosts of
+                            the PostgreSQL cluster. The structure is documented below.
+                          items:
+                            properties:
+                              diskSize:
+                                description: (Required) Volume of the storage available
+                                  to a PostgreSQL host, in gigabytes.
+                                type: number
+                              diskTypeId:
+                                description: (Required) Type of the storage of PostgreSQL
+                                  hosts.
+                                type: string
+                              resourcePresetId:
+                                type: string
+                            required:
+                            - diskSize
+                            - resourcePresetId
+                            type: object
+                          type: array
+                        version:
+                          description: '(Required) Version of the PostgreSQL cluster.
+                            (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c,
+                            13, 14)'
+                          type: string
+                      required:
+                      - resources
+                      - version
+                      type: object
+                    type: array
+                  database:
+                    description: (Deprecated) To manage databases, please switch to
+                      using a separate resource type `yandex_mdb_postgresql_database`.
+                    items:
+                      properties:
+                        extension:
+                          items:
+                            properties:
+                              name:
+                                description: (Required) Name of the PostgreSQL cluster.
+                                  Provided by the client when the cluster is created.
+                                type: string
+                              version:
+                                description: '(Required) Version of the PostgreSQL
+                                  cluster. (allowed versions are: 10, 10-1c, 11, 11-1c,
+                                  12, 12-1c, 13, 14)'
+                                type: string
+                            required:
+                            - name
+                            type: object
+                          type: array
+                        lcCollate:
+                          type: string
+                        lcType:
+                          type: string
+                        name:
+                          description: (Required) Name of the PostgreSQL cluster.
+                            Provided by the client when the cluster is created.
+                          type: string
+                        owner:
+                          type: string
+                      required:
+                      - name
+                      - owner
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: (Optional) Inhibits deletion of the cluster.  Can
+                      be either `true` or `false`.
+                    type: boolean
+                  description:
+                    description: (Optional) Description of the PostgreSQL cluster.
+                    type: string
+                  environment:
+                    description: (Required) Deployment environment of the PostgreSQL
+                      cluster.
+                    type: string
+                  folderId:
+                    description: (Optional) The ID of the folder that the resource
+                      belongs to. If it is unset, the default provider `folder_id`
+                      is used for create.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  host:
+                    description: (Required) A host of the PostgreSQL cluster. The
+                      structure is documented below.
+                    items:
+                      properties:
+                        assignPublicIp:
+                          description: (Optional) Sets whether the host should get
+                            a public IP address on creation. It can be changed on
+                            the fly only when `name` is set.
+                          type: boolean
+                        name:
+                          description: (Required) Name of the PostgreSQL cluster.
+                            Provided by the client when the cluster is created.
+                          type: string
+                        priority:
+                          description: Host priority in HA group. It works only when
+                            `name` is set.
+                          type: number
+                        replicationSourceName:
+                          description: (Optional) Host replication source name points
+                            to host's `name` from which this host should replicate.
+                            When not set then host in HA group. It works only when
+                            `name` is set.
+                          type: string
+                        subnetId:
+                          description: (Optional) The ID of the subnet, to which the
+                            host belongs. The subnet must be a part of the network
+                            to which the cluster belongs.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in vpc to populate subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: Resolution specifies whether resolution
+                                    of this reference is required. The default is
+                                    'Required', which means the reconcile will fail
+                                    if the reference cannot be resolved. 'Optional'
+                                    means this reference will be a no-op if it cannot
+                                    be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: Resolve specifies when this reference
+                                    should be resolved. The default is 'IfNotPresent',
+                                    which will attempt to resolve the reference only
+                                    when the corresponding field is not present. Use
+                                    'Always' to resolve the reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in vpc to populate subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: MatchControllerRef ensures an object with
+                                the same controller reference as the selecting object
+                                is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: Resolution specifies whether resolution
+                                    of this reference is required. The default is
+                                    'Required', which means the reconcile will fail
+                                    if the reference cannot be resolved. 'Optional'
+                                    means this reference will be a no-op if it cannot
+                                    be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: Resolve specifies when this reference
+                                    should be resolved. The default is 'IfNotPresent',
+                                    which will attempt to resolve the reference only
+                                    when the corresponding field is not present. Use
+                                    'Always' to resolve the reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        zone:
+                          description: (Required) The availability zone where the
+                            PostgreSQL host will be created.
+                          type: string
+                      required:
+                      - zone
+                      type: object
+                    type: array
+                  hostGroupIds:
+                    items:
+                      type: string
+                    type: array
+                  hostMasterName:
+                    description: (Optional) It sets name of master host. It works
+                      only when `host.name` is set.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: (Optional) A set of key/value label pairs to assign
+                      to the PostgreSQL cluster.
+                    type: object
+                  maintenanceWindow:
+                    description: (Optional) Maintenance policy of the PostgreSQL cluster.
+                      The structure is documented below.
+                    items:
+                      properties:
+                        day:
+                          description: '(Optional) Day of the week (in `DDD` format).
+                            Allowed values: "MON", "TUE", "WED", "THU", "FRI", "SAT",
+                            "SUN"'
+                          type: string
+                        hour:
+                          description: (Optional) Hour of the day in UTC (in `HH`
+                            format). Allowed value is between 1 and 24.
+                          type: number
+                        type:
+                          description: (Required) Type of maintenance window. Can
+                            be either `ANYTIME` or `WEEKLY`. A day and hour of window
+                            need to be specified with weekly window.
+                          type: string
+                      required:
+                      - type
+                      type: object
+                    type: array
+                  name:
+                    description: (Required) Name of the PostgreSQL cluster. Provided
+                      by the client when the cluster is created.
+                    type: string
+                  networkId:
+                    description: (Required) ID of the network, to which the PostgreSQL
+                      cluster belongs.
+                    type: string
+                  networkIdRef:
+                    description: Reference to a Network in vpc to populate networkId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: Selector for a Network in vpc to populate networkId.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  restore:
+                    description: (Optional, ForceNew) The cluster will be created
+                      from the specified backup. The structure is documented below.
+                    items:
+                      properties:
+                        backupId:
+                          description: (Required, ForceNew) Backup ID. The cluster
+                            will be created from the specified backup. [How to get
+                            a list of PostgreSQL backups](https://cloud.yandex.com/docs/managed-postgresql/operations/cluster-backups).
+                          type: string
+                        time:
+                          description: '(Optional, ForceNew) Timestamp of the moment
+                            to which the PostgreSQL cluster should be restored. (Format:
+                            "2006-01-02T15:04:05" - UTC). When not set, current time
+                            is used.'
+                          type: string
+                        timeInclusive:
+                          description: (Optional, ForceNew) Flag that indicates whether
+                            a database should be restored to the first backup point
+                            available just after the timestamp specified in the [time]
+                            field instead of just before.
+                          type: boolean
+                      required:
+                      - backupId
+                      type: object
+                    type: array
+                  securityGroupIds:
+                    description: (Optional) A set of ids of security groups assigned
+                      to hosts of the cluster.
+                    items:
+                      type: string
+                    type: array
+                  securityGroupIdsRefs:
+                    description: References to SecurityGroup in vpc to populate securityGroupIds.
+                    items:
+                      description: A Reference to a named object.
+                      properties:
+                        name:
+                          description: Name of the referenced object.
+                          type: string
+                        policy:
+                          description: Policies for referencing.
+                          properties:
+                            resolution:
+                              default: Required
+                              description: Resolution specifies whether resolution
+                                of this reference is required. The default is 'Required',
+                                which means the reconcile will fail if the reference
+                                cannot be resolved. 'Optional' means this reference
+                                will be a no-op if it cannot be resolved.
+                              enum:
+                              - Required
+                              - Optional
+                              type: string
+                            resolve:
+                              description: Resolve specifies when this reference should
+                                be resolved. The default is 'IfNotPresent', which
+                                will attempt to resolve the reference only when the
+                                corresponding field is not present. Use 'Always' to
+                                resolve the reference on every reconcile.
+                              enum:
+                              - Always
+                              - IfNotPresent
+                              type: string
+                          type: object
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  securityGroupIdsSelector:
+                    description: Selector for a list of SecurityGroup in vpc to populate
+                      securityGroupIds.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  user:
+                    description: (Deprecated) To manage users, please switch to using
+                      a separate resource type `yandex_mdb_postgresql_user`.
+                    items:
+                      properties:
+                        connLimit:
+                          type: number
+                        grants:
+                          items:
+                            type: string
+                          type: array
+                        login:
+                          type: boolean
+                        name:
+                          description: (Required) Name of the PostgreSQL cluster.
+                            Provided by the client when the cluster is created.
+                          type: string
+                        passwordSecretRef:
+                          description: A SecretKeySelector is a reference to a secret
+                            key in an arbitrary namespace.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        permission:
+                          items:
+                            properties:
+                              databaseName:
+                                type: string
+                            required:
+                            - databaseName
+                            type: object
+                          type: array
+                        settings:
+                          additionalProperties:
+                            type: string
+                          type: object
+                      required:
+                      - name
+                      - passwordSecretRef
+                      type: object
+                    type: array
+                required:
+                - config
+                - environment
+                - host
+                - name
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: PostgresqlClusterStatus defines the observed state of PostgresqlCluster.
+            properties:
+              atProvider:
+                properties:
+                  createdAt:
+                    description: Timestamp of cluster creation.
+                    type: string
+                  health:
+                    description: Aggregated health of the cluster.
+                    type: string
+                  host:
+                    description: (Required) A host of the PostgreSQL cluster. The
+                      structure is documented below.
+                    items:
+                      properties:
+                        fqdn:
+                          description: (Computed) The fully qualified domain name
+                            of the host.
+                          type: string
+                        replicationSource:
+                          description: (Computed) Host replication source (fqdn),
+                            when replication_source is empty then host is in HA group.
+                          type: string
+                        role:
+                          type: string
+                      type: object
+                    type: array
+                  id:
+                    type: string
+                  status:
+                    description: Status of the cluster.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

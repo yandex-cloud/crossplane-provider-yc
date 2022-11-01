@@ -22,6 +22,15 @@ func DefaultResourceFn(name string, terraformResource *schema.Resource,terraform
 	return r
 }
 
+// DefaultResourceOverrides returns a default resource configuration to be used while
+// building resource configurations.
+func DefaultResourceOverrides() config.ResourceOption {
+	return func(r *config.Resource) {
+		r.ExternalName = config.IdentifierFromProvider
+		defaultFolderIDFn(r)
+	}
+}
+
 func defaultFolderIDFn(r *tjconfig.Resource) {
 	if r.ShortGroup != "resourcemanager" ||
 		// Fix for group change from "resourcemanager" to "iam"
