@@ -35,8 +35,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: FolderIAMMember is the Schema for the FolderIAMMembers API. <no
-          value>
+        description: FolderIAMMember is the Schema for the FolderIAMMembers API. Allows
+          management of a single member for a single IAM binding for a Yandex Resource
+          Manager folder.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -65,7 +66,7 @@ spec:
               forProvider:
                 properties:
                   folderId:
-                    description: (Required) ID of the folder to attach a policy to.
+                    description: ID of the folder to attach a policy to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -143,11 +144,12 @@ spec:
                         type: object
                     type: object
                   member:
-                    description: (Required) The identity that will be granted the
-                      privilege that is specified in the `role` field.
+                    description: 'The identity that will be granted the privilege
+                      that is specified in the role field. This field can have one
+                      of the following values:'
                     type: string
                   role:
-                    description: (Required) The role that should be assigned.
+                    description: The role that should be assigned.
                     type: string
                   serviceAccountRef:
                     description: Reference to a ServiceAccount to populate member.

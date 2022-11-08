@@ -26,16 +26,23 @@ import (
 )
 
 type HTTPRouterObservation struct {
+
+	// The HTTP Router creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// The ID of the HTTP Router.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type HTTPRouterParameters struct {
 
+	// An optional description of the HTTP Router. Provide this property when
+	// you create the resource.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The ID of the folder to which the resource belongs.
+	// If omitted, the provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -48,9 +55,11 @@ type HTTPRouterParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// Labels to assign to this HTTP Router. A list of key/value pairs.
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
@@ -69,7 +78,7 @@ type HTTPRouterStatus struct {
 
 // +kubebuilder:object:root=true
 
-// HTTPRouter is the Schema for the HTTPRouters API. <no value>
+// HTTPRouter is the Schema for the HTTPRouters API. The HTTP router defines the routing rules for HTTP requests to backend groups.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

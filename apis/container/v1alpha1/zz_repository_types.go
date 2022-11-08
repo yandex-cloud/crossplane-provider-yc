@@ -31,8 +31,8 @@ type RepositoryObservation struct {
 
 type RepositoryParameters struct {
 
+	// A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
 	// +kubebuilder:validation:Optional
-	// A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository. 
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
@@ -50,7 +50,7 @@ type RepositoryStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Repository is the Schema for the Repositorys API. <no value>
+// Repository is the Schema for the Repositorys API. Creates a new container repository.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

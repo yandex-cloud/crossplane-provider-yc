@@ -26,15 +26,18 @@ import (
 )
 
 type DefaultSecurityGroupObservation struct {
+
 	// Creation timestamp of this security group.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// A list of egress rules. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Egress []EgressObservation `json:"egress,omitempty" tf:"egress,omitempty"`
 
 	// Id of the security group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// A list of ingress rules.
 	// +kubebuilder:validation:Optional
 	Ingress []IngressObservation `json:"ingress,omitempty" tf:"ingress,omitempty"`
 
@@ -47,12 +50,15 @@ type DefaultSecurityGroupObservation struct {
 
 type DefaultSecurityGroupParameters struct {
 
+	// Description of the security group.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// A list of egress rules. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Egress []EgressParameters `json:"egress,omitempty" tf:"egress,omitempty"`
 
+	// ID of the folder this security group belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -65,12 +71,15 @@ type DefaultSecurityGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// A list of ingress rules.
 	// +kubebuilder:validation:Optional
 	Ingress []IngressParameters `json:"ingress,omitempty" tf:"ingress,omitempty"`
 
+	// Labels to assign to this security group.
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// ID of the network this security group belongs to.
 	// +crossplane:generate:reference:type=Network
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -85,77 +94,99 @@ type DefaultSecurityGroupParameters struct {
 }
 
 type EgressObservation struct {
+
 	// Id of the security group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type EgressParameters struct {
 
+	// Description of the rule.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// Minimum port number.
 	// +kubebuilder:validation:Optional
 	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
+	// Labels to assign to this security group.
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Port number (if applied to a single port).
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// Special-purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
 	// +kubebuilder:validation:Optional
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
+	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
 	// +kubebuilder:validation:Required
 	Protocol *string `json:"protocol" tf:"protocol,omitempty"`
 
+	// Target security group ID for this rule.
 	// +kubebuilder:validation:Optional
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 
+	// Maximum port number.
 	// +kubebuilder:validation:Optional
 	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
 
+	// The blocks of IPv4 addresses for this rule.
 	// +kubebuilder:validation:Optional
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
+	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
 	// +kubebuilder:validation:Optional
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }
 
 type IngressObservation struct {
+
 	// Id of the security group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type IngressParameters struct {
 
+	// Description of the rule.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// Minimum port number.
 	// +kubebuilder:validation:Optional
 	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
+	// Labels to assign to this rule.
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Port number (if applied to a single port).
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// Special-purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
 	// +kubebuilder:validation:Optional
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
+	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
 	// +kubebuilder:validation:Required
 	Protocol *string `json:"protocol" tf:"protocol,omitempty"`
 
+	// Target security group ID for this rule.
 	// +kubebuilder:validation:Optional
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 
+	// Maximum port number.
 	// +kubebuilder:validation:Optional
 	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
 
+	// The blocks of IPv4 addresses for this rule.
 	// +kubebuilder:validation:Optional
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
+	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
 	// +kubebuilder:validation:Optional
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }
@@ -174,7 +205,7 @@ type DefaultSecurityGroupStatus struct {
 
 // +kubebuilder:object:root=true
 
-// DefaultSecurityGroup is the Schema for the DefaultSecurityGroups API. <no value>
+// DefaultSecurityGroup is the Schema for the DefaultSecurityGroups API. Yandex VPC Default Security Group.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

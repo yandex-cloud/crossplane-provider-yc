@@ -30,12 +30,15 @@ type AddressObservation struct {
 
 type AddressParameters struct {
 
+	// External IPv4 address. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ExternalIPv4Address []ExternalIPv4AddressParameters `json:"externalIpv4Address,omitempty" tf:"external_ipv4_address,omitempty"`
 
+	// External IPv6 address. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ExternalIPv6Address []ExternalIPv6AddressParameters `json:"externalIpv6Address,omitempty" tf:"external_ipv6_address,omitempty"`
 
+	// Internal IPv4 address. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	InternalIPv4Address []InternalIPv4AddressParameters `json:"internalIpv4Address,omitempty" tf:"internal_ipv4_address,omitempty"`
 }
@@ -45,6 +48,7 @@ type AllocationPolicyObservation struct {
 
 type AllocationPolicyParameters struct {
 
+	// Unique set of locations. The structure is documented below.
 	// +kubebuilder:validation:Required
 	Location []LocationParameters `json:"location" tf:"location,omitempty"`
 }
@@ -54,12 +58,16 @@ type DefaultHandlerObservation struct {
 
 type DefaultHandlerParameters struct {
 
+	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
+	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
 	// +kubebuilder:validation:Required
 	CertificateIds []*string `json:"certificateIds" tf:"certificate_ids,omitempty"`
 
+	// HTTP handler resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	HTTPHandler []HTTPHandlerParameters `json:"httpHandler,omitempty" tf:"http_handler,omitempty"`
 
+	// Stream handler resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	StreamHandler []DefaultHandlerStreamHandlerParameters `json:"streamHandler,omitempty" tf:"stream_handler,omitempty"`
 }
@@ -69,6 +77,7 @@ type DefaultHandlerStreamHandlerObservation struct {
 
 type DefaultHandlerStreamHandlerParameters struct {
 
+	// Backend group id.
 	// +kubebuilder:validation:Optional
 	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
 }
@@ -78,9 +87,11 @@ type EndpointObservation struct {
 
 type EndpointParameters struct {
 
+	// Provided by the client or computed automatically.
 	// +kubebuilder:validation:Required
 	Address []AddressParameters `json:"address" tf:"address,omitempty"`
 
+	// One or more ports to listen on.
 	// +kubebuilder:validation:Required
 	Ports []*float64 `json:"ports" tf:"ports,omitempty"`
 }
@@ -90,6 +101,7 @@ type ExternalIPv4AddressObservation struct {
 
 type ExternalIPv4AddressParameters struct {
 
+	// Provided by the client or computed automatically.
 	// +kubebuilder:validation:Optional
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 }
@@ -99,6 +111,7 @@ type ExternalIPv6AddressObservation struct {
 
 type ExternalIPv6AddressParameters struct {
 
+	// Provided by the client or computed automatically.
 	// +kubebuilder:validation:Optional
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 }
@@ -108,6 +121,7 @@ type HTTPHandlerHttp2OptionsObservation struct {
 
 type HTTPHandlerHttp2OptionsParameters struct {
 
+	// Maximum number of concurrent streams.
 	// +kubebuilder:validation:Optional
 	MaxConcurrentStreams *float64 `json:"maxConcurrentStreams,omitempty" tf:"max_concurrent_streams,omitempty"`
 }
@@ -117,12 +131,15 @@ type HTTPHandlerObservation struct {
 
 type HTTPHandlerParameters struct {
 
+	// If set, will enable only HTTP1 protocol with HTTP1.0 support.
 	// +kubebuilder:validation:Optional
 	AllowHttp10 *bool `json:"allowHttp10,omitempty" tf:"allow_http10,omitempty"`
 
+	// HTTP router id.
 	// +kubebuilder:validation:Optional
 	HTTPRouterID *string `json:"httpRouterId,omitempty" tf:"http_router_id,omitempty"`
 
+	// If set, will enable HTTP2 protocol for the handler. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Http2Options []HTTPHandlerHttp2OptionsParameters `json:"http2Options,omitempty" tf:"http2_options,omitempty"`
 }
@@ -132,9 +149,11 @@ type HTTPObservation struct {
 
 type HTTPParameters struct {
 
+	// Stream handler that sets plaintext Stream backend group. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Handler []HandlerParameters `json:"handler,omitempty" tf:"handler,omitempty"`
 
+	// Shortcut for adding http -> https redirects. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Redirects []RedirectsParameters `json:"redirects,omitempty" tf:"redirects,omitempty"`
 }
@@ -144,6 +163,7 @@ type HandlerHTTPHandlerHttp2OptionsObservation struct {
 
 type HandlerHTTPHandlerHttp2OptionsParameters struct {
 
+	// Maximum number of concurrent streams.
 	// +kubebuilder:validation:Optional
 	MaxConcurrentStreams *float64 `json:"maxConcurrentStreams,omitempty" tf:"max_concurrent_streams,omitempty"`
 }
@@ -153,12 +173,15 @@ type HandlerHTTPHandlerObservation struct {
 
 type HandlerHTTPHandlerParameters struct {
 
+	// If set, will enable only HTTP1 protocol with HTTP1.0 support.
 	// +kubebuilder:validation:Optional
 	AllowHttp10 *bool `json:"allowHttp10,omitempty" tf:"allow_http10,omitempty"`
 
+	// HTTP router id.
 	// +kubebuilder:validation:Optional
 	HTTPRouterID *string `json:"httpRouterId,omitempty" tf:"http_router_id,omitempty"`
 
+	// If set, will enable HTTP2 protocol for the handler. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Http2Options []HandlerHTTPHandlerHttp2OptionsParameters `json:"http2Options,omitempty" tf:"http2_options,omitempty"`
 }
@@ -168,12 +191,15 @@ type HandlerObservation struct {
 
 type HandlerParameters struct {
 
+	// If set, will enable only HTTP1 protocol with HTTP1.0 support.
 	// +kubebuilder:validation:Optional
 	AllowHttp10 *bool `json:"allowHttp10,omitempty" tf:"allow_http10,omitempty"`
 
+	// HTTP router id.
 	// +kubebuilder:validation:Optional
 	HTTPRouterID *string `json:"httpRouterId,omitempty" tf:"http_router_id,omitempty"`
 
+	// If set, will enable HTTP2 protocol for the handler. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Http2Options []Http2OptionsParameters `json:"http2Options,omitempty" tf:"http2_options,omitempty"`
 }
@@ -183,6 +209,7 @@ type HandlerStreamHandlerObservation struct {
 
 type HandlerStreamHandlerParameters struct {
 
+	// Backend group id.
 	// +kubebuilder:validation:Optional
 	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
 }
@@ -192,6 +219,7 @@ type Http2OptionsObservation struct {
 
 type Http2OptionsParameters struct {
 
+	// Maximum number of concurrent streams.
 	// +kubebuilder:validation:Optional
 	MaxConcurrentStreams *float64 `json:"maxConcurrentStreams,omitempty" tf:"max_concurrent_streams,omitempty"`
 }
@@ -201,9 +229,11 @@ type InternalIPv4AddressObservation struct {
 
 type InternalIPv4AddressParameters struct {
 
+	// Provided by the client or computed automatically.
 	// +kubebuilder:validation:Optional
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
+	// Provided by the client or computed automatically.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -222,18 +252,23 @@ type ListenerObservation struct {
 
 type ListenerParameters struct {
 
+	// Network endpoints (addresses and ports) of the listener. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Endpoint []EndpointParameters `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
+	// HTTP listener resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	HTTP []HTTPParameters `json:"http,omitempty" tf:"http,omitempty"`
 
+	// name of the listener.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// Stream listener resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Stream []StreamParameters `json:"stream,omitempty" tf:"stream,omitempty"`
 
+	// TLS listener resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	TLS []ListenerTLSParameters `json:"tls,omitempty" tf:"tls,omitempty"`
 }
@@ -243,31 +278,41 @@ type ListenerTLSObservation struct {
 
 type ListenerTLSParameters struct {
 
+	// TLS handler resource. The structure is documented below.
 	// +kubebuilder:validation:Required
 	DefaultHandler []DefaultHandlerParameters `json:"defaultHandler" tf:"default_handler,omitempty"`
 
+	// SNI match resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	SniHandler []SniHandlerParameters `json:"sniHandler,omitempty" tf:"sni_handler,omitempty"`
 }
 
 type LoadBalancerObservation struct {
+
+	// The Load Balancer creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// The ID of the Load Balancer.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Cloud log group used by the Load Balancer to store access logs.
 	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
 
+	// Status of the Load Balancer.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type LoadBalancerParameters struct {
 
+	// Allocation zones for the Load Balancer instance. The structure is documented below.
 	// +kubebuilder:validation:Required
 	AllocationPolicy []AllocationPolicyParameters `json:"allocationPolicy" tf:"allocation_policy,omitempty"`
 
+	// An optional description of the Load Balancer.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -280,15 +325,19 @@ type LoadBalancerParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// Labels to assign to this Load Balancer. A list of key/value pairs.
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// List of listeners for the Load Balancer. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Listener []ListenerParameters `json:"listener,omitempty" tf:"listener,omitempty"`
 
+	// Name of the Load Balancer. Provided by the client when the Load Balancer is created.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// ID of the network that the Load Balancer is located at.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -301,9 +350,11 @@ type LoadBalancerParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
+	// ID of the region that the Load Balancer is located at.
 	// +kubebuilder:validation:Optional
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
+	// A list of ID's of security groups attached to the Load Balancer.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
@@ -322,9 +373,11 @@ type LocationObservation struct {
 
 type LocationParameters struct {
 
+	// If set, will disable all L7 instances in the zone for request handling.
 	// +kubebuilder:validation:Optional
 	DisableTraffic *bool `json:"disableTraffic,omitempty" tf:"disable_traffic,omitempty"`
 
+	// ID of the subnet that location is located at.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -337,6 +390,7 @@ type LocationParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
+	// ID of the zone that location is located at.
 	// +kubebuilder:validation:Required
 	ZoneID *string `json:"zoneId" tf:"zone_id,omitempty"`
 }
@@ -346,6 +400,7 @@ type RedirectsObservation struct {
 
 type RedirectsParameters struct {
 
+	// If set redirects all unencrypted HTTP requests to the same URI with scheme changed to https.
 	// +kubebuilder:validation:Optional
 	HTTPToHTTPS *bool `json:"httpToHttps,omitempty" tf:"http_to_https,omitempty"`
 }
@@ -355,12 +410,16 @@ type SniHandlerHandlerObservation struct {
 
 type SniHandlerHandlerParameters struct {
 
+	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
+	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
 	// +kubebuilder:validation:Required
 	CertificateIds []*string `json:"certificateIds" tf:"certificate_ids,omitempty"`
 
+	// HTTP handler resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	HTTPHandler []HandlerHTTPHandlerParameters `json:"httpHandler,omitempty" tf:"http_handler,omitempty"`
 
+	// Stream handler resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	StreamHandler []HandlerStreamHandlerParameters `json:"streamHandler,omitempty" tf:"stream_handler,omitempty"`
 }
@@ -370,12 +429,15 @@ type SniHandlerObservation struct {
 
 type SniHandlerParameters struct {
 
+	// Stream handler that sets plaintext Stream backend group. The structure is documented below.
 	// +kubebuilder:validation:Required
 	Handler []SniHandlerHandlerParameters `json:"handler" tf:"handler,omitempty"`
 
+	// name of SNI match.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// A set of server names.
 	// +kubebuilder:validation:Required
 	ServerNames []*string `json:"serverNames" tf:"server_names,omitempty"`
 }
@@ -385,6 +447,7 @@ type StreamHandlerObservation struct {
 
 type StreamHandlerParameters struct {
 
+	// Backend group id.
 	// +kubebuilder:validation:Optional
 	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
 }
@@ -394,6 +457,7 @@ type StreamObservation struct {
 
 type StreamParameters struct {
 
+	// Stream handler that sets plaintext Stream backend group. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Handler []StreamHandlerParameters `json:"handler,omitempty" tf:"handler,omitempty"`
 }
@@ -412,7 +476,7 @@ type LoadBalancerStatus struct {
 
 // +kubebuilder:object:root=true
 
-// LoadBalancer is the Schema for the LoadBalancers API. <no value>
+// LoadBalancer is the Schema for the LoadBalancers API. A Load Balancer is used for receiving incoming traffic and transmitting it to the backend endpointsspecified in the ALB Target Groups.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

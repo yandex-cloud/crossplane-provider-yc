@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Recordset is the Schema for the Recordsets API. <no value>
+        description: Recordset is the Schema for the Recordsets API. Manages a DNS
+          Recordset within Yandex.Cloud.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,24 +65,22 @@ spec:
               forProvider:
                 properties:
                   data:
-                    description: (Optional) The string data for the records in this
-                      record set.
+                    description: The string data for the records in this record set.
                     items:
                       type: string
                     type: array
                   name:
-                    description: (Required) The DNS name this record set will apply
-                      to.
+                    description: The DNS name this record set will apply to.
                     type: string
                   ttl:
-                    description: (Optional) The time-to-live of this record set (seconds).
+                    description: The time-to-live of this record set (seconds).
                     type: number
                   type:
-                    description: (Required) The DNS record set type.
+                    description: The DNS record set type.
                     type: string
                   zoneId:
-                    description: (Required) The id of the zone in which this record
-                      set will reside.
+                    description: The id of the zone in which this record set will
+                      reside.
                     type: string
                   zoneIdRef:
                     description: Reference to a Zone to populate zoneId.

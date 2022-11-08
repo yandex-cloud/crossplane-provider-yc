@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: NodeGroup is the Schema for the NodeGroups API. <no value>
+        description: NodeGroup is the Schema for the NodeGroups API. Allows management
+          of Yandex Kubernetes Node Group. For more information, see
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -168,15 +169,14 @@ spec:
                       type: object
                     type: array
                   allowedUnsafeSysctls:
-                    description: (Optional, Forces new resource) A list of allowed
-                      unsafe sysctl parameters for this node group. For more details
-                      see [documentation](https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster/).
+                    description: A list of allowed unsafe sysctl parameters for this
+                      node group. For more details see documentation.
                     items:
                       type: string
                     type: array
                   clusterId:
-                    description: (Required) The ID of the Kubernetes cluster that
-                      this node group belongs to.
+                    description: The ID of the Kubernetes cluster that this node group
+                      belongs to.
                     type: string
                   clusterIdRef:
                     description: Reference to a Cluster to populate clusterId.
@@ -271,11 +271,11 @@ spec:
                       type: object
                     type: array
                   description:
-                    description: (Optional) A description of the Kubernetes node group.
+                    description: A description of the Kubernetes node group.
                     type: string
                   instanceTemplate:
-                    description: (Required) Template used to create compute instances
-                      in this Kubernetes node group. The structure is documented below.
+                    description: Template used to create compute instances in this
+                      Kubernetes node group. The structure is documented below.
                     items:
                       properties:
                         bootDisk:
@@ -285,21 +285,22 @@ spec:
                           items:
                             properties:
                               size:
-                                description: 'The size of the disk in GB. Allowed
-                                  minimal size: 64 GB.'
+                                description: The number of instances in the node group.
                                 type: number
                               type:
-                                description: The disk type.
+                                description: 'Type of container runtime. Values: docker,
+                                  containerd.'
                                 type: string
                             type: object
                           type: array
                         containerRuntime:
-                          description: (Optional) Container runtime configuration.
-                            The structure is documented below.
+                          description: Container runtime configuration. The structure
+                            is documented below.
                           items:
                             properties:
                               type:
-                                description: The disk type.
+                                description: 'Type of container runtime. Values: docker,
+                                  containerd.'
                                 type: string
                             required:
                             - type
@@ -308,7 +309,7 @@ spec:
                         metadata:
                           additionalProperties:
                             type: string
-                          description: The set of metadata `key:value` pairs assigned
+                          description: The set of metadata key:value pairs assigned
                             to this instance template. This includes custom metadata
                             and predefined keys.
                           type: object
@@ -317,8 +318,8 @@ spec:
                             instances.
                           type: boolean
                         networkAccelerationType:
-                          description: '(Optional) Type of network acceleration. Values:
-                            `standard`, `software_accelerated`.'
+                          description: 'Type of network acceleration. Values: standard,
+                            software_accelerated.'
                           type: string
                         networkInterface:
                           description: An array with the network interfaces that will
@@ -327,21 +328,20 @@ spec:
                           items:
                             properties:
                               ipv4:
-                                description: (Optional) Allocate an IPv4 address for
-                                  the interface. The default value is `true`.
+                                description: Allocate an IPv4 address for the interface.
+                                  The default value is true.
                                 type: boolean
                               ipv6:
-                                description: (Optional) If true, allocate an IPv6
-                                  address for the interface. The address will be automatically
+                                description: If true, allocate an IPv6 address for
+                                  the interface. The address will be automatically
                                   assigned from the specified subnet.
                                 type: boolean
                               nat:
-                                description: Boolean flag, enables NAT for node group
-                                  compute instances.
+                                description: A public address that can be used to
+                                  access the internet over NAT.
                                 type: boolean
                               securityGroupIds:
-                                description: (Optional) Security group ids for network
-                                  interface.
+                                description: Security group ids for network interface.
                                 items:
                                   type: string
                                 type: array
@@ -523,13 +523,13 @@ spec:
                             type: object
                           type: array
                         placementPolicy:
-                          description: (Optional) The placement policy configuration.
-                            The structure is documented below.
+                          description: The placement policy configuration. The structure
+                            is documented below.
                           items:
                             properties:
                               placementGroupId:
-                                description: (Optional) Specifies the id of the Placement
-                                  Group to assign to the instances.
+                                description: Specifies the id of the Placement Group
+                                  to assign to the instances.
                                 type: string
                             required:
                             - placementGroupId
@@ -543,12 +543,18 @@ spec:
                           items:
                             properties:
                               coreFraction:
+                                description: Baseline core performance as a percent.
                                 type: number
                               cores:
+                                description: Number of CPU cores allocated to the
+                                  instance.
                                 type: number
                               gpus:
+                                description: Number of GPU cores allocated to the
+                                  instance.
                                 type: number
                               memory:
+                                description: The memory size allocated to the instance.
                                 type: number
                             type: object
                           type: array
@@ -568,25 +574,32 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) A set of key/value label pairs assigned
-                      to the Kubernetes node group.
+                    description: A set of key/value label pairs assigned to the Kubernetes
+                      node group.
                     type: object
                   maintenancePolicy:
-                    description: (Optional) (Computed) Maintenance policy for this
-                      Kubernetes node group.
+                    description: (Computed) Maintenance policy for this Kubernetes
+                      node group. If policy is omitted, automatic revision upgrades
+                      are enabled and could happen at any time. Revision upgrades
+                      are performed only within the same minor version, e.g. 1.13.
+                      Minor version upgrades (e.g. 1.13->1.14) should be performed
+                      manually. The structure is documented below.
                     items:
                       properties:
                         autoRepair:
+                          description: Boolean flag that specifies if node group can
+                            be repaired automatically. When omitted, default value
+                            is TRUE.
                           type: boolean
                         autoUpgrade:
-                          description: (Required) Boolean flag that specifies if node
-                            group can be upgraded automatically. When omitted, default
-                            value is TRUE.
+                          description: Boolean flag that specifies if node group can
+                            be upgraded automatically. When omitted, default value
+                            is TRUE.
                           type: boolean
                         maintenanceWindow:
-                          description: (Optional) (Computed) Set of day intervals,
-                            when maintenance is allowed for this node group. When
-                            omitted, it defaults to any time.
+                          description: (Computed) Set of day intervals, when maintenance
+                            is allowed for this node group. When omitted, it defaults
+                            to any time.
                           items:
                             properties:
                               day:
@@ -606,25 +619,23 @@ spec:
                       type: object
                     type: array
                   name:
-                    description: (Optional) Name of a specific Kubernetes node group.
+                    description: Name of a specific Kubernetes node group.
                     type: string
                   nodeLabels:
                     additionalProperties:
                       type: string
-                    description: (Optional, Forces new resource) A set of key/value
-                      label pairs, that are assigned to all the nodes of this Kubernetes
-                      node group.
+                    description: A set of key/value label pairs, that are assigned
+                      to all the nodes of this Kubernetes node group.
                     type: object
                   nodeTaints:
-                    description: (Optional, Forces new resource) A list of Kubernetes
-                      taints, that are applied to all the nodes of this Kubernetes
-                      node group.
+                    description: A list of Kubernetes taints, that are applied to
+                      all the nodes of this Kubernetes node group.
                     items:
                       type: string
                     type: array
                   scalePolicy:
-                    description: (Required) Scale policy of the node group. The structure
-                      is documented below.
+                    description: Scale policy of the node group. The structure is
+                      documented below.
                     items:
                       properties:
                         autoScale:
@@ -656,16 +667,15 @@ spec:
                           items:
                             properties:
                               size:
-                                description: 'The size of the disk in GB. Allowed
-                                  minimal size: 64 GB.'
+                                description: The number of instances in the node group.
                                 type: number
                             type: object
                           type: array
                       type: object
                     type: array
                   version:
-                    description: (Optional) Version of Kubernetes that will be used
-                      for Kubernetes node group.
+                    description: Version of Kubernetes that will be used for Kubernetes
+                      node group.
                     type: string
                 required:
                 - instanceTemplate
@@ -869,15 +879,21 @@ spec:
                             1.15).
                           type: string
                         newRevisionAvailable:
-                          description: True/false flag.
+                          description: True/false flag. Newer revisions may include
+                            Kubernetes patches (e.g 1.15.1 -> 1.15.2) as well as some
+                            internal component updates - new features or bug fixes
+                            in yandex-specific components either on the master or
+                            nodes.
                           type: boolean
                         newRevisionSummary:
                           description: Human readable description of the changes to
-                            be applied
+                            be applied when updating to the latest revision. Empty
+                            if new_revision_available is false.
                           type: string
                         versionDeprecated:
                           description: True/false flag. The current version is on
-                            the deprecation schedule,
+                            the deprecation schedule, component (master or node group)
+                            should be upgraded.
                           type: boolean
                       type: object
                     type: array

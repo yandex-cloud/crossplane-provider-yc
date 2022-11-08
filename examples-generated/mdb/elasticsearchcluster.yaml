@@ -1,0 +1,70 @@
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: ElasticsearchCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/elasticsearchcluster
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    config:
+    - adminPasswordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      dataNode:
+      - resources:
+        - diskSize: 100
+          diskTypeId: network-ssd
+          resourcePresetId: s2.micro
+    environment: PRESTABLE
+    host:
+    - assignPublicIp: true
+      name: node
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: foo
+      type: DATA_NODE
+      zone: ru-central1-a
+    maintenanceWindow:
+    - type: ANYTIME
+    name: test
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+
+---
+
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Network
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/elasticsearchcluster
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider: {}
+
+---
+
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/elasticsearchcluster
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    v4CidrBlocks:
+    - 10.5.0.0/24
+    zone: ru-central1-a
+
+---
+

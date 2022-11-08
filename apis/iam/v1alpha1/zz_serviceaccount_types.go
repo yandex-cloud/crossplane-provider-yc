@@ -33,13 +33,14 @@ type ServiceAccountObservation struct {
 
 type ServiceAccountParameters struct {
 
+	// Description of the service account.
 	// +kubebuilder:validation:Optional
-	// (Optional) Description of the service account.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// ID of the folder that the service account will be created in.
+	// Defaults to the provider folder configuration.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
-	// (Optional) ID of the folder that the service account will be created in.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -50,8 +51,9 @@ type ServiceAccountParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// Name of the service account.
+	// Can be updated without creating a new resource.
 	// +kubebuilder:validation:Required
-	// (Required) Name of the service account.
 	Name *string `json:"name" tf:"name,omitempty"`
 }
 
@@ -69,7 +71,7 @@ type ServiceAccountStatus struct {
 
 // +kubebuilder:object:root=true
 
-// ServiceAccount is the Schema for the ServiceAccounts API. <no value>
+// ServiceAccount is the Schema for the ServiceAccounts API. Allows management of a Yandex.Cloud IAM service account.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

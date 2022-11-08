@@ -43,8 +43,8 @@ type MySQLDatabaseParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
+	// The name of the database.
 	// +kubebuilder:validation:Required
-	// (Required) The name of the database.
 	Name *string `json:"name" tf:"name,omitempty"`
 }
 
@@ -62,7 +62,7 @@ type MySQLDatabaseStatus struct {
 
 // +kubebuilder:object:root=true
 
-// MySQLDatabase is the Schema for the MySQLDatabases API. <no value>
+// MySQLDatabase is the Schema for the MySQLDatabases API. Manages a MySQL database within Yandex.Cloud.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

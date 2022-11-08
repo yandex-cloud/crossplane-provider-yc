@@ -36,7 +36,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: PostgresqlCluster is the Schema for the PostgresqlClusters API.
-          <no value>
+          Manages a PostgreSQL cluster within Yandex.Cloud.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -65,54 +65,54 @@ spec:
               forProvider:
                 properties:
                   config:
-                    description: (Required) Configuration of the PostgreSQL cluster.
-                      The structure is documented below.
+                    description: Configuration of the PostgreSQL cluster. The structure
+                      is documented below.
                     items:
                       properties:
                         access:
-                          description: (Optional) Access policy to the PostgreSQL
-                            cluster. The structure is documented below.
+                          description: Access policy to the PostgreSQL cluster. The
+                            structure is documented below.
                           items:
                             properties:
                               dataLens:
-                                description: (Optional) Allow access for [Yandex DataLens](https://cloud.yandex.com/services/datalens).
+                                description: Allow access for Yandex DataLens.
                                 type: boolean
                               serverless:
-                                description: Allow access for [connection to managed
-                                  databases from functions](https://cloud.yandex.com/docs/functions/operations/database-connection)
+                                description: Allow access for connection to managed
+                                  databases from functions
                                 type: boolean
                               webSql:
-                                description: Allow access for [SQL queries in the
-                                  management console](https://cloud.yandex.com/docs/managed-postgresql/operations/web-sql-query)
+                                description: Allow access for SQL queries in the management
+                                  console
                                 type: boolean
                             type: object
                           type: array
                         autofailover:
-                          description: (Optional) Configuration setting which enables/disables
+                          description: Configuration setting which enables/disables
                             autofailover in cluster.
                           type: boolean
                         backupRetainPeriodDays:
-                          description: (Optional) The period in days during which
-                            backups are stored.
+                          description: The period in days during which backups are
+                            stored.
                           type: number
                         backupWindowStart:
-                          description: (Optional) Time to start the daily backup,
-                            in the UTC timezone. The structure is documented below.
+                          description: Time to start the daily backup, in the UTC
+                            timezone. The structure is documented below.
                           items:
                             properties:
                               hours:
-                                description: (Optional) The hour at which backup will
-                                  be started (UTC).
+                                description: The hour at which backup will be started
+                                  (UTC).
                                 type: number
                               minutes:
-                                description: (Optional) The minute at which backup
-                                  will be started (UTC).
+                                description: The minute at which backup will be started
+                                  (UTC).
                                 type: number
                             type: object
                           type: array
                         performanceDiagnostics:
-                          description: (Optional) Cluster performance diagnostics
-                            settings. The structure is documented below. [YC Documentation](https://cloud.yandex.com/en-ru/docs/managed-postgresql/api-ref/grpc/cluster_service#PerformanceDiagnostics)
+                          description: Cluster performance diagnostics settings. The
+                            structure is documented below. YC Documentation
                           items:
                             properties:
                               enabled:
@@ -132,39 +132,37 @@ spec:
                             type: object
                           type: array
                         poolerConfig:
-                          description: (Optional) Configuration of the connection
-                            pooler. The structure is documented below.
+                          description: Configuration of the connection pooler. The
+                            structure is documented below.
                           items:
                             properties:
                               poolDiscard:
-                                description: (Optional) Setting `pool_discard` [parameter
-                                  in Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool_discard-yesno).
+                                description: Setting pool_discard parameter in Odyssey.
                                 type: boolean
                               poolingMode:
-                                description: (Optional) Mode that the connection pooler
-                                  is working in. See descriptions of all modes in
-                                  the [documentation for Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool-string.
+                                description: Mode that the connection pooler is working
+                                  in. See descriptions of all modes in the [documentation
+                                  for Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool-string.
                                 type: string
                             type: object
                           type: array
                         postgresqlConfig:
                           additionalProperties:
                             type: string
-                          description: (Optional) PostgreSQL cluster config. Detail
-                            info in "postresql config" section (documented below).
+                          description: PostgreSQL cluster config. Detail info in "postresql
+                            config" section (documented below).
                           type: object
                         resources:
-                          description: (Required) Resources allocated to hosts of
-                            the PostgreSQL cluster. The structure is documented below.
+                          description: Resources allocated to hosts of the PostgreSQL
+                            cluster. The structure is documented below.
                           items:
                             properties:
                               diskSize:
-                                description: (Required) Volume of the storage available
-                                  to a PostgreSQL host, in gigabytes.
+                                description: Volume of the storage available to a
+                                  PostgreSQL host, in gigabytes.
                                 type: number
                               diskTypeId:
-                                description: (Required) Type of the storage of PostgreSQL
-                                  hosts.
+                                description: Type of the storage of PostgreSQL hosts.
                                 type: string
                               resourcePresetId:
                                 type: string
@@ -174,9 +172,8 @@ spec:
                             type: object
                           type: array
                         version:
-                          description: '(Required) Version of the PostgreSQL cluster.
-                            (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c,
-                            13, 14)'
+                          description: 'Version of the PostgreSQL cluster. (allowed
+                            versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 14)'
                           type: string
                       required:
                       - resources
@@ -185,20 +182,20 @@ spec:
                     type: array
                   database:
                     description: (Deprecated) To manage databases, please switch to
-                      using a separate resource type `yandex_mdb_postgresql_database`.
+                      using a separate resource type yandex_mdb_postgresql_database.
                     items:
                       properties:
                         extension:
                           items:
                             properties:
                               name:
-                                description: (Required) Name of the PostgreSQL cluster.
-                                  Provided by the client when the cluster is created.
+                                description: Name of the PostgreSQL cluster. Provided
+                                  by the client when the cluster is created.
                                 type: string
                               version:
-                                description: '(Required) Version of the PostgreSQL
-                                  cluster. (allowed versions are: 10, 10-1c, 11, 11-1c,
-                                  12, 12-1c, 13, 14)'
+                                description: 'Version of the PostgreSQL cluster. (allowed
+                                  versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13,
+                                  14)'
                                 type: string
                             required:
                             - name
@@ -209,8 +206,8 @@ spec:
                         lcType:
                           type: string
                         name:
-                          description: (Required) Name of the PostgreSQL cluster.
-                            Provided by the client when the cluster is created.
+                          description: Name of the PostgreSQL cluster. Provided by
+                            the client when the cluster is created.
                           type: string
                         owner:
                           type: string
@@ -220,20 +217,18 @@ spec:
                       type: object
                     type: array
                   deletionProtection:
-                    description: (Optional) Inhibits deletion of the cluster.  Can
-                      be either `true` or `false`.
+                    description: Inhibits deletion of the cluster.  Can be either
+                      true or false.
                     type: boolean
                   description:
-                    description: (Optional) Description of the PostgreSQL cluster.
+                    description: Description of the PostgreSQL cluster.
                     type: string
                   environment:
-                    description: (Required) Deployment environment of the PostgreSQL
-                      cluster.
+                    description: Deployment environment of the PostgreSQL cluster.
                     type: string
                   folderId:
-                    description: (Optional) The ID of the folder that the resource
-                      belongs to. If it is unset, the default provider `folder_id`
-                      is used for create.
+                    description: The ID of the folder that the resource belongs to.
+                      If it is unset, the default provider folder_id is used for create.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -311,33 +306,36 @@ spec:
                         type: object
                     type: object
                   host:
-                    description: (Required) A host of the PostgreSQL cluster. The
-                      structure is documented below.
+                    description: A host of the PostgreSQL cluster. The structure is
+                      documented below.
                     items:
                       properties:
                         assignPublicIp:
-                          description: (Optional) Sets whether the host should get
-                            a public IP address on creation. It can be changed on
-                            the fly only when `name` is set.
+                          description: Sets whether the host should get a public IP
+                            address on creation. It can be changed on the fly only
+                            when name is set.
                           type: boolean
                         name:
-                          description: (Required) Name of the PostgreSQL cluster.
-                            Provided by the client when the cluster is created.
+                          description: Host state name. It should be set for all hosts
+                            or unset for all hosts. This field can be used by another
+                            host, to select which host will be its replication source.
+                            Please see replication_source_name parameter. Also, this
+                            field is used to select which host will be selected as
+                            a master host. Please see host_master_name parameter.
                           type: string
                         priority:
                           description: Host priority in HA group. It works only when
-                            `name` is set.
+                            name is set.
                           type: number
                         replicationSourceName:
-                          description: (Optional) Host replication source name points
-                            to host's `name` from which this host should replicate.
-                            When not set then host in HA group. It works only when
-                            `name` is set.
+                          description: Host replication source name points to host's
+                            name from which this host should replicate. When not set
+                            then host in HA group. It works only when name is set.
                           type: string
                         subnetId:
-                          description: (Optional) The ID of the subnet, to which the
-                            host belongs. The subnet must be a part of the network
-                            to which the cluster belongs.
+                          description: The ID of the subnet, to which the host belongs.
+                            The subnet must be a part of the network to which the
+                            cluster belongs.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -416,8 +414,8 @@ spec:
                               type: object
                           type: object
                         zone:
-                          description: (Required) The availability zone where the
-                            PostgreSQL host will be created.
+                          description: The availability zone where the PostgreSQL
+                            host will be created.
                           type: string
                       required:
                       - zone
@@ -428,45 +426,44 @@ spec:
                       type: string
                     type: array
                   hostMasterName:
-                    description: (Optional) It sets name of master host. It works
-                      only when `host.name` is set.
+                    description: It sets name of master host. It works only when host.name
+                      is set.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) A set of key/value label pairs to assign
-                      to the PostgreSQL cluster.
+                    description: A set of key/value label pairs to assign to the PostgreSQL
+                      cluster.
                     type: object
                   maintenanceWindow:
-                    description: (Optional) Maintenance policy of the PostgreSQL cluster.
-                      The structure is documented below.
+                    description: Maintenance policy of the PostgreSQL cluster. The
+                      structure is documented below.
                     items:
                       properties:
                         day:
-                          description: '(Optional) Day of the week (in `DDD` format).
-                            Allowed values: "MON", "TUE", "WED", "THU", "FRI", "SAT",
-                            "SUN"'
+                          description: 'Day of the week (in DDD format). Allowed values:
+                            "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"'
                           type: string
                         hour:
-                          description: (Optional) Hour of the day in UTC (in `HH`
-                            format). Allowed value is between 1 and 24.
+                          description: Hour of the day in UTC (in HH format). Allowed
+                            value is between 1 and 24.
                           type: number
                         type:
-                          description: (Required) Type of maintenance window. Can
-                            be either `ANYTIME` or `WEEKLY`. A day and hour of window
-                            need to be specified with weekly window.
+                          description: Type of maintenance window. Can be either ANYTIME
+                            or WEEKLY. A day and hour of window need to be specified
+                            with weekly window.
                           type: string
                       required:
                       - type
                       type: object
                     type: array
                   name:
-                    description: (Required) Name of the PostgreSQL cluster. Provided
-                      by the client when the cluster is created.
+                    description: Name of the PostgreSQL cluster. Provided by the client
+                      when the cluster is created.
                     type: string
                   networkId:
-                    description: (Required) ID of the network, to which the PostgreSQL
-                      cluster belongs.
+                    description: ID of the network, to which the PostgreSQL cluster
+                      belongs.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -542,34 +539,33 @@ spec:
                         type: object
                     type: object
                   restore:
-                    description: (Optional, ForceNew) The cluster will be created
-                      from the specified backup. The structure is documented below.
+                    description: The cluster will be created from the specified backup.
+                      The structure is documented below.
                     items:
                       properties:
                         backupId:
-                          description: (Required, ForceNew) Backup ID. The cluster
-                            will be created from the specified backup. [How to get
-                            a list of PostgreSQL backups](https://cloud.yandex.com/docs/managed-postgresql/operations/cluster-backups).
+                          description: Backup ID. The cluster will be created from
+                            the specified backup. How to get a list of PostgreSQL
+                            backups.
                           type: string
                         time:
-                          description: '(Optional, ForceNew) Timestamp of the moment
-                            to which the PostgreSQL cluster should be restored. (Format:
-                            "2006-01-02T15:04:05" - UTC). When not set, current time
-                            is used.'
+                          description: 'Timestamp of the moment to which the PostgreSQL
+                            cluster should be restored. (Format: "2006-01-02T15:04:05"
+                            - UTC). When not set, current time is used.'
                           type: string
                         timeInclusive:
-                          description: (Optional, ForceNew) Flag that indicates whether
-                            a database should be restored to the first backup point
-                            available just after the timestamp specified in the [time]
-                            field instead of just before.
+                          description: 'Flag that indicates whether a database should
+                            be restored to the first backup point available just after
+                            the timestamp specified in the [time] field instead of
+                            just before. Possible values:'
                           type: boolean
                       required:
                       - backupId
                       type: object
                     type: array
                   securityGroupIds:
-                    description: (Optional) A set of ids of security groups assigned
-                      to hosts of the cluster.
+                    description: A set of ids of security groups assigned to hosts
+                      of the cluster.
                     items:
                       type: string
                     type: array
@@ -652,7 +648,7 @@ spec:
                     type: object
                   user:
                     description: (Deprecated) To manage users, please switch to using
-                      a separate resource type `yandex_mdb_postgresql_user`.
+                      a separate resource type yandex_mdb_postgresql_user.
                     items:
                       properties:
                         connLimit:
@@ -664,8 +660,8 @@ spec:
                         login:
                           type: boolean
                         name:
-                          description: (Required) Name of the PostgreSQL cluster.
-                            Provided by the client when the cluster is created.
+                          description: Name of the PostgreSQL cluster. Provided by
+                            the client when the cluster is created.
                           type: string
                         passwordSecretRef:
                           description: A SecretKeySelector is a reference to a secret
@@ -689,6 +685,8 @@ spec:
                           items:
                             properties:
                               databaseName:
+                                description: Name of the PostgreSQL cluster. Provided
+                                  by the client when the cluster is created.
                                 type: string
                             required:
                             - databaseName
@@ -892,8 +890,8 @@ spec:
                     description: Aggregated health of the cluster.
                     type: string
                   host:
-                    description: (Required) A host of the PostgreSQL cluster. The
-                      structure is documented below.
+                    description: A host of the PostgreSQL cluster. The structure is
+                      documented below.
                     items:
                       properties:
                         fqdn:

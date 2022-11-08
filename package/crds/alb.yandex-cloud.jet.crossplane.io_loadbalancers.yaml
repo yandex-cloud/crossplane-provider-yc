@@ -35,7 +35,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: LoadBalancer is the Schema for the LoadBalancers API. <no value>
+        description: LoadBalancer is the Schema for the LoadBalancers API. A Load
+          Balancer is used for receiving incoming traffic and transmitting it to the
+          backend endpointsspecified in the ALB Target Groups.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,14 +66,22 @@ spec:
               forProvider:
                 properties:
                   allocationPolicy:
+                    description: Allocation zones for the Load Balancer instance.
+                      The structure is documented below.
                     items:
                       properties:
                         location:
+                          description: Unique set of locations. The structure is documented
+                            below.
                           items:
                             properties:
                               disableTraffic:
+                                description: If set, will disable all L7 instances
+                                  in the zone for request handling.
                                 type: boolean
                               subnetId:
+                                description: ID of the subnet that location is located
+                                  at.
                                 type: string
                               subnetIdRef:
                                 description: Reference to a Subnet in vpc to populate
@@ -154,6 +164,8 @@ spec:
                                     type: object
                                 type: object
                               zoneId:
+                                description: ID of the zone that location is located
+                                  at.
                                 type: string
                             required:
                             - zoneId
@@ -164,8 +176,11 @@ spec:
                       type: object
                     type: array
                   description:
+                    description: An optional description of the Load Balancer.
                     type: string
                   folderId:
+                    description: The ID of the folder to which the resource belongs.
+                      If omitted, the provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -245,36 +260,57 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
+                    description: Labels to assign to this Load Balancer. A list of
+                      key/value pairs.
                     type: object
                   listener:
+                    description: List of listeners for the Load Balancer. The structure
+                      is documented below.
                     items:
                       properties:
                         endpoint:
+                          description: Network endpoints (addresses and ports) of
+                            the listener. The structure is documented below.
                           items:
                             properties:
                               address:
+                                description: Provided by the client or computed automatically.
                                 items:
                                   properties:
                                     externalIpv4Address:
+                                      description: External IPv4 address. The structure
+                                        is documented below.
                                       items:
                                         properties:
                                           address:
+                                            description: Provided by the client or
+                                              computed automatically.
                                             type: string
                                         type: object
                                       type: array
                                     externalIpv6Address:
+                                      description: External IPv6 address. The structure
+                                        is documented below.
                                       items:
                                         properties:
                                           address:
+                                            description: Provided by the client or
+                                              computed automatically.
                                             type: string
                                         type: object
                                       type: array
                                     internalIpv4Address:
+                                      description: Internal IPv4 address. The structure
+                                        is documented below.
                                       items:
                                         properties:
                                           address:
+                                            description: Provided by the client or
+                                              computed automatically.
                                             type: string
                                           subnetId:
+                                            description: Provided by the client or
+                                              computed automatically.
                                             type: string
                                           subnetIdRef:
                                             description: Reference to a Subnet in
@@ -371,6 +407,7 @@ spec:
                                   type: object
                                 type: array
                               ports:
+                                description: One or more ports to listen on.
                                 items:
                                   type: number
                                 type: array
@@ -380,77 +417,122 @@ spec:
                             type: object
                           type: array
                         http:
+                          description: HTTP listener resource. The structure is documented
+                            below.
                           items:
                             properties:
                               handler:
+                                description: Stream handler that sets plaintext Stream
+                                  backend group. The structure is documented below.
                                 items:
                                   properties:
                                     allowHttp10:
+                                      description: If set, will enable only HTTP1
+                                        protocol with HTTP1.0 support.
                                       type: boolean
                                     http2Options:
+                                      description: If set, will enable HTTP2 protocol
+                                        for the handler. The structure is documented
+                                        below.
                                       items:
                                         properties:
                                           maxConcurrentStreams:
+                                            description: Maximum number of concurrent
+                                              streams.
                                             type: number
                                         type: object
                                       type: array
                                     httpRouterId:
+                                      description: HTTP router id.
                                       type: string
                                   type: object
                                 type: array
                               redirects:
+                                description: Shortcut for adding http -> https redirects.
+                                  The structure is documented below.
                                 items:
                                   properties:
                                     httpToHttps:
+                                      description: If set redirects all unencrypted
+                                        HTTP requests to the same URI with scheme
+                                        changed to https.
                                       type: boolean
                                   type: object
                                 type: array
                             type: object
                           type: array
                         name:
+                          description: name of the listener.
                           type: string
                         stream:
+                          description: Stream listener resource. The structure is
+                            documented below.
                           items:
                             properties:
                               handler:
+                                description: Stream handler that sets plaintext Stream
+                                  backend group. The structure is documented below.
                                 items:
                                   properties:
                                     backendGroupId:
+                                      description: Backend group id.
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         tls:
+                          description: TLS listener resource. The structure is documented
+                            below.
                           items:
                             properties:
                               defaultHandler:
+                                description: TLS handler resource. The structure is
+                                  documented below.
                                 items:
                                   properties:
                                     certificateIds:
+                                      description: Certificate IDs in the Certificate
+                                        Manager. Multiple TLS certificates can be
+                                        associated with the same context to allow
+                                        both RSA and ECDSA certificates. Only the
+                                        first certificate of each type will be used.
                                       items:
                                         type: string
                                       type: array
                                     httpHandler:
+                                      description: HTTP handler resource. The structure
+                                        is documented below.
                                       items:
                                         properties:
                                           allowHttp10:
+                                            description: If set, will enable only
+                                              HTTP1 protocol with HTTP1.0 support.
                                             type: boolean
                                           http2Options:
+                                            description: If set, will enable HTTP2
+                                              protocol for the handler. The structure
+                                              is documented below.
                                             items:
                                               properties:
                                                 maxConcurrentStreams:
+                                                  description: Maximum number of concurrent
+                                                    streams.
                                                   type: number
                                               type: object
                                             type: array
                                           httpRouterId:
+                                            description: HTTP router id.
                                             type: string
                                         type: object
                                       type: array
                                     streamHandler:
+                                      description: Stream handler resource. The structure
+                                        is documented below.
                                       items:
                                         properties:
                                           backendGroupId:
+                                            description: Backend group id.
                                             type: string
                                         type: object
                                       type: array
@@ -459,35 +541,60 @@ spec:
                                   type: object
                                 type: array
                               sniHandler:
+                                description: SNI match resource. The structure is
+                                  documented below.
                                 items:
                                   properties:
                                     handler:
+                                      description: Stream handler that sets plaintext
+                                        Stream backend group. The structure is documented
+                                        below.
                                       items:
                                         properties:
                                           certificateIds:
+                                            description: Certificate IDs in the Certificate
+                                              Manager. Multiple TLS certificates can
+                                              be associated with the same context
+                                              to allow both RSA and ECDSA certificates.
+                                              Only the first certificate of each type
+                                              will be used.
                                             items:
                                               type: string
                                             type: array
                                           httpHandler:
+                                            description: HTTP handler resource. The
+                                              structure is documented below.
                                             items:
                                               properties:
                                                 allowHttp10:
+                                                  description: If set, will enable
+                                                    only HTTP1 protocol with HTTP1.0
+                                                    support.
                                                   type: boolean
                                                 http2Options:
+                                                  description: If set, will enable
+                                                    HTTP2 protocol for the handler.
+                                                    The structure is documented below.
                                                   items:
                                                     properties:
                                                       maxConcurrentStreams:
+                                                        description: Maximum number
+                                                          of concurrent streams.
                                                         type: number
                                                     type: object
                                                   type: array
                                                 httpRouterId:
+                                                  description: HTTP router id.
                                                   type: string
                                               type: object
                                             type: array
                                           streamHandler:
+                                            description: Stream handler resource.
+                                              The structure is documented below.
                                             items:
                                               properties:
                                                 backendGroupId:
+                                                  description: Backend group id.
                                                   type: string
                                               type: object
                                             type: array
@@ -496,8 +603,10 @@ spec:
                                         type: object
                                       type: array
                                     name:
+                                      description: name of SNI match.
                                       type: string
                                     serverNames:
+                                      description: A set of server names.
                                       items:
                                         type: string
                                       type: array
@@ -516,8 +625,12 @@ spec:
                       type: object
                     type: array
                   name:
+                    description: Name of the Load Balancer. Provided by the client
+                      when the Load Balancer is created.
                     type: string
                   networkId:
+                    description: ID of the network that the Load Balancer is located
+                      at.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -593,8 +706,12 @@ spec:
                         type: object
                     type: object
                   regionId:
+                    description: ID of the region that the Load Balancer is located
+                      at.
                     type: string
                   securityGroupIds:
+                    description: A list of ID's of security groups attached to the
+                      Load Balancer.
                     items:
                       type: string
                     type: array
@@ -855,12 +972,17 @@ spec:
               atProvider:
                 properties:
                   createdAt:
+                    description: The Load Balancer creation timestamp.
                     type: string
                   id:
+                    description: The ID of the Load Balancer.
                     type: string
                   logGroupId:
+                    description: Cloud log group used by the Load Balancer to store
+                      access logs.
                     type: string
                   status:
+                    description: Status of the Load Balancer.
                     type: string
                 type: object
               conditions:

@@ -30,12 +30,12 @@ type PostgresqlDatabaseExtensionObservation struct {
 
 type PostgresqlDatabaseExtensionParameters struct {
 
+	// Name of the database extension. For more information on available extensions see the official documentation.
 	// +kubebuilder:validation:Required
-	// (Required) The name of the database.
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// Version of the extension.
 	// +kubebuilder:validation:Optional
-	// (Optional) Version of the extension.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -57,24 +57,24 @@ type PostgresqlDatabaseParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
+	// Set of database extensions. The structure is documented below
 	// +kubebuilder:validation:Optional
-	// (Optional) Set of database extensions. The structure is documented below
 	Extension []PostgresqlDatabaseExtensionParameters `json:"extension,omitempty" tf:"extension,omitempty"`
 
+	// POSIX locale for string sorting order. Forbidden to change in an existing database.
 	// +kubebuilder:validation:Optional
-	// (Optional) POSIX locale for string sorting order. Forbidden to change in an existing database.
 	LcCollate *string `json:"lcCollate,omitempty" tf:"lc_collate,omitempty"`
 
+	// POSIX locale for character classification. Forbidden to change in an existing database.
 	// +kubebuilder:validation:Optional
-	// (Optional) POSIX locale for character classification. Forbidden to change in an existing database.
 	LcType *string `json:"lcType,omitempty" tf:"lc_type,omitempty"`
 
+	// The name of the database.
 	// +kubebuilder:validation:Required
-	// (Required) The name of the database.
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	// +kubebuilder:validation:Required
-	// (Required) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	Owner *string `json:"owner" tf:"owner,omitempty"`
 }
 
@@ -92,7 +92,7 @@ type PostgresqlDatabaseStatus struct {
 
 // +kubebuilder:object:root=true
 
-// PostgresqlDatabase is the Schema for the PostgresqlDatabases API. <no value>
+// PostgresqlDatabase is the Schema for the PostgresqlDatabases API. Manages a PostgreSQL database within Yandex.Cloud.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

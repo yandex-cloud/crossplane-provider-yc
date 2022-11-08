@@ -26,35 +26,38 @@ import (
 )
 
 type AddressObservation struct {
+
 	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// spec of IP v4 address
 	// +kubebuilder:validation:Optional
-	// (Optional) spec of IP v4 address
 	ExternalIPv4Address []ExternalIPv4AddressObservation `json:"externalIpv4Address,omitempty" tf:"external_ipv4_address,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// `false` means that address is ephemeral.
+	// false means that address is ephemeral.
 	Reserved *bool `json:"reserved,omitempty" tf:"reserved,omitempty"`
 
-	// `true` if address is used.
+	// true if address is used.
 	Used *bool `json:"used,omitempty" tf:"used,omitempty"`
 }
 
 type AddressParameters struct {
 
+	// An optional description of this resource. Provide this property when
+	// you create the resource.
 	// +kubebuilder:validation:Optional
-	// (Optional) An optional description of this resource. Provide this property when
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// spec of IP v4 address
 	// +kubebuilder:validation:Optional
-	// (Optional) spec of IP v4 address
 	ExternalIPv4Address []ExternalIPv4AddressParameters `json:"externalIpv4Address,omitempty" tf:"external_ipv4_address,omitempty"`
 
+	// ID of the folder that the resource belongs to. If it
+	// is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
-	// (Optional) ID of the folder that the resource belongs to. If it
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -65,32 +68,33 @@ type AddressParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// Labels to apply to this resource. A list of key/value pairs.
 	// +kubebuilder:validation:Optional
-	// (Optional) Labels to apply to this resource. A list of key/value pairs.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Name of the address. Provided by the client when the address is created.
 	// +kubebuilder:validation:Optional
-	// (Optional) Name of the address. Provided by the client when the address is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type ExternalIPv4AddressObservation struct {
+
 	// Allocated IP address.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 }
 
 type ExternalIPv4AddressParameters struct {
 
+	// Enable DDOS protection. Possible values are: "qrator"
 	// +kubebuilder:validation:Optional
-	// (Optional) Enable DDOS protection. Possible values are: "qrator"
 	DdosProtectionProvider *string `json:"ddosProtectionProvider,omitempty" tf:"ddos_protection_provider,omitempty"`
 
+	// Wanted outgoing smtp capability.
 	// +kubebuilder:validation:Optional
-	// (Optional) Wanted outgoing smtp capability.
 	OutgoingSMTPCapability *string `json:"outgoingSmtpCapability,omitempty" tf:"outgoing_smtp_capability,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// Zone for allocating address.
+	// +kubebuilder:validation:Optional
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
@@ -108,7 +112,7 @@ type AddressStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Address is the Schema for the Addresss API. <no value>
+// Address is the Schema for the Addresss API. Manages a VPC address within Yandex.Cloud.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

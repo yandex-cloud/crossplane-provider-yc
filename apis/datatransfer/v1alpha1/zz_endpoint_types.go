@@ -30,9 +30,11 @@ type AltNamesObservation struct {
 
 type AltNamesParameters struct {
 
+	// Name of the endpoint.
 	// +kubebuilder:validation:Optional
 	FromName *string `json:"fromName,omitempty" tf:"from_name,omitempty"`
 
+	// Name of the endpoint.
 	// +kubebuilder:validation:Optional
 	ToName *string `json:"toName,omitempty" tf:"to_name,omitempty"`
 }
@@ -42,25 +44,25 @@ type ClickhouseSourceObservation struct {
 
 type ClickhouseSourceParameters struct {
 
+	// Connection settings. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Required) Connection settings. The structure is documented below.
 	Connection []ConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
+	// List of tables which will not be transfered, formatted as schemaname.tablename.
 	// +kubebuilder:validation:Optional
-	// List of tables which will not be transfered, formatted as `schemaname.tablename`.
 	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
 
+	// List of tables to transfer, formatted as schemaname.tablename. If omitted or an empty list is specified, all tables will be transferred.
 	// +kubebuilder:validation:Optional
-	// List of tables to transfer, formatted as `schemaname.tablename`. If omitted or an empty list is specified, all tables will be transferred.
 	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
 
+	// List of security groups that the transfer associated with this endpoint should use.
 	// +kubebuilder:validation:Optional
-	// (Optional) List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
-	// (Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -77,6 +79,7 @@ type ClickhouseTargetConnectionObservation struct {
 
 type ClickhouseTargetConnectionParameters struct {
 
+	// Connection options. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ConnectionOptions []ConnectionConnectionOptionsParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
@@ -86,33 +89,33 @@ type ClickhouseTargetObservation struct {
 
 type ClickhouseTargetParameters struct {
 
+	// Table renaming rules. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Table renaming rules. The structure is documented below.
 	AltNames []AltNamesParameters `json:"altNames,omitempty" tf:"alt_names,omitempty"`
 
+	// How to clean collections when activating the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
 	// +kubebuilder:validation:Optional
-	// (Optional) How to clean collections when activating the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
+	// Name of the ClickHouse cluster. For managed ClickHouse clusters defaults to managed cluster ID.
 	// +kubebuilder:validation:Optional
-	// (Optional) Name of the ClickHouse cluster. For managed ClickHouse clusters defaults to managed cluster ID.
 	ClickhouseClusterName *string `json:"clickhouseClusterName,omitempty" tf:"clickhouse_cluster_name,omitempty"`
 
+	// Connection settings. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Required) Connection settings. The structure is documented below.
 	Connection []ClickhouseTargetConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
+	// List of security groups that the transfer associated with this endpoint should use.
 	// +kubebuilder:validation:Optional
-	// (Optional) List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
+	// Shard selection rules for the data being transferred. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Shard selection rules for the data being transferred. The structure is documented below.
 	Sharding []ShardingParameters `json:"sharding,omitempty" tf:"sharding,omitempty"`
 
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
-	// (Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -129,12 +132,12 @@ type CollectionsObservation struct {
 
 type CollectionsParameters struct {
 
+	// Collection name.
 	// +kubebuilder:validation:Optional
-	// (Required) Collection name.
 	CollectionName *string `json:"collectionName,omitempty" tf:"collection_name,omitempty"`
 
+	// Database name.
 	// +kubebuilder:validation:Optional
-	// (Required) Database name.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 }
 
@@ -143,8 +146,8 @@ type ColumnValueHashObservation struct {
 
 type ColumnValueHashParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// The name of the column to calculate hash from.
+	// +kubebuilder:validation:Optional
 	ColumnName *string `json:"columnName,omitempty" tf:"column_name,omitempty"`
 }
 
@@ -156,20 +159,20 @@ type ConnectionConnectionOptionsOnPremiseObservation struct {
 
 type ConnectionConnectionOptionsOnPremiseParameters struct {
 
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	// +kubebuilder:validation:Optional
-	// (Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
+	// Port for the database connection.
 	// +kubebuilder:validation:Optional
-	// (Required) Port for the database connection.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// Replica set name.
 	// +kubebuilder:validation:Optional
-	// (Optional) Replica set name.
 	ReplicaSet *string `json:"replicaSet,omitempty" tf:"replica_set,omitempty"`
 
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	TLSMode []ConnectionOptionsOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
@@ -178,35 +181,35 @@ type ConnectionConnectionOptionsOnPremiseTLSModeObservation struct {
 
 type ConnectionConnectionOptionsOnPremiseTLSModeParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	// +kubebuilder:validation:Optional
 	Disabled []ConnectionOptionsOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	Enabled []ConnectionOptionsOnPremiseTLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type ConnectionConnectionOptionsParameters struct {
 
+	// Name of the database to transfer.
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// Identifier of the Managed PostgreSQL cluster.
+	// +kubebuilder:validation:Optional
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// Connection settings of the on-premise PostgreSQL server.
+	// +kubebuilder:validation:Optional
 	OnPremise []ConnectionOptionsOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
 	// +kubebuilder:validation:Optional
-	// (Required) Password for the database access. This is a block with a single field named `raw` which should contain the password.
 	Password []ConnectionOptionsPasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
+	// User for the database access.
 	// +kubebuilder:validation:Optional
-	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
@@ -227,17 +230,17 @@ type ConnectionOnPremiseObservation struct {
 
 type ConnectionOnPremiseParameters struct {
 
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	// +kubebuilder:validation:Optional
-	// (Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
+	// Port for the database connection.
 	// +kubebuilder:validation:Optional
-	// (Required) Port for the database connection.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
-	// (Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -248,8 +251,8 @@ type ConnectionOnPremiseParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	TLSMode []ConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
@@ -264,8 +267,8 @@ type ConnectionOnPremiseTLSModeEnabledObservation struct {
 
 type ConnectionOnPremiseTLSModeEnabledParameters struct {
 
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
-	// (Optional) X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
@@ -274,12 +277,12 @@ type ConnectionOnPremiseTLSModeObservation struct {
 
 type ConnectionOnPremiseTLSModeParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	// +kubebuilder:validation:Optional
 	Disabled []ConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	Enabled []ConnectionOnPremiseTLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
@@ -291,20 +294,20 @@ type ConnectionOptionsOnPremiseObservation struct {
 
 type ConnectionOptionsOnPremiseParameters struct {
 
+	// TCP port number for the HTTP interface of the ClickHouse server.
 	// +kubebuilder:validation:Optional
-	// (Required) TCP port number for the HTTP interface of the ClickHouse server.
 	HTTPPort *float64 `json:"httpPort,omitempty" tf:"http_port,omitempty"`
 
+	// TCP port number for the native interface of the ClickHouse server.
 	// +kubebuilder:validation:Optional
-	// (Required) TCP port number for the native interface of the ClickHouse server.
 	NativePort *float64 `json:"nativePort,omitempty" tf:"native_port,omitempty"`
 
+	// The list of ClickHouse shards. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Required) The list of ClickHouse shards. The structure is documented below.
 	Shards []OnPremiseShardsParameters `json:"shards,omitempty" tf:"shards,omitempty"`
 
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	TLSMode []OnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
@@ -319,8 +322,8 @@ type ConnectionOptionsOnPremiseTLSModeEnabledObservation struct {
 
 type ConnectionOptionsOnPremiseTLSModeEnabledParameters struct {
 
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
-	// (Optional) X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
@@ -329,35 +332,35 @@ type ConnectionOptionsOnPremiseTLSModeObservation struct {
 
 type ConnectionOptionsOnPremiseTLSModeParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	// +kubebuilder:validation:Optional
 	Disabled []OnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	Enabled []OnPremiseTLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type ConnectionOptionsParameters struct {
 
+	// Name of the database to transfer.
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// Identifier of the Managed PostgreSQL cluster.
+	// +kubebuilder:validation:Optional
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// Connection settings of the on-premise PostgreSQL server.
+	// +kubebuilder:validation:Optional
 	OnPremise []OnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
 	// +kubebuilder:validation:Optional
-	// (Required) Password for the database access. This is a block with a single field named `raw` which should contain the password.
 	Password []PasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
+	// User for the database access.
 	// +kubebuilder:validation:Optional
-	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
@@ -372,6 +375,7 @@ type ConnectionOptionsPasswordParameters struct {
 
 type ConnectionParameters struct {
 
+	// Connection options. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ConnectionOptions []ConnectionOptionsParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
@@ -387,25 +391,26 @@ type EnabledObservation struct {
 
 type EnabledParameters struct {
 
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
-	// (Optional) X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type EndpointObservation struct {
+
 	// (Computed) Identifier of a new Data Transfer endpoint.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type EndpointParameters struct {
 
+	// Arbitrary description text for the endpoint.
 	// +kubebuilder:validation:Optional
-	// (Optional) Arbitrary description text for the endpoint.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// ID of the folder to create the endpoint in. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
-	// (Optional) ID of the folder to create the endpoint in. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -416,16 +421,16 @@ type EndpointParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// A set of key/value label pairs to assign to the Data Transfer endpoint.
 	// +kubebuilder:validation:Optional
-	// (Optional) A set of key/value label pairs to assign to the Data Transfer endpoint.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Name of the endpoint.
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the endpoint.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Settings for the endpoint. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Required) Settings for the endpoint. The structure is documented below.
 	Settings []SettingsParameters `json:"settings,omitempty" tf:"settings,omitempty"`
 }
 
@@ -434,12 +439,12 @@ type ExcludedCollectionsObservation struct {
 
 type ExcludedCollectionsParameters struct {
 
+	// Collection name.
 	// +kubebuilder:validation:Optional
-	// (Required) Collection name.
 	CollectionName *string `json:"collectionName,omitempty" tf:"collection_name,omitempty"`
 
+	// Database name.
 	// +kubebuilder:validation:Optional
-	// (Required) Database name.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 }
 
@@ -448,13 +453,13 @@ type MongoSourceConnectionConnectionOptionsObservation struct {
 
 type MongoSourceConnectionConnectionOptionsParameters struct {
 
+	// Name of the database associated with the credentials.
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the database associated with the credentials.
 	AuthSource *string `json:"authSource,omitempty" tf:"auth_source,omitempty"`
 
+	// Identifier of the Managed PostgreSQL cluster.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MongodbCluster
 	// +kubebuilder:validation:Optional
-	// Identifier of the Managed PostgreSQL cluster.
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
 	// Reference to a MongodbCluster in mdb to populate mdbClusterId.
@@ -465,16 +470,16 @@ type MongoSourceConnectionConnectionOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.Selector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// +kubebuilder:validation:Optional
 	// Connection settings of the on-premise PostgreSQL server.
+	// +kubebuilder:validation:Optional
 	OnPremise []ConnectionConnectionOptionsOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
 	// +kubebuilder:validation:Optional
-	// (Required) Password for the database access. This is a block with a single field named `raw` which should contain the password.
 	Password []ConnectionConnectionOptionsPasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
+	// User for the database access.
 	// +kubebuilder:validation:Optional
-	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
@@ -483,6 +488,7 @@ type MongoSourceConnectionObservation struct {
 
 type MongoSourceConnectionParameters struct {
 
+	// Connection options. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ConnectionOptions []MongoSourceConnectionConnectionOptionsParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
@@ -492,29 +498,29 @@ type MongoSourceObservation struct {
 
 type MongoSourceParameters struct {
 
+	// The list of the MongoDB collections that should be transferred. If omitted, all available collections will be transferred. The structure of the list item is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) The list of the MongoDB collections that should be transferred. If omitted, all available collections will be transferred. The structure of the list item is documented below.
 	Collections []CollectionsParameters `json:"collections,omitempty" tf:"collections,omitempty"`
 
+	// Connection settings. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Required) Connection settings. The structure is documented below.
 	Connection []MongoSourceConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
+	// The list of the MongoDB collections that should not be transferred.
 	// +kubebuilder:validation:Optional
-	// (Optional) The list of the MongoDB collections that should not be transferred.
 	ExcludedCollections []ExcludedCollectionsParameters `json:"excludedCollections,omitempty" tf:"excluded_collections,omitempty"`
 
+	// whether the secondary server should be preferred to the primary when copying data.
 	// +kubebuilder:validation:Optional
-	// (Optional) whether the secondary server should be preferred to the primary when copying data.
 	SecondaryPreferredMode *bool `json:"secondaryPreferredMode,omitempty" tf:"secondary_preferred_mode,omitempty"`
 
+	// List of security groups that the transfer associated with this endpoint should use.
 	// +kubebuilder:validation:Optional
-	// (Optional) List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
-	// (Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -534,32 +540,32 @@ type MongoTargetConnectionConnectionOptionsOnPremiseObservation struct {
 
 type MongoTargetConnectionConnectionOptionsOnPremiseParameters struct {
 
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	// +kubebuilder:validation:Optional
-	// (Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
+	// Port for the database connection.
 	// +kubebuilder:validation:Optional
-	// (Required) Port for the database connection.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// Replica set name.
 	// +kubebuilder:validation:Optional
-	// (Optional) Replica set name.
 	ReplicaSet *string `json:"replicaSet,omitempty" tf:"replica_set,omitempty"`
 
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	TLSMode []ConnectionConnectionOptionsOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type MongoTargetConnectionConnectionOptionsParameters struct {
 
+	// Name of the database associated with the credentials.
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the database associated with the credentials.
 	AuthSource *string `json:"authSource,omitempty" tf:"auth_source,omitempty"`
 
+	// Identifier of the Managed PostgreSQL cluster.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MongodbCluster
 	// +kubebuilder:validation:Optional
-	// Identifier of the Managed PostgreSQL cluster.
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
 	// Reference to a MongodbCluster in mdb to populate mdbClusterId.
@@ -570,16 +576,16 @@ type MongoTargetConnectionConnectionOptionsParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.Selector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// +kubebuilder:validation:Optional
 	// Connection settings of the on-premise PostgreSQL server.
+	// +kubebuilder:validation:Optional
 	OnPremise []MongoTargetConnectionConnectionOptionsOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
 	// +kubebuilder:validation:Optional
-	// (Required) Password for the database access. This is a block with a single field named `raw` which should contain the password.
 	Password []MongoTargetConnectionConnectionOptionsPasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
+	// User for the database access.
 	// +kubebuilder:validation:Optional
-	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
@@ -597,6 +603,7 @@ type MongoTargetConnectionObservation struct {
 
 type MongoTargetConnectionParameters struct {
 
+	// Connection options. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ConnectionOptions []MongoTargetConnectionConnectionOptionsParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
@@ -606,25 +613,25 @@ type MongoTargetObservation struct {
 
 type MongoTargetParameters struct {
 
+	// How to clean collections when activating the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
 	// +kubebuilder:validation:Optional
-	// (Optional) How to clean collections when activating the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
+	// Connection settings. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Required) Connection settings. The structure is documented below.
 	Connection []MongoTargetConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
+	// Name of the database to transfer.
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
+	// List of security groups that the transfer associated with this endpoint should use.
 	// +kubebuilder:validation:Optional
-	// (Optional) List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
-	// (Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -641,9 +648,9 @@ type MySQLSourceConnectionObservation struct {
 
 type MySQLSourceConnectionParameters struct {
 
+	// Identifier of the Managed PostgreSQL cluster.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLCluster
 	// +kubebuilder:validation:Optional
-	// Identifier of the Managed PostgreSQL cluster.
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
 	// Reference to a MySQLCluster in mdb to populate mdbClusterId.
@@ -654,8 +661,8 @@ type MySQLSourceConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.Selector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// +kubebuilder:validation:Optional
 	// Connection settings of the on-premise PostgreSQL server.
+	// +kubebuilder:validation:Optional
 	OnPremise []ConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
@@ -664,14 +671,14 @@ type MySQLSourceObservation struct {
 
 type MySQLSourceParameters struct {
 
+	// Connection settings. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Required) Connection settings. The structure is documented below.
 	Connection []MySQLSourceConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
+	// Name of the database to transfer.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Reference to a MySQLDatabase in mdb to populate database.
@@ -682,25 +689,25 @@ type MySQLSourceParameters struct {
 	// +kubebuilder:validation:Optional
 	DatabaseSelector *v1.Selector `json:"databaseSelector,omitempty" tf:"-"`
 
+	// Opposite of include_table_regex. The tables matching the specified regular expressions will not be transferred.
 	// +kubebuilder:validation:Optional
-	// (Optional) Opposite of `include_table_regex`. The tables matching the specified regular expressions will not be transferred.
 	ExcludeTablesRegex []*string `json:"excludeTablesRegex,omitempty" tf:"exclude_tables_regex,omitempty"`
 
+	// List of regular expressions of table names which should be transferred. A table name is formatted as schemaname.tablename. For example, a single regular expression may look like ^mydb.employees$.
 	// +kubebuilder:validation:Optional
-	// (Optional) List of regular expressions of table names which should be transferred. A table name is formatted as schemaname.tablename. For example, a single regular expression may look like `^mydb.employees$`.
 	IncludeTablesRegex []*string `json:"includeTablesRegex,omitempty" tf:"include_tables_regex,omitempty"`
 
+	// Defines which database schema objects should be transferred, e.g. views, functions, etc.
 	// +kubebuilder:validation:Optional
-	// (Optional) Defines which database schema objects should be transferred, e.g. views, functions, etc.
 	ObjectTransferSettings []ObjectTransferSettingsParameters `json:"objectTransferSettings,omitempty" tf:"object_transfer_settings,omitempty"`
 
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
 	// +kubebuilder:validation:Optional
-	// (Required) Password for the database access. This is a block with a single field named `raw` which should contain the password.
 	Password []MySQLSourcePasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
+	// List of security groups that the transfer associated with this endpoint should use.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
-	// (Optional) List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// References to SecurityGroup in vpc to populate securityGroups.
@@ -714,14 +721,14 @@ type MySQLSourceParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceDatabase *string `json:"serviceDatabase,omitempty" tf:"service_database,omitempty"`
 
+	// Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.
 	// +kubebuilder:validation:Optional
-	// (Optional) Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.
 	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
 
+	// User for the database access.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
-	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 
 	// Reference to a MySQLUser in mdb to populate user.
@@ -750,17 +757,17 @@ type MySQLTargetConnectionOnPremiseObservation struct {
 
 type MySQLTargetConnectionOnPremiseParameters struct {
 
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	// +kubebuilder:validation:Optional
-	// (Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
+	// Port for the database connection.
 	// +kubebuilder:validation:Optional
-	// (Required) Port for the database connection.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
-	// (Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -771,8 +778,8 @@ type MySQLTargetConnectionOnPremiseParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	TLSMode []MySQLTargetConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
@@ -787,8 +794,8 @@ type MySQLTargetConnectionOnPremiseTLSModeEnabledObservation struct {
 
 type MySQLTargetConnectionOnPremiseTLSModeEnabledParameters struct {
 
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
-	// (Optional) X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
@@ -797,20 +804,20 @@ type MySQLTargetConnectionOnPremiseTLSModeObservation struct {
 
 type MySQLTargetConnectionOnPremiseTLSModeParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	// +kubebuilder:validation:Optional
 	Disabled []MySQLTargetConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	Enabled []MySQLTargetConnectionOnPremiseTLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type MySQLTargetConnectionParameters struct {
 
+	// Identifier of the Managed PostgreSQL cluster.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLCluster
 	// +kubebuilder:validation:Optional
-	// Identifier of the Managed PostgreSQL cluster.
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
 	// Reference to a MySQLCluster in mdb to populate mdbClusterId.
@@ -821,8 +828,8 @@ type MySQLTargetConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.Selector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// +kubebuilder:validation:Optional
 	// Connection settings of the on-premise PostgreSQL server.
+	// +kubebuilder:validation:Optional
 	OnPremise []MySQLTargetConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
@@ -831,14 +838,14 @@ type MySQLTargetObservation struct {
 
 type MySQLTargetParameters struct {
 
+	// Connection settings. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Required) Connection settings. The structure is documented below.
 	Connection []MySQLTargetConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
+	// Name of the database to transfer.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Reference to a MySQLDatabase in mdb to populate database.
@@ -849,17 +856,17 @@ type MySQLTargetParameters struct {
 	// +kubebuilder:validation:Optional
 	DatabaseSelector *v1.Selector `json:"databaseSelector,omitempty" tf:"-"`
 
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
 	// +kubebuilder:validation:Optional
-	// (Required) Password for the database access. This is a block with a single field named `raw` which should contain the password.
 	Password []MySQLTargetPasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
+	// sql_mode to use when interacting with the server. Defaults to "NO_AUTO_VALUE_ON_ZERO,NO_DIR_IN_CREATE,NO_ENGINE_SUBSTITUTION".
 	// +kubebuilder:validation:Optional
-	// (Optional) [sql_mode](https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html) to use when interacting with the server. Defaults to "NO_AUTO_VALUE_ON_ZERO,NO_DIR_IN_CREATE,NO_ENGINE_SUBSTITUTION".
 	SQLMode *string `json:"sqlMode,omitempty" tf:"sql_mode,omitempty"`
 
+	// List of security groups that the transfer associated with this endpoint should use.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
-	// (Optional) List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// References to SecurityGroup in vpc to populate securityGroups.
@@ -870,18 +877,18 @@ type MySQLTargetParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
 
+	// When true, disables foreign key checks. See foreign_key_checks. False by default.
 	// +kubebuilder:validation:Optional
-	// (Optional) When true, disables foreign key checks. See [foreign_key_checks](https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_foreign_key_checks). False by default.
 	SkipConstraintChecks *bool `json:"skipConstraintChecks,omitempty" tf:"skip_constraint_checks,omitempty"`
 
+	// Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.
 	// +kubebuilder:validation:Optional
-	// (Optional) Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.
 	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
 
+	// User for the database access.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
-	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 
 	// Reference to a MySQLUser in mdb to populate user.
@@ -910,6 +917,7 @@ type ObjectTransferSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	Routine *string `json:"routine,omitempty" tf:"routine,omitempty"`
 
+	// All of the attrubutes are optional and should be either "BEFORE_DATA", "AFTER_DATA" or "NEVER".
 	// +kubebuilder:validation:Optional
 	Trigger *string `json:"trigger,omitempty" tf:"trigger,omitempty"`
 
@@ -922,20 +930,20 @@ type OnPremiseObservation struct {
 
 type OnPremiseParameters struct {
 
+	// TCP port number for the HTTP interface of the ClickHouse server.
 	// +kubebuilder:validation:Optional
-	// (Required) TCP port number for the HTTP interface of the ClickHouse server.
 	HTTPPort *float64 `json:"httpPort,omitempty" tf:"http_port,omitempty"`
 
+	// TCP port number for the native interface of the ClickHouse server.
 	// +kubebuilder:validation:Optional
-	// (Required) TCP port number for the native interface of the ClickHouse server.
 	NativePort *float64 `json:"nativePort,omitempty" tf:"native_port,omitempty"`
 
+	// The list of ClickHouse shards. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Required) The list of ClickHouse shards. The structure is documented below.
 	Shards []ShardsParameters `json:"shards,omitempty" tf:"shards,omitempty"`
 
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	TLSMode []TLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
@@ -944,12 +952,12 @@ type OnPremiseShardsObservation struct {
 
 type OnPremiseShardsParameters struct {
 
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	// +kubebuilder:validation:Optional
-	// (Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
+	// Name of the endpoint.
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the endpoint.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
@@ -964,8 +972,8 @@ type OnPremiseTLSModeEnabledObservation struct {
 
 type OnPremiseTLSModeEnabledParameters struct {
 
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
-	// (Optional) X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
@@ -974,12 +982,12 @@ type OnPremiseTLSModeObservation struct {
 
 type OnPremiseTLSModeParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	// +kubebuilder:validation:Optional
 	Disabled []TLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	Enabled []TLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
@@ -1000,17 +1008,17 @@ type PostgresSourceConnectionOnPremiseObservation struct {
 
 type PostgresSourceConnectionOnPremiseParameters struct {
 
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	// +kubebuilder:validation:Optional
-	// (Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
+	// Port for the database connection.
 	// +kubebuilder:validation:Optional
-	// (Required) Port for the database connection.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
-	// (Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -1021,8 +1029,8 @@ type PostgresSourceConnectionOnPremiseParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	TLSMode []PostgresSourceConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
@@ -1037,8 +1045,8 @@ type PostgresSourceConnectionOnPremiseTLSModeEnabledObservation struct {
 
 type PostgresSourceConnectionOnPremiseTLSModeEnabledParameters struct {
 
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
-	// (Optional) X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
@@ -1047,20 +1055,20 @@ type PostgresSourceConnectionOnPremiseTLSModeObservation struct {
 
 type PostgresSourceConnectionOnPremiseTLSModeParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	// +kubebuilder:validation:Optional
 	Disabled []PostgresSourceConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	Enabled []PostgresSourceConnectionOnPremiseTLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type PostgresSourceConnectionParameters struct {
 
+	// Identifier of the Managed PostgreSQL cluster.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlCluster
 	// +kubebuilder:validation:Optional
-	// Identifier of the Managed PostgreSQL cluster.
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
 	// Reference to a PostgresqlCluster in mdb to populate mdbClusterId.
@@ -1071,8 +1079,8 @@ type PostgresSourceConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.Selector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// +kubebuilder:validation:Optional
 	// Connection settings of the on-premise PostgreSQL server.
+	// +kubebuilder:validation:Optional
 	OnPremise []PostgresSourceConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
@@ -1081,6 +1089,7 @@ type PostgresSourceObjectTransferSettingsObservation struct {
 
 type PostgresSourceObjectTransferSettingsParameters struct {
 
+	// All of the attrubutes are optional and should be either "BEFORE_DATA", "AFTER_DATA" or "NEVER".
 	// +kubebuilder:validation:Optional
 	Cast *string `json:"cast,omitempty" tf:"cast,omitempty"`
 
@@ -1123,6 +1132,7 @@ type PostgresSourceObjectTransferSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	Table *string `json:"table,omitempty" tf:"table,omitempty"`
 
+	// All of the attrubutes are optional and should be either "BEFORE_DATA", "AFTER_DATA" or "NEVER".
 	// +kubebuilder:validation:Optional
 	Trigger *string `json:"trigger,omitempty" tf:"trigger,omitempty"`
 
@@ -1138,14 +1148,14 @@ type PostgresSourceObservation struct {
 
 type PostgresSourceParameters struct {
 
+	// Connection settings. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Required) Connection settings. The structure is documented below.
 	Connection []PostgresSourceConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
+	// Name of the database to transfer.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlDatabase
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Reference to a PostgresqlDatabase in mdb to populate database.
@@ -1156,25 +1166,25 @@ type PostgresSourceParameters struct {
 	// +kubebuilder:validation:Optional
 	DatabaseSelector *v1.Selector `json:"databaseSelector,omitempty" tf:"-"`
 
+	// List of tables which will not be transfered, formatted as schemaname.tablename.
 	// +kubebuilder:validation:Optional
-	// List of tables which will not be transfered, formatted as `schemaname.tablename`.
 	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
 
+	// List of tables to transfer, formatted as schemaname.tablename. If omitted or an empty list is specified, all tables will be transferred.
 	// +kubebuilder:validation:Optional
-	// List of tables to transfer, formatted as `schemaname.tablename`. If omitted or an empty list is specified, all tables will be transferred.
 	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
 
+	// Defines which database schema objects should be transferred, e.g. views, functions, etc.
 	// +kubebuilder:validation:Optional
-	// (Optional) Defines which database schema objects should be transferred, e.g. views, functions, etc.
 	ObjectTransferSettings []PostgresSourceObjectTransferSettingsParameters `json:"objectTransferSettings,omitempty" tf:"object_transfer_settings,omitempty"`
 
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
 	// +kubebuilder:validation:Optional
-	// (Required) Password for the database access. This is a block with a single field named `raw` which should contain the password.
 	Password []PostgresSourcePasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
+	// List of security groups that the transfer associated with this endpoint should use.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
-	// (Optional) List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// References to SecurityGroup in vpc to populate securityGroups.
@@ -1185,18 +1195,18 @@ type PostgresSourceParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
 
+	// Name of the database schema in which auxiliary tables needed for the transfer will be created. Empty service_schema implies schema "public".
 	// +kubebuilder:validation:Optional
-	// (Optional) Name of the database schema in which auxiliary tables needed for the transfer will be created. Empty `service_schema` implies schema "public".
 	ServiceSchema *string `json:"serviceSchema,omitempty" tf:"service_schema,omitempty"`
 
+	// Maximum WAL size held by the replication slot, in gigabytes. Exceeding this limit will result in a replication failure and deletion of the replication slot. Unlimited by default.
 	// +kubebuilder:validation:Optional
-	// (Optional) Maximum WAL size held by the replication slot, in gigabytes. Exceeding this limit will result in a replication failure and deletion of the replication slot. Unlimited by default.
 	SlotGigabyteLagLimit *float64 `json:"slotGigabyteLagLimit,omitempty" tf:"slot_gigabyte_lag_limit,omitempty"`
 
+	// User for the database access.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
-	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 
 	// Reference to a PostgresqlUser in mdb to populate user.
@@ -1225,17 +1235,17 @@ type PostgresTargetConnectionOnPremiseObservation struct {
 
 type PostgresTargetConnectionOnPremiseParameters struct {
 
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	// +kubebuilder:validation:Optional
-	// (Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
+	// Port for the database connection.
 	// +kubebuilder:validation:Optional
-	// (Required) Port for the database connection.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
-	// (Optional) Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -1246,8 +1256,8 @@ type PostgresTargetConnectionOnPremiseParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	TLSMode []PostgresTargetConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
@@ -1262,8 +1272,8 @@ type PostgresTargetConnectionOnPremiseTLSModeEnabledObservation struct {
 
 type PostgresTargetConnectionOnPremiseTLSModeEnabledParameters struct {
 
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
-	// (Optional) X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
@@ -1272,20 +1282,20 @@ type PostgresTargetConnectionOnPremiseTLSModeObservation struct {
 
 type PostgresTargetConnectionOnPremiseTLSModeParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	// +kubebuilder:validation:Optional
 	Disabled []PostgresTargetConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	Enabled []PostgresTargetConnectionOnPremiseTLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type PostgresTargetConnectionParameters struct {
 
+	// Identifier of the Managed PostgreSQL cluster.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlCluster
 	// +kubebuilder:validation:Optional
-	// Identifier of the Managed PostgreSQL cluster.
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
 	// Reference to a PostgresqlCluster in mdb to populate mdbClusterId.
@@ -1296,8 +1306,8 @@ type PostgresTargetConnectionParameters struct {
 	// +kubebuilder:validation:Optional
 	MdbClusterIDSelector *v1.Selector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
 
-	// +kubebuilder:validation:Optional
 	// Connection settings of the on-premise PostgreSQL server.
+	// +kubebuilder:validation:Optional
 	OnPremise []PostgresTargetConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
@@ -1306,14 +1316,14 @@ type PostgresTargetObservation struct {
 
 type PostgresTargetParameters struct {
 
+	// Connection settings. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Required) Connection settings. The structure is documented below.
 	Connection []PostgresTargetConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
+	// Name of the database to transfer.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlDatabase
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the database to transfer.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Reference to a PostgresqlDatabase in mdb to populate database.
@@ -1324,13 +1334,13 @@ type PostgresTargetParameters struct {
 	// +kubebuilder:validation:Optional
 	DatabaseSelector *v1.Selector `json:"databaseSelector,omitempty" tf:"-"`
 
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
 	// +kubebuilder:validation:Optional
-	// (Required) Password for the database access. This is a block with a single field named `raw` which should contain the password.
 	Password []PostgresTargetPasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
+	// List of security groups that the transfer associated with this endpoint should use.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
-	// (Optional) List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// References to SecurityGroup in vpc to populate securityGroups.
@@ -1341,10 +1351,10 @@ type PostgresTargetParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
 
+	// User for the database access.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
-	// (Required) User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 
 	// Reference to a PostgresqlUser in mdb to populate user.
@@ -1382,20 +1392,20 @@ type SettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	MongoTarget []MongoTargetParameters `json:"mongoTarget,omitempty" tf:"mongo_target,omitempty"`
 
+	// Settings specific to the MySQL source endpoint.
 	// +kubebuilder:validation:Optional
-	// (Optional) Settings specific to the MySQL source endpoint.
 	MySQLSource []MySQLSourceParameters `json:"mysqlSource,omitempty" tf:"mysql_source,omitempty"`
 
+	// Settings specific to the MySQL target endpoint.
 	// +kubebuilder:validation:Optional
-	// (Optional) Settings specific to the MySQL target endpoint.
 	MySQLTarget []MySQLTargetParameters `json:"mysqlTarget,omitempty" tf:"mysql_target,omitempty"`
 
+	// Settings specific to the PostgreSQL source endpoint.
 	// +kubebuilder:validation:Optional
-	// (Optional) Settings specific to the PostgreSQL source endpoint.
 	PostgresSource []PostgresSourceParameters `json:"postgresSource,omitempty" tf:"postgres_source,omitempty"`
 
+	// Settings specific to the PostgreSQL target endpoint.
 	// +kubebuilder:validation:Optional
-	// (Optional) Settings specific to the PostgreSQL target endpoint.
 	PostgresTarget []PostgresTargetParameters `json:"postgresTarget,omitempty" tf:"postgres_target,omitempty"`
 }
 
@@ -1404,12 +1414,12 @@ type ShardingObservation struct {
 
 type ShardingParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// Shard data by the hash value of the specified column. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	ColumnValueHash []ColumnValueHashParameters `json:"columnValueHash,omitempty" tf:"column_value_hash,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// Shard data by ID of the transfer.
+	// +kubebuilder:validation:Optional
 	TransferID []TransferIDParameters `json:"transferId,omitempty" tf:"transfer_id,omitempty"`
 }
 
@@ -1418,12 +1428,12 @@ type ShardsObservation struct {
 
 type ShardsParameters struct {
 
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	// +kubebuilder:validation:Optional
-	// (Required) List of host names of the PostgreSQL server. Exactly one host is expected currently.
 	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
+	// Name of the endpoint.
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the endpoint.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
@@ -1438,8 +1448,8 @@ type TLSModeEnabledObservation struct {
 
 type TLSModeEnabledParameters struct {
 
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
-	// (Optional) X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
@@ -1448,12 +1458,12 @@ type TLSModeObservation struct {
 
 type TLSModeParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	// +kubebuilder:validation:Optional
 	Disabled []DisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	Enabled []EnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
@@ -1477,7 +1487,7 @@ type EndpointStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Endpoint is the Schema for the Endpoints API. <no value>
+// Endpoint is the Schema for the Endpoints API. Manages a Data Transfer endpoint within Yandex.Cloud.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

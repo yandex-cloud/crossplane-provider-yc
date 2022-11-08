@@ -1,0 +1,30 @@
+apiVersion: alb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: BackendGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: alb/v1alpha1/backendgroup
+  labels:
+    testing.upbound.io/example-name: test-backend-group
+  name: test-backend-group
+spec:
+  forProvider:
+    httpBackend:
+    - healthcheck:
+      - httpHealthcheck:
+        - path: /
+        interval: 1s
+        timeout: 1s
+      http2: "true"
+      loadBalancingConfig:
+      - panicThreshold: 50
+      name: test-http-backend
+      port: 8080
+      targetGroupIdsRefs:
+      - name: test-target-group
+      tls:
+      - sni: backend-domain.internal
+      weight: 1
+    name: my-backend-group
+
+---
+

@@ -26,16 +26,23 @@ import (
 )
 
 type TargetGroupObservation struct {
+
+	// The target group creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// The ID of the target group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type TargetGroupParameters struct {
 
+	// An optional description of the target group. Provide this property when
+	// you create the resource.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The ID of the folder to which the resource belongs.
+	// If omitted, the provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -48,12 +55,15 @@ type TargetGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// Labels to assign to this target group. A list of key/value pairs.
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Name of the target group. Provided by the client when the target group is created.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// A Target resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Target []TargetParameters `json:"target,omitempty" tf:"target,omitempty"`
 }
@@ -63,12 +73,15 @@ type TargetObservation struct {
 
 type TargetParameters struct {
 
+	// IP address of the target.
 	// +kubebuilder:validation:Required
 	IPAddress *string `json:"ipAddress" tf:"ip_address,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	PrivateIPv4Address *bool `json:"privateIpv4Address,omitempty" tf:"private_ipv4_address,omitempty"`
 
+	// ID of the subnet that targets are connected to.
+	// All targets in the target group must be connected to the same subnet within a single availability zone.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -96,7 +109,7 @@ type TargetGroupStatus struct {
 
 // +kubebuilder:object:root=true
 
-// TargetGroup is the Schema for the TargetGroups API. <no value>
+// TargetGroup is the Schema for the TargetGroups API. An application load balancer distributes the load across cloud resources that are combined into a target group.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

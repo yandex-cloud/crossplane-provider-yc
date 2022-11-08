@@ -36,7 +36,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: DatabaseDedicated is the Schema for the DatabaseDedicateds API.
-          <no value>
+          Manages Yandex Database dedicated cluster.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -65,16 +65,16 @@ spec:
               forProvider:
                 properties:
                   assignPublicIps:
-                    description: (Optional) Whether public IP addresses should be
-                      assigned to the Yandex Database cluster.
+                    description: Whether public IP addresses should be assigned to
+                      the Yandex Database cluster.
                     type: boolean
                   description:
-                    description: (Optional) A description for the Yandex Database
-                      cluster.
+                    description: A description for the Yandex Database cluster.
                     type: string
                   folderId:
-                    description: (Optional) ID of the folder that the Yandex Database
-                      cluster belongs to.
+                    description: ID of the folder that the Yandex Database cluster
+                      belongs to. It will be deduced from provider configuration if
+                      not set explicitly.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -154,20 +154,21 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) A set of key/value label pairs to assign
-                      to the Yandex Database cluster.
+                    description: A set of key/value label pairs to assign to the Yandex
+                      Database cluster.
                     type: object
                   location:
-                    description: (Optional) Location for the Yandex Database cluster.
+                    description: Location for the Yandex Database cluster. The structure
+                      is documented below.
                     items:
                       properties:
                         region:
-                          description: (Optional) Region for the Yandex Database cluster.
+                          description: Region for the Yandex Database cluster. The
+                            structure is documented below.
                           items:
                             properties:
                               id:
-                                description: (Required) Region ID for the Yandex Database
-                                  cluster.
+                                description: Region ID for the Yandex Database cluster.
                                 type: string
                             required:
                             - id
@@ -176,14 +177,14 @@ spec:
                       type: object
                     type: array
                   locationId:
-                    description: (Optional) Location ID for the Yandex Database cluster.
+                    description: Location ID for the Yandex Database cluster.
                     type: string
                   name:
-                    description: (Required) Name of the Yandex Database cluster.
+                    description: Name of the Yandex Database cluster.
                     type: string
                   networkId:
-                    description: (Required) ID of the network to attach the Yandex
-                      Database cluster to.
+                    description: ID of the network to attach the Yandex Database cluster
+                      to.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -259,21 +260,22 @@ spec:
                         type: object
                     type: object
                   resourcePresetId:
-                    description: (Required) The Yandex Database cluster preset.
+                    description: The Yandex Database cluster preset. Available presets
+                      can be obtained via yc ydb resource-preset list command.
                     type: string
                   scalePolicy:
-                    description: (Required) Scaling policy for the Yandex Database
-                      cluster.
+                    description: Scaling policy for the Yandex Database cluster. The
+                      structure is documented below.
                     items:
                       properties:
                         fixedScale:
-                          description: (Required) Fixed scaling policy for the Yandex
-                            Database cluster.
+                          description: Fixed scaling policy for the Yandex Database
+                            cluster. The structure is documented below.
                           items:
                             properties:
                               size:
-                                description: (Required) Number of instances for the
-                                  Yandex Database cluster.
+                                description: Number of instances for the Yandex Database
+                                  cluster.
                                 type: number
                             required:
                             - size
@@ -284,17 +286,18 @@ spec:
                       type: object
                     type: array
                   storageConfig:
-                    description: (Required) A list of storage configuration options
-                      for the Yandex Database cluster.
+                    description: A list of storage configuration options for the Yandex
+                      Database cluster. The structure is documented below.
                     items:
                       properties:
                         groupCount:
-                          description: (Required) Amount of storage groups of selected
-                            type for the Yandex Database cluster.
+                          description: Amount of storage groups of selected type for
+                            the Yandex Database cluster.
                           type: number
                         storageTypeId:
-                          description: (Required) Storage type ID for the Yandex Database
-                            cluster.
+                          description: Storage type ID for the Yandex Database cluster.
+                            Available presets can be obtained via yc ydb storage-type
+                            list command.
                           type: string
                       required:
                       - groupCount
@@ -302,8 +305,8 @@ spec:
                       type: object
                     type: array
                   subnetIds:
-                    description: (Required) List of subnet IDs to attach the Yandex
-                      Database cluster to.
+                    description: List of subnet IDs to attach the Yandex Database
+                      cluster to.
                     items:
                       type: string
                     type: array
@@ -571,18 +574,21 @@ spec:
                     type: string
                   databasePath:
                     description: Full database path of the Yandex Database cluster.
+                      Useful for SDK configuration.
                     type: string
                   id:
-                    description: (Required) Region ID for the Yandex Database cluster.
+                    description: ID of the Yandex Database cluster.
                     type: string
                   status:
                     description: Status of the Yandex Database cluster.
                     type: string
                   tlsEnabled:
                     description: Whether TLS is enabled for the Yandex Database cluster.
+                      Useful for SDK configuration.
                     type: boolean
                   ydbApiEndpoint:
-                    description: API endpoint of the Yandex Database cluster.
+                    description: API endpoint of the Yandex Database cluster. Useful
+                      for SDK configuration.
                     type: string
                   ydbFullEndpoint:
                     description: Full endpoint of the Yandex Database cluster.

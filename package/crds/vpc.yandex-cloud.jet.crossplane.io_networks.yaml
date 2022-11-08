@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Network is the Schema for the Networks API. <no value>
+        description: Network is the Schema for the Networks API. Manages a network
+          within Yandex.Cloud.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,12 +65,12 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: (Optional) An optional description of this resource.
-                      Provide this property when
+                    description: An optional description of this resource. Provide
+                      this property when you create the resource.
                     type: string
                   folderId:
-                    description: (Optional) ID of the folder that the resource belongs
-                      to. If it
+                    description: ID of the folder that the resource belongs to. If
+                      it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -149,12 +150,12 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) Labels to apply to this network. A list
-                      of key/value pairs.
+                    description: Labels to apply to this network. A list of key/value
+                      pairs.
                     type: object
                   name:
-                    description: (Optional) Name of the network. Provided by the client
-                      when the network is created.
+                    description: Name of the network. Provided by the client when
+                      the network is created.
                     type: string
                 type: object
               providerConfigRef:

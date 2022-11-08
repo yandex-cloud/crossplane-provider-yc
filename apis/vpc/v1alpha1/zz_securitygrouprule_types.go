@@ -26,36 +26,46 @@ import (
 )
 
 type SecurityGroupRuleObservation struct {
+
 	// Id of the rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type SecurityGroupRuleParameters struct {
 
+	// Description of the rule.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// direction of the rule. Can be ingress (inbound) or egress (outbound).
 	// +kubebuilder:validation:Required
 	Direction *string `json:"direction" tf:"direction,omitempty"`
 
+	// Minimum port number.
 	// +kubebuilder:validation:Optional
 	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
+	// Labels to assign to this rule.
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Port number (if applied to a single port).
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// Special-purpose targets such as "self_security_group". See docs for possible options.
 	// +kubebuilder:validation:Optional
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
+	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
 	// +kubebuilder:validation:Optional
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
+	// ID of the security group this rule belongs to.
 	// +kubebuilder:validation:Required
 	SecurityGroupBinding *string `json:"securityGroupBinding" tf:"security_group_binding,omitempty"`
 
+	// Target security group ID for this rule.
 	// +crossplane:generate:reference:type=SecurityGroup
 	// +kubebuilder:validation:Optional
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
@@ -68,12 +78,15 @@ type SecurityGroupRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 
+	// Maximum port number.
 	// +kubebuilder:validation:Optional
 	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
 
+	// The blocks of IPv4 addresses for this rule.
 	// +kubebuilder:validation:Optional
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
+	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
 	// +kubebuilder:validation:Optional
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }
@@ -92,7 +105,7 @@ type SecurityGroupRuleStatus struct {
 
 // +kubebuilder:object:root=true
 
-// SecurityGroupRule is the Schema for the SecurityGroupRules API. <no value>
+// SecurityGroupRule is the Schema for the SecurityGroupRules API. Yandex VPC Security Group Rule.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

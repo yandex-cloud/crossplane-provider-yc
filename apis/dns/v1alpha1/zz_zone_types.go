@@ -26,6 +26,7 @@ import (
 )
 
 type ZoneObservation struct {
+
 	// (Computed) The DNS zone creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
@@ -35,13 +36,13 @@ type ZoneObservation struct {
 
 type ZoneParameters struct {
 
+	// Description of the DNS zone.
 	// +kubebuilder:validation:Optional
-	// (Optional) Description of the DNS zone.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
-	// (Optional) ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -52,17 +53,17 @@ type ZoneParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// A set of key/value label pairs to assign to the DNS zone.
 	// +kubebuilder:validation:Optional
-	// (Optional) A set of key/value label pairs to assign to the DNS zone.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// User assigned name of a specific resource. Must be unique within the folder.
 	// +kubebuilder:validation:Optional
-	// (Optional) User assigned name of a specific resource. Must be unique within the folder.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
-	// (Optional) For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	PrivateNetworks []*string `json:"privateNetworks,omitempty" tf:"private_networks,omitempty"`
 
 	// References to Network in vpc to populate privateNetworks.
@@ -73,12 +74,12 @@ type ZoneParameters struct {
 	// +kubebuilder:validation:Optional
 	PrivateNetworksSelector *v1.Selector `json:"privateNetworksSelector,omitempty" tf:"-"`
 
+	// The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	// +kubebuilder:validation:Optional
-	// (Optional) The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
 
+	// The DNS name of this zone, e.g. "example.com.". Must ends with dot.
 	// +kubebuilder:validation:Required
-	// (Required) The DNS name of this zone, e.g. "example.com.". Must ends with dot.
 	Zone *string `json:"zone" tf:"zone,omitempty"`
 }
 
@@ -96,7 +97,7 @@ type ZoneStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Zone is the Schema for the Zones API. <no value>
+// Zone is the Schema for the Zones API. Manages a DNS Zone within Yandex.Cloud.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

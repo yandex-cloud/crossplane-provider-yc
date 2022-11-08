@@ -31,21 +31,23 @@ type ServiceAccountIAMMemberObservation struct {
 
 type ServiceAccountIAMMemberParameters struct {
 
+	// Identity that will be granted the privilege in role.
+	// Entry can have one of the following values:
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
 	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
 	// +kubebuilder:validation:Optional
-	// (Required) Identity that will be granted the privilege in `role`.
 	Member *string `json:"member,omitempty" tf:"member,omitempty"`
 
+	// The role that should be applied. Only one
+	// yandex_iam_service_account_iam_binding can be used per role.
 	// +kubebuilder:validation:Required
-	// (Required) The role that should be applied. Only one
 	Role *string `json:"role" tf:"role,omitempty"`
 
+	// The service account ID to apply a policy to.
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +kubebuilder:validation:Optional
-	// (Required) The service account ID to apply a policy to.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
 	// Reference to a ServiceAccount to populate serviceAccountId.
@@ -82,7 +84,7 @@ type ServiceAccountIAMMemberStatus struct {
 
 // +kubebuilder:object:root=true
 
-// ServiceAccountIAMMember is the Schema for the ServiceAccountIAMMembers API. <no value>
+// ServiceAccountIAMMember is the Schema for the ServiceAccountIAMMembers API. Allows management of a single member for a single IAM binding for a Yandex IAM service account.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

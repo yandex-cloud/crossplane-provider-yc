@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Instance is the Schema for the Instances API. <no value>
+        description: Instance is the Schema for the Instances API. Manages a VM instance
+          resource.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -66,67 +67,67 @@ spec:
                   allowRecreate:
                     type: boolean
                   allowStoppingForUpdate:
-                    description: (Optional) If true, allows Terraform to stop the
-                      instance in order to update its properties.
+                    description: If you try to update a property that requires stopping
+                      the instance without setting this field, the update will fail.
                     type: boolean
                   bootDisk:
-                    description: (Required) The boot disk for the instance. The structure
-                      is documented below.
+                    description: The boot disk for the instance. The structure is
+                      documented below.
                     items:
                       properties:
                         autoDelete:
-                          description: (Optional) Defines whether the disk will be
-                            auto-deleted when the instance
+                          description: Defines whether the disk will be auto-deleted
+                            when the instance is deleted. The default value is True.
                           type: boolean
                         deviceName:
-                          description: (Optional) Name that can be used to access
-                            an attached disk.
+                          description: Name that can be used to access an attached
+                            disk.
                           type: string
                         diskId:
-                          description: (Optional) The ID of the existing disk (such
-                            as those managed by
+                          description: The ID of the existing disk (such as those
+                            managed by yandex_compute_disk) to attach as a boot disk.
                           type: string
                         initializeParams:
-                          description: (Optional) Parameters for a new disk that will
-                            be created
+                          description: Parameters for a new disk that will be created
+                            alongside the new instance. Either initialize_params or
+                            disk_id must be set. The structure is documented below.
                           items:
                             properties:
                               blockSize:
                                 type: number
                               description:
-                                description: (Optional) Description of the instance.
+                                description: Description of the boot disk.
                                 type: string
                               imageId:
-                                description: (Optional) A disk image to initialize
-                                  this disk from.
+                                description: A disk image to initialize this disk
+                                  from.
                                 type: string
                               name:
-                                description: (Optional) Resource name.
+                                description: Resource name.
                                 type: string
                               size:
-                                description: (Optional) Size of the disk in GB.
+                                description: Size of the disk in GB.
                                 type: number
                               snapshotId:
-                                description: (Optional) A snapshot to initialize this
-                                  disk from.
+                                description: A snapshot to initialize this disk from.
                                 type: string
                               type:
-                                description: (Optional) Disk type.
+                                description: Disk type.
                                 type: string
                             type: object
                           type: array
                         mode:
-                          description: (Optional) Type of access to the disk resource.
-                            By default, a disk is attached in `READ_WRITE` mode.
+                          description: Type of access to the disk resource. By default,
+                            a disk is attached in READ_WRITE mode.
                           type: string
                       type: object
                     type: array
                   description:
-                    description: (Optional) Description of the instance.
+                    description: Description of the instance.
                     type: string
                   folderId:
-                    description: (Optional) The ID of the folder that the resource
-                      belongs to. If it
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -204,22 +205,24 @@ spec:
                         type: object
                     type: object
                   hostname:
-                    description: (Optional) Host name for the instance. This field
-                      is used to generate the instance `fqdn` value.
+                    description: Host name for the instance. This field is used to
+                      generate the instance fqdn value. The host name must be unique
+                      within the network and region. If not specified, the host name
+                      will be equal to id of the instance and fqdn will be <id>.auto.internal.
+                      Otherwise FQDN will be <hostname>.<region_id>.internal.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) A set of key/value label pairs to assign
-                      to the instance.
+                    description: A set of key/value label pairs to assign to the instance.
                     type: object
                   localDisk:
-                    description: (Optional) List of local disks that are attached
-                      to the instance. Structure is documented below.
+                    description: List of local disks that are attached to the instance.
+                      Structure is documented below.
                     items:
                       properties:
                         sizeBytes:
-                          description: (Required) Size of the disk, specified in bytes.
+                          description: Size of the disk, specified in bytes.
                           type: number
                       required:
                       - sizeBytes
@@ -228,120 +231,121 @@ spec:
                   metadata:
                     additionalProperties:
                       type: string
-                    description: (Optional) Metadata key/value pairs to make available
-                      from
+                    description: Metadata key/value pairs to make available from within
+                      the instance.
                     type: object
                   name:
-                    description: (Optional) Resource name.
+                    description: Resource name.
                     type: string
                   networkAccelerationType:
-                    description: '(Optional) Type of network acceleration. The default
-                      is `standard`. Values: `standard`, `software_accelerated`'
+                    description: 'Type of network acceleration. The default is standard.
+                      Values: standard, software_accelerated'
                     type: string
                   networkInterface:
-                    description: (Required) Networks to attach to the instance. This
-                      can
+                    description: Networks to attach to the instance. This can be specified
+                      multiple times. The structure is documented below.
                     items:
                       properties:
                         dnsRecord:
-                          description: (Optional) List of configurations for creating
-                            ipv4 DNS records. The structure is documented below.
+                          description: List of configurations for creating ipv4 DNS
+                            records. The structure is documented below.
                           items:
                             properties:
                               dnsZoneId:
-                                description: (Optional) DNS zone ID (if not set, private
-                                  zone used).
+                                description: DNS zone ID (if not set, private zone
+                                  used).
                                 type: string
                               fqdn:
-                                description: (Required) DNS record FQDN (must have
-                                  a dot at the end).
+                                description: DNS record FQDN (must have a dot at the
+                                  end).
                                 type: string
                               ptr:
-                                description: (Optional) When set to true, also create
-                                  a PTR DNS record.
+                                description: When set to true, also create a PTR DNS
+                                  record.
                                 type: boolean
                               ttl:
-                                description: (Optional) DNS record TTL. in seconds
+                                description: DNS record TTL. in seconds
                                 type: number
                             required:
                             - fqdn
                             type: object
                           type: array
                         ipAddress:
-                          description: (Optional) The private IP address to assign
-                            to the instance. If
+                          description: The private IP address to assign to the instance.
+                            If empty, the address will be automatically assigned from
+                            the specified subnet.
                           type: string
                         ipv4:
-                          description: (Optional) Allocate an IPv4 address for the
-                            interface. The default value is `true`.
+                          description: Allocate an IPv4 address for the interface.
+                            The default value is true.
                           type: boolean
                         ipv6:
-                          description: (Optional) If true, allocate an IPv6 address
-                            for the interface.
+                          description: If true, allocate an IPv6 address for the interface.
+                            The address will be automatically assigned from the specified
+                            subnet.
                           type: boolean
                         ipv6Address:
-                          description: (Optional) The private IPv6 address to assign
-                            to the instance.
+                          description: The private IPv6 address to assign to the instance.
                           type: string
                         ipv6DnsRecord:
-                          description: (Optional) List of configurations for creating
-                            ipv6 DNS records. The structure is documented below.
+                          description: List of configurations for creating ipv6 DNS
+                            records. The structure is documented below.
                           items:
                             properties:
                               dnsZoneId:
-                                description: (Optional) DNS zone ID (if not set, private
-                                  zone used).
+                                description: DNS zone ID (if not set, private zone
+                                  used).
                                 type: string
                               fqdn:
-                                description: (Required) DNS record FQDN (must have
-                                  a dot at the end).
+                                description: DNS record FQDN (must have a dot at the
+                                  end).
                                 type: string
                               ptr:
-                                description: (Optional) When set to true, also create
-                                  a PTR DNS record.
+                                description: When set to true, also create a PTR DNS
+                                  record.
                                 type: boolean
                               ttl:
-                                description: (Optional) DNS record TTL. in seconds
+                                description: DNS record TTL. in seconds
                                 type: number
                             required:
                             - fqdn
                             type: object
                           type: array
                         nat:
-                          description: (Optional) Provide a public address, for instance,
-                            to access the internet over NAT.
+                          description: Provide a public address, for instance, to
+                            access the internet over NAT.
                           type: boolean
                         natDnsRecord:
-                          description: (Optional) List of configurations for creating
-                            ipv4 NAT DNS records. The structure is documented below.
+                          description: List of configurations for creating ipv4 NAT
+                            DNS records. The structure is documented below.
                           items:
                             properties:
                               dnsZoneId:
-                                description: (Optional) DNS zone ID (if not set, private
-                                  zone used).
+                                description: DNS zone ID (if not set, private zone
+                                  used).
                                 type: string
                               fqdn:
-                                description: (Required) DNS record FQDN (must have
-                                  a dot at the end).
+                                description: DNS record FQDN (must have a dot at the
+                                  end).
                                 type: string
                               ptr:
-                                description: (Optional) When set to true, also create
-                                  a PTR DNS record.
+                                description: When set to true, also create a PTR DNS
+                                  record.
                                 type: boolean
                               ttl:
-                                description: (Optional) DNS record TTL. in seconds
+                                description: DNS record TTL. in seconds
                                 type: number
                             required:
                             - fqdn
                             type: object
                           type: array
                         natIpAddress:
-                          description: (Optional) Provide a public address, for instance,
-                            to access the internet over NAT. Address should be already
+                          description: Provide a public address, for instance, to
+                            access the internet over NAT. Address should be already
                             reserved in web UI.
                           type: string
                         securityGroupIds:
-                          description: (Optional) Security group ids for network interface.
+                          description: Security group ids for network interface.
                           items:
                             type: string
                           type: array
@@ -428,7 +432,9 @@ spec:
                               type: object
                           type: object
                         subnetId:
-                          description: (Required) ID of the subnet to attach this
+                          description: ID of the subnet to attach this interface to.
+                            The subnet must exist in the same zone where this instance
+                            will be created.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -509,22 +515,22 @@ spec:
                       type: object
                     type: array
                   placementPolicy:
-                    description: (Optional) The placement policy configuration. The
-                      structure is documented below.
+                    description: The placement policy configuration. The structure
+                      is documented below.
                     items:
                       properties:
                         hostAffinityRules:
-                          description: (Optional) List of host affinity rules. The
-                            structure is documented below.
+                          description: List of host affinity rules. The structure
+                            is documented below.
                           items:
                             properties:
                               key:
-                                description: (Required) Affinity label or one of reserved
-                                  values - `yc.hostId`, `yc.hostGroupId`.
+                                description: Affinity label or one of reserved values
+                                  - yc.hostId, yc.hostGroupId.
                                 type: string
                               op:
-                                description: (Required) Affinity action. The only
-                                  value supported is `IN`.
+                                description: Affinity action. The only value supported
+                                  is IN.
                                 type: string
                               values:
                                 items:
@@ -533,31 +539,31 @@ spec:
                             type: object
                           type: array
                         placementGroupId:
-                          description: (Optional) Specifies the id of the Placement
-                            Group to assign to the instance.
+                          description: Specifies the id of the Placement Group to
+                            assign to the instance.
                           type: string
                       type: object
                     type: array
                   platformId:
-                    description: (Optional) The type of virtual machine to create.
-                      The default is 'standard-v1'.
+                    description: The type of virtual machine to create. The default
+                      is 'standard-v1'.
                     type: string
                   resources:
-                    description: (Required) Compute resources that are allocated for
-                      the instance. The structure is documented below.
+                    description: Compute resources that are allocated for the instance.
+                      The structure is documented below.
                     items:
                       properties:
                         coreFraction:
-                          description: (Optional) If provided, specifies baseline
-                            performance for a core as a percent.
+                          description: If provided, specifies baseline performance
+                            for a core as a percent.
                           type: number
                         cores:
-                          description: (Required) CPU cores for the instance.
+                          description: CPU cores for the instance.
                           type: number
                         gpus:
                           type: number
                         memory:
-                          description: (Required) Memory size in GB.
+                          description: Memory size in GB.
                           type: number
                       required:
                       - cores
@@ -565,44 +571,43 @@ spec:
                       type: object
                     type: array
                   schedulingPolicy:
-                    description: (Optional) Scheduling policy configuration. The structure
-                      is documented below.
+                    description: Scheduling policy configuration. The structure is
+                      documented below.
                     items:
                       properties:
                         preemptible:
-                          description: (Optional) Specifies if the instance is preemptible.
-                            Defaults to false.
+                          description: Specifies if the instance is preemptible. Defaults
+                            to false.
                           type: boolean
                       type: object
                     type: array
                   secondaryDisk:
-                    description: (Optional) A list of disks to attach to the instance.
-                      The structure is documented below.
+                    description: 'A list of disks to attach to the instance. The structure
+                      is documented below. Note: The allow_stopping_for_update property
+                      must be set to true in order to update this structure.'
                     items:
                       properties:
                         autoDelete:
-                          description: (Optional) Defines whether the disk will be
-                            auto-deleted when the instance
+                          description: Whether the disk is auto-deleted when the instance
+                            is deleted. The default value is false.
                           type: boolean
                         deviceName:
-                          description: (Optional) Name that can be used to access
-                            an attached disk.
+                          description: Name that can be used to access an attached
+                            disk under /dev/disk/by-id/.
                           type: string
                         diskId:
-                          description: (Optional) The ID of the existing disk (such
-                            as those managed by
+                          description: ID of the disk that is attached to the instance.
                           type: string
                         mode:
-                          description: (Optional) Type of access to the disk resource.
-                            By default, a disk is attached in `READ_WRITE` mode.
+                          description: Type of access to the disk resource. By default,
+                            a disk is attached in READ_WRITE mode.
                           type: string
                       required:
                       - diskId
                       type: object
                     type: array
                   serviceAccountId:
-                    description: (Optional) ID of the service account authorized for
-                      this instance.
+                    description: ID of the service account authorized for this instance.
                     type: string
                   serviceAccountIdRef:
                     description: Reference to a ServiceAccount in iam to populate
@@ -680,8 +685,9 @@ spec:
                         type: object
                     type: object
                   zone:
-                    description: (Optional) The availability zone where the virtual
-                      machine will be created. If it is not provided,
+                    description: The availability zone where the virtual machine will
+                      be created. If it is not provided, the default provider folder
+                      is used.
                     type: string
                 required:
                 - bootDisk
@@ -868,25 +874,23 @@ spec:
                     description: Creation timestamp of the instance.
                     type: string
                   fqdn:
-                    description: (Required) DNS record FQDN (must have a dot at the
-                      end).
+                    description: The fully qualified DNS name of this instance.
                     type: string
                   id:
                     type: string
                   localDisk:
-                    description: (Optional) List of local disks that are attached
-                      to the instance. Structure is documented below.
+                    description: List of local disks that are attached to the instance.
+                      Structure is documented below.
                     items:
                       properties:
                         deviceName:
-                          description: (Optional) Name that can be used to access
-                            an attached disk.
+                          description: The name of the local disk device.
                           type: string
                       type: object
                     type: array
                   networkInterface:
-                    description: (Required) Networks to attach to the instance. This
-                      can
+                    description: Networks to attach to the instance. This can be specified
+                      multiple times. The structure is documented below.
                     items:
                       properties:
                         index:

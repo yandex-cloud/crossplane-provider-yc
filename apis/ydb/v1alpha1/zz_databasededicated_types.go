@@ -26,22 +26,26 @@ import (
 )
 
 type DatabaseDedicatedObservation struct {
+
 	// The Yandex Database cluster creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
 	// Full database path of the Yandex Database cluster.
+	// Useful for SDK configuration.
 	DatabasePath *string `json:"databasePath,omitempty" tf:"database_path,omitempty"`
 
-	// (Required) Region ID for the Yandex Database cluster.
+	// ID of the Yandex Database cluster.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Status of the Yandex Database cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
 	// Whether TLS is enabled for the Yandex Database cluster.
+	// Useful for SDK configuration.
 	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 
 	// API endpoint of the Yandex Database cluster.
+	// Useful for SDK configuration.
 	YdbAPIEndpoint *string `json:"ydbApiEndpoint,omitempty" tf:"ydb_api_endpoint,omitempty"`
 
 	// Full endpoint of the Yandex Database cluster.
@@ -50,17 +54,18 @@ type DatabaseDedicatedObservation struct {
 
 type DatabaseDedicatedParameters struct {
 
+	// Whether public IP addresses should be assigned to the Yandex Database cluster.
 	// +kubebuilder:validation:Optional
-	// (Optional) Whether public IP addresses should be assigned to the Yandex Database cluster.
 	AssignPublicIps *bool `json:"assignPublicIps,omitempty" tf:"assign_public_ips,omitempty"`
 
+	// A description for the Yandex Database cluster.
 	// +kubebuilder:validation:Optional
-	// (Optional) A description for the Yandex Database cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// ID of the folder that the Yandex Database cluster belongs to.
+	// It will be deduced from provider configuration if not set explicitly.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
-	// (Optional) ID of the folder that the Yandex Database cluster belongs to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -71,25 +76,26 @@ type DatabaseDedicatedParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// A set of key/value label pairs to assign to the Yandex Database cluster.
 	// +kubebuilder:validation:Optional
-	// (Optional) A set of key/value label pairs to assign to the Yandex Database cluster.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Location for the Yandex Database cluster.
+	// The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Location for the Yandex Database cluster.
 	Location []LocationParameters `json:"location,omitempty" tf:"location,omitempty"`
 
+	// Location ID for the Yandex Database cluster.
 	// +kubebuilder:validation:Optional
-	// (Optional) Location ID for the Yandex Database cluster.
 	LocationID *string `json:"locationId,omitempty" tf:"location_id,omitempty"`
 
+	// Name of the Yandex Database cluster.
 	// +kubebuilder:validation:Required
-	// (Required) Name of the Yandex Database cluster.
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// ID of the network to attach the Yandex Database cluster to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
-	// (Required) ID of the network to attach the Yandex Database cluster to.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
 	// Reference to a Network in vpc to populate networkId.
@@ -100,21 +106,24 @@ type DatabaseDedicatedParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
+	// The Yandex Database cluster preset.
+	// Available presets can be obtained via yc ydb resource-preset list command.
 	// +kubebuilder:validation:Required
-	// (Required) The Yandex Database cluster preset.
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
 
+	// Scaling policy for the Yandex Database cluster.
+	// The structure is documented below.
 	// +kubebuilder:validation:Required
-	// (Required) Scaling policy for the Yandex Database cluster.
 	ScalePolicy []ScalePolicyParameters `json:"scalePolicy" tf:"scale_policy,omitempty"`
 
+	// A list of storage configuration options for the Yandex Database cluster.
+	// The structure is documented below.
 	// +kubebuilder:validation:Required
-	// (Required) A list of storage configuration options for the Yandex Database cluster.
 	StorageConfig []StorageConfigParameters `json:"storageConfig" tf:"storage_config,omitempty"`
 
+	// List of subnet IDs to attach the Yandex Database cluster to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
-	// (Required) List of subnet IDs to attach the Yandex Database cluster to.
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
 	// References to Subnet in vpc to populate subnetIds.
@@ -131,8 +140,8 @@ type FixedScaleObservation struct {
 
 type FixedScaleParameters struct {
 
+	// Number of instances for the Yandex Database cluster.
 	// +kubebuilder:validation:Required
-	// (Required) Number of instances for the Yandex Database cluster.
 	Size *float64 `json:"size" tf:"size,omitempty"`
 }
 
@@ -141,8 +150,9 @@ type LocationObservation struct {
 
 type LocationParameters struct {
 
+	// Region for the Yandex Database cluster.
+	// The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Region for the Yandex Database cluster.
 	Region []RegionParameters `json:"region,omitempty" tf:"region,omitempty"`
 }
 
@@ -151,8 +161,8 @@ type RegionObservation struct {
 
 type RegionParameters struct {
 
+	// Region ID for the Yandex Database cluster.
 	// +kubebuilder:validation:Required
-	// (Required) Region ID for the Yandex Database cluster.
 	ID *string `json:"id" tf:"id,omitempty"`
 }
 
@@ -161,8 +171,9 @@ type ScalePolicyObservation struct {
 
 type ScalePolicyParameters struct {
 
+	// Fixed scaling policy for the Yandex Database cluster.
+	// The structure is documented below.
 	// +kubebuilder:validation:Required
-	// (Required) Fixed scaling policy for the Yandex Database cluster.
 	FixedScale []FixedScaleParameters `json:"fixedScale" tf:"fixed_scale,omitempty"`
 }
 
@@ -171,12 +182,13 @@ type StorageConfigObservation struct {
 
 type StorageConfigParameters struct {
 
+	// Amount of storage groups of selected type for the Yandex Database cluster.
 	// +kubebuilder:validation:Required
-	// (Required) Amount of storage groups of selected type for the Yandex Database cluster.
 	GroupCount *float64 `json:"groupCount" tf:"group_count,omitempty"`
 
+	// Storage type ID for the Yandex Database cluster.
+	// Available presets can be obtained via yc ydb storage-type list command.
 	// +kubebuilder:validation:Required
-	// (Required) Storage type ID for the Yandex Database cluster.
 	StorageTypeID *string `json:"storageTypeId" tf:"storage_type_id,omitempty"`
 }
 
@@ -194,7 +206,7 @@ type DatabaseDedicatedStatus struct {
 
 // +kubebuilder:object:root=true
 
-// DatabaseDedicated is the Schema for the DatabaseDedicateds API. <no value>
+// DatabaseDedicated is the Schema for the DatabaseDedicateds API. Manages Yandex Database dedicated cluster.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -43,31 +43,32 @@ type PostgresqlUserParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
+	// The maximum number of connections per user. (Default 50)
 	// +kubebuilder:validation:Optional
-	// (Optional) The maximum number of connections per user. (Default 50)
 	ConnLimit *float64 `json:"connLimit,omitempty" tf:"conn_limit,omitempty"`
 
+	// List of the user's grants.
 	// +kubebuilder:validation:Optional
-	// (Optional) List of the user's grants.
 	Grants []*string `json:"grants,omitempty" tf:"grants,omitempty"`
 
+	// User's ability to login.
 	// +kubebuilder:validation:Optional
-	// (Optional) User's ability to login.
 	Login *bool `json:"login,omitempty" tf:"login,omitempty"`
 
+	// The name of the user.
 	// +kubebuilder:validation:Required
-	// (Required) The name of the user.
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// The password of the user.
 	// +kubebuilder:validation:Required
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
+	// Set of permissions granted to the user. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Set of permissions granted to the user. The structure is documented below.
 	Permission []PostgresqlUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 
+	// Map of user settings. List of settings is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Map of user settings. List of settings is documented below.
 	Settings map[string]*string `json:"settings,omitempty" tf:"settings,omitempty"`
 }
 
@@ -76,8 +77,8 @@ type PostgresqlUserPermissionObservation struct {
 
 type PostgresqlUserPermissionParameters struct {
 
+	// The name of the database that the permission grants access to.
 	// +kubebuilder:validation:Required
-	// (Required) The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 }
 
@@ -95,7 +96,7 @@ type PostgresqlUserStatus struct {
 
 // +kubebuilder:object:root=true
 
-// PostgresqlUser is the Schema for the PostgresqlUsers API. <no value>
+// PostgresqlUser is the Schema for the PostgresqlUsers API. Manages a PostgreSQL user within Yandex.Cloud.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

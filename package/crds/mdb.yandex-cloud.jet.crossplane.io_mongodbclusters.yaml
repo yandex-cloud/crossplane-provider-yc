@@ -35,8 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: MongodbCluster is the Schema for the MongodbClusters API. <no
-          value>
+        description: MongodbCluster is the Schema for the MongodbClusters API. Manages
+          a MongoDB cluster within Yandex.Cloud.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -65,115 +65,134 @@ spec:
               forProvider:
                 properties:
                   clusterConfig:
-                    description: (Required) Configuration of the MongoDB subcluster.
-                      The structure is documented below.
+                    description: Configuration of the MongoDB subcluster. The structure
+                      is documented below.
                     items:
                       properties:
                         access:
-                          description: (Optional) Access policy to the MongoDB cluster.
+                          description: Shows whether cluster has access to data lens.
                             The structure is documented below.
                           items:
                             type: object
                           type: array
                         backupWindowStart:
-                          description: (Optional) Time to start the daily backup,
-                            in the UTC timezone. The structure is documented below.
+                          description: Time to start the daily backup, in the UTC
+                            timezone. The structure is documented below.
                           items:
                             properties:
                               hours:
-                                description: (Optional) The hour at which backup will
-                                  be started.
+                                description: The hour at which backup will be started.
                                 type: number
                               minutes:
-                                description: (Optional) The minute at which backup
-                                  will be started.
+                                description: The minute at which backup will be started.
                                 type: number
                             type: object
                           type: array
                         featureCompatibilityVersion:
-                          description: (Optional) Feature compatibility version of
-                            MongoDB. If not provided version is taken. Can be either
-                            `5.0`, `4.4`, `4.2` and `4.0`.
+                          description: Feature compatibility version of MongoDB. If
+                            not provided version is taken. Can be either 5.0, 4.4,
+                            4.2 and 4.0.
                           type: string
                         mongod:
-                          description: (Optional) Configuration of the mongod service.
-                            The structure is documented below.
+                          description: Configuration of the mongod service. The structure
+                            is documented below.
                           items:
                             properties:
                               auditLog:
-                                description: (Optional) A set of audit log settings
+                                description: A set of audit log settings (see the
+                                  auditLog option). The structure is documented below.
+                                  Available only in enterprise edition.
                                 items:
                                   properties:
                                     filter:
-                                      description: (Optional) Configuration of the
-                                        audit log filter in JSON format.
+                                      description: Configuration of the audit log
+                                        filter in JSON format. For more information
+                                        see auditLog.filter description in the official
+                                        documentation. Available only in enterprise
+                                        edition.
                                       type: string
                                     runtimeConfiguration:
                                       type: boolean
                                   type: object
                                 type: array
                               security:
-                                description: (Optional) A set of MongoDB Security
-                                  settings
+                                description: A set of MongoDB Security settings (see
+                                  the security option). The structure is documented
+                                  below. Available only in enterprise edition.
                                 items:
                                   properties:
                                     enableEncryption:
-                                      description: (Optional) Enables the encryption
-                                        for the WiredTiger storage engine. Can be
-                                        either true or false.
+                                      description: Enables the encryption for the
+                                        WiredTiger storage engine. Can be either true
+                                        or false. For more information see security.enableEncryption
+                                        description in the official documentation.
+                                        Available only in enterprise edition.
                                       type: boolean
                                     kmip:
-                                      description: (Optional) Configuration of the
-                                        third party key management appliance via the
-                                        Key Management Interoperability Protocol (KMIP)
+                                      description: Configuration of the third party
+                                        key management appliance via the Key Management
+                                        Interoperability Protocol (KMIP) (see Encryption
+                                        tutorial ). Requires enable_encryption to
+                                        be true. The structure is documented below.
+                                        Available only in enterprise edition.
                                       items:
                                         properties:
                                           clientCertificate:
-                                            description: (Required) String containing
-                                              the client certificate used for authenticating
-                                              MongoDB to the KMIP server.
+                                            description: String containing the client
+                                              certificate used for authenticating
+                                              MongoDB to the KMIP server. For more
+                                              information see security.kmip.clientCertificateFile
+                                              description in the official documentation.
                                             type: string
                                           keyIdentifier:
-                                            description: (Optional) Unique KMIP identifier
-                                              for an existing key within the KMIP
-                                              server.
+                                            description: Unique KMIP identifier for
+                                              an existing key within the KMIP server.
+                                              For more information see security.kmip.keyIdentifier
+                                              description in the official documentation.
                                             type: string
                                           port:
-                                            description: '(Optional) Port number to
-                                              use to communicate with the KMIP server.
-                                              Default: 5696'
+                                            description: 'Port number to use to communicate
+                                              with the KMIP server. Default: 5696
+                                              For more information see security.kmip.port
+                                              description in the official documentation.'
                                             type: number
                                           serverCa:
-                                            description: (Required) Path to CA File.
-                                              Used for validating secure client connection
-                                              to KMIP server.
+                                            description: Path to CA File. Used for
+                                              validating secure client connection
+                                              to KMIP server. For more information
+                                              see security.kmip.serverCAFile description
+                                              in the official documentation.
                                             type: string
                                           serverName:
-                                            description: (Required) Hostname or IP
-                                              address of the KMIP server to connect
-                                              to.
+                                            description: Hostname or IP address of
+                                              the KMIP server to connect to. For more
+                                              information see security.kmip.serverName
+                                              description in the official documentation.
                                             type: string
                                         type: object
                                       type: array
                                   type: object
                                 type: array
                               setParameter:
-                                description: (Optional) A set of MongoDB Server Parameters
+                                description: A set of MongoDB Server Parameters (see
+                                  the setParameter option). The structure is documented
+                                  below.
                                 items:
                                   properties:
                                     auditAuthorizationSuccess:
-                                      description: (Optional) Enables the auditing
-                                        of authorization successes. Can be either
-                                        true or false.
+                                      description: Enables the auditing of authorization
+                                        successes. Can be either true or false. For
+                                        more information, see the auditAuthorizationSuccess
+                                        description in the official documentation.
+                                        Available only in enterprise edition.
                                       type: boolean
                                   type: object
                                 type: array
                             type: object
                           type: array
                         version:
-                          description: (Optional) Version of the MongoDB server software.
-                            Can be either `4.0`, `4.2`, `4.4`, `4.4-enterprise`, `5.0`
-                            and `5.0-enterprise`.
+                          description: Version of MongoDB (either 5.0, 4.4, 4.2 or
+                            4.0).
                           type: string
                       required:
                       - version
@@ -183,32 +202,31 @@ spec:
                     description: The ID of the cluster.
                     type: string
                   database:
-                    description: (Required) A database of the MongoDB cluster. The
-                      structure is documented below.
+                    description: A database of the MongoDB cluster. The structure
+                      is documented below.
                     items:
                       properties:
                         name:
-                          description: (Required) Name of the MongoDB cluster. Provided
-                            by the client when the cluster is created.
+                          description: The name of the database.
                           type: string
                       required:
                       - name
                       type: object
                     type: array
                   deletionProtection:
-                    description: (Optional) Inhibits deletion of the cluster.  Can
-                      be either `true` or `false`.
+                    description: Inhibits deletion of the cluster.  Can be either
+                      true or false.
                     type: boolean
                   description:
-                    description: (Optional) Description of the MongoDB cluster.
+                    description: Description of the MongoDB cluster.
                     type: string
                   environment:
-                    description: (Required) Deployment environment of the MongoDB
-                      cluster. Can be either `PRESTABLE` or `PRODUCTION`.
+                    description: Deployment environment of the MongoDB cluster. Can
+                      be either PRESTABLE or PRODUCTION.
                     type: string
                   folderId:
-                    description: (Optional) The ID of the folder that the resource
-                      belongs to. If it
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -286,23 +304,25 @@ spec:
                         type: object
                     type: object
                   host:
-                    description: (Required) A host of the MongoDB cluster. The structure
-                      is documented below.
+                    description: A host of the MongoDB cluster. The structure is documented
+                      below.
                     items:
                       properties:
                         assignPublicIp:
+                          description: Should this host have assigned public IP assigned.
+                            Can be either true or false.
                           type: boolean
                         role:
-                          description: (Optional) The role of the cluster (either
-                            PRIMARY or SECONDARY).
+                          description: The role of the cluster (either PRIMARY or
+                            SECONDARY).
                           type: string
                         shardName:
-                          description: (Optional) The name of the shard to which the
-                            host belongs.
+                          description: The name of the shard to which the host belongs.
                           type: string
                         subnetId:
-                          description: (Required) The ID of the subnet, to which the
-                            host belongs. The subnet must
+                          description: The ID of the subnet, to which the host belongs.
+                            The subnet must be a part of the network to which the
+                            cluster belongs.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -381,13 +401,13 @@ spec:
                               type: object
                           type: object
                         type:
-                          description: (Optional) type of mongo daemon which runs
-                            on this host (mongod, mongos or monogcfg). Defaults to
-                            mongod.
+                          description: type of mongo daemon which runs on this host
+                            (mongod, mongos or monogcfg). Defaults to mongod.
                           type: string
                         zoneId:
-                          description: (Required) The availability zone where the
-                            MongoDB host will be created.
+                          description: The availability zone where the MongoDB host
+                            will be created. For more information see the official
+                            documentation.
                           type: string
                       required:
                       - zoneId
@@ -396,37 +416,36 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) A set of key/value label pairs to assign
-                      to the MongoDB cluster.
+                    description: A set of key/value label pairs to assign to the MongoDB
+                      cluster.
                     type: object
                   maintenanceWindow:
                     items:
                       properties:
                         day:
-                          description: '(Optional) Day of week for maintenance window
-                            if window type is weekly. Possible values: `MON`, `TUE`,
-                            `WED`, `THU`, `FRI`, `SAT`, `SUN`.'
+                          description: 'Day of week for maintenance window if window
+                            type is weekly. Possible values: MON, TUE, WED, THU, FRI,
+                            SAT, SUN.'
                           type: string
                         hour:
-                          description: (Optional) Hour of day in UTC time zone (1-24)
-                            for maintenance window if window type is weekly.
+                          description: Hour of day in UTC time zone (1-24) for maintenance
+                            window if window type is weekly.
                           type: number
                         type:
-                          description: (Optional) type of mongo daemon which runs
-                            on this host (mongod, mongos or monogcfg). Defaults to
-                            mongod.
+                          description: Type of maintenance window. Can be either ANYTIME
+                            or WEEKLY. A day and hour of window need to be specified
+                            with weekly window.
                           type: string
                       required:
                       - type
                       type: object
                     type: array
                   name:
-                    description: (Required) Name of the MongoDB cluster. Provided
-                      by the client when the cluster is created.
+                    description: Name of the MongoDB cluster. Provided by the client
+                      when the cluster is created.
                     type: string
                   networkId:
-                    description: (Required) ID of the network, to which the MongoDB
-                      cluster belongs.
+                    description: ID of the network, to which the MongoDB cluster belongs.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -502,16 +521,17 @@ spec:
                         type: object
                     type: object
                   resources:
-                    description: (Required) Resources allocated to hosts of the MongoDB
-                      cluster. The structure is documented below.
+                    description: Resources allocated to hosts of the MongoDB cluster.
+                      The structure is documented below.
                     items:
                       properties:
                         diskSize:
-                          description: (Required) Volume of the storage available
-                            to a MongoDB host, in gigabytes.
+                          description: Volume of the storage available to a MongoDB
+                            host, in gigabytes.
                           type: number
                         diskTypeId:
-                          description: (Required) Type of the storage of MongoDB hosts.
+                          description: Type of the storage of MongoDB hosts. For more
+                            information see the official documentation.
                           type: string
                         resourcePresetId:
                           type: string
@@ -522,8 +542,8 @@ spec:
                       type: object
                     type: array
                   securityGroupIds:
-                    description: (Optional) A set of ids of security groups assigned
-                      to hosts of the cluster.
+                    description: A set of ids of security groups assigned to hosts
+                      of the cluster.
                     items:
                       type: string
                     type: array
@@ -605,17 +625,15 @@ spec:
                         type: object
                     type: object
                   user:
-                    description: (Required) A user of the MongoDB cluster. The structure
-                      is documented below.
+                    description: A user of the MongoDB cluster. The structure is documented
+                      below.
                     items:
                       properties:
                         name:
-                          description: (Required) Name of the MongoDB cluster. Provided
-                            by the client when the cluster is created.
+                          description: The name of the user.
                           type: string
                         passwordSecretRef:
-                          description: A SecretKeySelector is a reference to a secret
-                            key in an arbitrary namespace.
+                          description: The password of the user.
                           properties:
                             key:
                               description: The key to select.
@@ -632,18 +650,17 @@ spec:
                           - namespace
                           type: object
                         permission:
-                          description: (Optional) Set of permissions granted to the
-                            user. The structure is documented below.
+                          description: Set of permissions granted to the user. The
+                            structure is documented below.
                           items:
                             properties:
                               databaseName:
-                                description: (Required) The name of the database that
-                                  the permission grants access to.
+                                description: The name of the database that the permission
+                                  grants access to.
                                 type: string
                               roles:
-                                description: (Optional) The roles of the user in this
-                                  database. For more information see [the official
-                                  documentation](https://cloud.yandex.com/docs/managed-mongodb/concepts/users-and-roles).
+                                description: The roles of the user in this database.
+                                  For more information see the official documentation.
                                 items:
                                   type: string
                                 type: array
@@ -842,17 +859,17 @@ spec:
               atProvider:
                 properties:
                   clusterConfig:
-                    description: (Required) Configuration of the MongoDB subcluster.
-                      The structure is documented below.
+                    description: Configuration of the MongoDB subcluster. The structure
+                      is documented below.
                     items:
                       properties:
                         access:
-                          description: (Optional) Access policy to the MongoDB cluster.
+                          description: Shows whether cluster has access to data lens.
                             The structure is documented below.
                           items:
                             properties:
                               dataLens:
-                                description: (Optional) Allow access for DataLens.
+                                description: Allow access for DataLens.
                                 type: boolean
                             type: object
                           type: array
@@ -862,19 +879,21 @@ spec:
                     description: Creation timestamp of the key.
                     type: string
                   health:
-                    description: (Computed) The health of the host.
+                    description: Aggregated health of the cluster. Can be either ALIVE,
+                      DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health
+                      field of JSON representation in the official documentation.
                     type: string
                   host:
-                    description: (Required) A host of the MongoDB cluster. The structure
-                      is documented below.
+                    description: A host of the MongoDB cluster. The structure is documented
+                      below.
                     items:
                       properties:
                         health:
                           description: (Computed) The health of the host.
                           type: string
                         name:
-                          description: (Required) Name of the MongoDB cluster. Provided
-                            by the client when the cluster is created.
+                          description: (Computed) The fully qualified domain name
+                            of the host. Computed on server side.
                           type: string
                       type: object
                     type: array
@@ -884,9 +903,10 @@ spec:
                     description: MongoDB Cluster mode enabled/disabled.
                     type: boolean
                   status:
-                    description: Status of the cluster. Can be either `CREATING`,
-                      `STARTING`, `RUNNING`, `UPDATING`, `STOPPING`, `STOPPED`, `ERROR`
-                      or `STATUS_UNKNOWN`.
+                    description: Status of the cluster. Can be either CREATING, STARTING,
+                      RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
+                      For more information see status field of JSON representation
+                      in the official documentation.
                     type: string
                 type: object
               conditions:
