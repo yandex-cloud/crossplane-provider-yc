@@ -1,0 +1,33 @@
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/subnet
+  labels:
+    testing.upbound.io/example-name: lab-subnet-a
+  name: lab-subnet-a
+spec:
+  forProvider:
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: lab-net
+    v4CidrBlocks:
+    - 10.2.0.0/16
+    zone: ru-central1-a
+
+---
+
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Network
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/subnet
+  labels:
+    testing.upbound.io/example-name: lab-net
+  name: lab-net
+spec:
+  forProvider:
+    name: lab-network
+
+---
+

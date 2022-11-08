@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: RedisCluster is the Schema for the RedisClusters API. <no value>
+        description: RedisCluster is the Schema for the RedisClusters API. Manages
+          a Redis cluster within Yandex.Cloud.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,31 +65,33 @@ spec:
               forProvider:
                 properties:
                   config:
-                    description: (Required) Configuration of the Redis cluster. The
-                      structure is documented below.
+                    description: Configuration of the Redis cluster. The structure
+                      is documented below.
                     items:
                       properties:
                         clientOutputBufferLimitNormal:
-                          description: (Optional) Normal clients output buffer limits.
+                          description: Normal clients output buffer limits. See redis
+                            config file.
                           type: string
                         clientOutputBufferLimitPubsub:
-                          description: (Optional) Pubsub clients output buffer limits.
+                          description: Pubsub clients output buffer limits. See redis
+                            config file.
                           type: string
                         databases:
-                          description: (Optional) Number of databases (changing requires
-                            redis-server restart).
+                          description: Number of databases (changing requires redis-server
+                            restart).
                           type: number
                         maxmemoryPolicy:
-                          description: (Optional) Redis key eviction policy for a
-                            dataset that reaches maximum memory.
+                          description: Redis key eviction policy for a dataset that
+                            reaches maximum memory. Can be any of the listed in the
+                            official RedisDB documentation.
                           type: string
                         notifyKeyspaceEvents:
-                          description: (Optional) Select the events that Redis will
-                            notify among a set of classes.
+                          description: Select the events that Redis will notify among
+                            a set of classes.
                           type: string
                         passwordSecretRef:
-                          description: A SecretKeySelector is a reference to a secret
-                            key in an arbitrary namespace.
+                          description: Password for the Redis cluster.
                           properties:
                             key:
                               description: The key to select.
@@ -105,18 +108,17 @@ spec:
                           - namespace
                           type: object
                         slowlogLogSlowerThan:
-                          description: (Optional) Log slow queries below this number
-                            in microseconds.
+                          description: Log slow queries below this number in microseconds.
                           type: number
                         slowlogMaxLen:
-                          description: (Optional) Slow queries log length.
+                          description: Slow queries log length.
                           type: number
                         timeout:
-                          description: (Optional) Close the connection after a client
-                            is idle for N seconds.
+                          description: Close the connection after a client is idle
+                            for N seconds.
                           type: number
                         version:
-                          description: (Required) Version of Redis (5.0, 6.0 or 6.2).
+                          description: Version of Redis (5.0, 6.0 or 6.2).
                           type: string
                       required:
                       - passwordSecretRef
@@ -124,19 +126,19 @@ spec:
                       type: object
                     type: array
                   deletionProtection:
-                    description: (Optional) Inhibits deletion of the cluster.  Can
-                      be either `true` or `false`.
+                    description: Inhibits deletion of the cluster.  Can be either
+                      true or false.
                     type: boolean
                   description:
-                    description: (Optional) Description of the Redis cluster.
+                    description: Description of the Redis cluster.
                     type: string
                   environment:
-                    description: (Required) Deployment environment of the Redis cluster.
-                      Can be either `PRESTABLE` or `PRODUCTION`.
+                    description: Deployment environment of the Redis cluster. Can
+                      be either PRESTABLE or PRODUCTION.
                     type: string
                   folderId:
-                    description: (Optional) The ID of the folder that the resource
-                      belongs to. If it
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -214,21 +216,25 @@ spec:
                         type: object
                     type: object
                   host:
-                    description: (Required) A host of the Redis cluster. The structure
-                      is documented below.
+                    description: A host of the Redis cluster. The structure is documented
+                      below.
                     items:
                       properties:
                         assignPublicIp:
-                          description: (Optional) Sets whether the host should get
-                            a public IP address or not.
+                          description: Sets whether the host should get a public IP
+                            address or not.
                           type: boolean
                         replicaPriority:
-                          description: (Optional) Replica priority of a current replica
-                            (usable for non-sharded only).
+                          description: Replica priority of a current replica (usable
+                            for non-sharded only).
                           type: number
                         shardName:
+                          description: The name of the shard to which the host belongs.
                           type: string
                         subnetId:
+                          description: The ID of the subnet, to which the host belongs.
+                            The subnet must be a part of the network to which the
+                            cluster belongs.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -307,8 +313,9 @@ spec:
                               type: object
                           type: object
                         zone:
-                          description: (Required) The availability zone where the
-                            Redis host will be created.
+                          description: The availability zone where the Redis host
+                            will be created. For more information see the official
+                            documentation.
                           type: string
                       required:
                       - zone
@@ -317,37 +324,36 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) A set of key/value label pairs to assign
-                      to the Redis cluster.
+                    description: A set of key/value label pairs to assign to the Redis
+                      cluster.
                     type: object
                   maintenanceWindow:
                     items:
                       properties:
                         day:
-                          description: '(Optional) Day of week for maintenance window
-                            if window type is weekly. Possible values: `MON`, `TUE`,
-                            `WED`, `THU`, `FRI`, `SAT`, `SUN`.'
+                          description: 'Day of week for maintenance window if window
+                            type is weekly. Possible values: MON, TUE, WED, THU, FRI,
+                            SAT, SUN.'
                           type: string
                         hour:
-                          description: (Optional) Hour of day in UTC time zone (1-24)
-                            for maintenance window if window type is weekly.
+                          description: Hour of day in UTC time zone (1-24) for maintenance
+                            window if window type is weekly.
                           type: number
                         type:
-                          description: (Required) Type of maintenance window. Can
-                            be either `ANYTIME` or `WEEKLY`. A day and hour of window
-                            need to be specified with weekly window.
+                          description: Type of maintenance window. Can be either ANYTIME
+                            or WEEKLY. A day and hour of window need to be specified
+                            with weekly window.
                           type: string
                       required:
                       - type
                       type: object
                     type: array
                   name:
-                    description: (Required) Name of the Redis cluster. Provided by
-                      the client when the cluster is created.
+                    description: Name of the Redis cluster. Provided by the client
+                      when the cluster is created.
                     type: string
                   networkId:
-                    description: (Required) ID of the network, to which the Redis
-                      cluster belongs.
+                    description: ID of the network, to which the Redis cluster belongs.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -423,20 +429,20 @@ spec:
                         type: object
                     type: object
                   persistenceMode:
-                    description: (Optional) Persistence mode.
+                    description: Persistence mode.
                     type: string
                   resources:
-                    description: (Required) Resources allocated to hosts of the Redis
-                      cluster. The structure is documented below.
+                    description: Resources allocated to hosts of the Redis cluster.
+                      The structure is documented below.
                     items:
                       properties:
                         diskSize:
-                          description: (Required) Volume of the storage available
-                            to a host, in gigabytes.
+                          description: Volume of the storage available to a host,
+                            in gigabytes.
                           type: number
                         diskTypeId:
-                          description: (Optional) Type of the storage of Redis hosts
-                            - environment default is used if missing.
+                          description: Type of the storage of Redis hosts - environment
+                            default is used if missing.
                           type: string
                         resourcePresetId:
                           type: string
@@ -446,8 +452,8 @@ spec:
                       type: object
                     type: array
                   securityGroupIds:
-                    description: (Optional) A set of ids of security groups assigned
-                      to hosts of the cluster.
+                    description: A set of ids of security groups assigned to hosts
+                      of the cluster.
                     items:
                       type: string
                     type: array
@@ -529,10 +535,10 @@ spec:
                         type: object
                     type: object
                   sharded:
-                    description: (Optional) Redis Cluster mode enabled/disabled.
+                    description: Redis Cluster mode enabled/disabled.
                     type: boolean
                   tlsEnabled:
-                    description: (Optional) TLS support mode enabled/disabled.
+                    description: TLS support mode enabled/disabled.
                     type: boolean
                 required:
                 - config
@@ -721,24 +727,27 @@ spec:
                     description: Creation timestamp of the key.
                     type: string
                   health:
-                    description: Aggregated health of the cluster. Can be either `ALIVE`,
-                      `DEGRADED`, `DEAD` or `HEALTH_UNKNOWN`.
+                    description: Aggregated health of the cluster. Can be either ALIVE,
+                      DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health
+                      field of JSON representation in the official documentation.
                     type: string
                   host:
-                    description: (Required) A host of the Redis cluster. The structure
-                      is documented below.
+                    description: A host of the Redis cluster. The structure is documented
+                      below.
                     items:
                       properties:
                         fqdn:
+                          description: The fully qualified domain name of the host.
                           type: string
                       type: object
                     type: array
                   id:
                     type: string
                   status:
-                    description: Status of the cluster. Can be either `CREATING`,
-                      `STARTING`, `RUNNING`, `UPDATING`, `STOPPING`, `STOPPED`, `ERROR`
-                      or `STATUS_UNKNOWN`.
+                    description: Status of the cluster. Can be either CREATING, STARTING,
+                      RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
+                      For more information see status field of JSON representation
+                      in the official documentation.
                     type: string
                 type: object
               conditions:

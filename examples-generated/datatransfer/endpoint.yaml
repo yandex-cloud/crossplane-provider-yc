@@ -1,0 +1,33 @@
+apiVersion: datatransfer.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Endpoint
+metadata:
+  annotations:
+    meta.upbound.io/example-id: datatransfer/v1alpha1/endpoint
+  labels:
+    testing.upbound.io/example-name: pg_source
+  name: pg-source
+spec:
+  forProvider:
+    name: pg-test-source
+    settings:
+    - postgresSource:
+      - connection:
+        - onPremise:
+          - hosts:
+            - example.org
+            port: 5432
+        databaseSelector:
+          matchLabels:
+            testing.upbound.io/example-name: example
+        password:
+        - rawSecretRef:
+            key: example-key
+            name: example-secret
+            namespace: upbound-system
+        slotGigabyteLagLimit: 100
+        userSelector:
+          matchLabels:
+            testing.upbound.io/example-name: example
+
+---
+

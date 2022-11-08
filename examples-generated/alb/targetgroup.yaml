@@ -1,0 +1,23 @@
+apiVersion: alb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: TargetGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: alb/v1alpha1/targetgroup
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    name: my-target-group
+    target:
+    - ipAddress: ${yandex_compute_instance.my-instance-1.network_interface.0.ip_address}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: my-subnet
+    - ipAddress: ${yandex_compute_instance.my-instance-2.network_interface.0.ip_address}
+      subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: my-subnet
+
+---
+

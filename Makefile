@@ -13,6 +13,9 @@ export TERRAFORM_PROVIDER_HOST := hashicorp-releases.yandexcloud.net
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/yandex-cloud/terraform-provider-yandex
 export TERRAFORM_DOCS_PATH ?= website/docs/r
 
+GO_REQUIRED_VERSION ?= 1.19
+GOLANGCILINT_VERSION ?= 1.50.0
+
 PLATFORMS ?= linux_amd64 linux_arm64
 
 # -include will silently skip missing files, which allows us
@@ -59,19 +62,19 @@ IMAGES = provider-jet-yc provider-jet-yc-controller
 # ====================================================================================
 # Setup Upbound Docs
 
-updoc-upload:
-	@$(INFO) uploading docs for v$(VERSION_MAJOR).$(VERSION_MINOR)
-	@go run github.com/upbound/official-providers/updoc/cmd upload \
-        --docs-dir=$(ROOT_DIR)/docs \
-        --name=$(PROJECT_NAME) \
-        --version=v$(VERSION_MAJOR).$(VERSION_MINOR) \
-        --bucket-name=$(BUCKET_NAME) \
-        --cdn-domain=$(CDN_DOMAIN) || $(FAIL)
-	@$(OK) uploaded docs for v$(VERSION_MAJOR).$(VERSION_MINOR)
+# updoc-upload:
+# 	@$(INFO) uploading docs for v$(VERSION_MAJOR).$(VERSION_MINOR)
+# 	@go run github.com/upbound/official-providers/updoc/cmd upload \
+#         --docs-dir=$(ROOT_DIR)/docs \
+#         --name=$(PROJECT_NAME) \
+#         --version=v$(VERSION_MAJOR).$(VERSION_MINOR) \
+#         --bucket-name=$(BUCKET_NAME) \
+#         --cdn-domain=$(CDN_DOMAIN) || $(FAIL)
+# 	@$(OK) uploaded docs for v$(VERSION_MAJOR).$(VERSION_MINOR)
 
-ifneq ($(filter release-%,$(BRANCH_NAME)),)
-publish.artifacts: updoc-upload
-endif
+# ifneq ($(filter release-%,$(BRANCH_NAME)),)
+# publish.artifacts: updoc-upload
+# endif
 
 # ====================================================================================
 # Targets

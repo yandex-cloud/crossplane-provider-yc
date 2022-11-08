@@ -30,9 +30,9 @@ type AllocationPolicyLocationObservation struct {
 
 type AllocationPolicyLocationParameters struct {
 
+	// ID of the subnet, that will be used by one compute instance in node group.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
-	// ID of the subnet, that will be used by one compute instance in node group.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -43,8 +43,8 @@ type AllocationPolicyLocationParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// +kubebuilder:validation:Optional
 	// ID of the availability zone where for one compute instance in node group.
+	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
@@ -53,8 +53,8 @@ type AllocationPolicyObservation struct {
 
 type AllocationPolicyParameters struct {
 
+	// Repeated field, that specify subnets (zones), that will be used by node group compute instances. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// Repeated field, that specify subnets (zones), that will be used by node group compute instances. The structure is documented below.   
 	Location []AllocationPolicyLocationParameters `json:"location,omitempty" tf:"location,omitempty"`
 }
 
@@ -63,16 +63,16 @@ type AutoScaleObservation struct {
 
 type AutoScaleParameters struct {
 
-	// +kubebuilder:validation:Required
 	// Initial number of instances in the node group.
+	// +kubebuilder:validation:Required
 	Initial *float64 `json:"initial" tf:"initial,omitempty"`
 
-	// +kubebuilder:validation:Required
 	// Maximum number of instances in the node group.
+	// +kubebuilder:validation:Required
 	Max *float64 `json:"max" tf:"max,omitempty"`
 
-	// +kubebuilder:validation:Required
 	// Minimum number of instances in the node group.
+	// +kubebuilder:validation:Required
 	Min *float64 `json:"min" tf:"min,omitempty"`
 }
 
@@ -81,12 +81,12 @@ type BootDiskObservation struct {
 
 type BootDiskParameters struct {
 
+	// The number of instances in the node group.
 	// +kubebuilder:validation:Optional
-	// The size of the disk in GB. Allowed minimal size: 64 GB.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
+	// Type of container runtime. Values: docker, containerd.
 	// +kubebuilder:validation:Optional
-	// The disk type.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -95,8 +95,8 @@ type ContainerRuntimeObservation struct {
 
 type ContainerRuntimeParameters struct {
 
+	// Type of container runtime. Values: docker, containerd.
 	// +kubebuilder:validation:Required
-	// The disk type.
 	Type *string `json:"type" tf:"type,omitempty"`
 }
 
@@ -105,12 +105,12 @@ type DeployPolicyObservation struct {
 
 type DeployPolicyParameters struct {
 
-	// +kubebuilder:validation:Required
 	// The maximum number of instances that can be temporarily allocated above the group's target size during the update.
+	// +kubebuilder:validation:Required
 	MaxExpansion *float64 `json:"maxExpansion" tf:"max_expansion,omitempty"`
 
-	// +kubebuilder:validation:Required
 	// The maximum number of running instances that can be taken offline during update.
+	// +kubebuilder:validation:Required
 	MaxUnavailable *float64 `json:"maxUnavailable" tf:"max_unavailable,omitempty"`
 }
 
@@ -119,8 +119,8 @@ type FixedScaleObservation struct {
 
 type FixedScaleParameters struct {
 
+	// The number of instances in the node group.
 	// +kubebuilder:validation:Optional
-	// The size of the disk in GB. Allowed minimal size: 64 GB.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 }
 
@@ -129,43 +129,43 @@ type InstanceTemplateObservation struct {
 
 type InstanceTemplateParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// The specifications for boot disks that will be attached to the instance. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	BootDisk []BootDiskParameters `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
 
+	// Container runtime configuration. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Container runtime configuration. The structure is documented below.
 	ContainerRuntime []ContainerRuntimeParameters `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
 
+	// The set of metadata key:value pairs assigned to this instance template. This includes custom metadata and predefined keys.
 	// +kubebuilder:validation:Optional
-	// The set of metadata `key:value` pairs assigned to this instance template. This includes custom metadata and predefined keys.
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// Boolean flag, enables NAT for node group compute instances.
+	// +kubebuilder:validation:Optional
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
+	// Type of network acceleration. Values: standard, software_accelerated.
 	// +kubebuilder:validation:Optional
-	// (Optional) Type of network acceleration. Values: `standard`, `software_accelerated`.
 	NetworkAccelerationType *string `json:"networkAccelerationType,omitempty" tf:"network_acceleration_type,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// An array with the network interfaces that will be attached to the instance. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	NetworkInterface []NetworkInterfaceParameters `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
 
+	// The placement policy configuration. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) The placement policy configuration. The structure is documented below.
 	PlacementPolicy []PlacementPolicyParameters `json:"placementPolicy,omitempty" tf:"placement_policy,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// The ID of the hardware platform configuration for the node group compute instances.
+	// +kubebuilder:validation:Optional
 	PlatformID *string `json:"platformId,omitempty" tf:"platform_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Resources []ResourcesParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// The scheduling policy for the instances in node group. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	SchedulingPolicy []SchedulingPolicyParameters `json:"schedulingPolicy,omitempty" tf:"scheduling_policy,omitempty"`
 }
 
@@ -189,21 +189,21 @@ type NetworkInterfaceObservation struct {
 
 type NetworkInterfaceParameters struct {
 
+	// Allocate an IPv4 address for the interface. The default value is true.
 	// +kubebuilder:validation:Optional
-	// (Optional) Allocate an IPv4 address for the interface. The default value is `true`.
 	IPv4 *bool `json:"ipv4,omitempty" tf:"ipv4,omitempty"`
 
+	// If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
 	// +kubebuilder:validation:Optional
-	// (Optional) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
+	// A public address that can be used to access the internet over NAT.
 	// +kubebuilder:validation:Optional
-	// Boolean flag, enables NAT for node group compute instances.
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
+	// Security group ids for network interface.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
-	// (Optional) Security group ids for network interface.
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// References to SecurityGroup in vpc to populate securityGroupIds.
@@ -214,9 +214,9 @@ type NetworkInterfaceParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
+	// The IDs of the subnets.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
-	// The IDs of the subnets.
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
 	// References to Subnet in vpc to populate subnetIds.
@@ -233,19 +233,21 @@ type NodeGroupMaintenancePolicyObservation struct {
 
 type NodeGroupMaintenancePolicyParameters struct {
 
+	// Boolean flag that specifies if node group can be repaired automatically. When omitted, default value is TRUE.
 	// +kubebuilder:validation:Required
 	AutoRepair *bool `json:"autoRepair" tf:"auto_repair,omitempty"`
 
+	// Boolean flag that specifies if node group can be upgraded automatically. When omitted, default value is TRUE.
 	// +kubebuilder:validation:Required
-	// (Required) Boolean flag that specifies if node group can be upgraded automatically. When omitted, default value is TRUE.
 	AutoUpgrade *bool `json:"autoUpgrade" tf:"auto_upgrade,omitempty"`
 
+	// (Computed) Set of day intervals, when maintenance is allowed for this node group. When omitted, it defaults to any time.
 	// +kubebuilder:validation:Optional
-	// (Optional) (Computed) Set of day intervals, when maintenance is allowed for this node group. When omitted, it defaults to any time. 
 	MaintenanceWindow []MaintenancePolicyMaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 }
 
 type NodeGroupObservation struct {
+
 	// (Computed) The Kubernetes node group creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
@@ -263,17 +265,17 @@ type NodeGroupObservation struct {
 
 type NodeGroupParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// This argument specify subnets (zones), that will be used by node group compute instances. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	AllocationPolicy []AllocationPolicyParameters `json:"allocationPolicy,omitempty" tf:"allocation_policy,omitempty"`
 
+	// A list of allowed unsafe sysctl parameters for this node group. For more details see documentation.
 	// +kubebuilder:validation:Optional
-	// (Optional, Forces new resource) A list of allowed unsafe sysctl parameters for this node group. For more details see [documentation](https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster/).
 	AllowedUnsafeSysctls []*string `json:"allowedUnsafeSysctls,omitempty" tf:"allowed_unsafe_sysctls,omitempty"`
 
+	// The ID of the Kubernetes cluster that this node group belongs to.
 	// +crossplane:generate:reference:type=Cluster
 	// +kubebuilder:validation:Optional
-	// (Required) The ID of the Kubernetes cluster that this node group belongs to.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
 	// Reference to a Cluster to populate clusterId.
@@ -284,58 +286,67 @@ type NodeGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// +kubebuilder:validation:Optional
 	// Deploy policy of the node group. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	DeployPolicy []DeployPolicyParameters `json:"deployPolicy,omitempty" tf:"deploy_policy,omitempty"`
 
+	// A description of the Kubernetes node group.
 	// +kubebuilder:validation:Optional
-	// (Optional) A description of the Kubernetes node group.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// Template used to create compute instances in this Kubernetes node group. The structure is documented below.
 	// +kubebuilder:validation:Required
-	// (Required) Template used to create compute instances in this Kubernetes node group. The structure is documented below.
 	InstanceTemplate []InstanceTemplateParameters `json:"instanceTemplate" tf:"instance_template,omitempty"`
 
+	// A set of key/value label pairs assigned to the Kubernetes node group.
 	// +kubebuilder:validation:Optional
-	// (Optional) A set of key/value label pairs assigned to the Kubernetes node group.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Computed) Maintenance policy for this Kubernetes node group.
+	// If policy is omitted, automatic revision upgrades are enabled and could happen at any time.
+	// Revision upgrades are performed only within the same minor version, e.g. 1.13.
+	// Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) (Computed) Maintenance policy for this Kubernetes node group.
 	MaintenancePolicy []NodeGroupMaintenancePolicyParameters `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
+	// Name of a specific Kubernetes node group.
 	// +kubebuilder:validation:Optional
-	// (Optional) Name of a specific Kubernetes node group.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// A set of key/value label pairs, that are assigned to all the nodes of this Kubernetes node group.
 	// +kubebuilder:validation:Optional
-	// (Optional, Forces new resource) A set of key/value label pairs, that are assigned to all the nodes of this Kubernetes node group.
 	NodeLabels map[string]*string `json:"nodeLabels,omitempty" tf:"node_labels,omitempty"`
 
+	// A list of Kubernetes taints, that are applied to all the nodes of this Kubernetes node group.
 	// +kubebuilder:validation:Optional
-	// (Optional, Forces new resource) A list of Kubernetes taints, that are applied to all the nodes of this Kubernetes node group.
 	NodeTaints []*string `json:"nodeTaints,omitempty" tf:"node_taints,omitempty"`
 
+	// Scale policy of the node group. The structure is documented below.
 	// +kubebuilder:validation:Required
-	// (Required) Scale policy of the node group. The structure is documented below.
 	ScalePolicy []ScalePolicyParameters `json:"scalePolicy" tf:"scale_policy,omitempty"`
 
+	// Version of Kubernetes that will be used for Kubernetes node group.
 	// +kubebuilder:validation:Optional
-	// (Optional) Version of Kubernetes that will be used for Kubernetes node group.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type NodeGroupVersionInfoObservation struct {
+
 	// Current Kubernetes version, major.minor (e.g. 1.15).
 	CurrentVersion *string `json:"currentVersion,omitempty" tf:"current_version,omitempty"`
 
 	// True/false flag.
+	// Newer revisions may include Kubernetes patches (e.g 1.15.1 -> 1.15.2) as well
+	// as some internal component updates - new features or bug fixes in yandex-specific
+	// components either on the master or nodes.
 	NewRevisionAvailable *bool `json:"newRevisionAvailable,omitempty" tf:"new_revision_available,omitempty"`
 
 	// Human readable description of the changes to be applied
+	// when updating to the latest revision. Empty if new_revision_available is false.
 	NewRevisionSummary *string `json:"newRevisionSummary,omitempty" tf:"new_revision_summary,omitempty"`
 
 	// True/false flag. The current version is on the deprecation schedule,
+	// component (master or node group) should be upgraded.
 	VersionDeprecated *bool `json:"versionDeprecated,omitempty" tf:"version_deprecated,omitempty"`
 }
 
@@ -347,8 +358,8 @@ type PlacementPolicyObservation struct {
 
 type PlacementPolicyParameters struct {
 
+	// Specifies the id of the Placement Group to assign to the instances.
 	// +kubebuilder:validation:Required
-	// (Optional) Specifies the id of the Placement Group to assign to the instances.
 	PlacementGroupID *string `json:"placementGroupId" tf:"placement_group_id,omitempty"`
 }
 
@@ -357,15 +368,19 @@ type ResourcesObservation struct {
 
 type ResourcesParameters struct {
 
+	// Baseline core performance as a percent.
 	// +kubebuilder:validation:Optional
 	CoreFraction *float64 `json:"coreFraction,omitempty" tf:"core_fraction,omitempty"`
 
+	// Number of CPU cores allocated to the instance.
 	// +kubebuilder:validation:Optional
 	Cores *float64 `json:"cores,omitempty" tf:"cores,omitempty"`
 
+	// Number of GPU cores allocated to the instance.
 	// +kubebuilder:validation:Optional
 	Gpus *float64 `json:"gpus,omitempty" tf:"gpus,omitempty"`
 
+	// The memory size allocated to the instance.
 	// +kubebuilder:validation:Optional
 	Memory *float64 `json:"memory,omitempty" tf:"memory,omitempty"`
 }
@@ -375,12 +390,12 @@ type ScalePolicyObservation struct {
 
 type ScalePolicyParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// Scale policy for an autoscaled node group. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	AutoScale []AutoScaleParameters `json:"autoScale,omitempty" tf:"auto_scale,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// Scale policy for a fixed scale node group. The structure is documented below.
+	// +kubebuilder:validation:Optional
 	FixedScale []FixedScaleParameters `json:"fixedScale,omitempty" tf:"fixed_scale,omitempty"`
 }
 
@@ -389,8 +404,8 @@ type SchedulingPolicyObservation struct {
 
 type SchedulingPolicyParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// Specifies if the instance is preemptible. Defaults to false.
+	// +kubebuilder:validation:Optional
 	Preemptible *bool `json:"preemptible,omitempty" tf:"preemptible,omitempty"`
 }
 
@@ -408,7 +423,7 @@ type NodeGroupStatus struct {
 
 // +kubebuilder:object:root=true
 
-// NodeGroup is the Schema for the NodeGroups API. <no value>
+// NodeGroup is the Schema for the NodeGroups API. Allows management of Yandex Kubernetes Node Group. For more information, see
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Cluster is the Schema for the Clusters API. <no value>
+        description: Cluster is the Schema for the Clusters API. Allows management
+          of Yandex Kubernetes Cluster. For more information, see
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,19 +65,21 @@ spec:
               forProvider:
                 properties:
                   clusterIpv4Range:
-                    description: (Optional) CIDR block. IP range for allocating pod
-                      addresses.
+                    description: CIDR block. IP range for allocating pod addresses.
+                      It should not overlap with any subnet in the network the Kubernetes
+                      cluster located in. Static routes will be set up for this CIDR
+                      blocks in node subnets.
                     type: string
                   clusterIpv6Range:
-                    description: (Optional) Identical to cluster_ipv4_range but for
-                      IPv6 protocol.
+                    description: Identical to cluster_ipv4_range but for IPv6 protocol.
                     type: string
                   description:
-                    description: (Optional) A description of the Kubernetes cluster.
+                    description: A description of the Kubernetes cluster.
                     type: string
                   folderId:
-                    description: (Optional) The ID of the folder that the Kubernetes
-                      cluster belongs to.
+                    description: The ID of the folder that the Kubernetes cluster
+                      belongs to. If it is not provided, the default provider folder
+                      is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -154,7 +157,7 @@ spec:
                         type: object
                     type: object
                   kmsProvider:
-                    description: (Optional) cluster KMS provider parameters.
+                    description: cluster KMS provider parameters.
                     items:
                       properties:
                         keyId:
@@ -243,8 +246,8 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) A set of key/value label pairs to assign
-                      to the Kubernetes cluster.
+                    description: A set of key/value label pairs to assign to the Kubernetes
+                      cluster.
                     type: object
                   master:
                     description: Kubernetes master configuration options. The structure
@@ -252,19 +255,28 @@ spec:
                     items:
                       properties:
                         maintenancePolicy:
-                          description: (Optional) (Computed) Maintenance policy for
-                            Kubernetes master.
+                          description: (Computed) Maintenance policy for Kubernetes
+                            master. If policy is omitted, automatic revision upgrades
+                            of the kubernetes master are enabled and could happen
+                            at any time. Revision upgrades are performed only within
+                            the same minor version, e.g. 1.13. Minor version upgrades
+                            (e.g. 1.13->1.14) should be performed manually. The structure
+                            is documented below.
                           items:
                             properties:
                               autoUpgrade:
-                                description: (Required) Boolean flag that specifies
-                                  if master can be upgraded automatically. When omitted,
-                                  default value is TRUE.
+                                description: Boolean flag that specifies if master
+                                  can be upgraded automatically. When omitted, default
+                                  value is TRUE.
                                 type: boolean
                               maintenanceWindow:
-                                description: (Optional) (Computed) This structure
-                                  specifies maintenance window, when update for master
-                                  is allowed. When omitted, it defaults to any time.
+                                description: (Computed) This structure specifies maintenance
+                                  window, when update for master is allowed. When
+                                  omitted, it defaults to any time. To specify time
+                                  of day interval, for all days, one element should
+                                  be provided, with two fields set, start_time and
+                                  duration. Please see zonal_cluster_resource_name
+                                  config example.
                                 items:
                                   properties:
                                     day:
@@ -283,13 +295,12 @@ spec:
                             type: object
                           type: array
                         publicIp:
-                          description: (Optional) (Computed) Boolean flag. When `true`,
-                            Kubernetes master will have visible ipv4 address.
+                          description: (Computed) Boolean flag. When true, Kubernetes
+                            master will have visible ipv4 address.
                           type: boolean
                         regional:
-                          description: (Optional) Initialize parameters for Regional
-                            Master (highly available master). The structure is documented
-                            below.
+                          description: Initialize parameters for Regional Master (highly
+                            available master). The structure is documented below.
                           items:
                             properties:
                               location:
@@ -298,10 +309,9 @@ spec:
                                 items:
                                   properties:
                                     subnetId:
-                                      description: (Optional) ID of the subnet. If
-                                        no ID is specified, and there only one subnet
-                                        in specified zone, an address in this subnet
-                                        will be allocated.
+                                      description: ID of the subnet. If no ID is specified,
+                                        and there only one subnet in specified zone,
+                                        an address in this subnet will be allocated.
                                       type: string
                                     subnetIdRef:
                                       description: Reference to a Subnet in vpc to
@@ -388,23 +398,21 @@ spec:
                                           type: object
                                       type: object
                                     zone:
-                                      description: (Optional) ID of the availability
-                                        zone.
+                                      description: ID of the availability zone.
                                       type: string
                                   type: object
                                 type: array
                               region:
-                                description: (Required) Name of availability region
-                                  (e.g. "ru-central1"), where master instances will
-                                  be allocated.
+                                description: Name of availability region (e.g. "ru-central1"),
+                                  where master instances will be allocated.
                                 type: string
                             required:
                             - region
                             type: object
                           type: array
                         securityGroupIds:
-                          description: (Optional) List of security group IDs to which
-                            the Kubernetes cluster belongs.
+                          description: List of security group IDs to which the Kubernetes
+                            cluster belongs.
                           items:
                             type: string
                           type: array
@@ -491,19 +499,18 @@ spec:
                               type: object
                           type: object
                         version:
-                          description: (Optional) (Computed) Version of Kubernetes
-                            that will be used for master.
+                          description: (Computed) Version of Kubernetes that will
+                            be used for master.
                           type: string
                         zonal:
-                          description: (Optional) Initialize parameters for Zonal
-                            Master (single node master). The structure is documented
-                            below.
+                          description: Initialize parameters for Zonal Master (single
+                            node master). The structure is documented below.
                           items:
                             properties:
                               subnetId:
-                                description: (Optional) ID of the subnet. If no ID
-                                  is specified, and there only one subnet in specified
-                                  zone, an address in this subnet will be allocated.
+                                description: ID of the subnet. If no ID is specified,
+                                  and there only one subnet in specified zone, an
+                                  address in this subnet will be allocated.
                                 type: string
                               subnetIdRef:
                                 description: Reference to a Subnet in vpc to populate
@@ -586,17 +593,17 @@ spec:
                                     type: object
                                 type: object
                               zone:
-                                description: (Optional) ID of the availability zone.
+                                description: ID of the availability zone.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   name:
-                    description: (Optional) Name of a specific Kubernetes cluster.
+                    description: Name of a specific Kubernetes cluster.
                     type: string
                   networkId:
-                    description: (Optional) The ID of the cluster network.
+                    description: The ID of the cluster network.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -672,12 +679,12 @@ spec:
                         type: object
                     type: object
                   networkImplementation:
-                    description: (Optional) Network Implementation options. The structure
-                      is documented below.
+                    description: Network Implementation options. The structure is
+                      documented below.
                     items:
                       properties:
                         cilium:
-                          description: (Optional) Cilium network implementation configuration.
+                          description: Cilium network implementation configuration.
                             No options exist.
                           items:
                             type: object
@@ -685,17 +692,18 @@ spec:
                       type: object
                     type: array
                   networkPolicyProvider:
-                    description: '(Optional) Network policy provider for the cluster.
-                      Possible values: `CALICO`.'
+                    description: 'Network policy provider for the cluster. Possible
+                      values: CALICO.'
                     type: string
                   nodeIpv4CidrMaskSize:
-                    description: (Optional) Size of the masks that are assigned to
-                      each node in the cluster. Effectively limits maximum number
-                      of pods for each node.
+                    description: Size of the masks that are assigned to each node
+                      in the cluster. Effectively limits maximum number of pods for
+                      each node.
                     type: number
                   nodeServiceAccountId:
                     description: Service account to be used by the worker nodes of
-                      the Kubernetes cluster
+                      the Kubernetes cluster to access Container Registry or to push
+                      node logs and metrics.
                     type: string
                   nodeServiceAccountIdRef:
                     description: Reference to a ServiceAccount in iam to populate
@@ -777,7 +785,10 @@ spec:
                     type: string
                   serviceAccountId:
                     description: Service account to be used for provisioning Compute
-                      Cloud and VPC resources
+                      Cloud and VPC resources for Kubernetes cluster. Selected service
+                      account should have edit role on the folder where the Kubernetes
+                      cluster will be located and on the folder where selected network
+                      resides.
                     type: string
                   serviceAccountIdRef:
                     description: Reference to a ServiceAccount in iam to populate
@@ -855,12 +866,13 @@ spec:
                         type: object
                     type: object
                   serviceIpv4Range:
-                    description: (Optional) CIDR block. IP range Kubernetes service
-                      Kubernetes cluster
+                    description: CIDR block. IP range Kubernetes service Kubernetes
+                      cluster IP addresses will be allocated from. It should not overlap
+                      with any subnet in the network the Kubernetes cluster located
+                      in.
                     type: string
                   serviceIpv6Range:
-                    description: (Optional) Identical to service_ipv4_range but for
-                      IPv6 protocol.
+                    description: Identical to service_ipv4_range but for IPv6 protocol.
                     type: string
                 required:
                 - master
@@ -1089,15 +1101,21 @@ spec:
                                   (e.g. 1.15).
                                 type: string
                               newRevisionAvailable:
-                                description: Boolean flag.
+                                description: Boolean flag. Newer revisions may include
+                                  Kubernetes patches (e.g 1.15.1 -> 1.15.2) as well
+                                  as some internal component updates - new features
+                                  or bug fixes in yandex-specific components either
+                                  on the master or nodes.
                                 type: boolean
                               newRevisionSummary:
                                 description: Human readable description of the changes
-                                  to be applied
+                                  to be applied when updating to the latest revision.
+                                  Empty if new_revision_available is false.
                                 type: string
                               versionDeprecated:
                                 description: Boolean flag. The current version is
-                                  on the deprecation schedule,
+                                  on the deprecation schedule, component (master or
+                                  node group) should be upgraded.
                                 type: boolean
                             type: object
                           type: array

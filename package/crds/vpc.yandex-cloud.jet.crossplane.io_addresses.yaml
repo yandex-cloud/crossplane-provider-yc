@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Address is the Schema for the Addresss API. <no value>
+        description: Address is the Schema for the Addresss API. Manages a VPC address
+          within Yandex.Cloud.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,19 +65,19 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: (Optional) An optional description of this resource.
-                      Provide this property when
+                    description: An optional description of this resource. Provide
+                      this property when you create the resource.
                     type: string
                   externalIpv4Address:
-                    description: (Optional) spec of IP v4 address
+                    description: spec of IP v4 address
                     items:
                       properties:
                         ddosProtectionProvider:
-                          description: '(Optional) Enable DDOS protection. Possible
-                            values are: "qrator"'
+                          description: 'Enable DDOS protection. Possible values are:
+                            "qrator"'
                           type: string
                         outgoingSmtpCapability:
-                          description: (Optional) Wanted outgoing smtp capability.
+                          description: Wanted outgoing smtp capability.
                           type: string
                         zoneId:
                           description: Zone for allocating address.
@@ -84,8 +85,8 @@ spec:
                       type: object
                     type: array
                   folderId:
-                    description: (Optional) ID of the folder that the resource belongs
-                      to. If it
+                    description: ID of the folder that the resource belongs to. If
+                      it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -165,12 +166,12 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) Labels to apply to this resource. A list
-                      of key/value pairs.
+                    description: Labels to apply to this resource. A list of key/value
+                      pairs.
                     type: object
                   name:
-                    description: (Optional) Name of the address. Provided by the client
-                      when the address is created.
+                    description: Name of the address. Provided by the client when
+                      the address is created.
                     type: string
                 type: object
               providerConfigRef:
@@ -353,7 +354,7 @@ spec:
                     description: Creation timestamp of the key.
                     type: string
                   externalIpv4Address:
-                    description: (Optional) spec of IP v4 address
+                    description: spec of IP v4 address
                     items:
                       properties:
                         address:
@@ -364,10 +365,10 @@ spec:
                   id:
                     type: string
                   reserved:
-                    description: '`false` means that address is ephemeral.'
+                    description: false means that address is ephemeral.
                     type: boolean
                   used:
-                    description: '`true` if address is used.'
+                    description: true if address is used.
                     type: boolean
                 type: object
               conditions:

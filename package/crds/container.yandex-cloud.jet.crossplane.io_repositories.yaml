@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Repository is the Schema for the Repositorys API. <no value>
+        description: Repository is the Schema for the Repositorys API. Creates a new
+          container repository.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation

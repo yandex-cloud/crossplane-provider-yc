@@ -30,20 +30,20 @@ type MySQLUserConnectionLimitsObservation struct {
 
 type MySQLUserConnectionLimitsParameters struct {
 
-	// +kubebuilder:validation:Optional
 	// Max connections per hour.
+	// +kubebuilder:validation:Optional
 	MaxConnectionsPerHour *float64 `json:"maxConnectionsPerHour,omitempty" tf:"max_connections_per_hour,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// Max questions per hour.
+	// +kubebuilder:validation:Optional
 	MaxQuestionsPerHour *float64 `json:"maxQuestionsPerHour,omitempty" tf:"max_questions_per_hour,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// Max updates per hour.
+	// +kubebuilder:validation:Optional
 	MaxUpdatesPerHour *float64 `json:"maxUpdatesPerHour,omitempty" tf:"max_updates_per_hour,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// Max user connections.
+	// +kubebuilder:validation:Optional
 	MaxUserConnections *float64 `json:"maxUserConnections,omitempty" tf:"max_user_connections,omitempty"`
 }
 
@@ -53,8 +53,8 @@ type MySQLUserObservation struct {
 
 type MySQLUserParameters struct {
 
+	// Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD)
 	// +kubebuilder:validation:Optional
-	// (Optional) Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`)
 	AuthenticationPlugin *string `json:"authenticationPlugin,omitempty" tf:"authentication_plugin,omitempty"`
 
 	// +crossplane:generate:reference:type=MySQLCluster
@@ -69,23 +69,27 @@ type MySQLUserParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
+	// User's connection limits. The structure is documented below.
+	// If the attribute is not specified there will be no changes.
 	// +kubebuilder:validation:Optional
-	// (Optional) User's connection limits. The structure is documented below.
 	ConnectionLimits []MySQLUserConnectionLimitsParameters `json:"connectionLimits,omitempty" tf:"connection_limits,omitempty"`
 
+	// List user's global permissions
+	// Allowed permissions:  REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list.
+	// If the attribute is not specified there will be no changes.
 	// +kubebuilder:validation:Optional
-	// (Optional) List user's global permissions     
 	GlobalPermissions []*string `json:"globalPermissions,omitempty" tf:"global_permissions,omitempty"`
 
+	// The name of the user.
 	// +kubebuilder:validation:Required
-	// (Required) The name of the user.
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// The password of the user.
 	// +kubebuilder:validation:Required
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
+	// Set of permissions granted to the user. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Set of permissions granted to the user. The structure is documented below.
 	Permission []MySQLUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
@@ -94,12 +98,14 @@ type MySQLUserPermissionObservation struct {
 
 type MySQLUserPermissionParameters struct {
 
+	// The name of the database that the permission grants access to.
 	// +kubebuilder:validation:Required
-	// (Required) The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 
+	// List user's roles in the database.
+	// Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES,
+	// CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
 	// +kubebuilder:validation:Optional
-	// (Optional) List user's roles in the database.
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
@@ -117,7 +123,7 @@ type MySQLUserStatus struct {
 
 // +kubebuilder:object:root=true
 
-// MySQLUser is the Schema for the MySQLUsers API. <no value>
+// MySQLUser is the Schema for the MySQLUsers API. Manages a MySQL user within Yandex.Cloud.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -35,7 +35,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Subnet is the Schema for the Subnets API. <no value>
+        description: Subnet is the Schema for the Subnets API. A VPC network is a
+          virtual version of the traditional physical networks that exist within and
+          between physical data centers.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,32 +66,32 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: (Optional) An optional description of the subnet.
-                      Provide this property when
+                    description: An optional description of the subnet. Provide this
+                      property when you create the resource.
                     type: string
                   dhcpOptions:
-                    description: (Optional) Options for DHCP client. The structure
-                      is documented below.
+                    description: Options for DHCP client. The structure is documented
+                      below.
                     items:
                       properties:
                         domainName:
-                          description: (Optional) Domain name.
+                          description: Domain name.
                           type: string
                         domainNameServers:
-                          description: (Optional) Domain name server IP addresses.
+                          description: Domain name server IP addresses.
                           items:
                             type: string
                           type: array
                         ntpServers:
-                          description: (Optional) NTP server IP addresses.
+                          description: NTP server IP addresses.
                           items:
                             type: string
                           type: array
                       type: object
                     type: array
                   folderId:
-                    description: (Optional) The ID of the folder to which the resource
-                      belongs.
+                    description: The ID of the folder to which the resource belongs.
+                      If omitted, the provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -169,16 +171,16 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) Labels to assign to this subnet. A list
-                      of key/value pairs.
+                    description: Labels to assign to this subnet. A list of key/value
+                      pairs.
                     type: object
                   name:
-                    description: (Optional) Name of the subnet. Provided by the client
-                      when the subnet is created.
+                    description: Name of the subnet. Provided by the client when the
+                      subnet is created.
                     type: string
                   networkId:
-                    description: (Required) ID of the network this subnet belongs
-                      to.
+                    description: ID of the network this subnet belongs to. Only networks
+                      that are in the distributed mode can have subnets.
                     type: string
                   networkIdRef:
                     description: Reference to a Network to populate networkId.
@@ -254,18 +256,22 @@ spec:
                         type: object
                     type: object
                   routeTableId:
-                    description: (Optional) The ID of the route table to assign to
-                      this subnet. Assigned route table should
+                    description: The ID of the route table to assign to this subnet.
+                      Assigned route table should belong to the same network as this
+                      subnet.
                     type: string
                   v4CidrBlocks:
-                    description: (Required) A list of blocks of internal IPv4 addresses
-                      that are owned by this subnet.
+                    description: A list of blocks of internal IPv4 addresses that
+                      are owned by this subnet. Provide this property when you create
+                      the subnet. For example, 10.0.0.0/22 or 192.168.0.0/16. Blocks
+                      of addresses must be unique and non-overlapping within a network.
+                      Minimum subnet size is /28, and maximum subnet size is /16.
+                      Only IPv4 is supported.
                     items:
                       type: string
                     type: array
                   zone:
-                    description: (Required) Name of the Yandex.Cloud zone for this
-                      subnet.
+                    description: Name of the Yandex.Cloud zone for this subnet.
                     type: string
                 required:
                 - v4CidrBlocks

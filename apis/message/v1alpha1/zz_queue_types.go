@@ -26,13 +26,17 @@ import (
 )
 
 type QueueObservation struct {
+
+	// ARN of the Yandex Message Queue. It is used for setting up a redrive policy. See documentation.
 	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
+	// URL of the Yandex Message Queue.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type QueueParameters struct {
 
+	// The access key to use when applying changes. If omitted, ymq_access_key specified in provider config is used. For more information see documentation.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/message.ExtractAccessKey()
 	// +kubebuilder:validation:Optional
@@ -46,39 +50,52 @@ type QueueParameters struct {
 	// +kubebuilder:validation:Optional
 	AccessKeySelector *v1.Selector `json:"accessKeySelector,omitempty" tf:"-"`
 
+	// Enables content-based deduplication. Can be used only if queue is FIFO.
 	// +kubebuilder:validation:Optional
 	ContentBasedDeduplication *bool `json:"contentBasedDeduplication,omitempty" tf:"content_based_deduplication,omitempty"`
 
+	// Number of seconds to delay the message from being available for processing. Valid values: from 0 to 900 seconds (15 minutes). Default: 0.
 	// +kubebuilder:validation:Optional
 	DelaySeconds *float64 `json:"delaySeconds,omitempty" tf:"delay_seconds,omitempty"`
 
+	// Is this queue FIFO. If this parameter is not used, a standard queue is created. You cannot change the parameter value for a created queue.
 	// +kubebuilder:validation:Optional
 	FifoQueue *bool `json:"fifoQueue,omitempty" tf:"fifo_queue,omitempty"`
 
+	// Maximum message size in bytes. Valid values: from 1024 bytes (1 KB) to 262144 bytes (256 KB). Default: 262144 (256 KB). For more information see documentation.
 	// +kubebuilder:validation:Optional
 	MaxMessageSize *float64 `json:"maxMessageSize,omitempty" tf:"max_message_size,omitempty"`
 
+	// The length of time in seconds to retain a message. Valid values: from 60 seconds (1 minute) to 1209600 seconds (14 days). Default: 345600 (4 days). For more information see documentation.
 	// +kubebuilder:validation:Optional
 	MessageRetentionSeconds *float64 `json:"messageRetentionSeconds,omitempty" tf:"message_retention_seconds,omitempty"`
 
+	// Queue name. The maximum length is 80 characters. You can use numbers, letters, underscores, and hyphens in the name. The name of a FIFO queue must end with the .fifo suffix. If not specified, random name will be generated. Conflicts with name_prefix. For more information see documentation.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Generates random name with the specified prefix. Conflicts with name.
 	// +kubebuilder:validation:Optional
 	NamePrefix *string `json:"namePrefix,omitempty" tf:"name_prefix,omitempty"`
 
+	// Wait time for the ReceiveMessage method (for long polling), in seconds. Valid values: from 0 to 20 seconds. Default: 0. For more information about long polling see documentation.
 	// +kubebuilder:validation:Optional
 	ReceiveWaitTimeSeconds *float64 `json:"receiveWaitTimeSeconds,omitempty" tf:"receive_wait_time_seconds,omitempty"`
 
+	// Message redrive policy in Dead Letter Queue. The source queue and DLQ must be the same type: for FIFO queues, the DLQ must also be a FIFO queue. For more information about redrive policy see documentation. Also you can use example in this page.
 	// +kubebuilder:validation:Optional
 	RedrivePolicy *string `json:"redrivePolicy,omitempty" tf:"redrive_policy,omitempty"`
 
+	// ID of the region where the message queue is located at.
+	// The default is 'ru-central1'.
 	// +kubebuilder:validation:Optional
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
+	// The secret key to use when applying changes. If omitted, ymq_secret_key specified in provider config is used. For more information see documentation.
 	// +kubebuilder:validation:Optional
 	SecretKeySecretRef *v1.SecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
 
+	// Visibility timeout for messages in a queue, specified in seconds. Valid values: from 0 to 43200 seconds (12 hours). Default: 30.
 	// +kubebuilder:validation:Optional
 	VisibilityTimeoutSeconds *float64 `json:"visibilityTimeoutSeconds,omitempty" tf:"visibility_timeout_seconds,omitempty"`
 }
@@ -97,7 +114,7 @@ type QueueStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Queue is the Schema for the Queues API. <no value>
+// Queue is the Schema for the Queues API. Allows management of a Yandex.Cloud Message Queue.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

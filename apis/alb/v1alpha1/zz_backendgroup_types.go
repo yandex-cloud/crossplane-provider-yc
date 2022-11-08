@@ -26,16 +26,21 @@ import (
 )
 
 type BackendGroupObservation struct {
+
+	// The backend group creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// The ID of the backend group.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type BackendGroupParameters struct {
 
+	// Description of the backend group.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// Folder that the resource belongs to. If value is omitted, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -48,21 +53,26 @@ type BackendGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// Grpc backend specification that will be used by the ALB Backend Group. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	GRPCBackend []GRPCBackendParameters `json:"grpcBackend,omitempty" tf:"grpc_backend,omitempty"`
 
+	// Http backend specification that will be used by the ALB Backend Group. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	HTTPBackend []HTTPBackendParameters `json:"httpBackend,omitempty" tf:"http_backend,omitempty"`
 
+	// Labels to assign to this backend group.
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Name of the Backend Group.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	SessionAffinity []SessionAffinityParameters `json:"sessionAffinity,omitempty" tf:"session_affinity,omitempty"`
 
+	// Stream backend specification that will be used by the ALB Backend Group. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	StreamBackend []StreamBackendParameters `json:"streamBackend,omitempty" tf:"stream_backend,omitempty"`
 }
@@ -82,6 +92,7 @@ type CookieObservation struct {
 
 type CookieParameters struct {
 
+	// Name of the backend.
 	// Name of the HTTP cookie
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
@@ -96,21 +107,27 @@ type GRPCBackendObservation struct {
 
 type GRPCBackendParameters struct {
 
+	// Healthcheck specification that will be used by this backend. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	Healthcheck []HealthcheckParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
 
+	// Load Balancing Config specification that will be used by this backend. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	LoadBalancingConfig []LoadBalancingConfigParameters `json:"loadBalancingConfig,omitempty" tf:"load_balancing_config,omitempty"`
 
+	// Name of the backend.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// Port for incoming traffic.
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// Tls specification that will be used by this backend. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	TLS []TLSParameters `json:"tls,omitempty" tf:"tls,omitempty"`
 
+	// References target groups for the backend.
 	// +crossplane:generate:reference:type=TargetGroup
 	// +kubebuilder:validation:Optional
 	TargetGroupIds []*string `json:"targetGroupIds,omitempty" tf:"target_group_ids,omitempty"`
@@ -123,6 +140,7 @@ type GRPCBackendParameters struct {
 	// +kubebuilder:validation:Optional
 	TargetGroupIdsSelector *v1.Selector `json:"targetGroupIdsSelector,omitempty" tf:"-"`
 
+	// Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
 	// +kubebuilder:validation:Optional
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
@@ -132,6 +150,7 @@ type GRPCHealthcheckObservation struct {
 
 type GRPCHealthcheckParameters struct {
 
+	// Service name for grpc.health.v1.HealthCheckRequest message.
 	// +kubebuilder:validation:Optional
 	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 }
@@ -141,30 +160,39 @@ type HTTPBackendHealthcheckObservation struct {
 
 type HTTPBackendHealthcheckParameters struct {
 
+	// Grpc Healthcheck specification that will be used by this healthcheck. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	GRPCHealthcheck []HealthcheckGRPCHealthcheckParameters `json:"grpcHealthcheck,omitempty" tf:"grpc_healthcheck,omitempty"`
 
+	// Http Healthcheck specification that will be used by this healthcheck. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	HTTPHealthcheck []HealthcheckHTTPHealthcheckParameters `json:"httpHealthcheck,omitempty" tf:"http_healthcheck,omitempty"`
 
+	// Optional alternative port for health checking.
 	// +kubebuilder:validation:Optional
 	HealthcheckPort *float64 `json:"healthcheckPort,omitempty" tf:"healthcheck_port,omitempty"`
 
+	// Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
 	// +kubebuilder:validation:Optional
 	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
 
+	// Interval between health checks.
 	// +kubebuilder:validation:Required
 	Interval *string `json:"interval" tf:"interval,omitempty"`
 
+	// An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
 	// +kubebuilder:validation:Optional
 	IntervalJitterPercent *float64 `json:"intervalJitterPercent,omitempty" tf:"interval_jitter_percent,omitempty"`
 
+	// Stream Healthcheck specification that will be used by this healthcheck. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	StreamHealthcheck []HealthcheckStreamHealthcheckParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
 
+	// Time to wait for a health check response.
 	// +kubebuilder:validation:Required
 	Timeout *string `json:"timeout" tf:"timeout,omitempty"`
 
+	// Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
 	// +kubebuilder:validation:Optional
 	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
@@ -174,15 +202,19 @@ type HTTPBackendLoadBalancingConfigObservation struct {
 
 type HTTPBackendLoadBalancingConfigParameters struct {
 
+	// Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
 	// +kubebuilder:validation:Optional
 	LocalityAwareRoutingPercent *float64 `json:"localityAwareRoutingPercent,omitempty" tf:"locality_aware_routing_percent,omitempty"`
 
+	// Load balancing mode for the backend. Possible values: "ROUND_ROBIN", "RANDOM", "LEAST_REQUEST", "MAGLEV_HASH".
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
+	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
 	// +kubebuilder:validation:Optional
 	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
 
+	// If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
 	// +kubebuilder:validation:Optional
 	StrictLocality *bool `json:"strictLocality,omitempty" tf:"strict_locality,omitempty"`
 }
@@ -192,27 +224,34 @@ type HTTPBackendObservation struct {
 
 type HTTPBackendParameters struct {
 
+	// Healthcheck specification that will be used by this backend. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	Healthcheck []HTTPBackendHealthcheckParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
 
+	// Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
 	// +kubebuilder:validation:Optional
 	Http2 *bool `json:"http2,omitempty" tf:"http2,omitempty"`
 
+	// Load Balancing Config specification that will be used by this backend. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	LoadBalancingConfig []HTTPBackendLoadBalancingConfigParameters `json:"loadBalancingConfig,omitempty" tf:"load_balancing_config,omitempty"`
 
+	// Name of the backend.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// Port for incoming traffic.
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	StorageBucket *string `json:"storageBucket,omitempty" tf:"storage_bucket,omitempty"`
 
+	// Tls specification that will be used by this backend. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	TLS []HTTPBackendTLSParameters `json:"tls,omitempty" tf:"tls,omitempty"`
 
+	// References target groups for the backend.
 	// +crossplane:generate:reference:type=TargetGroup
 	// +kubebuilder:validation:Optional
 	TargetGroupIds []*string `json:"targetGroupIds,omitempty" tf:"target_group_ids,omitempty"`
@@ -225,6 +264,7 @@ type HTTPBackendParameters struct {
 	// +kubebuilder:validation:Optional
 	TargetGroupIdsSelector *v1.Selector `json:"targetGroupIdsSelector,omitempty" tf:"-"`
 
+	// Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
 	// +kubebuilder:validation:Optional
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
@@ -234,6 +274,7 @@ type HTTPBackendTLSObservation struct {
 
 type HTTPBackendTLSParameters struct {
 
+	// SNI string for TLS connections.
 	// +kubebuilder:validation:Optional
 	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
 
@@ -246,12 +287,15 @@ type HTTPHealthcheckObservation struct {
 
 type HTTPHealthcheckParameters struct {
 
+	// "Host" HTTP header value.
 	// +kubebuilder:validation:Optional
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
+	// If set, health checks will use HTTP2.
 	// +kubebuilder:validation:Optional
 	Http2 *bool `json:"http2,omitempty" tf:"http2,omitempty"`
 
+	// HTTP path.
 	// +kubebuilder:validation:Required
 	Path *string `json:"path" tf:"path,omitempty"`
 }
@@ -261,6 +305,7 @@ type HeaderObservation struct {
 
 type HeaderParameters struct {
 
+	// Name of the Backend Group.
 	// The name of the request header that will be used
 	// +kubebuilder:validation:Required
 	HeaderName *string `json:"headerName" tf:"header_name,omitempty"`
@@ -271,6 +316,7 @@ type HealthcheckGRPCHealthcheckObservation struct {
 
 type HealthcheckGRPCHealthcheckParameters struct {
 
+	// Service name for grpc.health.v1.HealthCheckRequest message.
 	// +kubebuilder:validation:Optional
 	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 }
@@ -280,12 +326,15 @@ type HealthcheckHTTPHealthcheckObservation struct {
 
 type HealthcheckHTTPHealthcheckParameters struct {
 
+	// "Host" HTTP header value.
 	// +kubebuilder:validation:Optional
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
+	// If set, health checks will use HTTP2.
 	// +kubebuilder:validation:Optional
 	Http2 *bool `json:"http2,omitempty" tf:"http2,omitempty"`
 
+	// HTTP path.
 	// +kubebuilder:validation:Required
 	Path *string `json:"path" tf:"path,omitempty"`
 }
@@ -295,30 +344,39 @@ type HealthcheckObservation struct {
 
 type HealthcheckParameters struct {
 
+	// Grpc Healthcheck specification that will be used by this healthcheck. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	GRPCHealthcheck []GRPCHealthcheckParameters `json:"grpcHealthcheck,omitempty" tf:"grpc_healthcheck,omitempty"`
 
+	// Http Healthcheck specification that will be used by this healthcheck. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	HTTPHealthcheck []HTTPHealthcheckParameters `json:"httpHealthcheck,omitempty" tf:"http_healthcheck,omitempty"`
 
+	// Optional alternative port for health checking.
 	// +kubebuilder:validation:Optional
 	HealthcheckPort *float64 `json:"healthcheckPort,omitempty" tf:"healthcheck_port,omitempty"`
 
+	// Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
 	// +kubebuilder:validation:Optional
 	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
 
+	// Interval between health checks.
 	// +kubebuilder:validation:Required
 	Interval *string `json:"interval" tf:"interval,omitempty"`
 
+	// An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
 	// +kubebuilder:validation:Optional
 	IntervalJitterPercent *float64 `json:"intervalJitterPercent,omitempty" tf:"interval_jitter_percent,omitempty"`
 
+	// Stream Healthcheck specification that will be used by this healthcheck. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	StreamHealthcheck []StreamHealthcheckParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
 
+	// Time to wait for a health check response.
 	// +kubebuilder:validation:Required
 	Timeout *string `json:"timeout" tf:"timeout,omitempty"`
 
+	// Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
 	// +kubebuilder:validation:Optional
 	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
@@ -328,9 +386,11 @@ type HealthcheckStreamHealthcheckObservation struct {
 
 type HealthcheckStreamHealthcheckParameters struct {
 
+	// Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
 	// +kubebuilder:validation:Optional
 	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
 
+	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
 	// +kubebuilder:validation:Optional
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
@@ -340,15 +400,19 @@ type LoadBalancingConfigObservation struct {
 
 type LoadBalancingConfigParameters struct {
 
+	// Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
 	// +kubebuilder:validation:Optional
 	LocalityAwareRoutingPercent *float64 `json:"localityAwareRoutingPercent,omitempty" tf:"locality_aware_routing_percent,omitempty"`
 
+	// Load balancing mode for the backend. Possible values: "ROUND_ROBIN", "RANDOM", "LEAST_REQUEST", "MAGLEV_HASH".
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
+	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
 	// +kubebuilder:validation:Optional
 	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
 
+	// If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
 	// +kubebuilder:validation:Optional
 	StrictLocality *bool `json:"strictLocality,omitempty" tf:"strict_locality,omitempty"`
 }
@@ -376,6 +440,7 @@ type StreamBackendHealthcheckGRPCHealthcheckObservation struct {
 
 type StreamBackendHealthcheckGRPCHealthcheckParameters struct {
 
+	// Service name for grpc.health.v1.HealthCheckRequest message.
 	// +kubebuilder:validation:Optional
 	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 }
@@ -385,12 +450,15 @@ type StreamBackendHealthcheckHTTPHealthcheckObservation struct {
 
 type StreamBackendHealthcheckHTTPHealthcheckParameters struct {
 
+	// "Host" HTTP header value.
 	// +kubebuilder:validation:Optional
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
+	// If set, health checks will use HTTP2.
 	// +kubebuilder:validation:Optional
 	Http2 *bool `json:"http2,omitempty" tf:"http2,omitempty"`
 
+	// HTTP path.
 	// +kubebuilder:validation:Required
 	Path *string `json:"path" tf:"path,omitempty"`
 }
@@ -400,30 +468,39 @@ type StreamBackendHealthcheckObservation struct {
 
 type StreamBackendHealthcheckParameters struct {
 
+	// Grpc Healthcheck specification that will be used by this healthcheck. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	GRPCHealthcheck []StreamBackendHealthcheckGRPCHealthcheckParameters `json:"grpcHealthcheck,omitempty" tf:"grpc_healthcheck,omitempty"`
 
+	// Http Healthcheck specification that will be used by this healthcheck. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	HTTPHealthcheck []StreamBackendHealthcheckHTTPHealthcheckParameters `json:"httpHealthcheck,omitempty" tf:"http_healthcheck,omitempty"`
 
+	// Optional alternative port for health checking.
 	// +kubebuilder:validation:Optional
 	HealthcheckPort *float64 `json:"healthcheckPort,omitempty" tf:"healthcheck_port,omitempty"`
 
+	// Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
 	// +kubebuilder:validation:Optional
 	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
 
+	// Interval between health checks.
 	// +kubebuilder:validation:Required
 	Interval *string `json:"interval" tf:"interval,omitempty"`
 
+	// An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
 	// +kubebuilder:validation:Optional
 	IntervalJitterPercent *float64 `json:"intervalJitterPercent,omitempty" tf:"interval_jitter_percent,omitempty"`
 
+	// Stream Healthcheck specification that will be used by this healthcheck. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	StreamHealthcheck []StreamBackendHealthcheckStreamHealthcheckParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
 
+	// Time to wait for a health check response.
 	// +kubebuilder:validation:Required
 	Timeout *string `json:"timeout" tf:"timeout,omitempty"`
 
+	// Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
 	// +kubebuilder:validation:Optional
 	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
@@ -433,9 +510,11 @@ type StreamBackendHealthcheckStreamHealthcheckObservation struct {
 
 type StreamBackendHealthcheckStreamHealthcheckParameters struct {
 
+	// Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
 	// +kubebuilder:validation:Optional
 	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
 
+	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
 	// +kubebuilder:validation:Optional
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
@@ -445,15 +524,19 @@ type StreamBackendLoadBalancingConfigObservation struct {
 
 type StreamBackendLoadBalancingConfigParameters struct {
 
+	// Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
 	// +kubebuilder:validation:Optional
 	LocalityAwareRoutingPercent *float64 `json:"localityAwareRoutingPercent,omitempty" tf:"locality_aware_routing_percent,omitempty"`
 
+	// Load balancing mode for the backend. Possible values: "ROUND_ROBIN", "RANDOM", "LEAST_REQUEST", "MAGLEV_HASH".
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
+	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
 	// +kubebuilder:validation:Optional
 	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
 
+	// If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
 	// +kubebuilder:validation:Optional
 	StrictLocality *bool `json:"strictLocality,omitempty" tf:"strict_locality,omitempty"`
 }
@@ -466,21 +549,27 @@ type StreamBackendParameters struct {
 	// +kubebuilder:validation:Optional
 	EnableProxyProtocol *bool `json:"enableProxyProtocol,omitempty" tf:"enable_proxy_protocol,omitempty"`
 
+	// Healthcheck specification that will be used by this backend. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	Healthcheck []StreamBackendHealthcheckParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
 
+	// Load Balancing Config specification that will be used by this backend. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	LoadBalancingConfig []StreamBackendLoadBalancingConfigParameters `json:"loadBalancingConfig,omitempty" tf:"load_balancing_config,omitempty"`
 
+	// Name of the backend.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// Port for incoming traffic.
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// Tls specification that will be used by this backend. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	TLS []StreamBackendTLSParameters `json:"tls,omitempty" tf:"tls,omitempty"`
 
+	// References target groups for the backend.
 	// +crossplane:generate:reference:type=TargetGroup
 	// +kubebuilder:validation:Optional
 	TargetGroupIds []*string `json:"targetGroupIds,omitempty" tf:"target_group_ids,omitempty"`
@@ -493,6 +582,7 @@ type StreamBackendParameters struct {
 	// +kubebuilder:validation:Optional
 	TargetGroupIdsSelector *v1.Selector `json:"targetGroupIdsSelector,omitempty" tf:"-"`
 
+	// Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
 	// +kubebuilder:validation:Optional
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
@@ -502,6 +592,7 @@ type StreamBackendTLSObservation struct {
 
 type StreamBackendTLSParameters struct {
 
+	// SNI string for TLS connections.
 	// +kubebuilder:validation:Optional
 	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
 
@@ -514,9 +605,11 @@ type StreamBackendTLSValidationContextObservation struct {
 
 type StreamBackendTLSValidationContextParameters struct {
 
+	// PEM-encoded trusted CA certificate chain.
 	// +kubebuilder:validation:Optional
 	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
 
+	// Trusted CA certificate ID in the Certificate Manager.
 	// +kubebuilder:validation:Optional
 	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
 }
@@ -526,9 +619,11 @@ type StreamHealthcheckObservation struct {
 
 type StreamHealthcheckParameters struct {
 
+	// Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
 	// +kubebuilder:validation:Optional
 	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
 
+	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
 	// +kubebuilder:validation:Optional
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
@@ -538,6 +633,7 @@ type TLSObservation struct {
 
 type TLSParameters struct {
 
+	// SNI string for TLS connections.
 	// +kubebuilder:validation:Optional
 	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
 
@@ -550,9 +646,11 @@ type TLSValidationContextObservation struct {
 
 type TLSValidationContextParameters struct {
 
+	// PEM-encoded trusted CA certificate chain.
 	// +kubebuilder:validation:Optional
 	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
 
+	// Trusted CA certificate ID in the Certificate Manager.
 	// +kubebuilder:validation:Optional
 	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
 }
@@ -562,9 +660,11 @@ type ValidationContextObservation struct {
 
 type ValidationContextParameters struct {
 
+	// PEM-encoded trusted CA certificate chain.
 	// +kubebuilder:validation:Optional
 	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
 
+	// Trusted CA certificate ID in the Certificate Manager.
 	// +kubebuilder:validation:Optional
 	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
 }
@@ -583,7 +683,7 @@ type BackendGroupStatus struct {
 
 // +kubebuilder:object:root=true
 
-// BackendGroup is the Schema for the BackendGroups API. <no value>
+// BackendGroup is the Schema for the BackendGroups API. An application load balancer distributes the load across cloud resources that are combined into a backend group.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -1,0 +1,17 @@
+apiVersion: kms.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: SymmetricKey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kms/v1alpha1/symmetrickey
+  labels:
+    testing.upbound.io/example-name: key-a
+  name: key-a
+spec:
+  forProvider:
+    defaultAlgorithm: AES_128
+    description: description for key
+    name: example-symetric-key
+    rotationPeriod: 8760h
+
+---
+

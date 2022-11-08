@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Folder is the Schema for the Folders API. <no value>
+        description: Folder is the Schema for the Folders API. Allows management of
+          the Cloud Folder.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,25 +65,19 @@ spec:
               forProvider:
                 properties:
                   cloudId:
-                    description: (Optional) Cloud that the resource belongs to. If
-                      value is omitted, the default provider Cloud ID is used. (Optional)
-                      Cloud that the resource belongs to. If value is omitted, the
-                      default provider Cloud ID is used.
+                    description: Cloud that the resource belongs to. If value is omitted,
+                      the default provider Cloud ID is used.
                     type: string
                   description:
-                    description: (Optional) A description of the Folder. (Optional)
-                      A description of the Folder.
+                    description: A description of the Folder.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) A set of key/value label pairs to assign
-                      to the Folder. (Optional) A set of key/value label pairs to
-                      assign to the Folder.
+                    description: A set of key/value label pairs to assign to the Folder.
                     type: object
                   name:
-                    description: (Optional) The name of the Folder. (Optional) The
-                      name of the Folder.
+                    description: The name of the Folder.
                     type: string
                 type: object
               providerConfigRef:

@@ -30,16 +30,16 @@ type DHCPOptionsObservation struct {
 
 type DHCPOptionsParameters struct {
 
+	// Domain name.
 	// +kubebuilder:validation:Optional
-	// (Optional) Domain name.
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
 
+	// Domain name server IP addresses.
 	// +kubebuilder:validation:Optional
-	// (Optional) Domain name server IP addresses.
 	DomainNameServers []*string `json:"domainNameServers,omitempty" tf:"domain_name_servers,omitempty"`
 
+	// NTP server IP addresses.
 	// +kubebuilder:validation:Optional
-	// (Optional) NTP server IP addresses.
 	NtpServers []*string `json:"ntpServers,omitempty" tf:"ntp_servers,omitempty"`
 }
 
@@ -54,17 +54,19 @@ type SubnetObservation struct {
 
 type SubnetParameters struct {
 
+	// Options for DHCP client. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Options for DHCP client. The structure is documented below.
 	DHCPOptions []DHCPOptionsParameters `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
 
+	// An optional description of the subnet. Provide this property when
+	// you create the resource.
 	// +kubebuilder:validation:Optional
-	// (Optional) An optional description of the subnet. Provide this property when
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The ID of the folder to which the resource belongs.
+	// If omitted, the provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
-	// (Optional) The ID of the folder to which the resource belongs.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -75,17 +77,18 @@ type SubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// Labels to assign to this subnet. A list of key/value pairs.
 	// +kubebuilder:validation:Optional
-	// (Optional) Labels to assign to this subnet. A list of key/value pairs.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Name of the subnet. Provided by the client when the subnet is created.
 	// +kubebuilder:validation:Optional
-	// (Optional) Name of the subnet. Provided by the client when the subnet is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// ID of the network this subnet belongs to.
+	// Only networks that are in the distributed mode can have subnets.
 	// +crossplane:generate:reference:type=Network
 	// +kubebuilder:validation:Optional
-	// (Required) ID of the network this subnet belongs to.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
 	// Reference to a Network to populate networkId.
@@ -96,16 +99,20 @@ type SubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
+	// The ID of the route table to assign to this subnet. Assigned route table should
+	// belong to the same network as this subnet.
 	// +kubebuilder:validation:Optional
-	// (Optional) The ID of the route table to assign to this subnet. Assigned route table should
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
 
+	// A list of blocks of internal IPv4 addresses that are owned by this subnet.
+	// Provide this property when you create the subnet. For example, 10.0.0.0/22 or 192.168.0.0/16.
+	// Blocks of addresses must be unique and non-overlapping within a network.
+	// Minimum subnet size is /28, and maximum subnet size is /16. Only IPv4 is supported.
 	// +kubebuilder:validation:Required
-	// (Required) A list of blocks of internal IPv4 addresses that are owned by this subnet.
 	V4CidrBlocks []*string `json:"v4CidrBlocks" tf:"v4_cidr_blocks,omitempty"`
 
+	// Name of the Yandex.Cloud zone for this subnet.
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the Yandex.Cloud zone for this subnet.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
@@ -123,7 +130,7 @@ type SubnetStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Subnet is the Schema for the Subnets API. <no value>
+// Subnet is the Schema for the Subnets API. A VPC network is a virtual version of the traditional physical networks that exist within and between physical data centers.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

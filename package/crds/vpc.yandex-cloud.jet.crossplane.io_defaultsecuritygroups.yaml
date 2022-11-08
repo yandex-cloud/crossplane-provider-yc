@@ -36,7 +36,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: DefaultSecurityGroup is the Schema for the DefaultSecurityGroups
-          API. <no value>
+          API. Yandex VPC Default Security Group.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -65,33 +65,50 @@ spec:
               forProvider:
                 properties:
                   description:
+                    description: Description of the security group.
                     type: string
                   egress:
+                    description: A list of egress rules. The structure is documented
+                      below.
                     items:
                       properties:
                         description:
+                          description: Description of the rule.
                           type: string
                         fromPort:
+                          description: Minimum port number.
                           type: number
                         labels:
                           additionalProperties:
                             type: string
+                          description: Labels to assign to this security group.
                           type: object
                         port:
+                          description: Port number (if applied to a single port).
                           type: number
                         predefinedTarget:
+                          description: Special-purpose targets. self_security_group
+                            refers to this particular security group. loadbalancer_healthchecks
+                            represents loadbalancer health check nodes.
                           type: string
                         protocol:
+                          description: One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
                           type: string
                         securityGroupId:
+                          description: Target security group ID for this rule.
                           type: string
                         toPort:
+                          description: Maximum port number.
                           type: number
                         v4CidrBlocks:
+                          description: The blocks of IPv4 addresses for this rule.
                           items:
                             type: string
                           type: array
                         v6CidrBlocks:
+                          description: The blocks of IPv6 addresses for this rule.
+                            v6_cidr_blocks argument is currently not supported. It
+                            will be available in the future.
                           items:
                             type: string
                           type: array
@@ -100,6 +117,7 @@ spec:
                       type: object
                     type: array
                   folderId:
+                    description: ID of the folder this security group belongs to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -177,31 +195,46 @@ spec:
                         type: object
                     type: object
                   ingress:
+                    description: A list of ingress rules.
                     items:
                       properties:
                         description:
+                          description: Description of the rule.
                           type: string
                         fromPort:
+                          description: Minimum port number.
                           type: number
                         labels:
                           additionalProperties:
                             type: string
+                          description: Labels to assign to this rule.
                           type: object
                         port:
+                          description: Port number (if applied to a single port).
                           type: number
                         predefinedTarget:
+                          description: Special-purpose targets. self_security_group
+                            refers to this particular security group. loadbalancer_healthchecks
+                            represents loadbalancer health check nodes.
                           type: string
                         protocol:
+                          description: One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
                           type: string
                         securityGroupId:
+                          description: Target security group ID for this rule.
                           type: string
                         toPort:
+                          description: Maximum port number.
                           type: number
                         v4CidrBlocks:
+                          description: The blocks of IPv4 addresses for this rule.
                           items:
                             type: string
                           type: array
                         v6CidrBlocks:
+                          description: The blocks of IPv6 addresses for this rule.
+                            v6_cidr_blocks argument is currently not supported. It
+                            will be available in the future.
                           items:
                             type: string
                           type: array
@@ -212,8 +245,10 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
+                    description: Labels to assign to this security group.
                     type: object
                   networkId:
+                    description: ID of the network this security group belongs to.
                     type: string
                   networkIdRef:
                     description: Reference to a Network to populate networkId.
@@ -470,6 +505,8 @@ spec:
                     description: Creation timestamp of this security group.
                     type: string
                   egress:
+                    description: A list of egress rules. The structure is documented
+                      below.
                     items:
                       properties:
                         id:
@@ -481,6 +518,7 @@ spec:
                     description: Id of the security group.
                     type: string
                   ingress:
+                    description: A list of ingress rules.
                     items:
                       properties:
                         id:

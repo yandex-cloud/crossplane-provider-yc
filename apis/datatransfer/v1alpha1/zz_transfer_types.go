@@ -26,6 +26,7 @@ import (
 )
 
 type TransferObservation struct {
+
 	// (Computed) Identifier of a new Data Transfer transfer.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -35,13 +36,13 @@ type TransferObservation struct {
 
 type TransferParameters struct {
 
+	// Arbitrary description text for the transfer.
 	// +kubebuilder:validation:Optional
-	// (Optional) Arbitrary description text for the transfer.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// ID of the folder to create the transfer in. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
-	// (Optional) ID of the folder to create the transfer in. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -52,17 +53,17 @@ type TransferParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// A set of key/value label pairs to assign to the Data Transfer transfer.
 	// +kubebuilder:validation:Optional
-	// (Optional) A set of key/value label pairs to assign to the Data Transfer transfer.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Name of the transfer.
 	// +kubebuilder:validation:Optional
-	// (Required) Name of the transfer.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// ID of the source endpoint for the transfer.
 	// +crossplane:generate:reference:type=Endpoint
 	// +kubebuilder:validation:Optional
-	// (Optional) ID of the source endpoint for the transfer.
 	SourceID *string `json:"sourceId,omitempty" tf:"source_id,omitempty"`
 
 	// Reference to a Endpoint to populate sourceId.
@@ -73,9 +74,9 @@ type TransferParameters struct {
 	// +kubebuilder:validation:Optional
 	SourceIDSelector *v1.Selector `json:"sourceIdSelector,omitempty" tf:"-"`
 
+	// ID of the target endpoint for the transfer.
 	// +crossplane:generate:reference:type=Endpoint
 	// +kubebuilder:validation:Optional
-	// (Optional) ID of the target endpoint for the transfer.
 	TargetID *string `json:"targetId,omitempty" tf:"target_id,omitempty"`
 
 	// Reference to a Endpoint to populate targetId.
@@ -86,8 +87,8 @@ type TransferParameters struct {
 	// +kubebuilder:validation:Optional
 	TargetIDSelector *v1.Selector `json:"targetIdSelector,omitempty" tf:"-"`
 
+	// Type of the transfer. One of "SNAPSHOT_ONLY", "INCREMENT_ONLY", "SNAPSHOT_AND_INCREMENT".
 	// +kubebuilder:validation:Optional
-	// (Required) Type of the transfer. One of "SNAPSHOT_ONLY", "INCREMENT_ONLY", "SNAPSHOT_AND_INCREMENT".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
@@ -105,7 +106,7 @@ type TransferStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Transfer is the Schema for the Transfers API. <no value>
+// Transfer is the Schema for the Transfers API. Manages a Data Transfer transfer within Yandex.Cloud.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

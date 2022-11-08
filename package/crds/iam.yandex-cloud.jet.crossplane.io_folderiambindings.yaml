@@ -36,7 +36,8 @@ spec:
     schema:
       openAPIV3Schema:
         description: FolderIAMBinding is the Schema for the FolderIAMBindings API.
-          <no value>
+          Allows management of a single IAM binding for a Yandex Resource Manager
+          folder.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -65,7 +66,7 @@ spec:
               forProvider:
                 properties:
                   folderId:
-                    description: (Required) ID of the folder to attach a policy to.
+                    description: ID of the folder to attach a policy to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -143,14 +144,15 @@ spec:
                         type: object
                     type: object
                   members:
-                    description: (Required) An array of identities that will be granted
-                      the privilege that is specified in the `role` field.
+                    description: 'An array of identities that will be granted the
+                      privilege that is specified in the role field. Each entry can
+                      have one of the following values:'
                     items:
                       type: string
                     type: array
                   role:
-                    description: (Required) The role that should be assigned. Only
-                      one
+                    description: The role that should be assigned. Only one yandex_resourcemanager_folder_iam_binding
+                      can be used per role.
                     type: string
                   serviceAccountsRef:
                     description: References to ServiceAccount to populate members.

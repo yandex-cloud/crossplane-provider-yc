@@ -26,34 +26,35 @@ import (
 )
 
 type ServiceAccountStaticAccessKeyObservation struct {
+
 	// ID of the static access key.
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
 
 	// Creation timestamp of the static access key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// The encrypted secret, base64 encoded. This is only populated when `pgp_key` is supplied.
+	// The encrypted secret, base64 encoded. This is only populated when pgp_key is supplied.
 	EncryptedSecretKey *string `json:"encryptedSecretKey,omitempty" tf:"encrypted_secret_key,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The fingerprint of the PGP key used to encrypt the secret key. This is only populated when `pgp_key` is supplied.
+	// The fingerprint of the PGP key used to encrypt the secret key. This is only populated when pgp_key is supplied.
 	KeyFingerprint *string `json:"keyFingerprint,omitempty" tf:"key_fingerprint,omitempty"`
 }
 
 type ServiceAccountStaticAccessKeyParameters struct {
 
+	// The description of the service account static key.
 	// +kubebuilder:validation:Optional
-	// (Optional) The description of the service account static key.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// An optional PGP key to encrypt the resulting secret key material. May either be a base64-encoded public key or a keybase username in the form keybase:keybaseusername.
 	// +kubebuilder:validation:Optional
-	// (Optional) An optional PGP key to encrypt the resulting secret key material. May either be a base64-encoded public key or a keybase username in the form `keybase:keybaseusername`.
 	PgpKey *string `json:"pgpKey,omitempty" tf:"pgp_key,omitempty"`
 
+	// ID of the service account which is used to get a static key.
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +kubebuilder:validation:Optional
-	// (Required) ID of the service account which is used to get a static key.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
 	// Reference to a ServiceAccount to populate serviceAccountId.
@@ -79,7 +80,7 @@ type ServiceAccountStaticAccessKeyStatus struct {
 
 // +kubebuilder:object:root=true
 
-// ServiceAccountStaticAccessKey is the Schema for the ServiceAccountStaticAccessKeys API. <no value>
+// ServiceAccountStaticAccessKey is the Schema for the ServiceAccountStaticAccessKeys API. Allows management of a Yandex.Cloud IAM service account static access key.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

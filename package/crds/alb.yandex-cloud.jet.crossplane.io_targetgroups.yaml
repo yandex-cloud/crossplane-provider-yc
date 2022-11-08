@@ -35,7 +35,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TargetGroup is the Schema for the TargetGroups API. <no value>
+        description: TargetGroup is the Schema for the TargetGroups API. An application
+          load balancer distributes the load across cloud resources that are combined
+          into a target group.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,8 +66,12 @@ spec:
               forProvider:
                 properties:
                   description:
+                    description: An optional description of the target group. Provide
+                      this property when you create the resource.
                     type: string
                   folderId:
+                    description: The ID of the folder to which the resource belongs.
+                      If omitted, the provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -145,17 +151,26 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
+                    description: Labels to assign to this target group. A list of
+                      key/value pairs.
                     type: object
                   name:
+                    description: Name of the target group. Provided by the client
+                      when the target group is created.
                     type: string
                   target:
+                    description: A Target resource. The structure is documented below.
                     items:
                       properties:
                         ipAddress:
+                          description: IP address of the target.
                           type: string
                         privateIpv4Address:
                           type: boolean
                         subnetId:
+                          description: ID of the subnet that targets are connected
+                            to. All targets in the target group must be connected
+                            to the same subnet within a single availability zone.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -415,8 +430,10 @@ spec:
               atProvider:
                 properties:
                   createdAt:
+                    description: The target group creation timestamp.
                     type: string
                   id:
+                    description: The ID of the target group.
                     type: string
                 type: object
               conditions:

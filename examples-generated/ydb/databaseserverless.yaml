@@ -1,0 +1,17 @@
+apiVersion: ydb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: DatabaseServerless
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ydb/v1alpha1/databaseserverless
+  labels:
+    testing.upbound.io/example-name: database1
+  name: database1
+spec:
+  forProvider:
+    folderIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: yandex_resourcemanager_folder
+    name: test-ydb-serverless
+
+---
+

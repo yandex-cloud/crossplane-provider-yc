@@ -26,6 +26,7 @@ import (
 )
 
 type RegistryObservation struct {
+
 	// Creation timestamp of the registry.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
@@ -37,9 +38,9 @@ type RegistryObservation struct {
 
 type RegistryParameters struct {
 
+	// Folder that the resource belongs to. If value is omitted, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
-	// (Optional) Folder that the resource belongs to. If value is omitted, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -50,12 +51,12 @@ type RegistryParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// A set of key/value label pairs to assign to the registry.
 	// +kubebuilder:validation:Optional
-	// (Optional) A set of key/value label pairs to assign to the registry.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// A name of the registry.
 	// +kubebuilder:validation:Optional
-	// (Optional) A name of the registry.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
@@ -73,7 +74,7 @@ type RegistryStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Registry is the Schema for the Registrys API. <no value>
+// Registry is the Schema for the Registrys API. Creates a new container registry.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

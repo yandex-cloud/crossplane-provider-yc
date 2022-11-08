@@ -1,0 +1,53 @@
+apiVersion: kubernetes.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: NodeGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kubernetes/v1alpha1/nodegroup
+  labels:
+    testing.upbound.io/example-name: my_node_group
+  name: my-node-group
+spec:
+  forProvider:
+    allocationPolicy:
+    - location:
+      - zone: ru-central1-a
+    clusterIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_cluster
+    description: description
+    instanceTemplate:
+    - bootDisk:
+      - size: 64
+        type: network-hdd
+      containerRuntime:
+      - type: containerd
+      networkInterface:
+      - nat: true
+        subnetIdsRefs:
+        - name: my_subnet
+      platformId: standard-v2
+      resources:
+      - cores: 2
+        memory: 2
+      schedulingPolicy:
+      - preemptible: false
+    labels:
+      key: value
+    maintenancePolicy:
+    - autoRepair: true
+      autoUpgrade: true
+      maintenanceWindow:
+      - day: monday
+        duration: 3h
+        startTime: "15:00"
+      - day: friday
+        duration: 4h30m
+        startTime: "10:00"
+    name: name
+    scalePolicy:
+    - fixedScale:
+      - size: 1
+    version: "1.17"
+
+---
+

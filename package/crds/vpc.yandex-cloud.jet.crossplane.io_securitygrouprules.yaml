@@ -36,7 +36,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: SecurityGroupRule is the Schema for the SecurityGroupRules API.
-          <no value>
+          Yandex VPC Security Group Rule.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -65,24 +65,35 @@ spec:
               forProvider:
                 properties:
                   description:
+                    description: Description of the rule.
                     type: string
                   direction:
+                    description: direction of the rule. Can be ingress (inbound) or
+                      egress (outbound).
                     type: string
                   fromPort:
+                    description: Minimum port number.
                     type: number
                   labels:
                     additionalProperties:
                       type: string
+                    description: Labels to assign to this rule.
                     type: object
                   port:
+                    description: Port number (if applied to a single port).
                     type: number
                   predefinedTarget:
+                    description: Special-purpose targets such as "self_security_group".
+                      See docs for possible options.
                     type: string
                   protocol:
+                    description: One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
                     type: string
                   securityGroupBinding:
+                    description: ID of the security group this rule belongs to.
                     type: string
                   securityGroupId:
+                    description: Target security group ID for this rule.
                     type: string
                   securityGroupIdRef:
                     description: Reference to a SecurityGroup to populate securityGroupId.
@@ -158,12 +169,17 @@ spec:
                         type: object
                     type: object
                   toPort:
+                    description: Maximum port number.
                     type: number
                   v4CidrBlocks:
+                    description: The blocks of IPv4 addresses for this rule.
                     items:
                       type: string
                     type: array
                   v6CidrBlocks:
+                    description: The blocks of IPv6 addresses for this rule. v6_cidr_blocks
+                      argument is currently not supported. It will be available in
+                      the future.
                     items:
                       type: string
                     type: array

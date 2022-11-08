@@ -1,0 +1,75 @@
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: MongodbCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/mongodbcluster
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    clusterConfig:
+    - version: "4.2"
+    database:
+    - name: testdb
+    environment: PRESTABLE
+    host:
+    - subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: foo
+      zoneId: ru-central1-a
+    labels:
+      test_key: test_value
+    maintenanceWindow:
+    - type: ANYTIME
+    name: test
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    resources:
+    - diskSize: 16
+      diskTypeId: network-hdd
+      resourcePresetId: b1.nano
+    user:
+    - name: john
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      permission:
+      - databaseName: testdb
+
+---
+
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Network
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/mongodbcluster
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider: {}
+
+---
+
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/mongodbcluster
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    v4CidrBlocks:
+    - 10.1.0.0/24
+    zone: ru-central1-a
+
+---
+

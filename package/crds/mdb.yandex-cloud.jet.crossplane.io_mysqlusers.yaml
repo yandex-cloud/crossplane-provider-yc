@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: MySQLUser is the Schema for the MySQLUsers API. <no value>
+        description: MySQLUser is the Schema for the MySQLUsers API. Manages a MySQL
+          user within Yandex.Cloud.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,9 +65,9 @@ spec:
               forProvider:
                 properties:
                   authenticationPlugin:
-                    description: '(Optional) Authentication plugin. Allowed values:
-                      `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD`
-                      (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`)'
+                    description: 'Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD,
+                      CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD,
+                      SHA256_PASSWORD)'
                     type: string
                   clusterId:
                     type: string
@@ -144,8 +145,8 @@ spec:
                         type: object
                     type: object
                   connectionLimits:
-                    description: (Optional) User's connection limits. The structure
-                      is documented below.
+                    description: User's connection limits. The structure is documented
+                      below. If the attribute is not specified there will be no changes.
                     items:
                       properties:
                         maxConnectionsPerHour:
@@ -163,16 +164,17 @@ spec:
                       type: object
                     type: array
                   globalPermissions:
-                    description: (Optional) List user's global permissions
+                    description: 'List user''s global permissions Allowed permissions:  REPLICATION_CLIENT,
+                      REPLICATION_SLAVE, PROCESS for clear list use empty list. If
+                      the attribute is not specified there will be no changes.'
                     items:
                       type: string
                     type: array
                   name:
-                    description: (Required) The name of the user.
+                    description: The name of the user.
                     type: string
                   passwordSecretRef:
-                    description: A SecretKeySelector is a reference to a secret key
-                      in an arbitrary namespace.
+                    description: The password of the user.
                     properties:
                       key:
                         description: The key to select.
@@ -189,16 +191,18 @@ spec:
                     - namespace
                     type: object
                   permission:
-                    description: (Optional) Set of permissions granted to the user.
-                      The structure is documented below.
+                    description: Set of permissions granted to the user. The structure
+                      is documented below.
                     items:
                       properties:
                         databaseName:
-                          description: (Required) The name of the database that the
-                            permission grants access to.
+                          description: The name of the database that the permission
+                            grants access to.
                           type: string
                         roles:
-                          description: (Optional) List user's roles in the database.
+                          description: 'List user''s roles in the database. Allowed
+                            roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES,
+                            CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.'
                           items:
                             type: string
                           type: array

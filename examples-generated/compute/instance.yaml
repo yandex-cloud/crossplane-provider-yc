@@ -1,0 +1,59 @@
+apiVersion: compute.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: default
+  name: default
+spec:
+  forProvider:
+    bootDisk:
+    - initializeParams:
+      - imageId: image_id
+    metadata:
+      foo: bar
+      ssh-keys: ubuntu:${file("~/.ssh/id_rsa.pub")}
+    name: test
+    networkInterface:
+    - subnetIdSelector:
+        matchLabels:
+          testing.upbound.io/example-name: foo
+    platformId: standard-v1
+    resources:
+    - cores: 2
+      memory: 4
+    zone: ru-central1-a
+
+---
+
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Network
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider: {}
+
+---
+
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    networkIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
+    zone: ru-central1-a
+
+---
+

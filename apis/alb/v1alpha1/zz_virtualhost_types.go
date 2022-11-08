@@ -30,9 +30,12 @@ type DirectResponseActionObservation struct {
 
 type DirectResponseActionParameters struct {
 
+	// Response body text.
 	// +kubebuilder:validation:Optional
 	Body *string `json:"body,omitempty" tf:"body,omitempty"`
 
+	// The status of the response. Supported values are: ok, invalid_argumet, not_found,
+	// permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	// +kubebuilder:validation:Optional
 	Status *float64 `json:"status,omitempty" tf:"status,omitempty"`
 }
@@ -42,9 +45,11 @@ type FqmnObservation struct {
 
 type FqmnParameters struct {
 
+	// Match exactly.
 	// +kubebuilder:validation:Optional
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// Match prefix.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 }
@@ -54,6 +59,7 @@ type GRPCMatchObservation struct {
 
 type GRPCMatchParameters struct {
 
+	// If not set, all services/methods are assumed. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Fqmn []FqmnParameters `json:"fqmn,omitempty" tf:"fqmn,omitempty"`
 }
@@ -63,9 +69,11 @@ type GRPCRouteActionObservation struct {
 
 type GRPCRouteActionParameters struct {
 
+	// If set, will automatically rewrite host.
 	// +kubebuilder:validation:Optional
 	AutoHostRewrite *bool `json:"autoHostRewrite,omitempty" tf:"auto_host_rewrite,omitempty"`
 
+	// Backend group to route requests.
 	// +crossplane:generate:reference:type=BackendGroup
 	// +kubebuilder:validation:Optional
 	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
@@ -78,12 +86,19 @@ type GRPCRouteActionParameters struct {
 	// +kubebuilder:validation:Optional
 	BackendGroupIDSelector *v1.Selector `json:"backendGroupIdSelector,omitempty" tf:"-"`
 
+	// Host rewrite specifier.
 	// +kubebuilder:validation:Optional
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
+	// Specifies the idle timeout (time without any data transfer for the active request) for the
+	// route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to
+	// something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no
+	// per-route idle timeout.
 	// +kubebuilder:validation:Optional
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
+	// Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is
+	// 60 seconds.
 	// +kubebuilder:validation:Optional
 	MaxTimeout *string `json:"maxTimeout,omitempty" tf:"max_timeout,omitempty"`
 }
@@ -93,12 +108,15 @@ type GRPCRouteObservation struct {
 
 type GRPCRouteParameters struct {
 
+	// Checks "/" prefix by default. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	GRPCMatch []GRPCMatchParameters `json:"grpcMatch,omitempty" tf:"grpc_match,omitempty"`
 
+	// GRPC route action resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	GRPCRouteAction []GRPCRouteActionParameters `json:"grpcRouteAction,omitempty" tf:"grpc_route_action,omitempty"`
 
+	// GRPC status response action resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	GRPCStatusResponseAction []GRPCStatusResponseActionParameters `json:"grpcStatusResponseAction,omitempty" tf:"grpc_status_response_action,omitempty"`
 }
@@ -108,6 +126,8 @@ type GRPCStatusResponseActionObservation struct {
 
 type GRPCStatusResponseActionParameters struct {
 
+	// The status of the response. Supported values are: ok, invalid_argumet, not_found,
+	// permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	// +kubebuilder:validation:Optional
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
@@ -117,9 +137,11 @@ type HTTPMatchObservation struct {
 
 type HTTPMatchParameters struct {
 
+	// List of methods(strings).
 	// +kubebuilder:validation:Optional
 	HTTPMethod []*string `json:"httpMethod,omitempty" tf:"http_method,omitempty"`
 
+	// If not set, '/' is assumed. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Path []PathParameters `json:"path,omitempty" tf:"path,omitempty"`
 }
@@ -129,9 +151,11 @@ type HTTPRouteActionObservation struct {
 
 type HTTPRouteActionParameters struct {
 
+	// If set, will automatically rewrite host.
 	// +kubebuilder:validation:Optional
 	AutoHostRewrite *bool `json:"autoHostRewrite,omitempty" tf:"auto_host_rewrite,omitempty"`
 
+	// Backend group to route requests.
 	// +crossplane:generate:reference:type=BackendGroup
 	// +kubebuilder:validation:Optional
 	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
@@ -144,18 +168,28 @@ type HTTPRouteActionParameters struct {
 	// +kubebuilder:validation:Optional
 	BackendGroupIDSelector *v1.Selector `json:"backendGroupIdSelector,omitempty" tf:"-"`
 
+	// Host rewrite specifier.
 	// +kubebuilder:validation:Optional
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
+	// Specifies the idle timeout (time without any data transfer for the active request) for the
+	// route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to
+	// something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no
+	// per-route idle timeout.
 	// +kubebuilder:validation:Optional
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
+	// If not empty, matched path prefix will be replaced by this value.
 	// +kubebuilder:validation:Optional
 	PrefixRewrite *string `json:"prefixRewrite,omitempty" tf:"prefix_rewrite,omitempty"`
 
+	// Specifies the request timeout (overall time request processing is allowed to take) for the
+	// route. If not set, default is 60 seconds.
 	// +kubebuilder:validation:Optional
 	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
+	// List of upgrade types. Only specified upgrade types will be allowed. For example,
+	// "websocket".
 	// +kubebuilder:validation:Optional
 	UpgradeTypes []*string `json:"upgradeTypes,omitempty" tf:"upgrade_types,omitempty"`
 }
@@ -165,15 +199,19 @@ type HTTPRouteObservation struct {
 
 type HTTPRouteParameters struct {
 
+	// Direct response action resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	DirectResponseAction []DirectResponseActionParameters `json:"directResponseAction,omitempty" tf:"direct_response_action,omitempty"`
 
+	// Checks "/" prefix by default. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	HTTPMatch []HTTPMatchParameters `json:"httpMatch,omitempty" tf:"http_match,omitempty"`
 
+	// HTTP route action resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	HTTPRouteAction []HTTPRouteActionParameters `json:"httpRouteAction,omitempty" tf:"http_route_action,omitempty"`
 
+	// Redirect action resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	RedirectAction []RedirectActionParameters `json:"redirectAction,omitempty" tf:"redirect_action,omitempty"`
 }
@@ -183,15 +221,20 @@ type ModifyRequestHeadersObservation struct {
 
 type ModifyRequestHeadersParameters struct {
 
+	// Append string to the header value.
 	// +kubebuilder:validation:Optional
 	Append *string `json:"append,omitempty" tf:"append,omitempty"`
 
+	// name of the header to modify.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// If set, remove the header.
 	// +kubebuilder:validation:Optional
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
+	// New value for a header. Header values support the following
+	// formatters.
 	// +kubebuilder:validation:Optional
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
@@ -201,15 +244,20 @@ type ModifyResponseHeadersObservation struct {
 
 type ModifyResponseHeadersParameters struct {
 
+	// Append string to the header value.
 	// +kubebuilder:validation:Optional
 	Append *string `json:"append,omitempty" tf:"append,omitempty"`
 
+	// name of the route.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// If set, remove the header.
 	// +kubebuilder:validation:Optional
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
+	// New value for a header. Header values support the following
+	// formatters.
 	// +kubebuilder:validation:Optional
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
@@ -219,9 +267,11 @@ type PathObservation struct {
 
 type PathParameters struct {
 
+	// Match exactly.
 	// +kubebuilder:validation:Optional
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// Match prefix.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 }
@@ -234,21 +284,30 @@ type RedirectActionParameters struct {
 	// +kubebuilder:validation:Optional
 	RemoveQuery *bool `json:"removeQuery,omitempty" tf:"remove_query,omitempty"`
 
+	// Replaces hostname.
 	// +kubebuilder:validation:Optional
 	ReplaceHost *string `json:"replaceHost,omitempty" tf:"replace_host,omitempty"`
 
+	// Replace path.
 	// +kubebuilder:validation:Optional
 	ReplacePath *string `json:"replacePath,omitempty" tf:"replace_path,omitempty"`
 
+	// Replaces port.
 	// +kubebuilder:validation:Optional
 	ReplacePort *float64 `json:"replacePort,omitempty" tf:"replace_port,omitempty"`
 
+	// Replace only matched prefix. Example: match:{ prefix_match: "/some" }
+	// redirect: { replace_prefix: "/other" }  will redirect "/something" to "/otherthing".
 	// +kubebuilder:validation:Optional
 	ReplacePrefix *string `json:"replacePrefix,omitempty" tf:"replace_prefix,omitempty"`
 
+	// Replaces scheme. If the original scheme is http or https, will also remove the
+	// 80 or 443 port, if present.
 	// +kubebuilder:validation:Optional
 	ReplaceScheme *string `json:"replaceScheme,omitempty" tf:"replace_scheme,omitempty"`
 
+	// The HTTP status code to use in the redirect response. Supported values are:
+	// moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
 	// +kubebuilder:validation:Optional
 	ResponseCode *string `json:"responseCode,omitempty" tf:"response_code,omitempty"`
 }
@@ -258,25 +317,33 @@ type RouteObservation struct {
 
 type RouteParameters struct {
 
+	// GRPC route resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	GRPCRoute []GRPCRouteParameters `json:"grpcRoute,omitempty" tf:"grpc_route,omitempty"`
 
+	// HTTP route resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	HTTPRoute []HTTPRouteParameters `json:"httpRoute,omitempty" tf:"http_route,omitempty"`
 
+	// name of the route.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type VirtualHostObservation struct {
+
+	// The ID of the virtual host.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type VirtualHostParameters struct {
 
+	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard
+	// hosts are supported in the form of '.foo.com' or '-bar.foo.com'. If not specified, all domains will be matched.
 	// +kubebuilder:validation:Optional
 	Authority []*string `json:"authority,omitempty" tf:"authority,omitempty"`
 
+	// The ID of the virtual host.
 	// +crossplane:generate:reference:type=HTTPRouter
 	// +kubebuilder:validation:Optional
 	HTTPRouterID *string `json:"httpRouterId,omitempty" tf:"http_router_id,omitempty"`
@@ -289,15 +356,22 @@ type VirtualHostParameters struct {
 	// +kubebuilder:validation:Optional
 	HTTPRouterIDSelector *v1.Selector `json:"httpRouterIdSelector,omitempty" tf:"-"`
 
+	// Apply the following modifications to the request
+	// headers. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ModifyRequestHeaders []ModifyRequestHeadersParameters `json:"modifyRequestHeaders,omitempty" tf:"modify_request_headers,omitempty"`
 
+	// Apply the following modifications to the response
+	// headers. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ModifyResponseHeaders []ModifyResponseHeadersParameters `json:"modifyResponseHeaders,omitempty" tf:"modify_response_headers,omitempty"`
 
+	// Name of the virtual host. Provided by the client when the virtual host is created.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// A Route resource. Routes are matched in-order. Be careful when adding them to the end. For instance, having
+	// http '/' match first makes all other routes unused. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Route []RouteParameters `json:"route,omitempty" tf:"route,omitempty"`
 }
@@ -316,7 +390,7 @@ type VirtualHostStatus struct {
 
 // +kubebuilder:object:root=true
 
-// VirtualHost is the Schema for the VirtualHosts API. <no value>
+// VirtualHost is the Schema for the VirtualHosts API. Virtual hosts combine routes belonging to the same set of domains.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -26,6 +26,7 @@ import (
 )
 
 type NetworkObservation struct {
+
 	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
@@ -39,13 +40,15 @@ type NetworkObservation struct {
 
 type NetworkParameters struct {
 
+	// An optional description of this resource. Provide this property when
+	// you create the resource.
 	// +kubebuilder:validation:Optional
-	// (Optional) An optional description of this resource. Provide this property when
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// ID of the folder that the resource belongs to. If it
+	// is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
-	// (Optional) ID of the folder that the resource belongs to. If it
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -56,12 +59,12 @@ type NetworkParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// Labels to apply to this network. A list of key/value pairs.
 	// +kubebuilder:validation:Optional
-	// (Optional) Labels to apply to this network. A list of key/value pairs.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Name of the network. Provided by the client when the network is created.
 	// +kubebuilder:validation:Optional
-	// (Optional) Name of the network. Provided by the client when the network is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
@@ -79,7 +82,7 @@ type NetworkStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Network is the Schema for the Networks API. <no value>
+// Network is the Schema for the Networks API. Manages a network within Yandex.Cloud.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

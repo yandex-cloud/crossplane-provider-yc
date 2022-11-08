@@ -31,9 +31,9 @@ type FolderIAMMemberObservation struct {
 
 type FolderIAMMemberParameters struct {
 
+	// ID of the folder to attach a policy to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
-	// (Required) ID of the folder to attach a policy to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -44,16 +44,17 @@ type FolderIAMMemberParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// The identity that will be granted the privilege that is specified in the role field.
+	// This field can have one of the following values:
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
 	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
 	// +kubebuilder:validation:Optional
-	// (Required) The identity that will be granted the privilege that is specified in the `role` field.
 	Member *string `json:"member,omitempty" tf:"member,omitempty"`
 
+	// The role that should be assigned.
 	// +kubebuilder:validation:Required
-	// (Required) The role that should be assigned.
 	Role *string `json:"role" tf:"role,omitempty"`
 
 	// Reference to a ServiceAccount to populate member.
@@ -82,7 +83,7 @@ type FolderIAMMemberStatus struct {
 
 // +kubebuilder:object:root=true
 
-// FolderIAMMember is the Schema for the FolderIAMMembers API. <no value>
+// FolderIAMMember is the Schema for the FolderIAMMembers API. Allows management of a single member for a single IAM binding for a Yandex Resource Manager folder.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Queue is the Schema for the Queues API. <no value>
+        description: Queue is the Schema for the Queues API. Allows management of
+          a Yandex.Cloud Message Queue.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,6 +65,9 @@ spec:
               forProvider:
                 properties:
                   accessKey:
+                    description: The access key to use when applying changes. If omitted,
+                      ymq_access_key specified in provider config is used. For more
+                      information see documentation.
                     type: string
                   accessKeyRef:
                     description: Reference to a ServiceAccountStaticAccessKey in iam
@@ -141,28 +145,61 @@ spec:
                         type: object
                     type: object
                   contentBasedDeduplication:
+                    description: Enables content-based deduplication. Can be used
+                      only if queue is FIFO.
                     type: boolean
                   delaySeconds:
+                    description: 'Number of seconds to delay the message from being
+                      available for processing. Valid values: from 0 to 900 seconds
+                      (15 minutes). Default: 0.'
                     type: number
                   fifoQueue:
+                    description: Is this queue FIFO. If this parameter is not used,
+                      a standard queue is created. You cannot change the parameter
+                      value for a created queue.
                     type: boolean
                   maxMessageSize:
+                    description: 'Maximum message size in bytes. Valid values: from
+                      1024 bytes (1 KB) to 262144 bytes (256 KB). Default: 262144
+                      (256 KB). For more information see documentation.'
                     type: number
                   messageRetentionSeconds:
+                    description: 'The length of time in seconds to retain a message.
+                      Valid values: from 60 seconds (1 minute) to 1209600 seconds
+                      (14 days). Default: 345600 (4 days). For more information see
+                      documentation.'
                     type: number
                   name:
+                    description: Queue name. The maximum length is 80 characters.
+                      You can use numbers, letters, underscores, and hyphens in the
+                      name. The name of a FIFO queue must end with the .fifo suffix.
+                      If not specified, random name will be generated. Conflicts with
+                      name_prefix. For more information see documentation.
                     type: string
                   namePrefix:
+                    description: Generates random name with the specified prefix.
+                      Conflicts with name.
                     type: string
                   receiveWaitTimeSeconds:
+                    description: 'Wait time for the ReceiveMessage method (for long
+                      polling), in seconds. Valid values: from 0 to 20 seconds. Default:
+                      0. For more information about long polling see documentation.'
                     type: number
                   redrivePolicy:
+                    description: 'Message redrive policy in Dead Letter Queue. The
+                      source queue and DLQ must be the same type: for FIFO queues,
+                      the DLQ must also be a FIFO queue. For more information about
+                      redrive policy see documentation. Also you can use example in
+                      this page.'
                     type: string
                   regionId:
+                    description: ID of the region where the message queue is located
+                      at. The default is 'ru-central1'.
                     type: string
                   secretKeySecretRef:
-                    description: A SecretKeySelector is a reference to a secret key
-                      in an arbitrary namespace.
+                    description: The secret key to use when applying changes. If omitted,
+                      ymq_secret_key specified in provider config is used. For more
+                      information see documentation.
                     properties:
                       key:
                         description: The key to select.
@@ -179,6 +216,9 @@ spec:
                     - namespace
                     type: object
                   visibilityTimeoutSeconds:
+                    description: 'Visibility timeout for messages in a queue, specified
+                      in seconds. Valid values: from 0 to 43200 seconds (12 hours).
+                      Default: 30.'
                     type: number
                 type: object
               providerConfigRef:
@@ -358,8 +398,11 @@ spec:
               atProvider:
                 properties:
                   arn:
+                    description: ARN of the Yandex Message Queue. It is used for setting
+                      up a redrive policy. See documentation.
                     type: string
                   id:
+                    description: URL of the Yandex Message Queue.
                     type: string
                 type: object
               conditions:

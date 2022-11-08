@@ -31,9 +31,9 @@ type FolderIAMBindingObservation struct {
 
 type FolderIAMBindingParameters struct {
 
+	// ID of the folder to attach a policy to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
-	// (Required) ID of the folder to attach a policy to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -44,16 +44,18 @@ type FolderIAMBindingParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// An array of identities that will be granted the privilege that is specified in the role field.
+	// Each entry can have one of the following values:
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountsRef
 	// +crossplane:generate:reference:selectorFieldName=ServiceAccountsSelector
 	// +kubebuilder:validation:Optional
-	// (Required) An array of identities that will be granted the privilege that is specified in the `role` field.
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
+	// The role that should be assigned. Only one
+	// yandex_resourcemanager_folder_iam_binding can be used per role.
 	// +kubebuilder:validation:Required
-	// (Required) The role that should be assigned. Only one
 	Role *string `json:"role" tf:"role,omitempty"`
 
 	// References to ServiceAccount to populate members.
@@ -82,7 +84,7 @@ type FolderIAMBindingStatus struct {
 
 // +kubebuilder:object:root=true
 
-// FolderIAMBinding is the Schema for the FolderIAMBindings API. <no value>
+// FolderIAMBinding is the Schema for the FolderIAMBindings API. Allows management of a single IAM binding for a Yandex Resource Manager folder.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

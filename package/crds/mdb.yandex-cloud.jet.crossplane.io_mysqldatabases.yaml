@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: MySQLDatabase is the Schema for the MySQLDatabases API. <no value>
+        description: MySQLDatabase is the Schema for the MySQLDatabases API. Manages
+          a MySQL database within Yandex.Cloud.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -139,7 +140,7 @@ spec:
                         type: object
                     type: object
                   name:
-                    description: (Required) The name of the database.
+                    description: The name of the database.
                     type: string
                 required:
                 - name

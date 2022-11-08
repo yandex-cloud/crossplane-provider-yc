@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Registry is the Schema for the Registrys API. <no value>
+        description: Registry is the Schema for the Registrys API. Creates a new container
+          registry.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,8 +65,8 @@ spec:
               forProvider:
                 properties:
                   folderId:
-                    description: (Optional) Folder that the resource belongs to. If
-                      value is omitted, the default provider folder is used.
+                    description: Folder that the resource belongs to. If value is
+                      omitted, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -145,11 +146,10 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) A set of key/value label pairs to assign
-                      to the registry.
+                    description: A set of key/value label pairs to assign to the registry.
                     type: object
                   name:
-                    description: (Optional) A name of the registry.
+                    description: A name of the registry.
                     type: string
                 type: object
               providerConfigRef:

@@ -1,0 +1,18 @@
+apiVersion: storage.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Object
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storage/v1alpha1/object
+  labels:
+    testing.upbound.io/example-name: cute-cat-picture
+  name: cute-cat-picture
+spec:
+  forProvider:
+    bucketSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    key: cute-cat
+    source: /images/cats/cute-cat.jpg
+
+---
+

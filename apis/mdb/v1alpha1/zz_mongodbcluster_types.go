@@ -26,7 +26,8 @@ import (
 )
 
 type AccessObservation struct {
-	// (Optional) Allow access for DataLens.
+
+	// Allow access for DataLens.
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
 }
 
@@ -38,8 +39,10 @@ type AuditLogObservation struct {
 
 type AuditLogParameters struct {
 
+	// Configuration of the audit log filter in JSON format.
+	// For more information see auditLog.filter
+	// description in the official documentation. Available only in enterprise edition.
 	// +kubebuilder:validation:Optional
-	// (Optional) Configuration of the audit log filter in JSON format.
 	Filter *string `json:"filter,omitempty" tf:"filter,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -51,42 +54,42 @@ type BackupWindowStartObservation struct {
 
 type BackupWindowStartParameters struct {
 
+	// The hour at which backup will be started.
 	// +kubebuilder:validation:Optional
-	// (Optional) The hour at which backup will be started.
 	Hours *float64 `json:"hours,omitempty" tf:"hours,omitempty"`
 
+	// The minute at which backup will be started.
 	// +kubebuilder:validation:Optional
-	// (Optional) The minute at which backup will be started.
 	Minutes *float64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
 }
 
 type ClusterConfigObservation struct {
 
+	// Shows whether cluster has access to data lens. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Access policy to the MongoDB cluster. The structure is documented below.
 	Access []AccessObservation `json:"access,omitempty" tf:"access,omitempty"`
 }
 
 type ClusterConfigParameters struct {
 
+	// Shows whether cluster has access to data lens. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Access policy to the MongoDB cluster. The structure is documented below.
 	Access []AccessParameters `json:"access,omitempty" tf:"access,omitempty"`
 
+	// Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	BackupWindowStart []BackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
+	// Feature compatibility version of MongoDB. If not provided version is taken. Can be either 5.0, 4.4, 4.2 and 4.0.
 	// +kubebuilder:validation:Optional
-	// (Optional) Feature compatibility version of MongoDB. If not provided version is taken. Can be either `5.0`, `4.4`, `4.2` and `4.0`.
 	FeatureCompatibilityVersion *string `json:"featureCompatibilityVersion,omitempty" tf:"feature_compatibility_version,omitempty"`
 
+	// Configuration of the mongod service. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Configuration of the mongod service. The structure is documented below.
 	Mongod []MongodParameters `json:"mongod,omitempty" tf:"mongod,omitempty"`
 
+	// Version of MongoDB (either 5.0, 4.4, 4.2 or 4.0).
 	// +kubebuilder:validation:Required
-	// (Optional) Version of the MongoDB server software. Can be either `4.0`, `4.2`, `4.4`, `4.4-enterprise`, `5.0` and `5.0-enterprise`.
 	Version *string `json:"version" tf:"version,omitempty"`
 }
 
@@ -95,8 +98,8 @@ type DatabaseObservation struct {
 
 type DatabaseParameters struct {
 
+	// The name of the database.
 	// +kubebuilder:validation:Required
-	// (Required) Name of the MongoDB cluster. Provided by the client when the cluster is created.
 	Name *string `json:"name" tf:"name,omitempty"`
 }
 
@@ -105,24 +108,34 @@ type KmipObservation struct {
 
 type KmipParameters struct {
 
+	// String containing the client certificate used for authenticating MongoDB to the KMIP server.
+	// For more information see security.kmip.clientCertificateFile
+	// description in the official documentation.
 	// +kubebuilder:validation:Optional
-	// (Required) String containing the client certificate used for authenticating MongoDB to the KMIP server.
 	ClientCertificate *string `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
 
+	// Unique KMIP identifier for an existing key within the KMIP server.
+	// For more information see security.kmip.keyIdentifier
+	// description in the official documentation.
 	// +kubebuilder:validation:Optional
-	// (Optional) Unique KMIP identifier for an existing key within the KMIP server.
 	KeyIdentifier *string `json:"keyIdentifier,omitempty" tf:"key_identifier,omitempty"`
 
+	// Port number to use to communicate with the KMIP server. Default: 5696
+	// For more information see security.kmip.port
+	// description in the official documentation.
 	// +kubebuilder:validation:Optional
-	// (Optional) Port number to use to communicate with the KMIP server. Default: 5696
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// Path to CA File. Used for validating secure client connection to KMIP server.
+	// For more information see security.kmip.serverCAFile
+	// description in the official documentation.
 	// +kubebuilder:validation:Optional
-	// (Required) Path to CA File. Used for validating secure client connection to KMIP server.
 	ServerCA *string `json:"serverCa,omitempty" tf:"server_ca,omitempty"`
 
+	// Hostname or IP address of the KMIP server to connect to.
+	// For more information see security.kmip.serverName
+	// description in the official documentation.
 	// +kubebuilder:validation:Optional
-	// (Required) Hostname or IP address of the KMIP server to connect to.
 	ServerName *string `json:"serverName,omitempty" tf:"server_name,omitempty"`
 }
 
@@ -131,43 +144,52 @@ type MongodObservation struct {
 
 type MongodParameters struct {
 
+	// A set of audit log settings
+	// (see the auditLog option).
+	// The structure is documented below. Available only in enterprise edition.
 	// +kubebuilder:validation:Optional
-	// (Optional) A set of audit log settings 
 	AuditLog []AuditLogParameters `json:"auditLog,omitempty" tf:"audit_log,omitempty"`
 
+	// A set of MongoDB Security settings
+	// (see the security option).
+	// The structure is documented below. Available only in enterprise edition.
 	// +kubebuilder:validation:Optional
-	// (Optional) A set of MongoDB Security settings
 	Security []SecurityParameters `json:"security,omitempty" tf:"security,omitempty"`
 
+	// A set of MongoDB Server Parameters
+	// (see the setParameter option).
+	// The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) A set of MongoDB Server Parameters 
 	SetParameter []SetParameterParameters `json:"setParameter,omitempty" tf:"set_parameter,omitempty"`
 }
 
 type MongodbClusterHostObservation struct {
+
 	// (Computed) The health of the host.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
-	// (Required) Name of the MongoDB cluster. Provided by the client when the cluster is created.
+	// (Computed) The fully qualified domain name of the host. Computed on server side.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type MongodbClusterHostParameters struct {
 
+	// Should this host have assigned public IP assigned. Can be either true or false.
 	// +kubebuilder:validation:Optional
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
+	// The role of the cluster (either PRIMARY or SECONDARY).
 	// +kubebuilder:validation:Optional
-	// (Optional) The role of the cluster (either PRIMARY or SECONDARY).
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
+	// The name of the shard to which the host belongs.
 	// +kubebuilder:validation:Optional
-	// (Optional) The name of the shard to which the host belongs.
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
 
+	// The ID of the subnet, to which the host belongs. The subnet must
+	// be a part of the network to which the cluster belongs.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
-	// (Required) The ID of the subnet, to which the host belongs. The subnet must
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -178,12 +200,13 @@ type MongodbClusterHostParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
+	// type of mongo daemon which runs on this host (mongod, mongos or monogcfg). Defaults to mongod.
 	// +kubebuilder:validation:Optional
-	// (Optional) type of mongo daemon which runs on this host (mongod, mongos or monogcfg). Defaults to mongod.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
+	// The availability zone where the MongoDB host will be created.
+	// For more information see the official documentation.
 	// +kubebuilder:validation:Required
-	// (Required) The availability zone where the MongoDB host will be created.
 	ZoneID *string `json:"zoneId" tf:"zone_id,omitempty"`
 }
 
@@ -192,33 +215,34 @@ type MongodbClusterMaintenanceWindowObservation struct {
 
 type MongodbClusterMaintenanceWindowParameters struct {
 
+	// Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
 	// +kubebuilder:validation:Optional
-	// (Optional) Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
+	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
 	// +kubebuilder:validation:Optional
-	// (Optional) Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
 	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
+	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	// +kubebuilder:validation:Required
-	// (Optional) type of mongo daemon which runs on this host (mongod, mongos or monogcfg). Defaults to mongod.
 	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 type MongodbClusterObservation struct {
 
+	// Configuration of the MongoDB subcluster. The structure is documented below.
 	// +kubebuilder:validation:Required
-	// (Required) Configuration of the MongoDB subcluster. The structure is documented below.
 	ClusterConfig []ClusterConfigObservation `json:"clusterConfig,omitempty" tf:"cluster_config,omitempty"`
 
 	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Computed) The health of the host.
+	// Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN.
+	// For more information see health field of JSON representation in the official documentation.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
+	// A host of the MongoDB cluster. The structure is documented below.
 	// +kubebuilder:validation:Required
-	// (Required) A host of the MongoDB cluster. The structure is documented below.
 	Host []MongodbClusterHostObservation `json:"host,omitempty" tf:"host,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -226,39 +250,41 @@ type MongodbClusterObservation struct {
 	// MongoDB Cluster mode enabled/disabled.
 	Sharded *bool `json:"sharded,omitempty" tf:"sharded,omitempty"`
 
-	// Status of the cluster. Can be either `CREATING`, `STARTING`, `RUNNING`, `UPDATING`, `STOPPING`, `STOPPED`, `ERROR` or `STATUS_UNKNOWN`.
+	// Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
+	// For more information see status field of JSON representation in the official documentation.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type MongodbClusterParameters struct {
 
+	// Configuration of the MongoDB subcluster. The structure is documented below.
 	// +kubebuilder:validation:Required
-	// (Required) Configuration of the MongoDB subcluster. The structure is documented below.
 	ClusterConfig []ClusterConfigParameters `json:"clusterConfig" tf:"cluster_config,omitempty"`
 
-	// +kubebuilder:validation:Optional
 	// The ID of the cluster.
+	// +kubebuilder:validation:Optional
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
+	// A database of the MongoDB cluster. The structure is documented below.
 	// +kubebuilder:validation:Required
-	// (Required) A database of the MongoDB cluster. The structure is documented below.
 	Database []DatabaseParameters `json:"database" tf:"database,omitempty"`
 
+	// Inhibits deletion of the cluster.  Can be either true or false.
 	// +kubebuilder:validation:Optional
-	// (Optional) Inhibits deletion of the cluster.  Can be either `true` or `false`.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
+	// Description of the MongoDB cluster.
 	// +kubebuilder:validation:Optional
-	// (Optional) Description of the MongoDB cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// Deployment environment of the MongoDB cluster. Can be either PRESTABLE or PRODUCTION.
 	// +kubebuilder:validation:Required
-	// (Required) Deployment environment of the MongoDB cluster. Can be either `PRESTABLE` or `PRODUCTION`.
 	Environment *string `json:"environment" tf:"environment,omitempty"`
 
+	// The ID of the folder that the resource belongs to. If it
+	// is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
-	// (Optional) The ID of the folder that the resource belongs to. If it
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -269,24 +295,24 @@ type MongodbClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// A host of the MongoDB cluster. The structure is documented below.
 	// +kubebuilder:validation:Required
-	// (Required) A host of the MongoDB cluster. The structure is documented below.
 	Host []MongodbClusterHostParameters `json:"host" tf:"host,omitempty"`
 
+	// A set of key/value label pairs to assign to the MongoDB cluster.
 	// +kubebuilder:validation:Optional
-	// (Optional) A set of key/value label pairs to assign to the MongoDB cluster.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	MaintenanceWindow []MongodbClusterMaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
+	// Name of the MongoDB cluster. Provided by the client when the cluster is created.
 	// +kubebuilder:validation:Required
-	// (Required) Name of the MongoDB cluster. Provided by the client when the cluster is created.
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// ID of the network, to which the MongoDB cluster belongs.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
-	// (Required) ID of the network, to which the MongoDB cluster belongs.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
 	// Reference to a Network in vpc to populate networkId.
@@ -297,13 +323,13 @@ type MongodbClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
+	// Resources allocated to hosts of the MongoDB cluster. The structure is documented below.
 	// +kubebuilder:validation:Required
-	// (Required) Resources allocated to hosts of the MongoDB cluster. The structure is documented below.
 	Resources []MongodbClusterResourcesParameters `json:"resources" tf:"resources,omitempty"`
 
+	// A set of ids of security groups assigned to hosts of the cluster.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
-	// (Optional) A set of ids of security groups assigned to hosts of the cluster.
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// References to SecurityGroup in vpc to populate securityGroupIds.
@@ -314,8 +340,8 @@ type MongodbClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
+	// A user of the MongoDB cluster. The structure is documented below.
 	// +kubebuilder:validation:Required
-	// (Required) A user of the MongoDB cluster. The structure is documented below.
 	User []UserParameters `json:"user" tf:"user,omitempty"`
 }
 
@@ -324,12 +350,13 @@ type MongodbClusterResourcesObservation struct {
 
 type MongodbClusterResourcesParameters struct {
 
+	// Volume of the storage available to a MongoDB host, in gigabytes.
 	// +kubebuilder:validation:Required
-	// (Required) Volume of the storage available to a MongoDB host, in gigabytes.
 	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
 
+	// Type of the storage of MongoDB hosts.
+	// For more information see the official documentation.
 	// +kubebuilder:validation:Required
-	// (Required) Type of the storage of MongoDB hosts.
 	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
 
 	// +kubebuilder:validation:Required
@@ -341,12 +368,12 @@ type PermissionObservation struct {
 
 type PermissionParameters struct {
 
+	// The name of the database that the permission grants access to.
 	// +kubebuilder:validation:Required
-	// (Required) The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 
+	// The roles of the user in this database. For more information see the official documentation.
 	// +kubebuilder:validation:Optional
-	// (Optional) The roles of the user in this database. For more information see [the official documentation](https://cloud.yandex.com/docs/managed-mongodb/concepts/users-and-roles).
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
@@ -355,12 +382,16 @@ type SecurityObservation struct {
 
 type SecurityParameters struct {
 
+	// Enables the encryption for the WiredTiger storage engine. Can be either true or false.
+	// For more information see security.enableEncryption
+	// description in the official documentation. Available only in enterprise edition.
 	// +kubebuilder:validation:Optional
-	// (Optional) Enables the encryption for the WiredTiger storage engine. Can be either true or false.
 	EnableEncryption *bool `json:"enableEncryption,omitempty" tf:"enable_encryption,omitempty"`
 
+	// Configuration of the third party key management appliance via the Key Management Interoperability Protocol (KMIP)
+	// (see Encryption tutorial ). Requires enable_encryption to be true.
+	// The structure is documented below. Available only in enterprise edition.
 	// +kubebuilder:validation:Optional
-	// (Optional) Configuration of the third party key management appliance via the Key Management Interoperability Protocol (KMIP)
 	Kmip []KmipParameters `json:"kmip,omitempty" tf:"kmip,omitempty"`
 }
 
@@ -369,8 +400,10 @@ type SetParameterObservation struct {
 
 type SetParameterParameters struct {
 
+	// Enables the auditing of authorization successes. Can be either true or false.
+	// For more information, see the auditAuthorizationSuccess
+	// description in the official documentation. Available only in enterprise edition.
 	// +kubebuilder:validation:Optional
-	// (Optional) Enables the auditing of authorization successes. Can be either true or false.
 	AuditAuthorizationSuccess *bool `json:"auditAuthorizationSuccess,omitempty" tf:"audit_authorization_success,omitempty"`
 }
 
@@ -379,15 +412,16 @@ type UserObservation struct {
 
 type UserParameters struct {
 
+	// The name of the user.
 	// +kubebuilder:validation:Required
-	// (Required) Name of the MongoDB cluster. Provided by the client when the cluster is created.
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// The password of the user.
 	// +kubebuilder:validation:Required
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
+	// Set of permissions granted to the user. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	// (Optional) Set of permissions granted to the user. The structure is documented below.
 	Permission []PermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
@@ -405,7 +439,7 @@ type MongodbClusterStatus struct {
 
 // +kubebuilder:object:root=true
 
-// MongodbCluster is the Schema for the MongodbClusters API. <no value>
+// MongodbCluster is the Schema for the MongodbClusters API. Manages a MongoDB cluster within Yandex.Cloud.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -36,7 +36,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: PostgresqlDatabase is the Schema for the PostgresqlDatabases
-          API. <no value>
+          API. Manages a PostgreSQL database within Yandex.Cloud.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -140,34 +140,35 @@ spec:
                         type: object
                     type: object
                   extension:
-                    description: (Optional) Set of database extensions. The structure
-                      is documented below
+                    description: Set of database extensions. The structure is documented
+                      below
                     items:
                       properties:
                         name:
-                          description: (Required) The name of the database.
+                          description: Name of the database extension. For more information
+                            on available extensions see the official documentation.
                           type: string
                         version:
-                          description: (Optional) Version of the extension.
+                          description: Version of the extension.
                           type: string
                       required:
                       - name
                       type: object
                     type: array
                   lcCollate:
-                    description: (Optional) POSIX locale for string sorting order.
-                      Forbidden to change in an existing database.
+                    description: POSIX locale for string sorting order. Forbidden
+                      to change in an existing database.
                     type: string
                   lcType:
-                    description: (Optional) POSIX locale for character classification.
-                      Forbidden to change in an existing database.
+                    description: POSIX locale for character classification. Forbidden
+                      to change in an existing database.
                     type: string
                   name:
-                    description: (Required) The name of the database.
+                    description: The name of the database.
                     type: string
                   owner:
-                    description: (Required) Name of the user assigned as the owner
-                      of the database. Forbidden to change in an existing database.
+                    description: Name of the user assigned as the owner of the database.
+                      Forbidden to change in an existing database.
                     type: string
                 required:
                 - name

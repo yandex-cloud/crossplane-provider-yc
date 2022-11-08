@@ -35,7 +35,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Transfer is the Schema for the Transfers API. <no value>
+        description: Transfer is the Schema for the Transfers API. Manages a Data
+          Transfer transfer within Yandex.Cloud.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,11 +65,11 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: (Optional) Arbitrary description text for the transfer.
+                    description: Arbitrary description text for the transfer.
                     type: string
                   folderId:
-                    description: (Optional) ID of the folder to create the transfer
-                      in. If it is not provided, the default provider folder is used.
+                    description: ID of the folder to create the transfer in. If it
+                      is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -148,14 +149,14 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: (Optional) A set of key/value label pairs to assign
-                      to the Data Transfer transfer.
+                    description: A set of key/value label pairs to assign to the Data
+                      Transfer transfer.
                     type: object
                   name:
-                    description: (Required) Name of the transfer.
+                    description: Name of the transfer.
                     type: string
                   sourceId:
-                    description: (Optional) ID of the source endpoint for the transfer.
+                    description: ID of the source endpoint for the transfer.
                     type: string
                   sourceIdRef:
                     description: Reference to a Endpoint to populate sourceId.
@@ -231,7 +232,7 @@ spec:
                         type: object
                     type: object
                   targetId:
-                    description: (Optional) ID of the target endpoint for the transfer.
+                    description: ID of the target endpoint for the transfer.
                     type: string
                   targetIdRef:
                     description: Reference to a Endpoint to populate targetId.
@@ -307,8 +308,8 @@ spec:
                         type: object
                     type: object
                   type:
-                    description: (Required) Type of the transfer. One of "SNAPSHOT_ONLY",
-                      "INCREMENT_ONLY", "SNAPSHOT_AND_INCREMENT".
+                    description: Type of the transfer. One of "SNAPSHOT_ONLY", "INCREMENT_ONLY",
+                      "SNAPSHOT_AND_INCREMENT".
                     type: string
                 type: object
               providerConfigRef:

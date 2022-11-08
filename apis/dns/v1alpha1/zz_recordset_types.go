@@ -31,25 +31,25 @@ type RecordsetObservation struct {
 
 type RecordsetParameters struct {
 
+	// The string data for the records in this record set.
 	// +kubebuilder:validation:Required
-	// (Optional) The string data for the records in this record set.
 	Data []*string `json:"data" tf:"data,omitempty"`
 
+	// The DNS name this record set will apply to.
 	// +kubebuilder:validation:Required
-	// (Required) The DNS name this record set will apply to.
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// The time-to-live of this record set (seconds).
 	// +kubebuilder:validation:Required
-	// (Optional) The time-to-live of this record set (seconds).
 	TTL *float64 `json:"ttl" tf:"ttl,omitempty"`
 
+	// The DNS record set type.
 	// +kubebuilder:validation:Required
-	// (Required) The DNS record set type.
 	Type *string `json:"type" tf:"type,omitempty"`
 
+	// The id of the zone in which this record set will reside.
 	// +crossplane:generate:reference:type=Zone
 	// +kubebuilder:validation:Optional
-	// (Required) The id of the zone in which this record set will reside.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 
 	// Reference to a Zone to populate zoneId.
@@ -75,7 +75,7 @@ type RecordsetStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Recordset is the Schema for the Recordsets API. <no value>
+// Recordset is the Schema for the Recordsets API. Manages a DNS Recordset within Yandex.Cloud.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
