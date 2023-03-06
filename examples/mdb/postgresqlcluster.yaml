@@ -16,8 +16,7 @@ spec:
   forProvider:
     name: example-pg
     environment: PRESTABLE
-    networkIdRef:
-      name: example-net
+    networkId: <your-network-id>
     config:
       - version: "12"
         resources:
@@ -52,12 +51,9 @@ spec:
           log_min_duration_statement: "5000"
     host:
       - zone: ru-central1-a
-        subnetIdRef:
-          name: example-subnet-a
-    folderIdRef:
-      name: example-folder
+        subnetId: <your-subnet-id>
+    folderId: <your-folder-id>
   providerConfigRef:
     name: example
   writeConnectionSecretToRef:
     name: postgress-conn
-    namespace: default

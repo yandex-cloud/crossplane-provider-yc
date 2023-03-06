@@ -1,11 +1,10 @@
 apiVersion: container.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Registry
 metadata:
-  name: example-registry
+  name: registry-1994
 spec:
   forProvider:
-    name: example-registry
-    folderIdRef:
-      name: example-folder
+    folderId: <your-folder-id>
+    name: registry-1994
   providerConfigRef:
     name: example

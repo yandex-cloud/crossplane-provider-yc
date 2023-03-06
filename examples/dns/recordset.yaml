@@ -1,15 +1,15 @@
 apiVersion: dns.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Recordset
 metadata:
-  name: example-recordset
+  name: apps
 spec:
+  deletionPolicy: Orphan
   forProvider:
-    zoneIdRef:
-      name: example-zone
-    name: example-recordset
-    type: "A"
-    ttl: 200
     data:
-      - "10.1.0.1"
+      - '<ip-address>' # тут должен быть ip-адрес
+    name: '*.apps.pushka.ga.' # поменяй на свой домен
+    ttl: 600
+    type: A
+    zoneId: <zone-id> # поменяй на имя своей зоны
   providerConfigRef:
     name: example

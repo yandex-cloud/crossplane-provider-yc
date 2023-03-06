@@ -1,0 +1,31 @@
+---
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: PostgresqlDatabase
+metadata:
+  name: postgres-db
+spec:
+  forProvider:
+    clusterId: <pg-cluster-id>
+    name: postgres-db
+    owner: user1
+  providerConfigRef:
+    name: example
+
+---
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: PostgresqlUser
+metadata: 
+  name: postgres-user
+spec:
+  forProvider:
+    clusterId: <pg-cluster-id>
+    connLimit: 100
+    name: postgres-user
+    passwordSecretRef:
+      name: postgresql
+      key: password
+      namespace: default
+    permission: 
+      - databaseName: db_name
+  providerConfigRef:
+    name: example
