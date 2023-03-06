@@ -16,14 +16,13 @@ spec:
   forProvider:
     name: example-redis
     environment: PRESTABLE
-    networkIdRef:
-      name: example-net
+    networkId: <your-network-id>
     config:
       - passwordSecretRef:
           name: redis
           key: password
           namespace: default
-        version: "6.0"
+        version: "6.2" # allowed versions are: 6.2, 7.0
     resources:
     - resourcePresetId: "hm1.nano"
       diskSize: 16
@@ -31,10 +30,8 @@ spec:
       - type: ANYTIME
     host:
       - zone: ru-central1-a
-        subnetIdRef:
-          name: example-subnet-a
-    folderIdRef:
-      name: example-folder
+        subnetId: <your-subnet-id>
+    folderId: <your-folder-id>
   providerConfigRef:
     name: example
   writeConnectionSecretToRef:

@@ -4,8 +4,9 @@ metadata:
   name: example-instance
 spec:
   forProvider:
+    folderId: <your-folder-id>
     name: example-instance
-    platformId: standard-v1
+    platformId: standard-v3
     zone: ru-central1-a
     resources:
       - cores: 2
@@ -14,10 +15,9 @@ spec:
       - initializeParams:
           # ubuntu 20.04
           # yc compute image list --folder-id standard-images | grep 'ubuntu-20-04-lts'
-          - imageId: fd8ot0k0vde438jv0t8j
+          - imageId: fd8ot0k0vde438jv0t8j # your image-id
     networkInterface:
-      - subnetIdRef:
-          name: example-subnet-a
+      - subnetId: <your-subnet-id>
     metadata:
       ssh-keys: "ubuntu:<public-key-data>"
   providerConfigRef:

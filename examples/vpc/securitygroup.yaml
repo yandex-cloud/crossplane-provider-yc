@@ -1,34 +1,49 @@
 apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: SecurityGroup
 metadata:
-  name: example-sg
+  name: new-security-group
 spec:
   forProvider:
-    name: example-sg
-    folderIdRef:
-      name: example-folder
-    networkIDRef:
-      name: example-net
-    ingress:
-      - protocol: TCP
-        description: "rule1 description"
-        v4CidrBlocks:
-          - "10.0.1.0/24"
-          - "10.0.2.0/24"
-        port: 8080
     egress:
-      - protocol: ANY
-        description: "rule2 description"
+      - description: rule-egress-all
+        fromPort: 0
+        protocol: any
+        toPort: 65535
         v4CidrBlocks:
-          - "10.0.1.0/24"
-          - "10.0.2.0/24"
-        fromPort: 8090
-        toPort: 8099
-      - protocol: UDP
-        description: "rule3 description"
+          - 0.0.0.0/0
+    folderId: <your-folder-id>
+    ingress:
+      - description: rule-https
+        port: 443
+        protocol: tcp
         v4CidrBlocks:
-          - "10.0.1.0/24"
-        fromPort: 8090
-        toPort: 8099
+          - 0.0.0.0/0
+      - description: rule-internal-traffic
+        fromPort: 0
+        predefinedTarget: self_security_group
+        protocol: any
+        toPort: 65535
+      - description: rule-internal-k8s-pods-services
+        fromPort: 0
+        protocol: any
+        toPort: 65535
+        v4CidrBlocks:
+          - 10.97.0.0/16
+          - 10.113.0.0/16
+      - description: rule-yc-balancing
+        fromPort: 0
+        protocol: tcp
+        toPort: 65535
+        v4CidrBlocks:
+          - 198.18.235.0/24
+          - 198.18.248.0/24
+      - description: rule-icmp-internal
+        protocol: icmp
+        v4CidrBlocks:
+          - 10.0.0.0/8
+          - 192.168.0.0/16
+          - 172.16.0.0/12
+    name: new
+    networkId: <your-network-id>
   providerConfigRef:
     name: example

@@ -1,16 +1,45 @@
+---
 apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Subnet
 metadata:
-  name: example-subnet-a
+  name: new-vpc-n-ru-central1-a
 spec:
   forProvider:
-    name: example-subnet-a
-    networkIdRef:
-      name: example-net
+    folderId: <your-folder-id>
+    networkId: <your-network-id>
     v4CidrBlocks:
-      - 10.0.0.0/24
-    folderIdRef:
-      name: example-folder
-    zone: ru-central1-a
+      - 10.128.0.0/24
+    zone: "ru-central1-a"
+    name: "new-vpc-n-ru-central1-a"
+  providerConfigRef:
+    name: example
+---
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  name: new-vpc-n-ru-central1-b
+spec:
+  forProvider:
+    folderId: <your-folder-id>
+    networkId: <your-network-id>
+    v4CidrBlocks:
+      - 10.129.0.0/24
+    zone: "ru-central1-b"
+    name: "new-vpc-n-ru-central1-b"
+  providerConfigRef:
+    name: example
+---
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  name: new-vpc-n-ru-central1-c
+spec:
+  forProvider:
+    folderId: <your-folder-id>
+    networkId: <your-network-id>
+    v4CidrBlocks:
+      - 10.130.0.0/24
+    zone: "ru-central1-c"
+    name: "new-vpc-n-ru-central1-c"
   providerConfigRef:
     name: example
