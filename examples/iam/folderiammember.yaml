@@ -1,10 +1,11 @@
 apiVersion: iam.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: FolderIAMMember
 metadata:
-  name: lala19
+  name: example-iam-member
 spec:
   forProvider:
-    folderId: <your-folder-id>
+    folderIdRef:
+      name: example-folder # you can also use folderId: <your-folder-id> here
     role: storage.editor
     member: "serviceAccount:<sa-id>"
   providerConfigRef:

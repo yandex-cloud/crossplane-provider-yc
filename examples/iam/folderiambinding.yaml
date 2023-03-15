@@ -1,11 +1,12 @@
 apiVersion: iam.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: FolderIAMBinding
 metadata:
-  name: admin-1998 # укажи своё название
+  name: example-iam-binding
 spec:
   deletionPolicy: Orphan
   forProvider:
-    folderId: <your-folder-id>
+    folderIdRef:
+      name: example-folder # you can also use folderId: <your-folder-id> here
     role: admin # укажи требуемую роль
     members: ["serviceAccount:<sa-id>"]
   providerConfigRef:

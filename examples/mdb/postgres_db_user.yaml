@@ -5,7 +5,8 @@ metadata:
   name: postgres-db
 spec:
   forProvider:
-    clusterId: <pg-cluster-id>
+    clusterIdRef:
+      name: example-pg # you can also use clusterId: <your-cluster-id> here
     name: postgres-db
     owner: user1
   providerConfigRef:
@@ -18,7 +19,8 @@ metadata:
   name: postgres-user
 spec:
   forProvider:
-    clusterId: <pg-cluster-id>
+    clusterIdRef:
+      name: example-pg # you can also use clusterId: <your-cluster-id> here
     connLimit: 100
     name: postgres-user
     passwordSecretRef:

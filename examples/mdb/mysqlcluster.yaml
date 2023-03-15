@@ -16,7 +16,8 @@ spec:
   forProvider:
     name: example-mysql
     environment: PRESTABLE
-    networkId: <your-network-id>
+    networkIdRef:
+      name: example-vpc # you can also use networkId: <your-network-id> here
     version: "8.0"
     resources:
       - diskSize: 16
@@ -38,8 +39,10 @@ spec:
           - databaseName: db_name
     host:
       - zone: ru-central1-a
-        subnetId: <your-subnet-id>
-    folderId: <your-folder-id>
+        subnetIdRef:
+          name: example-subnet-a # you can also use subnetId: <your-subnet-id> here
+    folderIdRef: # you can also use folderId: <your-folder-id> here
+      name: example-folder
   providerConfigRef:
     name: example
   writeConnectionSecretToRef:

@@ -16,7 +16,8 @@ spec:
   forProvider:
     name: example-pg
     environment: PRESTABLE
-    networkId: <your-network-id>
+    networkIdRef:
+      name: example-vpc # you can also use networkId: <your-network-id> here
     config:
       - version: "12"
         resources:
@@ -51,8 +52,10 @@ spec:
           log_min_duration_statement: "5000"
     host:
       - zone: ru-central1-a
-        subnetId: <your-subnet-id>
-    folderId: <your-folder-id>
+        subnetIdRef:
+          name: example-subnet-a # you can also use subnetId: <your-subnet-id> here
+    folderIdRef: # you can also use folderId: <your-folder-id> here
+      name: example-folder
   providerConfigRef:
     name: example
   writeConnectionSecretToRef:

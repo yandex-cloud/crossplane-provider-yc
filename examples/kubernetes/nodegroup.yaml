@@ -1,23 +1,24 @@
 apiVersion: kubernetes.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: NodeGroup
 metadata:
-  name: kube-prod-new-nodegroup-0
+  name: example-nodegroup-0
 spec:
   forProvider:
     allocationPolicy:
       - location:
           - zone: ru-central1-a
-    clusterId: <cluster-id>
+    clusterIdRef:
+      name: example-cluster # you can also use clusterId: <your-cluster-id> here
     instanceTemplate:
       - bootDisk:
           - size: 64
             type: network-hdd
         networkInterface:
           - nat: true
-            securityGroupIds: 
-              - <sg-id>
-            subnetIds: 
-              - <subnet-id>
+            securityGroupIdsRefs:
+              name: example-sg # you can also use securityGroupIds: <your-sg-id> here
+            subnetIdsRefs:
+              - name: example-subnet-a # you can also use subnetIds: <your-subnet-id> here
         platformId: standard-v3
         resources:
           - cores: 2
@@ -31,7 +32,7 @@ spec:
           - day: saturday
             duration: 3h
             startTime: '23:00'
-    name: kube-prod-nodegroup-0
+    name: example-nodegroup-0
     scalePolicy:
       - autoScale:
           - initial: 1

@@ -16,7 +16,8 @@ spec:
   forProvider:
     name: example-redis
     environment: PRESTABLE
-    networkId: <your-network-id>
+    networkIdRef:
+      name: example-vpc # you can also use networkId: <your-network-id> here
     config:
       - passwordSecretRef:
           name: redis
@@ -30,8 +31,10 @@ spec:
       - type: ANYTIME
     host:
       - zone: ru-central1-a
-        subnetId: <your-subnet-id>
-    folderId: <your-folder-id>
+        subnetIdRef:
+          name: example-subnet-a # you can also use subnetId: <your-subnet-id> here
+    folderIdRef: # you can also use folderId: <your-folder-id> here
+      name: example-folder
   providerConfigRef:
     name: example
   writeConnectionSecretToRef:

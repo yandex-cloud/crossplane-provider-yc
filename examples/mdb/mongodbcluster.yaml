@@ -16,9 +16,10 @@ spec:
   forProvider:
     name: example-mongodb
     environment: PRESTABLE
-    networkId: <your-network-id>
+    networkIdRef:
+      name: example-vpc # you can also use networkId: <your-network-id> here
     clusterConfig:
-      - version: "4.4" # required either [4.4 4.2 4.0 3.6 5.0-enterprise 4.4-enterprise 5.0]
+      - version: "4.4"
     resources:
       - diskSize: 16
         diskTypeId: network-hdd
@@ -37,8 +38,10 @@ spec:
           - databaseName: testdb
     host:
       - zoneId: ru-central1-a
-        subnetId: <your-subnet-id>
-    folderId: <your-folder-id>
+        subnetIdRef:
+          name: example-subnet-a # you can also use subnetId: <your-subnet-id> here
+    folderIdRef: # you can also use folderId: <your-folder-id> here
+      name: example-folder
   providerConfigRef:
     name: example
   writeConnectionSecretToRef:

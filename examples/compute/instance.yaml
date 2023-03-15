@@ -4,7 +4,8 @@ metadata:
   name: example-instance
 spec:
   forProvider:
-    folderId: <your-folder-id>
+    folderIdRef: # you can also use folderId: <your-folder-id> here
+      name: example-folder
     name: example-instance
     platformId: standard-v3
     zone: ru-central1-a
@@ -17,7 +18,8 @@ spec:
           # yc compute image list --folder-id standard-images | grep 'ubuntu-20-04-lts'
           - imageId: fd8ot0k0vde438jv0t8j # your image-id
     networkInterface:
-      - subnetId: <your-subnet-id>
+      - subnetIdRef:
+          name: example-subnet-a # you can also use subnetId: <your-subnet-id> here
     metadata:
       ssh-keys: "ubuntu:<public-key-data>"
   providerConfigRef:

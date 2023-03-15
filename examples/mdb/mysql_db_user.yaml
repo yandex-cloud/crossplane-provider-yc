@@ -17,7 +17,8 @@ metadata:
   name: mysql-user
 spec:
   forProvider:
-    clusterId: <mysql-cluster-id>
+    clusterIdRef:
+      name: example-mongodb # you can use clusterId: <your-cluster-id-here>
     name: mysql-user
     passwordSecretRef:
       name: mysql

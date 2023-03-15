@@ -11,7 +11,8 @@ spec:
         toPort: 65535
         v4CidrBlocks:
           - 0.0.0.0/0
-    folderId: <your-folder-id>
+    folderIdRef: # you can also use folderId: <your-folder-id> here
+      name: example-folder
     ingress:
       - description: rule-https
         port: 443
@@ -44,6 +45,7 @@ spec:
           - 192.168.0.0/16
           - 172.16.0.0/12
     name: new
-    networkId: <your-network-id>
+    networkIdRef:
+      name: example-vpc # you can also use networkId: <your-network-id> here
   providerConfigRef:
     name: example

@@ -8,6 +8,7 @@ spec:
     description: provider-jet-yc created KMS key
     defaultAlgorithm: AES_128
     rotationPeriod: 8760h
-    folderId: <your-folder-id>
+    folderIdRef:
+      name: example-folder # you can also use folderId: <your-folder-id> here
   providerConfigRef:
     name: example

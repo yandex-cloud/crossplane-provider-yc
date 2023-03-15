@@ -1,13 +1,14 @@
 apiVersion: dns.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Zone
 metadata:
-  name: yc-courses-1999
+  name: example-zone
 spec:
   deletionPolicy: Orphan
   forProvider:
-    folderId: <your-folder-id>
-    name: yc-courses-1999 # укажи имя своей dns-зоны
+    folderIdRef:
+      name: example-folder # you can also use folderId: <your-folder-id> here
+    name: example-zone
+    zone: "example.com."
     public: true
-    zone: pushka.ga. # укажи свою dns-зону
   providerConfigRef:
     name: example

@@ -1,11 +1,12 @@
 apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Network
 metadata:
-  name: new-vpc-n
+  name: example-vpc
 spec:
   deletionPolicy: Orphan
   forProvider:
-    folderId: <folder-id>
-    name: new-vpc-n
+    folderIdRef: # you can also use folderId: <your-folder-id> here
+      name: example-folder
+    name: example-vpc
   providerConfigRef:
     name: example
