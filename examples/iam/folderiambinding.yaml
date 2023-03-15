@@ -7,7 +7,7 @@ spec:
   forProvider:
     folderIdRef:
       name: example-folder # you can also use folderId: <your-folder-id> here
-    role: admin # укажи требуемую роль
+    role: admin
     members: ["serviceAccount:<sa-id>"]
   providerConfigRef:
     name: example
