@@ -1,7 +1,7 @@
 apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: SecurityGroup
 metadata:
-  name: new-security-group
+  name: example-security-group
 spec:
   forProvider:
     egress:

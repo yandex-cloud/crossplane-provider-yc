@@ -9,7 +9,7 @@ spec:
     folderIdRef: # you can also use folderId: <your-folder-id> here
       name: example-folder
     securityGroupIdRef: # you can also use securityGroupId: <your-sg-id> here
-      name: example-sg
+      name: example-security-group
     direction: ingress
     v4CidrBlocks:
       - "10.0.1.0/24"

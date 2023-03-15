@@ -2,11 +2,12 @@
 apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: MySQLDatabase
 metadata: 
-  name: mysql-db
+  name: example-mysql-db
 spec:
   forProvider:
-    clusterId: <mysql-cluster-id>
-    name: mysql-db
+    clusterIdRef:
+      name: example-mysql # you can also use clusterId: <your-cluster-id> here
+    name: example-mysql-db
   providerConfigRef:
     name: example
 
@@ -14,12 +15,12 @@ spec:
 apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: MySQLUser
 metadata: 
-  name: mysql-user
+  name: example-mysql-user
 spec:
   forProvider:
     clusterIdRef:
-      name: example-mongodb # you can use clusterId: <your-cluster-id-here>
-    name: mysql-user
+      name: example-mysql # you can use clusterId: <your-cluster-id-here>
+    name: example-mysql-user
     passwordSecretRef:
       name: mysql
       key: password
