@@ -17,7 +17,7 @@ spec:
     name: example-pg
     environment: PRESTABLE
     networkIdRef:
-      name: example-net
+      name: example-vpc # you can also use networkId: <your-network-id> here
     config:
       - version: "12"
         resources:
@@ -53,11 +53,10 @@ spec:
     host:
       - zone: ru-central1-a
         subnetIdRef:
-          name: example-subnet-a
-    folderIdRef:
+          name: example-subnet-a # you can also use subnetId: <your-subnet-id> here
+    folderIdRef: # you can also use folderId: <your-folder-id> here
       name: example-folder
   providerConfigRef:
     name: example
   writeConnectionSecretToRef:
     name: postgress-conn
-    namespace: default

@@ -5,11 +5,9 @@ metadata:
 spec:
   forProvider:
     name: queue-example
-
     secretKeySecretRef:
       name: sa-key-conn
       namespace: crossplane-system
       key: attribute.secret_key
-
     accessKeyRef:
       name: example-sa-static-key

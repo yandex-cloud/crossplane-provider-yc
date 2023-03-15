@@ -3,14 +3,12 @@ kind: Zone
 metadata:
   name: example-zone
 spec:
+  deletionPolicy: Orphan
   forProvider:
+    folderIdRef:
+      name: example-folder # you can also use folderId: <your-folder-id> here
     name: example-zone
-    description: desc
-    labels:
-      label1: "label-1-value"
     zone: "example.com."
-    public: false
-    privateNetworksRefs:
-      - name: example-net
+    public: true
   providerConfigRef:
     name: example

@@ -1,14 +1,15 @@
-apiVersion: dns.yandex-cloud.jet.crossplane.io/v1alpha1
+piVersion: dns.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Recordset
 metadata:
   name: example-recordset
 spec:
+  deletionPolicy: Orphan
   forProvider:
-    zoneIdRef:
+    zoneIdRef: # you can also use zoneId: <your-zone-id> here
       name: example-zone
     name: example-recordset
     type: "A"
-    ttl: 200
+    ttl: 600
     data:
       - "10.1.0.1"
   providerConfigRef:

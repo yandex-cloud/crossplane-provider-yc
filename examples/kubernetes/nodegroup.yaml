@@ -1,43 +1,43 @@
 apiVersion: kubernetes.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: NodeGroup
 metadata:
-  name: example-nodegroup
+  name: example-nodegroup-0
 spec:
   forProvider:
-    clusterIdRef:
-      name: example-cluster
-    name: example-cluster
-    description: provider-jet-yc nodegroup
-    version: "1.21"
-    instanceTemplate:
-      - platformId: "standard-v2"
-        networkInterface:
-          - nat: true
-            subnetIdsRefs:
-              - name: example-subnet-a
-        resources:
-          - memory: 2
-            cores: 2
-        bootDisk:
-          - type: "network-hdd"
-            size: 64
-        schedulingPolicy:
-          - preemptible: true
-    scalePolicy:
-      - fixedScale:
-          - size: 1
     allocationPolicy:
       - location:
-          - zone: "ru-central1-a"
+          - zone: ru-central1-a
+    clusterIdRef:
+      name: example-cluster # you can also use clusterId: <your-cluster-id> here
+    instanceTemplate:
+      - bootDisk:
+          - size: 64
+            type: network-hdd
+        networkInterface:
+          - nat: true
+            securityGroupIdsRefs:
+              name: example-sg # you can also use securityGroupIds: <your-sg-id> here
+            subnetIdsRefs:
+              - name: example-subnet-a # you can also use subnetIds: <your-subnet-id> here
+        platformId: standard-v3
+        resources:
+          - cores: 2
+            memory: 2
+        schedulingPolicy:
+          - preemptible: true
     maintenancePolicy:
-      - autoUpgrade: true
-        autoRepair: true
+      - autoRepair: true
+        autoUpgrade: true
         maintenanceWindow:
-          - startTime: "15:00"
-            duration: "3h"
-            day: "monday"
-          - startTime: "10:00"
-            duration: "4h30m"
-            day: "friday"
+          - day: saturday
+            duration: 3h
+            startTime: '23:00'
+    name: example-nodegroup-0
+    scalePolicy:
+      - autoScale:
+          - initial: 1
+            max: 5
+            min: 1
+    version: '1.21'
   providerConfigRef:
     name: example

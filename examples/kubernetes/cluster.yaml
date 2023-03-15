@@ -4,30 +4,25 @@ metadata:
   name: example-cluster
 spec:
   forProvider:
-    name: example-cluster
-    description: provider-jet-yc cluster
-    networkIdRef:
-      name: example-net
+    clusterIpv4Range: 10.113.0.0/16
+    folderIdRef:
+      name: example-folder # you can also use folderId: <your-folder-id> here
     master:
-      - version: "1.21"
-        zonal:
-          - zone: ru-central1-a
-            subnetIdRef:
-              name: example-subnet-a
-        publicIp: true
-        maintenancePolicy:
-          - autoUpgrade: true
-            maintenanceWindow:
-              - startTime: "15:00"
-                duration: "3h"
-    serviceAccountIdRef:
-      name: example-sa
-    nodeServiceAccountIdRef:
-      name: example-sa
-    releaseChannel: RAPID
+      - publicIp: true
+        regional:
+          - region: ru-central1
+        securityGroupIdsRefs:
+          name: example-sg # you can also use securityGroupIds: <your-sg-id>
+        version: '1.21'
+    name: example-cluster
+    networkIdRef:
+      name: example-vpc # you can also use networkId: <your-network-id> here
     networkPolicyProvider: CALICO
-    kmsProvider:
-      - keyIdRef:
-          name: example-sk
+    nodeServiceAccountIdRef:
+      name: example-node-sa # you can also use nodeServiceAccountId: <your-sa-id> here
+    releaseChannel: STABLE
+    serviceAccountIdRef:
+      name: example-sa # you can also use serviceAccountId: <your-sa-id> here
+    serviceIpv4Range: 10.97.0.0/16
   providerConfigRef:
     name: example

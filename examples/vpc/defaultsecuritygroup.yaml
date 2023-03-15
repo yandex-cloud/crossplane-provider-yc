@@ -5,10 +5,10 @@ metadata:
 spec:
   forProvider:
     name: example-sg
-    folderIdRef:
+    folderIdRef: # you can also use folderId: <your-folder-id> here
       name: example-folder
-    networkIDRef:
-      name: example-net
+    networkIdRef:
+      name: example-vpc # you can also use networkId: <your-network-id> here
     ingress:
       - protocol: TCP
         description: "rule1 description"

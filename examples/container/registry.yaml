@@ -4,8 +4,8 @@ metadata:
   name: example-registry
 spec:
   forProvider:
-    name: example-registry
-    folderIdRef:
+    folderIdRef: # you can also use folderId: <your-folder-id> here
       name: example-folder
+    name: example-registry
   providerConfigRef:
     name: example

@@ -17,9 +17,9 @@ spec:
     name: example-mongodb
     environment: PRESTABLE
     networkIdRef:
-      name: example-net
+      name: example-vpc # you can also use networkId: <your-network-id> here
     clusterConfig:
-      - version: "4.2"
+      - version: "4.4"
     resources:
       - diskSize: 16
         diskTypeId: network-hdd
@@ -39,8 +39,8 @@ spec:
     host:
       - zoneId: ru-central1-a
         subnetIdRef:
-          name: example-subnet-a
-    folderIdRef:
+          name: example-subnet-a # you can also use subnetId: <your-subnet-id> here
+    folderIdRef: # you can also use folderId: <your-folder-id> here
       name: example-folder
   providerConfigRef:
     name: example

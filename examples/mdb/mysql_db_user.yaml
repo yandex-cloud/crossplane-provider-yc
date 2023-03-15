@@ -1,0 +1,31 @@
+---
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: MySQLDatabase
+metadata: 
+  name: example-mysql-db
+spec:
+  forProvider:
+    clusterIdRef:
+      name: example-mysql # you can also use clusterId: <your-cluster-id> here
+    name: example-mysql-db
+  providerConfigRef:
+    name: example
+
+---
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: MySQLUser
+metadata: 
+  name: example-mysql-user
+spec:
+  forProvider:
+    clusterIdRef:
+      name: example-mysql # you can use clusterId: <your-cluster-id-here>
+    name: example-mysql-user
+    passwordSecretRef:
+      name: mysql
+      key: password
+      namespace: default
+    permission: 
+      - databaseName: db_name
+  providerConfigRef:
+    name: example

@@ -17,13 +17,13 @@ spec:
     name: example-redis
     environment: PRESTABLE
     networkIdRef:
-      name: example-net
+      name: example-vpc # you can also use networkId: <your-network-id> here
     config:
       - passwordSecretRef:
           name: redis
           key: password
           namespace: default
-        version: "6.0"
+        version: "6.2"
     resources:
     - resourcePresetId: "hm1.nano"
       diskSize: 16
@@ -32,8 +32,8 @@ spec:
     host:
       - zone: ru-central1-a
         subnetIdRef:
-          name: example-subnet-a
-    folderIdRef:
+          name: example-subnet-a # you can also use subnetId: <your-subnet-id> here
+    folderIdRef: # you can also use folderId: <your-folder-id> here
       name: example-folder
   providerConfigRef:
     name: example
