@@ -25,28 +25,132 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type CiliumInitParameters struct {
+}
+
 type CiliumObservation struct {
 }
 
 type CiliumParameters struct {
 }
 
+type ClusterInitParameters struct {
+
+	// CIDR block. IP range for allocating pod addresses.
+	// It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be
+	// set up for this CIDR blocks in node subnets.
+	ClusterIPv4Range *string `json:"clusterIpv4Range,omitempty" tf:"cluster_ipv4_range,omitempty"`
+
+	// Identical to cluster_ipv4_range but for IPv6 protocol.
+	ClusterIPv6Range *string `json:"clusterIpv6Range,omitempty" tf:"cluster_ipv6_range,omitempty"`
+
+	// A description of the Kubernetes cluster.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// cluster KMS provider parameters.
+	KMSProvider []KMSProviderInitParameters `json:"kmsProvider,omitempty" tf:"kms_provider,omitempty"`
+
+	// A set of key/value label pairs to assign to the Kubernetes cluster.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Kubernetes master configuration options. The structure is documented below.
+	Master []MasterInitParameters `json:"master,omitempty" tf:"master,omitempty"`
+
+	// Name of a specific Kubernetes cluster.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Network Implementation options. The structure is documented below.
+	NetworkImplementation []NetworkImplementationInitParameters `json:"networkImplementation,omitempty" tf:"network_implementation,omitempty"`
+
+	// Network policy provider for the cluster. Possible values: CALICO.
+	NetworkPolicyProvider *string `json:"networkPolicyProvider,omitempty" tf:"network_policy_provider,omitempty"`
+
+	// Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
+	NodeIPv4CidrMaskSize *float64 `json:"nodeIpv4CidrMaskSize,omitempty" tf:"node_ipv4_cidr_mask_size,omitempty"`
+
+	// Cluster release channel.
+	ReleaseChannel *string `json:"releaseChannel,omitempty" tf:"release_channel,omitempty"`
+
+	// CIDR block. IP range Kubernetes service Kubernetes cluster
+	// IP addresses will be allocated from. It should not overlap with any subnet in the network
+	// the Kubernetes cluster located in.
+	ServiceIPv4Range *string `json:"serviceIpv4Range,omitempty" tf:"service_ipv4_range,omitempty"`
+
+	// Identical to service_ipv4_range but for IPv6 protocol.
+	ServiceIPv6Range *string `json:"serviceIpv6Range,omitempty" tf:"service_ipv6_range,omitempty"`
+}
+
 type ClusterObservation struct {
+
+	// CIDR block. IP range for allocating pod addresses.
+	// It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be
+	// set up for this CIDR blocks in node subnets.
+	ClusterIPv4Range *string `json:"clusterIpv4Range,omitempty" tf:"cluster_ipv4_range,omitempty"`
+
+	// Identical to cluster_ipv4_range but for IPv6 protocol.
+	ClusterIPv6Range *string `json:"clusterIpv6Range,omitempty" tf:"cluster_ipv6_range,omitempty"`
 
 	// (Computed) The Kubernetes cluster creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
+
+	// A description of the Kubernetes cluster.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The ID of the folder that the Kubernetes cluster belongs to.
+	// If it is not provided, the default provider folder is used.
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// (Computed) Health of the Kubernetes cluster.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// cluster KMS provider parameters.
+	KMSProvider []KMSProviderObservation `json:"kmsProvider,omitempty" tf:"kms_provider,omitempty"`
+
+	// A set of key/value label pairs to assign to the Kubernetes cluster.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
 	// Log group where cluster stores cluster system logs, like audit, events, or controlplane logs.
 	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
 
 	// Kubernetes master configuration options. The structure is documented below.
-	// +kubebuilder:validation:Required
 	Master []MasterObservation `json:"master,omitempty" tf:"master,omitempty"`
+
+	// Name of a specific Kubernetes cluster.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The ID of the cluster network.
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// Network Implementation options. The structure is documented below.
+	NetworkImplementation []NetworkImplementationObservation `json:"networkImplementation,omitempty" tf:"network_implementation,omitempty"`
+
+	// Network policy provider for the cluster. Possible values: CALICO.
+	NetworkPolicyProvider *string `json:"networkPolicyProvider,omitempty" tf:"network_policy_provider,omitempty"`
+
+	// Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
+	NodeIPv4CidrMaskSize *float64 `json:"nodeIpv4CidrMaskSize,omitempty" tf:"node_ipv4_cidr_mask_size,omitempty"`
+
+	// Service account to be used by the worker nodes of the Kubernetes cluster
+	// to access Container Registry or to push node logs and metrics.
+	NodeServiceAccountID *string `json:"nodeServiceAccountId,omitempty" tf:"node_service_account_id,omitempty"`
+
+	// Cluster release channel.
+	ReleaseChannel *string `json:"releaseChannel,omitempty" tf:"release_channel,omitempty"`
+
+	// Service account to be used for provisioning Compute Cloud and VPC resources
+	// for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes
+	// cluster will be located and on the folder where selected network resides.
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+
+	// CIDR block. IP range Kubernetes service Kubernetes cluster
+	// IP addresses will be allocated from. It should not overlap with any subnet in the network
+	// the Kubernetes cluster located in.
+	ServiceIPv4Range *string `json:"serviceIpv4Range,omitempty" tf:"service_ipv4_range,omitempty"`
+
+	// Identical to service_ipv4_range but for IPv6 protocol.
+	ServiceIPv6Range *string `json:"serviceIpv6Range,omitempty" tf:"service_ipv6_range,omitempty"`
 
 	// (Computed)Status of the Kubernetes cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
@@ -91,8 +195,8 @@ type ClusterParameters struct {
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Kubernetes master configuration options. The structure is documented below.
-	// +kubebuilder:validation:Required
-	Master []MasterParameters `json:"master" tf:"master,omitempty"`
+	// +kubebuilder:validation:Optional
+	Master []MasterParameters `json:"master,omitempty" tf:"master,omitempty"`
 
 	// Name of a specific Kubernetes cluster.
 	// +kubebuilder:validation:Optional
@@ -167,7 +271,13 @@ type ClusterParameters struct {
 	ServiceIPv6Range *string `json:"serviceIpv6Range,omitempty" tf:"service_ipv6_range,omitempty"`
 }
 
+type KMSProviderInitParameters struct {
+}
+
 type KMSProviderObservation struct {
+
+	// KMS key ID.
+	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 }
 
 type KMSProviderParameters struct {
@@ -186,7 +296,19 @@ type KMSProviderParameters struct {
 	KeyIDSelector *v1.Selector `json:"keyIdSelector,omitempty" tf:"-"`
 }
 
+type LocationInitParameters struct {
+
+	// ID of the availability zone.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
+}
+
 type LocationObservation struct {
+
+	// ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// ID of the availability zone.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type LocationParameters struct {
@@ -209,13 +331,32 @@ type LocationParameters struct {
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
+type MaintenancePolicyInitParameters struct {
+
+	// Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
+	AutoUpgrade *bool `json:"autoUpgrade,omitempty" tf:"auto_upgrade,omitempty"`
+
+	// (Computed) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time.
+	// To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration.
+	// Please see zonal_cluster_resource_name config example.
+	MaintenanceWindow []MaintenanceWindowInitParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+}
+
 type MaintenancePolicyObservation struct {
+
+	// Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
+	AutoUpgrade *bool `json:"autoUpgrade,omitempty" tf:"auto_upgrade,omitempty"`
+
+	// (Computed) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time.
+	// To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration.
+	// Please see zonal_cluster_resource_name config example.
+	MaintenanceWindow []MaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 }
 
 type MaintenancePolicyParameters struct {
 
 	// Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	AutoUpgrade *bool `json:"autoUpgrade" tf:"auto_upgrade,omitempty"`
 
 	// (Computed) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time.
@@ -225,7 +366,20 @@ type MaintenancePolicyParameters struct {
 	MaintenanceWindow []MaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 }
 
+type MaintenanceWindowInitParameters struct {
+	Day *string `json:"day,omitempty" tf:"day,omitempty"`
+
+	Duration *string `json:"duration,omitempty" tf:"duration,omitempty"`
+
+	StartTime *string `json:"startTime,omitempty" tf:"start_time,omitempty"`
+}
+
 type MaintenanceWindowObservation struct {
+	Day *string `json:"day,omitempty" tf:"day,omitempty"`
+
+	Duration *string `json:"duration,omitempty" tf:"duration,omitempty"`
+
+	StartTime *string `json:"startTime,omitempty" tf:"start_time,omitempty"`
 }
 
 type MaintenanceWindowParameters struct {
@@ -233,11 +387,32 @@ type MaintenanceWindowParameters struct {
 	// +kubebuilder:validation:Optional
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Duration *string `json:"duration" tf:"duration,omitempty"`
 
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	StartTime *string `json:"startTime" tf:"start_time,omitempty"`
+}
+
+type MasterInitParameters struct {
+
+	// (Computed) Maintenance policy for Kubernetes master.
+	// If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time.
+	// Revision upgrades are performed only within the same minor version, e.g. 1.13.
+	// Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+	MaintenancePolicy []MaintenancePolicyInitParameters `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
+
+	// (Computed) Boolean flag. When true, Kubernetes master will have visible ipv4 address.
+	PublicIP *bool `json:"publicIp,omitempty" tf:"public_ip,omitempty"`
+
+	// Initialize parameters for Regional Master (highly available master). The structure is documented below.
+	Regional []RegionalInitParameters `json:"regional,omitempty" tf:"regional,omitempty"`
+
+	// (Computed) Version of Kubernetes that will be used for master.
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+
+	// Initialize parameters for Zonal Master (single node master). The structure is documented below.
+	Zonal []ZonalInitParameters `json:"zonal,omitempty" tf:"zonal,omitempty"`
 }
 
 type MasterObservation struct {
@@ -257,8 +432,29 @@ type MasterObservation struct {
 	// (Computed) Internal endpoint that can be used to connect to the master from cloud networks.
 	InternalV4Endpoint *string `json:"internalV4Endpoint,omitempty" tf:"internal_v4_endpoint,omitempty"`
 
+	// (Computed) Maintenance policy for Kubernetes master.
+	// If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time.
+	// Revision upgrades are performed only within the same minor version, e.g. 1.13.
+	// Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+	MaintenancePolicy []MaintenancePolicyObservation `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
+
+	// (Computed) Boolean flag. When true, Kubernetes master will have visible ipv4 address.
+	PublicIP *bool `json:"publicIp,omitempty" tf:"public_ip,omitempty"`
+
+	// Initialize parameters for Regional Master (highly available master). The structure is documented below.
+	Regional []RegionalObservation `json:"regional,omitempty" tf:"regional,omitempty"`
+
+	// List of security group IDs to which the Kubernetes cluster belongs.
+	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+
+	// (Computed) Version of Kubernetes that will be used for master.
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+
 	// (Computed) Information about cluster version. The structure is documented below.
 	VersionInfo []VersionInfoObservation `json:"versionInfo,omitempty" tf:"version_info,omitempty"`
+
+	// Initialize parameters for Zonal Master (single node master). The structure is documented below.
+	Zonal []ZonalObservation `json:"zonal,omitempty" tf:"zonal,omitempty"`
 }
 
 type MasterParameters struct {
@@ -300,7 +496,16 @@ type MasterParameters struct {
 	Zonal []ZonalParameters `json:"zonal,omitempty" tf:"zonal,omitempty"`
 }
 
+type NetworkImplementationInitParameters struct {
+
+	// Cilium network implementation configuration. No options exist.
+	Cilium []CiliumInitParameters `json:"cilium,omitempty" tf:"cilium,omitempty"`
+}
+
 type NetworkImplementationObservation struct {
+
+	// Cilium network implementation configuration. No options exist.
+	Cilium []CiliumParameters `json:"cilium,omitempty" tf:"cilium,omitempty"`
 }
 
 type NetworkImplementationParameters struct {
@@ -310,7 +515,22 @@ type NetworkImplementationParameters struct {
 	Cilium []CiliumParameters `json:"cilium,omitempty" tf:"cilium,omitempty"`
 }
 
+type RegionalInitParameters struct {
+
+	// Array of locations, where master instances will be allocated. The structure is documented below.
+	Location []LocationInitParameters `json:"location,omitempty" tf:"location,omitempty"`
+
+	// Name of availability region (e.g. "ru-central1"), where master instances will be allocated.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+}
+
 type RegionalObservation struct {
+
+	// Array of locations, where master instances will be allocated. The structure is documented below.
+	Location []LocationObservation `json:"location,omitempty" tf:"location,omitempty"`
+
+	// Name of availability region (e.g. "ru-central1"), where master instances will be allocated.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
 
 type RegionalParameters struct {
@@ -320,8 +540,11 @@ type RegionalParameters struct {
 	Location []LocationParameters `json:"location,omitempty" tf:"location,omitempty"`
 
 	// Name of availability region (e.g. "ru-central1"), where master instances will be allocated.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Region *string `json:"region" tf:"region,omitempty"`
+}
+
+type VersionInfoInitParameters struct {
 }
 
 type VersionInfoObservation struct {
@@ -347,7 +570,19 @@ type VersionInfoObservation struct {
 type VersionInfoParameters struct {
 }
 
+type ZonalInitParameters struct {
+
+	// ID of the availability zone.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
+}
+
 type ZonalObservation struct {
+
+	// ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// ID of the availability zone.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type ZonalParameters struct {
@@ -374,6 +609,18 @@ type ZonalParameters struct {
 type ClusterSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ClusterParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ClusterInitParameters `json:"initProvider,omitempty"`
 }
 
 // ClusterStatus defines the observed state of Cluster.
@@ -394,8 +641,9 @@ type ClusterStatus struct {
 type Cluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ClusterSpec   `json:"spec"`
-	Status            ClusterStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.master) || has(self.initProvider.master)",message="master is a required parameter"
+	Spec   ClusterSpec   `json:"spec"`
+	Status ClusterStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

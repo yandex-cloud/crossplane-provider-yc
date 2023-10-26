@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.12.1
   name: clusters.kubernetes.yandex-cloud.jet.crossplane.io
 spec:
   group: kubernetes.yandex-cloud.jet.crossplane.io
@@ -55,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -285,13 +288,8 @@ spec:
                                       type: string
                                     startTime:
                                       type: string
-                                  required:
-                                  - duration
-                                  - startTime
                                   type: object
                                 type: array
-                            required:
-                            - autoUpgrade
                             type: object
                           type: array
                         publicIp:
@@ -406,8 +404,6 @@ spec:
                                 description: Name of availability region (e.g. "ru-central1"),
                                   where master instances will be allocated.
                                 type: string
-                            required:
-                            - region
                             type: object
                           type: array
                         securityGroupIds:
@@ -874,9 +870,188 @@ spec:
                   serviceIpv6Range:
                     description: Identical to service_ipv4_range but for IPv6 protocol.
                     type: string
-                required:
-                - master
                 type: object
+              initProvider:
+                description: THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. InitProvider
+                  holds the same fields as ForProvider, with the exception of Identifier
+                  and other resource reference fields. The fields that are in InitProvider
+                  are merged into ForProvider when the resource is created. The same
+                  fields are also added to the terraform ignore_changes hook, to avoid
+                  updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after
+                  creation, for example because of an external controller is managing
+                  them, like an autoscaler.
+                properties:
+                  clusterIpv4Range:
+                    description: CIDR block. IP range for allocating pod addresses.
+                      It should not overlap with any subnet in the network the Kubernetes
+                      cluster located in. Static routes will be set up for this CIDR
+                      blocks in node subnets.
+                    type: string
+                  clusterIpv6Range:
+                    description: Identical to cluster_ipv4_range but for IPv6 protocol.
+                    type: string
+                  description:
+                    description: A description of the Kubernetes cluster.
+                    type: string
+                  kmsProvider:
+                    description: cluster KMS provider parameters.
+                    items:
+                      type: object
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: A set of key/value label pairs to assign to the Kubernetes
+                      cluster.
+                    type: object
+                  master:
+                    description: Kubernetes master configuration options. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        maintenancePolicy:
+                          description: (Computed) Maintenance policy for Kubernetes
+                            master. If policy is omitted, automatic revision upgrades
+                            of the kubernetes master are enabled and could happen
+                            at any time. Revision upgrades are performed only within
+                            the same minor version, e.g. 1.13. Minor version upgrades
+                            (e.g. 1.13->1.14) should be performed manually. The structure
+                            is documented below.
+                          items:
+                            properties:
+                              autoUpgrade:
+                                description: Boolean flag that specifies if master
+                                  can be upgraded automatically. When omitted, default
+                                  value is TRUE.
+                                type: boolean
+                              maintenanceWindow:
+                                description: (Computed) This structure specifies maintenance
+                                  window, when update for master is allowed. When
+                                  omitted, it defaults to any time. To specify time
+                                  of day interval, for all days, one element should
+                                  be provided, with two fields set, start_time and
+                                  duration. Please see zonal_cluster_resource_name
+                                  config example.
+                                items:
+                                  properties:
+                                    day:
+                                      type: string
+                                    duration:
+                                      type: string
+                                    startTime:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        publicIp:
+                          description: (Computed) Boolean flag. When true, Kubernetes
+                            master will have visible ipv4 address.
+                          type: boolean
+                        regional:
+                          description: Initialize parameters for Regional Master (highly
+                            available master). The structure is documented below.
+                          items:
+                            properties:
+                              location:
+                                description: Array of locations, where master instances
+                                  will be allocated. The structure is documented below.
+                                items:
+                                  properties:
+                                    zone:
+                                      description: ID of the availability zone.
+                                      type: string
+                                  type: object
+                                type: array
+                              region:
+                                description: Name of availability region (e.g. "ru-central1"),
+                                  where master instances will be allocated.
+                                type: string
+                            type: object
+                          type: array
+                        version:
+                          description: (Computed) Version of Kubernetes that will
+                            be used for master.
+                          type: string
+                        zonal:
+                          description: Initialize parameters for Zonal Master (single
+                            node master). The structure is documented below.
+                          items:
+                            properties:
+                              zone:
+                                description: ID of the availability zone.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  name:
+                    description: Name of a specific Kubernetes cluster.
+                    type: string
+                  networkImplementation:
+                    description: Network Implementation options. The structure is
+                      documented below.
+                    items:
+                      properties:
+                        cilium:
+                          description: Cilium network implementation configuration.
+                            No options exist.
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  networkPolicyProvider:
+                    description: 'Network policy provider for the cluster. Possible
+                      values: CALICO.'
+                    type: string
+                  nodeIpv4CidrMaskSize:
+                    description: Size of the masks that are assigned to each node
+                      in the cluster. Effectively limits maximum number of pods for
+                      each node.
+                    type: number
+                  releaseChannel:
+                    description: Cluster release channel.
+                    type: string
+                  serviceIpv4Range:
+                    description: CIDR block. IP range Kubernetes service Kubernetes
+                      cluster IP addresses will be allocated from. It should not overlap
+                      with any subnet in the network the Kubernetes cluster located
+                      in.
+                    type: string
+                  serviceIpv6Range:
+                    description: Identical to service_ipv4_range but for IPv6 protocol.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
@@ -1048,19 +1223,56 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: master is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.master)
+                || has(self.initProvider.master)'
           status:
             description: ClusterStatus defines the observed state of Cluster.
             properties:
               atProvider:
                 properties:
+                  clusterIpv4Range:
+                    description: CIDR block. IP range for allocating pod addresses.
+                      It should not overlap with any subnet in the network the Kubernetes
+                      cluster located in. Static routes will be set up for this CIDR
+                      blocks in node subnets.
+                    type: string
+                  clusterIpv6Range:
+                    description: Identical to cluster_ipv4_range but for IPv6 protocol.
+                    type: string
                   createdAt:
                     description: (Computed) The Kubernetes cluster creation timestamp.
+                    type: string
+                  description:
+                    description: A description of the Kubernetes cluster.
+                    type: string
+                  folderId:
+                    description: The ID of the folder that the Kubernetes cluster
+                      belongs to. If it is not provided, the default provider folder
+                      is used.
                     type: string
                   health:
                     description: (Computed) Health of the Kubernetes cluster.
                     type: string
                   id:
                     type: string
+                  kmsProvider:
+                    description: cluster KMS provider parameters.
+                    items:
+                      properties:
+                        keyId:
+                          description: KMS key ID.
+                          type: string
+                      type: object
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: A set of key/value label pairs to assign to the Kubernetes
+                      cluster.
+                    type: object
                   logGroupId:
                     description: Log group where cluster stores cluster system logs,
                       like audit, events, or controlplane logs.
@@ -1091,6 +1303,81 @@ spec:
                           description: (Computed) Internal endpoint that can be used
                             to connect to the master from cloud networks.
                           type: string
+                        maintenancePolicy:
+                          description: (Computed) Maintenance policy for Kubernetes
+                            master. If policy is omitted, automatic revision upgrades
+                            of the kubernetes master are enabled and could happen
+                            at any time. Revision upgrades are performed only within
+                            the same minor version, e.g. 1.13. Minor version upgrades
+                            (e.g. 1.13->1.14) should be performed manually. The structure
+                            is documented below.
+                          items:
+                            properties:
+                              autoUpgrade:
+                                description: Boolean flag that specifies if master
+                                  can be upgraded automatically. When omitted, default
+                                  value is TRUE.
+                                type: boolean
+                              maintenanceWindow:
+                                description: (Computed) This structure specifies maintenance
+                                  window, when update for master is allowed. When
+                                  omitted, it defaults to any time. To specify time
+                                  of day interval, for all days, one element should
+                                  be provided, with two fields set, start_time and
+                                  duration. Please see zonal_cluster_resource_name
+                                  config example.
+                                items:
+                                  properties:
+                                    day:
+                                      type: string
+                                    duration:
+                                      type: string
+                                    startTime:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        publicIp:
+                          description: (Computed) Boolean flag. When true, Kubernetes
+                            master will have visible ipv4 address.
+                          type: boolean
+                        regional:
+                          description: Initialize parameters for Regional Master (highly
+                            available master). The structure is documented below.
+                          items:
+                            properties:
+                              location:
+                                description: Array of locations, where master instances
+                                  will be allocated. The structure is documented below.
+                                items:
+                                  properties:
+                                    subnetId:
+                                      description: ID of the subnet. If no ID is specified,
+                                        and there only one subnet in specified zone,
+                                        an address in this subnet will be allocated.
+                                      type: string
+                                    zone:
+                                      description: ID of the availability zone.
+                                      type: string
+                                  type: object
+                                type: array
+                              region:
+                                description: Name of availability region (e.g. "ru-central1"),
+                                  where master instances will be allocated.
+                                type: string
+                            type: object
+                          type: array
+                        securityGroupIds:
+                          description: List of security group IDs to which the Kubernetes
+                            cluster belongs.
+                          items:
+                            type: string
+                          type: array
+                        version:
+                          description: (Computed) Version of Kubernetes that will
+                            be used for master.
+                          type: string
                         versionInfo:
                           description: (Computed) Information about cluster version.
                             The structure is documented below.
@@ -1119,8 +1406,75 @@ spec:
                                 type: boolean
                             type: object
                           type: array
+                        zonal:
+                          description: Initialize parameters for Zonal Master (single
+                            node master). The structure is documented below.
+                          items:
+                            properties:
+                              subnetId:
+                                description: ID of the subnet. If no ID is specified,
+                                  and there only one subnet in specified zone, an
+                                  address in this subnet will be allocated.
+                                type: string
+                              zone:
+                                description: ID of the availability zone.
+                                type: string
+                            type: object
+                          type: array
                       type: object
                     type: array
+                  name:
+                    description: Name of a specific Kubernetes cluster.
+                    type: string
+                  networkId:
+                    description: The ID of the cluster network.
+                    type: string
+                  networkImplementation:
+                    description: Network Implementation options. The structure is
+                      documented below.
+                    items:
+                      properties:
+                        cilium:
+                          description: Cilium network implementation configuration.
+                            No options exist.
+                          items:
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  networkPolicyProvider:
+                    description: 'Network policy provider for the cluster. Possible
+                      values: CALICO.'
+                    type: string
+                  nodeIpv4CidrMaskSize:
+                    description: Size of the masks that are assigned to each node
+                      in the cluster. Effectively limits maximum number of pods for
+                      each node.
+                    type: number
+                  nodeServiceAccountId:
+                    description: Service account to be used by the worker nodes of
+                      the Kubernetes cluster to access Container Registry or to push
+                      node logs and metrics.
+                    type: string
+                  releaseChannel:
+                    description: Cluster release channel.
+                    type: string
+                  serviceAccountId:
+                    description: Service account to be used for provisioning Compute
+                      Cloud and VPC resources for Kubernetes cluster. Selected service
+                      account should have edit role on the folder where the Kubernetes
+                      cluster will be located and on the folder where selected network
+                      resides.
+                    type: string
+                  serviceIpv4Range:
+                    description: CIDR block. IP range Kubernetes service Kubernetes
+                      cluster IP addresses will be allocated from. It should not overlap
+                      with any subnet in the network the Kubernetes cluster located
+                      in.
+                    type: string
+                  serviceIpv6Range:
+                    description: Identical to service_ipv4_range but for IPv6 protocol.
+                    type: string
                   status:
                     description: (Computed)Status of the Kubernetes cluster.
                     type: string
@@ -1166,9 +1520,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

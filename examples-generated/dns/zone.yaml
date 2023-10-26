@@ -50,6 +50,3 @@ metadata:
   name: foo
 spec:
   forProvider: {}
-
----
-

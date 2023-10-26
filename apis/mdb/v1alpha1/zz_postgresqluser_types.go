@@ -25,8 +25,49 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type PostgresqlUserInitParameters struct {
+
+	// The maximum number of connections per user. (Default 50)
+	ConnLimit *float64 `json:"connLimit,omitempty" tf:"conn_limit,omitempty"`
+
+	// List of the user's grants.
+	Grants []*string `json:"grants,omitempty" tf:"grants,omitempty"`
+
+	// User's ability to login.
+	Login *bool `json:"login,omitempty" tf:"login,omitempty"`
+
+	// The name of the user.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Set of permissions granted to the user. The structure is documented below.
+	Permission []PostgresqlUserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+
+	// Map of user settings. List of settings is documented below.
+	Settings map[string]*string `json:"settings,omitempty" tf:"settings,omitempty"`
+}
+
 type PostgresqlUserObservation struct {
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// The maximum number of connections per user. (Default 50)
+	ConnLimit *float64 `json:"connLimit,omitempty" tf:"conn_limit,omitempty"`
+
+	// List of the user's grants.
+	Grants []*string `json:"grants,omitempty" tf:"grants,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// User's ability to login.
+	Login *bool `json:"login,omitempty" tf:"login,omitempty"`
+
+	// The name of the user.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Set of permissions granted to the user. The structure is documented below.
+	Permission []PostgresqlUserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
+
+	// Map of user settings. List of settings is documented below.
+	Settings map[string]*string `json:"settings,omitempty" tf:"settings,omitempty"`
 }
 
 type PostgresqlUserParameters struct {
@@ -56,11 +97,11 @@ type PostgresqlUserParameters struct {
 	Login *bool `json:"login,omitempty" tf:"login,omitempty"`
 
 	// The name of the user.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The password of the user.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// Set of permissions granted to the user. The structure is documented below.
@@ -72,13 +113,22 @@ type PostgresqlUserParameters struct {
 	Settings map[string]*string `json:"settings,omitempty" tf:"settings,omitempty"`
 }
 
+type PostgresqlUserPermissionInitParameters struct {
+
+	// The name of the database that the permission grants access to.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
+}
+
 type PostgresqlUserPermissionObservation struct {
+
+	// The name of the database that the permission grants access to.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 }
 
 type PostgresqlUserPermissionParameters struct {
 
 	// The name of the database that the permission grants access to.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 }
 
@@ -86,6 +136,18 @@ type PostgresqlUserPermissionParameters struct {
 type PostgresqlUserSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     PostgresqlUserParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider PostgresqlUserInitParameters `json:"initProvider,omitempty"`
 }
 
 // PostgresqlUserStatus defines the observed state of PostgresqlUser.
@@ -106,8 +168,10 @@ type PostgresqlUserStatus struct {
 type PostgresqlUser struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              PostgresqlUserSpec   `json:"spec"`
-	Status            PostgresqlUserStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || has(self.initProvider.name)",message="name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.passwordSecretRef)",message="passwordSecretRef is a required parameter"
+	Spec   PostgresqlUserSpec   `json:"spec"`
+	Status PostgresqlUserStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

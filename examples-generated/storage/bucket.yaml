@@ -70,6 +70,3 @@ spec:
     serviceAccountSelector:
       matchLabels:
         testing.upbound.io/example-name: sa
-
----
-

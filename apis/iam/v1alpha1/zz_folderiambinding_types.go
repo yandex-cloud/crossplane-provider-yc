@@ -25,8 +25,31 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type FolderIAMBindingInitParameters struct {
+
+	// The role that should be assigned. Only one
+	// yandex_resourcemanager_folder_iam_binding can be used per role.
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+
+	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
+}
+
 type FolderIAMBindingObservation struct {
+
+	// ID of the folder to attach a policy to.
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// An array of identities that will be granted the privilege that is specified in the role field.
+	// Each entry can have one of the following values:
+	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
+
+	// The role that should be assigned. Only one
+	// yandex_resourcemanager_folder_iam_binding can be used per role.
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+
+	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type FolderIAMBindingParameters struct {
@@ -55,8 +78,8 @@ type FolderIAMBindingParameters struct {
 
 	// The role that should be assigned. Only one
 	// yandex_resourcemanager_folder_iam_binding can be used per role.
-	// +kubebuilder:validation:Required
-	Role *string `json:"role" tf:"role,omitempty"`
+	// +kubebuilder:validation:Optional
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// References to ServiceAccount to populate members.
 	// +kubebuilder:validation:Optional
@@ -74,6 +97,18 @@ type FolderIAMBindingParameters struct {
 type FolderIAMBindingSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     FolderIAMBindingParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider FolderIAMBindingInitParameters `json:"initProvider,omitempty"`
 }
 
 // FolderIAMBindingStatus defines the observed state of FolderIAMBinding.
@@ -94,8 +129,9 @@ type FolderIAMBindingStatus struct {
 type FolderIAMBinding struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              FolderIAMBindingSpec   `json:"spec"`
-	Status            FolderIAMBindingStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.role) || has(self.initProvider.role)",message="role is a required parameter"
+	Spec   FolderIAMBindingSpec   `json:"spec"`
+	Status FolderIAMBindingStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

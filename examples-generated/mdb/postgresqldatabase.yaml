@@ -100,6 +100,3 @@ spec:
     v4CidrBlocks:
     - 10.5.0.0/24
     zone: ru-central1-a
-
----
-

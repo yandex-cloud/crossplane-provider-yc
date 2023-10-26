@@ -54,6 +54,3 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: foo
     zone: ru-central1-a
-
----
-

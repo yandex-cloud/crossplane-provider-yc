@@ -25,8 +25,19 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type MySQLDatabaseInitParameters struct {
+
+	// The name of the database.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
 type MySQLDatabaseObservation struct {
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The name of the database.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type MySQLDatabaseParameters struct {
@@ -44,14 +55,26 @@ type MySQLDatabaseParameters struct {
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
 	// The name of the database.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 // MySQLDatabaseSpec defines the desired state of MySQLDatabase
 type MySQLDatabaseSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     MySQLDatabaseParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider MySQLDatabaseInitParameters `json:"initProvider,omitempty"`
 }
 
 // MySQLDatabaseStatus defines the observed state of MySQLDatabase.
@@ -72,8 +95,9 @@ type MySQLDatabaseStatus struct {
 type MySQLDatabase struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              MySQLDatabaseSpec   `json:"spec"`
-	Status            MySQLDatabaseStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || has(self.initProvider.name)",message="name is a required parameter"
+	Spec   MySQLDatabaseSpec   `json:"spec"`
+	Status MySQLDatabaseStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

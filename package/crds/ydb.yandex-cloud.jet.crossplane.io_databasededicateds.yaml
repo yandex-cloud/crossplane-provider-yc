@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.12.1
   name: databasededicateds.ydb.yandex-cloud.jet.crossplane.io
 spec:
   group: ydb.yandex-cloud.jet.crossplane.io
@@ -55,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -170,8 +173,6 @@ spec:
                               id:
                                 description: Region ID for the Yandex Database cluster.
                                 type: string
-                            required:
-                            - id
                             type: object
                           type: array
                       type: object
@@ -277,12 +278,8 @@ spec:
                                 description: Number of instances for the Yandex Database
                                   cluster.
                                 type: number
-                            required:
-                            - size
                             type: object
                           type: array
-                      required:
-                      - fixedScale
                       type: object
                     type: array
                   storageConfig:
@@ -299,9 +296,6 @@ spec:
                             Available presets can be obtained via yc ydb storage-type
                             list command.
                           type: string
-                      required:
-                      - groupCount
-                      - storageTypeId
                       type: object
                     type: array
                   subnetIds:
@@ -387,12 +381,121 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - name
-                - resourcePresetId
-                - scalePolicy
-                - storageConfig
                 type: object
+              initProvider:
+                description: THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. InitProvider
+                  holds the same fields as ForProvider, with the exception of Identifier
+                  and other resource reference fields. The fields that are in InitProvider
+                  are merged into ForProvider when the resource is created. The same
+                  fields are also added to the terraform ignore_changes hook, to avoid
+                  updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after
+                  creation, for example because of an external controller is managing
+                  them, like an autoscaler.
+                properties:
+                  assignPublicIps:
+                    description: Whether public IP addresses should be assigned to
+                      the Yandex Database cluster.
+                    type: boolean
+                  description:
+                    description: A description for the Yandex Database cluster.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: A set of key/value label pairs to assign to the Yandex
+                      Database cluster.
+                    type: object
+                  location:
+                    description: Location for the Yandex Database cluster. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        region:
+                          description: Region for the Yandex Database cluster. The
+                            structure is documented below.
+                          items:
+                            properties:
+                              id:
+                                description: Region ID for the Yandex Database cluster.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  locationId:
+                    description: Location ID for the Yandex Database cluster.
+                    type: string
+                  name:
+                    description: Name of the Yandex Database cluster.
+                    type: string
+                  resourcePresetId:
+                    description: The Yandex Database cluster preset. Available presets
+                      can be obtained via yc ydb resource-preset list command.
+                    type: string
+                  scalePolicy:
+                    description: Scaling policy for the Yandex Database cluster. The
+                      structure is documented below.
+                    items:
+                      properties:
+                        fixedScale:
+                          description: Fixed scaling policy for the Yandex Database
+                            cluster. The structure is documented below.
+                          items:
+                            properties:
+                              size:
+                                description: Number of instances for the Yandex Database
+                                  cluster.
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  storageConfig:
+                    description: A list of storage configuration options for the Yandex
+                      Database cluster. The structure is documented below.
+                    items:
+                      properties:
+                        groupCount:
+                          description: Amount of storage groups of selected type for
+                            the Yandex Database cluster.
+                          type: number
+                        storageTypeId:
+                          description: Storage type ID for the Yandex Database cluster.
+                            Available presets can be obtained via yc ydb storage-type
+                            list command.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
@@ -564,11 +667,32 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || has(self.initProvider.name)'
+            - message: resourcePresetId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.resourcePresetId)
+                || has(self.initProvider.resourcePresetId)'
+            - message: scalePolicy is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.scalePolicy)
+                || has(self.initProvider.scalePolicy)'
+            - message: storageConfig is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.storageConfig)
+                || has(self.initProvider.storageConfig)'
           status:
             description: DatabaseDedicatedStatus defines the observed state of DatabaseDedicated.
             properties:
               atProvider:
                 properties:
+                  assignPublicIps:
+                    description: Whether public IP addresses should be assigned to
+                      the Yandex Database cluster.
+                    type: boolean
                   createdAt:
                     description: The Yandex Database cluster creation timestamp.
                     type: string
@@ -576,12 +700,97 @@ spec:
                     description: Full database path of the Yandex Database cluster.
                       Useful for SDK configuration.
                     type: string
+                  description:
+                    description: A description for the Yandex Database cluster.
+                    type: string
+                  folderId:
+                    description: ID of the folder that the Yandex Database cluster
+                      belongs to. It will be deduced from provider configuration if
+                      not set explicitly.
+                    type: string
                   id:
                     description: ID of the Yandex Database cluster.
                     type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: A set of key/value label pairs to assign to the Yandex
+                      Database cluster.
+                    type: object
+                  location:
+                    description: Location for the Yandex Database cluster. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        region:
+                          description: Region for the Yandex Database cluster. The
+                            structure is documented below.
+                          items:
+                            properties:
+                              id:
+                                description: Region ID for the Yandex Database cluster.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  locationId:
+                    description: Location ID for the Yandex Database cluster.
+                    type: string
+                  name:
+                    description: Name of the Yandex Database cluster.
+                    type: string
+                  networkId:
+                    description: ID of the network to attach the Yandex Database cluster
+                      to.
+                    type: string
+                  resourcePresetId:
+                    description: The Yandex Database cluster preset. Available presets
+                      can be obtained via yc ydb resource-preset list command.
+                    type: string
+                  scalePolicy:
+                    description: Scaling policy for the Yandex Database cluster. The
+                      structure is documented below.
+                    items:
+                      properties:
+                        fixedScale:
+                          description: Fixed scaling policy for the Yandex Database
+                            cluster. The structure is documented below.
+                          items:
+                            properties:
+                              size:
+                                description: Number of instances for the Yandex Database
+                                  cluster.
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   status:
                     description: Status of the Yandex Database cluster.
                     type: string
+                  storageConfig:
+                    description: A list of storage configuration options for the Yandex
+                      Database cluster. The structure is documented below.
+                    items:
+                      properties:
+                        groupCount:
+                          description: Amount of storage groups of selected type for
+                            the Yandex Database cluster.
+                          type: number
+                        storageTypeId:
+                          description: Storage type ID for the Yandex Database cluster.
+                            Available presets can be obtained via yc ydb storage-type
+                            list command.
+                          type: string
+                      type: object
+                    type: array
+                  subnetIds:
+                    description: List of subnet IDs to attach the Yandex Database
+                      cluster to.
+                    items:
+                      type: string
+                    type: array
                   tlsEnabled:
                     description: Whether TLS is enabled for the Yandex Database cluster.
                       Useful for SDK configuration.
@@ -635,9 +844,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

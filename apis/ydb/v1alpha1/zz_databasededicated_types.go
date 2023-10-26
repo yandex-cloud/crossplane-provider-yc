@@ -25,7 +25,44 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type DatabaseDedicatedInitParameters struct {
+
+	// Whether public IP addresses should be assigned to the Yandex Database cluster.
+	AssignPublicIps *bool `json:"assignPublicIps,omitempty" tf:"assign_public_ips,omitempty"`
+
+	// A description for the Yandex Database cluster.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// A set of key/value label pairs to assign to the Yandex Database cluster.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Location for the Yandex Database cluster.
+	// The structure is documented below.
+	Location []LocationInitParameters `json:"location,omitempty" tf:"location,omitempty"`
+
+	// Location ID for the Yandex Database cluster.
+	LocationID *string `json:"locationId,omitempty" tf:"location_id,omitempty"`
+
+	// Name of the Yandex Database cluster.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The Yandex Database cluster preset.
+	// Available presets can be obtained via yc ydb resource-preset list command.
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+
+	// Scaling policy for the Yandex Database cluster.
+	// The structure is documented below.
+	ScalePolicy []ScalePolicyInitParameters `json:"scalePolicy,omitempty" tf:"scale_policy,omitempty"`
+
+	// A list of storage configuration options for the Yandex Database cluster.
+	// The structure is documented below.
+	StorageConfig []StorageConfigInitParameters `json:"storageConfig,omitempty" tf:"storage_config,omitempty"`
+}
+
 type DatabaseDedicatedObservation struct {
+
+	// Whether public IP addresses should be assigned to the Yandex Database cluster.
+	AssignPublicIps *bool `json:"assignPublicIps,omitempty" tf:"assign_public_ips,omitempty"`
 
 	// The Yandex Database cluster creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
@@ -34,11 +71,49 @@ type DatabaseDedicatedObservation struct {
 	// Useful for SDK configuration.
 	DatabasePath *string `json:"databasePath,omitempty" tf:"database_path,omitempty"`
 
+	// A description for the Yandex Database cluster.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// ID of the folder that the Yandex Database cluster belongs to.
+	// It will be deduced from provider configuration if not set explicitly.
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
 	// ID of the Yandex Database cluster.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// A set of key/value label pairs to assign to the Yandex Database cluster.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Location for the Yandex Database cluster.
+	// The structure is documented below.
+	Location []LocationObservation `json:"location,omitempty" tf:"location,omitempty"`
+
+	// Location ID for the Yandex Database cluster.
+	LocationID *string `json:"locationId,omitempty" tf:"location_id,omitempty"`
+
+	// Name of the Yandex Database cluster.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// ID of the network to attach the Yandex Database cluster to.
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// The Yandex Database cluster preset.
+	// Available presets can be obtained via yc ydb resource-preset list command.
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+
+	// Scaling policy for the Yandex Database cluster.
+	// The structure is documented below.
+	ScalePolicy []ScalePolicyObservation `json:"scalePolicy,omitempty" tf:"scale_policy,omitempty"`
+
 	// Status of the Yandex Database cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// A list of storage configuration options for the Yandex Database cluster.
+	// The structure is documented below.
+	StorageConfig []StorageConfigObservation `json:"storageConfig,omitempty" tf:"storage_config,omitempty"`
+
+	// List of subnet IDs to attach the Yandex Database cluster to.
+	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
 	// Whether TLS is enabled for the Yandex Database cluster.
 	// Useful for SDK configuration.
@@ -90,8 +165,8 @@ type DatabaseDedicatedParameters struct {
 	LocationID *string `json:"locationId,omitempty" tf:"location_id,omitempty"`
 
 	// Name of the Yandex Database cluster.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// ID of the network to attach the Yandex Database cluster to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
@@ -108,18 +183,18 @@ type DatabaseDedicatedParameters struct {
 
 	// The Yandex Database cluster preset.
 	// Available presets can be obtained via yc ydb resource-preset list command.
-	// +kubebuilder:validation:Required
-	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
+	// +kubebuilder:validation:Optional
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 
 	// Scaling policy for the Yandex Database cluster.
 	// The structure is documented below.
-	// +kubebuilder:validation:Required
-	ScalePolicy []ScalePolicyParameters `json:"scalePolicy" tf:"scale_policy,omitempty"`
+	// +kubebuilder:validation:Optional
+	ScalePolicy []ScalePolicyParameters `json:"scalePolicy,omitempty" tf:"scale_policy,omitempty"`
 
 	// A list of storage configuration options for the Yandex Database cluster.
 	// The structure is documented below.
-	// +kubebuilder:validation:Required
-	StorageConfig []StorageConfigParameters `json:"storageConfig" tf:"storage_config,omitempty"`
+	// +kubebuilder:validation:Optional
+	StorageConfig []StorageConfigParameters `json:"storageConfig,omitempty" tf:"storage_config,omitempty"`
 
 	// List of subnet IDs to attach the Yandex Database cluster to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
@@ -135,17 +210,37 @@ type DatabaseDedicatedParameters struct {
 	SubnetIdsSelector *v1.Selector `json:"subnetIdsSelector,omitempty" tf:"-"`
 }
 
+type FixedScaleInitParameters struct {
+
+	// Number of instances for the Yandex Database cluster.
+	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
+}
+
 type FixedScaleObservation struct {
+
+	// Number of instances for the Yandex Database cluster.
+	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 }
 
 type FixedScaleParameters struct {
 
 	// Number of instances for the Yandex Database cluster.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Size *float64 `json:"size" tf:"size,omitempty"`
 }
 
+type LocationInitParameters struct {
+
+	// Region for the Yandex Database cluster.
+	// The structure is documented below.
+	Region []RegionInitParameters `json:"region,omitempty" tf:"region,omitempty"`
+}
+
 type LocationObservation struct {
+
+	// Region for the Yandex Database cluster.
+	// The structure is documented below.
+	Region []RegionObservation `json:"region,omitempty" tf:"region,omitempty"`
 }
 
 type LocationParameters struct {
@@ -156,39 +251,76 @@ type LocationParameters struct {
 	Region []RegionParameters `json:"region,omitempty" tf:"region,omitempty"`
 }
 
+type RegionInitParameters struct {
+
+	// Region ID for the Yandex Database cluster.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+}
+
 type RegionObservation struct {
+
+	// Region ID for the Yandex Database cluster.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type RegionParameters struct {
 
 	// Region ID for the Yandex Database cluster.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	ID *string `json:"id" tf:"id,omitempty"`
 }
 
+type ScalePolicyInitParameters struct {
+
+	// Fixed scaling policy for the Yandex Database cluster.
+	// The structure is documented below.
+	FixedScale []FixedScaleInitParameters `json:"fixedScale,omitempty" tf:"fixed_scale,omitempty"`
+}
+
 type ScalePolicyObservation struct {
+
+	// Fixed scaling policy for the Yandex Database cluster.
+	// The structure is documented below.
+	FixedScale []FixedScaleObservation `json:"fixedScale,omitempty" tf:"fixed_scale,omitempty"`
 }
 
 type ScalePolicyParameters struct {
 
 	// Fixed scaling policy for the Yandex Database cluster.
 	// The structure is documented below.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	FixedScale []FixedScaleParameters `json:"fixedScale" tf:"fixed_scale,omitempty"`
 }
 
+type StorageConfigInitParameters struct {
+
+	// Amount of storage groups of selected type for the Yandex Database cluster.
+	GroupCount *float64 `json:"groupCount,omitempty" tf:"group_count,omitempty"`
+
+	// Storage type ID for the Yandex Database cluster.
+	// Available presets can be obtained via yc ydb storage-type list command.
+	StorageTypeID *string `json:"storageTypeId,omitempty" tf:"storage_type_id,omitempty"`
+}
+
 type StorageConfigObservation struct {
+
+	// Amount of storage groups of selected type for the Yandex Database cluster.
+	GroupCount *float64 `json:"groupCount,omitempty" tf:"group_count,omitempty"`
+
+	// Storage type ID for the Yandex Database cluster.
+	// Available presets can be obtained via yc ydb storage-type list command.
+	StorageTypeID *string `json:"storageTypeId,omitempty" tf:"storage_type_id,omitempty"`
 }
 
 type StorageConfigParameters struct {
 
 	// Amount of storage groups of selected type for the Yandex Database cluster.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	GroupCount *float64 `json:"groupCount" tf:"group_count,omitempty"`
 
 	// Storage type ID for the Yandex Database cluster.
 	// Available presets can be obtained via yc ydb storage-type list command.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	StorageTypeID *string `json:"storageTypeId" tf:"storage_type_id,omitempty"`
 }
 
@@ -196,6 +328,18 @@ type StorageConfigParameters struct {
 type DatabaseDedicatedSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     DatabaseDedicatedParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider DatabaseDedicatedInitParameters `json:"initProvider,omitempty"`
 }
 
 // DatabaseDedicatedStatus defines the observed state of DatabaseDedicated.
@@ -216,8 +360,12 @@ type DatabaseDedicatedStatus struct {
 type DatabaseDedicated struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              DatabaseDedicatedSpec   `json:"spec"`
-	Status            DatabaseDedicatedStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || has(self.initProvider.name)",message="name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.resourcePresetId) || has(self.initProvider.resourcePresetId)",message="resourcePresetId is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.scalePolicy) || has(self.initProvider.scalePolicy)",message="scalePolicy is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.storageConfig) || has(self.initProvider.storageConfig)",message="storageConfig is a required parameter"
+	Spec   DatabaseDedicatedSpec   `json:"spec"`
+	Status DatabaseDedicatedStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -18,6 +18,3 @@ spec:
       subnetIdSelector:
         matchLabels:
           testing.upbound.io/example-name: my-subnet
-
----
-

@@ -25,7 +25,22 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AnonymousAccessFlagsInitParameters struct {
+
+	// Allows to list object in bucket anonymously.
+	List *bool `json:"list,omitempty" tf:"list,omitempty"`
+
+	// Allows to read objects in bucket anonymously.
+	Read *bool `json:"read,omitempty" tf:"read,omitempty"`
+}
+
 type AnonymousAccessFlagsObservation struct {
+
+	// Allows to list object in bucket anonymously.
+	List *bool `json:"list,omitempty" tf:"list,omitempty"`
+
+	// Allows to read objects in bucket anonymously.
+	Read *bool `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type AnonymousAccessFlagsParameters struct {
@@ -39,27 +54,165 @@ type AnonymousAccessFlagsParameters struct {
 	Read *bool `json:"read,omitempty" tf:"read,omitempty"`
 }
 
+type ApplyServerSideEncryptionByDefaultInitParameters struct {
+
+	// The KMS master key ID used for the SSE-KMS encryption.
+	KMSMasterKeyID *string `json:"kmsMasterKeyId,omitempty" tf:"kms_master_key_id,omitempty"`
+
+	// The server-side encryption algorithm to use. Single valid value is aws:kms
+	SseAlgorithm *string `json:"sseAlgorithm,omitempty" tf:"sse_algorithm,omitempty"`
+}
+
 type ApplyServerSideEncryptionByDefaultObservation struct {
+
+	// The KMS master key ID used for the SSE-KMS encryption.
+	KMSMasterKeyID *string `json:"kmsMasterKeyId,omitempty" tf:"kms_master_key_id,omitempty"`
+
+	// The server-side encryption algorithm to use. Single valid value is aws:kms
+	SseAlgorithm *string `json:"sseAlgorithm,omitempty" tf:"sse_algorithm,omitempty"`
 }
 
 type ApplyServerSideEncryptionByDefaultParameters struct {
 
 	// The KMS master key ID used for the SSE-KMS encryption.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	KMSMasterKeyID *string `json:"kmsMasterKeyId" tf:"kms_master_key_id,omitempty"`
 
 	// The server-side encryption algorithm to use. Single valid value is aws:kms
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	SseAlgorithm *string `json:"sseAlgorithm" tf:"sse_algorithm,omitempty"`
+}
+
+type BucketInitParameters struct {
+
+	// The predefined ACL to apply. Defaults to private. Conflicts with grant.
+	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
+
+	// Provides various access to objects.
+	// See bucket availability
+	// for more infomation.
+	AnonymousAccessFlags []AnonymousAccessFlagsInitParameters `json:"anonymousAccessFlags,omitempty" tf:"anonymous_access_flags,omitempty"`
+
+	// The name of the bucket.
+	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
+
+	// Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
+	BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
+
+	// A rule of Cross-Origin Resource Sharing (documented below).
+	CorsRule []CorsRuleInitParameters `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
+
+	// Storage class which is used for storing objects by default.
+	// Available values are: "STANDARD", "COLD". Default is "STANDARD".
+	// See storage class for more inforamtion.
+	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
+
+	// A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable.
+	ForceDestroy *bool `json:"forceDestroy,omitempty" tf:"force_destroy,omitempty"`
+
+	// An ACL policy grant. Conflicts with acl.
+	Grant []GrantInitParameters `json:"grant,omitempty" tf:"grant,omitempty"`
+
+	// Manages https certificates for bucket. See https for more infomation.
+	HTTPS []HTTPSInitParameters `json:"https,omitempty" tf:"https,omitempty"`
+
+	// A configuration of object lifecycle management (documented below).
+	LifecycleRule []LifecycleRuleInitParameters `json:"lifecycleRule,omitempty" tf:"lifecycle_rule,omitempty"`
+
+	// A settings of bucket logging (documented below).
+	Logging []LoggingInitParameters `json:"logging,omitempty" tf:"logging,omitempty"`
+
+	// The size of bucket, in bytes. See size limiting for more information.
+	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
+
+	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
+
+	// A configuration of server-side encryption for the bucket (documented below)
+	ServerSideEncryptionConfiguration []ServerSideEncryptionConfigurationInitParameters `json:"serverSideEncryptionConfiguration,omitempty" tf:"server_side_encryption_configuration,omitempty"`
+
+	// A state of versioning (documented below)
+	Versioning []VersioningInitParameters `json:"versioning,omitempty" tf:"versioning,omitempty"`
+
+	// A website object (documented below).
+	Website []WebsiteInitParameters `json:"website,omitempty" tf:"website,omitempty"`
+
+	// The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+	WebsiteDomain *string `json:"websiteDomain,omitempty" tf:"website_domain,omitempty"`
+
+	// The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+	WebsiteEndpoint *string `json:"websiteEndpoint,omitempty" tf:"website_endpoint,omitempty"`
 }
 
 type BucketObservation struct {
 
+	// The predefined ACL to apply. Defaults to private. Conflicts with grant.
+	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
+
+	// The access key to use when applying changes. If omitted, storage_access_key specified in provider config is used.
+	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
+
+	// Provides various access to objects.
+	// See bucket availability
+	// for more infomation.
+	AnonymousAccessFlags []AnonymousAccessFlagsObservation `json:"anonymousAccessFlags,omitempty" tf:"anonymous_access_flags,omitempty"`
+
+	// The name of the bucket.
+	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
+
 	// The bucket domain name.
 	BucketDomainName *string `json:"bucketDomainName,omitempty" tf:"bucket_domain_name,omitempty"`
 
+	// Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
+	BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
+
+	// A rule of Cross-Origin Resource Sharing (documented below).
+	CorsRule []CorsRuleObservation `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
+
+	// Storage class which is used for storing objects by default.
+	// Available values are: "STANDARD", "COLD". Default is "STANDARD".
+	// See storage class for more inforamtion.
+	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
+
+	// Allow to create bucket in different folder.
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable.
+	ForceDestroy *bool `json:"forceDestroy,omitempty" tf:"force_destroy,omitempty"`
+
+	// An ACL policy grant. Conflicts with acl.
+	Grant []GrantObservation `json:"grant,omitempty" tf:"grant,omitempty"`
+
+	// Manages https certificates for bucket. See https for more infomation.
+	HTTPS []HTTPSObservation `json:"https,omitempty" tf:"https,omitempty"`
+
 	// Unique identifier for the rule. Must be less than or equal to 255 characters in length.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// A configuration of object lifecycle management (documented below).
+	LifecycleRule []LifecycleRuleObservation `json:"lifecycleRule,omitempty" tf:"lifecycle_rule,omitempty"`
+
+	// A settings of bucket logging (documented below).
+	Logging []LoggingObservation `json:"logging,omitempty" tf:"logging,omitempty"`
+
+	// The size of bucket, in bytes. See size limiting for more information.
+	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
+
+	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
+
+	// A configuration of server-side encryption for the bucket (documented below)
+	ServerSideEncryptionConfiguration []ServerSideEncryptionConfigurationObservation `json:"serverSideEncryptionConfiguration,omitempty" tf:"server_side_encryption_configuration,omitempty"`
+
+	// A state of versioning (documented below)
+	Versioning []VersioningObservation `json:"versioning,omitempty" tf:"versioning,omitempty"`
+
+	// A website object (documented below).
+	Website []WebsiteObservation `json:"website,omitempty" tf:"website,omitempty"`
+
+	// The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+	WebsiteDomain *string `json:"websiteDomain,omitempty" tf:"website_domain,omitempty"`
+
+	// The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+	WebsiteEndpoint *string `json:"websiteEndpoint,omitempty" tf:"website_endpoint,omitempty"`
 }
 
 type BucketParameters struct {
@@ -171,7 +324,40 @@ type BucketParameters struct {
 	WebsiteEndpoint *string `json:"websiteEndpoint,omitempty" tf:"website_endpoint,omitempty"`
 }
 
+type CorsRuleInitParameters struct {
+
+	// Specifies which headers are allowed.
+	AllowedHeaders []*string `json:"allowedHeaders,omitempty" tf:"allowed_headers,omitempty"`
+
+	// Specifies which methods are allowed. Can be GET, PUT, POST, DELETE or HEAD.
+	AllowedMethods []*string `json:"allowedMethods,omitempty" tf:"allowed_methods,omitempty"`
+
+	// Specifies which origins are allowed.
+	AllowedOrigins []*string `json:"allowedOrigins,omitempty" tf:"allowed_origins,omitempty"`
+
+	// Specifies expose header in the response.
+	ExposeHeaders []*string `json:"exposeHeaders,omitempty" tf:"expose_headers,omitempty"`
+
+	// Specifies time in seconds that browser can cache the response for a preflight request.
+	MaxAgeSeconds *float64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
+}
+
 type CorsRuleObservation struct {
+
+	// Specifies which headers are allowed.
+	AllowedHeaders []*string `json:"allowedHeaders,omitempty" tf:"allowed_headers,omitempty"`
+
+	// Specifies which methods are allowed. Can be GET, PUT, POST, DELETE or HEAD.
+	AllowedMethods []*string `json:"allowedMethods,omitempty" tf:"allowed_methods,omitempty"`
+
+	// Specifies which origins are allowed.
+	AllowedOrigins []*string `json:"allowedOrigins,omitempty" tf:"allowed_origins,omitempty"`
+
+	// Specifies expose header in the response.
+	ExposeHeaders []*string `json:"exposeHeaders,omitempty" tf:"expose_headers,omitempty"`
+
+	// Specifies time in seconds that browser can cache the response for a preflight request.
+	MaxAgeSeconds *float64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
 }
 
 type CorsRuleParameters struct {
@@ -181,11 +367,11 @@ type CorsRuleParameters struct {
 	AllowedHeaders []*string `json:"allowedHeaders,omitempty" tf:"allowed_headers,omitempty"`
 
 	// Specifies which methods are allowed. Can be GET, PUT, POST, DELETE or HEAD.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	AllowedMethods []*string `json:"allowedMethods" tf:"allowed_methods,omitempty"`
 
 	// Specifies which origins are allowed.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	AllowedOrigins []*string `json:"allowedOrigins" tf:"allowed_origins,omitempty"`
 
 	// Specifies expose header in the response.
@@ -197,7 +383,28 @@ type CorsRuleParameters struct {
 	MaxAgeSeconds *float64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
 }
 
+type ExpirationInitParameters struct {
+
+	// Specifies the date after which you want the corresponding action to take effect.
+	Date *string `json:"date,omitempty" tf:"date,omitempty"`
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+
+	// On a versioned bucket (versioning-enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
+	ExpiredObjectDeleteMarker *bool `json:"expiredObjectDeleteMarker,omitempty" tf:"expired_object_delete_marker,omitempty"`
+}
+
 type ExpirationObservation struct {
+
+	// Specifies the date after which you want the corresponding action to take effect.
+	Date *string `json:"date,omitempty" tf:"date,omitempty"`
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+
+	// On a versioned bucket (versioning-enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
+	ExpiredObjectDeleteMarker *bool `json:"expiredObjectDeleteMarker,omitempty" tf:"expired_object_delete_marker,omitempty"`
 }
 
 type ExpirationParameters struct {
@@ -215,7 +422,28 @@ type ExpirationParameters struct {
 	ExpiredObjectDeleteMarker *bool `json:"expiredObjectDeleteMarker,omitempty" tf:"expired_object_delete_marker,omitempty"`
 }
 
+type GrantInitParameters struct {
+
+	// Unique identifier for the rule. Must be less than or equal to 255 characters in length.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	Permissions []*string `json:"permissions,omitempty" tf:"permissions,omitempty"`
+
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	URI *string `json:"uri,omitempty" tf:"uri,omitempty"`
+}
+
 type GrantObservation struct {
+
+	// Unique identifier for the rule. Must be less than or equal to 255 characters in length.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	Permissions []*string `json:"permissions,omitempty" tf:"permissions,omitempty"`
+
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	URI *string `json:"uri,omitempty" tf:"uri,omitempty"`
 }
 
 type GrantParameters struct {
@@ -224,27 +452,87 @@ type GrantParameters struct {
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Permissions []*string `json:"permissions" tf:"permissions,omitempty"`
 
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	URI *string `json:"uri,omitempty" tf:"uri,omitempty"`
 }
 
+type HTTPSInitParameters struct {
+
+	// — Id of the certificate in Certificate Manager, that will be used for bucket.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
+}
+
 type HTTPSObservation struct {
+
+	// — Id of the certificate in Certificate Manager, that will be used for bucket.
+	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
 }
 
 type HTTPSParameters struct {
 
 	// — Id of the certificate in Certificate Manager, that will be used for bucket.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	CertificateID *string `json:"certificateId" tf:"certificate_id,omitempty"`
 }
 
+type LifecycleRuleInitParameters struct {
+
+	// Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
+	AbortIncompleteMultipartUploadDays *float64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
+
+	// Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// Specifies a period in the object's expire (documented below).
+	Expiration []ExpirationInitParameters `json:"expiration,omitempty" tf:"expiration,omitempty"`
+
+	// Unique identifier for the rule. Must be less than or equal to 255 characters in length.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Specifies when noncurrent object versions expire (documented below).
+	NoncurrentVersionExpiration []NoncurrentVersionExpirationInitParameters `json:"noncurrentVersionExpiration,omitempty" tf:"noncurrent_version_expiration,omitempty"`
+
+	// Specifies when noncurrent object versions transitions (documented below).
+	NoncurrentVersionTransition []NoncurrentVersionTransitionInitParameters `json:"noncurrentVersionTransition,omitempty" tf:"noncurrent_version_transition,omitempty"`
+
+	// Object key prefix identifying one or more objects to which the rule applies.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// Specifies a period in the object's transitions (documented below).
+	Transition []TransitionInitParameters `json:"transition,omitempty" tf:"transition,omitempty"`
+}
+
 type LifecycleRuleObservation struct {
+
+	// Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
+	AbortIncompleteMultipartUploadDays *float64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
+
+	// Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// Specifies a period in the object's expire (documented below).
+	Expiration []ExpirationObservation `json:"expiration,omitempty" tf:"expiration,omitempty"`
+
+	// Unique identifier for the rule. Must be less than or equal to 255 characters in length.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Specifies when noncurrent object versions expire (documented below).
+	NoncurrentVersionExpiration []NoncurrentVersionExpirationObservation `json:"noncurrentVersionExpiration,omitempty" tf:"noncurrent_version_expiration,omitempty"`
+
+	// Specifies when noncurrent object versions transitions (documented below).
+	NoncurrentVersionTransition []NoncurrentVersionTransitionObservation `json:"noncurrentVersionTransition,omitempty" tf:"noncurrent_version_transition,omitempty"`
+
+	// Object key prefix identifying one or more objects to which the rule applies.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// Specifies a period in the object's transitions (documented below).
+	Transition []TransitionObservation `json:"transition,omitempty" tf:"transition,omitempty"`
 }
 
 type LifecycleRuleParameters struct {
@@ -254,7 +542,7 @@ type LifecycleRuleParameters struct {
 	AbortIncompleteMultipartUploadDays *float64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
 
 	// Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
 
 	// Specifies a period in the object's expire (documented below).
@@ -282,13 +570,28 @@ type LifecycleRuleParameters struct {
 	Transition []TransitionParameters `json:"transition,omitempty" tf:"transition,omitempty"`
 }
 
+type LoggingInitParameters struct {
+
+	// The name of the bucket that will receive the log objects.
+	TargetBucket *string `json:"targetBucket,omitempty" tf:"target_bucket,omitempty"`
+
+	// To specify a key prefix for log objects.
+	TargetPrefix *string `json:"targetPrefix,omitempty" tf:"target_prefix,omitempty"`
+}
+
 type LoggingObservation struct {
+
+	// The name of the bucket that will receive the log objects.
+	TargetBucket *string `json:"targetBucket,omitempty" tf:"target_bucket,omitempty"`
+
+	// To specify a key prefix for log objects.
+	TargetPrefix *string `json:"targetPrefix,omitempty" tf:"target_prefix,omitempty"`
 }
 
 type LoggingParameters struct {
 
 	// The name of the bucket that will receive the log objects.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	TargetBucket *string `json:"targetBucket" tf:"target_bucket,omitempty"`
 
 	// To specify a key prefix for log objects.
@@ -296,7 +599,16 @@ type LoggingParameters struct {
 	TargetPrefix *string `json:"targetPrefix,omitempty" tf:"target_prefix,omitempty"`
 }
 
+type NoncurrentVersionExpirationInitParameters struct {
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+}
+
 type NoncurrentVersionExpirationObservation struct {
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 }
 
 type NoncurrentVersionExpirationParameters struct {
@@ -306,7 +618,22 @@ type NoncurrentVersionExpirationParameters struct {
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 }
 
+type NoncurrentVersionTransitionInitParameters struct {
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+
+	// Specifies the storage class to which you want the object to transition. Can only be COLD or STANDARD_IA.
+	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
+}
+
 type NoncurrentVersionTransitionObservation struct {
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+
+	// Specifies the storage class to which you want the object to transition. Can only be COLD or STANDARD_IA.
+	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
 }
 
 type NoncurrentVersionTransitionParameters struct {
@@ -316,31 +643,70 @@ type NoncurrentVersionTransitionParameters struct {
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// Specifies the storage class to which you want the object to transition. Can only be COLD or STANDARD_IA.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	StorageClass *string `json:"storageClass" tf:"storage_class,omitempty"`
 }
 
+type RuleInitParameters struct {
+
+	// A single object for setting server-side encryption by default. (documented below)
+	ApplyServerSideEncryptionByDefault []ApplyServerSideEncryptionByDefaultInitParameters `json:"applyServerSideEncryptionByDefault,omitempty" tf:"apply_server_side_encryption_by_default,omitempty"`
+}
+
 type RuleObservation struct {
+
+	// A single object for setting server-side encryption by default. (documented below)
+	ApplyServerSideEncryptionByDefault []ApplyServerSideEncryptionByDefaultObservation `json:"applyServerSideEncryptionByDefault,omitempty" tf:"apply_server_side_encryption_by_default,omitempty"`
 }
 
 type RuleParameters struct {
 
 	// A single object for setting server-side encryption by default. (documented below)
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	ApplyServerSideEncryptionByDefault []ApplyServerSideEncryptionByDefaultParameters `json:"applyServerSideEncryptionByDefault" tf:"apply_server_side_encryption_by_default,omitempty"`
 }
 
+type ServerSideEncryptionConfigurationInitParameters struct {
+
+	// A single object for server-side encryption by default configuration. (documented below)
+	Rule []RuleInitParameters `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
 type ServerSideEncryptionConfigurationObservation struct {
+
+	// A single object for server-side encryption by default configuration. (documented below)
+	Rule []RuleObservation `json:"rule,omitempty" tf:"rule,omitempty"`
 }
 
 type ServerSideEncryptionConfigurationParameters struct {
 
 	// A single object for server-side encryption by default configuration. (documented below)
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Rule []RuleParameters `json:"rule" tf:"rule,omitempty"`
 }
 
+type TransitionInitParameters struct {
+
+	// Specifies the date after which you want the corresponding action to take effect.
+	Date *string `json:"date,omitempty" tf:"date,omitempty"`
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+
+	// Specifies the storage class to which you want the object to transition. Can only be COLD or STANDARD_IA.
+	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
+}
+
 type TransitionObservation struct {
+
+	// Specifies the date after which you want the corresponding action to take effect.
+	Date *string `json:"date,omitempty" tf:"date,omitempty"`
+
+	// Specifies the number of days after object creation when the specific rule action takes effect.
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+
+	// Specifies the storage class to which you want the object to transition. Can only be COLD or STANDARD_IA.
+	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
 }
 
 type TransitionParameters struct {
@@ -354,11 +720,20 @@ type TransitionParameters struct {
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// Specifies the storage class to which you want the object to transition. Can only be COLD or STANDARD_IA.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	StorageClass *string `json:"storageClass" tf:"storage_class,omitempty"`
 }
 
+type VersioningInitParameters struct {
+
+	// Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type VersioningObservation struct {
+
+	// Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type VersioningParameters struct {
@@ -368,7 +743,34 @@ type VersioningParameters struct {
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
+type WebsiteInitParameters struct {
+
+	// An absolute path to the document to return in case of a 4XX error.
+	ErrorDocument *string `json:"errorDocument,omitempty" tf:"error_document,omitempty"`
+
+	// Storage returns this index document when requests are made to the root domain or any of the subfolders.
+	IndexDocument *string `json:"indexDocument,omitempty" tf:"index_document,omitempty"`
+
+	// A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (http:// or https://) to use when redirecting requests. The default is the protocol that is used in the original request.
+	RedirectAllRequestsTo *string `json:"redirectAllRequestsTo,omitempty" tf:"redirect_all_requests_to,omitempty"`
+
+	// A json array containing routing rules describing redirect behavior and when redirects are applied.
+	RoutingRules *string `json:"routingRules,omitempty" tf:"routing_rules,omitempty"`
+}
+
 type WebsiteObservation struct {
+
+	// An absolute path to the document to return in case of a 4XX error.
+	ErrorDocument *string `json:"errorDocument,omitempty" tf:"error_document,omitempty"`
+
+	// Storage returns this index document when requests are made to the root domain or any of the subfolders.
+	IndexDocument *string `json:"indexDocument,omitempty" tf:"index_document,omitempty"`
+
+	// A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (http:// or https://) to use when redirecting requests. The default is the protocol that is used in the original request.
+	RedirectAllRequestsTo *string `json:"redirectAllRequestsTo,omitempty" tf:"redirect_all_requests_to,omitempty"`
+
+	// A json array containing routing rules describing redirect behavior and when redirects are applied.
+	RoutingRules *string `json:"routingRules,omitempty" tf:"routing_rules,omitempty"`
 }
 
 type WebsiteParameters struct {
@@ -394,6 +796,18 @@ type WebsiteParameters struct {
 type BucketSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     BucketParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider BucketInitParameters `json:"initProvider,omitempty"`
 }
 
 // BucketStatus defines the observed state of Bucket.

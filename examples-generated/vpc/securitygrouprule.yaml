@@ -50,6 +50,3 @@ spec:
     networkIdSelector:
       matchLabels:
         testing.upbound.io/example-name: lab-net
-
----
-

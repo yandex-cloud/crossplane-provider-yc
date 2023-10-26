@@ -25,7 +25,34 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type MySQLUserConnectionLimitsInitParameters struct {
+
+	// Max connections per hour.
+	MaxConnectionsPerHour *float64 `json:"maxConnectionsPerHour,omitempty" tf:"max_connections_per_hour,omitempty"`
+
+	// Max questions per hour.
+	MaxQuestionsPerHour *float64 `json:"maxQuestionsPerHour,omitempty" tf:"max_questions_per_hour,omitempty"`
+
+	// Max updates per hour.
+	MaxUpdatesPerHour *float64 `json:"maxUpdatesPerHour,omitempty" tf:"max_updates_per_hour,omitempty"`
+
+	// Max user connections.
+	MaxUserConnections *float64 `json:"maxUserConnections,omitempty" tf:"max_user_connections,omitempty"`
+}
+
 type MySQLUserConnectionLimitsObservation struct {
+
+	// Max connections per hour.
+	MaxConnectionsPerHour *float64 `json:"maxConnectionsPerHour,omitempty" tf:"max_connections_per_hour,omitempty"`
+
+	// Max questions per hour.
+	MaxQuestionsPerHour *float64 `json:"maxQuestionsPerHour,omitempty" tf:"max_questions_per_hour,omitempty"`
+
+	// Max updates per hour.
+	MaxUpdatesPerHour *float64 `json:"maxUpdatesPerHour,omitempty" tf:"max_updates_per_hour,omitempty"`
+
+	// Max user connections.
+	MaxUserConnections *float64 `json:"maxUserConnections,omitempty" tf:"max_user_connections,omitempty"`
 }
 
 type MySQLUserConnectionLimitsParameters struct {
@@ -47,8 +74,50 @@ type MySQLUserConnectionLimitsParameters struct {
 	MaxUserConnections *float64 `json:"maxUserConnections,omitempty" tf:"max_user_connections,omitempty"`
 }
 
+type MySQLUserInitParameters struct {
+
+	// Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD)
+	AuthenticationPlugin *string `json:"authenticationPlugin,omitempty" tf:"authentication_plugin,omitempty"`
+
+	// User's connection limits. The structure is documented below.
+	// If the attribute is not specified there will be no changes.
+	ConnectionLimits []MySQLUserConnectionLimitsInitParameters `json:"connectionLimits,omitempty" tf:"connection_limits,omitempty"`
+
+	// List user's global permissions
+	// Allowed permissions:  REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list.
+	// If the attribute is not specified there will be no changes.
+	GlobalPermissions []*string `json:"globalPermissions,omitempty" tf:"global_permissions,omitempty"`
+
+	// The name of the user.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Set of permissions granted to the user. The structure is documented below.
+	Permission []MySQLUserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+}
+
 type MySQLUserObservation struct {
+
+	// Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD)
+	AuthenticationPlugin *string `json:"authenticationPlugin,omitempty" tf:"authentication_plugin,omitempty"`
+
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// User's connection limits. The structure is documented below.
+	// If the attribute is not specified there will be no changes.
+	ConnectionLimits []MySQLUserConnectionLimitsObservation `json:"connectionLimits,omitempty" tf:"connection_limits,omitempty"`
+
+	// List user's global permissions
+	// Allowed permissions:  REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list.
+	// If the attribute is not specified there will be no changes.
+	GlobalPermissions []*string `json:"globalPermissions,omitempty" tf:"global_permissions,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The name of the user.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Set of permissions granted to the user. The structure is documented below.
+	Permission []MySQLUserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type MySQLUserParameters struct {
@@ -81,11 +150,11 @@ type MySQLUserParameters struct {
 	GlobalPermissions []*string `json:"globalPermissions,omitempty" tf:"global_permissions,omitempty"`
 
 	// The name of the user.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The password of the user.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// Set of permissions granted to the user. The structure is documented below.
@@ -93,13 +162,32 @@ type MySQLUserParameters struct {
 	Permission []MySQLUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
+type MySQLUserPermissionInitParameters struct {
+
+	// The name of the database that the permission grants access to.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
+
+	// List user's roles in the database.
+	// Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES,
+	// CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
+	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
+}
+
 type MySQLUserPermissionObservation struct {
+
+	// The name of the database that the permission grants access to.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
+
+	// List user's roles in the database.
+	// Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES,
+	// CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
+	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
 type MySQLUserPermissionParameters struct {
 
 	// The name of the database that the permission grants access to.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 
 	// List user's roles in the database.
@@ -113,6 +201,18 @@ type MySQLUserPermissionParameters struct {
 type MySQLUserSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     MySQLUserParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider MySQLUserInitParameters `json:"initProvider,omitempty"`
 }
 
 // MySQLUserStatus defines the observed state of MySQLUser.
@@ -133,8 +233,10 @@ type MySQLUserStatus struct {
 type MySQLUser struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              MySQLUserSpec   `json:"spec"`
-	Status            MySQLUserStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || has(self.initProvider.name)",message="name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.passwordSecretRef)",message="passwordSecretRef is a required parameter"
+	Spec   MySQLUserSpec   `json:"spec"`
+	Status MySQLUserStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

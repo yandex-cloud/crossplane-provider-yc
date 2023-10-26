@@ -14,6 +14,3 @@ spec:
     labels:
       my-label: my-label-value
     name: test-registry
-
----
-

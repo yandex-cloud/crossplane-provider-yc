@@ -23,6 +23,3 @@ metadata:
 spec:
   forProvider:
     name: test-registry
-
----
-

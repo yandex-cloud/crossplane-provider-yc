@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.12.1
   name: mongodbclusters.mdb.yandex-cloud.jet.crossplane.io
 spec:
   group: mdb.yandex-cloud.jet.crossplane.io
@@ -55,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -194,8 +197,6 @@ spec:
                           description: Version of MongoDB (either 5.0, 4.4, 4.2 or
                             4.0).
                           type: string
-                      required:
-                      - version
                       type: object
                     type: array
                   clusterId:
@@ -209,8 +210,6 @@ spec:
                         name:
                           description: The name of the database.
                           type: string
-                      required:
-                      - name
                       type: object
                     type: array
                   deletionProtection:
@@ -409,8 +408,6 @@ spec:
                             will be created. For more information see the official
                             documentation.
                           type: string
-                      required:
-                      - zoneId
                       type: object
                     type: array
                   labels:
@@ -436,8 +433,6 @@ spec:
                             or WEEKLY. A day and hour of window need to be specified
                             with weekly window.
                           type: string
-                      required:
-                      - type
                       type: object
                     type: array
                   name:
@@ -535,10 +530,6 @@ spec:
                           type: string
                         resourcePresetId:
                           type: string
-                      required:
-                      - diskSize
-                      - diskTypeId
-                      - resourcePresetId
                       type: object
                     type: array
                   securityGroupIds:
@@ -664,24 +655,309 @@ spec:
                                 items:
                                   type: string
                                 type: array
-                            required:
-                            - databaseName
                             type: object
                           type: array
                       required:
-                      - name
                       - passwordSecretRef
                       type: object
                     type: array
-                required:
-                - clusterConfig
-                - database
-                - environment
-                - host
-                - name
-                - resources
-                - user
                 type: object
+              initProvider:
+                description: THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. InitProvider
+                  holds the same fields as ForProvider, with the exception of Identifier
+                  and other resource reference fields. The fields that are in InitProvider
+                  are merged into ForProvider when the resource is created. The same
+                  fields are also added to the terraform ignore_changes hook, to avoid
+                  updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after
+                  creation, for example because of an external controller is managing
+                  them, like an autoscaler.
+                properties:
+                  clusterConfig:
+                    description: Configuration of the MongoDB subcluster. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        access:
+                          description: Shows whether cluster has access to data lens.
+                            The structure is documented below.
+                          items:
+                            type: object
+                          type: array
+                        backupWindowStart:
+                          description: Time to start the daily backup, in the UTC
+                            timezone. The structure is documented below.
+                          items:
+                            properties:
+                              hours:
+                                description: The hour at which backup will be started.
+                                type: number
+                              minutes:
+                                description: The minute at which backup will be started.
+                                type: number
+                            type: object
+                          type: array
+                        featureCompatibilityVersion:
+                          description: Feature compatibility version of MongoDB. If
+                            not provided version is taken. Can be either 5.0, 4.4,
+                            4.2 and 4.0.
+                          type: string
+                        mongod:
+                          description: Configuration of the mongod service. The structure
+                            is documented below.
+                          items:
+                            properties:
+                              auditLog:
+                                description: A set of audit log settings (see the
+                                  auditLog option). The structure is documented below.
+                                  Available only in enterprise edition.
+                                items:
+                                  properties:
+                                    filter:
+                                      description: Configuration of the audit log
+                                        filter in JSON format. For more information
+                                        see auditLog.filter description in the official
+                                        documentation. Available only in enterprise
+                                        edition.
+                                      type: string
+                                    runtimeConfiguration:
+                                      type: boolean
+                                  type: object
+                                type: array
+                              security:
+                                description: A set of MongoDB Security settings (see
+                                  the security option). The structure is documented
+                                  below. Available only in enterprise edition.
+                                items:
+                                  properties:
+                                    enableEncryption:
+                                      description: Enables the encryption for the
+                                        WiredTiger storage engine. Can be either true
+                                        or false. For more information see security.enableEncryption
+                                        description in the official documentation.
+                                        Available only in enterprise edition.
+                                      type: boolean
+                                    kmip:
+                                      description: Configuration of the third party
+                                        key management appliance via the Key Management
+                                        Interoperability Protocol (KMIP) (see Encryption
+                                        tutorial ). Requires enable_encryption to
+                                        be true. The structure is documented below.
+                                        Available only in enterprise edition.
+                                      items:
+                                        properties:
+                                          clientCertificate:
+                                            description: String containing the client
+                                              certificate used for authenticating
+                                              MongoDB to the KMIP server. For more
+                                              information see security.kmip.clientCertificateFile
+                                              description in the official documentation.
+                                            type: string
+                                          keyIdentifier:
+                                            description: Unique KMIP identifier for
+                                              an existing key within the KMIP server.
+                                              For more information see security.kmip.keyIdentifier
+                                              description in the official documentation.
+                                            type: string
+                                          port:
+                                            description: 'Port number to use to communicate
+                                              with the KMIP server. Default: 5696
+                                              For more information see security.kmip.port
+                                              description in the official documentation.'
+                                            type: number
+                                          serverCa:
+                                            description: Path to CA File. Used for
+                                              validating secure client connection
+                                              to KMIP server. For more information
+                                              see security.kmip.serverCAFile description
+                                              in the official documentation.
+                                            type: string
+                                          serverName:
+                                            description: Hostname or IP address of
+                                              the KMIP server to connect to. For more
+                                              information see security.kmip.serverName
+                                              description in the official documentation.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              setParameter:
+                                description: A set of MongoDB Server Parameters (see
+                                  the setParameter option). The structure is documented
+                                  below.
+                                items:
+                                  properties:
+                                    auditAuthorizationSuccess:
+                                      description: Enables the auditing of authorization
+                                        successes. Can be either true or false. For
+                                        more information, see the auditAuthorizationSuccess
+                                        description in the official documentation.
+                                        Available only in enterprise edition.
+                                      type: boolean
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        version:
+                          description: Version of MongoDB (either 5.0, 4.4, 4.2 or
+                            4.0).
+                          type: string
+                      type: object
+                    type: array
+                  clusterId:
+                    description: The ID of the cluster.
+                    type: string
+                  database:
+                    description: A database of the MongoDB cluster. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        name:
+                          description: The name of the database.
+                          type: string
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: Inhibits deletion of the cluster.  Can be either
+                      true or false.
+                    type: boolean
+                  description:
+                    description: Description of the MongoDB cluster.
+                    type: string
+                  environment:
+                    description: Deployment environment of the MongoDB cluster. Can
+                      be either PRESTABLE or PRODUCTION.
+                    type: string
+                  host:
+                    description: A host of the MongoDB cluster. The structure is documented
+                      below.
+                    items:
+                      properties:
+                        assignPublicIp:
+                          description: Should this host have assigned public IP assigned.
+                            Can be either true or false.
+                          type: boolean
+                        role:
+                          description: The role of the cluster (either PRIMARY or
+                            SECONDARY).
+                          type: string
+                        shardName:
+                          description: The name of the shard to which the host belongs.
+                          type: string
+                        type:
+                          description: type of mongo daemon which runs on this host
+                            (mongod, mongos or monogcfg). Defaults to mongod.
+                          type: string
+                        zoneId:
+                          description: The availability zone where the MongoDB host
+                            will be created. For more information see the official
+                            documentation.
+                          type: string
+                      type: object
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: A set of key/value label pairs to assign to the MongoDB
+                      cluster.
+                    type: object
+                  maintenanceWindow:
+                    items:
+                      properties:
+                        day:
+                          description: 'Day of week for maintenance window if window
+                            type is weekly. Possible values: MON, TUE, WED, THU, FRI,
+                            SAT, SUN.'
+                          type: string
+                        hour:
+                          description: Hour of day in UTC time zone (1-24) for maintenance
+                            window if window type is weekly.
+                          type: number
+                        type:
+                          description: Type of maintenance window. Can be either ANYTIME
+                            or WEEKLY. A day and hour of window need to be specified
+                            with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: Name of the MongoDB cluster. Provided by the client
+                      when the cluster is created.
+                    type: string
+                  resources:
+                    description: Resources allocated to hosts of the MongoDB cluster.
+                      The structure is documented below.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Volume of the storage available to a MongoDB
+                            host, in gigabytes.
+                          type: number
+                        diskTypeId:
+                          description: Type of the storage of MongoDB hosts. For more
+                            information see the official documentation.
+                          type: string
+                        resourcePresetId:
+                          type: string
+                      type: object
+                    type: array
+                  user:
+                    description: A user of the MongoDB cluster. The structure is documented
+                      below.
+                    items:
+                      properties:
+                        name:
+                          description: The name of the user.
+                          type: string
+                        permission:
+                          description: Set of permissions granted to the user. The
+                            structure is documented below.
+                          items:
+                            properties:
+                              databaseName:
+                                description: The name of the database that the permission
+                                  grants access to.
+                                type: string
+                              roles:
+                                description: The roles of the user in this database.
+                                  For more information see the official documentation.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
@@ -853,6 +1129,35 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: clusterConfig is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.clusterConfig)
+                || has(self.initProvider.clusterConfig)'
+            - message: database is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.database)
+                || has(self.initProvider.database)'
+            - message: environment is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.environment)
+                || has(self.initProvider.environment)'
+            - message: host is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.host)
+                || has(self.initProvider.host)'
+            - message: name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || has(self.initProvider.name)'
+            - message: resources is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.resources)
+                || has(self.initProvider.resources)'
+            - message: user is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.user)
+                || has(self.initProvider.user)'
           status:
             description: MongodbClusterStatus defines the observed state of MongodbCluster.
             properties:
@@ -873,10 +1178,157 @@ spec:
                                 type: boolean
                             type: object
                           type: array
+                        backupWindowStart:
+                          description: Time to start the daily backup, in the UTC
+                            timezone. The structure is documented below.
+                          items:
+                            properties:
+                              hours:
+                                description: The hour at which backup will be started.
+                                type: number
+                              minutes:
+                                description: The minute at which backup will be started.
+                                type: number
+                            type: object
+                          type: array
+                        featureCompatibilityVersion:
+                          description: Feature compatibility version of MongoDB. If
+                            not provided version is taken. Can be either 5.0, 4.4,
+                            4.2 and 4.0.
+                          type: string
+                        mongod:
+                          description: Configuration of the mongod service. The structure
+                            is documented below.
+                          items:
+                            properties:
+                              auditLog:
+                                description: A set of audit log settings (see the
+                                  auditLog option). The structure is documented below.
+                                  Available only in enterprise edition.
+                                items:
+                                  properties:
+                                    filter:
+                                      description: Configuration of the audit log
+                                        filter in JSON format. For more information
+                                        see auditLog.filter description in the official
+                                        documentation. Available only in enterprise
+                                        edition.
+                                      type: string
+                                    runtimeConfiguration:
+                                      type: boolean
+                                  type: object
+                                type: array
+                              security:
+                                description: A set of MongoDB Security settings (see
+                                  the security option). The structure is documented
+                                  below. Available only in enterprise edition.
+                                items:
+                                  properties:
+                                    enableEncryption:
+                                      description: Enables the encryption for the
+                                        WiredTiger storage engine. Can be either true
+                                        or false. For more information see security.enableEncryption
+                                        description in the official documentation.
+                                        Available only in enterprise edition.
+                                      type: boolean
+                                    kmip:
+                                      description: Configuration of the third party
+                                        key management appliance via the Key Management
+                                        Interoperability Protocol (KMIP) (see Encryption
+                                        tutorial ). Requires enable_encryption to
+                                        be true. The structure is documented below.
+                                        Available only in enterprise edition.
+                                      items:
+                                        properties:
+                                          clientCertificate:
+                                            description: String containing the client
+                                              certificate used for authenticating
+                                              MongoDB to the KMIP server. For more
+                                              information see security.kmip.clientCertificateFile
+                                              description in the official documentation.
+                                            type: string
+                                          keyIdentifier:
+                                            description: Unique KMIP identifier for
+                                              an existing key within the KMIP server.
+                                              For more information see security.kmip.keyIdentifier
+                                              description in the official documentation.
+                                            type: string
+                                          port:
+                                            description: 'Port number to use to communicate
+                                              with the KMIP server. Default: 5696
+                                              For more information see security.kmip.port
+                                              description in the official documentation.'
+                                            type: number
+                                          serverCa:
+                                            description: Path to CA File. Used for
+                                              validating secure client connection
+                                              to KMIP server. For more information
+                                              see security.kmip.serverCAFile description
+                                              in the official documentation.
+                                            type: string
+                                          serverName:
+                                            description: Hostname or IP address of
+                                              the KMIP server to connect to. For more
+                                              information see security.kmip.serverName
+                                              description in the official documentation.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              setParameter:
+                                description: A set of MongoDB Server Parameters (see
+                                  the setParameter option). The structure is documented
+                                  below.
+                                items:
+                                  properties:
+                                    auditAuthorizationSuccess:
+                                      description: Enables the auditing of authorization
+                                        successes. Can be either true or false. For
+                                        more information, see the auditAuthorizationSuccess
+                                        description in the official documentation.
+                                        Available only in enterprise edition.
+                                      type: boolean
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        version:
+                          description: Version of MongoDB (either 5.0, 4.4, 4.2 or
+                            4.0).
+                          type: string
                       type: object
                     type: array
+                  clusterId:
+                    description: The ID of the cluster.
+                    type: string
                   createdAt:
                     description: Creation timestamp of the key.
+                    type: string
+                  database:
+                    description: A database of the MongoDB cluster. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        name:
+                          description: The name of the database.
+                          type: string
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: Inhibits deletion of the cluster.  Can be either
+                      true or false.
+                    type: boolean
+                  description:
+                    description: Description of the MongoDB cluster.
+                    type: string
+                  environment:
+                    description: Deployment environment of the MongoDB cluster. Can
+                      be either PRESTABLE or PRODUCTION.
+                    type: string
+                  folderId:
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   health:
                     description: Aggregated health of the cluster. Can be either ALIVE,
@@ -888,6 +1340,10 @@ spec:
                       below.
                     items:
                       properties:
+                        assignPublicIp:
+                          description: Should this host have assigned public IP assigned.
+                            Can be either true or false.
+                          type: boolean
                         health:
                           description: (Computed) The health of the host.
                           type: string
@@ -895,10 +1351,86 @@ spec:
                           description: (Computed) The fully qualified domain name
                             of the host. Computed on server side.
                           type: string
+                        role:
+                          description: The role of the cluster (either PRIMARY or
+                            SECONDARY).
+                          type: string
+                        shardName:
+                          description: The name of the shard to which the host belongs.
+                          type: string
+                        subnetId:
+                          description: The ID of the subnet, to which the host belongs.
+                            The subnet must be a part of the network to which the
+                            cluster belongs.
+                          type: string
+                        type:
+                          description: type of mongo daemon which runs on this host
+                            (mongod, mongos or monogcfg). Defaults to mongod.
+                          type: string
+                        zoneId:
+                          description: The availability zone where the MongoDB host
+                            will be created. For more information see the official
+                            documentation.
+                          type: string
                       type: object
                     type: array
                   id:
                     type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: A set of key/value label pairs to assign to the MongoDB
+                      cluster.
+                    type: object
+                  maintenanceWindow:
+                    items:
+                      properties:
+                        day:
+                          description: 'Day of week for maintenance window if window
+                            type is weekly. Possible values: MON, TUE, WED, THU, FRI,
+                            SAT, SUN.'
+                          type: string
+                        hour:
+                          description: Hour of day in UTC time zone (1-24) for maintenance
+                            window if window type is weekly.
+                          type: number
+                        type:
+                          description: Type of maintenance window. Can be either ANYTIME
+                            or WEEKLY. A day and hour of window need to be specified
+                            with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: Name of the MongoDB cluster. Provided by the client
+                      when the cluster is created.
+                    type: string
+                  networkId:
+                    description: ID of the network, to which the MongoDB cluster belongs.
+                    type: string
+                  resources:
+                    description: Resources allocated to hosts of the MongoDB cluster.
+                      The structure is documented below.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Volume of the storage available to a MongoDB
+                            host, in gigabytes.
+                          type: number
+                        diskTypeId:
+                          description: Type of the storage of MongoDB hosts. For more
+                            information see the official documentation.
+                          type: string
+                        resourcePresetId:
+                          type: string
+                      type: object
+                    type: array
+                  securityGroupIds:
+                    description: A set of ids of security groups assigned to hosts
+                      of the cluster.
+                    items:
+                      type: string
+                    type: array
                   sharded:
                     description: MongoDB Cluster mode enabled/disabled.
                     type: boolean
@@ -908,6 +1440,33 @@ spec:
                       For more information see status field of JSON representation
                       in the official documentation.
                     type: string
+                  user:
+                    description: A user of the MongoDB cluster. The structure is documented
+                      below.
+                    items:
+                      properties:
+                        name:
+                          description: The name of the user.
+                          type: string
+                        permission:
+                          description: Set of permissions granted to the user. The
+                            structure is documented below.
+                          items:
+                            properties:
+                              databaseName:
+                                description: The name of the database that the permission
+                                  grants access to.
+                                type: string
+                              roles:
+                                description: The roles of the user in this database.
+                                  For more information see the official documentation.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -950,9 +1509,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

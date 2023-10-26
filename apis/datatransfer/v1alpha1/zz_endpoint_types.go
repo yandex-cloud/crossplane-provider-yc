@@ -25,7 +25,22 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AltNamesInitParameters struct {
+
+	// Name of the endpoint.
+	FromName *string `json:"fromName,omitempty" tf:"from_name,omitempty"`
+
+	// Name of the endpoint.
+	ToName *string `json:"toName,omitempty" tf:"to_name,omitempty"`
+}
+
 type AltNamesObservation struct {
+
+	// Name of the endpoint.
+	FromName *string `json:"fromName,omitempty" tf:"from_name,omitempty"`
+
+	// Name of the endpoint.
+	ToName *string `json:"toName,omitempty" tf:"to_name,omitempty"`
 }
 
 type AltNamesParameters struct {
@@ -39,7 +54,37 @@ type AltNamesParameters struct {
 	ToName *string `json:"toName,omitempty" tf:"to_name,omitempty"`
 }
 
+type ClickhouseSourceInitParameters struct {
+
+	// Connection settings. The structure is documented below.
+	Connection []ConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// List of tables which will not be transfered, formatted as schemaname.tablename.
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	// List of tables to transfer, formatted as schemaname.tablename. If omitted or an empty list is specified, all tables will be transferred.
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+
+	// List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+}
+
 type ClickhouseSourceObservation struct {
+
+	// Connection settings. The structure is documented below.
+	Connection []ConnectionObservation `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// List of tables which will not be transfered, formatted as schemaname.tablename.
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	// List of tables to transfer, formatted as schemaname.tablename. If omitted or an empty list is specified, all tables will be transferred.
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+
+	// List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
 type ClickhouseSourceParameters struct {
@@ -74,7 +119,16 @@ type ClickhouseSourceParameters struct {
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
+type ClickhouseTargetConnectionInitParameters struct {
+
+	// Connection options. The structure is documented below.
+	ConnectionOptions []ConnectionConnectionOptionsInitParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
+}
+
 type ClickhouseTargetConnectionObservation struct {
+
+	// Connection options. The structure is documented below.
+	ConnectionOptions []ConnectionConnectionOptionsObservation `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
 
 type ClickhouseTargetConnectionParameters struct {
@@ -84,7 +138,49 @@ type ClickhouseTargetConnectionParameters struct {
 	ConnectionOptions []ConnectionConnectionOptionsParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
 
+type ClickhouseTargetInitParameters struct {
+
+	// Table renaming rules. The structure is documented below.
+	AltNames []AltNamesInitParameters `json:"altNames,omitempty" tf:"alt_names,omitempty"`
+
+	// How to clean collections when activating the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
+	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
+
+	// Name of the ClickHouse cluster. For managed ClickHouse clusters defaults to managed cluster ID.
+	ClickhouseClusterName *string `json:"clickhouseClusterName,omitempty" tf:"clickhouse_cluster_name,omitempty"`
+
+	// Connection settings. The structure is documented below.
+	Connection []ClickhouseTargetConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// Shard selection rules for the data being transferred. The structure is documented below.
+	Sharding []ShardingInitParameters `json:"sharding,omitempty" tf:"sharding,omitempty"`
+}
+
 type ClickhouseTargetObservation struct {
+
+	// Table renaming rules. The structure is documented below.
+	AltNames []AltNamesObservation `json:"altNames,omitempty" tf:"alt_names,omitempty"`
+
+	// How to clean collections when activating the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
+	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
+
+	// Name of the ClickHouse cluster. For managed ClickHouse clusters defaults to managed cluster ID.
+	ClickhouseClusterName *string `json:"clickhouseClusterName,omitempty" tf:"clickhouse_cluster_name,omitempty"`
+
+	// Connection settings. The structure is documented below.
+	Connection []ClickhouseTargetConnectionObservation `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// Shard selection rules for the data being transferred. The structure is documented below.
+	Sharding []ShardingObservation `json:"sharding,omitempty" tf:"sharding,omitempty"`
+
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
 type ClickhouseTargetParameters struct {
@@ -127,7 +223,22 @@ type ClickhouseTargetParameters struct {
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
+type CollectionsInitParameters struct {
+
+	// Collection name.
+	CollectionName *string `json:"collectionName,omitempty" tf:"collection_name,omitempty"`
+
+	// Database name.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
+}
+
 type CollectionsObservation struct {
+
+	// Collection name.
+	CollectionName *string `json:"collectionName,omitempty" tf:"collection_name,omitempty"`
+
+	// Database name.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 }
 
 type CollectionsParameters struct {
@@ -141,7 +252,16 @@ type CollectionsParameters struct {
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 }
 
+type ColumnValueHashInitParameters struct {
+
+	// The name of the column to calculate hash from.
+	ColumnName *string `json:"columnName,omitempty" tf:"column_name,omitempty"`
+}
+
 type ColumnValueHashObservation struct {
+
+	// The name of the column to calculate hash from.
+	ColumnName *string `json:"columnName,omitempty" tf:"column_name,omitempty"`
 }
 
 type ColumnValueHashParameters struct {
@@ -151,10 +271,70 @@ type ColumnValueHashParameters struct {
 	ColumnName *string `json:"columnName,omitempty" tf:"column_name,omitempty"`
 }
 
+type ConnectionConnectionOptionsInitParameters struct {
+
+	// Name of the database to transfer.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// Identifier of the Managed PostgreSQL cluster.
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []ConnectionOptionsOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []ConnectionOptionsPasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
 type ConnectionConnectionOptionsObservation struct {
+
+	// Name of the database to transfer.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// Identifier of the Managed PostgreSQL cluster.
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []ConnectionOptionsOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []ConnectionOptionsPasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
+type ConnectionConnectionOptionsOnPremiseInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Replica set name.
+	ReplicaSet *string `json:"replicaSet,omitempty" tf:"replica_set,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []ConnectionOptionsOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type ConnectionConnectionOptionsOnPremiseObservation struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Replica set name.
+	ReplicaSet *string `json:"replicaSet,omitempty" tf:"replica_set,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []ConnectionOptionsOnPremiseTLSModeObservation `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type ConnectionConnectionOptionsOnPremiseParameters struct {
@@ -176,7 +356,22 @@ type ConnectionConnectionOptionsOnPremiseParameters struct {
 	TLSMode []ConnectionOptionsOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type ConnectionConnectionOptionsOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []ConnectionOptionsOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []ConnectionOptionsOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type ConnectionConnectionOptionsOnPremiseTLSModeObservation struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []ConnectionOptionsOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []ConnectionOptionsOnPremiseTLSModeEnabledObservation `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type ConnectionConnectionOptionsOnPremiseTLSModeParameters struct {
@@ -213,6 +408,9 @@ type ConnectionConnectionOptionsParameters struct {
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
+type ConnectionConnectionOptionsPasswordInitParameters struct {
+}
+
 type ConnectionConnectionOptionsPasswordObservation struct {
 }
 
@@ -222,10 +420,43 @@ type ConnectionConnectionOptionsPasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type ConnectionInitParameters struct {
+
+	// Connection options. The structure is documented below.
+	ConnectionOptions []ConnectionOptionsInitParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
+}
+
 type ConnectionObservation struct {
+
+	// Connection options. The structure is documented below.
+	ConnectionOptions []ConnectionOptionsObservation `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
+}
+
+type ConnectionOnPremiseInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []ConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type ConnectionOnPremiseObservation struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []ConnectionOnPremiseTLSModeObservation `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type ConnectionOnPremiseParameters struct {
@@ -256,13 +487,25 @@ type ConnectionOnPremiseParameters struct {
 	TLSMode []ConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type ConnectionOnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type ConnectionOnPremiseTLSModeDisabledObservation struct {
 }
 
 type ConnectionOnPremiseTLSModeDisabledParameters struct {
 }
 
+type ConnectionOnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
 type ConnectionOnPremiseTLSModeEnabledObservation struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type ConnectionOnPremiseTLSModeEnabledParameters struct {
@@ -272,7 +515,22 @@ type ConnectionOnPremiseTLSModeEnabledParameters struct {
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
+type ConnectionOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []ConnectionOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []ConnectionOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type ConnectionOnPremiseTLSModeObservation struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []ConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []ConnectionOnPremiseTLSModeEnabledObservation `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type ConnectionOnPremiseTLSModeParameters struct {
@@ -286,10 +544,70 @@ type ConnectionOnPremiseTLSModeParameters struct {
 	Enabled []ConnectionOnPremiseTLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
+type ConnectionOptionsInitParameters struct {
+
+	// Name of the database to transfer.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// Identifier of the Managed PostgreSQL cluster.
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []OnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []PasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
 type ConnectionOptionsObservation struct {
+
+	// Name of the database to transfer.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// Identifier of the Managed PostgreSQL cluster.
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []OnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []PasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
+type ConnectionOptionsOnPremiseInitParameters struct {
+
+	// TCP port number for the HTTP interface of the ClickHouse server.
+	HTTPPort *float64 `json:"httpPort,omitempty" tf:"http_port,omitempty"`
+
+	// TCP port number for the native interface of the ClickHouse server.
+	NativePort *float64 `json:"nativePort,omitempty" tf:"native_port,omitempty"`
+
+	// The list of ClickHouse shards. The structure is documented below.
+	Shards []OnPremiseShardsInitParameters `json:"shards,omitempty" tf:"shards,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []OnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type ConnectionOptionsOnPremiseObservation struct {
+
+	// TCP port number for the HTTP interface of the ClickHouse server.
+	HTTPPort *float64 `json:"httpPort,omitempty" tf:"http_port,omitempty"`
+
+	// TCP port number for the native interface of the ClickHouse server.
+	NativePort *float64 `json:"nativePort,omitempty" tf:"native_port,omitempty"`
+
+	// The list of ClickHouse shards. The structure is documented below.
+	Shards []OnPremiseShardsObservation `json:"shards,omitempty" tf:"shards,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []OnPremiseTLSModeObservation `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type ConnectionOptionsOnPremiseParameters struct {
@@ -311,13 +629,25 @@ type ConnectionOptionsOnPremiseParameters struct {
 	TLSMode []OnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type ConnectionOptionsOnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type ConnectionOptionsOnPremiseTLSModeDisabledObservation struct {
 }
 
 type ConnectionOptionsOnPremiseTLSModeDisabledParameters struct {
 }
 
+type ConnectionOptionsOnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
 type ConnectionOptionsOnPremiseTLSModeEnabledObservation struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type ConnectionOptionsOnPremiseTLSModeEnabledParameters struct {
@@ -327,7 +657,22 @@ type ConnectionOptionsOnPremiseTLSModeEnabledParameters struct {
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
+type ConnectionOptionsOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []OnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []OnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type ConnectionOptionsOnPremiseTLSModeObservation struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []OnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []OnPremiseTLSModeEnabledObservation `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type ConnectionOptionsOnPremiseTLSModeParameters struct {
@@ -364,6 +709,9 @@ type ConnectionOptionsParameters struct {
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
+type ConnectionOptionsPasswordInitParameters struct {
+}
+
 type ConnectionOptionsPasswordObservation struct {
 }
 
@@ -380,13 +728,25 @@ type ConnectionParameters struct {
 	ConnectionOptions []ConnectionOptionsParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
 
+type DisabledInitParameters struct {
+}
+
 type DisabledObservation struct {
 }
 
 type DisabledParameters struct {
 }
 
+type EnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
 type EnabledObservation struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type EnabledParameters struct {
@@ -396,10 +756,40 @@ type EnabledParameters struct {
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
+type EndpointInitParameters struct {
+
+	// Arbitrary description text for the endpoint.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// A set of key/value label pairs to assign to the Data Transfer endpoint.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Name of the endpoint.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Settings for the endpoint. The structure is documented below.
+	Settings []SettingsInitParameters `json:"settings,omitempty" tf:"settings,omitempty"`
+}
+
 type EndpointObservation struct {
+
+	// Arbitrary description text for the endpoint.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// ID of the folder to create the endpoint in. If it is not provided, the default provider folder is used.
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// (Computed) Identifier of a new Data Transfer endpoint.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// A set of key/value label pairs to assign to the Data Transfer endpoint.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Name of the endpoint.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Settings for the endpoint. The structure is documented below.
+	Settings []SettingsObservation `json:"settings,omitempty" tf:"settings,omitempty"`
 }
 
 type EndpointParameters struct {
@@ -434,7 +824,22 @@ type EndpointParameters struct {
 	Settings []SettingsParameters `json:"settings,omitempty" tf:"settings,omitempty"`
 }
 
+type ExcludedCollectionsInitParameters struct {
+
+	// Collection name.
+	CollectionName *string `json:"collectionName,omitempty" tf:"collection_name,omitempty"`
+
+	// Database name.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
+}
+
 type ExcludedCollectionsObservation struct {
+
+	// Collection name.
+	CollectionName *string `json:"collectionName,omitempty" tf:"collection_name,omitempty"`
+
+	// Database name.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 }
 
 type ExcludedCollectionsParameters struct {
@@ -448,7 +853,37 @@ type ExcludedCollectionsParameters struct {
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 }
 
+type MongoSourceConnectionConnectionOptionsInitParameters struct {
+
+	// Name of the database associated with the credentials.
+	AuthSource *string `json:"authSource,omitempty" tf:"auth_source,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []ConnectionConnectionOptionsOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []ConnectionConnectionOptionsPasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
 type MongoSourceConnectionConnectionOptionsObservation struct {
+
+	// Name of the database associated with the credentials.
+	AuthSource *string `json:"authSource,omitempty" tf:"auth_source,omitempty"`
+
+	// Identifier of the Managed PostgreSQL cluster.
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []ConnectionConnectionOptionsOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []ConnectionConnectionOptionsPasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type MongoSourceConnectionConnectionOptionsParameters struct {
@@ -483,7 +918,16 @@ type MongoSourceConnectionConnectionOptionsParameters struct {
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
+type MongoSourceConnectionInitParameters struct {
+
+	// Connection options. The structure is documented below.
+	ConnectionOptions []MongoSourceConnectionConnectionOptionsInitParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
+}
+
 type MongoSourceConnectionObservation struct {
+
+	// Connection options. The structure is documented below.
+	ConnectionOptions []MongoSourceConnectionConnectionOptionsObservation `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
 
 type MongoSourceConnectionParameters struct {
@@ -493,7 +937,43 @@ type MongoSourceConnectionParameters struct {
 	ConnectionOptions []MongoSourceConnectionConnectionOptionsParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
 
+type MongoSourceInitParameters struct {
+
+	// The list of the MongoDB collections that should be transferred. If omitted, all available collections will be transferred. The structure of the list item is documented below.
+	Collections []CollectionsInitParameters `json:"collections,omitempty" tf:"collections,omitempty"`
+
+	// Connection settings. The structure is documented below.
+	Connection []MongoSourceConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// The list of the MongoDB collections that should not be transferred.
+	ExcludedCollections []ExcludedCollectionsInitParameters `json:"excludedCollections,omitempty" tf:"excluded_collections,omitempty"`
+
+	// whether the secondary server should be preferred to the primary when copying data.
+	SecondaryPreferredMode *bool `json:"secondaryPreferredMode,omitempty" tf:"secondary_preferred_mode,omitempty"`
+
+	// List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+}
+
 type MongoSourceObservation struct {
+
+	// The list of the MongoDB collections that should be transferred. If omitted, all available collections will be transferred. The structure of the list item is documented below.
+	Collections []CollectionsObservation `json:"collections,omitempty" tf:"collections,omitempty"`
+
+	// Connection settings. The structure is documented below.
+	Connection []MongoSourceConnectionObservation `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// The list of the MongoDB collections that should not be transferred.
+	ExcludedCollections []ExcludedCollectionsObservation `json:"excludedCollections,omitempty" tf:"excluded_collections,omitempty"`
+
+	// whether the secondary server should be preferred to the primary when copying data.
+	SecondaryPreferredMode *bool `json:"secondaryPreferredMode,omitempty" tf:"secondary_preferred_mode,omitempty"`
+
+	// List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
 type MongoSourceParameters struct {
@@ -532,10 +1012,67 @@ type MongoSourceParameters struct {
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
+type MongoTargetConnectionConnectionOptionsInitParameters struct {
+
+	// Name of the database associated with the credentials.
+	AuthSource *string `json:"authSource,omitempty" tf:"auth_source,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []MongoTargetConnectionConnectionOptionsOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []MongoTargetConnectionConnectionOptionsPasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
 type MongoTargetConnectionConnectionOptionsObservation struct {
+
+	// Name of the database associated with the credentials.
+	AuthSource *string `json:"authSource,omitempty" tf:"auth_source,omitempty"`
+
+	// Identifier of the Managed PostgreSQL cluster.
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []MongoTargetConnectionConnectionOptionsOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []MongoTargetConnectionConnectionOptionsPasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
+type MongoTargetConnectionConnectionOptionsOnPremiseInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Replica set name.
+	ReplicaSet *string `json:"replicaSet,omitempty" tf:"replica_set,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []ConnectionConnectionOptionsOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type MongoTargetConnectionConnectionOptionsOnPremiseObservation struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Replica set name.
+	ReplicaSet *string `json:"replicaSet,omitempty" tf:"replica_set,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []ConnectionConnectionOptionsOnPremiseTLSModeObservation `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type MongoTargetConnectionConnectionOptionsOnPremiseParameters struct {
@@ -589,6 +1126,9 @@ type MongoTargetConnectionConnectionOptionsParameters struct {
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
+type MongoTargetConnectionConnectionOptionsPasswordInitParameters struct {
+}
+
 type MongoTargetConnectionConnectionOptionsPasswordObservation struct {
 }
 
@@ -598,7 +1138,16 @@ type MongoTargetConnectionConnectionOptionsPasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type MongoTargetConnectionInitParameters struct {
+
+	// Connection options. The structure is documented below.
+	ConnectionOptions []MongoTargetConnectionConnectionOptionsInitParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
+}
+
 type MongoTargetConnectionObservation struct {
+
+	// Connection options. The structure is documented below.
+	ConnectionOptions []MongoTargetConnectionConnectionOptionsObservation `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
 
 type MongoTargetConnectionParameters struct {
@@ -608,7 +1157,37 @@ type MongoTargetConnectionParameters struct {
 	ConnectionOptions []MongoTargetConnectionConnectionOptionsParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
 
+type MongoTargetInitParameters struct {
+
+	// How to clean collections when activating the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
+	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
+
+	// Connection settings. The structure is documented below.
+	Connection []MongoTargetConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// Name of the database to transfer.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+}
+
 type MongoTargetObservation struct {
+
+	// How to clean collections when activating the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
+	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
+
+	// Connection settings. The structure is documented below.
+	Connection []MongoTargetConnectionObservation `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// Name of the database to transfer.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
 type MongoTargetParameters struct {
@@ -643,7 +1222,19 @@ type MongoTargetParameters struct {
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
+type MySQLSourceConnectionInitParameters struct {
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []ConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
 type MySQLSourceConnectionObservation struct {
+
+	// Identifier of the Managed PostgreSQL cluster.
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []ConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
 type MySQLSourceConnectionParameters struct {
@@ -666,7 +1257,59 @@ type MySQLSourceConnectionParameters struct {
 	OnPremise []ConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
+type MySQLSourceInitParameters struct {
+
+	// Connection settings. The structure is documented below.
+	Connection []MySQLSourceConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// Opposite of include_table_regex. The tables matching the specified regular expressions will not be transferred.
+	ExcludeTablesRegex []*string `json:"excludeTablesRegex,omitempty" tf:"exclude_tables_regex,omitempty"`
+
+	// List of regular expressions of table names which should be transferred. A table name is formatted as schemaname.tablename. For example, a single regular expression may look like ^mydb.employees$.
+	IncludeTablesRegex []*string `json:"includeTablesRegex,omitempty" tf:"include_tables_regex,omitempty"`
+
+	// Defines which database schema objects should be transferred, e.g. views, functions, etc.
+	ObjectTransferSettings []ObjectTransferSettingsInitParameters `json:"objectTransferSettings,omitempty" tf:"object_transfer_settings,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []MySQLSourcePasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	ServiceDatabase *string `json:"serviceDatabase,omitempty" tf:"service_database,omitempty"`
+
+	// Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.
+	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
+}
+
 type MySQLSourceObservation struct {
+
+	// Connection settings. The structure is documented below.
+	Connection []MySQLSourceConnectionObservation `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// Name of the database to transfer.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// Opposite of include_table_regex. The tables matching the specified regular expressions will not be transferred.
+	ExcludeTablesRegex []*string `json:"excludeTablesRegex,omitempty" tf:"exclude_tables_regex,omitempty"`
+
+	// List of regular expressions of table names which should be transferred. A table name is formatted as schemaname.tablename. For example, a single regular expression may look like ^mydb.employees$.
+	IncludeTablesRegex []*string `json:"includeTablesRegex,omitempty" tf:"include_tables_regex,omitempty"`
+
+	// Defines which database schema objects should be transferred, e.g. views, functions, etc.
+	ObjectTransferSettings []ObjectTransferSettingsObservation `json:"objectTransferSettings,omitempty" tf:"object_transfer_settings,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []MySQLSourcePasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	ServiceDatabase *string `json:"serviceDatabase,omitempty" tf:"service_database,omitempty"`
+
+	// Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.
+	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type MySQLSourceParameters struct {
@@ -740,6 +1383,9 @@ type MySQLSourceParameters struct {
 	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
 }
 
+type MySQLSourcePasswordInitParameters struct {
+}
+
 type MySQLSourcePasswordObservation struct {
 }
 
@@ -749,10 +1395,46 @@ type MySQLSourcePasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type MySQLTargetConnectionInitParameters struct {
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []MySQLTargetConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
 type MySQLTargetConnectionObservation struct {
+
+	// Identifier of the Managed PostgreSQL cluster.
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []MySQLTargetConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type MySQLTargetConnectionOnPremiseInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []MySQLTargetConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type MySQLTargetConnectionOnPremiseObservation struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []MySQLTargetConnectionOnPremiseTLSModeObservation `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type MySQLTargetConnectionOnPremiseParameters struct {
@@ -783,13 +1465,25 @@ type MySQLTargetConnectionOnPremiseParameters struct {
 	TLSMode []MySQLTargetConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type MySQLTargetConnectionOnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type MySQLTargetConnectionOnPremiseTLSModeDisabledObservation struct {
 }
 
 type MySQLTargetConnectionOnPremiseTLSModeDisabledParameters struct {
 }
 
+type MySQLTargetConnectionOnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
 type MySQLTargetConnectionOnPremiseTLSModeEnabledObservation struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type MySQLTargetConnectionOnPremiseTLSModeEnabledParameters struct {
@@ -799,7 +1493,22 @@ type MySQLTargetConnectionOnPremiseTLSModeEnabledParameters struct {
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
+type MySQLTargetConnectionOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []MySQLTargetConnectionOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []MySQLTargetConnectionOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type MySQLTargetConnectionOnPremiseTLSModeObservation struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []MySQLTargetConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []MySQLTargetConnectionOnPremiseTLSModeEnabledObservation `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type MySQLTargetConnectionOnPremiseTLSModeParameters struct {
@@ -833,7 +1542,49 @@ type MySQLTargetConnectionParameters struct {
 	OnPremise []MySQLTargetConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
+type MySQLTargetInitParameters struct {
+
+	// Connection settings. The structure is documented below.
+	Connection []MySQLTargetConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []MySQLTargetPasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// sql_mode to use when interacting with the server. Defaults to "NO_AUTO_VALUE_ON_ZERO,NO_DIR_IN_CREATE,NO_ENGINE_SUBSTITUTION".
+	SQLMode *string `json:"sqlMode,omitempty" tf:"sql_mode,omitempty"`
+
+	// When true, disables foreign key checks. See foreign_key_checks. False by default.
+	SkipConstraintChecks *bool `json:"skipConstraintChecks,omitempty" tf:"skip_constraint_checks,omitempty"`
+
+	// Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.
+	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
+}
+
 type MySQLTargetObservation struct {
+
+	// Connection settings. The structure is documented below.
+	Connection []MySQLTargetConnectionObservation `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// Name of the database to transfer.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []MySQLTargetPasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// sql_mode to use when interacting with the server. Defaults to "NO_AUTO_VALUE_ON_ZERO,NO_DIR_IN_CREATE,NO_ENGINE_SUBSTITUTION".
+	SQLMode *string `json:"sqlMode,omitempty" tf:"sql_mode,omitempty"`
+
+	// List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// When true, disables foreign key checks. See foreign_key_checks. False by default.
+	SkipConstraintChecks *bool `json:"skipConstraintChecks,omitempty" tf:"skip_constraint_checks,omitempty"`
+
+	// Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.
+	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type MySQLTargetParameters struct {
@@ -900,6 +1651,9 @@ type MySQLTargetParameters struct {
 	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
 }
 
+type MySQLTargetPasswordInitParameters struct {
+}
+
 type MySQLTargetPasswordObservation struct {
 }
 
@@ -909,7 +1663,22 @@ type MySQLTargetPasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type ObjectTransferSettingsInitParameters struct {
+	Routine *string `json:"routine,omitempty" tf:"routine,omitempty"`
+
+	// All of the attrubutes are optional and should be either "BEFORE_DATA", "AFTER_DATA" or "NEVER".
+	Trigger *string `json:"trigger,omitempty" tf:"trigger,omitempty"`
+
+	View *string `json:"view,omitempty" tf:"view,omitempty"`
+}
+
 type ObjectTransferSettingsObservation struct {
+	Routine *string `json:"routine,omitempty" tf:"routine,omitempty"`
+
+	// All of the attrubutes are optional and should be either "BEFORE_DATA", "AFTER_DATA" or "NEVER".
+	Trigger *string `json:"trigger,omitempty" tf:"trigger,omitempty"`
+
+	View *string `json:"view,omitempty" tf:"view,omitempty"`
 }
 
 type ObjectTransferSettingsParameters struct {
@@ -925,7 +1694,34 @@ type ObjectTransferSettingsParameters struct {
 	View *string `json:"view,omitempty" tf:"view,omitempty"`
 }
 
+type OnPremiseInitParameters struct {
+
+	// TCP port number for the HTTP interface of the ClickHouse server.
+	HTTPPort *float64 `json:"httpPort,omitempty" tf:"http_port,omitempty"`
+
+	// TCP port number for the native interface of the ClickHouse server.
+	NativePort *float64 `json:"nativePort,omitempty" tf:"native_port,omitempty"`
+
+	// The list of ClickHouse shards. The structure is documented below.
+	Shards []ShardsInitParameters `json:"shards,omitempty" tf:"shards,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []TLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
 type OnPremiseObservation struct {
+
+	// TCP port number for the HTTP interface of the ClickHouse server.
+	HTTPPort *float64 `json:"httpPort,omitempty" tf:"http_port,omitempty"`
+
+	// TCP port number for the native interface of the ClickHouse server.
+	NativePort *float64 `json:"nativePort,omitempty" tf:"native_port,omitempty"`
+
+	// The list of ClickHouse shards. The structure is documented below.
+	Shards []ShardsObservation `json:"shards,omitempty" tf:"shards,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []TLSModeObservation `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type OnPremiseParameters struct {
@@ -947,7 +1743,22 @@ type OnPremiseParameters struct {
 	TLSMode []TLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type OnPremiseShardsInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Name of the endpoint.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
 type OnPremiseShardsObservation struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Name of the endpoint.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type OnPremiseShardsParameters struct {
@@ -961,13 +1772,25 @@ type OnPremiseShardsParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
+type OnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type OnPremiseTLSModeDisabledObservation struct {
 }
 
 type OnPremiseTLSModeDisabledParameters struct {
 }
 
+type OnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
 type OnPremiseTLSModeEnabledObservation struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type OnPremiseTLSModeEnabledParameters struct {
@@ -977,7 +1800,22 @@ type OnPremiseTLSModeEnabledParameters struct {
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
+type OnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []TLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []TLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type OnPremiseTLSModeObservation struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []TLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []TLSModeEnabledObservation `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type OnPremiseTLSModeParameters struct {
@@ -991,6 +1829,9 @@ type OnPremiseTLSModeParameters struct {
 	Enabled []TLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
+type PasswordInitParameters struct {
+}
+
 type PasswordObservation struct {
 }
 
@@ -1000,10 +1841,46 @@ type PasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type PostgresSourceConnectionInitParameters struct {
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []PostgresSourceConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
 type PostgresSourceConnectionObservation struct {
+
+	// Identifier of the Managed PostgreSQL cluster.
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []PostgresSourceConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type PostgresSourceConnectionOnPremiseInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []PostgresSourceConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type PostgresSourceConnectionOnPremiseObservation struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []PostgresSourceConnectionOnPremiseTLSModeObservation `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type PostgresSourceConnectionOnPremiseParameters struct {
@@ -1034,13 +1911,25 @@ type PostgresSourceConnectionOnPremiseParameters struct {
 	TLSMode []PostgresSourceConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type PostgresSourceConnectionOnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type PostgresSourceConnectionOnPremiseTLSModeDisabledObservation struct {
 }
 
 type PostgresSourceConnectionOnPremiseTLSModeDisabledParameters struct {
 }
 
+type PostgresSourceConnectionOnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
 type PostgresSourceConnectionOnPremiseTLSModeEnabledObservation struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type PostgresSourceConnectionOnPremiseTLSModeEnabledParameters struct {
@@ -1050,7 +1939,22 @@ type PostgresSourceConnectionOnPremiseTLSModeEnabledParameters struct {
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
+type PostgresSourceConnectionOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []PostgresSourceConnectionOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []PostgresSourceConnectionOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type PostgresSourceConnectionOnPremiseTLSModeObservation struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []PostgresSourceConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []PostgresSourceConnectionOnPremiseTLSModeEnabledObservation `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type PostgresSourceConnectionOnPremiseTLSModeParameters struct {
@@ -1084,7 +1988,106 @@ type PostgresSourceConnectionParameters struct {
 	OnPremise []PostgresSourceConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
+type PostgresSourceInitParameters struct {
+
+	// Connection settings. The structure is documented below.
+	Connection []PostgresSourceConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// List of tables which will not be transfered, formatted as schemaname.tablename.
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	// List of tables to transfer, formatted as schemaname.tablename. If omitted or an empty list is specified, all tables will be transferred.
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+
+	// Defines which database schema objects should be transferred, e.g. views, functions, etc.
+	ObjectTransferSettings []PostgresSourceObjectTransferSettingsInitParameters `json:"objectTransferSettings,omitempty" tf:"object_transfer_settings,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []PostgresSourcePasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// Name of the database schema in which auxiliary tables needed for the transfer will be created. Empty service_schema implies schema "public".
+	ServiceSchema *string `json:"serviceSchema,omitempty" tf:"service_schema,omitempty"`
+
+	// Maximum WAL size held by the replication slot, in gigabytes. Exceeding this limit will result in a replication failure and deletion of the replication slot. Unlimited by default.
+	SlotGigabyteLagLimit *float64 `json:"slotGigabyteLagLimit,omitempty" tf:"slot_gigabyte_lag_limit,omitempty"`
+}
+
+type PostgresSourceObjectTransferSettingsInitParameters struct {
+
+	// All of the attrubutes are optional and should be either "BEFORE_DATA", "AFTER_DATA" or "NEVER".
+	Cast *string `json:"cast,omitempty" tf:"cast,omitempty"`
+
+	Collation *string `json:"collation,omitempty" tf:"collation,omitempty"`
+
+	Constraint *string `json:"constraint,omitempty" tf:"constraint,omitempty"`
+
+	DefaultValues *string `json:"defaultValues,omitempty" tf:"default_values,omitempty"`
+
+	FkConstraint *string `json:"fkConstraint,omitempty" tf:"fk_constraint,omitempty"`
+
+	Function *string `json:"function,omitempty" tf:"function,omitempty"`
+
+	Index *string `json:"index,omitempty" tf:"index,omitempty"`
+
+	MaterializedView *string `json:"materializedView,omitempty" tf:"materialized_view,omitempty"`
+
+	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
+
+	PrimaryKey *string `json:"primaryKey,omitempty" tf:"primary_key,omitempty"`
+
+	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
+
+	Sequence *string `json:"sequence,omitempty" tf:"sequence,omitempty"`
+
+	SequenceOwnedBy *string `json:"sequenceOwnedBy,omitempty" tf:"sequence_owned_by,omitempty"`
+
+	Table *string `json:"table,omitempty" tf:"table,omitempty"`
+
+	// All of the attrubutes are optional and should be either "BEFORE_DATA", "AFTER_DATA" or "NEVER".
+	Trigger *string `json:"trigger,omitempty" tf:"trigger,omitempty"`
+
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	View *string `json:"view,omitempty" tf:"view,omitempty"`
+}
+
 type PostgresSourceObjectTransferSettingsObservation struct {
+
+	// All of the attrubutes are optional and should be either "BEFORE_DATA", "AFTER_DATA" or "NEVER".
+	Cast *string `json:"cast,omitempty" tf:"cast,omitempty"`
+
+	Collation *string `json:"collation,omitempty" tf:"collation,omitempty"`
+
+	Constraint *string `json:"constraint,omitempty" tf:"constraint,omitempty"`
+
+	DefaultValues *string `json:"defaultValues,omitempty" tf:"default_values,omitempty"`
+
+	FkConstraint *string `json:"fkConstraint,omitempty" tf:"fk_constraint,omitempty"`
+
+	Function *string `json:"function,omitempty" tf:"function,omitempty"`
+
+	Index *string `json:"index,omitempty" tf:"index,omitempty"`
+
+	MaterializedView *string `json:"materializedView,omitempty" tf:"materialized_view,omitempty"`
+
+	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
+
+	PrimaryKey *string `json:"primaryKey,omitempty" tf:"primary_key,omitempty"`
+
+	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
+
+	Sequence *string `json:"sequence,omitempty" tf:"sequence,omitempty"`
+
+	SequenceOwnedBy *string `json:"sequenceOwnedBy,omitempty" tf:"sequence_owned_by,omitempty"`
+
+	Table *string `json:"table,omitempty" tf:"table,omitempty"`
+
+	// All of the attrubutes are optional and should be either "BEFORE_DATA", "AFTER_DATA" or "NEVER".
+	Trigger *string `json:"trigger,omitempty" tf:"trigger,omitempty"`
+
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	View *string `json:"view,omitempty" tf:"view,omitempty"`
 }
 
 type PostgresSourceObjectTransferSettingsParameters struct {
@@ -1144,6 +2147,36 @@ type PostgresSourceObjectTransferSettingsParameters struct {
 }
 
 type PostgresSourceObservation struct {
+
+	// Connection settings. The structure is documented below.
+	Connection []PostgresSourceConnectionObservation `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// Name of the database to transfer.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// List of tables which will not be transfered, formatted as schemaname.tablename.
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	// List of tables to transfer, formatted as schemaname.tablename. If omitted or an empty list is specified, all tables will be transferred.
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+
+	// Defines which database schema objects should be transferred, e.g. views, functions, etc.
+	ObjectTransferSettings []PostgresSourceObjectTransferSettingsObservation `json:"objectTransferSettings,omitempty" tf:"object_transfer_settings,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []PostgresSourcePasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// Name of the database schema in which auxiliary tables needed for the transfer will be created. Empty service_schema implies schema "public".
+	ServiceSchema *string `json:"serviceSchema,omitempty" tf:"service_schema,omitempty"`
+
+	// Maximum WAL size held by the replication slot, in gigabytes. Exceeding this limit will result in a replication failure and deletion of the replication slot. Unlimited by default.
+	SlotGigabyteLagLimit *float64 `json:"slotGigabyteLagLimit,omitempty" tf:"slot_gigabyte_lag_limit,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type PostgresSourceParameters struct {
@@ -1218,6 +2251,9 @@ type PostgresSourceParameters struct {
 	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
 }
 
+type PostgresSourcePasswordInitParameters struct {
+}
+
 type PostgresSourcePasswordObservation struct {
 }
 
@@ -1227,10 +2263,46 @@ type PostgresSourcePasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type PostgresTargetConnectionInitParameters struct {
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []PostgresTargetConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
 type PostgresTargetConnectionObservation struct {
+
+	// Identifier of the Managed PostgreSQL cluster.
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []PostgresTargetConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type PostgresTargetConnectionOnPremiseInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []PostgresTargetConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type PostgresTargetConnectionOnPremiseObservation struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []PostgresTargetConnectionOnPremiseTLSModeObservation `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type PostgresTargetConnectionOnPremiseParameters struct {
@@ -1261,13 +2333,25 @@ type PostgresTargetConnectionOnPremiseParameters struct {
 	TLSMode []PostgresTargetConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type PostgresTargetConnectionOnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type PostgresTargetConnectionOnPremiseTLSModeDisabledObservation struct {
 }
 
 type PostgresTargetConnectionOnPremiseTLSModeDisabledParameters struct {
 }
 
+type PostgresTargetConnectionOnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
 type PostgresTargetConnectionOnPremiseTLSModeEnabledObservation struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type PostgresTargetConnectionOnPremiseTLSModeEnabledParameters struct {
@@ -1277,7 +2361,22 @@ type PostgresTargetConnectionOnPremiseTLSModeEnabledParameters struct {
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
+type PostgresTargetConnectionOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []PostgresTargetConnectionOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []PostgresTargetConnectionOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type PostgresTargetConnectionOnPremiseTLSModeObservation struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []PostgresTargetConnectionOnPremiseTLSModeDisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []PostgresTargetConnectionOnPremiseTLSModeEnabledObservation `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type PostgresTargetConnectionOnPremiseTLSModeParameters struct {
@@ -1311,7 +2410,31 @@ type PostgresTargetConnectionParameters struct {
 	OnPremise []PostgresTargetConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
+type PostgresTargetInitParameters struct {
+
+	// Connection settings. The structure is documented below.
+	Connection []PostgresTargetConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []PostgresTargetPasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+}
+
 type PostgresTargetObservation struct {
+
+	// Connection settings. The structure is documented below.
+	Connection []PostgresTargetConnectionObservation `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// Name of the database to transfer.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []PostgresTargetPasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type PostgresTargetParameters struct {
@@ -1366,6 +2489,9 @@ type PostgresTargetParameters struct {
 	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
 }
 
+type PostgresTargetPasswordInitParameters struct {
+}
+
 type PostgresTargetPasswordObservation struct {
 }
 
@@ -1375,7 +2501,48 @@ type PostgresTargetPasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type SettingsInitParameters struct {
+	ClickhouseSource []ClickhouseSourceInitParameters `json:"clickhouseSource,omitempty" tf:"clickhouse_source,omitempty"`
+
+	ClickhouseTarget []ClickhouseTargetInitParameters `json:"clickhouseTarget,omitempty" tf:"clickhouse_target,omitempty"`
+
+	MongoSource []MongoSourceInitParameters `json:"mongoSource,omitempty" tf:"mongo_source,omitempty"`
+
+	MongoTarget []MongoTargetInitParameters `json:"mongoTarget,omitempty" tf:"mongo_target,omitempty"`
+
+	// Settings specific to the MySQL source endpoint.
+	MySQLSource []MySQLSourceInitParameters `json:"mysqlSource,omitempty" tf:"mysql_source,omitempty"`
+
+	// Settings specific to the MySQL target endpoint.
+	MySQLTarget []MySQLTargetInitParameters `json:"mysqlTarget,omitempty" tf:"mysql_target,omitempty"`
+
+	// Settings specific to the PostgreSQL source endpoint.
+	PostgresSource []PostgresSourceInitParameters `json:"postgresSource,omitempty" tf:"postgres_source,omitempty"`
+
+	// Settings specific to the PostgreSQL target endpoint.
+	PostgresTarget []PostgresTargetInitParameters `json:"postgresTarget,omitempty" tf:"postgres_target,omitempty"`
+}
+
 type SettingsObservation struct {
+	ClickhouseSource []ClickhouseSourceObservation `json:"clickhouseSource,omitempty" tf:"clickhouse_source,omitempty"`
+
+	ClickhouseTarget []ClickhouseTargetObservation `json:"clickhouseTarget,omitempty" tf:"clickhouse_target,omitempty"`
+
+	MongoSource []MongoSourceObservation `json:"mongoSource,omitempty" tf:"mongo_source,omitempty"`
+
+	MongoTarget []MongoTargetObservation `json:"mongoTarget,omitempty" tf:"mongo_target,omitempty"`
+
+	// Settings specific to the MySQL source endpoint.
+	MySQLSource []MySQLSourceObservation `json:"mysqlSource,omitempty" tf:"mysql_source,omitempty"`
+
+	// Settings specific to the MySQL target endpoint.
+	MySQLTarget []MySQLTargetObservation `json:"mysqlTarget,omitempty" tf:"mysql_target,omitempty"`
+
+	// Settings specific to the PostgreSQL source endpoint.
+	PostgresSource []PostgresSourceObservation `json:"postgresSource,omitempty" tf:"postgres_source,omitempty"`
+
+	// Settings specific to the PostgreSQL target endpoint.
+	PostgresTarget []PostgresTargetObservation `json:"postgresTarget,omitempty" tf:"postgres_target,omitempty"`
 }
 
 type SettingsParameters struct {
@@ -1409,7 +2576,22 @@ type SettingsParameters struct {
 	PostgresTarget []PostgresTargetParameters `json:"postgresTarget,omitempty" tf:"postgres_target,omitempty"`
 }
 
+type ShardingInitParameters struct {
+
+	// Shard data by the hash value of the specified column. The structure is documented below.
+	ColumnValueHash []ColumnValueHashInitParameters `json:"columnValueHash,omitempty" tf:"column_value_hash,omitempty"`
+
+	// Shard data by ID of the transfer.
+	TransferID []TransferIDInitParameters `json:"transferId,omitempty" tf:"transfer_id,omitempty"`
+}
+
 type ShardingObservation struct {
+
+	// Shard data by the hash value of the specified column. The structure is documented below.
+	ColumnValueHash []ColumnValueHashObservation `json:"columnValueHash,omitempty" tf:"column_value_hash,omitempty"`
+
+	// Shard data by ID of the transfer.
+	TransferID []TransferIDParameters `json:"transferId,omitempty" tf:"transfer_id,omitempty"`
 }
 
 type ShardingParameters struct {
@@ -1423,7 +2605,22 @@ type ShardingParameters struct {
 	TransferID []TransferIDParameters `json:"transferId,omitempty" tf:"transfer_id,omitempty"`
 }
 
+type ShardsInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Name of the endpoint.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
 type ShardsObservation struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Name of the endpoint.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type ShardsParameters struct {
@@ -1437,13 +2634,25 @@ type ShardsParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
+type TLSModeDisabledInitParameters struct {
+}
+
 type TLSModeDisabledObservation struct {
 }
 
 type TLSModeDisabledParameters struct {
 }
 
+type TLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
 type TLSModeEnabledObservation struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type TLSModeEnabledParameters struct {
@@ -1453,7 +2662,22 @@ type TLSModeEnabledParameters struct {
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
+type TLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []DisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []EnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type TLSModeObservation struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []DisabledParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []EnabledObservation `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type TLSModeParameters struct {
@@ -1467,6 +2691,9 @@ type TLSModeParameters struct {
 	Enabled []EnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
+type TransferIDInitParameters struct {
+}
+
 type TransferIDObservation struct {
 }
 
@@ -1477,6 +2704,18 @@ type TransferIDParameters struct {
 type EndpointSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     EndpointParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider EndpointInitParameters `json:"initProvider,omitempty"`
 }
 
 // EndpointStatus defines the observed state of Endpoint.

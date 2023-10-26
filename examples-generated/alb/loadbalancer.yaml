@@ -29,6 +29,3 @@ spec:
     networkIdSelector:
       matchLabels:
         testing.upbound.io/example-name: test-network
-
----
-

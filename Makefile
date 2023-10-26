@@ -13,8 +13,8 @@ export TERRAFORM_PROVIDER_HOST := hashicorp-releases.yandexcloud.net
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/yandex-cloud/terraform-provider-yandex
 export TERRAFORM_DOCS_PATH ?= website/docs/r
 
-GO_REQUIRED_VERSION ?= 1.19
-GOLANGCILINT_VERSION ?= 1.50.0
+GO_REQUIRED_VERSION ?= 1.20
+GOLANGCILINT_VERSION ?= 1.55.1
 
 PLATFORMS ?= linux_amd64 linux_arm64
 

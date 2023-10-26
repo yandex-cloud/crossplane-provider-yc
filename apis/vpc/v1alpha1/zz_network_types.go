@@ -25,6 +25,19 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type NetworkInitParameters struct {
+
+	// An optional description of this resource. Provide this property when
+	// you create the resource.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Labels to apply to this network. A list of key/value pairs.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Name of the network. Provided by the client when the network is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
 type NetworkObservation struct {
 
 	// Creation timestamp of the key.
@@ -33,7 +46,21 @@ type NetworkObservation struct {
 	// ID of default Security Group of this network.
 	DefaultSecurityGroupID *string `json:"defaultSecurityGroupId,omitempty" tf:"default_security_group_id,omitempty"`
 
+	// An optional description of this resource. Provide this property when
+	// you create the resource.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// ID of the folder that the resource belongs to. If it
+	// is not provided, the default provider folder is used.
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Labels to apply to this network. A list of key/value pairs.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Name of the network. Provided by the client when the network is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 }
@@ -72,6 +99,18 @@ type NetworkParameters struct {
 type NetworkSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     NetworkParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider NetworkInitParameters `json:"initProvider,omitempty"`
 }
 
 // NetworkStatus defines the observed state of Network.

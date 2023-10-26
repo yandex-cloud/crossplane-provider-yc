@@ -25,10 +25,31 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ServiceAccountInitParameters struct {
+
+	// Description of the service account.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Name of the service account.
+	// Can be updated without creating a new resource.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
 type ServiceAccountObservation struct {
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// Description of the service account.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// ID of the folder that the service account will be created in.
+	// Defaults to the provider folder configuration.
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Name of the service account.
+	// Can be updated without creating a new resource.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type ServiceAccountParameters struct {
@@ -53,14 +74,26 @@ type ServiceAccountParameters struct {
 
 	// Name of the service account.
 	// Can be updated without creating a new resource.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 // ServiceAccountSpec defines the desired state of ServiceAccount
 type ServiceAccountSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ServiceAccountParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ServiceAccountInitParameters `json:"initProvider,omitempty"`
 }
 
 // ServiceAccountStatus defines the observed state of ServiceAccount.
@@ -81,8 +114,9 @@ type ServiceAccountStatus struct {
 type ServiceAccount struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ServiceAccountSpec   `json:"spec"`
-	Status            ServiceAccountStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || has(self.initProvider.name)",message="name is a required parameter"
+	Spec   ServiceAccountSpec   `json:"spec"`
+	Status ServiceAccountStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

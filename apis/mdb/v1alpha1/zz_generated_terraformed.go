@@ -81,6 +81,16 @@ func (tr *ElasticsearchCluster) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
+// GetInitParameters of this ElasticsearchCluster
+func (tr *ElasticsearchCluster) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
 // LateInitialize this ElasticsearchCluster using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *ElasticsearchCluster) LateInitialize(attrs []byte) (bool, error) {
@@ -153,6 +163,16 @@ func (tr *MongodbCluster) SetParameters(params map[string]any) error {
 		return err
 	}
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// GetInitParameters of this MongodbCluster
+func (tr *MongodbCluster) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
 }
 
 // LateInitialize this MongodbCluster using its observed tfState.
@@ -229,6 +249,16 @@ func (tr *MySQLCluster) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
+// GetInitParameters of this MySQLCluster
+func (tr *MySQLCluster) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
 // LateInitialize this MySQLCluster using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *MySQLCluster) LateInitialize(attrs []byte) (bool, error) {
@@ -301,6 +331,16 @@ func (tr *MySQLDatabase) SetParameters(params map[string]any) error {
 		return err
 	}
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// GetInitParameters of this MySQLDatabase
+func (tr *MySQLDatabase) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
 }
 
 // LateInitialize this MySQLDatabase using its observed tfState.
@@ -377,6 +417,16 @@ func (tr *MySQLUser) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
+// GetInitParameters of this MySQLUser
+func (tr *MySQLUser) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
 // LateInitialize this MySQLUser using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *MySQLUser) LateInitialize(attrs []byte) (bool, error) {
@@ -449,6 +499,16 @@ func (tr *PostgresqlCluster) SetParameters(params map[string]any) error {
 		return err
 	}
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// GetInitParameters of this PostgresqlCluster
+func (tr *PostgresqlCluster) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
 }
 
 // LateInitialize this PostgresqlCluster using its observed tfState.
@@ -525,6 +585,16 @@ func (tr *PostgresqlDatabase) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
+// GetInitParameters of this PostgresqlDatabase
+func (tr *PostgresqlDatabase) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
 // LateInitialize this PostgresqlDatabase using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *PostgresqlDatabase) LateInitialize(attrs []byte) (bool, error) {
@@ -599,6 +669,16 @@ func (tr *PostgresqlUser) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
+// GetInitParameters of this PostgresqlUser
+func (tr *PostgresqlUser) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
 // LateInitialize this PostgresqlUser using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *PostgresqlUser) LateInitialize(attrs []byte) (bool, error) {
@@ -671,6 +751,16 @@ func (tr *RedisCluster) SetParameters(params map[string]any) error {
 		return err
 	}
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// GetInitParameters of this RedisCluster
+func (tr *RedisCluster) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
 }
 
 // LateInitialize this RedisCluster using its observed tfState.

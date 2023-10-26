@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.12.1
   name: endpoints.datatransfer.yandex-cloud.jet.crossplane.io
 spec:
   group: datatransfer.yandex-cloud.jet.crossplane.io
@@ -55,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -3553,6 +3556,1003 @@ spec:
                       type: object
                     type: array
                 type: object
+              initProvider:
+                description: THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. InitProvider
+                  holds the same fields as ForProvider, with the exception of Identifier
+                  and other resource reference fields. The fields that are in InitProvider
+                  are merged into ForProvider when the resource is created. The same
+                  fields are also added to the terraform ignore_changes hook, to avoid
+                  updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after
+                  creation, for example because of an external controller is managing
+                  them, like an autoscaler.
+                properties:
+                  description:
+                    description: Arbitrary description text for the endpoint.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: A set of key/value label pairs to assign to the Data
+                      Transfer endpoint.
+                    type: object
+                  name:
+                    description: Name of the endpoint.
+                    type: string
+                  settings:
+                    description: Settings for the endpoint. The structure is documented
+                      below.
+                    items:
+                      properties:
+                        clickhouseSource:
+                          items:
+                            properties:
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    connectionOptions:
+                                      description: Connection options. The structure
+                                        is documented below.
+                                      items:
+                                        properties:
+                                          database:
+                                            description: Name of the database to transfer.
+                                            type: string
+                                          mdbClusterId:
+                                            description: Identifier of the Managed
+                                              PostgreSQL cluster.
+                                            type: string
+                                          onPremise:
+                                            description: Connection settings of the
+                                              on-premise PostgreSQL server.
+                                            items:
+                                              properties:
+                                                httpPort:
+                                                  description: TCP port number for
+                                                    the HTTP interface of the ClickHouse
+                                                    server.
+                                                  type: number
+                                                nativePort:
+                                                  description: TCP port number for
+                                                    the native interface of the ClickHouse
+                                                    server.
+                                                  type: number
+                                                shards:
+                                                  description: The list of ClickHouse
+                                                    shards. The structure is documented
+                                                    below.
+                                                  items:
+                                                    properties:
+                                                      hosts:
+                                                        description: List of host
+                                                          names of the PostgreSQL
+                                                          server. Exactly one host
+                                                          is expected currently.
+                                                        items:
+                                                          type: string
+                                                        type: array
+                                                      name:
+                                                        description: Name of the endpoint.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                                tlsMode:
+                                                  description: TLS settings for the
+                                                    server connection. Empty implies
+                                                    plaintext connection. The structure
+                                                    is documented below.
+                                                  items:
+                                                    properties:
+                                                      disabled:
+                                                        description: Empty block designating
+                                                          that the connection is not
+                                                          secured, i.e. plaintext
+                                                          connection.
+                                                        items:
+                                                          type: object
+                                                        type: array
+                                                      enabled:
+                                                        description: If this attribute
+                                                          is not an empty block, then
+                                                          TLS is used for the server
+                                                          connection. The structure
+                                                          is documented below.
+                                                        items:
+                                                          properties:
+                                                            caCertificate:
+                                                              description: X.509 certificate
+                                                                of the certificate
+                                                                authority which issued
+                                                                the server's certificate,
+                                                                in PEM format. If
+                                                                empty, the server's
+                                                                certificate must be
+                                                                signed by a well-known
+                                                                CA.
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          password:
+                                            description: Password for the database
+                                              access. This is a block with a single
+                                              field named raw which should contain
+                                              the password.
+                                            items:
+                                              type: object
+                                            type: array
+                                          user:
+                                            description: User for the database access.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              excludeTables:
+                                description: List of tables which will not be transfered,
+                                  formatted as schemaname.tablename.
+                                items:
+                                  type: string
+                                type: array
+                              includeTables:
+                                description: List of tables to transfer, formatted
+                                  as schemaname.tablename. If omitted or an empty
+                                  list is specified, all tables will be transferred.
+                                items:
+                                  type: string
+                                type: array
+                              securityGroups:
+                                description: List of security groups that the transfer
+                                  associated with this endpoint should use.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        clickhouseTarget:
+                          items:
+                            properties:
+                              altNames:
+                                description: Table renaming rules. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    fromName:
+                                      description: Name of the endpoint.
+                                      type: string
+                                    toName:
+                                      description: Name of the endpoint.
+                                      type: string
+                                  type: object
+                                type: array
+                              cleanupPolicy:
+                                description: How to clean collections when activating
+                                  the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
+                                type: string
+                              clickhouseClusterName:
+                                description: Name of the ClickHouse cluster. For managed
+                                  ClickHouse clusters defaults to managed cluster
+                                  ID.
+                                type: string
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    connectionOptions:
+                                      description: Connection options. The structure
+                                        is documented below.
+                                      items:
+                                        properties:
+                                          database:
+                                            description: Name of the database to transfer.
+                                            type: string
+                                          mdbClusterId:
+                                            description: Identifier of the Managed
+                                              PostgreSQL cluster.
+                                            type: string
+                                          onPremise:
+                                            description: Connection settings of the
+                                              on-premise PostgreSQL server.
+                                            items:
+                                              properties:
+                                                httpPort:
+                                                  description: TCP port number for
+                                                    the HTTP interface of the ClickHouse
+                                                    server.
+                                                  type: number
+                                                nativePort:
+                                                  description: TCP port number for
+                                                    the native interface of the ClickHouse
+                                                    server.
+                                                  type: number
+                                                shards:
+                                                  description: The list of ClickHouse
+                                                    shards. The structure is documented
+                                                    below.
+                                                  items:
+                                                    properties:
+                                                      hosts:
+                                                        description: List of host
+                                                          names of the PostgreSQL
+                                                          server. Exactly one host
+                                                          is expected currently.
+                                                        items:
+                                                          type: string
+                                                        type: array
+                                                      name:
+                                                        description: Name of the endpoint.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                                tlsMode:
+                                                  description: TLS settings for the
+                                                    server connection. Empty implies
+                                                    plaintext connection. The structure
+                                                    is documented below.
+                                                  items:
+                                                    properties:
+                                                      disabled:
+                                                        description: Empty block designating
+                                                          that the connection is not
+                                                          secured, i.e. plaintext
+                                                          connection.
+                                                        items:
+                                                          type: object
+                                                        type: array
+                                                      enabled:
+                                                        description: If this attribute
+                                                          is not an empty block, then
+                                                          TLS is used for the server
+                                                          connection. The structure
+                                                          is documented below.
+                                                        items:
+                                                          properties:
+                                                            caCertificate:
+                                                              description: X.509 certificate
+                                                                of the certificate
+                                                                authority which issued
+                                                                the server's certificate,
+                                                                in PEM format. If
+                                                                empty, the server's
+                                                                certificate must be
+                                                                signed by a well-known
+                                                                CA.
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          password:
+                                            description: Password for the database
+                                              access. This is a block with a single
+                                              field named raw which should contain
+                                              the password.
+                                            items:
+                                              type: object
+                                            type: array
+                                          user:
+                                            description: User for the database access.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              securityGroups:
+                                description: List of security groups that the transfer
+                                  associated with this endpoint should use.
+                                items:
+                                  type: string
+                                type: array
+                              sharding:
+                                description: Shard selection rules for the data being
+                                  transferred. The structure is documented below.
+                                items:
+                                  properties:
+                                    columnValueHash:
+                                      description: Shard data by the hash value of
+                                        the specified column. The structure is documented
+                                        below.
+                                      items:
+                                        properties:
+                                          columnName:
+                                            description: The name of the column to
+                                              calculate hash from.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    transferId:
+                                      description: Shard data by ID of the transfer.
+                                      items:
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        mongoSource:
+                          items:
+                            properties:
+                              collections:
+                                description: The list of the MongoDB collections that
+                                  should be transferred. If omitted, all available
+                                  collections will be transferred. The structure of
+                                  the list item is documented below.
+                                items:
+                                  properties:
+                                    collectionName:
+                                      description: Collection name.
+                                      type: string
+                                    databaseName:
+                                      description: Database name.
+                                      type: string
+                                  type: object
+                                type: array
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    connectionOptions:
+                                      description: Connection options. The structure
+                                        is documented below.
+                                      items:
+                                        properties:
+                                          authSource:
+                                            description: Name of the database associated
+                                              with the credentials.
+                                            type: string
+                                          onPremise:
+                                            description: Connection settings of the
+                                              on-premise PostgreSQL server.
+                                            items:
+                                              properties:
+                                                hosts:
+                                                  description: List of host names
+                                                    of the PostgreSQL server. Exactly
+                                                    one host is expected currently.
+                                                  items:
+                                                    type: string
+                                                  type: array
+                                                port:
+                                                  description: Port for the database
+                                                    connection.
+                                                  type: number
+                                                replicaSet:
+                                                  description: Replica set name.
+                                                  type: string
+                                                tlsMode:
+                                                  description: TLS settings for the
+                                                    server connection. Empty implies
+                                                    plaintext connection. The structure
+                                                    is documented below.
+                                                  items:
+                                                    properties:
+                                                      disabled:
+                                                        description: Empty block designating
+                                                          that the connection is not
+                                                          secured, i.e. plaintext
+                                                          connection.
+                                                        items:
+                                                          type: object
+                                                        type: array
+                                                      enabled:
+                                                        description: If this attribute
+                                                          is not an empty block, then
+                                                          TLS is used for the server
+                                                          connection. The structure
+                                                          is documented below.
+                                                        items:
+                                                          properties:
+                                                            caCertificate:
+                                                              description: X.509 certificate
+                                                                of the certificate
+                                                                authority which issued
+                                                                the server's certificate,
+                                                                in PEM format. If
+                                                                empty, the server's
+                                                                certificate must be
+                                                                signed by a well-known
+                                                                CA.
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          password:
+                                            description: Password for the database
+                                              access. This is a block with a single
+                                              field named raw which should contain
+                                              the password.
+                                            items:
+                                              type: object
+                                            type: array
+                                          user:
+                                            description: User for the database access.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              excludedCollections:
+                                description: The list of the MongoDB collections that
+                                  should not be transferred.
+                                items:
+                                  properties:
+                                    collectionName:
+                                      description: Collection name.
+                                      type: string
+                                    databaseName:
+                                      description: Database name.
+                                      type: string
+                                  type: object
+                                type: array
+                              secondaryPreferredMode:
+                                description: whether the secondary server should be
+                                  preferred to the primary when copying data.
+                                type: boolean
+                              securityGroups:
+                                description: List of security groups that the transfer
+                                  associated with this endpoint should use.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        mongoTarget:
+                          items:
+                            properties:
+                              cleanupPolicy:
+                                description: How to clean collections when activating
+                                  the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
+                                type: string
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    connectionOptions:
+                                      description: Connection options. The structure
+                                        is documented below.
+                                      items:
+                                        properties:
+                                          authSource:
+                                            description: Name of the database associated
+                                              with the credentials.
+                                            type: string
+                                          onPremise:
+                                            description: Connection settings of the
+                                              on-premise PostgreSQL server.
+                                            items:
+                                              properties:
+                                                hosts:
+                                                  description: List of host names
+                                                    of the PostgreSQL server. Exactly
+                                                    one host is expected currently.
+                                                  items:
+                                                    type: string
+                                                  type: array
+                                                port:
+                                                  description: Port for the database
+                                                    connection.
+                                                  type: number
+                                                replicaSet:
+                                                  description: Replica set name.
+                                                  type: string
+                                                tlsMode:
+                                                  description: TLS settings for the
+                                                    server connection. Empty implies
+                                                    plaintext connection. The structure
+                                                    is documented below.
+                                                  items:
+                                                    properties:
+                                                      disabled:
+                                                        description: Empty block designating
+                                                          that the connection is not
+                                                          secured, i.e. plaintext
+                                                          connection.
+                                                        items:
+                                                          type: object
+                                                        type: array
+                                                      enabled:
+                                                        description: If this attribute
+                                                          is not an empty block, then
+                                                          TLS is used for the server
+                                                          connection. The structure
+                                                          is documented below.
+                                                        items:
+                                                          properties:
+                                                            caCertificate:
+                                                              description: X.509 certificate
+                                                                of the certificate
+                                                                authority which issued
+                                                                the server's certificate,
+                                                                in PEM format. If
+                                                                empty, the server's
+                                                                certificate must be
+                                                                signed by a well-known
+                                                                CA.
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          password:
+                                            description: Password for the database
+                                              access. This is a block with a single
+                                              field named raw which should contain
+                                              the password.
+                                            items:
+                                              type: object
+                                            type: array
+                                          user:
+                                            description: User for the database access.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              database:
+                                description: Name of the database to transfer.
+                                type: string
+                              securityGroups:
+                                description: List of security groups that the transfer
+                                  associated with this endpoint should use.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        mysqlSource:
+                          description: Settings specific to the MySQL source endpoint.
+                          items:
+                            properties:
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    onPremise:
+                                      description: Connection settings of the on-premise
+                                        PostgreSQL server.
+                                      items:
+                                        properties:
+                                          hosts:
+                                            description: List of host names of the
+                                              PostgreSQL server. Exactly one host
+                                              is expected currently.
+                                            items:
+                                              type: string
+                                            type: array
+                                          port:
+                                            description: Port for the database connection.
+                                            type: number
+                                          tlsMode:
+                                            description: TLS settings for the server
+                                              connection. Empty implies plaintext
+                                              connection. The structure is documented
+                                              below.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: Empty block designating
+                                                    that the connection is not secured,
+                                                    i.e. plaintext connection.
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: If this attribute is
+                                                    not an empty block, then TLS is
+                                                    used for the server connection.
+                                                    The structure is documented below.
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: X.509 certificate
+                                                          of the certificate authority
+                                                          which issued the server's
+                                                          certificate, in PEM format.
+                                                          If empty, the server's certificate
+                                                          must be signed by a well-known
+                                                          CA.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              excludeTablesRegex:
+                                description: Opposite of include_table_regex. The
+                                  tables matching the specified regular expressions
+                                  will not be transferred.
+                                items:
+                                  type: string
+                                type: array
+                              includeTablesRegex:
+                                description: List of regular expressions of table
+                                  names which should be transferred. A table name
+                                  is formatted as schemaname.tablename. For example,
+                                  a single regular expression may look like ^mydb.employees$.
+                                items:
+                                  type: string
+                                type: array
+                              objectTransferSettings:
+                                description: Defines which database schema objects
+                                  should be transferred, e.g. views, functions, etc.
+                                items:
+                                  properties:
+                                    routine:
+                                      type: string
+                                    trigger:
+                                      description: All of the attrubutes are optional
+                                        and should be either "BEFORE_DATA", "AFTER_DATA"
+                                        or "NEVER".
+                                      type: string
+                                    view:
+                                      type: string
+                                  type: object
+                                type: array
+                              password:
+                                description: Password for the database access. This
+                                  is a block with a single field named raw which should
+                                  contain the password.
+                                items:
+                                  type: object
+                                type: array
+                              serviceDatabase:
+                                type: string
+                              timezone:
+                                description: 'Timezone to use for parsing timestamps
+                                  for saving source timezones. Accepts values from
+                                  IANA timezone database. Default: local timezone.'
+                                type: string
+                            type: object
+                          type: array
+                        mysqlTarget:
+                          description: Settings specific to the MySQL target endpoint.
+                          items:
+                            properties:
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    onPremise:
+                                      description: Connection settings of the on-premise
+                                        PostgreSQL server.
+                                      items:
+                                        properties:
+                                          hosts:
+                                            description: List of host names of the
+                                              PostgreSQL server. Exactly one host
+                                              is expected currently.
+                                            items:
+                                              type: string
+                                            type: array
+                                          port:
+                                            description: Port for the database connection.
+                                            type: number
+                                          tlsMode:
+                                            description: TLS settings for the server
+                                              connection. Empty implies plaintext
+                                              connection. The structure is documented
+                                              below.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: Empty block designating
+                                                    that the connection is not secured,
+                                                    i.e. plaintext connection.
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: If this attribute is
+                                                    not an empty block, then TLS is
+                                                    used for the server connection.
+                                                    The structure is documented below.
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: X.509 certificate
+                                                          of the certificate authority
+                                                          which issued the server's
+                                                          certificate, in PEM format.
+                                                          If empty, the server's certificate
+                                                          must be signed by a well-known
+                                                          CA.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              password:
+                                description: Password for the database access. This
+                                  is a block with a single field named raw which should
+                                  contain the password.
+                                items:
+                                  type: object
+                                type: array
+                              skipConstraintChecks:
+                                description: When true, disables foreign key checks.
+                                  See foreign_key_checks. False by default.
+                                type: boolean
+                              sqlMode:
+                                description: sql_mode to use when interacting with
+                                  the server. Defaults to "NO_AUTO_VALUE_ON_ZERO,NO_DIR_IN_CREATE,NO_ENGINE_SUBSTITUTION".
+                                type: string
+                              timezone:
+                                description: 'Timezone to use for parsing timestamps
+                                  for saving source timezones. Accepts values from
+                                  IANA timezone database. Default: local timezone.'
+                                type: string
+                            type: object
+                          type: array
+                        postgresSource:
+                          description: Settings specific to the PostgreSQL source
+                            endpoint.
+                          items:
+                            properties:
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    onPremise:
+                                      description: Connection settings of the on-premise
+                                        PostgreSQL server.
+                                      items:
+                                        properties:
+                                          hosts:
+                                            description: List of host names of the
+                                              PostgreSQL server. Exactly one host
+                                              is expected currently.
+                                            items:
+                                              type: string
+                                            type: array
+                                          port:
+                                            description: Port for the database connection.
+                                            type: number
+                                          tlsMode:
+                                            description: TLS settings for the server
+                                              connection. Empty implies plaintext
+                                              connection. The structure is documented
+                                              below.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: Empty block designating
+                                                    that the connection is not secured,
+                                                    i.e. plaintext connection.
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: If this attribute is
+                                                    not an empty block, then TLS is
+                                                    used for the server connection.
+                                                    The structure is documented below.
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: X.509 certificate
+                                                          of the certificate authority
+                                                          which issued the server's
+                                                          certificate, in PEM format.
+                                                          If empty, the server's certificate
+                                                          must be signed by a well-known
+                                                          CA.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              excludeTables:
+                                description: List of tables which will not be transfered,
+                                  formatted as schemaname.tablename.
+                                items:
+                                  type: string
+                                type: array
+                              includeTables:
+                                description: List of tables to transfer, formatted
+                                  as schemaname.tablename. If omitted or an empty
+                                  list is specified, all tables will be transferred.
+                                items:
+                                  type: string
+                                type: array
+                              objectTransferSettings:
+                                description: Defines which database schema objects
+                                  should be transferred, e.g. views, functions, etc.
+                                items:
+                                  properties:
+                                    cast:
+                                      description: All of the attrubutes are optional
+                                        and should be either "BEFORE_DATA", "AFTER_DATA"
+                                        or "NEVER".
+                                      type: string
+                                    collation:
+                                      type: string
+                                    constraint:
+                                      type: string
+                                    defaultValues:
+                                      type: string
+                                    fkConstraint:
+                                      type: string
+                                    function:
+                                      type: string
+                                    index:
+                                      type: string
+                                    materializedView:
+                                      type: string
+                                    policy:
+                                      type: string
+                                    primaryKey:
+                                      type: string
+                                    rule:
+                                      type: string
+                                    sequence:
+                                      type: string
+                                    sequenceOwnedBy:
+                                      type: string
+                                    table:
+                                      type: string
+                                    trigger:
+                                      description: All of the attrubutes are optional
+                                        and should be either "BEFORE_DATA", "AFTER_DATA"
+                                        or "NEVER".
+                                      type: string
+                                    type:
+                                      type: string
+                                    view:
+                                      type: string
+                                  type: object
+                                type: array
+                              password:
+                                description: Password for the database access. This
+                                  is a block with a single field named raw which should
+                                  contain the password.
+                                items:
+                                  type: object
+                                type: array
+                              serviceSchema:
+                                description: Name of the database schema in which
+                                  auxiliary tables needed for the transfer will be
+                                  created. Empty service_schema implies schema "public".
+                                type: string
+                              slotGigabyteLagLimit:
+                                description: Maximum WAL size held by the replication
+                                  slot, in gigabytes. Exceeding this limit will result
+                                  in a replication failure and deletion of the replication
+                                  slot. Unlimited by default.
+                                type: number
+                            type: object
+                          type: array
+                        postgresTarget:
+                          description: Settings specific to the PostgreSQL target
+                            endpoint.
+                          items:
+                            properties:
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    onPremise:
+                                      description: Connection settings of the on-premise
+                                        PostgreSQL server.
+                                      items:
+                                        properties:
+                                          hosts:
+                                            description: List of host names of the
+                                              PostgreSQL server. Exactly one host
+                                              is expected currently.
+                                            items:
+                                              type: string
+                                            type: array
+                                          port:
+                                            description: Port for the database connection.
+                                            type: number
+                                          tlsMode:
+                                            description: TLS settings for the server
+                                              connection. Empty implies plaintext
+                                              connection. The structure is documented
+                                              below.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: Empty block designating
+                                                    that the connection is not secured,
+                                                    i.e. plaintext connection.
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: If this attribute is
+                                                    not an empty block, then TLS is
+                                                    used for the server connection.
+                                                    The structure is documented below.
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: X.509 certificate
+                                                          of the certificate authority
+                                                          which issued the server's
+                                                          certificate, in PEM format.
+                                                          If empty, the server's certificate
+                                                          must be signed by a well-known
+                                                          CA.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              password:
+                                description: Password for the database access. This
+                                  is a block with a single field named raw which should
+                                  contain the password.
+                                items:
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
@@ -3729,9 +4729,1246 @@ spec:
             properties:
               atProvider:
                 properties:
+                  description:
+                    description: Arbitrary description text for the endpoint.
+                    type: string
+                  folderId:
+                    description: ID of the folder to create the endpoint in. If it
+                      is not provided, the default provider folder is used.
+                    type: string
                   id:
                     description: (Computed) Identifier of a new Data Transfer endpoint.
                     type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: A set of key/value label pairs to assign to the Data
+                      Transfer endpoint.
+                    type: object
+                  name:
+                    description: Name of the endpoint.
+                    type: string
+                  settings:
+                    description: Settings for the endpoint. The structure is documented
+                      below.
+                    items:
+                      properties:
+                        clickhouseSource:
+                          items:
+                            properties:
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    connectionOptions:
+                                      description: Connection options. The structure
+                                        is documented below.
+                                      items:
+                                        properties:
+                                          database:
+                                            description: Name of the database to transfer.
+                                            type: string
+                                          mdbClusterId:
+                                            description: Identifier of the Managed
+                                              PostgreSQL cluster.
+                                            type: string
+                                          onPremise:
+                                            description: Connection settings of the
+                                              on-premise PostgreSQL server.
+                                            items:
+                                              properties:
+                                                httpPort:
+                                                  description: TCP port number for
+                                                    the HTTP interface of the ClickHouse
+                                                    server.
+                                                  type: number
+                                                nativePort:
+                                                  description: TCP port number for
+                                                    the native interface of the ClickHouse
+                                                    server.
+                                                  type: number
+                                                shards:
+                                                  description: The list of ClickHouse
+                                                    shards. The structure is documented
+                                                    below.
+                                                  items:
+                                                    properties:
+                                                      hosts:
+                                                        description: List of host
+                                                          names of the PostgreSQL
+                                                          server. Exactly one host
+                                                          is expected currently.
+                                                        items:
+                                                          type: string
+                                                        type: array
+                                                      name:
+                                                        description: Name of the endpoint.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                                tlsMode:
+                                                  description: TLS settings for the
+                                                    server connection. Empty implies
+                                                    plaintext connection. The structure
+                                                    is documented below.
+                                                  items:
+                                                    properties:
+                                                      disabled:
+                                                        description: Empty block designating
+                                                          that the connection is not
+                                                          secured, i.e. plaintext
+                                                          connection.
+                                                        items:
+                                                          type: object
+                                                        type: array
+                                                      enabled:
+                                                        description: If this attribute
+                                                          is not an empty block, then
+                                                          TLS is used for the server
+                                                          connection. The structure
+                                                          is documented below.
+                                                        items:
+                                                          properties:
+                                                            caCertificate:
+                                                              description: X.509 certificate
+                                                                of the certificate
+                                                                authority which issued
+                                                                the server's certificate,
+                                                                in PEM format. If
+                                                                empty, the server's
+                                                                certificate must be
+                                                                signed by a well-known
+                                                                CA.
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          password:
+                                            description: Password for the database
+                                              access. This is a block with a single
+                                              field named raw which should contain
+                                              the password.
+                                            items:
+                                              properties:
+                                                rawSecretRef:
+                                                  description: A SecretKeySelector
+                                                    is a reference to a secret key
+                                                    in an arbitrary namespace.
+                                                  properties:
+                                                    key:
+                                                      description: The key to select.
+                                                      type: string
+                                                    name:
+                                                      description: Name of the secret.
+                                                      type: string
+                                                    namespace:
+                                                      description: Namespace of the
+                                                        secret.
+                                                      type: string
+                                                  required:
+                                                  - key
+                                                  - name
+                                                  - namespace
+                                                  type: object
+                                              type: object
+                                            type: array
+                                          user:
+                                            description: User for the database access.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              excludeTables:
+                                description: List of tables which will not be transfered,
+                                  formatted as schemaname.tablename.
+                                items:
+                                  type: string
+                                type: array
+                              includeTables:
+                                description: List of tables to transfer, formatted
+                                  as schemaname.tablename. If omitted or an empty
+                                  list is specified, all tables will be transferred.
+                                items:
+                                  type: string
+                                type: array
+                              securityGroups:
+                                description: List of security groups that the transfer
+                                  associated with this endpoint should use.
+                                items:
+                                  type: string
+                                type: array
+                              subnetId:
+                                description: Identifier of the Yandex Cloud VPC subnetwork
+                                  to user for accessing the database. If omitted,
+                                  the server has to be accessible via Internet.
+                                type: string
+                            type: object
+                          type: array
+                        clickhouseTarget:
+                          items:
+                            properties:
+                              altNames:
+                                description: Table renaming rules. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    fromName:
+                                      description: Name of the endpoint.
+                                      type: string
+                                    toName:
+                                      description: Name of the endpoint.
+                                      type: string
+                                  type: object
+                                type: array
+                              cleanupPolicy:
+                                description: How to clean collections when activating
+                                  the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
+                                type: string
+                              clickhouseClusterName:
+                                description: Name of the ClickHouse cluster. For managed
+                                  ClickHouse clusters defaults to managed cluster
+                                  ID.
+                                type: string
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    connectionOptions:
+                                      description: Connection options. The structure
+                                        is documented below.
+                                      items:
+                                        properties:
+                                          database:
+                                            description: Name of the database to transfer.
+                                            type: string
+                                          mdbClusterId:
+                                            description: Identifier of the Managed
+                                              PostgreSQL cluster.
+                                            type: string
+                                          onPremise:
+                                            description: Connection settings of the
+                                              on-premise PostgreSQL server.
+                                            items:
+                                              properties:
+                                                httpPort:
+                                                  description: TCP port number for
+                                                    the HTTP interface of the ClickHouse
+                                                    server.
+                                                  type: number
+                                                nativePort:
+                                                  description: TCP port number for
+                                                    the native interface of the ClickHouse
+                                                    server.
+                                                  type: number
+                                                shards:
+                                                  description: The list of ClickHouse
+                                                    shards. The structure is documented
+                                                    below.
+                                                  items:
+                                                    properties:
+                                                      hosts:
+                                                        description: List of host
+                                                          names of the PostgreSQL
+                                                          server. Exactly one host
+                                                          is expected currently.
+                                                        items:
+                                                          type: string
+                                                        type: array
+                                                      name:
+                                                        description: Name of the endpoint.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                                tlsMode:
+                                                  description: TLS settings for the
+                                                    server connection. Empty implies
+                                                    plaintext connection. The structure
+                                                    is documented below.
+                                                  items:
+                                                    properties:
+                                                      disabled:
+                                                        description: Empty block designating
+                                                          that the connection is not
+                                                          secured, i.e. plaintext
+                                                          connection.
+                                                        items:
+                                                          type: object
+                                                        type: array
+                                                      enabled:
+                                                        description: If this attribute
+                                                          is not an empty block, then
+                                                          TLS is used for the server
+                                                          connection. The structure
+                                                          is documented below.
+                                                        items:
+                                                          properties:
+                                                            caCertificate:
+                                                              description: X.509 certificate
+                                                                of the certificate
+                                                                authority which issued
+                                                                the server's certificate,
+                                                                in PEM format. If
+                                                                empty, the server's
+                                                                certificate must be
+                                                                signed by a well-known
+                                                                CA.
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          password:
+                                            description: Password for the database
+                                              access. This is a block with a single
+                                              field named raw which should contain
+                                              the password.
+                                            items:
+                                              properties:
+                                                rawSecretRef:
+                                                  description: A SecretKeySelector
+                                                    is a reference to a secret key
+                                                    in an arbitrary namespace.
+                                                  properties:
+                                                    key:
+                                                      description: The key to select.
+                                                      type: string
+                                                    name:
+                                                      description: Name of the secret.
+                                                      type: string
+                                                    namespace:
+                                                      description: Namespace of the
+                                                        secret.
+                                                      type: string
+                                                  required:
+                                                  - key
+                                                  - name
+                                                  - namespace
+                                                  type: object
+                                              type: object
+                                            type: array
+                                          user:
+                                            description: User for the database access.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              securityGroups:
+                                description: List of security groups that the transfer
+                                  associated with this endpoint should use.
+                                items:
+                                  type: string
+                                type: array
+                              sharding:
+                                description: Shard selection rules for the data being
+                                  transferred. The structure is documented below.
+                                items:
+                                  properties:
+                                    columnValueHash:
+                                      description: Shard data by the hash value of
+                                        the specified column. The structure is documented
+                                        below.
+                                      items:
+                                        properties:
+                                          columnName:
+                                            description: The name of the column to
+                                              calculate hash from.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    transferId:
+                                      description: Shard data by ID of the transfer.
+                                      items:
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              subnetId:
+                                description: Identifier of the Yandex Cloud VPC subnetwork
+                                  to user for accessing the database. If omitted,
+                                  the server has to be accessible via Internet.
+                                type: string
+                            type: object
+                          type: array
+                        mongoSource:
+                          items:
+                            properties:
+                              collections:
+                                description: The list of the MongoDB collections that
+                                  should be transferred. If omitted, all available
+                                  collections will be transferred. The structure of
+                                  the list item is documented below.
+                                items:
+                                  properties:
+                                    collectionName:
+                                      description: Collection name.
+                                      type: string
+                                    databaseName:
+                                      description: Database name.
+                                      type: string
+                                  type: object
+                                type: array
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    connectionOptions:
+                                      description: Connection options. The structure
+                                        is documented below.
+                                      items:
+                                        properties:
+                                          authSource:
+                                            description: Name of the database associated
+                                              with the credentials.
+                                            type: string
+                                          mdbClusterId:
+                                            description: Identifier of the Managed
+                                              PostgreSQL cluster.
+                                            type: string
+                                          onPremise:
+                                            description: Connection settings of the
+                                              on-premise PostgreSQL server.
+                                            items:
+                                              properties:
+                                                hosts:
+                                                  description: List of host names
+                                                    of the PostgreSQL server. Exactly
+                                                    one host is expected currently.
+                                                  items:
+                                                    type: string
+                                                  type: array
+                                                port:
+                                                  description: Port for the database
+                                                    connection.
+                                                  type: number
+                                                replicaSet:
+                                                  description: Replica set name.
+                                                  type: string
+                                                tlsMode:
+                                                  description: TLS settings for the
+                                                    server connection. Empty implies
+                                                    plaintext connection. The structure
+                                                    is documented below.
+                                                  items:
+                                                    properties:
+                                                      disabled:
+                                                        description: Empty block designating
+                                                          that the connection is not
+                                                          secured, i.e. plaintext
+                                                          connection.
+                                                        items:
+                                                          type: object
+                                                        type: array
+                                                      enabled:
+                                                        description: If this attribute
+                                                          is not an empty block, then
+                                                          TLS is used for the server
+                                                          connection. The structure
+                                                          is documented below.
+                                                        items:
+                                                          properties:
+                                                            caCertificate:
+                                                              description: X.509 certificate
+                                                                of the certificate
+                                                                authority which issued
+                                                                the server's certificate,
+                                                                in PEM format. If
+                                                                empty, the server's
+                                                                certificate must be
+                                                                signed by a well-known
+                                                                CA.
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          password:
+                                            description: Password for the database
+                                              access. This is a block with a single
+                                              field named raw which should contain
+                                              the password.
+                                            items:
+                                              properties:
+                                                rawSecretRef:
+                                                  description: A SecretKeySelector
+                                                    is a reference to a secret key
+                                                    in an arbitrary namespace.
+                                                  properties:
+                                                    key:
+                                                      description: The key to select.
+                                                      type: string
+                                                    name:
+                                                      description: Name of the secret.
+                                                      type: string
+                                                    namespace:
+                                                      description: Namespace of the
+                                                        secret.
+                                                      type: string
+                                                  required:
+                                                  - key
+                                                  - name
+                                                  - namespace
+                                                  type: object
+                                              type: object
+                                            type: array
+                                          user:
+                                            description: User for the database access.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              excludedCollections:
+                                description: The list of the MongoDB collections that
+                                  should not be transferred.
+                                items:
+                                  properties:
+                                    collectionName:
+                                      description: Collection name.
+                                      type: string
+                                    databaseName:
+                                      description: Database name.
+                                      type: string
+                                  type: object
+                                type: array
+                              secondaryPreferredMode:
+                                description: whether the secondary server should be
+                                  preferred to the primary when copying data.
+                                type: boolean
+                              securityGroups:
+                                description: List of security groups that the transfer
+                                  associated with this endpoint should use.
+                                items:
+                                  type: string
+                                type: array
+                              subnetId:
+                                description: Identifier of the Yandex Cloud VPC subnetwork
+                                  to user for accessing the database. If omitted,
+                                  the server has to be accessible via Internet.
+                                type: string
+                            type: object
+                          type: array
+                        mongoTarget:
+                          items:
+                            properties:
+                              cleanupPolicy:
+                                description: How to clean collections when activating
+                                  the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
+                                type: string
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    connectionOptions:
+                                      description: Connection options. The structure
+                                        is documented below.
+                                      items:
+                                        properties:
+                                          authSource:
+                                            description: Name of the database associated
+                                              with the credentials.
+                                            type: string
+                                          mdbClusterId:
+                                            description: Identifier of the Managed
+                                              PostgreSQL cluster.
+                                            type: string
+                                          onPremise:
+                                            description: Connection settings of the
+                                              on-premise PostgreSQL server.
+                                            items:
+                                              properties:
+                                                hosts:
+                                                  description: List of host names
+                                                    of the PostgreSQL server. Exactly
+                                                    one host is expected currently.
+                                                  items:
+                                                    type: string
+                                                  type: array
+                                                port:
+                                                  description: Port for the database
+                                                    connection.
+                                                  type: number
+                                                replicaSet:
+                                                  description: Replica set name.
+                                                  type: string
+                                                tlsMode:
+                                                  description: TLS settings for the
+                                                    server connection. Empty implies
+                                                    plaintext connection. The structure
+                                                    is documented below.
+                                                  items:
+                                                    properties:
+                                                      disabled:
+                                                        description: Empty block designating
+                                                          that the connection is not
+                                                          secured, i.e. plaintext
+                                                          connection.
+                                                        items:
+                                                          type: object
+                                                        type: array
+                                                      enabled:
+                                                        description: If this attribute
+                                                          is not an empty block, then
+                                                          TLS is used for the server
+                                                          connection. The structure
+                                                          is documented below.
+                                                        items:
+                                                          properties:
+                                                            caCertificate:
+                                                              description: X.509 certificate
+                                                                of the certificate
+                                                                authority which issued
+                                                                the server's certificate,
+                                                                in PEM format. If
+                                                                empty, the server's
+                                                                certificate must be
+                                                                signed by a well-known
+                                                                CA.
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          password:
+                                            description: Password for the database
+                                              access. This is a block with a single
+                                              field named raw which should contain
+                                              the password.
+                                            items:
+                                              properties:
+                                                rawSecretRef:
+                                                  description: A SecretKeySelector
+                                                    is a reference to a secret key
+                                                    in an arbitrary namespace.
+                                                  properties:
+                                                    key:
+                                                      description: The key to select.
+                                                      type: string
+                                                    name:
+                                                      description: Name of the secret.
+                                                      type: string
+                                                    namespace:
+                                                      description: Namespace of the
+                                                        secret.
+                                                      type: string
+                                                  required:
+                                                  - key
+                                                  - name
+                                                  - namespace
+                                                  type: object
+                                              type: object
+                                            type: array
+                                          user:
+                                            description: User for the database access.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              database:
+                                description: Name of the database to transfer.
+                                type: string
+                              securityGroups:
+                                description: List of security groups that the transfer
+                                  associated with this endpoint should use.
+                                items:
+                                  type: string
+                                type: array
+                              subnetId:
+                                description: Identifier of the Yandex Cloud VPC subnetwork
+                                  to user for accessing the database. If omitted,
+                                  the server has to be accessible via Internet.
+                                type: string
+                            type: object
+                          type: array
+                        mysqlSource:
+                          description: Settings specific to the MySQL source endpoint.
+                          items:
+                            properties:
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    mdbClusterId:
+                                      description: Identifier of the Managed PostgreSQL
+                                        cluster.
+                                      type: string
+                                    onPremise:
+                                      description: Connection settings of the on-premise
+                                        PostgreSQL server.
+                                      items:
+                                        properties:
+                                          hosts:
+                                            description: List of host names of the
+                                              PostgreSQL server. Exactly one host
+                                              is expected currently.
+                                            items:
+                                              type: string
+                                            type: array
+                                          port:
+                                            description: Port for the database connection.
+                                            type: number
+                                          subnetId:
+                                            description: Identifier of the Yandex
+                                              Cloud VPC subnetwork to user for accessing
+                                              the database. If omitted, the server
+                                              has to be accessible via Internet.
+                                            type: string
+                                          tlsMode:
+                                            description: TLS settings for the server
+                                              connection. Empty implies plaintext
+                                              connection. The structure is documented
+                                              below.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: Empty block designating
+                                                    that the connection is not secured,
+                                                    i.e. plaintext connection.
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: If this attribute is
+                                                    not an empty block, then TLS is
+                                                    used for the server connection.
+                                                    The structure is documented below.
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: X.509 certificate
+                                                          of the certificate authority
+                                                          which issued the server's
+                                                          certificate, in PEM format.
+                                                          If empty, the server's certificate
+                                                          must be signed by a well-known
+                                                          CA.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              database:
+                                description: Name of the database to transfer.
+                                type: string
+                              excludeTablesRegex:
+                                description: Opposite of include_table_regex. The
+                                  tables matching the specified regular expressions
+                                  will not be transferred.
+                                items:
+                                  type: string
+                                type: array
+                              includeTablesRegex:
+                                description: List of regular expressions of table
+                                  names which should be transferred. A table name
+                                  is formatted as schemaname.tablename. For example,
+                                  a single regular expression may look like ^mydb.employees$.
+                                items:
+                                  type: string
+                                type: array
+                              objectTransferSettings:
+                                description: Defines which database schema objects
+                                  should be transferred, e.g. views, functions, etc.
+                                items:
+                                  properties:
+                                    routine:
+                                      type: string
+                                    trigger:
+                                      description: All of the attrubutes are optional
+                                        and should be either "BEFORE_DATA", "AFTER_DATA"
+                                        or "NEVER".
+                                      type: string
+                                    view:
+                                      type: string
+                                  type: object
+                                type: array
+                              password:
+                                description: Password for the database access. This
+                                  is a block with a single field named raw which should
+                                  contain the password.
+                                items:
+                                  properties:
+                                    rawSecretRef:
+                                      description: A SecretKeySelector is a reference
+                                        to a secret key in an arbitrary namespace.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                  type: object
+                                type: array
+                              securityGroups:
+                                description: List of security groups that the transfer
+                                  associated with this endpoint should use.
+                                items:
+                                  type: string
+                                type: array
+                              serviceDatabase:
+                                type: string
+                              timezone:
+                                description: 'Timezone to use for parsing timestamps
+                                  for saving source timezones. Accepts values from
+                                  IANA timezone database. Default: local timezone.'
+                                type: string
+                              user:
+                                description: User for the database access.
+                                type: string
+                            type: object
+                          type: array
+                        mysqlTarget:
+                          description: Settings specific to the MySQL target endpoint.
+                          items:
+                            properties:
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    mdbClusterId:
+                                      description: Identifier of the Managed PostgreSQL
+                                        cluster.
+                                      type: string
+                                    onPremise:
+                                      description: Connection settings of the on-premise
+                                        PostgreSQL server.
+                                      items:
+                                        properties:
+                                          hosts:
+                                            description: List of host names of the
+                                              PostgreSQL server. Exactly one host
+                                              is expected currently.
+                                            items:
+                                              type: string
+                                            type: array
+                                          port:
+                                            description: Port for the database connection.
+                                            type: number
+                                          subnetId:
+                                            description: Identifier of the Yandex
+                                              Cloud VPC subnetwork to user for accessing
+                                              the database. If omitted, the server
+                                              has to be accessible via Internet.
+                                            type: string
+                                          tlsMode:
+                                            description: TLS settings for the server
+                                              connection. Empty implies plaintext
+                                              connection. The structure is documented
+                                              below.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: Empty block designating
+                                                    that the connection is not secured,
+                                                    i.e. plaintext connection.
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: If this attribute is
+                                                    not an empty block, then TLS is
+                                                    used for the server connection.
+                                                    The structure is documented below.
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: X.509 certificate
+                                                          of the certificate authority
+                                                          which issued the server's
+                                                          certificate, in PEM format.
+                                                          If empty, the server's certificate
+                                                          must be signed by a well-known
+                                                          CA.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              database:
+                                description: Name of the database to transfer.
+                                type: string
+                              password:
+                                description: Password for the database access. This
+                                  is a block with a single field named raw which should
+                                  contain the password.
+                                items:
+                                  properties:
+                                    rawSecretRef:
+                                      description: A SecretKeySelector is a reference
+                                        to a secret key in an arbitrary namespace.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                  type: object
+                                type: array
+                              securityGroups:
+                                description: List of security groups that the transfer
+                                  associated with this endpoint should use.
+                                items:
+                                  type: string
+                                type: array
+                              skipConstraintChecks:
+                                description: When true, disables foreign key checks.
+                                  See foreign_key_checks. False by default.
+                                type: boolean
+                              sqlMode:
+                                description: sql_mode to use when interacting with
+                                  the server. Defaults to "NO_AUTO_VALUE_ON_ZERO,NO_DIR_IN_CREATE,NO_ENGINE_SUBSTITUTION".
+                                type: string
+                              timezone:
+                                description: 'Timezone to use for parsing timestamps
+                                  for saving source timezones. Accepts values from
+                                  IANA timezone database. Default: local timezone.'
+                                type: string
+                              user:
+                                description: User for the database access.
+                                type: string
+                            type: object
+                          type: array
+                        postgresSource:
+                          description: Settings specific to the PostgreSQL source
+                            endpoint.
+                          items:
+                            properties:
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    mdbClusterId:
+                                      description: Identifier of the Managed PostgreSQL
+                                        cluster.
+                                      type: string
+                                    onPremise:
+                                      description: Connection settings of the on-premise
+                                        PostgreSQL server.
+                                      items:
+                                        properties:
+                                          hosts:
+                                            description: List of host names of the
+                                              PostgreSQL server. Exactly one host
+                                              is expected currently.
+                                            items:
+                                              type: string
+                                            type: array
+                                          port:
+                                            description: Port for the database connection.
+                                            type: number
+                                          subnetId:
+                                            description: Identifier of the Yandex
+                                              Cloud VPC subnetwork to user for accessing
+                                              the database. If omitted, the server
+                                              has to be accessible via Internet.
+                                            type: string
+                                          tlsMode:
+                                            description: TLS settings for the server
+                                              connection. Empty implies plaintext
+                                              connection. The structure is documented
+                                              below.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: Empty block designating
+                                                    that the connection is not secured,
+                                                    i.e. plaintext connection.
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: If this attribute is
+                                                    not an empty block, then TLS is
+                                                    used for the server connection.
+                                                    The structure is documented below.
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: X.509 certificate
+                                                          of the certificate authority
+                                                          which issued the server's
+                                                          certificate, in PEM format.
+                                                          If empty, the server's certificate
+                                                          must be signed by a well-known
+                                                          CA.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              database:
+                                description: Name of the database to transfer.
+                                type: string
+                              excludeTables:
+                                description: List of tables which will not be transfered,
+                                  formatted as schemaname.tablename.
+                                items:
+                                  type: string
+                                type: array
+                              includeTables:
+                                description: List of tables to transfer, formatted
+                                  as schemaname.tablename. If omitted or an empty
+                                  list is specified, all tables will be transferred.
+                                items:
+                                  type: string
+                                type: array
+                              objectTransferSettings:
+                                description: Defines which database schema objects
+                                  should be transferred, e.g. views, functions, etc.
+                                items:
+                                  properties:
+                                    cast:
+                                      description: All of the attrubutes are optional
+                                        and should be either "BEFORE_DATA", "AFTER_DATA"
+                                        or "NEVER".
+                                      type: string
+                                    collation:
+                                      type: string
+                                    constraint:
+                                      type: string
+                                    defaultValues:
+                                      type: string
+                                    fkConstraint:
+                                      type: string
+                                    function:
+                                      type: string
+                                    index:
+                                      type: string
+                                    materializedView:
+                                      type: string
+                                    policy:
+                                      type: string
+                                    primaryKey:
+                                      type: string
+                                    rule:
+                                      type: string
+                                    sequence:
+                                      type: string
+                                    sequenceOwnedBy:
+                                      type: string
+                                    table:
+                                      type: string
+                                    trigger:
+                                      description: All of the attrubutes are optional
+                                        and should be either "BEFORE_DATA", "AFTER_DATA"
+                                        or "NEVER".
+                                      type: string
+                                    type:
+                                      type: string
+                                    view:
+                                      type: string
+                                  type: object
+                                type: array
+                              password:
+                                description: Password for the database access. This
+                                  is a block with a single field named raw which should
+                                  contain the password.
+                                items:
+                                  properties:
+                                    rawSecretRef:
+                                      description: A SecretKeySelector is a reference
+                                        to a secret key in an arbitrary namespace.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                  type: object
+                                type: array
+                              securityGroups:
+                                description: List of security groups that the transfer
+                                  associated with this endpoint should use.
+                                items:
+                                  type: string
+                                type: array
+                              serviceSchema:
+                                description: Name of the database schema in which
+                                  auxiliary tables needed for the transfer will be
+                                  created. Empty service_schema implies schema "public".
+                                type: string
+                              slotGigabyteLagLimit:
+                                description: Maximum WAL size held by the replication
+                                  slot, in gigabytes. Exceeding this limit will result
+                                  in a replication failure and deletion of the replication
+                                  slot. Unlimited by default.
+                                type: number
+                              user:
+                                description: User for the database access.
+                                type: string
+                            type: object
+                          type: array
+                        postgresTarget:
+                          description: Settings specific to the PostgreSQL target
+                            endpoint.
+                          items:
+                            properties:
+                              connection:
+                                description: Connection settings. The structure is
+                                  documented below.
+                                items:
+                                  properties:
+                                    mdbClusterId:
+                                      description: Identifier of the Managed PostgreSQL
+                                        cluster.
+                                      type: string
+                                    onPremise:
+                                      description: Connection settings of the on-premise
+                                        PostgreSQL server.
+                                      items:
+                                        properties:
+                                          hosts:
+                                            description: List of host names of the
+                                              PostgreSQL server. Exactly one host
+                                              is expected currently.
+                                            items:
+                                              type: string
+                                            type: array
+                                          port:
+                                            description: Port for the database connection.
+                                            type: number
+                                          subnetId:
+                                            description: Identifier of the Yandex
+                                              Cloud VPC subnetwork to user for accessing
+                                              the database. If omitted, the server
+                                              has to be accessible via Internet.
+                                            type: string
+                                          tlsMode:
+                                            description: TLS settings for the server
+                                              connection. Empty implies plaintext
+                                              connection. The structure is documented
+                                              below.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: Empty block designating
+                                                    that the connection is not secured,
+                                                    i.e. plaintext connection.
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: If this attribute is
+                                                    not an empty block, then TLS is
+                                                    used for the server connection.
+                                                    The structure is documented below.
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: X.509 certificate
+                                                          of the certificate authority
+                                                          which issued the server's
+                                                          certificate, in PEM format.
+                                                          If empty, the server's certificate
+                                                          must be signed by a well-known
+                                                          CA.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              database:
+                                description: Name of the database to transfer.
+                                type: string
+                              password:
+                                description: Password for the database access. This
+                                  is a block with a single field named raw which should
+                                  contain the password.
+                                items:
+                                  properties:
+                                    rawSecretRef:
+                                      description: A SecretKeySelector is a reference
+                                        to a secret key in an arbitrary namespace.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                  type: object
+                                type: array
+                              securityGroups:
+                                description: List of security groups that the transfer
+                                  associated with this endpoint should use.
+                                items:
+                                  type: string
+                                type: array
+                              user:
+                                description: User for the database access.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.
@@ -3774,9 +6011,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

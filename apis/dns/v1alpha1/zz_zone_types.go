@@ -25,13 +25,52 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ZoneInitParameters struct {
+
+	// Description of the DNS zone.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// A set of key/value label pairs to assign to the DNS zone.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// User assigned name of a specific resource. Must be unique within the folder.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
+	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
+
+	// The DNS name of this zone, e.g. "example.com.". Must ends with dot.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
+}
+
 type ZoneObservation struct {
 
 	// (Computed) The DNS zone creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// Description of the DNS zone.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
 	// (Computed) ID of a new DNS zone.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// A set of key/value label pairs to assign to the DNS zone.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// User assigned name of a specific resource. Must be unique within the folder.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
+	PrivateNetworks []*string `json:"privateNetworks,omitempty" tf:"private_networks,omitempty"`
+
+	// The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
+	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
+
+	// The DNS name of this zone, e.g. "example.com.". Must ends with dot.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type ZoneParameters struct {
@@ -79,14 +118,26 @@ type ZoneParameters struct {
 	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
 
 	// The DNS name of this zone, e.g. "example.com.". Must ends with dot.
-	// +kubebuilder:validation:Required
-	Zone *string `json:"zone" tf:"zone,omitempty"`
+	// +kubebuilder:validation:Optional
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 // ZoneSpec defines the desired state of Zone
 type ZoneSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ZoneParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ZoneInitParameters `json:"initProvider,omitempty"`
 }
 
 // ZoneStatus defines the observed state of Zone.
@@ -107,8 +158,9 @@ type ZoneStatus struct {
 type Zone struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ZoneSpec   `json:"spec"`
-	Status            ZoneStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.zone) || has(self.initProvider.zone)",message="zone is a required parameter"
+	Spec   ZoneSpec   `json:"spec"`
+	Status ZoneStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -25,7 +25,70 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type RedisClusterConfigInitParameters struct {
+
+	// Normal clients output buffer limits.
+	// See redis config file.
+	ClientOutputBufferLimitNormal *string `json:"clientOutputBufferLimitNormal,omitempty" tf:"client_output_buffer_limit_normal,omitempty"`
+
+	// Pubsub clients output buffer limits.
+	// See redis config file.
+	ClientOutputBufferLimitPubsub *string `json:"clientOutputBufferLimitPubsub,omitempty" tf:"client_output_buffer_limit_pubsub,omitempty"`
+
+	// Number of databases (changing requires redis-server restart).
+	Databases *float64 `json:"databases,omitempty" tf:"databases,omitempty"`
+
+	// Redis key eviction policy for a dataset that reaches maximum memory.
+	// Can be any of the listed in the official RedisDB documentation.
+	MaxmemoryPolicy *string `json:"maxmemoryPolicy,omitempty" tf:"maxmemory_policy,omitempty"`
+
+	// Select the events that Redis will notify among a set of classes.
+	NotifyKeyspaceEvents *string `json:"notifyKeyspaceEvents,omitempty" tf:"notify_keyspace_events,omitempty"`
+
+	// Log slow queries below this number in microseconds.
+	SlowlogLogSlowerThan *float64 `json:"slowlogLogSlowerThan,omitempty" tf:"slowlog_log_slower_than,omitempty"`
+
+	// Slow queries log length.
+	SlowlogMaxLen *float64 `json:"slowlogMaxLen,omitempty" tf:"slowlog_max_len,omitempty"`
+
+	// Close the connection after a client is idle for N seconds.
+	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
+
+	// Version of Redis (5.0, 6.0 or 6.2).
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+}
+
 type RedisClusterConfigObservation struct {
+
+	// Normal clients output buffer limits.
+	// See redis config file.
+	ClientOutputBufferLimitNormal *string `json:"clientOutputBufferLimitNormal,omitempty" tf:"client_output_buffer_limit_normal,omitempty"`
+
+	// Pubsub clients output buffer limits.
+	// See redis config file.
+	ClientOutputBufferLimitPubsub *string `json:"clientOutputBufferLimitPubsub,omitempty" tf:"client_output_buffer_limit_pubsub,omitempty"`
+
+	// Number of databases (changing requires redis-server restart).
+	Databases *float64 `json:"databases,omitempty" tf:"databases,omitempty"`
+
+	// Redis key eviction policy for a dataset that reaches maximum memory.
+	// Can be any of the listed in the official RedisDB documentation.
+	MaxmemoryPolicy *string `json:"maxmemoryPolicy,omitempty" tf:"maxmemory_policy,omitempty"`
+
+	// Select the events that Redis will notify among a set of classes.
+	NotifyKeyspaceEvents *string `json:"notifyKeyspaceEvents,omitempty" tf:"notify_keyspace_events,omitempty"`
+
+	// Log slow queries below this number in microseconds.
+	SlowlogLogSlowerThan *float64 `json:"slowlogLogSlowerThan,omitempty" tf:"slowlog_log_slower_than,omitempty"`
+
+	// Slow queries log length.
+	SlowlogMaxLen *float64 `json:"slowlogMaxLen,omitempty" tf:"slowlog_max_len,omitempty"`
+
+	// Close the connection after a client is idle for N seconds.
+	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
+
+	// Version of Redis (5.0, 6.0 or 6.2).
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type RedisClusterConfigParameters struct {
@@ -70,14 +133,47 @@ type RedisClusterConfigParameters struct {
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
 	// Version of Redis (5.0, 6.0 or 6.2).
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Version *string `json:"version" tf:"version,omitempty"`
+}
+
+type RedisClusterHostInitParameters struct {
+
+	// Sets whether the host should get a public IP address or not.
+	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
+
+	// Replica priority of a current replica (usable for non-sharded only).
+	ReplicaPriority *float64 `json:"replicaPriority,omitempty" tf:"replica_priority,omitempty"`
+
+	// The name of the shard to which the host belongs.
+	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
+
+	// The availability zone where the Redis host will be created.
+	// For more information see the official documentation.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type RedisClusterHostObservation struct {
 
+	// Sets whether the host should get a public IP address or not.
+	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
+
 	// The fully qualified domain name of the host.
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
+
+	// Replica priority of a current replica (usable for non-sharded only).
+	ReplicaPriority *float64 `json:"replicaPriority,omitempty" tf:"replica_priority,omitempty"`
+
+	// The name of the shard to which the host belongs.
+	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
+
+	// The ID of the subnet, to which the host belongs. The subnet must
+	// be a part of the network to which the cluster belongs.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// The availability zone where the Redis host will be created.
+	// For more information see the official documentation.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type RedisClusterHostParameters struct {
@@ -110,11 +206,70 @@ type RedisClusterHostParameters struct {
 
 	// The availability zone where the Redis host will be created.
 	// For more information see the official documentation.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone" tf:"zone,omitempty"`
 }
 
+type RedisClusterInitParameters struct {
+
+	// Configuration of the Redis cluster. The structure is documented below.
+	Config []RedisClusterConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
+
+	// Inhibits deletion of the cluster.  Can be either true or false.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// Description of the Redis cluster.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Deployment environment of the Redis cluster. Can be either PRESTABLE or PRODUCTION.
+	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
+
+	// A host of the Redis cluster. The structure is documented below.
+	Host []RedisClusterHostInitParameters `json:"host,omitempty" tf:"host,omitempty"`
+
+	// A set of key/value label pairs to assign to the Redis cluster.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	MaintenanceWindow []RedisClusterMaintenanceWindowInitParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+
+	// Name of the Redis cluster. Provided by the client when the cluster is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Persistence mode.
+	PersistenceMode *string `json:"persistenceMode,omitempty" tf:"persistence_mode,omitempty"`
+
+	// Resources allocated to hosts of the Redis cluster. The structure is documented below.
+	Resources []RedisClusterResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
+
+	// Redis Cluster mode enabled/disabled.
+	Sharded *bool `json:"sharded,omitempty" tf:"sharded,omitempty"`
+
+	// TLS support mode enabled/disabled.
+	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
+}
+
+type RedisClusterMaintenanceWindowInitParameters struct {
+
+	// Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	Day *string `json:"day,omitempty" tf:"day,omitempty"`
+
+	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
+	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
+
+	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
 type RedisClusterMaintenanceWindowObservation struct {
+
+	// Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	Day *string `json:"day,omitempty" tf:"day,omitempty"`
+
+	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
+	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
+
+	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type RedisClusterMaintenanceWindowParameters struct {
@@ -128,35 +283,76 @@ type RedisClusterMaintenanceWindowParameters struct {
 	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 type RedisClusterObservation struct {
 
+	// Configuration of the Redis cluster. The structure is documented below.
+	Config []RedisClusterConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
+
 	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
+
+	// Inhibits deletion of the cluster.  Can be either true or false.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// Description of the Redis cluster.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Deployment environment of the Redis cluster. Can be either PRESTABLE or PRODUCTION.
+	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
+
+	// The ID of the folder that the resource belongs to. If it
+	// is not provided, the default provider folder is used.
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN.
 	// For more information see health field of JSON representation in the official documentation.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
 	// A host of the Redis cluster. The structure is documented below.
-	// +kubebuilder:validation:Required
 	Host []RedisClusterHostObservation `json:"host,omitempty" tf:"host,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// A set of key/value label pairs to assign to the Redis cluster.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	MaintenanceWindow []RedisClusterMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+
+	// Name of the Redis cluster. Provided by the client when the cluster is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// ID of the network, to which the Redis cluster belongs.
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// Persistence mode.
+	PersistenceMode *string `json:"persistenceMode,omitempty" tf:"persistence_mode,omitempty"`
+
+	// Resources allocated to hosts of the Redis cluster. The structure is documented below.
+	Resources []RedisClusterResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
+
+	// A set of ids of security groups assigned to hosts of the cluster.
+	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+
+	// Redis Cluster mode enabled/disabled.
+	Sharded *bool `json:"sharded,omitempty" tf:"sharded,omitempty"`
+
 	// Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
 	// For more information see status field of JSON representation in the official documentation.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// TLS support mode enabled/disabled.
+	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 }
 
 type RedisClusterParameters struct {
 
 	// Configuration of the Redis cluster. The structure is documented below.
-	// +kubebuilder:validation:Required
-	Config []RedisClusterConfigParameters `json:"config" tf:"config,omitempty"`
+	// +kubebuilder:validation:Optional
+	Config []RedisClusterConfigParameters `json:"config,omitempty" tf:"config,omitempty"`
 
 	// Inhibits deletion of the cluster.  Can be either true or false.
 	// +kubebuilder:validation:Optional
@@ -167,8 +363,8 @@ type RedisClusterParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// Deployment environment of the Redis cluster. Can be either PRESTABLE or PRODUCTION.
-	// +kubebuilder:validation:Required
-	Environment *string `json:"environment" tf:"environment,omitempty"`
+	// +kubebuilder:validation:Optional
+	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
 	// The ID of the folder that the resource belongs to. If it
 	// is not provided, the default provider folder is used.
@@ -185,8 +381,8 @@ type RedisClusterParameters struct {
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
 	// A host of the Redis cluster. The structure is documented below.
-	// +kubebuilder:validation:Required
-	Host []RedisClusterHostParameters `json:"host" tf:"host,omitempty"`
+	// +kubebuilder:validation:Optional
+	Host []RedisClusterHostParameters `json:"host,omitempty" tf:"host,omitempty"`
 
 	// A set of key/value label pairs to assign to the Redis cluster.
 	// +kubebuilder:validation:Optional
@@ -196,8 +392,8 @@ type RedisClusterParameters struct {
 	MaintenanceWindow []RedisClusterMaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
 	// Name of the Redis cluster. Provided by the client when the cluster is created.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// ID of the network, to which the Redis cluster belongs.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
@@ -217,8 +413,8 @@ type RedisClusterParameters struct {
 	PersistenceMode *string `json:"persistenceMode,omitempty" tf:"persistence_mode,omitempty"`
 
 	// Resources allocated to hosts of the Redis cluster. The structure is documented below.
-	// +kubebuilder:validation:Required
-	Resources []RedisClusterResourcesParameters `json:"resources" tf:"resources,omitempty"`
+	// +kubebuilder:validation:Optional
+	Resources []RedisClusterResourcesParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
 	// A set of ids of security groups assigned to hosts of the cluster.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
@@ -242,20 +438,39 @@ type RedisClusterParameters struct {
 	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 }
 
+type RedisClusterResourcesInitParameters struct {
+
+	// Volume of the storage available to a host, in gigabytes.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Type of the storage of Redis hosts - environment default is used if missing.
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
 type RedisClusterResourcesObservation struct {
+
+	// Volume of the storage available to a host, in gigabytes.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Type of the storage of Redis hosts - environment default is used if missing.
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type RedisClusterResourcesParameters struct {
 
 	// Volume of the storage available to a host, in gigabytes.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// Type of the storage of Redis hosts - environment default is used if missing.
 	// +kubebuilder:validation:Optional
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
 }
 
@@ -263,6 +478,18 @@ type RedisClusterResourcesParameters struct {
 type RedisClusterSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     RedisClusterParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider RedisClusterInitParameters `json:"initProvider,omitempty"`
 }
 
 // RedisClusterStatus defines the observed state of RedisCluster.
@@ -283,8 +510,13 @@ type RedisClusterStatus struct {
 type RedisCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              RedisClusterSpec   `json:"spec"`
-	Status            RedisClusterStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.config) || has(self.initProvider.config)",message="config is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.environment) || has(self.initProvider.environment)",message="environment is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.host) || has(self.initProvider.host)",message="host is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || has(self.initProvider.name)",message="name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.resources) || has(self.initProvider.resources)",message="resources is a required parameter"
+	Spec   RedisClusterSpec   `json:"spec"`
+	Status RedisClusterStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

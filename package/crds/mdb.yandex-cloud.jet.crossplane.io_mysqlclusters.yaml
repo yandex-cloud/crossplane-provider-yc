@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.12.1
   name: mysqlclusters.mdb.yandex-cloud.jet.crossplane.io
 spec:
   group: mdb.yandex-cloud.jet.crossplane.io
@@ -55,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicies field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -103,8 +106,6 @@ spec:
                         name:
                           description: The name of the database.
                           type: string
-                      required:
-                      - name
                       type: object
                     type: array
                   deletionProtection:
@@ -310,8 +311,6 @@ spec:
                           description: The availability zone where the MySQL host
                             will be created.
                           type: string
-                      required:
-                      - zone
                       type: object
                     type: array
                   hostGroupIds:
@@ -342,8 +341,6 @@ spec:
                             or WEEKLY. A day and hour of window need to be specified
                             with weekly window.
                           type: string
-                      required:
-                      - type
                       type: object
                     type: array
                   mysqlConfig:
@@ -448,9 +445,6 @@ spec:
                           description: Interval (in seconds) for my_stat_statements
                             sampling Acceptable values are 1 to 86400, inclusive.
                           type: number
-                      required:
-                      - sessionsSamplingInterval
-                      - statementsSamplingInterval
                       type: object
                     type: array
                   resources:
@@ -467,10 +461,6 @@ spec:
                           type: string
                         resourcePresetId:
                           type: string
-                      required:
-                      - diskSize
-                      - diskTypeId
-                      - resourcePresetId
                       type: object
                     type: array
                   restore:
@@ -487,8 +477,6 @@ spec:
                             cluster should be restored. (Format: "2006-01-02T15:04:05"
                             - UTC). When not set, current time is used.'
                           type: string
-                      required:
-                      - backupId
                       type: object
                     type: array
                   securityGroupIds:
@@ -647,12 +635,9 @@ spec:
                                 items:
                                   type: string
                                 type: array
-                            required:
-                            - databaseName
                             type: object
                           type: array
                       required:
-                      - name
                       - passwordSecretRef
                       type: object
                     type: array
@@ -660,13 +645,287 @@ spec:
                     description: 'Version of the MySQL cluster. (allowed versions
                       are: 5.7, 8.0)'
                     type: string
-                required:
-                - environment
-                - host
-                - name
-                - resources
-                - version
                 type: object
+              initProvider:
+                description: THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. InitProvider
+                  holds the same fields as ForProvider, with the exception of Identifier
+                  and other resource reference fields. The fields that are in InitProvider
+                  are merged into ForProvider when the resource is created. The same
+                  fields are also added to the terraform ignore_changes hook, to avoid
+                  updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after
+                  creation, for example because of an external controller is managing
+                  them, like an autoscaler.
+                properties:
+                  access:
+                    description: Access policy to the MySQL cluster. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        dataLens:
+                          description: Allow access for Yandex DataLens.
+                          type: boolean
+                        webSql:
+                          description: Allows access for SQL queries in the management
+                            console.
+                          type: boolean
+                      type: object
+                    type: array
+                  allowRegenerationHost:
+                    description: A host of the MySQL cluster. The structure is documented
+                      below.
+                    type: boolean
+                  backupWindowStart:
+                    description: Time to start the daily backup, in the UTC. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        hours:
+                          description: The hour at which backup will be started.
+                          type: number
+                        minutes:
+                          description: The minute at which backup will be started.
+                          type: number
+                      type: object
+                    type: array
+                  database:
+                    description: (Deprecated) To manage databases, please switch to
+                      using a separate resource type yandex_mdb_mysql_databases.
+                    items:
+                      properties:
+                        name:
+                          description: The name of the database.
+                          type: string
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: Inhibits deletion of the cluster.  Can be either
+                      true or false.
+                    type: boolean
+                  description:
+                    description: Description of the MySQL cluster.
+                    type: string
+                  environment:
+                    description: Deployment environment of the MySQL cluster.
+                    type: string
+                  host:
+                    description: A host of the MySQL cluster. The structure is documented
+                      below.
+                    items:
+                      properties:
+                        assignPublicIp:
+                          description: Sets whether the host should get a public IP
+                            address. It can be changed on the fly only when name is
+                            set.
+                          type: boolean
+                        backupPriority:
+                          description: Host backup priority. Value is between 0 and
+                            100, default is 0.
+                          type: number
+                        name:
+                          description: Host state name. It should be set for all hosts
+                            or unset for all hosts. This field can be used by another
+                            host, to select which host will be its replication source.
+                            Please refer to replication_source_name parameter.
+                          type: string
+                        priority:
+                          description: Host master promotion priority. Value is between
+                            0 and 100, default is 0.
+                          type: number
+                        replicationSourceName:
+                          description: Host replication source name points to host's
+                            name from which this host should replicate. When not set
+                            then host in HA group. It works only when name is set.
+                          type: string
+                        zone:
+                          description: The availability zone where the MySQL host
+                            will be created.
+                          type: string
+                      type: object
+                    type: array
+                  hostGroupIds:
+                    items:
+                      type: string
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: A set of key/value label pairs to assign to the MySQL
+                      cluster.
+                    type: object
+                  maintenanceWindow:
+                    description: Maintenance policy of the MySQL cluster. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        day:
+                          description: 'Day of the week (in DDD format). Allowed values:
+                            "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"'
+                          type: string
+                        hour:
+                          description: Hour of the day in UTC (in HH format). Allowed
+                            value is between 0 and 23.
+                          type: number
+                        type:
+                          description: Type of maintenance window. Can be either ANYTIME
+                            or WEEKLY. A day and hour of window need to be specified
+                            with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  mysqlConfig:
+                    additionalProperties:
+                      type: string
+                    description: MySQL cluster config. Detail info in "MySQL config"
+                      section (documented below).
+                    type: object
+                  name:
+                    description: Name of the MySQL cluster. Provided by the client
+                      when the cluster is created.
+                    type: string
+                  performanceDiagnostics:
+                    description: Cluster performance diagnostics settings. The structure
+                      is documented below. YC Documentation
+                    items:
+                      properties:
+                        enabled:
+                          description: Enable performance diagnostics
+                          type: boolean
+                        sessionsSamplingInterval:
+                          description: Interval (in seconds) for my_stat_activity
+                            sampling Acceptable values are 1 to 86400, inclusive.
+                          type: number
+                        statementsSamplingInterval:
+                          description: Interval (in seconds) for my_stat_statements
+                            sampling Acceptable values are 1 to 86400, inclusive.
+                          type: number
+                      type: object
+                    type: array
+                  resources:
+                    description: Resources allocated to hosts of the MySQL cluster.
+                      The structure is documented below.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Volume of the storage available to a MySQL
+                            host, in gigabytes.
+                          type: number
+                        diskTypeId:
+                          description: Type of the storage of MySQL hosts.
+                          type: string
+                        resourcePresetId:
+                          type: string
+                      type: object
+                    type: array
+                  restore:
+                    description: The cluster will be created from the specified backup.
+                      The structure is documented below.
+                    items:
+                      properties:
+                        backupId:
+                          description: Backup ID. The cluster will be created from
+                            the specified backup. How to get a list of MySQL backups.
+                          type: string
+                        time:
+                          description: 'Timestamp of the moment to which the MySQL
+                            cluster should be restored. (Format: "2006-01-02T15:04:05"
+                            - UTC). When not set, current time is used.'
+                          type: string
+                      type: object
+                    type: array
+                  user:
+                    description: (Deprecated) To manage users, please switch to using
+                      a separate resource type yandex_mdb_mysql_user.
+                    items:
+                      properties:
+                        authenticationPlugin:
+                          description: 'Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD,
+                            CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7
+                            MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD)'
+                          type: string
+                        connectionLimits:
+                          description: User's connection limits. The structure is
+                            documented below. If the attribute is not specified there
+                            will be no changes.
+                          items:
+                            properties:
+                              maxConnectionsPerHour:
+                                description: Max connections per hour.
+                                type: number
+                              maxQuestionsPerHour:
+                                description: Max questions per hour.
+                                type: number
+                              maxUpdatesPerHour:
+                                description: Max updates per hour.
+                                type: number
+                              maxUserConnections:
+                                description: Max user connections.
+                                type: number
+                            type: object
+                          type: array
+                        globalPermissions:
+                          description: 'List user''s global permissions Allowed permissions:  REPLICATION_CLIENT,
+                            REPLICATION_SLAVE, PROCESS for clear list use empty list.
+                            If the attribute is not specified there will be no changes.'
+                          items:
+                            type: string
+                          type: array
+                        name:
+                          description: The name of the user.
+                          type: string
+                        permission:
+                          description: Set of permissions granted to the user. The
+                            structure is documented below.
+                          items:
+                            properties:
+                              databaseName:
+                                description: The name of the database that the permission
+                                  grants access to.
+                                type: string
+                              roles:
+                                description: 'List user''s roles in the database.
+                                  Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES,
+                                  CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.'
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  version:
+                    description: 'Version of the MySQL cluster. (allowed versions
+                      are: 5.7, 8.0)'
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default
@@ -838,13 +1097,89 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: environment is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.environment)
+                || has(self.initProvider.environment)'
+            - message: host is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.host)
+                || has(self.initProvider.host)'
+            - message: name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || has(self.initProvider.name)'
+            - message: resources is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.resources)
+                || has(self.initProvider.resources)'
+            - message: version is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.version)
+                || has(self.initProvider.version)'
           status:
             description: MySQLClusterStatus defines the observed state of MySQLCluster.
             properties:
               atProvider:
                 properties:
+                  access:
+                    description: Access policy to the MySQL cluster. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        dataLens:
+                          description: Allow access for Yandex DataLens.
+                          type: boolean
+                        webSql:
+                          description: Allows access for SQL queries in the management
+                            console.
+                          type: boolean
+                      type: object
+                    type: array
+                  allowRegenerationHost:
+                    description: A host of the MySQL cluster. The structure is documented
+                      below.
+                    type: boolean
+                  backupWindowStart:
+                    description: Time to start the daily backup, in the UTC. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        hours:
+                          description: The hour at which backup will be started.
+                          type: number
+                        minutes:
+                          description: The minute at which backup will be started.
+                          type: number
+                      type: object
+                    type: array
                   createdAt:
                     description: Creation timestamp of the cluster.
+                    type: string
+                  database:
+                    description: (Deprecated) To manage databases, please switch to
+                      using a separate resource type yandex_mdb_mysql_databases.
+                    items:
+                      properties:
+                        name:
+                          description: The name of the database.
+                          type: string
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: Inhibits deletion of the cluster.  Can be either
+                      true or false.
+                    type: boolean
+                  description:
+                    description: Description of the MySQL cluster.
+                    type: string
+                  environment:
+                    description: Deployment environment of the MySQL cluster.
+                    type: string
+                  folderId:
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   health:
                     description: Aggregated health of the cluster.
@@ -854,20 +1189,216 @@ spec:
                       below.
                     items:
                       properties:
+                        assignPublicIp:
+                          description: Sets whether the host should get a public IP
+                            address. It can be changed on the fly only when name is
+                            set.
+                          type: boolean
+                        backupPriority:
+                          description: Host backup priority. Value is between 0 and
+                            100, default is 0.
+                          type: number
                         fqdn:
                           description: (Computed) The fully qualified domain name
                             of the host.
                           type: string
+                        name:
+                          description: Host state name. It should be set for all hosts
+                            or unset for all hosts. This field can be used by another
+                            host, to select which host will be its replication source.
+                            Please refer to replication_source_name parameter.
+                          type: string
+                        priority:
+                          description: Host master promotion priority. Value is between
+                            0 and 100, default is 0.
+                          type: number
                         replicationSource:
                           description: (Computed) Host replication source (fqdn),
                             when replication_source is empty then host is in HA group.
                           type: string
+                        replicationSourceName:
+                          description: Host replication source name points to host's
+                            name from which this host should replicate. When not set
+                            then host in HA group. It works only when name is set.
+                          type: string
+                        subnetId:
+                          description: The ID of the subnet, to which the host belongs.
+                            The subnet must be a part of the network to which the
+                            cluster belongs.
+                          type: string
+                        zone:
+                          description: The availability zone where the MySQL host
+                            will be created.
+                          type: string
                       type: object
+                    type: array
+                  hostGroupIds:
+                    items:
+                      type: string
                     type: array
                   id:
                     type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: A set of key/value label pairs to assign to the MySQL
+                      cluster.
+                    type: object
+                  maintenanceWindow:
+                    description: Maintenance policy of the MySQL cluster. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        day:
+                          description: 'Day of the week (in DDD format). Allowed values:
+                            "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"'
+                          type: string
+                        hour:
+                          description: Hour of the day in UTC (in HH format). Allowed
+                            value is between 0 and 23.
+                          type: number
+                        type:
+                          description: Type of maintenance window. Can be either ANYTIME
+                            or WEEKLY. A day and hour of window need to be specified
+                            with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  mysqlConfig:
+                    additionalProperties:
+                      type: string
+                    description: MySQL cluster config. Detail info in "MySQL config"
+                      section (documented below).
+                    type: object
+                  name:
+                    description: Name of the MySQL cluster. Provided by the client
+                      when the cluster is created.
+                    type: string
+                  networkId:
+                    description: ID of the network, to which the MySQL cluster uses.
+                    type: string
+                  performanceDiagnostics:
+                    description: Cluster performance diagnostics settings. The structure
+                      is documented below. YC Documentation
+                    items:
+                      properties:
+                        enabled:
+                          description: Enable performance diagnostics
+                          type: boolean
+                        sessionsSamplingInterval:
+                          description: Interval (in seconds) for my_stat_activity
+                            sampling Acceptable values are 1 to 86400, inclusive.
+                          type: number
+                        statementsSamplingInterval:
+                          description: Interval (in seconds) for my_stat_statements
+                            sampling Acceptable values are 1 to 86400, inclusive.
+                          type: number
+                      type: object
+                    type: array
+                  resources:
+                    description: Resources allocated to hosts of the MySQL cluster.
+                      The structure is documented below.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Volume of the storage available to a MySQL
+                            host, in gigabytes.
+                          type: number
+                        diskTypeId:
+                          description: Type of the storage of MySQL hosts.
+                          type: string
+                        resourcePresetId:
+                          type: string
+                      type: object
+                    type: array
+                  restore:
+                    description: The cluster will be created from the specified backup.
+                      The structure is documented below.
+                    items:
+                      properties:
+                        backupId:
+                          description: Backup ID. The cluster will be created from
+                            the specified backup. How to get a list of MySQL backups.
+                          type: string
+                        time:
+                          description: 'Timestamp of the moment to which the MySQL
+                            cluster should be restored. (Format: "2006-01-02T15:04:05"
+                            - UTC). When not set, current time is used.'
+                          type: string
+                      type: object
+                    type: array
+                  securityGroupIds:
+                    description: A set of ids of security groups assigned to hosts
+                      of the cluster.
+                    items:
+                      type: string
+                    type: array
                   status:
                     description: Status of the cluster.
+                    type: string
+                  user:
+                    description: (Deprecated) To manage users, please switch to using
+                      a separate resource type yandex_mdb_mysql_user.
+                    items:
+                      properties:
+                        authenticationPlugin:
+                          description: 'Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD,
+                            CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7
+                            MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD)'
+                          type: string
+                        connectionLimits:
+                          description: User's connection limits. The structure is
+                            documented below. If the attribute is not specified there
+                            will be no changes.
+                          items:
+                            properties:
+                              maxConnectionsPerHour:
+                                description: Max connections per hour.
+                                type: number
+                              maxQuestionsPerHour:
+                                description: Max questions per hour.
+                                type: number
+                              maxUpdatesPerHour:
+                                description: Max updates per hour.
+                                type: number
+                              maxUserConnections:
+                                description: Max user connections.
+                                type: number
+                            type: object
+                          type: array
+                        globalPermissions:
+                          description: 'List user''s global permissions Allowed permissions:  REPLICATION_CLIENT,
+                            REPLICATION_SLAVE, PROCESS for clear list use empty list.
+                            If the attribute is not specified there will be no changes.'
+                          items:
+                            type: string
+                          type: array
+                        name:
+                          description: The name of the user.
+                          type: string
+                        permission:
+                          description: Set of permissions granted to the user. The
+                            structure is documented below.
+                          items:
+                            properties:
+                              databaseName:
+                                description: The name of the database that the permission
+                                  grants access to.
+                                type: string
+                              roles:
+                                description: 'List user''s roles in the database.
+                                  Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES,
+                                  CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.'
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  version:
+                    description: 'Version of the MySQL cluster. (allowed versions
+                      are: 5.7, 8.0)'
                     type: string
                 type: object
               conditions:
@@ -911,9 +1442,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

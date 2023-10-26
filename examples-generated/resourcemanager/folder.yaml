@@ -9,6 +9,3 @@ metadata:
 spec:
   forProvider:
     cloudId: my_cloud_id
-
----
-

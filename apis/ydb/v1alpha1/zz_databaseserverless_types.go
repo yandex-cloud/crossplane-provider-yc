@@ -25,6 +25,21 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type DatabaseServerlessInitParameters struct {
+
+	// A description for the Yandex Database serverless cluster.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// A set of key/value label pairs to assign to the Yandex Database serverless cluster.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Location ID for the Yandex Database serverless cluster.
+	LocationID *string `json:"locationId,omitempty" tf:"location_id,omitempty"`
+
+	// Name for the Yandex Database serverless cluster.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
 type DatabaseServerlessObservation struct {
 
 	// The Yandex Database serverless cluster creation timestamp.
@@ -34,11 +49,27 @@ type DatabaseServerlessObservation struct {
 	// Useful for SDK configuration.
 	DatabasePath *string `json:"databasePath,omitempty" tf:"database_path,omitempty"`
 
+	// A description for the Yandex Database serverless cluster.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
 	// Document API endpoint of the Yandex Database serverless cluster.
 	DocumentAPIEndpoint *string `json:"documentApiEndpoint,omitempty" tf:"document_api_endpoint,omitempty"`
 
+	// ID of the folder that the Yandex Database serverless cluster belongs to.
+	// It will be deduced from provider configuration if not set explicitly.
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
 	// ID of the Yandex Database serverless cluster.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// A set of key/value label pairs to assign to the Yandex Database serverless cluster.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Location ID for the Yandex Database serverless cluster.
+	LocationID *string `json:"locationId,omitempty" tf:"location_id,omitempty"`
+
+	// Name for the Yandex Database serverless cluster.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Status of the Yandex Database serverless cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
@@ -84,14 +115,26 @@ type DatabaseServerlessParameters struct {
 	LocationID *string `json:"locationId,omitempty" tf:"location_id,omitempty"`
 
 	// Name for the Yandex Database serverless cluster.
-	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 // DatabaseServerlessSpec defines the desired state of DatabaseServerless
 type DatabaseServerlessSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     DatabaseServerlessParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider DatabaseServerlessInitParameters `json:"initProvider,omitempty"`
 }
 
 // DatabaseServerlessStatus defines the observed state of DatabaseServerless.
@@ -112,8 +155,9 @@ type DatabaseServerlessStatus struct {
 type DatabaseServerless struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              DatabaseServerlessSpec   `json:"spec"`
-	Status            DatabaseServerlessStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || has(self.initProvider.name)",message="name is a required parameter"
+	Spec   DatabaseServerlessSpec   `json:"spec"`
+	Status DatabaseServerlessStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

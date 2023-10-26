@@ -25,21 +25,53 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ServiceAccountKeyInitParameters struct {
+
+	// The description of the key pair.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The output format of the keys. PEM_FILE is the default format.
+	Format *string `json:"format,omitempty" tf:"format,omitempty"`
+
+	// The algorithm used to generate the key. RSA_2048 is the default algorithm.
+	// Valid values are listed in the API reference.
+	KeyAlgorithm *string `json:"keyAlgorithm,omitempty" tf:"key_algorithm,omitempty"`
+
+	// An optional PGP key to encrypt the resulting private key material. May either be a base64-encoded public key or a keybase username in the form keybase:keybaseusername.
+	PgpKey *string `json:"pgpKey,omitempty" tf:"pgp_key,omitempty"`
+}
+
 type ServiceAccountKeyObservation struct {
 
 	// Creation timestamp of the static access key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// The description of the key pair.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
 	// The encrypted private key, base64 encoded. This is only populated when pgp_key is supplied.
 	EncryptedPrivateKey *string `json:"encryptedPrivateKey,omitempty" tf:"encrypted_private_key,omitempty"`
 
+	// The output format of the keys. PEM_FILE is the default format.
+	Format *string `json:"format,omitempty" tf:"format,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The algorithm used to generate the key. RSA_2048 is the default algorithm.
+	// Valid values are listed in the API reference.
+	KeyAlgorithm *string `json:"keyAlgorithm,omitempty" tf:"key_algorithm,omitempty"`
 
 	// The fingerprint of the PGP key used to encrypt the private key. This is only populated when pgp_key is supplied.
 	KeyFingerprint *string `json:"keyFingerprint,omitempty" tf:"key_fingerprint,omitempty"`
 
+	// An optional PGP key to encrypt the resulting private key material. May either be a base64-encoded public key or a keybase username in the form keybase:keybaseusername.
+	PgpKey *string `json:"pgpKey,omitempty" tf:"pgp_key,omitempty"`
+
 	// The public key.
 	PublicKey *string `json:"publicKey,omitempty" tf:"public_key,omitempty"`
+
+	// ID of the service account to create a pair for.
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 }
 
 type ServiceAccountKeyParameters struct {
@@ -79,6 +111,18 @@ type ServiceAccountKeyParameters struct {
 type ServiceAccountKeySpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ServiceAccountKeyParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ServiceAccountKeyInitParameters `json:"initProvider,omitempty"`
 }
 
 // ServiceAccountKeyStatus defines the observed state of ServiceAccountKey.
