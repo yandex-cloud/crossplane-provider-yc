@@ -32,24 +32,20 @@ const (
 	ServiceAccountRefValueFn = "ServiceAccountRefValue()"
 )
 
-func serviceAccountKey(attr map[string]interface{}) []byte {
-	if _, ok := attr["id"]; !ok {
-		return nil
+func serviceAccountKey(attr map[string]interface{}) ([]byte, error) {
+	required := []string{
+		"id",
+		"service_account_id",
+		"created_at",
+		"key_algorithm",
+		"public_key",
+		"private_key",
 	}
-	if _, ok := attr["service_account_id"]; !ok {
-		return nil
-	}
-	if _, ok := attr["created_at"]; !ok {
-		return nil
-	}
-	if _, ok := attr["key_algorithm"]; !ok {
-		return nil
-	}
-	if _, ok := attr["public_key"]; !ok {
-		return nil
-	}
-	if _, ok := attr["private_key"]; !ok {
-		return nil
+
+	for _, field := range required {
+		if _, ok := attr[field]; !ok {
+			return nil, fmt.Errorf("required field %s is missing", field)
+		}
 	}
 	result := map[string]string{
 		"id":                 attr["id"].(string),
@@ -59,8 +55,8 @@ func serviceAccountKey(attr map[string]interface{}) []byte {
 		"public_key":         attr["public_key"].(string),
 		"private_key":        attr["private_key"].(string),
 	}
-	encoded, _ := json.Marshal(result)
-	return encoded
+	encoded, err := json.Marshal(result)
+	return encoded, err
 }
 
 func serviceAccountStaticKey(attr map[string]interface{}) (map[string][]byte, error) {
@@ -83,9 +79,10 @@ func Configure(p *config.Provider) {
 			Type: "ServiceAccount",
 		}
 		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
+			bb, err := serviceAccountKey(attr)
 			return map[string][]byte{
-				"service_account_key": serviceAccountKey(attr),
-			}, nil
+				"service_account_key": bb,
+			}, err
 		}
 	})
 	p.AddResourceConfigurator("yandex_iam_service_account_static_access_key", func(r *config.Resource) {
