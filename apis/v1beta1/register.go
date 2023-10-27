@@ -13,7 +13,7 @@ import (
 
 // Package type metadata.
 const (
-	Group   = "aws.upbound.io"
+	Group   = "yandex-cloud.jet.crossplane.io"
 	Version = "v1beta1"
 )
 

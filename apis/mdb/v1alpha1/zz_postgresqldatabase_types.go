@@ -25,15 +25,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type PostgresqlDatabaseExtensionInitParameters struct {
-
-	// Name of the database extension. For more information on available extensions see the official documentation.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// Version of the extension.
-	Version *string `json:"version,omitempty" tf:"version,omitempty"`
-}
-
 type PostgresqlDatabaseExtensionObservation struct {
 
 	// Name of the database extension. For more information on available extensions see the official documentation.
@@ -46,30 +37,12 @@ type PostgresqlDatabaseExtensionObservation struct {
 type PostgresqlDatabaseExtensionParameters struct {
 
 	// Name of the database extension. For more information on available extensions see the official documentation.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// Version of the extension.
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
-}
-
-type PostgresqlDatabaseInitParameters struct {
-
-	// Set of database extensions. The structure is documented below
-	Extension []PostgresqlDatabaseExtensionInitParameters `json:"extension,omitempty" tf:"extension,omitempty"`
-
-	// POSIX locale for string sorting order. Forbidden to change in an existing database.
-	LcCollate *string `json:"lcCollate,omitempty" tf:"lc_collate,omitempty"`
-
-	// POSIX locale for character classification. Forbidden to change in an existing database.
-	LcType *string `json:"lcType,omitempty" tf:"lc_type,omitempty"`
-
-	// The name of the database.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
-	Owner *string `json:"owner,omitempty" tf:"owner,omitempty"`
 }
 
 type PostgresqlDatabaseObservation struct {
@@ -132,18 +105,6 @@ type PostgresqlDatabaseParameters struct {
 type PostgresqlDatabaseSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     PostgresqlDatabaseParameters `json:"forProvider"`
-	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
-	// unless the relevant Crossplane feature flag is enabled, and may be
-	// changed or removed without notice.
-	// InitProvider holds the same fields as ForProvider, with the exception
-	// of Identifier and other resource reference fields. The fields that are
-	// in InitProvider are merged into ForProvider when the resource is created.
-	// The same fields are also added to the terraform ignore_changes hook, to
-	// avoid updating them after creation. This is useful for fields that are
-	// required on creation, but we do not desire to update them after creation,
-	// for example because of an external controller is managing them, like an
-	// autoscaler.
-	InitProvider PostgresqlDatabaseInitParameters `json:"initProvider,omitempty"`
 }
 
 // PostgresqlDatabaseStatus defines the observed state of PostgresqlDatabase.
@@ -164,8 +125,8 @@ type PostgresqlDatabaseStatus struct {
 type PostgresqlDatabase struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || has(self.initProvider.name)",message="name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.owner) || has(self.initProvider.owner)",message="owner is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.owner)",message="owner is a required parameter"
 	Spec   PostgresqlDatabaseSpec   `json:"spec"`
 	Status PostgresqlDatabaseStatus `json:"status,omitempty"`
 }

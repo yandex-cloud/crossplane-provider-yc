@@ -55,6 +55,7 @@ func GetProvider() *tjconfig.Provider {
 	pc := tjconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
 		tjconfig.WithShortName("yandex-cloud"),
 		tjconfig.WithRootGroup("yandex-cloud.jet.crossplane.io"),
+		tjconfig.WithFeaturesPackage("internal/features"),
 		tjconfig.WithDefaultResourceOptions(common.DefaultResourceOverrides()),
 		tjconfig.WithIncludeList([]string{
 			"yandex_alb_backend_group$",

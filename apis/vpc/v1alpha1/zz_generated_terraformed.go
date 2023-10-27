@@ -81,16 +81,6 @@ func (tr *Address) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// GetInitParameters of this Address
-func (tr *Address) GetInitParameters() (map[string]any, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
-}
-
 // LateInitialize this Address using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *Address) LateInitialize(attrs []byte) (bool, error) {
@@ -163,16 +153,6 @@ func (tr *DefaultSecurityGroup) SetParameters(params map[string]any) error {
 		return err
 	}
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
-}
-
-// GetInitParameters of this DefaultSecurityGroup
-func (tr *DefaultSecurityGroup) GetInitParameters() (map[string]any, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
 }
 
 // LateInitialize this DefaultSecurityGroup using its observed tfState.
@@ -249,16 +229,6 @@ func (tr *Network) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// GetInitParameters of this Network
-func (tr *Network) GetInitParameters() (map[string]any, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
-}
-
 // LateInitialize this Network using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *Network) LateInitialize(attrs []byte) (bool, error) {
@@ -331,16 +301,6 @@ func (tr *SecurityGroup) SetParameters(params map[string]any) error {
 		return err
 	}
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
-}
-
-// GetInitParameters of this SecurityGroup
-func (tr *SecurityGroup) GetInitParameters() (map[string]any, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
 }
 
 // LateInitialize this SecurityGroup using its observed tfState.
@@ -417,16 +377,6 @@ func (tr *SecurityGroupRule) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// GetInitParameters of this SecurityGroupRule
-func (tr *SecurityGroupRule) GetInitParameters() (map[string]any, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
-}
-
 // LateInitialize this SecurityGroupRule using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *SecurityGroupRule) LateInitialize(attrs []byte) (bool, error) {
@@ -499,16 +449,6 @@ func (tr *Subnet) SetParameters(params map[string]any) error {
 		return err
 	}
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
-}
-
-// GetInitParameters of this Subnet
-func (tr *Subnet) GetInitParameters() (map[string]any, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
 }
 
 // LateInitialize this Subnet using its observed tfState.

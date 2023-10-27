@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.12.1
+    controller-gen.kubebuilder.io/version: v0.11.4
   name: loadbalancers.alb.yandex-cloud.jet.crossplane.io
 spec:
   group: alb.yandex-cloud.jet.crossplane.io
@@ -58,7 +58,7 @@ spec:
                 description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
                   or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
+                  in favor of the ManagementPolicy field in a future release. Currently,
                   both could be set independently and non-default values would be
                   honored if the feature flag is enabled. See the design doc for more
                   information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
@@ -170,8 +170,12 @@ spec:
                                 description: ID of the zone that location is located
                                   at.
                                 type: string
+                            required:
+                            - zoneId
                             type: object
                           type: array
+                      required:
+                      - location
                       type: object
                     type: array
                   description:
@@ -410,6 +414,9 @@ spec:
                                 items:
                                   type: number
                                 type: array
+                            required:
+                            - address
+                            - ports
                             type: object
                           type: array
                         http:
@@ -532,6 +539,8 @@ spec:
                                             type: string
                                         type: object
                                       type: array
+                                  required:
+                                  - certificateIds
                                   type: object
                                 type: array
                               sniHandler:
@@ -592,6 +601,8 @@ spec:
                                                   type: string
                                               type: object
                                             type: array
+                                        required:
+                                        - certificateIds
                                         type: object
                                       type: array
                                     name:
@@ -602,10 +613,18 @@ spec:
                                       items:
                                         type: string
                                       type: array
+                                  required:
+                                  - handler
+                                  - name
+                                  - serverNames
                                   type: object
                                 type: array
+                            required:
+                            - defaultHandler
                             type: object
                           type: array
+                      required:
+                      - name
                       type: object
                     type: array
                   name:
@@ -777,337 +796,21 @@ spec:
                         type: object
                     type: object
                 type: object
-              initProvider:
-                description: THIS IS AN ALPHA FIELD. Do not use it in production.
-                  It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. InitProvider
-                  holds the same fields as ForProvider, with the exception of Identifier
-                  and other resource reference fields. The fields that are in InitProvider
-                  are merged into ForProvider when the resource is created. The same
-                  fields are also added to the terraform ignore_changes hook, to avoid
-                  updating them after creation. This is useful for fields that are
-                  required on creation, but we do not desire to update them after
-                  creation, for example because of an external controller is managing
-                  them, like an autoscaler.
-                properties:
-                  allocationPolicy:
-                    description: Allocation zones for the Load Balancer instance.
-                      The structure is documented below.
-                    items:
-                      properties:
-                        location:
-                          description: Unique set of locations. The structure is documented
-                            below.
-                          items:
-                            properties:
-                              disableTraffic:
-                                description: If set, will disable all L7 instances
-                                  in the zone for request handling.
-                                type: boolean
-                              zoneId:
-                                description: ID of the zone that location is located
-                                  at.
-                                type: string
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  description:
-                    description: An optional description of the Load Balancer.
-                    type: string
-                  labels:
-                    additionalProperties:
-                      type: string
-                    description: Labels to assign to this Load Balancer. A list of
-                      key/value pairs.
-                    type: object
-                  listener:
-                    description: List of listeners for the Load Balancer. The structure
-                      is documented below.
-                    items:
-                      properties:
-                        endpoint:
-                          description: Network endpoints (addresses and ports) of
-                            the listener. The structure is documented below.
-                          items:
-                            properties:
-                              address:
-                                description: Provided by the client or computed automatically.
-                                items:
-                                  properties:
-                                    externalIpv4Address:
-                                      description: External IPv4 address. The structure
-                                        is documented below.
-                                      items:
-                                        properties:
-                                          address:
-                                            description: Provided by the client or
-                                              computed automatically.
-                                            type: string
-                                        type: object
-                                      type: array
-                                    externalIpv6Address:
-                                      description: External IPv6 address. The structure
-                                        is documented below.
-                                      items:
-                                        properties:
-                                          address:
-                                            description: Provided by the client or
-                                              computed automatically.
-                                            type: string
-                                        type: object
-                                      type: array
-                                    internalIpv4Address:
-                                      description: Internal IPv4 address. The structure
-                                        is documented below.
-                                      items:
-                                        properties:
-                                          address:
-                                            description: Provided by the client or
-                                              computed automatically.
-                                            type: string
-                                        type: object
-                                      type: array
-                                  type: object
-                                type: array
-                              ports:
-                                description: One or more ports to listen on.
-                                items:
-                                  type: number
-                                type: array
-                            type: object
-                          type: array
-                        http:
-                          description: HTTP listener resource. The structure is documented
-                            below.
-                          items:
-                            properties:
-                              handler:
-                                description: Stream handler that sets plaintext Stream
-                                  backend group. The structure is documented below.
-                                items:
-                                  properties:
-                                    allowHttp10:
-                                      description: If set, will enable only HTTP1
-                                        protocol with HTTP1.0 support.
-                                      type: boolean
-                                    http2Options:
-                                      description: If set, will enable HTTP2 protocol
-                                        for the handler. The structure is documented
-                                        below.
-                                      items:
-                                        properties:
-                                          maxConcurrentStreams:
-                                            description: Maximum number of concurrent
-                                              streams.
-                                            type: number
-                                        type: object
-                                      type: array
-                                    httpRouterId:
-                                      description: HTTP router id.
-                                      type: string
-                                  type: object
-                                type: array
-                              redirects:
-                                description: Shortcut for adding http -> https redirects.
-                                  The structure is documented below.
-                                items:
-                                  properties:
-                                    httpToHttps:
-                                      description: If set redirects all unencrypted
-                                        HTTP requests to the same URI with scheme
-                                        changed to https.
-                                      type: boolean
-                                  type: object
-                                type: array
-                            type: object
-                          type: array
-                        name:
-                          description: name of the listener.
-                          type: string
-                        stream:
-                          description: Stream listener resource. The structure is
-                            documented below.
-                          items:
-                            properties:
-                              handler:
-                                description: Stream handler that sets plaintext Stream
-                                  backend group. The structure is documented below.
-                                items:
-                                  properties:
-                                    backendGroupId:
-                                      description: Backend group id.
-                                      type: string
-                                  type: object
-                                type: array
-                            type: object
-                          type: array
-                        tls:
-                          description: TLS listener resource. The structure is documented
-                            below.
-                          items:
-                            properties:
-                              defaultHandler:
-                                description: TLS handler resource. The structure is
-                                  documented below.
-                                items:
-                                  properties:
-                                    certificateIds:
-                                      description: Certificate IDs in the Certificate
-                                        Manager. Multiple TLS certificates can be
-                                        associated with the same context to allow
-                                        both RSA and ECDSA certificates. Only the
-                                        first certificate of each type will be used.
-                                      items:
-                                        type: string
-                                      type: array
-                                    httpHandler:
-                                      description: HTTP handler resource. The structure
-                                        is documented below.
-                                      items:
-                                        properties:
-                                          allowHttp10:
-                                            description: If set, will enable only
-                                              HTTP1 protocol with HTTP1.0 support.
-                                            type: boolean
-                                          http2Options:
-                                            description: If set, will enable HTTP2
-                                              protocol for the handler. The structure
-                                              is documented below.
-                                            items:
-                                              properties:
-                                                maxConcurrentStreams:
-                                                  description: Maximum number of concurrent
-                                                    streams.
-                                                  type: number
-                                              type: object
-                                            type: array
-                                          httpRouterId:
-                                            description: HTTP router id.
-                                            type: string
-                                        type: object
-                                      type: array
-                                    streamHandler:
-                                      description: Stream handler resource. The structure
-                                        is documented below.
-                                      items:
-                                        properties:
-                                          backendGroupId:
-                                            description: Backend group id.
-                                            type: string
-                                        type: object
-                                      type: array
-                                  type: object
-                                type: array
-                              sniHandler:
-                                description: SNI match resource. The structure is
-                                  documented below.
-                                items:
-                                  properties:
-                                    handler:
-                                      description: Stream handler that sets plaintext
-                                        Stream backend group. The structure is documented
-                                        below.
-                                      items:
-                                        properties:
-                                          certificateIds:
-                                            description: Certificate IDs in the Certificate
-                                              Manager. Multiple TLS certificates can
-                                              be associated with the same context
-                                              to allow both RSA and ECDSA certificates.
-                                              Only the first certificate of each type
-                                              will be used.
-                                            items:
-                                              type: string
-                                            type: array
-                                          httpHandler:
-                                            description: HTTP handler resource. The
-                                              structure is documented below.
-                                            items:
-                                              properties:
-                                                allowHttp10:
-                                                  description: If set, will enable
-                                                    only HTTP1 protocol with HTTP1.0
-                                                    support.
-                                                  type: boolean
-                                                http2Options:
-                                                  description: If set, will enable
-                                                    HTTP2 protocol for the handler.
-                                                    The structure is documented below.
-                                                  items:
-                                                    properties:
-                                                      maxConcurrentStreams:
-                                                        description: Maximum number
-                                                          of concurrent streams.
-                                                        type: number
-                                                    type: object
-                                                  type: array
-                                                httpRouterId:
-                                                  description: HTTP router id.
-                                                  type: string
-                                              type: object
-                                            type: array
-                                          streamHandler:
-                                            description: Stream handler resource.
-                                              The structure is documented below.
-                                            items:
-                                              properties:
-                                                backendGroupId:
-                                                  description: Backend group id.
-                                                  type: string
-                                              type: object
-                                            type: array
-                                        type: object
-                                      type: array
-                                    name:
-                                      description: name of SNI match.
-                                      type: string
-                                    serverNames:
-                                      description: A set of server names.
-                                      items:
-                                        type: string
-                                      type: array
-                                  type: object
-                                type: array
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  name:
-                    description: Name of the Load Balancer. Provided by the client
-                      when the Load Balancer is created.
-                    type: string
-                  regionId:
-                    description: ID of the region that the Load Balancer is located
-                      at.
-                    type: string
-                type: object
-              managementPolicies:
-                default:
-                - '*'
+              managementPolicy:
+                default: FullControl
                 description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
                   It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
-                items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
-                  enum:
-                  - Observe
-                  - Create
-                  - Update
-                  - Delete
-                  - LateInitialize
-                  - '*'
-                  type: string
-                type: array
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -1281,9 +984,7 @@ spec:
             type: object
             x-kubernetes-validations:
             - message: allocationPolicy is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.allocationPolicy)
-                || has(self.initProvider.allocationPolicy)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.allocationPolicy)
           status:
             description: LoadBalancerStatus defines the observed state of LoadBalancer.
             properties:

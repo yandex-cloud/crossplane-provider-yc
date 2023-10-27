@@ -25,29 +25,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type BackendGroupInitParameters struct {
-
-	// Description of the backend group.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// Grpc backend specification that will be used by the ALB Backend Group. Structure is documented below.
-	GRPCBackend []GRPCBackendInitParameters `json:"grpcBackend,omitempty" tf:"grpc_backend,omitempty"`
-
-	// Http backend specification that will be used by the ALB Backend Group. Structure is documented below.
-	HTTPBackend []HTTPBackendInitParameters `json:"httpBackend,omitempty" tf:"http_backend,omitempty"`
-
-	// Labels to assign to this backend group.
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
-	// Name of the Backend Group.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	SessionAffinity []SessionAffinityInitParameters `json:"sessionAffinity,omitempty" tf:"session_affinity,omitempty"`
-
-	// Stream backend specification that will be used by the ALB Backend Group. Structure is documented below.
-	StreamBackend []StreamBackendInitParameters `json:"streamBackend,omitempty" tf:"stream_backend,omitempty"`
-}
-
 type BackendGroupObservation struct {
 
 	// The backend group creation timestamp.
@@ -123,12 +100,6 @@ type BackendGroupParameters struct {
 	StreamBackend []StreamBackendParameters `json:"streamBackend,omitempty" tf:"stream_backend,omitempty"`
 }
 
-type ConnectionInitParameters struct {
-
-	// Use source IP address
-	SourceIP *bool `json:"sourceIp,omitempty" tf:"source_ip,omitempty"`
-}
-
 type ConnectionObservation struct {
 
 	// Use source IP address
@@ -140,16 +111,6 @@ type ConnectionParameters struct {
 	// Use source IP address
 	// +kubebuilder:validation:Optional
 	SourceIP *bool `json:"sourceIp,omitempty" tf:"source_ip,omitempty"`
-}
-
-type CookieInitParameters struct {
-
-	// Name of the backend.
-	// Name of the HTTP cookie
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// TTL for the cookie (if not set, session cookie will be used)
-	TTL *string `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type CookieObservation struct {
@@ -166,33 +127,12 @@ type CookieParameters struct {
 
 	// Name of the backend.
 	// Name of the HTTP cookie
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// TTL for the cookie (if not set, session cookie will be used)
 	// +kubebuilder:validation:Optional
 	TTL *string `json:"ttl,omitempty" tf:"ttl,omitempty"`
-}
-
-type GRPCBackendInitParameters struct {
-
-	// Healthcheck specification that will be used by this backend. Structure is documented below.
-	Healthcheck []HealthcheckInitParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
-
-	// Load Balancing Config specification that will be used by this backend. Structure is documented below.
-	LoadBalancingConfig []LoadBalancingConfigInitParameters `json:"loadBalancingConfig,omitempty" tf:"load_balancing_config,omitempty"`
-
-	// Name of the backend.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// Port for incoming traffic.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// Tls specification that will be used by this backend. Structure is documented below.
-	TLS []TLSInitParameters `json:"tls,omitempty" tf:"tls,omitempty"`
-
-	// Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
-	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
 
 type GRPCBackendObservation struct {
@@ -230,7 +170,7 @@ type GRPCBackendParameters struct {
 	LoadBalancingConfig []LoadBalancingConfigParameters `json:"loadBalancingConfig,omitempty" tf:"load_balancing_config,omitempty"`
 
 	// Name of the backend.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// Port for incoming traffic.
@@ -259,12 +199,6 @@ type GRPCBackendParameters struct {
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
 
-type GRPCHealthcheckInitParameters struct {
-
-	// Service name for grpc.health.v1.HealthCheckRequest message.
-	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
-}
-
 type GRPCHealthcheckObservation struct {
 
 	// Service name for grpc.health.v1.HealthCheckRequest message.
@@ -276,36 +210,6 @@ type GRPCHealthcheckParameters struct {
 	// Service name for grpc.health.v1.HealthCheckRequest message.
 	// +kubebuilder:validation:Optional
 	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
-}
-
-type HTTPBackendHealthcheckInitParameters struct {
-
-	// Grpc Healthcheck specification that will be used by this healthcheck. Structure is documented below.
-	GRPCHealthcheck []HealthcheckGRPCHealthcheckInitParameters `json:"grpcHealthcheck,omitempty" tf:"grpc_healthcheck,omitempty"`
-
-	// Http Healthcheck specification that will be used by this healthcheck. Structure is documented below.
-	HTTPHealthcheck []HealthcheckHTTPHealthcheckInitParameters `json:"httpHealthcheck,omitempty" tf:"http_healthcheck,omitempty"`
-
-	// Optional alternative port for health checking.
-	HealthcheckPort *float64 `json:"healthcheckPort,omitempty" tf:"healthcheck_port,omitempty"`
-
-	// Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
-	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
-
-	// Interval between health checks.
-	Interval *string `json:"interval,omitempty" tf:"interval,omitempty"`
-
-	// An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
-	IntervalJitterPercent *float64 `json:"intervalJitterPercent,omitempty" tf:"interval_jitter_percent,omitempty"`
-
-	// Stream Healthcheck specification that will be used by this healthcheck. Structure is documented below.
-	StreamHealthcheck []HealthcheckStreamHealthcheckInitParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
-
-	// Time to wait for a health check response.
-	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
-
-	// Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
-	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
 
 type HTTPBackendHealthcheckObservation struct {
@@ -357,7 +261,7 @@ type HTTPBackendHealthcheckParameters struct {
 	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
 
 	// Interval between health checks.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Interval *string `json:"interval" tf:"interval,omitempty"`
 
 	// An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
@@ -369,53 +273,12 @@ type HTTPBackendHealthcheckParameters struct {
 	StreamHealthcheck []HealthcheckStreamHealthcheckParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
 
 	// Time to wait for a health check response.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Timeout *string `json:"timeout" tf:"timeout,omitempty"`
 
 	// Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
 	// +kubebuilder:validation:Optional
 	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
-}
-
-type HTTPBackendInitParameters struct {
-
-	// Healthcheck specification that will be used by this backend. Structure is documented below.
-	Healthcheck []HTTPBackendHealthcheckInitParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
-
-	// Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
-	Http2 *bool `json:"http2,omitempty" tf:"http2,omitempty"`
-
-	// Load Balancing Config specification that will be used by this backend. Structure is documented below.
-	LoadBalancingConfig []HTTPBackendLoadBalancingConfigInitParameters `json:"loadBalancingConfig,omitempty" tf:"load_balancing_config,omitempty"`
-
-	// Name of the backend.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// Port for incoming traffic.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	StorageBucket *string `json:"storageBucket,omitempty" tf:"storage_bucket,omitempty"`
-
-	// Tls specification that will be used by this backend. Structure is documented below.
-	TLS []HTTPBackendTLSInitParameters `json:"tls,omitempty" tf:"tls,omitempty"`
-
-	// Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
-	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
-}
-
-type HTTPBackendLoadBalancingConfigInitParameters struct {
-
-	// Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
-	LocalityAwareRoutingPercent *float64 `json:"localityAwareRoutingPercent,omitempty" tf:"locality_aware_routing_percent,omitempty"`
-
-	// Load balancing mode for the backend. Possible values: "ROUND_ROBIN", "RANDOM", "LEAST_REQUEST", "MAGLEV_HASH".
-	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
-
-	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
-	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
-
-	// If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
-	StrictLocality *bool `json:"strictLocality,omitempty" tf:"strict_locality,omitempty"`
 }
 
 type HTTPBackendLoadBalancingConfigObservation struct {
@@ -496,7 +359,7 @@ type HTTPBackendParameters struct {
 	LoadBalancingConfig []HTTPBackendLoadBalancingConfigParameters `json:"loadBalancingConfig,omitempty" tf:"load_balancing_config,omitempty"`
 
 	// Name of the backend.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// Port for incoming traffic.
@@ -528,14 +391,6 @@ type HTTPBackendParameters struct {
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
 
-type HTTPBackendTLSInitParameters struct {
-
-	// SNI string for TLS connections.
-	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
-
-	ValidationContext []TLSValidationContextInitParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
-}
-
 type HTTPBackendTLSObservation struct {
 
 	// SNI string for TLS connections.
@@ -552,18 +407,6 @@ type HTTPBackendTLSParameters struct {
 
 	// +kubebuilder:validation:Optional
 	ValidationContext []TLSValidationContextParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
-}
-
-type HTTPHealthcheckInitParameters struct {
-
-	// "Host" HTTP header value.
-	Host *string `json:"host,omitempty" tf:"host,omitempty"`
-
-	// If set, health checks will use HTTP2.
-	Http2 *bool `json:"http2,omitempty" tf:"http2,omitempty"`
-
-	// HTTP path.
-	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 }
 
 type HTTPHealthcheckObservation struct {
@@ -589,15 +432,8 @@ type HTTPHealthcheckParameters struct {
 	Http2 *bool `json:"http2,omitempty" tf:"http2,omitempty"`
 
 	// HTTP path.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Path *string `json:"path" tf:"path,omitempty"`
-}
-
-type HeaderInitParameters struct {
-
-	// Name of the Backend Group.
-	// The name of the request header that will be used
-	HeaderName *string `json:"headerName,omitempty" tf:"header_name,omitempty"`
 }
 
 type HeaderObservation struct {
@@ -611,14 +447,8 @@ type HeaderParameters struct {
 
 	// Name of the Backend Group.
 	// The name of the request header that will be used
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	HeaderName *string `json:"headerName" tf:"header_name,omitempty"`
-}
-
-type HealthcheckGRPCHealthcheckInitParameters struct {
-
-	// Service name for grpc.health.v1.HealthCheckRequest message.
-	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 }
 
 type HealthcheckGRPCHealthcheckObservation struct {
@@ -632,18 +462,6 @@ type HealthcheckGRPCHealthcheckParameters struct {
 	// Service name for grpc.health.v1.HealthCheckRequest message.
 	// +kubebuilder:validation:Optional
 	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
-}
-
-type HealthcheckHTTPHealthcheckInitParameters struct {
-
-	// "Host" HTTP header value.
-	Host *string `json:"host,omitempty" tf:"host,omitempty"`
-
-	// If set, health checks will use HTTP2.
-	Http2 *bool `json:"http2,omitempty" tf:"http2,omitempty"`
-
-	// HTTP path.
-	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 }
 
 type HealthcheckHTTPHealthcheckObservation struct {
@@ -669,38 +487,8 @@ type HealthcheckHTTPHealthcheckParameters struct {
 	Http2 *bool `json:"http2,omitempty" tf:"http2,omitempty"`
 
 	// HTTP path.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Path *string `json:"path" tf:"path,omitempty"`
-}
-
-type HealthcheckInitParameters struct {
-
-	// Grpc Healthcheck specification that will be used by this healthcheck. Structure is documented below.
-	GRPCHealthcheck []GRPCHealthcheckInitParameters `json:"grpcHealthcheck,omitempty" tf:"grpc_healthcheck,omitempty"`
-
-	// Http Healthcheck specification that will be used by this healthcheck. Structure is documented below.
-	HTTPHealthcheck []HTTPHealthcheckInitParameters `json:"httpHealthcheck,omitempty" tf:"http_healthcheck,omitempty"`
-
-	// Optional alternative port for health checking.
-	HealthcheckPort *float64 `json:"healthcheckPort,omitempty" tf:"healthcheck_port,omitempty"`
-
-	// Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
-	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
-
-	// Interval between health checks.
-	Interval *string `json:"interval,omitempty" tf:"interval,omitempty"`
-
-	// An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
-	IntervalJitterPercent *float64 `json:"intervalJitterPercent,omitempty" tf:"interval_jitter_percent,omitempty"`
-
-	// Stream Healthcheck specification that will be used by this healthcheck. Structure is documented below.
-	StreamHealthcheck []StreamHealthcheckInitParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
-
-	// Time to wait for a health check response.
-	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
-
-	// Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
-	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
 
 type HealthcheckObservation struct {
@@ -752,7 +540,7 @@ type HealthcheckParameters struct {
 	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
 
 	// Interval between health checks.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Interval *string `json:"interval" tf:"interval,omitempty"`
 
 	// An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
@@ -764,21 +552,12 @@ type HealthcheckParameters struct {
 	StreamHealthcheck []StreamHealthcheckParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
 
 	// Time to wait for a health check response.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Timeout *string `json:"timeout" tf:"timeout,omitempty"`
 
 	// Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
 	// +kubebuilder:validation:Optional
 	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
-}
-
-type HealthcheckStreamHealthcheckInitParameters struct {
-
-	// Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
-	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
-
-	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
-	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
 
 type HealthcheckStreamHealthcheckObservation struct {
@@ -799,21 +578,6 @@ type HealthcheckStreamHealthcheckParameters struct {
 	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
 	// +kubebuilder:validation:Optional
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
-}
-
-type LoadBalancingConfigInitParameters struct {
-
-	// Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
-	LocalityAwareRoutingPercent *float64 `json:"localityAwareRoutingPercent,omitempty" tf:"locality_aware_routing_percent,omitempty"`
-
-	// Load balancing mode for the backend. Possible values: "ROUND_ROBIN", "RANDOM", "LEAST_REQUEST", "MAGLEV_HASH".
-	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
-
-	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
-	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
-
-	// If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
-	StrictLocality *bool `json:"strictLocality,omitempty" tf:"strict_locality,omitempty"`
 }
 
 type LoadBalancingConfigObservation struct {
@@ -850,18 +614,6 @@ type LoadBalancingConfigParameters struct {
 	StrictLocality *bool `json:"strictLocality,omitempty" tf:"strict_locality,omitempty"`
 }
 
-type SessionAffinityInitParameters struct {
-
-	// IP address affinity
-	Connection []ConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
-
-	// Cookie affinity
-	Cookie []CookieInitParameters `json:"cookie,omitempty" tf:"cookie,omitempty"`
-
-	// Request header affinity
-	Header []HeaderInitParameters `json:"header,omitempty" tf:"header,omitempty"`
-}
-
 type SessionAffinityObservation struct {
 
 	// IP address affinity
@@ -889,12 +641,6 @@ type SessionAffinityParameters struct {
 	Header []HeaderParameters `json:"header,omitempty" tf:"header,omitempty"`
 }
 
-type StreamBackendHealthcheckGRPCHealthcheckInitParameters struct {
-
-	// Service name for grpc.health.v1.HealthCheckRequest message.
-	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
-}
-
 type StreamBackendHealthcheckGRPCHealthcheckObservation struct {
 
 	// Service name for grpc.health.v1.HealthCheckRequest message.
@@ -906,18 +652,6 @@ type StreamBackendHealthcheckGRPCHealthcheckParameters struct {
 	// Service name for grpc.health.v1.HealthCheckRequest message.
 	// +kubebuilder:validation:Optional
 	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
-}
-
-type StreamBackendHealthcheckHTTPHealthcheckInitParameters struct {
-
-	// "Host" HTTP header value.
-	Host *string `json:"host,omitempty" tf:"host,omitempty"`
-
-	// If set, health checks will use HTTP2.
-	Http2 *bool `json:"http2,omitempty" tf:"http2,omitempty"`
-
-	// HTTP path.
-	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 }
 
 type StreamBackendHealthcheckHTTPHealthcheckObservation struct {
@@ -943,38 +677,8 @@ type StreamBackendHealthcheckHTTPHealthcheckParameters struct {
 	Http2 *bool `json:"http2,omitempty" tf:"http2,omitempty"`
 
 	// HTTP path.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Path *string `json:"path" tf:"path,omitempty"`
-}
-
-type StreamBackendHealthcheckInitParameters struct {
-
-	// Grpc Healthcheck specification that will be used by this healthcheck. Structure is documented below.
-	GRPCHealthcheck []StreamBackendHealthcheckGRPCHealthcheckInitParameters `json:"grpcHealthcheck,omitempty" tf:"grpc_healthcheck,omitempty"`
-
-	// Http Healthcheck specification that will be used by this healthcheck. Structure is documented below.
-	HTTPHealthcheck []StreamBackendHealthcheckHTTPHealthcheckInitParameters `json:"httpHealthcheck,omitempty" tf:"http_healthcheck,omitempty"`
-
-	// Optional alternative port for health checking.
-	HealthcheckPort *float64 `json:"healthcheckPort,omitempty" tf:"healthcheck_port,omitempty"`
-
-	// Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
-	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
-
-	// Interval between health checks.
-	Interval *string `json:"interval,omitempty" tf:"interval,omitempty"`
-
-	// An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
-	IntervalJitterPercent *float64 `json:"intervalJitterPercent,omitempty" tf:"interval_jitter_percent,omitempty"`
-
-	// Stream Healthcheck specification that will be used by this healthcheck. Structure is documented below.
-	StreamHealthcheck []StreamBackendHealthcheckStreamHealthcheckInitParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
-
-	// Time to wait for a health check response.
-	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
-
-	// Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
-	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
 
 type StreamBackendHealthcheckObservation struct {
@@ -1026,7 +730,7 @@ type StreamBackendHealthcheckParameters struct {
 	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
 
 	// Interval between health checks.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Interval *string `json:"interval" tf:"interval,omitempty"`
 
 	// An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
@@ -1038,21 +742,12 @@ type StreamBackendHealthcheckParameters struct {
 	StreamHealthcheck []StreamBackendHealthcheckStreamHealthcheckParameters `json:"streamHealthcheck,omitempty" tf:"stream_healthcheck,omitempty"`
 
 	// Time to wait for a health check response.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Timeout *string `json:"timeout" tf:"timeout,omitempty"`
 
 	// Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
 	// +kubebuilder:validation:Optional
 	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
-}
-
-type StreamBackendHealthcheckStreamHealthcheckInitParameters struct {
-
-	// Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
-	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
-
-	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
-	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
 
 type StreamBackendHealthcheckStreamHealthcheckObservation struct {
@@ -1073,43 +768,6 @@ type StreamBackendHealthcheckStreamHealthcheckParameters struct {
 	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
 	// +kubebuilder:validation:Optional
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
-}
-
-type StreamBackendInitParameters struct {
-	EnableProxyProtocol *bool `json:"enableProxyProtocol,omitempty" tf:"enable_proxy_protocol,omitempty"`
-
-	// Healthcheck specification that will be used by this backend. Structure is documented below.
-	Healthcheck []StreamBackendHealthcheckInitParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
-
-	// Load Balancing Config specification that will be used by this backend. Structure is documented below.
-	LoadBalancingConfig []StreamBackendLoadBalancingConfigInitParameters `json:"loadBalancingConfig,omitempty" tf:"load_balancing_config,omitempty"`
-
-	// Name of the backend.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// Port for incoming traffic.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// Tls specification that will be used by this backend. Structure is documented below.
-	TLS []StreamBackendTLSInitParameters `json:"tls,omitempty" tf:"tls,omitempty"`
-
-	// Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
-	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
-}
-
-type StreamBackendLoadBalancingConfigInitParameters struct {
-
-	// Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
-	LocalityAwareRoutingPercent *float64 `json:"localityAwareRoutingPercent,omitempty" tf:"locality_aware_routing_percent,omitempty"`
-
-	// Load balancing mode for the backend. Possible values: "ROUND_ROBIN", "RANDOM", "LEAST_REQUEST", "MAGLEV_HASH".
-	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
-
-	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
-	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
-
-	// If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
-	StrictLocality *bool `json:"strictLocality,omitempty" tf:"strict_locality,omitempty"`
 }
 
 type StreamBackendLoadBalancingConfigObservation struct {
@@ -1185,7 +843,7 @@ type StreamBackendParameters struct {
 	LoadBalancingConfig []StreamBackendLoadBalancingConfigParameters `json:"loadBalancingConfig,omitempty" tf:"load_balancing_config,omitempty"`
 
 	// Name of the backend.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// Port for incoming traffic.
@@ -1214,14 +872,6 @@ type StreamBackendParameters struct {
 	Weight *float64 `json:"weight,omitempty" tf:"weight,omitempty"`
 }
 
-type StreamBackendTLSInitParameters struct {
-
-	// SNI string for TLS connections.
-	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
-
-	ValidationContext []StreamBackendTLSValidationContextInitParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
-}
-
 type StreamBackendTLSObservation struct {
 
 	// SNI string for TLS connections.
@@ -1238,15 +888,6 @@ type StreamBackendTLSParameters struct {
 
 	// +kubebuilder:validation:Optional
 	ValidationContext []StreamBackendTLSValidationContextParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
-}
-
-type StreamBackendTLSValidationContextInitParameters struct {
-
-	// PEM-encoded trusted CA certificate chain.
-	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
-
-	// Trusted CA certificate ID in the Certificate Manager.
-	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
 }
 
 type StreamBackendTLSValidationContextObservation struct {
@@ -1269,15 +910,6 @@ type StreamBackendTLSValidationContextParameters struct {
 	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
 }
 
-type StreamHealthcheckInitParameters struct {
-
-	// Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
-	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
-
-	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
-	Send *string `json:"send,omitempty" tf:"send,omitempty"`
-}
-
 type StreamHealthcheckObservation struct {
 
 	// Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
@@ -1298,14 +930,6 @@ type StreamHealthcheckParameters struct {
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
 
-type TLSInitParameters struct {
-
-	// SNI string for TLS connections.
-	Sni *string `json:"sni,omitempty" tf:"sni,omitempty"`
-
-	ValidationContext []ValidationContextInitParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
-}
-
 type TLSObservation struct {
 
 	// SNI string for TLS connections.
@@ -1322,15 +946,6 @@ type TLSParameters struct {
 
 	// +kubebuilder:validation:Optional
 	ValidationContext []ValidationContextParameters `json:"validationContext,omitempty" tf:"validation_context,omitempty"`
-}
-
-type TLSValidationContextInitParameters struct {
-
-	// PEM-encoded trusted CA certificate chain.
-	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
-
-	// Trusted CA certificate ID in the Certificate Manager.
-	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
 }
 
 type TLSValidationContextObservation struct {
@@ -1350,15 +965,6 @@ type TLSValidationContextParameters struct {
 
 	// Trusted CA certificate ID in the Certificate Manager.
 	// +kubebuilder:validation:Optional
-	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
-}
-
-type ValidationContextInitParameters struct {
-
-	// PEM-encoded trusted CA certificate chain.
-	TrustedCABytes *string `json:"trustedCaBytes,omitempty" tf:"trusted_ca_bytes,omitempty"`
-
-	// Trusted CA certificate ID in the Certificate Manager.
 	TrustedCAID *string `json:"trustedCaId,omitempty" tf:"trusted_ca_id,omitempty"`
 }
 
@@ -1386,18 +992,6 @@ type ValidationContextParameters struct {
 type BackendGroupSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     BackendGroupParameters `json:"forProvider"`
-	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
-	// unless the relevant Crossplane feature flag is enabled, and may be
-	// changed or removed without notice.
-	// InitProvider holds the same fields as ForProvider, with the exception
-	// of Identifier and other resource reference fields. The fields that are
-	// in InitProvider are merged into ForProvider when the resource is created.
-	// The same fields are also added to the terraform ignore_changes hook, to
-	// avoid updating them after creation. This is useful for fields that are
-	// required on creation, but we do not desire to update them after creation,
-	// for example because of an external controller is managing them, like an
-	// autoscaler.
-	InitProvider BackendGroupInitParameters `json:"initProvider,omitempty"`
 }
 
 // BackendGroupStatus defines the observed state of BackendGroup.

@@ -14,7 +14,7 @@ import (
 
 // DefaultResourceFn returns a default resource configuration to be used while
 // building resource configurations.
-func DefaultResourceFn(name string, terraformResource *schema.Resource,terraformRegistry *registry.Resource, opts ...tjconfig.ResourceOption) *tjconfig.Resource {
+func DefaultResourceFn(name string, terraformResource *schema.Resource, terraformRegistry *registry.Resource, opts ...tjconfig.ResourceOption) *tjconfig.Resource {
 	r := tjconfig.DefaultResource(name, terraformResource, terraformRegistry)
 	// Add any provider-specific defaulting here. For example:
 	r.ExternalName = tjconfig.IdentifierFromProvider

@@ -9,3 +9,6 @@ metadata:
 spec:
   forProvider:
     name: foobar
+
+---
+

@@ -25,16 +25,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type DirectResponseActionInitParameters struct {
-
-	// Response body text.
-	Body *string `json:"body,omitempty" tf:"body,omitempty"`
-
-	// The status of the response. Supported values are: ok, invalid_argumet, not_found,
-	// permission_denied, unauthenticated, unimplemented, internal, unavailable.
-	Status *float64 `json:"status,omitempty" tf:"status,omitempty"`
-}
-
 type DirectResponseActionObservation struct {
 
 	// Response body text.
@@ -57,15 +47,6 @@ type DirectResponseActionParameters struct {
 	Status *float64 `json:"status,omitempty" tf:"status,omitempty"`
 }
 
-type FqmnInitParameters struct {
-
-	// Match exactly.
-	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
-
-	// Match prefix.
-	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
-}
-
 type FqmnObservation struct {
 
 	// Match exactly.
@@ -86,12 +67,6 @@ type FqmnParameters struct {
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 }
 
-type GRPCMatchInitParameters struct {
-
-	// If not set, all services/methods are assumed. The structure is documented below.
-	Fqmn []FqmnInitParameters `json:"fqmn,omitempty" tf:"fqmn,omitempty"`
-}
-
 type GRPCMatchObservation struct {
 
 	// If not set, all services/methods are assumed. The structure is documented below.
@@ -103,25 +78,6 @@ type GRPCMatchParameters struct {
 	// If not set, all services/methods are assumed. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Fqmn []FqmnParameters `json:"fqmn,omitempty" tf:"fqmn,omitempty"`
-}
-
-type GRPCRouteActionInitParameters struct {
-
-	// If set, will automatically rewrite host.
-	AutoHostRewrite *bool `json:"autoHostRewrite,omitempty" tf:"auto_host_rewrite,omitempty"`
-
-	// Host rewrite specifier.
-	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
-
-	// Specifies the idle timeout (time without any data transfer for the active request) for the
-	// route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to
-	// something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no
-	// per-route idle timeout.
-	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
-
-	// Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is
-	// 60 seconds.
-	MaxTimeout *string `json:"maxTimeout,omitempty" tf:"max_timeout,omitempty"`
 }
 
 type GRPCRouteActionObservation struct {
@@ -182,18 +138,6 @@ type GRPCRouteActionParameters struct {
 	MaxTimeout *string `json:"maxTimeout,omitempty" tf:"max_timeout,omitempty"`
 }
 
-type GRPCRouteInitParameters struct {
-
-	// Checks "/" prefix by default. The structure is documented below.
-	GRPCMatch []GRPCMatchInitParameters `json:"grpcMatch,omitempty" tf:"grpc_match,omitempty"`
-
-	// GRPC route action resource. The structure is documented below.
-	GRPCRouteAction []GRPCRouteActionInitParameters `json:"grpcRouteAction,omitempty" tf:"grpc_route_action,omitempty"`
-
-	// GRPC status response action resource. The structure is documented below.
-	GRPCStatusResponseAction []GRPCStatusResponseActionInitParameters `json:"grpcStatusResponseAction,omitempty" tf:"grpc_status_response_action,omitempty"`
-}
-
 type GRPCRouteObservation struct {
 
 	// Checks "/" prefix by default. The structure is documented below.
@@ -221,13 +165,6 @@ type GRPCRouteParameters struct {
 	GRPCStatusResponseAction []GRPCStatusResponseActionParameters `json:"grpcStatusResponseAction,omitempty" tf:"grpc_status_response_action,omitempty"`
 }
 
-type GRPCStatusResponseActionInitParameters struct {
-
-	// The status of the response. Supported values are: ok, invalid_argumet, not_found,
-	// permission_denied, unauthenticated, unimplemented, internal, unavailable.
-	Status *string `json:"status,omitempty" tf:"status,omitempty"`
-}
-
 type GRPCStatusResponseActionObservation struct {
 
 	// The status of the response. Supported values are: ok, invalid_argumet, not_found,
@@ -241,15 +178,6 @@ type GRPCStatusResponseActionParameters struct {
 	// permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	// +kubebuilder:validation:Optional
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
-}
-
-type HTTPMatchInitParameters struct {
-
-	// List of methods(strings).
-	HTTPMethod []*string `json:"httpMethod,omitempty" tf:"http_method,omitempty"`
-
-	// If not set, '/' is assumed. The structure is documented below.
-	Path []PathInitParameters `json:"path,omitempty" tf:"path,omitempty"`
 }
 
 type HTTPMatchObservation struct {
@@ -270,32 +198,6 @@ type HTTPMatchParameters struct {
 	// If not set, '/' is assumed. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Path []PathParameters `json:"path,omitempty" tf:"path,omitempty"`
-}
-
-type HTTPRouteActionInitParameters struct {
-
-	// If set, will automatically rewrite host.
-	AutoHostRewrite *bool `json:"autoHostRewrite,omitempty" tf:"auto_host_rewrite,omitempty"`
-
-	// Host rewrite specifier.
-	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
-
-	// Specifies the idle timeout (time without any data transfer for the active request) for the
-	// route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to
-	// something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no
-	// per-route idle timeout.
-	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
-
-	// If not empty, matched path prefix will be replaced by this value.
-	PrefixRewrite *string `json:"prefixRewrite,omitempty" tf:"prefix_rewrite,omitempty"`
-
-	// Specifies the request timeout (overall time request processing is allowed to take) for the
-	// route. If not set, default is 60 seconds.
-	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
-
-	// List of upgrade types. Only specified upgrade types will be allowed. For example,
-	// "websocket".
-	UpgradeTypes []*string `json:"upgradeTypes,omitempty" tf:"upgrade_types,omitempty"`
 }
 
 type HTTPRouteActionObservation struct {
@@ -372,21 +274,6 @@ type HTTPRouteActionParameters struct {
 	UpgradeTypes []*string `json:"upgradeTypes,omitempty" tf:"upgrade_types,omitempty"`
 }
 
-type HTTPRouteInitParameters struct {
-
-	// Direct response action resource. The structure is documented below.
-	DirectResponseAction []DirectResponseActionInitParameters `json:"directResponseAction,omitempty" tf:"direct_response_action,omitempty"`
-
-	// Checks "/" prefix by default. The structure is documented below.
-	HTTPMatch []HTTPMatchInitParameters `json:"httpMatch,omitempty" tf:"http_match,omitempty"`
-
-	// HTTP route action resource. The structure is documented below.
-	HTTPRouteAction []HTTPRouteActionInitParameters `json:"httpRouteAction,omitempty" tf:"http_route_action,omitempty"`
-
-	// Redirect action resource. The structure is documented below.
-	RedirectAction []RedirectActionInitParameters `json:"redirectAction,omitempty" tf:"redirect_action,omitempty"`
-}
-
 type HTTPRouteObservation struct {
 
 	// Direct response action resource. The structure is documented below.
@@ -421,22 +308,6 @@ type HTTPRouteParameters struct {
 	RedirectAction []RedirectActionParameters `json:"redirectAction,omitempty" tf:"redirect_action,omitempty"`
 }
 
-type ModifyRequestHeadersInitParameters struct {
-
-	// Append string to the header value.
-	Append *string `json:"append,omitempty" tf:"append,omitempty"`
-
-	// name of the header to modify.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// If set, remove the header.
-	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
-
-	// New value for a header. Header values support the following
-	// formatters.
-	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
-}
-
 type ModifyRequestHeadersObservation struct {
 
 	// Append string to the header value.
@@ -460,7 +331,7 @@ type ModifyRequestHeadersParameters struct {
 	Append *string `json:"append,omitempty" tf:"append,omitempty"`
 
 	// name of the header to modify.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// If set, remove the header.
@@ -470,22 +341,6 @@ type ModifyRequestHeadersParameters struct {
 	// New value for a header. Header values support the following
 	// formatters.
 	// +kubebuilder:validation:Optional
-	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
-}
-
-type ModifyResponseHeadersInitParameters struct {
-
-	// Append string to the header value.
-	Append *string `json:"append,omitempty" tf:"append,omitempty"`
-
-	// name of the route.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// If set, remove the header.
-	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
-
-	// New value for a header. Header values support the following
-	// formatters.
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
 
@@ -512,7 +367,7 @@ type ModifyResponseHeadersParameters struct {
 	Append *string `json:"append,omitempty" tf:"append,omitempty"`
 
 	// name of the route.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// If set, remove the header.
@@ -523,15 +378,6 @@ type ModifyResponseHeadersParameters struct {
 	// formatters.
 	// +kubebuilder:validation:Optional
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
-}
-
-type PathInitParameters struct {
-
-	// Match exactly.
-	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
-
-	// Match prefix.
-	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 }
 
 type PathObservation struct {
@@ -552,31 +398,6 @@ type PathParameters struct {
 	// Match prefix.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
-}
-
-type RedirectActionInitParameters struct {
-	RemoveQuery *bool `json:"removeQuery,omitempty" tf:"remove_query,omitempty"`
-
-	// Replaces hostname.
-	ReplaceHost *string `json:"replaceHost,omitempty" tf:"replace_host,omitempty"`
-
-	// Replace path.
-	ReplacePath *string `json:"replacePath,omitempty" tf:"replace_path,omitempty"`
-
-	// Replaces port.
-	ReplacePort *float64 `json:"replacePort,omitempty" tf:"replace_port,omitempty"`
-
-	// Replace only matched prefix. Example: match:{ prefix_match: "/some" }
-	// redirect: { replace_prefix: "/other" }  will redirect "/something" to "/otherthing".
-	ReplacePrefix *string `json:"replacePrefix,omitempty" tf:"replace_prefix,omitempty"`
-
-	// Replaces scheme. If the original scheme is http or https, will also remove the
-	// 80 or 443 port, if present.
-	ReplaceScheme *string `json:"replaceScheme,omitempty" tf:"replace_scheme,omitempty"`
-
-	// The HTTP status code to use in the redirect response. Supported values are:
-	// moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
-	ResponseCode *string `json:"responseCode,omitempty" tf:"response_code,omitempty"`
 }
 
 type RedirectActionObservation struct {
@@ -637,18 +458,6 @@ type RedirectActionParameters struct {
 	ResponseCode *string `json:"responseCode,omitempty" tf:"response_code,omitempty"`
 }
 
-type RouteInitParameters struct {
-
-	// GRPC route resource. The structure is documented below.
-	GRPCRoute []GRPCRouteInitParameters `json:"grpcRoute,omitempty" tf:"grpc_route,omitempty"`
-
-	// HTTP route resource. The structure is documented below.
-	HTTPRoute []HTTPRouteInitParameters `json:"httpRoute,omitempty" tf:"http_route,omitempty"`
-
-	// name of the route.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-}
-
 type RouteObservation struct {
 
 	// GRPC route resource. The structure is documented below.
@@ -674,28 +483,6 @@ type RouteParameters struct {
 	// name of the route.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-}
-
-type VirtualHostInitParameters struct {
-
-	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard
-	// hosts are supported in the form of '.foo.com' or '-bar.foo.com'. If not specified, all domains will be matched.
-	Authority []*string `json:"authority,omitempty" tf:"authority,omitempty"`
-
-	// Apply the following modifications to the request
-	// headers. The structure is documented below.
-	ModifyRequestHeaders []ModifyRequestHeadersInitParameters `json:"modifyRequestHeaders,omitempty" tf:"modify_request_headers,omitempty"`
-
-	// Apply the following modifications to the response
-	// headers. The structure is documented below.
-	ModifyResponseHeaders []ModifyResponseHeadersInitParameters `json:"modifyResponseHeaders,omitempty" tf:"modify_response_headers,omitempty"`
-
-	// Name of the virtual host. Provided by the client when the virtual host is created.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// A Route resource. Routes are matched in-order. Be careful when adding them to the end. For instance, having
-	// http '/' match first makes all other routes unused. The structure is documented below.
-	Route []RouteInitParameters `json:"route,omitempty" tf:"route,omitempty"`
 }
 
 type VirtualHostObservation struct {
@@ -770,18 +557,6 @@ type VirtualHostParameters struct {
 type VirtualHostSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     VirtualHostParameters `json:"forProvider"`
-	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
-	// unless the relevant Crossplane feature flag is enabled, and may be
-	// changed or removed without notice.
-	// InitProvider holds the same fields as ForProvider, with the exception
-	// of Identifier and other resource reference fields. The fields that are
-	// in InitProvider are merged into ForProvider when the resource is created.
-	// The same fields are also added to the terraform ignore_changes hook, to
-	// avoid updating them after creation. This is useful for fields that are
-	// required on creation, but we do not desire to update them after creation,
-	// for example because of an external controller is managing them, like an
-	// autoscaler.
-	InitProvider VirtualHostInitParameters `json:"initProvider,omitempty"`
 }
 
 // VirtualHostStatus defines the observed state of VirtualHost.
@@ -802,7 +577,7 @@ type VirtualHostStatus struct {
 type VirtualHost struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || has(self.initProvider.name)",message="name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
 	Spec   VirtualHostSpec   `json:"spec"`
 	Status VirtualHostStatus `json:"status,omitempty"`
 }

@@ -25,15 +25,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type ServiceAccountIAMMemberInitParameters struct {
-
-	// The role that should be applied. Only one
-	// yandex_iam_service_account_iam_binding can be used per role.
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
-
-	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
-}
-
 type ServiceAccountIAMMemberObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -96,18 +87,6 @@ type ServiceAccountIAMMemberParameters struct {
 type ServiceAccountIAMMemberSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ServiceAccountIAMMemberParameters `json:"forProvider"`
-	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
-	// unless the relevant Crossplane feature flag is enabled, and may be
-	// changed or removed without notice.
-	// InitProvider holds the same fields as ForProvider, with the exception
-	// of Identifier and other resource reference fields. The fields that are
-	// in InitProvider are merged into ForProvider when the resource is created.
-	// The same fields are also added to the terraform ignore_changes hook, to
-	// avoid updating them after creation. This is useful for fields that are
-	// required on creation, but we do not desire to update them after creation,
-	// for example because of an external controller is managing them, like an
-	// autoscaler.
-	InitProvider ServiceAccountIAMMemberInitParameters `json:"initProvider,omitempty"`
 }
 
 // ServiceAccountIAMMemberStatus defines the observed state of ServiceAccountIAMMember.
@@ -128,7 +107,7 @@ type ServiceAccountIAMMemberStatus struct {
 type ServiceAccountIAMMember struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.role) || has(self.initProvider.role)",message="role is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.role)",message="role is a required parameter"
 	Spec   ServiceAccountIAMMemberSpec   `json:"spec"`
 	Status ServiceAccountIAMMemberStatus `json:"status,omitempty"`
 }

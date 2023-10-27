@@ -11,3 +11,6 @@ spec:
     externalIpv4Address:
     - zoneId: ru-central1-a
     name: exampleAddress
+
+---
+

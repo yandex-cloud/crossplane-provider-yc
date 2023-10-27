@@ -25,27 +25,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type ObjectInitParameters struct {
-
-	// The predefined ACL to apply. Defaults to private.
-	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
-
-	// Literal string value to use as the object content, which will be uploaded as UTF-8-encoded text.
-	Content *string `json:"content,omitempty" tf:"content,omitempty"`
-
-	// Base64-encoded data that will be decoded and uploaded as raw bytes for the object content. This allows safely uploading non-UTF8 binary data, but is recommended only for small content such as the result of the gzipbase64 function with small text strings. For larger objects, use source to stream the content from a disk file.
-	ContentBase64 *string `json:"contentBase64,omitempty" tf:"content_base64,omitempty"`
-
-	// A standard MIME type describing the format of the object data, e.g. application/octet-stream. All Valid MIME Types are valid for this input.
-	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
-
-	// The name of the object once it is in the bucket.
-	Key *string `json:"key,omitempty" tf:"key,omitempty"`
-
-	// The path to a file that will be read and uploaded as raw bytes for the object content.
-	Source *string `json:"source,omitempty" tf:"source,omitempty"`
-}
-
 type ObjectObservation struct {
 
 	// The predefined ACL to apply. Defaults to private.
@@ -138,18 +117,6 @@ type ObjectParameters struct {
 type ObjectSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ObjectParameters `json:"forProvider"`
-	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
-	// unless the relevant Crossplane feature flag is enabled, and may be
-	// changed or removed without notice.
-	// InitProvider holds the same fields as ForProvider, with the exception
-	// of Identifier and other resource reference fields. The fields that are
-	// in InitProvider are merged into ForProvider when the resource is created.
-	// The same fields are also added to the terraform ignore_changes hook, to
-	// avoid updating them after creation. This is useful for fields that are
-	// required on creation, but we do not desire to update them after creation,
-	// for example because of an external controller is managing them, like an
-	// autoscaler.
-	InitProvider ObjectInitParameters `json:"initProvider,omitempty"`
 }
 
 // ObjectStatus defines the observed state of Object.
@@ -170,7 +137,7 @@ type ObjectStatus struct {
 type Object struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.key) || has(self.initProvider.key)",message="key is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.key)",message="key is a required parameter"
 	Spec   ObjectSpec   `json:"spec"`
 	Status ObjectStatus `json:"status,omitempty"`
 }

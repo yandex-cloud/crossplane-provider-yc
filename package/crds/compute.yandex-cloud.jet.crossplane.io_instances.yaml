@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.12.1
+    controller-gen.kubebuilder.io/version: v0.11.4
   name: instances.compute.yandex-cloud.jet.crossplane.io
 spec:
   group: compute.yandex-cloud.jet.crossplane.io
@@ -57,7 +57,7 @@ spec:
                 description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
                   or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
+                  in favor of the ManagementPolicy field in a future release. Currently,
                   both could be set independently and non-default values would be
                   honored if the feature flag is enabled. See the design doc for more
                   information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
@@ -227,6 +227,8 @@ spec:
                         sizeBytes:
                           description: Size of the disk, specified in bytes.
                           type: number
+                      required:
+                      - sizeBytes
                       type: object
                     type: array
                   metadata:
@@ -267,6 +269,8 @@ spec:
                               ttl:
                                 description: DNS record TTL. in seconds
                                 type: number
+                            required:
+                            - fqdn
                             type: object
                           type: array
                         ipAddress:
@@ -306,6 +310,8 @@ spec:
                               ttl:
                                 description: DNS record TTL. in seconds
                                 type: number
+                            required:
+                            - fqdn
                             type: object
                           type: array
                         nat:
@@ -332,6 +338,8 @@ spec:
                               ttl:
                                 description: DNS record TTL. in seconds
                                 type: number
+                            required:
+                            - fqdn
                             type: object
                           type: array
                         natIpAddress:
@@ -560,6 +568,9 @@ spec:
                         memory:
                           description: Memory size in GB.
                           type: number
+                      required:
+                      - cores
+                      - memory
                       type: object
                     type: array
                   schedulingPolicy:
@@ -594,6 +605,8 @@ spec:
                           description: Type of access to the disk resource. By default,
                             a disk is attached in READ_WRITE mode.
                           type: string
+                      required:
+                      - diskId
                       type: object
                     type: array
                   serviceAccountId:
@@ -680,333 +693,21 @@ spec:
                       is used.
                     type: string
                 type: object
-              initProvider:
-                description: THIS IS AN ALPHA FIELD. Do not use it in production.
-                  It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. InitProvider
-                  holds the same fields as ForProvider, with the exception of Identifier
-                  and other resource reference fields. The fields that are in InitProvider
-                  are merged into ForProvider when the resource is created. The same
-                  fields are also added to the terraform ignore_changes hook, to avoid
-                  updating them after creation. This is useful for fields that are
-                  required on creation, but we do not desire to update them after
-                  creation, for example because of an external controller is managing
-                  them, like an autoscaler.
-                properties:
-                  allowRecreate:
-                    type: boolean
-                  allowStoppingForUpdate:
-                    description: If you try to update a property that requires stopping
-                      the instance without setting this field, the update will fail.
-                    type: boolean
-                  bootDisk:
-                    description: The boot disk for the instance. The structure is
-                      documented below.
-                    items:
-                      properties:
-                        autoDelete:
-                          description: Defines whether the disk will be auto-deleted
-                            when the instance is deleted. The default value is True.
-                          type: boolean
-                        deviceName:
-                          description: Name that can be used to access an attached
-                            disk.
-                          type: string
-                        diskId:
-                          description: The ID of the existing disk (such as those
-                            managed by yandex_compute_disk) to attach as a boot disk.
-                          type: string
-                        initializeParams:
-                          description: Parameters for a new disk that will be created
-                            alongside the new instance. Either initialize_params or
-                            disk_id must be set. The structure is documented below.
-                          items:
-                            properties:
-                              blockSize:
-                                type: number
-                              description:
-                                description: Description of the boot disk.
-                                type: string
-                              imageId:
-                                description: A disk image to initialize this disk
-                                  from.
-                                type: string
-                              name:
-                                description: Resource name.
-                                type: string
-                              size:
-                                description: Size of the disk in GB.
-                                type: number
-                              snapshotId:
-                                description: A snapshot to initialize this disk from.
-                                type: string
-                              type:
-                                description: Disk type.
-                                type: string
-                            type: object
-                          type: array
-                        mode:
-                          description: Type of access to the disk resource. By default,
-                            a disk is attached in READ_WRITE mode.
-                          type: string
-                      type: object
-                    type: array
-                  description:
-                    description: Description of the instance.
-                    type: string
-                  hostname:
-                    description: Host name for the instance. This field is used to
-                      generate the instance fqdn value. The host name must be unique
-                      within the network and region. If not specified, the host name
-                      will be equal to id of the instance and fqdn will be <id>.auto.internal.
-                      Otherwise FQDN will be <hostname>.<region_id>.internal.
-                    type: string
-                  labels:
-                    additionalProperties:
-                      type: string
-                    description: A set of key/value label pairs to assign to the instance.
-                    type: object
-                  localDisk:
-                    description: List of local disks that are attached to the instance.
-                      Structure is documented below.
-                    items:
-                      properties:
-                        sizeBytes:
-                          description: Size of the disk, specified in bytes.
-                          type: number
-                      type: object
-                    type: array
-                  metadata:
-                    additionalProperties:
-                      type: string
-                    description: Metadata key/value pairs to make available from within
-                      the instance.
-                    type: object
-                  name:
-                    description: Resource name.
-                    type: string
-                  networkAccelerationType:
-                    description: 'Type of network acceleration. The default is standard.
-                      Values: standard, software_accelerated'
-                    type: string
-                  networkInterface:
-                    description: Networks to attach to the instance. This can be specified
-                      multiple times. The structure is documented below.
-                    items:
-                      properties:
-                        dnsRecord:
-                          description: List of configurations for creating ipv4 DNS
-                            records. The structure is documented below.
-                          items:
-                            properties:
-                              dnsZoneId:
-                                description: DNS zone ID (if not set, private zone
-                                  used).
-                                type: string
-                              fqdn:
-                                description: DNS record FQDN (must have a dot at the
-                                  end).
-                                type: string
-                              ptr:
-                                description: When set to true, also create a PTR DNS
-                                  record.
-                                type: boolean
-                              ttl:
-                                description: DNS record TTL. in seconds
-                                type: number
-                            type: object
-                          type: array
-                        ipAddress:
-                          description: The private IP address to assign to the instance.
-                            If empty, the address will be automatically assigned from
-                            the specified subnet.
-                          type: string
-                        ipv4:
-                          description: Allocate an IPv4 address for the interface.
-                            The default value is true.
-                          type: boolean
-                        ipv6:
-                          description: If true, allocate an IPv6 address for the interface.
-                            The address will be automatically assigned from the specified
-                            subnet.
-                          type: boolean
-                        ipv6Address:
-                          description: The private IPv6 address to assign to the instance.
-                          type: string
-                        ipv6DnsRecord:
-                          description: List of configurations for creating ipv6 DNS
-                            records. The structure is documented below.
-                          items:
-                            properties:
-                              dnsZoneId:
-                                description: DNS zone ID (if not set, private zone
-                                  used).
-                                type: string
-                              fqdn:
-                                description: DNS record FQDN (must have a dot at the
-                                  end).
-                                type: string
-                              ptr:
-                                description: When set to true, also create a PTR DNS
-                                  record.
-                                type: boolean
-                              ttl:
-                                description: DNS record TTL. in seconds
-                                type: number
-                            type: object
-                          type: array
-                        nat:
-                          description: Provide a public address, for instance, to
-                            access the internet over NAT.
-                          type: boolean
-                        natDnsRecord:
-                          description: List of configurations for creating ipv4 NAT
-                            DNS records. The structure is documented below.
-                          items:
-                            properties:
-                              dnsZoneId:
-                                description: DNS zone ID (if not set, private zone
-                                  used).
-                                type: string
-                              fqdn:
-                                description: DNS record FQDN (must have a dot at the
-                                  end).
-                                type: string
-                              ptr:
-                                description: When set to true, also create a PTR DNS
-                                  record.
-                                type: boolean
-                              ttl:
-                                description: DNS record TTL. in seconds
-                                type: number
-                            type: object
-                          type: array
-                        natIpAddress:
-                          description: Provide a public address, for instance, to
-                            access the internet over NAT. Address should be already
-                            reserved in web UI.
-                          type: string
-                      type: object
-                    type: array
-                  placementPolicy:
-                    description: The placement policy configuration. The structure
-                      is documented below.
-                    items:
-                      properties:
-                        hostAffinityRules:
-                          description: List of host affinity rules. The structure
-                            is documented below.
-                          items:
-                            properties:
-                              key:
-                                description: Affinity label or one of reserved values
-                                  - yc.hostId, yc.hostGroupId.
-                                type: string
-                              op:
-                                description: Affinity action. The only value supported
-                                  is IN.
-                                type: string
-                              values:
-                                items:
-                                  type: string
-                                type: array
-                            type: object
-                          type: array
-                        placementGroupId:
-                          description: Specifies the id of the Placement Group to
-                            assign to the instance.
-                          type: string
-                      type: object
-                    type: array
-                  platformId:
-                    description: The type of virtual machine to create. The default
-                      is 'standard-v1'.
-                    type: string
-                  resources:
-                    description: Compute resources that are allocated for the instance.
-                      The structure is documented below.
-                    items:
-                      properties:
-                        coreFraction:
-                          description: If provided, specifies baseline performance
-                            for a core as a percent.
-                          type: number
-                        cores:
-                          description: CPU cores for the instance.
-                          type: number
-                        gpus:
-                          type: number
-                        memory:
-                          description: Memory size in GB.
-                          type: number
-                      type: object
-                    type: array
-                  schedulingPolicy:
-                    description: Scheduling policy configuration. The structure is
-                      documented below.
-                    items:
-                      properties:
-                        preemptible:
-                          description: Specifies if the instance is preemptible. Defaults
-                            to false.
-                          type: boolean
-                      type: object
-                    type: array
-                  secondaryDisk:
-                    description: 'A list of disks to attach to the instance. The structure
-                      is documented below. Note: The allow_stopping_for_update property
-                      must be set to true in order to update this structure.'
-                    items:
-                      properties:
-                        autoDelete:
-                          description: Whether the disk is auto-deleted when the instance
-                            is deleted. The default value is false.
-                          type: boolean
-                        deviceName:
-                          description: Name that can be used to access an attached
-                            disk under /dev/disk/by-id/.
-                          type: string
-                        diskId:
-                          description: ID of the disk that is attached to the instance.
-                          type: string
-                        mode:
-                          description: Type of access to the disk resource. By default,
-                            a disk is attached in READ_WRITE mode.
-                          type: string
-                      type: object
-                    type: array
-                  zone:
-                    description: The availability zone where the virtual machine will
-                      be created. If it is not provided, the default provider folder
-                      is used.
-                    type: string
-                type: object
-              managementPolicies:
-                default:
-                - '*'
+              managementPolicy:
+                default: FullControl
                 description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
                   It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
-                items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
-                  enum:
-                  - Observe
-                  - Create
-                  - Update
-                  - Delete
-                  - LateInitialize
-                  - '*'
-                  type: string
-                type: array
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -1180,17 +881,11 @@ spec:
             type: object
             x-kubernetes-validations:
             - message: bootDisk is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.bootDisk)
-                || has(self.initProvider.bootDisk)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.bootDisk)
             - message: networkInterface is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.networkInterface)
-                || has(self.initProvider.networkInterface)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.networkInterface)
             - message: resources is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.resources)
-                || has(self.initProvider.resources)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.resources)
           status:
             description: InstanceStatus defines the observed state of Instance.
             properties:

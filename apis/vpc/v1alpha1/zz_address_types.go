@@ -25,22 +25,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type AddressInitParameters struct {
-
-	// An optional description of this resource. Provide this property when
-	// you create the resource.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// spec of IP v4 address
-	ExternalIPv4Address []ExternalIPv4AddressInitParameters `json:"externalIpv4Address,omitempty" tf:"external_ipv4_address,omitempty"`
-
-	// Labels to apply to this resource. A list of key/value pairs.
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
-	// Name of the address. Provided by the client when the address is created.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-}
-
 type AddressObservation struct {
 
 	// Creation timestamp of the key.
@@ -106,18 +90,6 @@ type AddressParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
-type ExternalIPv4AddressInitParameters struct {
-
-	// Enable DDOS protection. Possible values are: "qrator"
-	DdosProtectionProvider *string `json:"ddosProtectionProvider,omitempty" tf:"ddos_protection_provider,omitempty"`
-
-	// Wanted outgoing smtp capability.
-	OutgoingSMTPCapability *string `json:"outgoingSmtpCapability,omitempty" tf:"outgoing_smtp_capability,omitempty"`
-
-	// Zone for allocating address.
-	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
-}
-
 type ExternalIPv4AddressObservation struct {
 
 	// Allocated IP address.
@@ -152,18 +124,6 @@ type ExternalIPv4AddressParameters struct {
 type AddressSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     AddressParameters `json:"forProvider"`
-	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
-	// unless the relevant Crossplane feature flag is enabled, and may be
-	// changed or removed without notice.
-	// InitProvider holds the same fields as ForProvider, with the exception
-	// of Identifier and other resource reference fields. The fields that are
-	// in InitProvider are merged into ForProvider when the resource is created.
-	// The same fields are also added to the terraform ignore_changes hook, to
-	// avoid updating them after creation. This is useful for fields that are
-	// required on creation, but we do not desire to update them after creation,
-	// for example because of an external controller is managing them, like an
-	// autoscaler.
-	InitProvider AddressInitParameters `json:"initProvider,omitempty"`
 }
 
 // AddressStatus defines the observed state of Address.

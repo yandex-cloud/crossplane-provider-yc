@@ -25,21 +25,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type FolderInitParameters struct {
-
-	// Cloud that the resource belongs to. If value is omitted, the default provider Cloud ID is used.
-	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
-
-	// A description of the Folder.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// A set of key/value label pairs to assign to the Folder.
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
-	// The name of the Folder.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-}
-
 type FolderObservation struct {
 
 	// Cloud that the resource belongs to. If value is omitted, the default provider Cloud ID is used.
@@ -82,18 +67,6 @@ type FolderParameters struct {
 type FolderSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     FolderParameters `json:"forProvider"`
-	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
-	// unless the relevant Crossplane feature flag is enabled, and may be
-	// changed or removed without notice.
-	// InitProvider holds the same fields as ForProvider, with the exception
-	// of Identifier and other resource reference fields. The fields that are
-	// in InitProvider are merged into ForProvider when the resource is created.
-	// The same fields are also added to the terraform ignore_changes hook, to
-	// avoid updating them after creation. This is useful for fields that are
-	// required on creation, but we do not desire to update them after creation,
-	// for example because of an external controller is managing them, like an
-	// autoscaler.
-	InitProvider FolderInitParameters `json:"initProvider,omitempty"`
 }
 
 // FolderStatus defines the observed state of Folder.

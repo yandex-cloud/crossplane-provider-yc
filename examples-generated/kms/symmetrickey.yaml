@@ -12,3 +12,6 @@ spec:
     description: description for key
     name: example-symetric-key
     rotationPeriod: 8760h
+
+---
+

@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.12.1
+    controller-gen.kubebuilder.io/version: v0.11.4
   name: postgresqlclusters.mdb.yandex-cloud.jet.crossplane.io
 spec:
   group: mdb.yandex-cloud.jet.crossplane.io
@@ -57,7 +57,7 @@ spec:
                 description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
                   or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
+                  in favor of the ManagementPolicy field in a future release. Currently,
                   both could be set independently and non-default values would be
                   honored if the feature flag is enabled. See the design doc for more
                   information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
@@ -129,6 +129,9 @@ spec:
                                 description: Interval (in seconds) for pg_stat_statements
                                   sampling Acceptable values are 1 to 86400, inclusive.
                                 type: number
+                            required:
+                            - sessionsSamplingInterval
+                            - statementsSamplingInterval
                             type: object
                           type: array
                         poolerConfig:
@@ -166,12 +169,18 @@ spec:
                                 type: string
                               resourcePresetId:
                                 type: string
+                            required:
+                            - diskSize
+                            - resourcePresetId
                             type: object
                           type: array
                         version:
                           description: 'Version of the PostgreSQL cluster. (allowed
                             versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 14)'
                           type: string
+                      required:
+                      - resources
+                      - version
                       type: object
                     type: array
                   database:
@@ -191,6 +200,8 @@ spec:
                                   versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13,
                                   14)'
                                 type: string
+                            required:
+                            - name
                             type: object
                           type: array
                         lcCollate:
@@ -203,6 +214,9 @@ spec:
                           type: string
                         owner:
                           type: string
+                      required:
+                      - name
+                      - owner
                       type: object
                     type: array
                   deletionProtection:
@@ -406,6 +420,8 @@ spec:
                           description: The availability zone where the PostgreSQL
                             host will be created.
                           type: string
+                      required:
+                      - zone
                       type: object
                     type: array
                   hostGroupIds:
@@ -440,6 +456,8 @@ spec:
                             or WEEKLY. A day and hour of window need to be specified
                             with weekly window.
                           type: string
+                      required:
+                      - type
                       type: object
                     type: array
                   name:
@@ -544,6 +562,8 @@ spec:
                             the timestamp specified in the [time] field instead of
                             just before. Possible values:'
                           type: boolean
+                      required:
+                      - backupId
                       type: object
                     type: array
                   securityGroupIds:
@@ -671,6 +691,8 @@ spec:
                                 description: Name of the PostgreSQL cluster. Provided
                                   by the client when the cluster is created.
                                 type: string
+                            required:
+                            - databaseName
                             type: object
                           type: array
                         settings:
@@ -678,324 +700,26 @@ spec:
                             type: string
                           type: object
                       required:
+                      - name
                       - passwordSecretRef
                       type: object
                     type: array
                 type: object
-              initProvider:
-                description: THIS IS AN ALPHA FIELD. Do not use it in production.
-                  It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. InitProvider
-                  holds the same fields as ForProvider, with the exception of Identifier
-                  and other resource reference fields. The fields that are in InitProvider
-                  are merged into ForProvider when the resource is created. The same
-                  fields are also added to the terraform ignore_changes hook, to avoid
-                  updating them after creation. This is useful for fields that are
-                  required on creation, but we do not desire to update them after
-                  creation, for example because of an external controller is managing
-                  them, like an autoscaler.
-                properties:
-                  config:
-                    description: Configuration of the PostgreSQL cluster. The structure
-                      is documented below.
-                    items:
-                      properties:
-                        access:
-                          description: Access policy to the PostgreSQL cluster. The
-                            structure is documented below.
-                          items:
-                            properties:
-                              dataLens:
-                                description: Allow access for Yandex DataLens.
-                                type: boolean
-                              serverless:
-                                description: Allow access for connection to managed
-                                  databases from functions
-                                type: boolean
-                              webSql:
-                                description: Allow access for SQL queries in the management
-                                  console
-                                type: boolean
-                            type: object
-                          type: array
-                        autofailover:
-                          description: Configuration setting which enables/disables
-                            autofailover in cluster.
-                          type: boolean
-                        backupRetainPeriodDays:
-                          description: The period in days during which backups are
-                            stored.
-                          type: number
-                        backupWindowStart:
-                          description: Time to start the daily backup, in the UTC
-                            timezone. The structure is documented below.
-                          items:
-                            properties:
-                              hours:
-                                description: The hour at which backup will be started
-                                  (UTC).
-                                type: number
-                              minutes:
-                                description: The minute at which backup will be started
-                                  (UTC).
-                                type: number
-                            type: object
-                          type: array
-                        performanceDiagnostics:
-                          description: Cluster performance diagnostics settings. The
-                            structure is documented below. YC Documentation
-                          items:
-                            properties:
-                              enabled:
-                                description: Enable performance diagnostics
-                                type: boolean
-                              sessionsSamplingInterval:
-                                description: Interval (in seconds) for pg_stat_activity
-                                  sampling Acceptable values are 1 to 86400, inclusive.
-                                type: number
-                              statementsSamplingInterval:
-                                description: Interval (in seconds) for pg_stat_statements
-                                  sampling Acceptable values are 1 to 86400, inclusive.
-                                type: number
-                            type: object
-                          type: array
-                        poolerConfig:
-                          description: Configuration of the connection pooler. The
-                            structure is documented below.
-                          items:
-                            properties:
-                              poolDiscard:
-                                description: Setting pool_discard parameter in Odyssey.
-                                type: boolean
-                              poolingMode:
-                                description: Mode that the connection pooler is working
-                                  in. See descriptions of all modes in the [documentation
-                                  for Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool-string.
-                                type: string
-                            type: object
-                          type: array
-                        postgresqlConfig:
-                          additionalProperties:
-                            type: string
-                          description: PostgreSQL cluster config. Detail info in "postresql
-                            config" section (documented below).
-                          type: object
-                        resources:
-                          description: Resources allocated to hosts of the PostgreSQL
-                            cluster. The structure is documented below.
-                          items:
-                            properties:
-                              diskSize:
-                                description: Volume of the storage available to a
-                                  PostgreSQL host, in gigabytes.
-                                type: number
-                              diskTypeId:
-                                description: Type of the storage of PostgreSQL hosts.
-                                type: string
-                              resourcePresetId:
-                                type: string
-                            type: object
-                          type: array
-                        version:
-                          description: 'Version of the PostgreSQL cluster. (allowed
-                            versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 14)'
-                          type: string
-                      type: object
-                    type: array
-                  database:
-                    description: (Deprecated) To manage databases, please switch to
-                      using a separate resource type yandex_mdb_postgresql_database.
-                    items:
-                      properties:
-                        extension:
-                          items:
-                            properties:
-                              name:
-                                description: Name of the PostgreSQL cluster. Provided
-                                  by the client when the cluster is created.
-                                type: string
-                              version:
-                                description: 'Version of the PostgreSQL cluster. (allowed
-                                  versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13,
-                                  14)'
-                                type: string
-                            type: object
-                          type: array
-                        lcCollate:
-                          type: string
-                        lcType:
-                          type: string
-                        name:
-                          description: Name of the PostgreSQL cluster. Provided by
-                            the client when the cluster is created.
-                          type: string
-                        owner:
-                          type: string
-                      type: object
-                    type: array
-                  deletionProtection:
-                    description: Inhibits deletion of the cluster.  Can be either
-                      true or false.
-                    type: boolean
-                  description:
-                    description: Description of the PostgreSQL cluster.
-                    type: string
-                  environment:
-                    description: Deployment environment of the PostgreSQL cluster.
-                    type: string
-                  host:
-                    description: A host of the PostgreSQL cluster. The structure is
-                      documented below.
-                    items:
-                      properties:
-                        assignPublicIp:
-                          description: Sets whether the host should get a public IP
-                            address on creation. It can be changed on the fly only
-                            when name is set.
-                          type: boolean
-                        name:
-                          description: Host state name. It should be set for all hosts
-                            or unset for all hosts. This field can be used by another
-                            host, to select which host will be its replication source.
-                            Please see replication_source_name parameter. Also, this
-                            field is used to select which host will be selected as
-                            a master host. Please see host_master_name parameter.
-                          type: string
-                        priority:
-                          description: Host priority in HA group. It works only when
-                            name is set.
-                          type: number
-                        replicationSourceName:
-                          description: Host replication source name points to host's
-                            name from which this host should replicate. When not set
-                            then host in HA group. It works only when name is set.
-                          type: string
-                        zone:
-                          description: The availability zone where the PostgreSQL
-                            host will be created.
-                          type: string
-                      type: object
-                    type: array
-                  hostGroupIds:
-                    items:
-                      type: string
-                    type: array
-                  hostMasterName:
-                    description: It sets name of master host. It works only when host.name
-                      is set.
-                    type: string
-                  labels:
-                    additionalProperties:
-                      type: string
-                    description: A set of key/value label pairs to assign to the PostgreSQL
-                      cluster.
-                    type: object
-                  maintenanceWindow:
-                    description: Maintenance policy of the PostgreSQL cluster. The
-                      structure is documented below.
-                    items:
-                      properties:
-                        day:
-                          description: 'Day of the week (in DDD format). Allowed values:
-                            "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"'
-                          type: string
-                        hour:
-                          description: Hour of the day in UTC (in HH format). Allowed
-                            value is between 1 and 24.
-                          type: number
-                        type:
-                          description: Type of maintenance window. Can be either ANYTIME
-                            or WEEKLY. A day and hour of window need to be specified
-                            with weekly window.
-                          type: string
-                      type: object
-                    type: array
-                  name:
-                    description: Name of the PostgreSQL cluster. Provided by the client
-                      when the cluster is created.
-                    type: string
-                  restore:
-                    description: The cluster will be created from the specified backup.
-                      The structure is documented below.
-                    items:
-                      properties:
-                        backupId:
-                          description: Backup ID. The cluster will be created from
-                            the specified backup. How to get a list of PostgreSQL
-                            backups.
-                          type: string
-                        time:
-                          description: 'Timestamp of the moment to which the PostgreSQL
-                            cluster should be restored. (Format: "2006-01-02T15:04:05"
-                            - UTC). When not set, current time is used.'
-                          type: string
-                        timeInclusive:
-                          description: 'Flag that indicates whether a database should
-                            be restored to the first backup point available just after
-                            the timestamp specified in the [time] field instead of
-                            just before. Possible values:'
-                          type: boolean
-                      type: object
-                    type: array
-                  user:
-                    description: (Deprecated) To manage users, please switch to using
-                      a separate resource type yandex_mdb_postgresql_user.
-                    items:
-                      properties:
-                        connLimit:
-                          type: number
-                        grants:
-                          items:
-                            type: string
-                          type: array
-                        login:
-                          type: boolean
-                        name:
-                          description: Name of the PostgreSQL cluster. Provided by
-                            the client when the cluster is created.
-                          type: string
-                        permission:
-                          items:
-                            properties:
-                              databaseName:
-                                description: Name of the PostgreSQL cluster. Provided
-                                  by the client when the cluster is created.
-                                type: string
-                            type: object
-                          type: array
-                        settings:
-                          additionalProperties:
-                            type: string
-                          type: object
-                      type: object
-                    type: array
-                type: object
-              managementPolicies:
-                default:
-                - '*'
+              managementPolicy:
+                default: FullControl
                 description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
                   It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
-                items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
-                  enum:
-                  - Observe
-                  - Create
-                  - Update
-                  - Delete
-                  - LateInitialize
-                  - '*'
-                  type: string
-                type: array
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -1169,21 +893,13 @@ spec:
             type: object
             x-kubernetes-validations:
             - message: config is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.config)
-                || has(self.initProvider.config)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.config)
             - message: environment is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.environment)
-                || has(self.initProvider.environment)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.environment)
             - message: host is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.host)
-                || has(self.initProvider.host)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.host)
             - message: name is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
-                || has(self.initProvider.name)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)
           status:
             description: PostgresqlClusterStatus defines the observed state of PostgresqlCluster.
             properties:

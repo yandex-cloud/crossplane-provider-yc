@@ -48,3 +48,6 @@ spec:
     - fixedScale:
       - size: 1
     version: "1.17"
+
+---
+

@@ -12,3 +12,6 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: yandex_resourcemanager_folder
     name: test-ydb-serverless
+
+---
+

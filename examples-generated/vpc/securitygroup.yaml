@@ -50,3 +50,6 @@ metadata:
 spec:
   forProvider:
     name: lab-network
+
+---
+

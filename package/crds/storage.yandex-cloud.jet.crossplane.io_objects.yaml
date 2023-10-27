@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.12.1
+    controller-gen.kubebuilder.io/version: v0.11.4
   name: objects.storage.yandex-cloud.jet.crossplane.io
 spec:
   group: storage.yandex-cloud.jet.crossplane.io
@@ -57,7 +57,7 @@ spec:
                 description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
                   or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
+                  in favor of the ManagementPolicy field in a future release. Currently,
                   both could be set independently and non-default values would be
                   honored if the feature flag is enabled. See the design doc for more
                   information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
@@ -268,73 +268,21 @@ spec:
                       as raw bytes for the object content.
                     type: string
                 type: object
-              initProvider:
-                description: THIS IS AN ALPHA FIELD. Do not use it in production.
-                  It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. InitProvider
-                  holds the same fields as ForProvider, with the exception of Identifier
-                  and other resource reference fields. The fields that are in InitProvider
-                  are merged into ForProvider when the resource is created. The same
-                  fields are also added to the terraform ignore_changes hook, to avoid
-                  updating them after creation. This is useful for fields that are
-                  required on creation, but we do not desire to update them after
-                  creation, for example because of an external controller is managing
-                  them, like an autoscaler.
-                properties:
-                  acl:
-                    description: The predefined ACL to apply. Defaults to private.
-                    type: string
-                  content:
-                    description: Literal string value to use as the object content,
-                      which will be uploaded as UTF-8-encoded text.
-                    type: string
-                  contentBase64:
-                    description: Base64-encoded data that will be decoded and uploaded
-                      as raw bytes for the object content. This allows safely uploading
-                      non-UTF8 binary data, but is recommended only for small content
-                      such as the result of the gzipbase64 function with small text
-                      strings. For larger objects, use source to stream the content
-                      from a disk file.
-                    type: string
-                  contentType:
-                    description: A standard MIME type describing the format of the
-                      object data, e.g. application/octet-stream. All Valid MIME Types
-                      are valid for this input.
-                    type: string
-                  key:
-                    description: The name of the object once it is in the bucket.
-                    type: string
-                  source:
-                    description: The path to a file that will be read and uploaded
-                      as raw bytes for the object content.
-                    type: string
-                type: object
-              managementPolicies:
-                default:
-                - '*'
+              managementPolicy:
+                default: FullControl
                 description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
                   It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
-                items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
-                  enum:
-                  - Observe
-                  - Create
-                  - Update
-                  - Delete
-                  - LateInitialize
-                  - '*'
-                  type: string
-                type: array
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -508,9 +456,7 @@ spec:
             type: object
             x-kubernetes-validations:
             - message: key is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.key)
-                || has(self.initProvider.key)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.key)
           status:
             description: ObjectStatus defines the observed state of Object.
             properties:

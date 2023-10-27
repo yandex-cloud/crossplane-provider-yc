@@ -25,39 +25,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type SecurityGroupEgressInitParameters struct {
-
-	// Description of the rule.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// Minimum port number.
-	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
-
-	// Labels to assign to this security group.
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
-	// Port number (if applied to a single port).
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// Special-purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
-	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
-
-	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
-	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
-
-	// Target security group ID for this rule.
-	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
-
-	// Maximum port number.
-	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
-
-	// The blocks of IPv4 addresses for this rule.
-	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
-
-	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
-	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
-}
-
 type SecurityGroupEgressObservation struct {
 
 	// Description of the rule.
@@ -117,7 +84,7 @@ type SecurityGroupEgressParameters struct {
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
 	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Protocol *string `json:"protocol" tf:"protocol,omitempty"`
 
 	// Target security group ID for this rule.
@@ -134,39 +101,6 @@ type SecurityGroupEgressParameters struct {
 
 	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
 	// +kubebuilder:validation:Optional
-	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
-}
-
-type SecurityGroupIngressInitParameters struct {
-
-	// Description of the rule.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// Minimum port number.
-	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
-
-	// Labels to assign to this rule.
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
-	// Port number (if applied to a single port).
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
-
-	// Special-purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
-	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
-
-	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
-	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
-
-	// Target security group ID for this rule.
-	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
-
-	// Maximum port number.
-	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
-
-	// The blocks of IPv4 addresses for this rule.
-	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
-
-	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }
 
@@ -229,7 +163,7 @@ type SecurityGroupIngressParameters struct {
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
 	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Protocol *string `json:"protocol" tf:"protocol,omitempty"`
 
 	// Target security group ID for this rule.
@@ -247,24 +181,6 @@ type SecurityGroupIngressParameters struct {
 	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
 	// +kubebuilder:validation:Optional
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
-}
-
-type SecurityGroupInitParameters struct {
-
-	// Description of the security group.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// A list of egress rules. The structure is documented below.
-	Egress []SecurityGroupEgressInitParameters `json:"egress,omitempty" tf:"egress,omitempty"`
-
-	// A list of ingress rules.
-	Ingress []SecurityGroupIngressInitParameters `json:"ingress,omitempty" tf:"ingress,omitempty"`
-
-	// Labels to assign to this security group.
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
-	// Name of the security group.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type SecurityGroupObservation struct {
@@ -353,18 +269,6 @@ type SecurityGroupParameters struct {
 type SecurityGroupSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     SecurityGroupParameters `json:"forProvider"`
-	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
-	// unless the relevant Crossplane feature flag is enabled, and may be
-	// changed or removed without notice.
-	// InitProvider holds the same fields as ForProvider, with the exception
-	// of Identifier and other resource reference fields. The fields that are
-	// in InitProvider are merged into ForProvider when the resource is created.
-	// The same fields are also added to the terraform ignore_changes hook, to
-	// avoid updating them after creation. This is useful for fields that are
-	// required on creation, but we do not desire to update them after creation,
-	// for example because of an external controller is managing them, like an
-	// autoscaler.
-	InitProvider SecurityGroupInitParameters `json:"initProvider,omitempty"`
 }
 
 // SecurityGroupStatus defines the observed state of SecurityGroup.

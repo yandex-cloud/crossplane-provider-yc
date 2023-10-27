@@ -81,16 +81,6 @@ func (tr *ServiceAccount) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// GetInitParameters of this ServiceAccount
-func (tr *ServiceAccount) GetInitParameters() (map[string]any, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
-}
-
 // LateInitialize this ServiceAccount using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *ServiceAccount) LateInitialize(attrs []byte) (bool, error) {
@@ -163,16 +153,6 @@ func (tr *ServiceAccountIAMMember) SetParameters(params map[string]any) error {
 		return err
 	}
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
-}
-
-// GetInitParameters of this ServiceAccountIAMMember
-func (tr *ServiceAccountIAMMember) GetInitParameters() (map[string]any, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
 }
 
 // LateInitialize this ServiceAccountIAMMember using its observed tfState.
@@ -249,16 +229,6 @@ func (tr *ServiceAccountKey) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// GetInitParameters of this ServiceAccountKey
-func (tr *ServiceAccountKey) GetInitParameters() (map[string]any, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
-}
-
 // LateInitialize this ServiceAccountKey using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *ServiceAccountKey) LateInitialize(attrs []byte) (bool, error) {
@@ -331,16 +301,6 @@ func (tr *ServiceAccountStaticAccessKey) SetParameters(params map[string]any) er
 		return err
 	}
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
-}
-
-// GetInitParameters of this ServiceAccountStaticAccessKey
-func (tr *ServiceAccountStaticAccessKey) GetInitParameters() (map[string]any, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
 }
 
 // LateInitialize this ServiceAccountStaticAccessKey using its observed tfState.
@@ -417,16 +377,6 @@ func (tr *FolderIAMBinding) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// GetInitParameters of this FolderIAMBinding
-func (tr *FolderIAMBinding) GetInitParameters() (map[string]any, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
-}
-
 // LateInitialize this FolderIAMBinding using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *FolderIAMBinding) LateInitialize(attrs []byte) (bool, error) {
@@ -499,16 +449,6 @@ func (tr *FolderIAMMember) SetParameters(params map[string]any) error {
 		return err
 	}
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
-}
-
-// GetInitParameters of this FolderIAMMember
-func (tr *FolderIAMMember) GetInitParameters() (map[string]any, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
 }
 
 // LateInitialize this FolderIAMMember using its observed tfState.

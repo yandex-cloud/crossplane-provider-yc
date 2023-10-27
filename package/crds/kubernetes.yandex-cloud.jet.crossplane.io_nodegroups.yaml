@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.12.1
+    controller-gen.kubebuilder.io/version: v0.11.4
   name: nodegroups.kubernetes.yandex-cloud.jet.crossplane.io
 spec:
   group: kubernetes.yandex-cloud.jet.crossplane.io
@@ -57,7 +57,7 @@ spec:
                 description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
                   or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
+                  in favor of the ManagementPolicy field in a future release. Currently,
                   both could be set independently and non-default values would be
                   honored if the feature flag is enabled. See the design doc for more
                   information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
@@ -268,6 +268,9 @@ spec:
                           description: The maximum number of running instances that
                             can be taken offline during update.
                           type: number
+                      required:
+                      - maxExpansion
+                      - maxUnavailable
                       type: object
                     type: array
                   description:
@@ -302,6 +305,8 @@ spec:
                                 description: 'Type of container runtime. Values: docker,
                                   containerd.'
                                 type: string
+                            required:
+                            - type
                             type: object
                           type: array
                         metadata:
@@ -529,6 +534,8 @@ spec:
                                 description: Specifies the id of the Placement Group
                                   to assign to the instances.
                                 type: string
+                            required:
+                            - placementGroupId
                             type: object
                           type: array
                         platformId:
@@ -604,8 +611,14 @@ spec:
                                 type: string
                               startTime:
                                 type: string
+                            required:
+                            - duration
+                            - startTime
                             type: object
                           type: array
+                      required:
+                      - autoRepair
+                      - autoUpgrade
                       type: object
                     type: array
                   name:
@@ -645,6 +658,10 @@ spec:
                                 description: Minimum number of instances in the node
                                   group.
                                 type: number
+                            required:
+                            - initial
+                            - max
+                            - min
                             type: object
                           type: array
                         fixedScale:
@@ -664,301 +681,21 @@ spec:
                       node group.
                     type: string
                 type: object
-              initProvider:
-                description: THIS IS AN ALPHA FIELD. Do not use it in production.
-                  It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. InitProvider
-                  holds the same fields as ForProvider, with the exception of Identifier
-                  and other resource reference fields. The fields that are in InitProvider
-                  are merged into ForProvider when the resource is created. The same
-                  fields are also added to the terraform ignore_changes hook, to avoid
-                  updating them after creation. This is useful for fields that are
-                  required on creation, but we do not desire to update them after
-                  creation, for example because of an external controller is managing
-                  them, like an autoscaler.
-                properties:
-                  allocationPolicy:
-                    description: This argument specify subnets (zones), that will
-                      be used by node group compute instances. The structure is documented
-                      below.
-                    items:
-                      properties:
-                        location:
-                          description: Repeated field, that specify subnets (zones),
-                            that will be used by node group compute instances. The
-                            structure is documented below.
-                          items:
-                            properties:
-                              zone:
-                                description: ID of the availability zone where for
-                                  one compute instance in node group.
-                                type: string
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  allowedUnsafeSysctls:
-                    description: A list of allowed unsafe sysctl parameters for this
-                      node group. For more details see documentation.
-                    items:
-                      type: string
-                    type: array
-                  deployPolicy:
-                    description: Deploy policy of the node group. The structure is
-                      documented below.
-                    items:
-                      properties:
-                        maxExpansion:
-                          description: The maximum number of instances that can be
-                            temporarily allocated above the group's target size during
-                            the update.
-                          type: number
-                        maxUnavailable:
-                          description: The maximum number of running instances that
-                            can be taken offline during update.
-                          type: number
-                      type: object
-                    type: array
-                  description:
-                    description: A description of the Kubernetes node group.
-                    type: string
-                  instanceTemplate:
-                    description: Template used to create compute instances in this
-                      Kubernetes node group. The structure is documented below.
-                    items:
-                      properties:
-                        bootDisk:
-                          description: The specifications for boot disks that will
-                            be attached to the instance. The structure is documented
-                            below.
-                          items:
-                            properties:
-                              size:
-                                description: The number of instances in the node group.
-                                type: number
-                              type:
-                                description: 'Type of container runtime. Values: docker,
-                                  containerd.'
-                                type: string
-                            type: object
-                          type: array
-                        containerRuntime:
-                          description: Container runtime configuration. The structure
-                            is documented below.
-                          items:
-                            properties:
-                              type:
-                                description: 'Type of container runtime. Values: docker,
-                                  containerd.'
-                                type: string
-                            type: object
-                          type: array
-                        metadata:
-                          additionalProperties:
-                            type: string
-                          description: The set of metadata key:value pairs assigned
-                            to this instance template. This includes custom metadata
-                            and predefined keys.
-                          type: object
-                        nat:
-                          description: Boolean flag, enables NAT for node group compute
-                            instances.
-                          type: boolean
-                        networkAccelerationType:
-                          description: 'Type of network acceleration. Values: standard,
-                            software_accelerated.'
-                          type: string
-                        networkInterface:
-                          description: An array with the network interfaces that will
-                            be attached to the instance. The structure is documented
-                            below.
-                          items:
-                            properties:
-                              ipv4:
-                                description: Allocate an IPv4 address for the interface.
-                                  The default value is true.
-                                type: boolean
-                              ipv6:
-                                description: If true, allocate an IPv6 address for
-                                  the interface. The address will be automatically
-                                  assigned from the specified subnet.
-                                type: boolean
-                              nat:
-                                description: A public address that can be used to
-                                  access the internet over NAT.
-                                type: boolean
-                            type: object
-                          type: array
-                        placementPolicy:
-                          description: The placement policy configuration. The structure
-                            is documented below.
-                          items:
-                            properties:
-                              placementGroupId:
-                                description: Specifies the id of the Placement Group
-                                  to assign to the instances.
-                                type: string
-                            type: object
-                          type: array
-                        platformId:
-                          description: The ID of the hardware platform configuration
-                            for the node group compute instances.
-                          type: string
-                        resources:
-                          items:
-                            properties:
-                              coreFraction:
-                                description: Baseline core performance as a percent.
-                                type: number
-                              cores:
-                                description: Number of CPU cores allocated to the
-                                  instance.
-                                type: number
-                              gpus:
-                                description: Number of GPU cores allocated to the
-                                  instance.
-                                type: number
-                              memory:
-                                description: The memory size allocated to the instance.
-                                type: number
-                            type: object
-                          type: array
-                        schedulingPolicy:
-                          description: The scheduling policy for the instances in
-                            node group. The structure is documented below.
-                          items:
-                            properties:
-                              preemptible:
-                                description: Specifies if the instance is preemptible.
-                                  Defaults to false.
-                                type: boolean
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  labels:
-                    additionalProperties:
-                      type: string
-                    description: A set of key/value label pairs assigned to the Kubernetes
-                      node group.
-                    type: object
-                  maintenancePolicy:
-                    description: (Computed) Maintenance policy for this Kubernetes
-                      node group. If policy is omitted, automatic revision upgrades
-                      are enabled and could happen at any time. Revision upgrades
-                      are performed only within the same minor version, e.g. 1.13.
-                      Minor version upgrades (e.g. 1.13->1.14) should be performed
-                      manually. The structure is documented below.
-                    items:
-                      properties:
-                        autoRepair:
-                          description: Boolean flag that specifies if node group can
-                            be repaired automatically. When omitted, default value
-                            is TRUE.
-                          type: boolean
-                        autoUpgrade:
-                          description: Boolean flag that specifies if node group can
-                            be upgraded automatically. When omitted, default value
-                            is TRUE.
-                          type: boolean
-                        maintenanceWindow:
-                          description: (Computed) Set of day intervals, when maintenance
-                            is allowed for this node group. When omitted, it defaults
-                            to any time.
-                          items:
-                            properties:
-                              day:
-                                type: string
-                              duration:
-                                type: string
-                              startTime:
-                                type: string
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  name:
-                    description: Name of a specific Kubernetes node group.
-                    type: string
-                  nodeLabels:
-                    additionalProperties:
-                      type: string
-                    description: A set of key/value label pairs, that are assigned
-                      to all the nodes of this Kubernetes node group.
-                    type: object
-                  nodeTaints:
-                    description: A list of Kubernetes taints, that are applied to
-                      all the nodes of this Kubernetes node group.
-                    items:
-                      type: string
-                    type: array
-                  scalePolicy:
-                    description: Scale policy of the node group. The structure is
-                      documented below.
-                    items:
-                      properties:
-                        autoScale:
-                          description: Scale policy for an autoscaled node group.
-                            The structure is documented below.
-                          items:
-                            properties:
-                              initial:
-                                description: Initial number of instances in the node
-                                  group.
-                                type: number
-                              max:
-                                description: Maximum number of instances in the node
-                                  group.
-                                type: number
-                              min:
-                                description: Minimum number of instances in the node
-                                  group.
-                                type: number
-                            type: object
-                          type: array
-                        fixedScale:
-                          description: Scale policy for a fixed scale node group.
-                            The structure is documented below.
-                          items:
-                            properties:
-                              size:
-                                description: The number of instances in the node group.
-                                type: number
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  version:
-                    description: Version of Kubernetes that will be used for Kubernetes
-                      node group.
-                    type: string
-                type: object
-              managementPolicies:
-                default:
-                - '*'
+              managementPolicy:
+                default: FullControl
                 description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
                   It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
-                items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
-                  enum:
-                  - Observe
-                  - Create
-                  - Update
-                  - Delete
-                  - LateInitialize
-                  - '*'
-                  type: string
-                type: array
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -1132,13 +869,9 @@ spec:
             type: object
             x-kubernetes-validations:
             - message: instanceTemplate is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.instanceTemplate)
-                || has(self.initProvider.instanceTemplate)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.instanceTemplate)
             - message: scalePolicy is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.scalePolicy)
-                || has(self.initProvider.scalePolicy)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.scalePolicy)
           status:
             description: NodeGroupStatus defines the observed state of NodeGroup.
             properties:

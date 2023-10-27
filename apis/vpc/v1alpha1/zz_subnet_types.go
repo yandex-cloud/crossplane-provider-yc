@@ -25,18 +25,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type DHCPOptionsInitParameters struct {
-
-	// Domain name.
-	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
-
-	// Domain name server IP addresses.
-	DomainNameServers []*string `json:"domainNameServers,omitempty" tf:"domain_name_servers,omitempty"`
-
-	// NTP server IP addresses.
-	NtpServers []*string `json:"ntpServers,omitempty" tf:"ntp_servers,omitempty"`
-}
-
 type DHCPOptionsObservation struct {
 
 	// Domain name.
@@ -62,35 +50,6 @@ type DHCPOptionsParameters struct {
 	// NTP server IP addresses.
 	// +kubebuilder:validation:Optional
 	NtpServers []*string `json:"ntpServers,omitempty" tf:"ntp_servers,omitempty"`
-}
-
-type SubnetInitParameters struct {
-
-	// Options for DHCP client. The structure is documented below.
-	DHCPOptions []DHCPOptionsInitParameters `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
-
-	// An optional description of the subnet. Provide this property when
-	// you create the resource.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// Labels to assign to this subnet. A list of key/value pairs.
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
-	// Name of the subnet. Provided by the client when the subnet is created.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// The ID of the route table to assign to this subnet. Assigned route table should
-	// belong to the same network as this subnet.
-	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
-
-	// A list of blocks of internal IPv4 addresses that are owned by this subnet.
-	// Provide this property when you create the subnet. For example, 10.0.0.0/22 or 192.168.0.0/16.
-	// Blocks of addresses must be unique and non-overlapping within a network.
-	// Minimum subnet size is /28, and maximum subnet size is /16. Only IPv4 is supported.
-	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
-
-	// Name of the Yandex.Cloud zone for this subnet.
-	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type SubnetObservation struct {
@@ -204,18 +163,6 @@ type SubnetParameters struct {
 type SubnetSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     SubnetParameters `json:"forProvider"`
-	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
-	// unless the relevant Crossplane feature flag is enabled, and may be
-	// changed or removed without notice.
-	// InitProvider holds the same fields as ForProvider, with the exception
-	// of Identifier and other resource reference fields. The fields that are
-	// in InitProvider are merged into ForProvider when the resource is created.
-	// The same fields are also added to the terraform ignore_changes hook, to
-	// avoid updating them after creation. This is useful for fields that are
-	// required on creation, but we do not desire to update them after creation,
-	// for example because of an external controller is managing them, like an
-	// autoscaler.
-	InitProvider SubnetInitParameters `json:"initProvider,omitempty"`
 }
 
 // SubnetStatus defines the observed state of Subnet.
@@ -236,7 +183,7 @@ type SubnetStatus struct {
 type Subnet struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.v4CidrBlocks) || has(self.initProvider.v4CidrBlocks)",message="v4CidrBlocks is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.v4CidrBlocks)",message="v4CidrBlocks is a required parameter"
 	Spec   SubnetSpec   `json:"spec"`
 	Status SubnetStatus `json:"status,omitempty"`
 }

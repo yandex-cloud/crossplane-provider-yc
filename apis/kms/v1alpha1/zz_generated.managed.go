@@ -29,6 +29,11 @@ func (mg *SymmetricKey) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this SymmetricKey.
+func (mg *SymmetricKey) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this SymmetricKey.
 func (mg *SymmetricKey) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -60,6 +65,11 @@ func (mg *SymmetricKey) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this SymmetricKey.
 func (mg *SymmetricKey) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this SymmetricKey.
+func (mg *SymmetricKey) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this SymmetricKey.

@@ -27,3 +27,6 @@ spec:
       storageTypeId: ssd
     subnetIdsRefs:
     - name: my-inst-group-subnet
+
+---
+

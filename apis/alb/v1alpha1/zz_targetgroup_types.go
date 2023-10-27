@@ -25,22 +25,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type TargetGroupInitParameters struct {
-
-	// An optional description of the target group. Provide this property when
-	// you create the resource.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// Labels to assign to this target group. A list of key/value pairs.
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
-	// Name of the target group. Provided by the client when the target group is created.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// A Target resource. The structure is documented below.
-	Target []TargetInitParameters `json:"target,omitempty" tf:"target,omitempty"`
-}
-
 type TargetGroupObservation struct {
 
 	// The target group creation timestamp.
@@ -101,14 +85,6 @@ type TargetGroupParameters struct {
 	Target []TargetParameters `json:"target,omitempty" tf:"target,omitempty"`
 }
 
-type TargetInitParameters struct {
-
-	// IP address of the target.
-	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
-
-	PrivateIPv4Address *bool `json:"privateIpv4Address,omitempty" tf:"private_ipv4_address,omitempty"`
-}
-
 type TargetObservation struct {
 
 	// IP address of the target.
@@ -124,7 +100,7 @@ type TargetObservation struct {
 type TargetParameters struct {
 
 	// IP address of the target.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	IPAddress *string `json:"ipAddress" tf:"ip_address,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -149,18 +125,6 @@ type TargetParameters struct {
 type TargetGroupSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     TargetGroupParameters `json:"forProvider"`
-	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
-	// unless the relevant Crossplane feature flag is enabled, and may be
-	// changed or removed without notice.
-	// InitProvider holds the same fields as ForProvider, with the exception
-	// of Identifier and other resource reference fields. The fields that are
-	// in InitProvider are merged into ForProvider when the resource is created.
-	// The same fields are also added to the terraform ignore_changes hook, to
-	// avoid updating them after creation. This is useful for fields that are
-	// required on creation, but we do not desire to update them after creation,
-	// for example because of an external controller is managing them, like an
-	// autoscaler.
-	InitProvider TargetGroupInitParameters `json:"initProvider,omitempty"`
 }
 
 // TargetGroupStatus defines the observed state of TargetGroup.

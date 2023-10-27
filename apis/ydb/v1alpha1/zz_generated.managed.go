@@ -29,6 +29,11 @@ func (mg *DatabaseDedicated) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this DatabaseDedicated.
+func (mg *DatabaseDedicated) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this DatabaseDedicated.
 func (mg *DatabaseDedicated) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -60,6 +65,11 @@ func (mg *DatabaseDedicated) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this DatabaseDedicated.
 func (mg *DatabaseDedicated) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this DatabaseDedicated.
+func (mg *DatabaseDedicated) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this DatabaseDedicated.
@@ -95,6 +105,11 @@ func (mg *DatabaseServerless) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this DatabaseServerless.
+func (mg *DatabaseServerless) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this DatabaseServerless.
 func (mg *DatabaseServerless) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -126,6 +141,11 @@ func (mg *DatabaseServerless) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this DatabaseServerless.
 func (mg *DatabaseServerless) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this DatabaseServerless.
+func (mg *DatabaseServerless) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this DatabaseServerless.

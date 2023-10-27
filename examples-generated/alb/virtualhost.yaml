@@ -20,3 +20,6 @@ spec:
               testing.upbound.io/example-name: my-bg
           timeout: 3s
       name: my-route
+
+---
+

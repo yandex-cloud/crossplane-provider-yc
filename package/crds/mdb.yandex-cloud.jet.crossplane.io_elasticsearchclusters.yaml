@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.12.1
+    controller-gen.kubebuilder.io/version: v0.11.4
   name: elasticsearchclusters.mdb.yandex-cloud.jet.crossplane.io
 spec:
   group: mdb.yandex-cloud.jet.crossplane.io
@@ -57,7 +57,7 @@ spec:
                 description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
                   or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
+                  in favor of the ManagementPolicy field in a future release. Currently,
                   both could be set independently and non-default values would be
                   honored if the feature flag is enabled. See the design doc for more
                   information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
@@ -110,8 +110,14 @@ spec:
                                       type: string
                                     resourcePresetId:
                                       type: string
+                                  required:
+                                  - diskSize
+                                  - diskTypeId
+                                  - resourcePresetId
                                   type: object
                                 type: array
+                            required:
+                            - resources
                             type: object
                           type: array
                         edition:
@@ -139,8 +145,14 @@ spec:
                                       type: string
                                     resourcePresetId:
                                       type: string
+                                  required:
+                                  - diskSize
+                                  - diskTypeId
+                                  - resourcePresetId
                                   type: object
                                 type: array
+                            required:
+                            - resources
                             type: object
                           type: array
                         plugins:
@@ -153,6 +165,7 @@ spec:
                           type: string
                       required:
                       - adminPasswordSecretRef
+                      - dataNode
                       type: object
                     type: array
                   deletionProtection:
@@ -347,6 +360,10 @@ spec:
                             host will be created. For more information see the official
                             documentation.
                           type: string
+                      required:
+                      - name
+                      - type
+                      - zone
                       type: object
                     type: array
                   labels:
@@ -372,6 +389,8 @@ spec:
                             or WEEKLY. A day and hour of window need to be specified
                             with weekly window.
                           type: string
+                      required:
+                      - type
                       type: object
                     type: array
                   name:
@@ -617,178 +636,21 @@ spec:
                         type: object
                     type: object
                 type: object
-              initProvider:
-                description: THIS IS AN ALPHA FIELD. Do not use it in production.
-                  It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. InitProvider
-                  holds the same fields as ForProvider, with the exception of Identifier
-                  and other resource reference fields. The fields that are in InitProvider
-                  are merged into ForProvider when the resource is created. The same
-                  fields are also added to the terraform ignore_changes hook, to avoid
-                  updating them after creation. This is useful for fields that are
-                  required on creation, but we do not desire to update them after
-                  creation, for example because of an external controller is managing
-                  them, like an autoscaler.
-                properties:
-                  config:
-                    description: Configuration of the Elasticsearch cluster. The structure
-                      is documented below.
-                    items:
-                      properties:
-                        dataNode:
-                          description: Configuration for Elasticsearch data nodes
-                            subcluster. The structure is documented below.
-                          items:
-                            properties:
-                              resources:
-                                description: Resources allocated to hosts of the Elasticsearch
-                                  master nodes subcluster. The structure is documented
-                                  below.
-                                items:
-                                  properties:
-                                    diskSize:
-                                      description: Volume of the storage available
-                                        to a host, in gigabytes.
-                                      type: number
-                                    diskTypeId:
-                                      description: Type of the storage of Elasticsearch
-                                        hosts.
-                                      type: string
-                                    resourcePresetId:
-                                      type: string
-                                  type: object
-                                type: array
-                            type: object
-                          type: array
-                        edition:
-                          description: Edition of Elasticsearch. For more information,
-                            see the official documentation.
-                          type: string
-                        masterNode:
-                          description: Configuration for Elasticsearch master nodes
-                            subcluster. The structure is documented below.
-                          items:
-                            properties:
-                              resources:
-                                description: Resources allocated to hosts of the Elasticsearch
-                                  master nodes subcluster. The structure is documented
-                                  below.
-                                items:
-                                  properties:
-                                    diskSize:
-                                      description: Volume of the storage available
-                                        to a host, in gigabytes.
-                                      type: number
-                                    diskTypeId:
-                                      description: Type of the storage of Elasticsearch
-                                        hosts.
-                                      type: string
-                                    resourcePresetId:
-                                      type: string
-                                  type: object
-                                type: array
-                            type: object
-                          type: array
-                        plugins:
-                          description: A set of Elasticsearch plugins to install.
-                          items:
-                            type: string
-                          type: array
-                        version:
-                          description: Version of Elasticsearch.
-                          type: string
-                      type: object
-                    type: array
-                  deletionProtection:
-                    description: Inhibits deletion of the cluster.  Can be either
-                      true or false.
-                    type: boolean
-                  description:
-                    description: Description of the Elasticsearch cluster.
-                    type: string
-                  environment:
-                    description: Deployment environment of the Elasticsearch cluster.
-                      Can be either PRESTABLE or PRODUCTION.
-                    type: string
-                  host:
-                    description: A host of the Elasticsearch cluster. The structure
-                      is documented below.
-                    items:
-                      properties:
-                        assignPublicIp:
-                          description: Sets whether the host should get a public IP
-                            address on creation. Can be either true or false.
-                          type: boolean
-                        name:
-                          description: User defined host name.
-                          type: string
-                        type:
-                          description: The type of the host to be deployed. Can be
-                            either DATA_NODE or MASTER_NODE.
-                          type: string
-                        zone:
-                          description: The availability zone where the Elasticsearch
-                            host will be created. For more information see the official
-                            documentation.
-                          type: string
-                      type: object
-                    type: array
-                  labels:
-                    additionalProperties:
-                      type: string
-                    description: A set of key/value label pairs to assign to the Elasticsearch
-                      cluster.
-                    type: object
-                  maintenanceWindow:
-                    items:
-                      properties:
-                        day:
-                          description: 'Day of week for maintenance window if window
-                            type is weekly. Possible values: MON, TUE, WED, THU, FRI,
-                            SAT, SUN.'
-                          type: string
-                        hour:
-                          description: Hour of day in UTC time zone (1-24) for maintenance
-                            window if window type is weekly.
-                          type: number
-                        type:
-                          description: Type of maintenance window. Can be either ANYTIME
-                            or WEEKLY. A day and hour of window need to be specified
-                            with weekly window.
-                          type: string
-                      type: object
-                    type: array
-                  name:
-                    description: Name of the Elasticsearch cluster. Provided by the
-                      client when the cluster is created.
-                    type: string
-                type: object
-              managementPolicies:
-                default:
-                - '*'
+              managementPolicy:
+                default: FullControl
                 description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
                   It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
-                items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
-                  enum:
-                  - Observe
-                  - Create
-                  - Update
-                  - Delete
-                  - LateInitialize
-                  - '*'
-                  type: string
-                type: array
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -962,17 +824,11 @@ spec:
             type: object
             x-kubernetes-validations:
             - message: config is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.config)
-                || has(self.initProvider.config)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.config)
             - message: environment is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.environment)
-                || has(self.initProvider.environment)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.environment)
             - message: name is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
-                || has(self.initProvider.name)'
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)
           status:
             description: ElasticsearchClusterStatus defines the observed state of
               ElasticsearchCluster.

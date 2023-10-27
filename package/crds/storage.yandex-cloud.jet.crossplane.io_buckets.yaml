@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.12.1
+    controller-gen.kubebuilder.io/version: v0.11.4
   name: buckets.storage.yandex-cloud.jet.crossplane.io
 spec:
   group: storage.yandex-cloud.jet.crossplane.io
@@ -57,7 +57,7 @@ spec:
                 description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
                   or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicies field in a future release. Currently,
+                  in favor of the ManagementPolicy field in a future release. Currently,
                   both could be set independently and non-default values would be
                   honored if the feature flag is enabled. See the design doc for more
                   information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
@@ -200,6 +200,9 @@ spec:
                           description: Specifies time in seconds that browser can
                             cache the response for a preflight request.
                           type: number
+                      required:
+                      - allowedMethods
+                      - allowedOrigins
                       type: object
                     type: array
                   defaultStorageClass:
@@ -306,6 +309,9 @@ spec:
                           type: string
                         uri:
                           type: string
+                      required:
+                      - permissions
+                      - type
                       type: object
                     type: array
                   https:
@@ -317,6 +323,8 @@ spec:
                           description: — Id of the certificate in Certificate Manager,
                             that will be used for bucket.
                           type: string
+                      required:
+                      - certificateId
                       type: object
                     type: array
                   lifecycleRule:
@@ -383,6 +391,8 @@ spec:
                                   you want the object to transition. Can only be COLD
                                   or STANDARD_IA.
                                 type: string
+                            required:
+                            - storageClass
                             type: object
                           type: array
                         prefix:
@@ -407,8 +417,12 @@ spec:
                                   you want the object to transition. Can only be COLD
                                   or STANDARD_IA.
                                 type: string
+                            required:
+                            - storageClass
                             type: object
                           type: array
+                      required:
+                      - enabled
                       type: object
                     type: array
                   logging:
@@ -422,6 +436,8 @@ spec:
                         targetPrefix:
                           description: To specify a key prefix for log objects.
                           type: string
+                      required:
+                      - targetBucket
                       type: object
                     type: array
                   maxSize:
@@ -471,10 +487,17 @@ spec:
                                       description: The server-side encryption algorithm
                                         to use. Single valid value is aws:kms
                                       type: string
+                                  required:
+                                  - kmsMasterKeyId
+                                  - sseAlgorithm
                                   type: object
                                 type: array
+                            required:
+                            - applyServerSideEncryptionByDefault
                             type: object
                           type: array
+                      required:
+                      - rule
                       type: object
                     type: array
                   versioning:
@@ -523,326 +546,21 @@ spec:
                       with a website. If not, this will be an empty string.
                     type: string
                 type: object
-              initProvider:
-                description: THIS IS AN ALPHA FIELD. Do not use it in production.
-                  It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. InitProvider
-                  holds the same fields as ForProvider, with the exception of Identifier
-                  and other resource reference fields. The fields that are in InitProvider
-                  are merged into ForProvider when the resource is created. The same
-                  fields are also added to the terraform ignore_changes hook, to avoid
-                  updating them after creation. This is useful for fields that are
-                  required on creation, but we do not desire to update them after
-                  creation, for example because of an external controller is managing
-                  them, like an autoscaler.
-                properties:
-                  acl:
-                    description: The predefined ACL to apply. Defaults to private.
-                      Conflicts with grant.
-                    type: string
-                  anonymousAccessFlags:
-                    description: Provides various access to objects. See bucket availability
-                      for more infomation.
-                    items:
-                      properties:
-                        list:
-                          description: Allows to list object in bucket anonymously.
-                          type: boolean
-                        read:
-                          description: Allows to read objects in bucket anonymously.
-                          type: boolean
-                      type: object
-                    type: array
-                  bucket:
-                    description: The name of the bucket.
-                    type: string
-                  bucketPrefix:
-                    description: Creates a unique bucket name beginning with the specified
-                      prefix. Conflicts with bucket.
-                    type: string
-                  corsRule:
-                    description: A rule of Cross-Origin Resource Sharing (documented
-                      below).
-                    items:
-                      properties:
-                        allowedHeaders:
-                          description: Specifies which headers are allowed.
-                          items:
-                            type: string
-                          type: array
-                        allowedMethods:
-                          description: Specifies which methods are allowed. Can be
-                            GET, PUT, POST, DELETE or HEAD.
-                          items:
-                            type: string
-                          type: array
-                        allowedOrigins:
-                          description: Specifies which origins are allowed.
-                          items:
-                            type: string
-                          type: array
-                        exposeHeaders:
-                          description: Specifies expose header in the response.
-                          items:
-                            type: string
-                          type: array
-                        maxAgeSeconds:
-                          description: Specifies time in seconds that browser can
-                            cache the response for a preflight request.
-                          type: number
-                      type: object
-                    type: array
-                  defaultStorageClass:
-                    description: 'Storage class which is used for storing objects
-                      by default. Available values are: "STANDARD", "COLD". Default
-                      is "STANDARD". See storage class for more inforamtion.'
-                    type: string
-                  forceDestroy:
-                    description: A boolean that indicates all objects should be deleted
-                      from the bucket so that the bucket can be destroyed without
-                      error. These objects are not recoverable.
-                    type: boolean
-                  grant:
-                    description: An ACL policy grant. Conflicts with acl.
-                    items:
-                      properties:
-                        id:
-                          description: Unique identifier for the rule. Must be less
-                            than or equal to 255 characters in length.
-                          type: string
-                        permissions:
-                          items:
-                            type: string
-                          type: array
-                        type:
-                          type: string
-                        uri:
-                          type: string
-                      type: object
-                    type: array
-                  https:
-                    description: Manages https certificates for bucket. See https
-                      for more infomation.
-                    items:
-                      properties:
-                        certificateId:
-                          description: — Id of the certificate in Certificate Manager,
-                            that will be used for bucket.
-                          type: string
-                      type: object
-                    type: array
-                  lifecycleRule:
-                    description: A configuration of object lifecycle management (documented
-                      below).
-                    items:
-                      properties:
-                        abortIncompleteMultipartUploadDays:
-                          description: Specifies the number of days after initiating
-                            a multipart upload when the multipart upload must be completed.
-                          type: number
-                        enabled:
-                          description: Enable versioning. Once you version-enable
-                            a bucket, it can never return to an unversioned state.
-                            You can, however, suspend versioning on that bucket.
-                          type: boolean
-                        expiration:
-                          description: Specifies a period in the object's expire (documented
-                            below).
-                          items:
-                            properties:
-                              date:
-                                description: Specifies the date after which you want
-                                  the corresponding action to take effect.
-                                type: string
-                              days:
-                                description: Specifies the number of days after object
-                                  creation when the specific rule action takes effect.
-                                type: number
-                              expiredObjectDeleteMarker:
-                                description: On a versioned bucket (versioning-enabled
-                                  or versioning-suspended bucket), you can add this
-                                  element in the lifecycle configuration to direct
-                                  Object Storage to delete expired object delete markers.
-                                type: boolean
-                            type: object
-                          type: array
-                        id:
-                          description: Unique identifier for the rule. Must be less
-                            than or equal to 255 characters in length.
-                          type: string
-                        noncurrentVersionExpiration:
-                          description: Specifies when noncurrent object versions expire
-                            (documented below).
-                          items:
-                            properties:
-                              days:
-                                description: Specifies the number of days after object
-                                  creation when the specific rule action takes effect.
-                                type: number
-                            type: object
-                          type: array
-                        noncurrentVersionTransition:
-                          description: Specifies when noncurrent object versions transitions
-                            (documented below).
-                          items:
-                            properties:
-                              days:
-                                description: Specifies the number of days after object
-                                  creation when the specific rule action takes effect.
-                                type: number
-                              storageClass:
-                                description: Specifies the storage class to which
-                                  you want the object to transition. Can only be COLD
-                                  or STANDARD_IA.
-                                type: string
-                            type: object
-                          type: array
-                        prefix:
-                          description: Object key prefix identifying one or more objects
-                            to which the rule applies.
-                          type: string
-                        transition:
-                          description: Specifies a period in the object's transitions
-                            (documented below).
-                          items:
-                            properties:
-                              date:
-                                description: Specifies the date after which you want
-                                  the corresponding action to take effect.
-                                type: string
-                              days:
-                                description: Specifies the number of days after object
-                                  creation when the specific rule action takes effect.
-                                type: number
-                              storageClass:
-                                description: Specifies the storage class to which
-                                  you want the object to transition. Can only be COLD
-                                  or STANDARD_IA.
-                                type: string
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  logging:
-                    description: A settings of bucket logging (documented below).
-                    items:
-                      properties:
-                        targetBucket:
-                          description: The name of the bucket that will receive the
-                            log objects.
-                          type: string
-                        targetPrefix:
-                          description: To specify a key prefix for log objects.
-                          type: string
-                      type: object
-                    type: array
-                  maxSize:
-                    description: The size of bucket, in bytes. See size limiting for
-                      more information.
-                    type: number
-                  policy:
-                    type: string
-                  serverSideEncryptionConfiguration:
-                    description: A configuration of server-side encryption for the
-                      bucket (documented below)
-                    items:
-                      properties:
-                        rule:
-                          description: A single object for server-side encryption
-                            by default configuration. (documented below)
-                          items:
-                            properties:
-                              applyServerSideEncryptionByDefault:
-                                description: A single object for setting server-side
-                                  encryption by default. (documented below)
-                                items:
-                                  properties:
-                                    kmsMasterKeyId:
-                                      description: The KMS master key ID used for
-                                        the SSE-KMS encryption.
-                                      type: string
-                                    sseAlgorithm:
-                                      description: The server-side encryption algorithm
-                                        to use. Single valid value is aws:kms
-                                      type: string
-                                  type: object
-                                type: array
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  versioning:
-                    description: A state of versioning (documented below)
-                    items:
-                      properties:
-                        enabled:
-                          description: Enable versioning. Once you version-enable
-                            a bucket, it can never return to an unversioned state.
-                            You can, however, suspend versioning on that bucket.
-                          type: boolean
-                      type: object
-                    type: array
-                  website:
-                    description: A website object (documented below).
-                    items:
-                      properties:
-                        errorDocument:
-                          description: An absolute path to the document to return
-                            in case of a 4XX error.
-                          type: string
-                        indexDocument:
-                          description: Storage returns this index document when requests
-                            are made to the root domain or any of the subfolders.
-                          type: string
-                        redirectAllRequestsTo:
-                          description: A hostname to redirect all website requests
-                            for this bucket to. Hostname can optionally be prefixed
-                            with a protocol (http:// or https://) to use when redirecting
-                            requests. The default is the protocol that is used in
-                            the original request.
-                          type: string
-                        routingRules:
-                          description: A json array containing routing rules describing
-                            redirect behavior and when redirects are applied.
-                          type: string
-                      type: object
-                    type: array
-                  websiteDomain:
-                    description: The domain of the website endpoint, if the bucket
-                      is configured with a website. If not, this will be an empty
-                      string.
-                    type: string
-                  websiteEndpoint:
-                    description: The website endpoint, if the bucket is configured
-                      with a website. If not, this will be an empty string.
-                    type: string
-                type: object
-              managementPolicies:
-                default:
-                - '*'
+              managementPolicy:
+                default: FullControl
                 description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
                   It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. ManagementPolicies
-                  specify the array of actions Crossplane is allowed to take on the
-                  managed and external resources. This field is planned to replace
-                  the DeletionPolicy field in a future release. Currently, both could
-                  be set independently and non-default values would be honored if
-                  the feature flag is enabled. If both are custom, the DeletionPolicy
-                  field will be ignored. See the design doc for more information:
-                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
-                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
-                items:
-                  description: A ManagementAction represents an action that the Crossplane
-                    controllers can take on an external resource.
-                  enum:
-                  - Observe
-                  - Create
-                  - Update
-                  - Delete
-                  - LateInitialize
-                  - '*'
-                  type: string
-                type: array
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default

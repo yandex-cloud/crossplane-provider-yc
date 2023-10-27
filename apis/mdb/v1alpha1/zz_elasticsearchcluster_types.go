@@ -25,24 +25,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type ConfigInitParameters struct {
-
-	// Configuration for Elasticsearch data nodes subcluster. The structure is documented below.
-	DataNode []DataNodeInitParameters `json:"dataNode,omitempty" tf:"data_node,omitempty"`
-
-	// Edition of Elasticsearch. For more information, see the official documentation.
-	Edition *string `json:"edition,omitempty" tf:"edition,omitempty"`
-
-	// Configuration for Elasticsearch master nodes subcluster. The structure is documented below.
-	MasterNode []MasterNodeInitParameters `json:"masterNode,omitempty" tf:"master_node,omitempty"`
-
-	// A set of Elasticsearch plugins to install.
-	Plugins []*string `json:"plugins,omitempty" tf:"plugins,omitempty"`
-
-	// Version of Elasticsearch.
-	Version *string `json:"version,omitempty" tf:"version,omitempty"`
-}
-
 type ConfigObservation struct {
 
 	// Configuration for Elasticsearch data nodes subcluster. The structure is documented below.
@@ -68,7 +50,7 @@ type ConfigParameters struct {
 	AdminPasswordSecretRef v1.SecretKeySelector `json:"adminPasswordSecretRef" tf:"-"`
 
 	// Configuration for Elasticsearch data nodes subcluster. The structure is documented below.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	DataNode []DataNodeParameters `json:"dataNode" tf:"data_node,omitempty"`
 
 	// Edition of Elasticsearch. For more information, see the official documentation.
@@ -88,12 +70,6 @@ type ConfigParameters struct {
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
-type DataNodeInitParameters struct {
-
-	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
-	Resources []ResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
 type DataNodeObservation struct {
 
 	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
@@ -103,34 +79,8 @@ type DataNodeObservation struct {
 type DataNodeParameters struct {
 
 	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Resources []ResourcesParameters `json:"resources" tf:"resources,omitempty"`
-}
-
-type ElasticsearchClusterInitParameters struct {
-
-	// Configuration of the Elasticsearch cluster. The structure is documented below.
-	Config []ConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
-
-	// Inhibits deletion of the cluster.  Can be either true or false.
-	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
-
-	// Description of the Elasticsearch cluster.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
-	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
-
-	// A host of the Elasticsearch cluster. The structure is documented below.
-	Host []HostInitParameters `json:"host,omitempty" tf:"host,omitempty"`
-
-	// A set of key/value label pairs to assign to the Elasticsearch cluster.
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
-	MaintenanceWindow []MaintenanceWindowInitParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
-
-	// Name of the Elasticsearch cluster. Provided by the client when the cluster is created.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type ElasticsearchClusterObservation struct {
@@ -270,22 +220,6 @@ type ElasticsearchClusterParameters struct {
 	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 }
 
-type HostInitParameters struct {
-
-	// Sets whether the host should get a public IP address on creation. Can be either true or false.
-	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
-
-	// User defined host name.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
-
-	// The availability zone where the Elasticsearch host will be created.
-	// For more information see the official documentation.
-	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
-}
-
 type HostObservation struct {
 
 	// Sets whether the host should get a public IP address on creation. Can be either true or false.
@@ -316,7 +250,7 @@ type HostParameters struct {
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
 	// User defined host name.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// The ID of the subnet, to which the host belongs. The subnet must
@@ -334,25 +268,13 @@ type HostParameters struct {
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Type *string `json:"type" tf:"type,omitempty"`
 
 	// The availability zone where the Elasticsearch host will be created.
 	// For more information see the official documentation.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Zone *string `json:"zone" tf:"zone,omitempty"`
-}
-
-type MaintenanceWindowInitParameters struct {
-
-	// Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
-	Day *string `json:"day,omitempty" tf:"day,omitempty"`
-
-	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
-	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
-
-	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type MaintenanceWindowObservation struct {
@@ -378,14 +300,8 @@ type MaintenanceWindowParameters struct {
 	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Type *string `json:"type" tf:"type,omitempty"`
-}
-
-type MasterNodeInitParameters struct {
-
-	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
-	Resources []MasterNodeResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type MasterNodeObservation struct {
@@ -397,19 +313,8 @@ type MasterNodeObservation struct {
 type MasterNodeParameters struct {
 
 	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	Resources []MasterNodeResourcesParameters `json:"resources" tf:"resources,omitempty"`
-}
-
-type MasterNodeResourcesInitParameters struct {
-
-	// Volume of the storage available to a host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
-
-	// Type of the storage of Elasticsearch hosts.
-	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
-
-	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type MasterNodeResourcesObservation struct {
@@ -426,26 +331,15 @@ type MasterNodeResourcesObservation struct {
 type MasterNodeResourcesParameters struct {
 
 	// Volume of the storage available to a host, in gigabytes.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// Type of the storage of Elasticsearch hosts.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
 
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
-}
-
-type ResourcesInitParameters struct {
-
-	// Volume of the storage available to a host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
-
-	// Type of the storage of Elasticsearch hosts.
-	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
-
-	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type ResourcesObservation struct {
@@ -462,14 +356,14 @@ type ResourcesObservation struct {
 type ResourcesParameters struct {
 
 	// Volume of the storage available to a host, in gigabytes.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// Type of the storage of Elasticsearch hosts.
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
 
-	// +kubebuilder:validation:Optional
+	// +kubebuilder:validation:Required
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
 }
 
@@ -477,18 +371,6 @@ type ResourcesParameters struct {
 type ElasticsearchClusterSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ElasticsearchClusterParameters `json:"forProvider"`
-	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
-	// unless the relevant Crossplane feature flag is enabled, and may be
-	// changed or removed without notice.
-	// InitProvider holds the same fields as ForProvider, with the exception
-	// of Identifier and other resource reference fields. The fields that are
-	// in InitProvider are merged into ForProvider when the resource is created.
-	// The same fields are also added to the terraform ignore_changes hook, to
-	// avoid updating them after creation. This is useful for fields that are
-	// required on creation, but we do not desire to update them after creation,
-	// for example because of an external controller is managing them, like an
-	// autoscaler.
-	InitProvider ElasticsearchClusterInitParameters `json:"initProvider,omitempty"`
 }
 
 // ElasticsearchClusterStatus defines the observed state of ElasticsearchCluster.
@@ -509,9 +391,9 @@ type ElasticsearchClusterStatus struct {
 type ElasticsearchCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.config) || has(self.initProvider.config)",message="config is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.environment) || has(self.initProvider.environment)",message="environment is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || has(self.initProvider.name)",message="name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.config)",message="config is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.environment)",message="environment is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
 	Spec   ElasticsearchClusterSpec   `json:"spec"`
 	Status ElasticsearchClusterStatus `json:"status,omitempty"`
 }

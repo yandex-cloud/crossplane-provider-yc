@@ -25,22 +25,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type ServiceAccountKeyInitParameters struct {
-
-	// The description of the key pair.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// The output format of the keys. PEM_FILE is the default format.
-	Format *string `json:"format,omitempty" tf:"format,omitempty"`
-
-	// The algorithm used to generate the key. RSA_2048 is the default algorithm.
-	// Valid values are listed in the API reference.
-	KeyAlgorithm *string `json:"keyAlgorithm,omitempty" tf:"key_algorithm,omitempty"`
-
-	// An optional PGP key to encrypt the resulting private key material. May either be a base64-encoded public key or a keybase username in the form keybase:keybaseusername.
-	PgpKey *string `json:"pgpKey,omitempty" tf:"pgp_key,omitempty"`
-}
-
 type ServiceAccountKeyObservation struct {
 
 	// Creation timestamp of the static access key.
@@ -111,18 +95,6 @@ type ServiceAccountKeyParameters struct {
 type ServiceAccountKeySpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ServiceAccountKeyParameters `json:"forProvider"`
-	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
-	// unless the relevant Crossplane feature flag is enabled, and may be
-	// changed or removed without notice.
-	// InitProvider holds the same fields as ForProvider, with the exception
-	// of Identifier and other resource reference fields. The fields that are
-	// in InitProvider are merged into ForProvider when the resource is created.
-	// The same fields are also added to the terraform ignore_changes hook, to
-	// avoid updating them after creation. This is useful for fields that are
-	// required on creation, but we do not desire to update them after creation,
-	// for example because of an external controller is managing them, like an
-	// autoscaler.
-	InitProvider ServiceAccountKeyInitParameters `json:"initProvider,omitempty"`
 }
 
 // ServiceAccountKeyStatus defines the observed state of ServiceAccountKey.
