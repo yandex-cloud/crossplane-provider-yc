@@ -20,5 +20,7 @@ spec:
           name: example-subnet-a
     metadata:
       ssh-keys: "ubuntu:<public-key-data>"
+    folderIdRef:
+      name: example-folder
   providerConfigRef:
     name: example

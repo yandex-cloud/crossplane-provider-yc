@@ -4,7 +4,7 @@ metadata:
   name: crossplane-preprod
 spec:
   forProvider:
-    serviceAccountRefs:
+    serviceAccountsRef:
       - name: example-sa
     role: editor
     folderIdRef:

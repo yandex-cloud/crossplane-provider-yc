@@ -23,7 +23,7 @@ spec:
           name: redis
           key: password
           namespace: default
-        version: "6.0"
+        version: "7.0"
     resources:
     - resourcePresetId: "hm1.nano"
       diskSize: 16

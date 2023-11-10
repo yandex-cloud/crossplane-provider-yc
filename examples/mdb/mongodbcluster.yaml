@@ -19,7 +19,7 @@ spec:
     networkIdRef:
       name: example-net
     clusterConfig:
-      - version: "4.2"
+      - version: "5.0"
     resources:
       - diskSize: 16
         diskTypeId: network-hdd

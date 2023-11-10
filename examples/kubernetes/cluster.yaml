@@ -9,7 +9,7 @@ spec:
     networkIdRef:
       name: example-net
     master:
-      - version: "1.21"
+      - version: "1.25"
         zonal:
           - zone: ru-central1-a
             subnetIdRef:
@@ -29,5 +29,7 @@ spec:
     kmsProvider:
       - keyIdRef:
           name: example-sk
+    folderIdRef:
+      name: example-folder
   providerConfigRef:
     name: example
