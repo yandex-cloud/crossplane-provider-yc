@@ -1,7 +1,7 @@
-# Terrajet Yandex.Cloud Provider
+# Yandex.Cloud Crossplane Provider
 
 `provider-jet-yc` is a [Crossplane](https://crossplane.io/) provider that is built
-using [Terrajet](https://github.com/crossplane-contrib/terrajet) code generation tools and exposes XRM-conformant
+using [Upjet](https://github.com/crossplane/upjet/) code generation tools and exposes XRM-conformant
 managed resources for [Yandex.Cloud](https://cloud.yandex.com/).
 
 ## Getting Started
