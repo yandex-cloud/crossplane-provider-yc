@@ -10,7 +10,7 @@ spec:
       name: sa-key-conn
       namespace: crossplane-system
       key: attribute.secret_key
-    bucket: "example-test-bucket"
-    acl: "public-read"
+    bucket: "example-crossplane-test-bucket"
+    # acl: "public-read"
   providerConfigRef:
     name: example

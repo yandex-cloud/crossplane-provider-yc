@@ -7,7 +7,7 @@ spec:
     name: example-sg
     folderIdRef:
       name: example-folder
-    networkIDRef:
+    networkIdRef:
       name: example-net
     ingress:
       - protocol: TCP

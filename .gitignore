@@ -2,6 +2,7 @@
 /.work
 /_output
 cover.out
+/examples-generated/
 /vendor
 /.vendor-new
 .DS_Store

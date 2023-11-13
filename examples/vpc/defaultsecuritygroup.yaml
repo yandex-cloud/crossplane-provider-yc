@@ -4,10 +4,9 @@ metadata:
   name: example-sg
 spec:
   forProvider:
-    name: example-sg
     folderIdRef:
       name: example-folder
-    networkIDRef:
+    networkIdRef:
       name: example-net
     ingress:
       - protocol: TCP

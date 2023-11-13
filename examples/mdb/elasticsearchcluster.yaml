@@ -47,7 +47,9 @@ spec:
         subnetIdRef:
           name: example-subnet-a
     folderIdRef:
-      name: crossplane-test
+      name: example-folder
+  providerConfigRef:
+    name: example
   writeConnectionSecretToRef:
     name: mysql-conn
     namespace: default

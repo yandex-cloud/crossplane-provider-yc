@@ -2024,6 +2024,16 @@ func (in *SecurityGroupRuleParameters) DeepCopyInto(out *SecurityGroupRuleParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.SecurityGroupBindingRef != nil {
+		in, out := &in.SecurityGroupBindingRef, &out.SecurityGroupBindingRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SecurityGroupBindingSelector != nil {
+		in, out := &in.SecurityGroupBindingSelector, &out.SecurityGroupBindingSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.SecurityGroupID != nil {
 		in, out := &in.SecurityGroupID, &out.SecurityGroupID
 		*out = new(string)

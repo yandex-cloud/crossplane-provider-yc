@@ -98,8 +98,17 @@ type SecurityGroupRuleParameters struct {
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
 	// ID of the security group this rule belongs to.
+	// +crossplane:generate:reference:type=SecurityGroup
 	// +kubebuilder:validation:Optional
 	SecurityGroupBinding *string `json:"securityGroupBinding,omitempty" tf:"security_group_binding,omitempty"`
+
+	// Reference to a SecurityGroup to populate securityGroupBinding.
+	// +kubebuilder:validation:Optional
+	SecurityGroupBindingRef *v1.Reference `json:"securityGroupBindingRef,omitempty" tf:"-"`
+
+	// Selector for a SecurityGroup to populate securityGroupBinding.
+	// +kubebuilder:validation:Optional
+	SecurityGroupBindingSelector *v1.Selector `json:"securityGroupBindingSelector,omitempty" tf:"-"`
 
 	// Target security group ID for this rule.
 	// +crossplane:generate:reference:type=SecurityGroup
@@ -152,7 +161,6 @@ type SecurityGroupRule struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.direction)",message="direction is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.securityGroupBinding)",message="securityGroupBinding is a required parameter"
 	Spec   SecurityGroupRuleSpec   `json:"spec"`
 	Status SecurityGroupRuleStatus `json:"status,omitempty"`
 }

@@ -43,5 +43,8 @@ func Configure(p *config.Provider) {
 		r.References["security_group_id"] = config.Reference{
 			Type: "SecurityGroup",
 		}
+		r.References["security_group_binding"] = config.Reference{
+			Type: "SecurityGroup",
+		}
 	})
 }
