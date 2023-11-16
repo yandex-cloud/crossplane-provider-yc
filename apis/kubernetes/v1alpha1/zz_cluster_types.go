@@ -54,6 +54,7 @@ type ClusterObservation struct {
 	// (Computed) Health of the Kubernetes cluster.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
+	// (Computed) ID of a new Kubernetes cluster.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// cluster KMS provider parameters.

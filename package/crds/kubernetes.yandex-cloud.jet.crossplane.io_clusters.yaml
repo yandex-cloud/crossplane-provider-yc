@@ -1096,6 +1096,7 @@ spec:
                     description: (Computed) Health of the Kubernetes cluster.
                     type: string
                   id:
+                    description: (Computed) ID of a new Kubernetes cluster.
                     type: string
                   kmsProvider:
                     description: cluster KMS provider parameters.

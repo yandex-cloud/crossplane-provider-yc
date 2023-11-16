@@ -166,6 +166,8 @@ type IPv6DNSRecordParameters struct {
 }
 
 type InitializeParamsObservation struct {
+
+	// Block size of the disk, specified in bytes.
 	BlockSize *float64 `json:"blockSize,omitempty" tf:"block_size,omitempty"`
 
 	// Description of the boot disk.
@@ -189,6 +191,7 @@ type InitializeParamsObservation struct {
 
 type InitializeParamsParameters struct {
 
+	// Block size of the disk, specified in bytes.
 	// +kubebuilder:validation:Optional
 	BlockSize *float64 `json:"blockSize,omitempty" tf:"block_size,omitempty"`
 
@@ -218,6 +221,8 @@ type InitializeParamsParameters struct {
 }
 
 type InstanceObservation struct {
+
+	// Default 5 minutes
 	AllowRecreate *bool `json:"allowRecreate,omitempty" tf:"allow_recreate,omitempty"`
 
 	// If you try to update a property that requires stopping the instance without setting this field, the update will fail.
@@ -296,6 +301,7 @@ type InstanceObservation struct {
 
 type InstanceParameters struct {
 
+	// Default 5 minutes
 	// +kubebuilder:validation:Optional
 	AllowRecreate *bool `json:"allowRecreate,omitempty" tf:"allow_recreate,omitempty"`
 

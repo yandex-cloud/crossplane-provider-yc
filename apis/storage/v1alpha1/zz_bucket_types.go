@@ -67,10 +67,12 @@ type ApplyServerSideEncryptionByDefaultParameters struct {
 
 type BucketObservation struct {
 
-	// The predefined ACL to apply. Defaults to private. Conflicts with grant.
+	// The predefined ACL to apply.
+	// Defaults to private. Conflicts with grant.
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
-	// The access key to use when applying changes. If omitted, storage_access_key specified in provider config is used.
+	// The access key to use when applying changes. If omitted, storage_access_key specified in
+	// provider config (explicitly or within shared_credentials_file) is used.
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
 
 	// Provides various access to objects.
@@ -84,14 +86,15 @@ type BucketObservation struct {
 	// The bucket domain name.
 	BucketDomainName *string `json:"bucketDomainName,omitempty" tf:"bucket_domain_name,omitempty"`
 
-	// Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
+	// Creates a unique bucket name beginning with the specified prefix.
+	// Conflicts with bucket.
 	BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
 
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	CorsRule []CorsRuleObservation `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
 
 	// Storage class which is used for storing objects by default.
-	// Available values are: "STANDARD", "COLD". Default is "STANDARD".
+	// Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD".
 	// See storage class for more inforamtion.
 	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
 
@@ -139,11 +142,13 @@ type BucketObservation struct {
 
 type BucketParameters struct {
 
-	// The predefined ACL to apply. Defaults to private. Conflicts with grant.
+	// The predefined ACL to apply.
+	// Defaults to private. Conflicts with grant.
 	// +kubebuilder:validation:Optional
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
-	// The access key to use when applying changes. If omitted, storage_access_key specified in provider config is used.
+	// The access key to use when applying changes. If omitted, storage_access_key specified in
+	// provider config (explicitly or within shared_credentials_file) is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/storage.ExtractAccessKey()
 	// +kubebuilder:validation:Optional
@@ -167,7 +172,8 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
-	// Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
+	// Creates a unique bucket name beginning with the specified prefix.
+	// Conflicts with bucket.
 	// +kubebuilder:validation:Optional
 	BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
 
@@ -176,7 +182,7 @@ type BucketParameters struct {
 	CorsRule []CorsRuleParameters `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
 
 	// Storage class which is used for storing objects by default.
-	// Available values are: "STANDARD", "COLD". Default is "STANDARD".
+	// Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD".
 	// See storage class for more inforamtion.
 	// +kubebuilder:validation:Optional
 	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
@@ -221,7 +227,8 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
-	// The secret key to use when applying changes. If omitted, storage_secret_key specified in provider config is used.
+	// The secret key to use when applying changes. If omitted, storage_secret_key specified in
+	// provider config (explicitly or within shared_credentials_file) is used.
 	// +kubebuilder:validation:Optional
 	SecretKeySecretRef *v1.SecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
 
@@ -292,7 +299,7 @@ type ExpirationObservation struct {
 	// Specifies the date after which you want the corresponding action to take effect.
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
-	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// On a versioned bucket (versioning-enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
@@ -305,7 +312,7 @@ type ExpirationParameters struct {
 	// +kubebuilder:validation:Optional
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
-	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
 	// +kubebuilder:validation:Optional
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
@@ -439,33 +446,33 @@ type LoggingParameters struct {
 
 type NoncurrentVersionExpirationObservation struct {
 
-	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 }
 
 type NoncurrentVersionExpirationParameters struct {
 
-	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
 	// +kubebuilder:validation:Optional
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 }
 
 type NoncurrentVersionTransitionObservation struct {
 
-	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// Specifies the storage class to which you want the object to transition. Can only be COLD or STANDARD_IA.
+	// Specifies the storage class to which you want the object to transition. Supported values: [STANDARD_IA, COLD, ICE].
 	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
 }
 
 type NoncurrentVersionTransitionParameters struct {
 
-	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
 	// +kubebuilder:validation:Optional
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// Specifies the storage class to which you want the object to transition. Can only be COLD or STANDARD_IA.
+	// Specifies the storage class to which you want the object to transition. Supported values: [STANDARD_IA, COLD, ICE].
 	// +kubebuilder:validation:Required
 	StorageClass *string `json:"storageClass" tf:"storage_class,omitempty"`
 }
@@ -485,13 +492,13 @@ type RuleParameters struct {
 
 type ServerSideEncryptionConfigurationObservation struct {
 
-	// A single object for server-side encryption by default configuration. (documented below)
+	// Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
 	Rule []RuleObservation `json:"rule,omitempty" tf:"rule,omitempty"`
 }
 
 type ServerSideEncryptionConfigurationParameters struct {
 
-	// A single object for server-side encryption by default configuration. (documented below)
+	// Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
 	// +kubebuilder:validation:Required
 	Rule []RuleParameters `json:"rule" tf:"rule,omitempty"`
 }
@@ -501,10 +508,10 @@ type TransitionObservation struct {
 	// Specifies the date after which you want the corresponding action to take effect.
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
-	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// Specifies the storage class to which you want the object to transition. Can only be COLD or STANDARD_IA.
+	// Specifies the storage class to which you want the object to transition. Supported values: [STANDARD_IA, COLD, ICE].
 	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
 }
 
@@ -514,11 +521,11 @@ type TransitionParameters struct {
 	// +kubebuilder:validation:Optional
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
-	// Specifies the number of days after object creation when the specific rule action takes effect.
+	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
 	// +kubebuilder:validation:Optional
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// Specifies the storage class to which you want the object to transition. Can only be COLD or STANDARD_IA.
+	// Specifies the storage class to which you want the object to transition. Supported values: [STANDARD_IA, COLD, ICE].
 	// +kubebuilder:validation:Required
 	StorageClass *string `json:"storageClass" tf:"storage_class,omitempty"`
 }

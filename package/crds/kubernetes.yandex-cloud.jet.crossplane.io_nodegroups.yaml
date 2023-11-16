@@ -312,9 +312,11 @@ spec:
                         metadata:
                           additionalProperties:
                             type: string
-                          description: The set of metadata key:value pairs assigned
+                          description: 'The set of metadata key:value pairs assigned
                             to this instance template. This includes custom metadata
-                            and predefined keys.
+                            and predefined keys. Note: key "user-data" won''t be provided
+                            into instances. It reserved for internal activity in kubernetes_node_group
+                            resource.'
                           type: object
                         nat:
                           description: Boolean flag, enables NAT for node group compute
@@ -973,9 +975,11 @@ spec:
                         metadata:
                           additionalProperties:
                             type: string
-                          description: The set of metadata key:value pairs assigned
+                          description: 'The set of metadata key:value pairs assigned
                             to this instance template. This includes custom metadata
-                            and predefined keys.
+                            and predefined keys. Note: key "user-data" won''t be provided
+                            into instances. It reserved for internal activity in kubernetes_node_group
+                            resource.'
                           type: object
                         nat:
                           description: Boolean flag, enables NAT for node group compute

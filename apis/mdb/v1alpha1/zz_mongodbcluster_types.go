@@ -27,7 +27,7 @@ import (
 
 type AccessObservation struct {
 
-	// Allow access for DataLens.
+	// Allow access for Yandex DataLens.
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
 }
 
@@ -41,6 +41,9 @@ type AuditLogObservation struct {
 	// description in the official documentation. Available only in enterprise edition.
 	Filter *string `json:"filter,omitempty" tf:"filter,omitempty"`
 
+	// Specifies if a node allows runtime configuration of audit filters and the auditAuthorizationSuccess variable.
+	// For more information see auditLog.runtimeConfiguration
+	// description in the official documentation. Available only in enterprise edition.
 	RuntimeConfiguration *bool `json:"runtimeConfiguration,omitempty" tf:"runtime_configuration,omitempty"`
 }
 
@@ -52,6 +55,9 @@ type AuditLogParameters struct {
 	// +kubebuilder:validation:Optional
 	Filter *string `json:"filter,omitempty" tf:"filter,omitempty"`
 
+	// Specifies if a node allows runtime configuration of audit filters and the auditAuthorizationSuccess variable.
+	// For more information see auditLog.runtimeConfiguration
+	// description in the official documentation. Available only in enterprise edition.
 	// +kubebuilder:validation:Optional
 	RuntimeConfiguration *bool `json:"runtimeConfiguration,omitempty" tf:"runtime_configuration,omitempty"`
 }
@@ -78,25 +84,25 @@ type BackupWindowStartParameters struct {
 
 type ClusterConfigObservation struct {
 
-	// Shows whether cluster has access to data lens. The structure is documented below.
+	// Access policy to the MongoDB cluster. The structure is documented below.
 	Access []AccessObservation `json:"access,omitempty" tf:"access,omitempty"`
 
 	// Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	BackupWindowStart []BackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
-	// Feature compatibility version of MongoDB. If not provided version is taken. Can be either 5.0, 4.4, 4.2 and 4.0.
+	// Feature compatibility version of MongoDB. If not provided version is taken. Can be either 6.0, 5.0, 4.4 and 4.2.
 	FeatureCompatibilityVersion *string `json:"featureCompatibilityVersion,omitempty" tf:"feature_compatibility_version,omitempty"`
 
 	// Configuration of the mongod service. The structure is documented below.
 	Mongod []MongodObservation `json:"mongod,omitempty" tf:"mongod,omitempty"`
 
-	// Version of MongoDB (either 5.0, 4.4, 4.2 or 4.0).
+	// Version of the MongoDB server software. Can be either 4.2, 4.4, 4.4-enterprise, 5.0, 5.0-enterprise, 6.0 and 6.0-enterprise.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type ClusterConfigParameters struct {
 
-	// Shows whether cluster has access to data lens. The structure is documented below.
+	// Access policy to the MongoDB cluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Access []AccessParameters `json:"access,omitempty" tf:"access,omitempty"`
 
@@ -104,7 +110,7 @@ type ClusterConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	BackupWindowStart []BackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
-	// Feature compatibility version of MongoDB. If not provided version is taken. Can be either 5.0, 4.4, 4.2 and 4.0.
+	// Feature compatibility version of MongoDB. If not provided version is taken. Can be either 6.0, 5.0, 4.4 and 4.2.
 	// +kubebuilder:validation:Optional
 	FeatureCompatibilityVersion *string `json:"featureCompatibilityVersion,omitempty" tf:"feature_compatibility_version,omitempty"`
 
@@ -112,7 +118,7 @@ type ClusterConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Mongod []MongodParameters `json:"mongod,omitempty" tf:"mongod,omitempty"`
 
-	// Version of MongoDB (either 5.0, 4.4, 4.2 or 4.0).
+	// Version of the MongoDB server software. Can be either 4.2, 4.4, 4.4-enterprise, 5.0, 5.0-enterprise, 6.0 and 6.0-enterprise.
 	// +kubebuilder:validation:Required
 	Version *string `json:"version" tf:"version,omitempty"`
 }
@@ -244,14 +250,14 @@ type MongodbClusterHostObservation struct {
 	// The role of the cluster (either PRIMARY or SECONDARY).
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
-	// The name of the shard to which the host belongs.
+	// The name of the shard to which the host belongs. Only for sharded cluster.
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
 
 	// The ID of the subnet, to which the host belongs. The subnet must
 	// be a part of the network to which the cluster belongs.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// type of mongo daemon which runs on this host (mongod, mongos or monogcfg). Defaults to mongod.
+	// type of mongo daemon which runs on this host (mongod, mongos, mongocfg, mongoinfra). Defaults to mongod.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// The availability zone where the MongoDB host will be created.
@@ -269,7 +275,7 @@ type MongodbClusterHostParameters struct {
 	// +kubebuilder:validation:Optional
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
-	// The name of the shard to which the host belongs.
+	// The name of the shard to which the host belongs. Only for sharded cluster.
 	// +kubebuilder:validation:Optional
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
 
@@ -287,7 +293,7 @@ type MongodbClusterHostParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// type of mongo daemon which runs on this host (mongod, mongos or monogcfg). Defaults to mongod.
+	// type of mongo daemon which runs on this host (mongod, mongos, mongocfg, mongoinfra). Defaults to mongod.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
@@ -363,6 +369,7 @@ type MongodbClusterObservation struct {
 	// A set of key/value label pairs to assign to the MongoDB cluster.
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Maintenance window settings of the MongoDB cluster. The structure is documented below.
 	MaintenanceWindow []MongodbClusterMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
 	// Name of the MongoDB cluster. Provided by the client when the cluster is created.
@@ -371,7 +378,7 @@ type MongodbClusterObservation struct {
 	// ID of the network, to which the MongoDB cluster belongs.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// Resources allocated to hosts of the MongoDB cluster. The structure is documented below.
+	// (DEPRECATED, use resources_* instead) Resources allocated to hosts of the MongoDB cluster. The structure is documented below.
 	Resources []MongodbClusterResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
 	// A set of ids of security groups assigned to hosts of the cluster.
@@ -436,6 +443,7 @@ type MongodbClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// Maintenance window settings of the MongoDB cluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	MaintenanceWindow []MongodbClusterMaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
@@ -456,7 +464,7 @@ type MongodbClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// Resources allocated to hosts of the MongoDB cluster. The structure is documented below.
+	// (DEPRECATED, use resources_* instead) Resources allocated to hosts of the MongoDB cluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Resources []MongodbClusterResourcesParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 

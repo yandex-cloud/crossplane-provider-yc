@@ -68,6 +68,7 @@ spec:
               forProvider:
                 properties:
                   allowRecreate:
+                    description: Default 5 minutes
                     type: boolean
                   allowStoppingForUpdate:
                     description: If you try to update a property that requires stopping
@@ -97,6 +98,8 @@ spec:
                           items:
                             properties:
                               blockSize:
+                                description: Block size of the disk, specified in
+                                  bytes.
                                 type: number
                               description:
                                 description: Description of the boot disk.
@@ -892,6 +895,7 @@ spec:
               atProvider:
                 properties:
                   allowRecreate:
+                    description: Default 5 minutes
                     type: boolean
                   allowStoppingForUpdate:
                     description: If you try to update a property that requires stopping
@@ -921,6 +925,8 @@ spec:
                           items:
                             properties:
                               blockSize:
+                                description: Block size of the disk, specified in
+                                  bytes.
                                 type: number
                               description:
                                 description: Description of the boot disk.

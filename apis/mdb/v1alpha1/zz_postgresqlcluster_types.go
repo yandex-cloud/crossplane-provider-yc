@@ -129,7 +129,7 @@ type ExtensionObservation struct {
 	// Name of the PostgreSQL cluster. Provided by the client when the cluster is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 14)
+	// Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c)
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -139,7 +139,7 @@ type ExtensionParameters struct {
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 14)
+	// Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c)
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
@@ -190,7 +190,7 @@ type PostgresqlClusterConfigObservation struct {
 	// Resources allocated to hosts of the PostgreSQL cluster. The structure is documented below.
 	Resources []ConfigResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 14)
+	// Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c)
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -228,7 +228,7 @@ type PostgresqlClusterConfigParameters struct {
 	// +kubebuilder:validation:Required
 	Resources []ConfigResourcesParameters `json:"resources" tf:"resources,omitempty"`
 
-	// Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 14)
+	// Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c)
 	// +kubebuilder:validation:Required
 	Version *string `json:"version" tf:"version,omitempty"`
 }

@@ -176,7 +176,8 @@ spec:
                           type: array
                         version:
                           description: 'Version of the PostgreSQL cluster. (allowed
-                            versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 14)'
+                            versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 13-1c,
+                            14, 14-1c)'
                           type: string
                       required:
                       - resources
@@ -198,7 +199,7 @@ spec:
                               version:
                                 description: 'Version of the PostgreSQL cluster. (allowed
                                   versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13,
-                                  14)'
+                                  13-1c, 14, 14-1c)'
                                 type: string
                             required:
                             - name
@@ -1008,7 +1009,8 @@ spec:
                           type: array
                         version:
                           description: 'Version of the PostgreSQL cluster. (allowed
-                            versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 14)'
+                            versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 13-1c,
+                            14, 14-1c)'
                           type: string
                       type: object
                     type: array
@@ -1030,7 +1032,7 @@ spec:
                               version:
                                 description: 'Version of the PostgreSQL cluster. (allowed
                                   versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13,
-                                  14)'
+                                  13-1c, 14, 14-1c)'
                                 type: string
                             type: object
                           type: array

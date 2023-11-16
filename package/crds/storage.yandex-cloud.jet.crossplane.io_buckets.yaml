@@ -69,7 +69,8 @@ spec:
                 properties:
                   accessKey:
                     description: The access key to use when applying changes. If omitted,
-                      storage_access_key specified in provider config is used.
+                      storage_access_key specified in provider config (explicitly
+                      or within shared_credentials_file) is used.
                     type: string
                   accessKeyRef:
                     description: Reference to a ServiceAccountStaticAccessKey in iam
@@ -207,8 +208,8 @@ spec:
                     type: array
                   defaultStorageClass:
                     description: 'Storage class which is used for storing objects
-                      by default. Available values are: "STANDARD", "COLD". Default
-                      is "STANDARD". See storage class for more inforamtion.'
+                      by default. Available values are: "STANDARD", "COLD", "ICE".
+                      Default is "STANDARD". See storage class for more inforamtion.'
                     type: string
                   folderId:
                     description: Allow to create bucket in different folder.
@@ -351,8 +352,10 @@ spec:
                                   the corresponding action to take effect.
                                 type: string
                               days:
-                                description: Specifies the number of days after object
-                                  creation when the specific rule action takes effect.
+                                description: Specifies a retention period in days
+                                  after uploading an object version. It must be a
+                                  positive integer. You can't set it simultaneously
+                                  with years.
                                 type: number
                               expiredObjectDeleteMarker:
                                 description: On a versioned bucket (versioning-enabled
@@ -372,8 +375,10 @@ spec:
                           items:
                             properties:
                               days:
-                                description: Specifies the number of days after object
-                                  creation when the specific rule action takes effect.
+                                description: Specifies a retention period in days
+                                  after uploading an object version. It must be a
+                                  positive integer. You can't set it simultaneously
+                                  with years.
                                 type: number
                             type: object
                           type: array
@@ -383,13 +388,15 @@ spec:
                           items:
                             properties:
                               days:
-                                description: Specifies the number of days after object
-                                  creation when the specific rule action takes effect.
+                                description: Specifies a retention period in days
+                                  after uploading an object version. It must be a
+                                  positive integer. You can't set it simultaneously
+                                  with years.
                                 type: number
                               storageClass:
-                                description: Specifies the storage class to which
-                                  you want the object to transition. Can only be COLD
-                                  or STANDARD_IA.
+                                description: 'Specifies the storage class to which
+                                  you want the object to transition. Supported values:
+                                  [STANDARD_IA, COLD, ICE].'
                                 type: string
                             required:
                             - storageClass
@@ -409,13 +416,15 @@ spec:
                                   the corresponding action to take effect.
                                 type: string
                               days:
-                                description: Specifies the number of days after object
-                                  creation when the specific rule action takes effect.
+                                description: Specifies a retention period in days
+                                  after uploading an object version. It must be a
+                                  positive integer. You can't set it simultaneously
+                                  with years.
                                 type: number
                               storageClass:
-                                description: Specifies the storage class to which
-                                  you want the object to transition. Can only be COLD
-                                  or STANDARD_IA.
+                                description: 'Specifies the storage class to which
+                                  you want the object to transition. Supported values:
+                                  [STANDARD_IA, COLD, ICE].'
                                 type: string
                             required:
                             - storageClass
@@ -448,7 +457,8 @@ spec:
                     type: string
                   secretKeySecretRef:
                     description: The secret key to use when applying changes. If omitted,
-                      storage_secret_key specified in provider config is used.
+                      storage_secret_key specified in provider config (explicitly
+                      or within shared_credentials_file) is used.
                     properties:
                       key:
                         description: The key to select.
@@ -470,8 +480,8 @@ spec:
                     items:
                       properties:
                         rule:
-                          description: A single object for server-side encryption
-                            by default configuration. (documented below)
+                          description: Specifies a default locking configuration for
+                            added objects. Require object_lock_enabled to be enabled.
                           items:
                             properties:
                               applyServerSideEncryptionByDefault:
@@ -739,7 +749,8 @@ spec:
                 properties:
                   accessKey:
                     description: The access key to use when applying changes. If omitted,
-                      storage_access_key specified in provider config is used.
+                      storage_access_key specified in provider config (explicitly
+                      or within shared_credentials_file) is used.
                     type: string
                   acl:
                     description: The predefined ACL to apply. Defaults to private.
@@ -802,8 +813,8 @@ spec:
                     type: array
                   defaultStorageClass:
                     description: 'Storage class which is used for storing objects
-                      by default. Available values are: "STANDARD", "COLD". Default
-                      is "STANDARD". See storage class for more inforamtion.'
+                      by default. Available values are: "STANDARD", "COLD", "ICE".
+                      Default is "STANDARD". See storage class for more inforamtion.'
                     type: string
                   folderId:
                     description: Allow to create bucket in different folder.
@@ -870,8 +881,10 @@ spec:
                                   the corresponding action to take effect.
                                 type: string
                               days:
-                                description: Specifies the number of days after object
-                                  creation when the specific rule action takes effect.
+                                description: Specifies a retention period in days
+                                  after uploading an object version. It must be a
+                                  positive integer. You can't set it simultaneously
+                                  with years.
                                 type: number
                               expiredObjectDeleteMarker:
                                 description: On a versioned bucket (versioning-enabled
@@ -891,8 +904,10 @@ spec:
                           items:
                             properties:
                               days:
-                                description: Specifies the number of days after object
-                                  creation when the specific rule action takes effect.
+                                description: Specifies a retention period in days
+                                  after uploading an object version. It must be a
+                                  positive integer. You can't set it simultaneously
+                                  with years.
                                 type: number
                             type: object
                           type: array
@@ -902,13 +917,15 @@ spec:
                           items:
                             properties:
                               days:
-                                description: Specifies the number of days after object
-                                  creation when the specific rule action takes effect.
+                                description: Specifies a retention period in days
+                                  after uploading an object version. It must be a
+                                  positive integer. You can't set it simultaneously
+                                  with years.
                                 type: number
                               storageClass:
-                                description: Specifies the storage class to which
-                                  you want the object to transition. Can only be COLD
-                                  or STANDARD_IA.
+                                description: 'Specifies the storage class to which
+                                  you want the object to transition. Supported values:
+                                  [STANDARD_IA, COLD, ICE].'
                                 type: string
                             type: object
                           type: array
@@ -926,13 +943,15 @@ spec:
                                   the corresponding action to take effect.
                                 type: string
                               days:
-                                description: Specifies the number of days after object
-                                  creation when the specific rule action takes effect.
+                                description: Specifies a retention period in days
+                                  after uploading an object version. It must be a
+                                  positive integer. You can't set it simultaneously
+                                  with years.
                                 type: number
                               storageClass:
-                                description: Specifies the storage class to which
-                                  you want the object to transition. Can only be COLD
-                                  or STANDARD_IA.
+                                description: 'Specifies the storage class to which
+                                  you want the object to transition. Supported values:
+                                  [STANDARD_IA, COLD, ICE].'
                                 type: string
                             type: object
                           type: array
@@ -963,8 +982,8 @@ spec:
                     items:
                       properties:
                         rule:
-                          description: A single object for server-side encryption
-                            by default configuration. (documented below)
+                          description: Specifies a default locking configuration for
+                            added objects. Require object_lock_enabled to be enabled.
                           items:
                             properties:
                               applyServerSideEncryptionByDefault:

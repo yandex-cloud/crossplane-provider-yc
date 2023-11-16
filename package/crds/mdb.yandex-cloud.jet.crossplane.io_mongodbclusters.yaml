@@ -73,8 +73,8 @@ spec:
                     items:
                       properties:
                         access:
-                          description: Shows whether cluster has access to data lens.
-                            The structure is documented below.
+                          description: Access policy to the MongoDB cluster. The structure
+                            is documented below.
                           items:
                             type: object
                           type: array
@@ -93,8 +93,8 @@ spec:
                           type: array
                         featureCompatibilityVersion:
                           description: Feature compatibility version of MongoDB. If
-                            not provided version is taken. Can be either 5.0, 4.4,
-                            4.2 and 4.0.
+                            not provided version is taken. Can be either 6.0, 5.0,
+                            4.4 and 4.2.
                           type: string
                         mongod:
                           description: Configuration of the mongod service. The structure
@@ -115,6 +115,11 @@ spec:
                                         edition.
                                       type: string
                                     runtimeConfiguration:
+                                      description: Specifies if a node allows runtime
+                                        configuration of audit filters and the auditAuthorizationSuccess
+                                        variable. For more information see auditLog.runtimeConfiguration
+                                        description in the official documentation.
+                                        Available only in enterprise edition.
                                       type: boolean
                                   type: object
                                 type: array
@@ -194,8 +199,9 @@ spec:
                             type: object
                           type: array
                         version:
-                          description: Version of MongoDB (either 5.0, 4.4, 4.2 or
-                            4.0).
+                          description: Version of the MongoDB server software. Can
+                            be either 4.2, 4.4, 4.4-enterprise, 5.0, 5.0-enterprise,
+                            6.0 and 6.0-enterprise.
                           type: string
                       required:
                       - version
@@ -321,6 +327,7 @@ spec:
                           type: string
                         shardName:
                           description: The name of the shard to which the host belongs.
+                            Only for sharded cluster.
                           type: string
                         subnetId:
                           description: The ID of the subnet, to which the host belongs.
@@ -405,7 +412,7 @@ spec:
                           type: object
                         type:
                           description: type of mongo daemon which runs on this host
-                            (mongod, mongos or monogcfg). Defaults to mongod.
+                            (mongod, mongos, mongocfg, mongoinfra). Defaults to mongod.
                           type: string
                         zoneId:
                           description: The availability zone where the MongoDB host
@@ -423,6 +430,8 @@ spec:
                       cluster.
                     type: object
                   maintenanceWindow:
+                    description: Maintenance window settings of the MongoDB cluster.
+                      The structure is documented below.
                     items:
                       properties:
                         day:
@@ -524,8 +533,9 @@ spec:
                         type: object
                     type: object
                   resources:
-                    description: Resources allocated to hosts of the MongoDB cluster.
-                      The structure is documented below.
+                    description: (DEPRECATED, use resources_* instead) Resources allocated
+                      to hosts of the MongoDB cluster. The structure is documented
+                      below.
                     items:
                       properties:
                         diskSize:
@@ -889,12 +899,12 @@ spec:
                     items:
                       properties:
                         access:
-                          description: Shows whether cluster has access to data lens.
-                            The structure is documented below.
+                          description: Access policy to the MongoDB cluster. The structure
+                            is documented below.
                           items:
                             properties:
                               dataLens:
-                                description: Allow access for DataLens.
+                                description: Allow access for Yandex DataLens.
                                 type: boolean
                             type: object
                           type: array
@@ -913,8 +923,8 @@ spec:
                           type: array
                         featureCompatibilityVersion:
                           description: Feature compatibility version of MongoDB. If
-                            not provided version is taken. Can be either 5.0, 4.4,
-                            4.2 and 4.0.
+                            not provided version is taken. Can be either 6.0, 5.0,
+                            4.4 and 4.2.
                           type: string
                         mongod:
                           description: Configuration of the mongod service. The structure
@@ -935,6 +945,11 @@ spec:
                                         edition.
                                       type: string
                                     runtimeConfiguration:
+                                      description: Specifies if a node allows runtime
+                                        configuration of audit filters and the auditAuthorizationSuccess
+                                        variable. For more information see auditLog.runtimeConfiguration
+                                        description in the official documentation.
+                                        Available only in enterprise edition.
                                       type: boolean
                                   type: object
                                 type: array
@@ -1014,8 +1029,9 @@ spec:
                             type: object
                           type: array
                         version:
-                          description: Version of MongoDB (either 5.0, 4.4, 4.2 or
-                            4.0).
+                          description: Version of the MongoDB server software. Can
+                            be either 4.2, 4.4, 4.4-enterprise, 5.0, 5.0-enterprise,
+                            6.0 and 6.0-enterprise.
                           type: string
                       type: object
                     type: array
@@ -1077,6 +1093,7 @@ spec:
                           type: string
                         shardName:
                           description: The name of the shard to which the host belongs.
+                            Only for sharded cluster.
                           type: string
                         subnetId:
                           description: The ID of the subnet, to which the host belongs.
@@ -1085,7 +1102,7 @@ spec:
                           type: string
                         type:
                           description: type of mongo daemon which runs on this host
-                            (mongod, mongos or monogcfg). Defaults to mongod.
+                            (mongod, mongos, mongocfg, mongoinfra). Defaults to mongod.
                           type: string
                         zoneId:
                           description: The availability zone where the MongoDB host
@@ -1103,6 +1120,8 @@ spec:
                       cluster.
                     type: object
                   maintenanceWindow:
+                    description: Maintenance window settings of the MongoDB cluster.
+                      The structure is documented below.
                     items:
                       properties:
                         day:
@@ -1129,8 +1148,9 @@ spec:
                     description: ID of the network, to which the MongoDB cluster belongs.
                     type: string
                   resources:
-                    description: Resources allocated to hosts of the MongoDB cluster.
-                      The structure is documented below.
+                    description: (DEPRECATED, use resources_* instead) Resources allocated
+                      to hosts of the MongoDB cluster. The structure is documented
+                      below.
                     items:
                       properties:
                         diskSize:

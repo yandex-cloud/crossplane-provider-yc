@@ -36,7 +36,7 @@ spec:
       openAPIV3Schema:
         description: LoadBalancer is the Schema for the LoadBalancers API. A Load
           Balancer is used for receiving incoming traffic and transmitting it to the
-          backend endpointsspecified in the ALB Target Groups.
+          backend endpoints specified in the ALB Target Groups.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation

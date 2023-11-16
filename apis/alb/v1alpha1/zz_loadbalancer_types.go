@@ -649,7 +649,7 @@ type LoadBalancerStatus struct {
 
 // +kubebuilder:object:root=true
 
-// LoadBalancer is the Schema for the LoadBalancers API. A Load Balancer is used for receiving incoming traffic and transmitting it to the backend endpointsspecified in the ALB Target Groups.
+// LoadBalancer is the Schema for the LoadBalancers API. A Load Balancer is used for receiving incoming traffic and transmitting it to the backend endpoints specified in the ALB Target Groups.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

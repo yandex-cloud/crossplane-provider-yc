@@ -121,7 +121,7 @@ spec:
                             for N seconds.
                           type: number
                         version:
-                          description: Version of Redis (5.0, 6.0 or 6.2).
+                          description: Version of Redis (6.2).
                           type: string
                       required:
                       - passwordSecretRef
@@ -783,7 +783,7 @@ spec:
                             for N seconds.
                           type: number
                         version:
-                          description: Version of Redis (5.0, 6.0 or 6.2).
+                          description: Version of Redis (6.2).
                           type: string
                       type: object
                     type: array

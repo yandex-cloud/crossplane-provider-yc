@@ -54,7 +54,7 @@ type RedisClusterConfigObservation struct {
 	// Close the connection after a client is idle for N seconds.
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// Version of Redis (5.0, 6.0 or 6.2).
+	// Version of Redis (6.2).
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -99,7 +99,7 @@ type RedisClusterConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// Version of Redis (5.0, 6.0 or 6.2).
+	// Version of Redis (6.2).
 	// +kubebuilder:validation:Required
 	Version *string `json:"version" tf:"version,omitempty"`
 }

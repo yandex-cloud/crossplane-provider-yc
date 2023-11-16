@@ -168,7 +168,7 @@ type InstanceTemplateObservation struct {
 	// Container runtime configuration. The structure is documented below.
 	ContainerRuntime []ContainerRuntimeObservation `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
 
-	// The set of metadata key:value pairs assigned to this instance template. This includes custom metadata and predefined keys.
+	// The set of metadata key:value pairs assigned to this instance template. This includes custom metadata and predefined keys. Note: key "user-data" won't be provided into instances. It reserved for internal activity in kubernetes_node_group resource.
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// Boolean flag, enables NAT for node group compute instances.
@@ -202,7 +202,7 @@ type InstanceTemplateParameters struct {
 	// +kubebuilder:validation:Optional
 	ContainerRuntime []ContainerRuntimeParameters `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
 
-	// The set of metadata key:value pairs assigned to this instance template. This includes custom metadata and predefined keys.
+	// The set of metadata key:value pairs assigned to this instance template. This includes custom metadata and predefined keys. Note: key "user-data" won't be provided into instances. It reserved for internal activity in kubernetes_node_group resource.
 	// +kubebuilder:validation:Optional
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 

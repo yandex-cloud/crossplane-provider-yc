@@ -164,11 +164,12 @@ spec:
                     items:
                       properties:
                         clickhouseSource:
+                          description: Settings specific to the ClickHouse source
+                            endpoint.
                           items:
                             properties:
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     connectionOptions:
@@ -177,7 +178,8 @@ spec:
                                       items:
                                         properties:
                                           database:
-                                            description: Name of the database to transfer.
+                                            description: '-  Database path in YDB
+                                              where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
                                             type: string
                                           mdbClusterId:
                                             description: Identifier of the Managed
@@ -213,7 +215,7 @@ spec:
                                                           type: string
                                                         type: array
                                                       name:
-                                                        description: Name of the endpoint.
+                                                        description: Field name.
                                                         type: string
                                                     type: object
                                                   type: array
@@ -307,15 +309,15 @@ spec:
                                   type: string
                                 type: array
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
                               subnetId:
-                                description: Identifier of the Yandex Cloud VPC subnetwork
-                                  to user for accessing the database. If omitted,
-                                  the server has to be accessible via Internet.
+                                description: '-  Identifier of the Yandex Cloud VPC
+                                  subnetwork to user for accessing the database. If
+                                  omitted, the server has to be accessible via Internet.'
                                 type: string
                               subnetIdRef:
                                 description: Reference to a Subnet in vpc to populate
@@ -400,6 +402,8 @@ spec:
                             type: object
                           type: array
                         clickhouseTarget:
+                          description: Settings specific to the ClickHouse target
+                            endpoint.
                           items:
                             properties:
                               altNames:
@@ -416,8 +420,9 @@ spec:
                                   type: object
                                 type: array
                               cleanupPolicy:
-                                description: How to clean collections when activating
-                                  the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
+                                description: '-  How to clean collections when activating
+                                  the transfer. One of "YDB_CLEANUP_POLICY_DISABLED"
+                                  or "YDB_CLEANUP_POLICY_DROP".'
                                 type: string
                               clickhouseClusterName:
                                 description: Name of the ClickHouse cluster. For managed
@@ -425,8 +430,7 @@ spec:
                                   ID.
                                 type: string
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     connectionOptions:
@@ -435,7 +439,8 @@ spec:
                                       items:
                                         properties:
                                           database:
-                                            description: Name of the database to transfer.
+                                            description: '-  Database path in YDB
+                                              where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
                                             type: string
                                           mdbClusterId:
                                             description: Identifier of the Managed
@@ -471,7 +476,7 @@ spec:
                                                           type: string
                                                         type: array
                                                       name:
-                                                        description: Name of the endpoint.
+                                                        description: Field name.
                                                         type: string
                                                     type: object
                                                   type: array
@@ -552,8 +557,8 @@ spec:
                                   type: object
                                 type: array
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
@@ -582,9 +587,9 @@ spec:
                                   type: object
                                 type: array
                               subnetId:
-                                description: Identifier of the Yandex Cloud VPC subnetwork
-                                  to user for accessing the database. If omitted,
-                                  the server has to be accessible via Internet.
+                                description: '-  Identifier of the Yandex Cloud VPC
+                                  subnetwork to user for accessing the database. If
+                                  omitted, the server has to be accessible via Internet.'
                                 type: string
                               subnetIdRef:
                                 description: Reference to a Subnet in vpc to populate
@@ -669,6 +674,7 @@ spec:
                             type: object
                           type: array
                         mongoSource:
+                          description: Settings specific to the MongoDB source endpoint.
                           items:
                             properties:
                               collections:
@@ -687,8 +693,7 @@ spec:
                                   type: object
                                 type: array
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     connectionOptions:
@@ -907,15 +912,15 @@ spec:
                                   preferred to the primary when copying data.
                                 type: boolean
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
                               subnetId:
-                                description: Identifier of the Yandex Cloud VPC subnetwork
-                                  to user for accessing the database. If omitted,
-                                  the server has to be accessible via Internet.
+                                description: '-  Identifier of the Yandex Cloud VPC
+                                  subnetwork to user for accessing the database. If
+                                  omitted, the server has to be accessible via Internet.'
                                 type: string
                               subnetIdRef:
                                 description: Reference to a Subnet in vpc to populate
@@ -1000,15 +1005,16 @@ spec:
                             type: object
                           type: array
                         mongoTarget:
+                          description: Settings specific to the MongoDB target endpoint.
                           items:
                             properties:
                               cleanupPolicy:
-                                description: How to clean collections when activating
-                                  the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
+                                description: '-  How to clean collections when activating
+                                  the transfer. One of "YDB_CLEANUP_POLICY_DISABLED"
+                                  or "YDB_CLEANUP_POLICY_DROP".'
                                 type: string
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     connectionOptions:
@@ -1210,18 +1216,19 @@ spec:
                                   type: object
                                 type: array
                               database:
-                                description: Name of the database to transfer.
+                                description: '-  Database path in YDB where tables
+                                  are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
                                 type: string
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
                               subnetId:
-                                description: Identifier of the Yandex Cloud VPC subnetwork
-                                  to user for accessing the database. If omitted,
-                                  the server has to be accessible via Internet.
+                                description: '-  Identifier of the Yandex Cloud VPC
+                                  subnetwork to user for accessing the database. If
+                                  omitted, the server has to be accessible via Internet.'
                                 type: string
                               subnetIdRef:
                                 description: Reference to a Subnet in vpc to populate
@@ -1310,8 +1317,7 @@ spec:
                           items:
                             properties:
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     mdbClusterId:
@@ -1418,10 +1424,10 @@ spec:
                                             description: Port for the database connection.
                                             type: number
                                           subnetId:
-                                            description: Identifier of the Yandex
+                                            description: '-  Identifier of the Yandex
                                               Cloud VPC subnetwork to user for accessing
                                               the database. If omitted, the server
-                                              has to be accessible via Internet.
+                                              has to be accessible via Internet.'
                                             type: string
                                           subnetIdRef:
                                             description: Reference to a Subnet in
@@ -1552,7 +1558,8 @@ spec:
                                   type: object
                                 type: array
                               database:
-                                description: Name of the database to transfer.
+                                description: '-  Database path in YDB where tables
+                                  are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
                                 type: string
                               databaseRef:
                                 description: Reference to a MySQLDatabase in mdb to
@@ -1692,8 +1699,8 @@ spec:
                                   type: object
                                 type: array
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
@@ -1879,8 +1886,7 @@ spec:
                           items:
                             properties:
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     mdbClusterId:
@@ -1987,10 +1993,10 @@ spec:
                                             description: Port for the database connection.
                                             type: number
                                           subnetId:
-                                            description: Identifier of the Yandex
+                                            description: '-  Identifier of the Yandex
                                               Cloud VPC subnetwork to user for accessing
                                               the database. If omitted, the server
-                                              has to be accessible via Internet.
+                                              has to be accessible via Internet.'
                                             type: string
                                           subnetIdRef:
                                             description: Reference to a Subnet in
@@ -2121,7 +2127,8 @@ spec:
                                   type: object
                                 type: array
                               database:
-                                description: Name of the database to transfer.
+                                description: '-  Database path in YDB where tables
+                                  are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
                                 type: string
                               databaseRef:
                                 description: Reference to a MySQLDatabase in mdb to
@@ -2230,8 +2237,8 @@ spec:
                                   type: object
                                 type: array
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
@@ -2532,10 +2539,10 @@ spec:
                                             description: Port for the database connection.
                                             type: number
                                           subnetId:
-                                            description: Identifier of the Yandex
+                                            description: '-  Identifier of the Yandex
                                               Cloud VPC subnetwork to user for accessing
                                               the database. If omitted, the server
-                                              has to be accessible via Internet.
+                                              has to be accessible via Internet.'
                                             type: string
                                           subnetIdRef:
                                             description: Reference to a Subnet in
@@ -2803,6 +2810,9 @@ spec:
                                         or "NEVER".
                                       type: string
                                     type:
+                                      description: 'Field type, one of: INT64, INT32,
+                                        INT16, INT8, UINT64, UINT32, UINT16, UINT8,
+                                        DOUBLE, BOOLEAN, STRING, UTF8, ANY, DATETIME.'
                                       type: string
                                     view:
                                       type: string
@@ -2835,8 +2845,8 @@ spec:
                                   type: object
                                 type: array
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
@@ -3027,8 +3037,7 @@ spec:
                           items:
                             properties:
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     mdbClusterId:
@@ -3135,10 +3144,10 @@ spec:
                                             description: Port for the database connection.
                                             type: number
                                           subnetId:
-                                            description: Identifier of the Yandex
+                                            description: '-  Identifier of the Yandex
                                               Cloud VPC subnetwork to user for accessing
                                               the database. If omitted, the server
-                                              has to be accessible via Internet.
+                                              has to be accessible via Internet.'
                                             type: string
                                           subnetIdRef:
                                             description: Reference to a Subnet in
@@ -3269,7 +3278,8 @@ spec:
                                   type: object
                                 type: array
                               database:
-                                description: Name of the database to transfer.
+                                description: '-  Database path in YDB where tables
+                                  are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
                                 type: string
                               databaseRef:
                                 description: Reference to a PostgresqlDatabase in
@@ -3378,8 +3388,8 @@ spec:
                                   type: object
                                 type: array
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
@@ -3772,11 +3782,12 @@ spec:
                     items:
                       properties:
                         clickhouseSource:
+                          description: Settings specific to the ClickHouse source
+                            endpoint.
                           items:
                             properties:
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     connectionOptions:
@@ -3785,7 +3796,8 @@ spec:
                                       items:
                                         properties:
                                           database:
-                                            description: Name of the database to transfer.
+                                            description: '-  Database path in YDB
+                                              where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
                                             type: string
                                           mdbClusterId:
                                             description: Identifier of the Managed
@@ -3821,7 +3833,7 @@ spec:
                                                           type: string
                                                         type: array
                                                       name:
-                                                        description: Name of the endpoint.
+                                                        description: Field name.
                                                         type: string
                                                     type: object
                                                   type: array
@@ -3915,19 +3927,21 @@ spec:
                                   type: string
                                 type: array
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
                               subnetId:
-                                description: Identifier of the Yandex Cloud VPC subnetwork
-                                  to user for accessing the database. If omitted,
-                                  the server has to be accessible via Internet.
+                                description: '-  Identifier of the Yandex Cloud VPC
+                                  subnetwork to user for accessing the database. If
+                                  omitted, the server has to be accessible via Internet.'
                                 type: string
                             type: object
                           type: array
                         clickhouseTarget:
+                          description: Settings specific to the ClickHouse target
+                            endpoint.
                           items:
                             properties:
                               altNames:
@@ -3944,8 +3958,9 @@ spec:
                                   type: object
                                 type: array
                               cleanupPolicy:
-                                description: How to clean collections when activating
-                                  the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
+                                description: '-  How to clean collections when activating
+                                  the transfer. One of "YDB_CLEANUP_POLICY_DISABLED"
+                                  or "YDB_CLEANUP_POLICY_DROP".'
                                 type: string
                               clickhouseClusterName:
                                 description: Name of the ClickHouse cluster. For managed
@@ -3953,8 +3968,7 @@ spec:
                                   ID.
                                 type: string
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     connectionOptions:
@@ -3963,7 +3977,8 @@ spec:
                                       items:
                                         properties:
                                           database:
-                                            description: Name of the database to transfer.
+                                            description: '-  Database path in YDB
+                                              where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
                                             type: string
                                           mdbClusterId:
                                             description: Identifier of the Managed
@@ -3999,7 +4014,7 @@ spec:
                                                           type: string
                                                         type: array
                                                       name:
-                                                        description: Name of the endpoint.
+                                                        description: Field name.
                                                         type: string
                                                     type: object
                                                   type: array
@@ -4080,8 +4095,8 @@ spec:
                                   type: object
                                 type: array
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
@@ -4110,13 +4125,14 @@ spec:
                                   type: object
                                 type: array
                               subnetId:
-                                description: Identifier of the Yandex Cloud VPC subnetwork
-                                  to user for accessing the database. If omitted,
-                                  the server has to be accessible via Internet.
+                                description: '-  Identifier of the Yandex Cloud VPC
+                                  subnetwork to user for accessing the database. If
+                                  omitted, the server has to be accessible via Internet.'
                                 type: string
                             type: object
                           type: array
                         mongoSource:
+                          description: Settings specific to the MongoDB source endpoint.
                           items:
                             properties:
                               collections:
@@ -4135,8 +4151,7 @@ spec:
                                   type: object
                                 type: array
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     connectionOptions:
@@ -4265,28 +4280,29 @@ spec:
                                   preferred to the primary when copying data.
                                 type: boolean
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
                               subnetId:
-                                description: Identifier of the Yandex Cloud VPC subnetwork
-                                  to user for accessing the database. If omitted,
-                                  the server has to be accessible via Internet.
+                                description: '-  Identifier of the Yandex Cloud VPC
+                                  subnetwork to user for accessing the database. If
+                                  omitted, the server has to be accessible via Internet.'
                                 type: string
                             type: object
                           type: array
                         mongoTarget:
+                          description: Settings specific to the MongoDB target endpoint.
                           items:
                             properties:
                               cleanupPolicy:
-                                description: How to clean collections when activating
-                                  the transfer. One of "DISABLED", "DROP" or "TRUNCATE".
+                                description: '-  How to clean collections when activating
+                                  the transfer. One of "YDB_CLEANUP_POLICY_DISABLED"
+                                  or "YDB_CLEANUP_POLICY_DROP".'
                                 type: string
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     connectionOptions:
@@ -4398,18 +4414,19 @@ spec:
                                   type: object
                                 type: array
                               database:
-                                description: Name of the database to transfer.
+                                description: '-  Database path in YDB where tables
+                                  are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
                                 type: string
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
                               subnetId:
-                                description: Identifier of the Yandex Cloud VPC subnetwork
-                                  to user for accessing the database. If omitted,
-                                  the server has to be accessible via Internet.
+                                description: '-  Identifier of the Yandex Cloud VPC
+                                  subnetwork to user for accessing the database. If
+                                  omitted, the server has to be accessible via Internet.'
                                 type: string
                             type: object
                           type: array
@@ -4418,8 +4435,7 @@ spec:
                           items:
                             properties:
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     mdbClusterId:
@@ -4442,10 +4458,10 @@ spec:
                                             description: Port for the database connection.
                                             type: number
                                           subnetId:
-                                            description: Identifier of the Yandex
+                                            description: '-  Identifier of the Yandex
                                               Cloud VPC subnetwork to user for accessing
                                               the database. If omitted, the server
-                                              has to be accessible via Internet.
+                                              has to be accessible via Internet.'
                                             type: string
                                           tlsMode:
                                             description: TLS settings for the server
@@ -4486,7 +4502,8 @@ spec:
                                   type: object
                                 type: array
                               database:
-                                description: Name of the database to transfer.
+                                description: '-  Database path in YDB where tables
+                                  are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
                                 type: string
                               excludeTablesRegex:
                                 description: Opposite of include_table_regex. The
@@ -4546,8 +4563,8 @@ spec:
                                   type: object
                                 type: array
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
@@ -4568,8 +4585,7 @@ spec:
                           items:
                             properties:
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     mdbClusterId:
@@ -4592,10 +4608,10 @@ spec:
                                             description: Port for the database connection.
                                             type: number
                                           subnetId:
-                                            description: Identifier of the Yandex
+                                            description: '-  Identifier of the Yandex
                                               Cloud VPC subnetwork to user for accessing
                                               the database. If omitted, the server
-                                              has to be accessible via Internet.
+                                              has to be accessible via Internet.'
                                             type: string
                                           tlsMode:
                                             description: TLS settings for the server
@@ -4636,7 +4652,8 @@ spec:
                                   type: object
                                 type: array
                               database:
-                                description: Name of the database to transfer.
+                                description: '-  Database path in YDB where tables
+                                  are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
                                 type: string
                               password:
                                 description: Password for the database access. This
@@ -4665,8 +4682,8 @@ spec:
                                   type: object
                                 type: array
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
@@ -4718,10 +4735,10 @@ spec:
                                             description: Port for the database connection.
                                             type: number
                                           subnetId:
-                                            description: Identifier of the Yandex
+                                            description: '-  Identifier of the Yandex
                                               Cloud VPC subnetwork to user for accessing
                                               the database. If omitted, the server
-                                              has to be accessible via Internet.
+                                              has to be accessible via Internet.'
                                             type: string
                                           tlsMode:
                                             description: TLS settings for the server
@@ -4819,6 +4836,9 @@ spec:
                                         or "NEVER".
                                       type: string
                                     type:
+                                      description: 'Field type, one of: INT64, INT32,
+                                        INT16, INT8, UINT64, UINT32, UINT16, UINT8,
+                                        DOUBLE, BOOLEAN, STRING, UTF8, ANY, DATETIME.'
                                       type: string
                                     view:
                                       type: string
@@ -4851,8 +4871,8 @@ spec:
                                   type: object
                                 type: array
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
@@ -4878,8 +4898,7 @@ spec:
                           items:
                             properties:
                               connection:
-                                description: Connection settings. The structure is
-                                  documented below.
+                                description: Connection settings.
                                 items:
                                   properties:
                                     mdbClusterId:
@@ -4902,10 +4921,10 @@ spec:
                                             description: Port for the database connection.
                                             type: number
                                           subnetId:
-                                            description: Identifier of the Yandex
+                                            description: '-  Identifier of the Yandex
                                               Cloud VPC subnetwork to user for accessing
                                               the database. If omitted, the server
-                                              has to be accessible via Internet.
+                                              has to be accessible via Internet.'
                                             type: string
                                           tlsMode:
                                             description: TLS settings for the server
@@ -4946,7 +4965,8 @@ spec:
                                   type: object
                                 type: array
                               database:
-                                description: Name of the database to transfer.
+                                description: '-  Database path in YDB where tables
+                                  are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
                                 type: string
                               password:
                                 description: Password for the database access. This
@@ -4975,8 +4995,8 @@ spec:
                                   type: object
                                 type: array
                               securityGroups:
-                                description: List of security groups that the transfer
-                                  associated with this endpoint should use.
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
                                 items:
                                   type: string
                                 type: array
