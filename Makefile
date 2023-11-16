@@ -202,3 +202,7 @@ crossplane.help:
 help-special: crossplane.help
 
 .PHONY: crossplane.help help-special
+
+test-all: test
+
+.PHONY: test-all
