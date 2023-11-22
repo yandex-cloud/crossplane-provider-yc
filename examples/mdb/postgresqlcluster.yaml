@@ -35,21 +35,6 @@ spec:
       - type: WEEKLY
         day: SAT
         hour: 12
-    database:
-      - name: db_name
-        owner: user1
-    user:
-      - name: user1
-        passwordSecretRef:
-          name: postgresql
-          key: password
-          namespace: default
-        connLimit: 50
-        permission:
-          - databaseName: db_name
-        settings:
-          default_transaction_isolation: "read committed"
-          log_min_duration_statement: "5000"
     host:
       - zone: ru-central1-a
         subnetIdRef:
@@ -61,3 +46,46 @@ spec:
   writeConnectionSecretToRef:
     name: postgress-conn
     namespace: default
+---
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: PostgresqlUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/postgresqluser
+  name: pg-user1
+spec:
+  forProvider:
+    clusterIdRef:
+      name: example-pg
+    connLimit: 50
+    name: user1
+    passwordSecretRef:
+      name: postgresql
+      key: password
+      namespace: default
+    permission:
+    settings:
+      default_transaction_isolation: "read committed"
+      log_min_duration_statement: "5000"
+  providerConfigRef:
+    name: example
+---
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: PostgresqlDatabase
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/postgresqldatabase
+  name: pg-database1
+spec:
+  forProvider:
+    clusterIdRef:
+      name: example-pg
+    extension:
+    - name: uuid-ossp
+    - name: xml2
+    lcCollate: en_US.UTF-8
+    lcType: en_US.UTF-8
+    name: db_name
+    owner: user1
+  providerConfigRef:
+    name: example
