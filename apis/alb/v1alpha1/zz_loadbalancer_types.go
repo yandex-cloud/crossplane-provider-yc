@@ -272,8 +272,17 @@ type HandlerParameters struct {
 	AllowHttp10 *bool `json:"allowHttp10,omitempty" tf:"allow_http10,omitempty"`
 
 	// HTTP router id.
+	// +crossplane:generate:reference:type=HTTPRouter
 	// +kubebuilder:validation:Optional
 	HTTPRouterID *string `json:"httpRouterId,omitempty" tf:"http_router_id,omitempty"`
+
+	// Reference to a HTTPRouter to populate httpRouterId.
+	// +kubebuilder:validation:Optional
+	HTTPRouterIDRef *v1.Reference `json:"httpRouterIdRef,omitempty" tf:"-"`
+
+	// Selector for a HTTPRouter to populate httpRouterId.
+	// +kubebuilder:validation:Optional
+	HTTPRouterIDSelector *v1.Selector `json:"httpRouterIdSelector,omitempty" tf:"-"`
 
 	// If set, will enable HTTP2 protocol for the handler. The structure is documented below.
 	// +kubebuilder:validation:Optional

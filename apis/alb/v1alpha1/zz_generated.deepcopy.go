@@ -2539,6 +2539,16 @@ func (in *HandlerParameters) DeepCopyInto(out *HandlerParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.HTTPRouterIDRef != nil {
+		in, out := &in.HTTPRouterIDRef, &out.HTTPRouterIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.HTTPRouterIDSelector != nil {
+		in, out := &in.HTTPRouterIDSelector, &out.HTTPRouterIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Http2Options != nil {
 		in, out := &in.Http2Options, &out.Http2Options
 		*out = make([]Http2OptionsParameters, len(*in))

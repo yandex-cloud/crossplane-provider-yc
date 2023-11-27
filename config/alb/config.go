@@ -36,6 +36,9 @@ func Configure(p *config.Provider) {
 		r.References["listener.endpoint.address.internal_ipv4_address.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
+		r.References["listener.http.handler.http_router_id"] = config.Reference{
+			Type: "HTTPRouter",
+		}
 		r.References["sni_handler.handler.stream_handler.backend_group_id"] = config.Reference{
 			Type: "BackendGroup",
 		}
@@ -69,6 +72,7 @@ func Configure(p *config.Provider) {
 		r.References["target.subnet_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
 		}
+
 		r.UseAsync = true
 	})
 	p.AddResourceConfigurator("yandex_alb_virtual_host", func(r *config.Resource) {
