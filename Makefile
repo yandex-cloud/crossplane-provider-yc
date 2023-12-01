@@ -16,7 +16,7 @@ export TERRAFORM_DOCS_PATH ?= website/docs/r
 GO_REQUIRED_VERSION ?= 1.20
 GOLANGCILINT_VERSION ?= 1.55.1
 
-PLATFORMS ?= linux_amd64 linux_arm64
+PLATFORMS ?= linux_amd64
 
 # -include will silently skip missing files, which allows us
 # to load those files with a target in the Makefile. If only
@@ -59,8 +59,8 @@ UPTEST_VERSION = v0.5.0
 # ====================================================================================
 # Setup Images
 
-DOCKER_REGISTRY := cr.yandex/crp0kch415f0lke009ft/crossplane
-IMAGES = provider-jet-yc provider-jet-yc-controller
+DOCKER_REGISTRY := cr.yandex/crpp95idm4jatfbm05e9/yandex-cloud/crossplane
+IMAGES = provider-jet-yc
 -include build/makelib/image.mk
 
 # ====================================================================================

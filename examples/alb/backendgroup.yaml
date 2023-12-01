@@ -27,6 +27,3 @@ spec:
     name: my-backend-group
   providerConfigRef:
     name: example
-
----
-

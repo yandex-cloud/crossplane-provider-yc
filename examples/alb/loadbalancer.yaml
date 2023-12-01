@@ -32,6 +32,3 @@ spec:
       name: example-folder
   providerConfigRef:
     name: example
-
----
-
