@@ -318,16 +318,97 @@ type MaintenanceWindowParameters struct {
 	StartTime *string `json:"startTime" tf:"start_time,omitempty"`
 }
 
+type MasterLocationObservation struct {
+
+	// ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// ID of the availability zone.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
+}
+
+type MasterLocationParameters struct {
+
+	// ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// ID of the availability zone.
+	// +kubebuilder:validation:Optional
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
+}
+
+type MasterLoggingObservation struct {
+
+	// Boolean flag that specifies if kube-apiserver audit logs should be sent to Yandex Cloud Logging.
+	AuditEnabled *bool `json:"auditEnabled,omitempty" tf:"audit_enabled,omitempty"`
+
+	// Boolean flag that specifies if cluster-autoscaler logs should be sent to Yandex Cloud Logging.
+	ClusterAutoscalerEnabled *bool `json:"clusterAutoscalerEnabled,omitempty" tf:"cluster_autoscaler_enabled,omitempty"`
+
+	// Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
+	EventsEnabled *bool `json:"eventsEnabled,omitempty" tf:"events_enabled,omitempty"`
+
+	// ID of the folder default Log group of which should be used to collect logs.
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Boolean flag that specifies if kube-apiserver logs should be sent to Yandex Cloud Logging.
+	KubeApiserverEnabled *bool `json:"kubeApiserverEnabled,omitempty" tf:"kube_apiserver_enabled,omitempty"`
+
+	// ID of the Yandex Cloud Logging Log group.
+	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
+}
+
+type MasterLoggingParameters struct {
+
+	// Boolean flag that specifies if kube-apiserver audit logs should be sent to Yandex Cloud Logging.
+	// +kubebuilder:validation:Optional
+	AuditEnabled *bool `json:"auditEnabled,omitempty" tf:"audit_enabled,omitempty"`
+
+	// Boolean flag that specifies if cluster-autoscaler logs should be sent to Yandex Cloud Logging.
+	// +kubebuilder:validation:Optional
+	ClusterAutoscalerEnabled *bool `json:"clusterAutoscalerEnabled,omitempty" tf:"cluster_autoscaler_enabled,omitempty"`
+
+	// Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
+	// +kubebuilder:validation:Optional
+	EventsEnabled *bool `json:"eventsEnabled,omitempty" tf:"events_enabled,omitempty"`
+
+	// ID of the folder default Log group of which should be used to collect logs.
+	// +kubebuilder:validation:Optional
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Boolean flag that specifies if kube-apiserver logs should be sent to Yandex Cloud Logging.
+	// +kubebuilder:validation:Optional
+	KubeApiserverEnabled *bool `json:"kubeApiserverEnabled,omitempty" tf:"kube_apiserver_enabled,omitempty"`
+
+	// ID of the Yandex Cloud Logging Log group.
+	// +kubebuilder:validation:Optional
+	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
+}
+
 type MasterObservation struct {
 
 	// (Computed) PEM-encoded public certificate that is the root of trust for the Kubernetes cluster.
 	ClusterCACertificate *string `json:"clusterCaCertificate,omitempty" tf:"cluster_ca_certificate,omitempty"`
+
+	EtcdClusterSize *float64 `json:"etcdClusterSize,omitempty" tf:"etcd_cluster_size,omitempty"`
 
 	// (Computed) An IPv4 external network address that is assigned to the master.
 	ExternalV4Address *string `json:"externalV4Address,omitempty" tf:"external_v4_address,omitempty"`
 
 	// (Computed) External endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
 	ExternalV4Endpoint *string `json:"externalV4Endpoint,omitempty" tf:"external_v4_endpoint,omitempty"`
+
+	ExternalV6Address *string `json:"externalV6Address,omitempty" tf:"external_v6_address,omitempty"`
+
+	ExternalV6Endpoint *string `json:"externalV6Endpoint,omitempty" tf:"external_v6_endpoint,omitempty"`
 
 	// (Computed) An IPv4 internal network address that is assigned to the master.
 	InternalV4Address *string `json:"internalV4Address,omitempty" tf:"internal_v4_address,omitempty"`
@@ -340,6 +421,11 @@ type MasterObservation struct {
 	// Revision upgrades are performed only within the same minor version, e.g. 1.13.
 	// Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
 	MaintenancePolicy []MaintenancePolicyObservation `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
+
+	MasterLocation []MasterLocationObservation `json:"masterLocation,omitempty" tf:"master_location,omitempty"`
+
+	// Master Logging options. The structure is documented below.
+	MasterLogging []MasterLoggingObservation `json:"masterLogging,omitempty" tf:"master_logging,omitempty"`
 
 	// (Computed) Boolean flag. When true, Kubernetes master will have visible ipv4 address.
 	PublicIP *bool `json:"publicIp,omitempty" tf:"public_ip,omitempty"`
@@ -362,12 +448,25 @@ type MasterObservation struct {
 
 type MasterParameters struct {
 
+	// +kubebuilder:validation:Optional
+	EtcdClusterSize *float64 `json:"etcdClusterSize,omitempty" tf:"etcd_cluster_size,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ExternalV6Address *string `json:"externalV6Address,omitempty" tf:"external_v6_address,omitempty"`
+
 	// (Computed) Maintenance policy for Kubernetes master.
 	// If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time.
 	// Revision upgrades are performed only within the same minor version, e.g. 1.13.
 	// Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	MaintenancePolicy []MaintenancePolicyParameters `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	MasterLocation []MasterLocationParameters `json:"masterLocation,omitempty" tf:"master_location,omitempty"`
+
+	// Master Logging options. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	MasterLogging []MasterLoggingParameters `json:"masterLogging,omitempty" tf:"master_logging,omitempty"`
 
 	// (Computed) Boolean flag. When true, Kubernetes master will have visible ipv4 address.
 	// +kubebuilder:validation:Optional

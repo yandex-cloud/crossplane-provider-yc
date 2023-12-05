@@ -106,6 +106,35 @@ type DNSRecordParameters struct {
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
+type FilesystemObservation struct {
+
+	// Name of the device representing the filesystem on the instance.
+	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
+
+	// ID of the filesystem that should be attached.
+	FilesystemID *string `json:"filesystemId,omitempty" tf:"filesystem_id,omitempty"`
+
+	// Mode of access to the filesystem that should be attached. By default, filesystem is attached
+	// in READ_WRITE mode.
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+}
+
+type FilesystemParameters struct {
+
+	// Name of the device representing the filesystem on the instance.
+	// +kubebuilder:validation:Optional
+	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
+
+	// ID of the filesystem that should be attached.
+	// +kubebuilder:validation:Required
+	FilesystemID *string `json:"filesystemId" tf:"filesystem_id,omitempty"`
+
+	// Mode of access to the filesystem that should be attached. By default, filesystem is attached
+	// in READ_WRITE mode.
+	// +kubebuilder:validation:Optional
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+}
+
 type HostAffinityRulesObservation struct {
 
 	// Affinity label or one of reserved values - yc.hostId, yc.hostGroupId.
@@ -237,12 +266,18 @@ type InstanceObservation struct {
 	// Description of the instance.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// List of filesystems that are attached to the instance. Structure is documented below.
+	Filesystem []FilesystemObservation `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
+
 	// The ID of the folder that the resource belongs to. If it
 	// is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// The fully qualified DNS name of this instance.
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
+
+	// ID of the GPU cluster to attach this instance to. The GPU cluster must exist in the same zone as the instance.
+	GpuClusterID *string `json:"gpuClusterId,omitempty" tf:"gpu_cluster_id,omitempty"`
 
 	// Host name for the instance. This field is used to generate the instance fqdn value.
 	// The host name must be unique within the network and region. If not specified, the host name will be equal
@@ -261,6 +296,9 @@ type InstanceObservation struct {
 	// Metadata key/value pairs to make available from
 	// within the instance.
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
+
+	// Options allow user to configure access to instance's metadata
+	MetadataOptions []MetadataOptionsObservation `json:"metadataOptions,omitempty" tf:"metadata_options,omitempty"`
 
 	// Resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -317,6 +355,10 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// List of filesystems that are attached to the instance. Structure is documented below.
+	// +kubebuilder:validation:Optional
+	Filesystem []FilesystemParameters `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
+
 	// The ID of the folder that the resource belongs to. If it
 	// is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
@@ -330,6 +372,10 @@ type InstanceParameters struct {
 	// Selector for a Folder in resourcemanager to populate folderId.
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// ID of the GPU cluster to attach this instance to. The GPU cluster must exist in the same zone as the instance.
+	// +kubebuilder:validation:Optional
+	GpuClusterID *string `json:"gpuClusterId,omitempty" tf:"gpu_cluster_id,omitempty"`
 
 	// Host name for the instance. This field is used to generate the instance fqdn value.
 	// The host name must be unique within the network and region. If not specified, the host name will be equal
@@ -350,6 +396,10 @@ type InstanceParameters struct {
 	// within the instance.
 	// +kubebuilder:validation:Optional
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
+
+	// Options allow user to configure access to instance's metadata
+	// +kubebuilder:validation:Optional
+	MetadataOptions []MetadataOptionsParameters `json:"metadataOptions,omitempty" tf:"metadata_options,omitempty"`
 
 	// Resource name.
 	// +kubebuilder:validation:Optional
@@ -418,6 +468,31 @@ type LocalDiskParameters struct {
 	// Size of the disk, specified in bytes.
 	// +kubebuilder:validation:Required
 	SizeBytes *float64 `json:"sizeBytes" tf:"size_bytes,omitempty"`
+}
+
+type MetadataOptionsObservation struct {
+	AwsV1HTTPEndpoint *float64 `json:"awsV1HttpEndpoint,omitempty" tf:"aws_v1_http_endpoint,omitempty"`
+
+	AwsV1HTTPToken *float64 `json:"awsV1HttpToken,omitempty" tf:"aws_v1_http_token,omitempty"`
+
+	GceHTTPEndpoint *float64 `json:"gceHttpEndpoint,omitempty" tf:"gce_http_endpoint,omitempty"`
+
+	GceHTTPToken *float64 `json:"gceHttpToken,omitempty" tf:"gce_http_token,omitempty"`
+}
+
+type MetadataOptionsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	AwsV1HTTPEndpoint *float64 `json:"awsV1HttpEndpoint,omitempty" tf:"aws_v1_http_endpoint,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	AwsV1HTTPToken *float64 `json:"awsV1HttpToken,omitempty" tf:"aws_v1_http_token,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	GceHTTPEndpoint *float64 `json:"gceHttpEndpoint,omitempty" tf:"gce_http_endpoint,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	GceHTTPToken *float64 `json:"gceHttpToken,omitempty" tf:"gce_http_token,omitempty"`
 }
 
 type NATDNSRecordObservation struct {

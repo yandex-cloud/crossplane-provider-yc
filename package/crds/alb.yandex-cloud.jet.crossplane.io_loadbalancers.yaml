@@ -532,6 +532,11 @@ spec:
                                               type: string
                                           type: object
                                       type: object
+                                    rewriteRequestId:
+                                      description: When unset, will preserve the incoming
+                                        x-request-id header, otherwise would rewrite
+                                        it with a new value.
+                                      type: boolean
                                   type: object
                                 type: array
                               redirects:
@@ -611,6 +616,11 @@ spec:
                                           httpRouterId:
                                             description: HTTP router id.
                                             type: string
+                                          rewriteRequestId:
+                                            description: When unset, will preserve
+                                              the incoming x-request-id header, otherwise
+                                              would rewrite it with a new value.
+                                            type: boolean
                                         type: object
                                       type: array
                                     streamHandler:
@@ -673,6 +683,12 @@ spec:
                                                 httpRouterId:
                                                   description: HTTP router id.
                                                   type: string
+                                                rewriteRequestId:
+                                                  description: When unset, will preserve
+                                                    the incoming x-request-id header,
+                                                    otherwise would rewrite it with
+                                                    a new value.
+                                                  type: boolean
                                               type: object
                                             type: array
                                           streamHandler:
@@ -709,6 +725,46 @@ spec:
                           type: array
                       required:
                       - name
+                      type: object
+                    type: array
+                  logOptions:
+                    description: Cloud Logging settings. The structure is documented
+                      below.
+                    items:
+                      properties:
+                        disable:
+                          description: Set to true to disable Cloud Logging for the
+                            balancer
+                          type: boolean
+                        discardRule:
+                          description: List of rules to discard a fraction of logs.
+                            The structure is documented below.
+                          items:
+                            properties:
+                              discardPercent:
+                                type: number
+                              grpcCodes:
+                                description: list of grpc codes by name, e.g, ["NOT_FOUND",
+                                  "RESOURCE_EXHAUSTED"]
+                                items:
+                                  type: string
+                                type: array
+                              httpCodeIntervals:
+                                description: 5XX or ALL
+                                items:
+                                  type: string
+                                type: array
+                              httpCodes:
+                                description: "599"
+                                items:
+                                  type: number
+                                type: array
+                            type: object
+                          type: array
+                        logGroupId:
+                          description: Cloud Logging group ID to send logs to. Leave
+                            empty to use the balancer folder default log group.
+                          type: string
                       type: object
                     type: array
                   name:
@@ -1208,6 +1264,11 @@ spec:
                                     httpRouterId:
                                       description: HTTP router id.
                                       type: string
+                                    rewriteRequestId:
+                                      description: When unset, will preserve the incoming
+                                        x-request-id header, otherwise would rewrite
+                                        it with a new value.
+                                      type: boolean
                                   type: object
                                 type: array
                               redirects:
@@ -1287,6 +1348,11 @@ spec:
                                           httpRouterId:
                                             description: HTTP router id.
                                             type: string
+                                          rewriteRequestId:
+                                            description: When unset, will preserve
+                                              the incoming x-request-id header, otherwise
+                                              would rewrite it with a new value.
+                                            type: boolean
                                         type: object
                                       type: array
                                     streamHandler:
@@ -1347,6 +1413,12 @@ spec:
                                                 httpRouterId:
                                                   description: HTTP router id.
                                                   type: string
+                                                rewriteRequestId:
+                                                  description: When unset, will preserve
+                                                    the incoming x-request-id header,
+                                                    otherwise would rewrite it with
+                                                    a new value.
+                                                  type: boolean
                                               type: object
                                             type: array
                                           streamHandler:
@@ -1379,6 +1451,46 @@ spec:
                     description: Cloud log group used by the Load Balancer to store
                       access logs.
                     type: string
+                  logOptions:
+                    description: Cloud Logging settings. The structure is documented
+                      below.
+                    items:
+                      properties:
+                        disable:
+                          description: Set to true to disable Cloud Logging for the
+                            balancer
+                          type: boolean
+                        discardRule:
+                          description: List of rules to discard a fraction of logs.
+                            The structure is documented below.
+                          items:
+                            properties:
+                              discardPercent:
+                                type: number
+                              grpcCodes:
+                                description: list of grpc codes by name, e.g, ["NOT_FOUND",
+                                  "RESOURCE_EXHAUSTED"]
+                                items:
+                                  type: string
+                                type: array
+                              httpCodeIntervals:
+                                description: 5XX or ALL
+                                items:
+                                  type: string
+                                type: array
+                              httpCodes:
+                                description: "599"
+                                items:
+                                  type: number
+                                type: array
+                            type: object
+                          type: array
+                        logGroupId:
+                          description: Cloud Logging group ID to send logs to. Leave
+                            empty to use the balancer folder default log group.
+                          type: string
+                      type: object
+                    type: array
                   name:
                     description: Name of the Load Balancer. Provided by the client
                       when the Load Balancer is created.

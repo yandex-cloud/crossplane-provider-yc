@@ -245,6 +245,21 @@ spec:
                   key:
                     description: The name of the object once it is in the bucket.
                     type: string
+                  objectLockLegalHoldStatus:
+                    description: Specifies a legal hold status of an object. Requires
+                      object_lock_configuration to be enabled on a bucket.
+                    type: string
+                  objectLockMode:
+                    description: Specifies a type of object lock. One of ["GOVERNANCE",
+                      "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date.
+                      Requires object_lock_configuration to be enabled on a bucket.
+                    type: string
+                  objectLockRetainUntilDate:
+                    description: Specifies date and time in RTC3339 format until which
+                      an object is to be locked. It must be set simultaneously with
+                      object_lock_mode. Requires object_lock_configuration to be enabled
+                      on a bucket.
+                    type: string
                   secretKeySecretRef:
                     description: The secret key to use when applying changes. If omitted,
                       storage_secret_key specified in config is used.
@@ -267,6 +282,16 @@ spec:
                     description: The path to a file that will be read and uploaded
                       as raw bytes for the object content.
                     type: string
+                  sourceHash:
+                    description: Used to trigger object update when the source content
+                      changes. So the only meaningful value is filemd5("path/to/source")
+                      (The value is only stored in state and not saved by Yandex Storage).
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Specifies an object tags.
+                    type: object
                 type: object
               managementPolicy:
                 default: FullControl
@@ -495,10 +520,35 @@ spec:
                   key:
                     description: The name of the object once it is in the bucket.
                     type: string
+                  objectLockLegalHoldStatus:
+                    description: Specifies a legal hold status of an object. Requires
+                      object_lock_configuration to be enabled on a bucket.
+                    type: string
+                  objectLockMode:
+                    description: Specifies a type of object lock. One of ["GOVERNANCE",
+                      "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date.
+                      Requires object_lock_configuration to be enabled on a bucket.
+                    type: string
+                  objectLockRetainUntilDate:
+                    description: Specifies date and time in RTC3339 format until which
+                      an object is to be locked. It must be set simultaneously with
+                      object_lock_mode. Requires object_lock_configuration to be enabled
+                      on a bucket.
+                    type: string
                   source:
                     description: The path to a file that will be read and uploaded
                       as raw bytes for the object content.
                     type: string
+                  sourceHash:
+                    description: Used to trigger object update when the source content
+                      changes. So the only meaningful value is filemd5("path/to/source")
+                      (The value is only stored in state and not saved by Yandex Storage).
+                    type: string
+                  tags:
+                    additionalProperties:
+                      type: string
+                    description: Specifies an object tags.
+                    type: object
                 type: object
               conditions:
                 description: Conditions of the resource.

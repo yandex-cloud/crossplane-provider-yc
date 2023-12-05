@@ -75,6 +75,9 @@ spec:
                         dataLens:
                           description: Allow access for Yandex DataLens.
                           type: boolean
+                        dataTransfer:
+                          description: Allow access for DataTransfer
+                          type: boolean
                         webSql:
                           description: Allows access for SQL queries in the management
                             console.
@@ -85,6 +88,9 @@ spec:
                     description: A host of the MySQL cluster. The structure is documented
                       below.
                     type: boolean
+                  backupRetainPeriodDays:
+                    description: The period in days during which backups are stored.
+                    type: number
                   backupWindowStart:
                     description: Time to start the daily backup, in the UTC. The structure
                       is documented below.
@@ -874,6 +880,9 @@ spec:
                         dataLens:
                           description: Allow access for Yandex DataLens.
                           type: boolean
+                        dataTransfer:
+                          description: Allow access for DataTransfer
+                          type: boolean
                         webSql:
                           description: Allows access for SQL queries in the management
                             console.
@@ -884,6 +893,9 @@ spec:
                     description: A host of the MySQL cluster. The structure is documented
                       below.
                     type: boolean
+                  backupRetainPeriodDays:
+                    description: The period in days during which backups are stored.
+                    type: number
                   backupWindowStart:
                     description: Time to start the daily backup, in the UTC. The structure
                       is documented below.

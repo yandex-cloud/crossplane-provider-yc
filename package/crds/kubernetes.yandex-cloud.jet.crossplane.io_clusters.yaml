@@ -257,6 +257,10 @@ spec:
                       is documented below.
                     items:
                       properties:
+                        etcdClusterSize:
+                          type: number
+                        externalV6Address:
+                          type: string
                         maintenancePolicy:
                           description: (Computed) Maintenance policy for Kubernetes
                             master. If policy is omitted, automatic revision upgrades
@@ -295,6 +299,55 @@ spec:
                                 type: array
                             required:
                             - autoUpgrade
+                            type: object
+                          type: array
+                        masterLocation:
+                          items:
+                            properties:
+                              subnetId:
+                                description: ID of the subnet. If no ID is specified,
+                                  and there only one subnet in specified zone, an
+                                  address in this subnet will be allocated.
+                                type: string
+                              zone:
+                                description: ID of the availability zone.
+                                type: string
+                            type: object
+                          type: array
+                        masterLogging:
+                          description: Master Logging options. The structure is documented
+                            below.
+                          items:
+                            properties:
+                              auditEnabled:
+                                description: Boolean flag that specifies if kube-apiserver
+                                  audit logs should be sent to Yandex Cloud Logging.
+                                type: boolean
+                              clusterAutoscalerEnabled:
+                                description: Boolean flag that specifies if cluster-autoscaler
+                                  logs should be sent to Yandex Cloud Logging.
+                                type: boolean
+                              enabled:
+                                description: Boolean flag that specifies if master
+                                  components logs should be sent to Yandex Cloud Logging.
+                                  The exact components that will send their logs must
+                                  be configured via the options described below.
+                                type: boolean
+                              eventsEnabled:
+                                description: Boolean flag that specifies if kubernetes
+                                  cluster events should be sent to Yandex Cloud Logging.
+                                type: boolean
+                              folderId:
+                                description: ID of the folder default Log group of
+                                  which should be used to collect logs.
+                                type: string
+                              kubeApiserverEnabled:
+                                description: Boolean flag that specifies if kube-apiserver
+                                  logs should be sent to Yandex Cloud Logging.
+                                type: boolean
+                              logGroupId:
+                                description: ID of the Yandex Cloud Logging Log group.
+                                type: string
                             type: object
                           type: array
                         publicIp:
@@ -1126,6 +1179,8 @@ spec:
                           description: (Computed) PEM-encoded public certificate that
                             is the root of trust for the Kubernetes cluster.
                           type: string
+                        etcdClusterSize:
+                          type: number
                         externalV4Address:
                           description: (Computed) An IPv4 external network address
                             that is assigned to the master.
@@ -1134,6 +1189,10 @@ spec:
                           description: (Computed) External endpoint that can be used
                             to access Kubernetes cluster API from the internet (outside
                             of the cloud).
+                          type: string
+                        externalV6Address:
+                          type: string
+                        externalV6Endpoint:
                           type: string
                         internalV4Address:
                           description: (Computed) An IPv4 internal network address
@@ -1176,6 +1235,55 @@ spec:
                                       type: string
                                   type: object
                                 type: array
+                            type: object
+                          type: array
+                        masterLocation:
+                          items:
+                            properties:
+                              subnetId:
+                                description: ID of the subnet. If no ID is specified,
+                                  and there only one subnet in specified zone, an
+                                  address in this subnet will be allocated.
+                                type: string
+                              zone:
+                                description: ID of the availability zone.
+                                type: string
+                            type: object
+                          type: array
+                        masterLogging:
+                          description: Master Logging options. The structure is documented
+                            below.
+                          items:
+                            properties:
+                              auditEnabled:
+                                description: Boolean flag that specifies if kube-apiserver
+                                  audit logs should be sent to Yandex Cloud Logging.
+                                type: boolean
+                              clusterAutoscalerEnabled:
+                                description: Boolean flag that specifies if cluster-autoscaler
+                                  logs should be sent to Yandex Cloud Logging.
+                                type: boolean
+                              enabled:
+                                description: Boolean flag that specifies if master
+                                  components logs should be sent to Yandex Cloud Logging.
+                                  The exact components that will send their logs must
+                                  be configured via the options described below.
+                                type: boolean
+                              eventsEnabled:
+                                description: Boolean flag that specifies if kubernetes
+                                  cluster events should be sent to Yandex Cloud Logging.
+                                type: boolean
+                              folderId:
+                                description: ID of the folder default Log group of
+                                  which should be used to collect logs.
+                                type: string
+                              kubeApiserverEnabled:
+                                description: Boolean flag that specifies if kube-apiserver
+                                  logs should be sent to Yandex Cloud Logging.
+                                type: boolean
+                              logGroupId:
+                                description: ID of the Yandex Cloud Logging Log group.
+                                type: string
                             type: object
                           type: array
                         publicIp:

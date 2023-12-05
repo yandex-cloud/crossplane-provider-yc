@@ -31,6 +31,9 @@ type PostgresqlUserObservation struct {
 	// The maximum number of connections per user. (Default 50)
 	ConnLimit *float64 `json:"connLimit,omitempty" tf:"conn_limit,omitempty"`
 
+	// Inhibits deletion of the user. Can either be true, false or unspecified.
+	DeletionProtection *string `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
 	// List of the user's grants.
 	Grants []*string `json:"grants,omitempty" tf:"grants,omitempty"`
 
@@ -66,6 +69,10 @@ type PostgresqlUserParameters struct {
 	// The maximum number of connections per user. (Default 50)
 	// +kubebuilder:validation:Optional
 	ConnLimit *float64 `json:"connLimit,omitempty" tf:"conn_limit,omitempty"`
+
+	// Inhibits deletion of the user. Can either be true, false or unspecified.
+	// +kubebuilder:validation:Optional
+	DeletionProtection *string `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// List of the user's grants.
 	// +kubebuilder:validation:Optional

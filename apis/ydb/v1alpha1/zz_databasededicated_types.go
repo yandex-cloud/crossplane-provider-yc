@@ -37,6 +37,9 @@ type DatabaseDedicatedObservation struct {
 	// Useful for SDK configuration.
 	DatabasePath *string `json:"databasePath,omitempty" tf:"database_path,omitempty"`
 
+	// Inhibits deletion of the database. Can be either true or false
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
 	// A description for the Yandex Database cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -98,6 +101,10 @@ type DatabaseDedicatedParameters struct {
 	// Whether public IP addresses should be assigned to the Yandex Database cluster.
 	// +kubebuilder:validation:Optional
 	AssignPublicIps *bool `json:"assignPublicIps,omitempty" tf:"assign_public_ips,omitempty"`
+
+	// Inhibits deletion of the database. Can be either true or false
+	// +kubebuilder:validation:Optional
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// A description for the Yandex Database cluster.
 	// +kubebuilder:validation:Optional

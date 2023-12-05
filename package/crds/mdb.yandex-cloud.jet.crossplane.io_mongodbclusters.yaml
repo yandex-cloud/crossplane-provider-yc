@@ -76,8 +76,19 @@ spec:
                           description: Access policy to the MongoDB cluster. The structure
                             is documented below.
                           items:
+                            properties:
+                              dataLens:
+                                description: Allow access for Yandex DataLens.
+                                type: boolean
+                              dataTransfer:
+                                description: Allow access for DataTransfer
+                                type: boolean
                             type: object
                           type: array
+                        backupRetainPeriodDays:
+                          description: Retain period of automatically created backup
+                            in days.
+                          type: number
                         backupWindowStart:
                           description: Time to start the daily backup, in the UTC
                             timezone. The structure is documented below.
@@ -96,6 +107,71 @@ spec:
                             not provided version is taken. Can be either 6.0, 5.0,
                             4.4 and 4.2.
                           type: string
+                        mongocfg:
+                          description: Configuration of the mongocfg service. The
+                            structure is documented below.
+                          items:
+                            properties:
+                              net:
+                                description: A set of network settings (see the net
+                                  option). The structure is documented below.
+                                items:
+                                  properties:
+                                    maxIncomingConnections:
+                                      description: The maximum number of simultaneous
+                                        connections that host will accept. For more
+                                        information, see the net.maxIncomingConnections
+                                        description in the official documentation.
+                                      type: number
+                                  type: object
+                                type: array
+                              operationProfiling:
+                                description: A set of profiling settings (see the
+                                  operationProfiling option). The structure is documented
+                                  below.
+                                items:
+                                  properties:
+                                    mode:
+                                      description: 'Specifies which operations should
+                                        be profiled. The following profiler levels
+                                        are available: off, slow_op, all. For more
+                                        information, see the operationProfiling.mode
+                                        description in the official documentation.'
+                                      type: string
+                                    slowOpThreshold:
+                                      description: The slow operation time threshold,
+                                        in milliseconds. Operations that run for longer
+                                        than this threshold are considered slow. For
+                                        more information, see the operationProfiling.slowOpThresholdMs
+                                        description in the official documentation.
+                                      type: number
+                                  type: object
+                                type: array
+                              storage:
+                                description: A set of storage settings (see the storage
+                                  option). The structure is documented below.
+                                items:
+                                  properties:
+                                    wiredTiger:
+                                      description: The WiredTiger engine settings.
+                                        (see the storage.wiredTiger option). These
+                                        settings available only on mongod hosts. The
+                                        structure is documented below.
+                                      items:
+                                        properties:
+                                          cacheSizeGb:
+                                            description: Defines the maximum size
+                                              of the internal cache that WiredTiger
+                                              will use for all data. For more information,
+                                              see the storage.wiredTiger.engineConfig.cacheSizeGB
+                                              description in the official documentation.
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                         mongod:
                           description: Configuration of the mongod service. The structure
                             is documented below.
@@ -121,6 +197,41 @@ spec:
                                         description in the official documentation.
                                         Available only in enterprise edition.
                                       type: boolean
+                                  type: object
+                                type: array
+                              net:
+                                description: A set of network settings (see the net
+                                  option). The structure is documented below.
+                                items:
+                                  properties:
+                                    maxIncomingConnections:
+                                      description: The maximum number of simultaneous
+                                        connections that host will accept. For more
+                                        information, see the net.maxIncomingConnections
+                                        description in the official documentation.
+                                      type: number
+                                  type: object
+                                type: array
+                              operationProfiling:
+                                description: A set of profiling settings (see the
+                                  operationProfiling option). The structure is documented
+                                  below.
+                                items:
+                                  properties:
+                                    mode:
+                                      description: 'Specifies which operations should
+                                        be profiled. The following profiler levels
+                                        are available: off, slow_op, all. For more
+                                        information, see the operationProfiling.mode
+                                        description in the official documentation.'
+                                      type: string
+                                    slowOpThreshold:
+                                      description: The slow operation time threshold,
+                                        in milliseconds. Operations that run for longer
+                                        than this threshold are considered slow. For
+                                        more information, see the operationProfiling.slowOpThresholdMs
+                                        description in the official documentation.
+                                      type: number
                                   type: object
                                 type: array
                               security:
@@ -196,6 +307,84 @@ spec:
                                       type: boolean
                                   type: object
                                 type: array
+                              storage:
+                                description: A set of storage settings (see the storage
+                                  option). The structure is documented below.
+                                items:
+                                  properties:
+                                    journal:
+                                      description: The durability journal to ensure
+                                        data files remain valid and recoverable. The
+                                        structure is documented below.
+                                      items:
+                                        properties:
+                                          commitInterval:
+                                            description: The maximum amount of time
+                                              in milliseconds that the mongod process
+                                              allows between journal operations. For
+                                              more information, see the storage.journal.commitIntervalMs
+                                              description in the official documentation.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    wiredTiger:
+                                      description: The WiredTiger engine settings.
+                                        (see the storage.wiredTiger option). These
+                                        settings available only on mongod hosts. The
+                                        structure is documented below.
+                                      items:
+                                        properties:
+                                          blockCompressor:
+                                            description: 'Specifies the default compression
+                                              for collection data. You can override
+                                              this on a per-collection basis when
+                                              creating collections. Available compressors
+                                              are: none, snappy, zlib, zstd. This
+                                              setting available only on mongod hosts.
+                                              For more information, see the storage.wiredTiger.collectionConfig.blockCompressor
+                                              description in the official documentation.'
+                                            type: string
+                                          cacheSizeGb:
+                                            description: Defines the maximum size
+                                              of the internal cache that WiredTiger
+                                              will use for all data. For more information,
+                                              see the storage.wiredTiger.engineConfig.cacheSizeGB
+                                              description in the official documentation.
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        mongos:
+                          description: Configuration of the mongos service. The structure
+                            is documented below.
+                          items:
+                            properties:
+                              net:
+                                description: A set of network settings (see the net
+                                  option). The structure is documented below.
+                                items:
+                                  properties:
+                                    maxIncomingConnections:
+                                      description: The maximum number of simultaneous
+                                        connections that host will accept. For more
+                                        information, see the net.maxIncomingConnections
+                                        description in the official documentation.
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        performanceDiagnostics:
+                          description: Performance diagnostics to the MongoDB cluster.
+                            The structure is documented below.
+                          items:
+                            properties:
+                              enabled:
+                                description: Enable or disable performance diagnostics.
+                                type: boolean
                             type: object
                           type: array
                         version:
@@ -554,6 +743,109 @@ spec:
                       - resourcePresetId
                       type: object
                     type: array
+                  resourcesMongocfg:
+                    description: Resources allocated to mongocfg hosts of the MongoDB
+                      cluster. The structure is documented below.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Volume of the storage available to a MongoDB
+                            host, in gigabytes.
+                          type: number
+                        diskTypeId:
+                          description: Type of the storage of MongoDB hosts. For more
+                            information see the official documentation.
+                          type: string
+                        resourcePresetId:
+                          type: string
+                      required:
+                      - diskSize
+                      - diskTypeId
+                      - resourcePresetId
+                      type: object
+                    type: array
+                  resourcesMongod:
+                    description: Resources allocated to mongod hosts of the MongoDB
+                      cluster. The structure is documented below.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Volume of the storage available to a MongoDB
+                            host, in gigabytes.
+                          type: number
+                        diskTypeId:
+                          description: Type of the storage of MongoDB hosts. For more
+                            information see the official documentation.
+                          type: string
+                        resourcePresetId:
+                          type: string
+                      required:
+                      - diskSize
+                      - diskTypeId
+                      - resourcePresetId
+                      type: object
+                    type: array
+                  resourcesMongoinfra:
+                    description: Resources allocated to mongoinfra hosts of the MongoDB
+                      cluster. The structure is documented below.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Volume of the storage available to a MongoDB
+                            host, in gigabytes.
+                          type: number
+                        diskTypeId:
+                          description: Type of the storage of MongoDB hosts. For more
+                            information see the official documentation.
+                          type: string
+                        resourcePresetId:
+                          type: string
+                      required:
+                      - diskSize
+                      - diskTypeId
+                      - resourcePresetId
+                      type: object
+                    type: array
+                  resourcesMongos:
+                    description: Resources allocated to mongos hosts of the MongoDB
+                      cluster. The structure is documented below.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Volume of the storage available to a MongoDB
+                            host, in gigabytes.
+                          type: number
+                        diskTypeId:
+                          description: Type of the storage of MongoDB hosts. For more
+                            information see the official documentation.
+                          type: string
+                        resourcePresetId:
+                          type: string
+                      required:
+                      - diskSize
+                      - diskTypeId
+                      - resourcePresetId
+                      type: object
+                    type: array
+                  restore:
+                    description: The cluster will be created from the specified backup.
+                      The structure is documented below.
+                    items:
+                      properties:
+                        backupId:
+                          description: Backup ID. The cluster will be created from
+                            the specified backup. How to get a list of PostgreSQL
+                            backups
+                          type: string
+                        time:
+                          description: 'Timestamp of the moment to which the MongoDB
+                            cluster should be restored. (Format: "2006-01-02T15:04:05"
+                            - UTC). When not set, current time is used.'
+                          type: string
+                      required:
+                      - backupId
+                      type: object
+                    type: array
                   securityGroupIds:
                     description: A set of ids of security groups assigned to hosts
                       of the cluster.
@@ -884,8 +1176,6 @@ spec:
               rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.host)
             - message: name is a required parameter
               rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)
-            - message: resources is a required parameter
-              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.resources)
             - message: user is a required parameter
               rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.user)
           status:
@@ -906,8 +1196,15 @@ spec:
                               dataLens:
                                 description: Allow access for Yandex DataLens.
                                 type: boolean
+                              dataTransfer:
+                                description: Allow access for DataTransfer
+                                type: boolean
                             type: object
                           type: array
+                        backupRetainPeriodDays:
+                          description: Retain period of automatically created backup
+                            in days.
+                          type: number
                         backupWindowStart:
                           description: Time to start the daily backup, in the UTC
                             timezone. The structure is documented below.
@@ -926,6 +1223,71 @@ spec:
                             not provided version is taken. Can be either 6.0, 5.0,
                             4.4 and 4.2.
                           type: string
+                        mongocfg:
+                          description: Configuration of the mongocfg service. The
+                            structure is documented below.
+                          items:
+                            properties:
+                              net:
+                                description: A set of network settings (see the net
+                                  option). The structure is documented below.
+                                items:
+                                  properties:
+                                    maxIncomingConnections:
+                                      description: The maximum number of simultaneous
+                                        connections that host will accept. For more
+                                        information, see the net.maxIncomingConnections
+                                        description in the official documentation.
+                                      type: number
+                                  type: object
+                                type: array
+                              operationProfiling:
+                                description: A set of profiling settings (see the
+                                  operationProfiling option). The structure is documented
+                                  below.
+                                items:
+                                  properties:
+                                    mode:
+                                      description: 'Specifies which operations should
+                                        be profiled. The following profiler levels
+                                        are available: off, slow_op, all. For more
+                                        information, see the operationProfiling.mode
+                                        description in the official documentation.'
+                                      type: string
+                                    slowOpThreshold:
+                                      description: The slow operation time threshold,
+                                        in milliseconds. Operations that run for longer
+                                        than this threshold are considered slow. For
+                                        more information, see the operationProfiling.slowOpThresholdMs
+                                        description in the official documentation.
+                                      type: number
+                                  type: object
+                                type: array
+                              storage:
+                                description: A set of storage settings (see the storage
+                                  option). The structure is documented below.
+                                items:
+                                  properties:
+                                    wiredTiger:
+                                      description: The WiredTiger engine settings.
+                                        (see the storage.wiredTiger option). These
+                                        settings available only on mongod hosts. The
+                                        structure is documented below.
+                                      items:
+                                        properties:
+                                          cacheSizeGb:
+                                            description: Defines the maximum size
+                                              of the internal cache that WiredTiger
+                                              will use for all data. For more information,
+                                              see the storage.wiredTiger.engineConfig.cacheSizeGB
+                                              description in the official documentation.
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                         mongod:
                           description: Configuration of the mongod service. The structure
                             is documented below.
@@ -951,6 +1313,41 @@ spec:
                                         description in the official documentation.
                                         Available only in enterprise edition.
                                       type: boolean
+                                  type: object
+                                type: array
+                              net:
+                                description: A set of network settings (see the net
+                                  option). The structure is documented below.
+                                items:
+                                  properties:
+                                    maxIncomingConnections:
+                                      description: The maximum number of simultaneous
+                                        connections that host will accept. For more
+                                        information, see the net.maxIncomingConnections
+                                        description in the official documentation.
+                                      type: number
+                                  type: object
+                                type: array
+                              operationProfiling:
+                                description: A set of profiling settings (see the
+                                  operationProfiling option). The structure is documented
+                                  below.
+                                items:
+                                  properties:
+                                    mode:
+                                      description: 'Specifies which operations should
+                                        be profiled. The following profiler levels
+                                        are available: off, slow_op, all. For more
+                                        information, see the operationProfiling.mode
+                                        description in the official documentation.'
+                                      type: string
+                                    slowOpThreshold:
+                                      description: The slow operation time threshold,
+                                        in milliseconds. Operations that run for longer
+                                        than this threshold are considered slow. For
+                                        more information, see the operationProfiling.slowOpThresholdMs
+                                        description in the official documentation.
+                                      type: number
                                   type: object
                                 type: array
                               security:
@@ -1026,6 +1423,84 @@ spec:
                                       type: boolean
                                   type: object
                                 type: array
+                              storage:
+                                description: A set of storage settings (see the storage
+                                  option). The structure is documented below.
+                                items:
+                                  properties:
+                                    journal:
+                                      description: The durability journal to ensure
+                                        data files remain valid and recoverable. The
+                                        structure is documented below.
+                                      items:
+                                        properties:
+                                          commitInterval:
+                                            description: The maximum amount of time
+                                              in milliseconds that the mongod process
+                                              allows between journal operations. For
+                                              more information, see the storage.journal.commitIntervalMs
+                                              description in the official documentation.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    wiredTiger:
+                                      description: The WiredTiger engine settings.
+                                        (see the storage.wiredTiger option). These
+                                        settings available only on mongod hosts. The
+                                        structure is documented below.
+                                      items:
+                                        properties:
+                                          blockCompressor:
+                                            description: 'Specifies the default compression
+                                              for collection data. You can override
+                                              this on a per-collection basis when
+                                              creating collections. Available compressors
+                                              are: none, snappy, zlib, zstd. This
+                                              setting available only on mongod hosts.
+                                              For more information, see the storage.wiredTiger.collectionConfig.blockCompressor
+                                              description in the official documentation.'
+                                            type: string
+                                          cacheSizeGb:
+                                            description: Defines the maximum size
+                                              of the internal cache that WiredTiger
+                                              will use for all data. For more information,
+                                              see the storage.wiredTiger.engineConfig.cacheSizeGB
+                                              description in the official documentation.
+                                            type: number
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        mongos:
+                          description: Configuration of the mongos service. The structure
+                            is documented below.
+                          items:
+                            properties:
+                              net:
+                                description: A set of network settings (see the net
+                                  option). The structure is documented below.
+                                items:
+                                  properties:
+                                    maxIncomingConnections:
+                                      description: The maximum number of simultaneous
+                                        connections that host will accept. For more
+                                        information, see the net.maxIncomingConnections
+                                        description in the official documentation.
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        performanceDiagnostics:
+                          description: Performance diagnostics to the MongoDB cluster.
+                            The structure is documented below.
+                          items:
+                            properties:
+                              enabled:
+                                description: Enable or disable performance diagnostics.
+                                type: boolean
                             type: object
                           type: array
                         version:
@@ -1162,6 +1637,91 @@ spec:
                             information see the official documentation.
                           type: string
                         resourcePresetId:
+                          type: string
+                      type: object
+                    type: array
+                  resourcesMongocfg:
+                    description: Resources allocated to mongocfg hosts of the MongoDB
+                      cluster. The structure is documented below.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Volume of the storage available to a MongoDB
+                            host, in gigabytes.
+                          type: number
+                        diskTypeId:
+                          description: Type of the storage of MongoDB hosts. For more
+                            information see the official documentation.
+                          type: string
+                        resourcePresetId:
+                          type: string
+                      type: object
+                    type: array
+                  resourcesMongod:
+                    description: Resources allocated to mongod hosts of the MongoDB
+                      cluster. The structure is documented below.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Volume of the storage available to a MongoDB
+                            host, in gigabytes.
+                          type: number
+                        diskTypeId:
+                          description: Type of the storage of MongoDB hosts. For more
+                            information see the official documentation.
+                          type: string
+                        resourcePresetId:
+                          type: string
+                      type: object
+                    type: array
+                  resourcesMongoinfra:
+                    description: Resources allocated to mongoinfra hosts of the MongoDB
+                      cluster. The structure is documented below.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Volume of the storage available to a MongoDB
+                            host, in gigabytes.
+                          type: number
+                        diskTypeId:
+                          description: Type of the storage of MongoDB hosts. For more
+                            information see the official documentation.
+                          type: string
+                        resourcePresetId:
+                          type: string
+                      type: object
+                    type: array
+                  resourcesMongos:
+                    description: Resources allocated to mongos hosts of the MongoDB
+                      cluster. The structure is documented below.
+                    items:
+                      properties:
+                        diskSize:
+                          description: Volume of the storage available to a MongoDB
+                            host, in gigabytes.
+                          type: number
+                        diskTypeId:
+                          description: Type of the storage of MongoDB hosts. For more
+                            information see the official documentation.
+                          type: string
+                        resourcePresetId:
+                          type: string
+                      type: object
+                    type: array
+                  restore:
+                    description: The cluster will be created from the specified backup.
+                      The structure is documented below.
+                    items:
+                      properties:
+                        backupId:
+                          description: Backup ID. The cluster will be created from
+                            the specified backup. How to get a list of PostgreSQL
+                            backups
+                          type: string
+                        time:
+                          description: 'Timestamp of the moment to which the MongoDB
+                            cluster should be restored. (Format: "2006-01-02T15:04:05"
+                            - UTC). When not set, current time is used.'
                           type: string
                       type: object
                     type: array

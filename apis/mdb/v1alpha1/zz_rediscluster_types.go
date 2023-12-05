@@ -38,6 +38,9 @@ type RedisClusterConfigObservation struct {
 	// Number of databases (changing requires redis-server restart).
 	Databases *float64 `json:"databases,omitempty" tf:"databases,omitempty"`
 
+	// Redis maxmemory usage in percent
+	MaxmemoryPercent *float64 `json:"maxmemoryPercent,omitempty" tf:"maxmemory_percent,omitempty"`
+
 	// Redis key eviction policy for a dataset that reaches maximum memory.
 	// Can be any of the listed in the official RedisDB documentation.
 	MaxmemoryPolicy *string `json:"maxmemoryPolicy,omitempty" tf:"maxmemory_policy,omitempty"`
@@ -73,6 +76,10 @@ type RedisClusterConfigParameters struct {
 	// Number of databases (changing requires redis-server restart).
 	// +kubebuilder:validation:Optional
 	Databases *float64 `json:"databases,omitempty" tf:"databases,omitempty"`
+
+	// Redis maxmemory usage in percent
+	// +kubebuilder:validation:Optional
+	MaxmemoryPercent *float64 `json:"maxmemoryPercent,omitempty" tf:"maxmemory_percent,omitempty"`
 
 	// Redis key eviction policy for a dataset that reaches maximum memory.
 	// Can be any of the listed in the official RedisDB documentation.
@@ -190,6 +197,9 @@ type RedisClusterMaintenanceWindowParameters struct {
 
 type RedisClusterObservation struct {
 
+	// Announce fqdn instead of ip address.
+	AnnounceHostnames *bool `json:"announceHostnames,omitempty" tf:"announce_hostnames,omitempty"`
+
 	// Configuration of the Redis cluster. The structure is documented below.
 	Config []RedisClusterConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
 
@@ -250,6 +260,10 @@ type RedisClusterObservation struct {
 }
 
 type RedisClusterParameters struct {
+
+	// Announce fqdn instead of ip address.
+	// +kubebuilder:validation:Optional
+	AnnounceHostnames *bool `json:"announceHostnames,omitempty" tf:"announce_hostnames,omitempty"`
 
 	// Configuration of the Redis cluster. The structure is documented below.
 	// +kubebuilder:validation:Optional

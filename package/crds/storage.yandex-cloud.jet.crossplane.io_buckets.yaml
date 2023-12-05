@@ -156,6 +156,9 @@ spec:
                       for more infomation.
                     items:
                       properties:
+                        configRead:
+                          description: Allows to read objects in bucket anonymously.
+                          type: boolean
                         list:
                           description: Allows to list object in bucket anonymously.
                           type: boolean
@@ -406,6 +409,10 @@ spec:
                           description: Object key prefix identifying one or more objects
                             to which the rule applies.
                           type: string
+                        tags:
+                          additionalProperties:
+                            type: string
+                          type: object
                         transition:
                           description: Specifies a period in the object's transitions
                             (documented below).
@@ -453,6 +460,49 @@ spec:
                     description: The size of bucket, in bytes. See size limiting for
                       more information.
                     type: number
+                  objectLockConfiguration:
+                    description: A configuration of object lock management (documented
+                      below).
+                    items:
+                      properties:
+                        objectLockEnabled:
+                          description: Enable object locking in a bucket. Require
+                            versioning to be enabled.
+                          type: string
+                        rule:
+                          description: Specifies a default locking configuration for
+                            added objects. Require object_lock_enabled to be enabled.
+                          items:
+                            properties:
+                              defaultRetention:
+                                items:
+                                  properties:
+                                    days:
+                                      description: Specifies a retention period in
+                                        days after uploading an object version. It
+                                        must be a positive integer. You can't set
+                                        it simultaneously with years.
+                                      type: number
+                                    mode:
+                                      description: Specifies a type of object lock.
+                                        One of ["GOVERNANCE", "COMPLIANCE"].
+                                      type: string
+                                    years:
+                                      description: Specifies a retention period in
+                                        years after uploading an object version. It
+                                        must be a positive integer. You can't set
+                                        it simultaneously with days.
+                                      type: number
+                                  required:
+                                  - mode
+                                  type: object
+                                type: array
+                            required:
+                            - defaultRetention
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   policy:
                     type: string
                   secretKeySecretRef:
@@ -510,6 +560,10 @@ spec:
                       - rule
                       type: object
                     type: array
+                  tags:
+                    additionalProperties:
+                      type: string
+                    type: object
                   versioning:
                     description: A state of versioning (documented below)
                     items:
@@ -761,6 +815,9 @@ spec:
                       for more infomation.
                     items:
                       properties:
+                        configRead:
+                          description: Allows to read objects in bucket anonymously.
+                          type: boolean
                         list:
                           description: Allows to list object in bucket anonymously.
                           type: boolean
@@ -933,6 +990,10 @@ spec:
                           description: Object key prefix identifying one or more objects
                             to which the rule applies.
                           type: string
+                        tags:
+                          additionalProperties:
+                            type: string
+                          type: object
                         transition:
                           description: Specifies a period in the object's transitions
                             (documented below).
@@ -974,6 +1035,45 @@ spec:
                     description: The size of bucket, in bytes. See size limiting for
                       more information.
                     type: number
+                  objectLockConfiguration:
+                    description: A configuration of object lock management (documented
+                      below).
+                    items:
+                      properties:
+                        objectLockEnabled:
+                          description: Enable object locking in a bucket. Require
+                            versioning to be enabled.
+                          type: string
+                        rule:
+                          description: Specifies a default locking configuration for
+                            added objects. Require object_lock_enabled to be enabled.
+                          items:
+                            properties:
+                              defaultRetention:
+                                items:
+                                  properties:
+                                    days:
+                                      description: Specifies a retention period in
+                                        days after uploading an object version. It
+                                        must be a positive integer. You can't set
+                                        it simultaneously with years.
+                                      type: number
+                                    mode:
+                                      description: Specifies a type of object lock.
+                                        One of ["GOVERNANCE", "COMPLIANCE"].
+                                      type: string
+                                    years:
+                                      description: Specifies a retention period in
+                                        years after uploading an object version. It
+                                        must be a positive integer. You can't set
+                                        it simultaneously with days.
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   policy:
                     type: string
                   serverSideEncryptionConfiguration:
@@ -1005,6 +1105,10 @@ spec:
                           type: array
                       type: object
                     type: array
+                  tags:
+                    additionalProperties:
+                      type: string
+                    type: object
                   versioning:
                     description: A state of versioning (documented below)
                     items:

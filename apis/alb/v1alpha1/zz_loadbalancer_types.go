@@ -107,6 +107,37 @@ type DefaultHandlerStreamHandlerParameters struct {
 	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
 }
 
+type DiscardRuleObservation struct {
+	DiscardPercent *float64 `json:"discardPercent,omitempty" tf:"discard_percent,omitempty"`
+
+	// list of grpc codes by name, e.g, ["NOT_FOUND", "RESOURCE_EXHAUSTED"]
+	GRPCCodes []*string `json:"grpcCodes,omitempty" tf:"grpc_codes,omitempty"`
+
+	// 5XX or ALL
+	HTTPCodeIntervals []*string `json:"httpCodeIntervals,omitempty" tf:"http_code_intervals,omitempty"`
+
+	// 599
+	HTTPCodes []*float64 `json:"httpCodes,omitempty" tf:"http_codes,omitempty"`
+}
+
+type DiscardRuleParameters struct {
+
+	// +kubebuilder:validation:Optional
+	DiscardPercent *float64 `json:"discardPercent,omitempty" tf:"discard_percent,omitempty"`
+
+	// list of grpc codes by name, e.g, ["NOT_FOUND", "RESOURCE_EXHAUSTED"]
+	// +kubebuilder:validation:Optional
+	GRPCCodes []*string `json:"grpcCodes,omitempty" tf:"grpc_codes,omitempty"`
+
+	// 5XX or ALL
+	// +kubebuilder:validation:Optional
+	HTTPCodeIntervals []*string `json:"httpCodeIntervals,omitempty" tf:"http_code_intervals,omitempty"`
+
+	// 599
+	// +kubebuilder:validation:Optional
+	HTTPCodes []*float64 `json:"httpCodes,omitempty" tf:"http_codes,omitempty"`
+}
+
 type EndpointObservation struct {
 
 	// Provided by the client or computed automatically.
@@ -176,6 +207,9 @@ type HTTPHandlerObservation struct {
 
 	// If set, will enable HTTP2 protocol for the handler. The structure is documented below.
 	Http2Options []HTTPHandlerHttp2OptionsObservation `json:"http2Options,omitempty" tf:"http2_options,omitempty"`
+
+	// When unset, will preserve the incoming x-request-id header, otherwise would rewrite it with a new value.
+	RewriteRequestID *bool `json:"rewriteRequestId,omitempty" tf:"rewrite_request_id,omitempty"`
 }
 
 type HTTPHandlerParameters struct {
@@ -191,6 +225,10 @@ type HTTPHandlerParameters struct {
 	// If set, will enable HTTP2 protocol for the handler. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Http2Options []HTTPHandlerHttp2OptionsParameters `json:"http2Options,omitempty" tf:"http2_options,omitempty"`
+
+	// When unset, will preserve the incoming x-request-id header, otherwise would rewrite it with a new value.
+	// +kubebuilder:validation:Optional
+	RewriteRequestID *bool `json:"rewriteRequestId,omitempty" tf:"rewrite_request_id,omitempty"`
 }
 
 type HTTPObservation struct {
@@ -236,6 +274,9 @@ type HandlerHTTPHandlerObservation struct {
 
 	// If set, will enable HTTP2 protocol for the handler. The structure is documented below.
 	Http2Options []HandlerHTTPHandlerHttp2OptionsObservation `json:"http2Options,omitempty" tf:"http2_options,omitempty"`
+
+	// When unset, will preserve the incoming x-request-id header, otherwise would rewrite it with a new value.
+	RewriteRequestID *bool `json:"rewriteRequestId,omitempty" tf:"rewrite_request_id,omitempty"`
 }
 
 type HandlerHTTPHandlerParameters struct {
@@ -251,6 +292,10 @@ type HandlerHTTPHandlerParameters struct {
 	// If set, will enable HTTP2 protocol for the handler. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Http2Options []HandlerHTTPHandlerHttp2OptionsParameters `json:"http2Options,omitempty" tf:"http2_options,omitempty"`
+
+	// When unset, will preserve the incoming x-request-id header, otherwise would rewrite it with a new value.
+	// +kubebuilder:validation:Optional
+	RewriteRequestID *bool `json:"rewriteRequestId,omitempty" tf:"rewrite_request_id,omitempty"`
 }
 
 type HandlerObservation struct {
@@ -263,6 +308,9 @@ type HandlerObservation struct {
 
 	// If set, will enable HTTP2 protocol for the handler. The structure is documented below.
 	Http2Options []Http2OptionsObservation `json:"http2Options,omitempty" tf:"http2_options,omitempty"`
+
+	// When unset, will preserve the incoming x-request-id header, otherwise would rewrite it with a new value.
+	RewriteRequestID *bool `json:"rewriteRequestId,omitempty" tf:"rewrite_request_id,omitempty"`
 }
 
 type HandlerParameters struct {
@@ -287,6 +335,10 @@ type HandlerParameters struct {
 	// If set, will enable HTTP2 protocol for the handler. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Http2Options []Http2OptionsParameters `json:"http2Options,omitempty" tf:"http2_options,omitempty"`
+
+	// When unset, will preserve the incoming x-request-id header, otherwise would rewrite it with a new value.
+	// +kubebuilder:validation:Optional
+	RewriteRequestID *bool `json:"rewriteRequestId,omitempty" tf:"rewrite_request_id,omitempty"`
 }
 
 type HandlerStreamHandlerObservation struct {
@@ -431,6 +483,9 @@ type LoadBalancerObservation struct {
 	// Cloud log group used by the Load Balancer to store access logs.
 	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
 
+	// Cloud Logging settings. The structure is documented below.
+	LogOptions []LogOptionsObservation `json:"logOptions,omitempty" tf:"log_options,omitempty"`
+
 	// Name of the Load Balancer. Provided by the client when the Load Balancer is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -477,6 +532,10 @@ type LoadBalancerParameters struct {
 	// List of listeners for the Load Balancer. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Listener []ListenerParameters `json:"listener,omitempty" tf:"listener,omitempty"`
+
+	// Cloud Logging settings. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	LogOptions []LogOptionsParameters `json:"logOptions,omitempty" tf:"log_options,omitempty"`
 
 	// Name of the Load Balancer. Provided by the client when the Load Balancer is created.
 	// +kubebuilder:validation:Optional
@@ -547,6 +606,33 @@ type LocationParameters struct {
 	// ID of the zone that location is located at.
 	// +kubebuilder:validation:Required
 	ZoneID *string `json:"zoneId" tf:"zone_id,omitempty"`
+}
+
+type LogOptionsObservation struct {
+
+	// Set to true to disable Cloud Logging for the balancer
+	Disable *bool `json:"disable,omitempty" tf:"disable,omitempty"`
+
+	// List of rules to discard a fraction of logs. The structure is documented below.
+	DiscardRule []DiscardRuleObservation `json:"discardRule,omitempty" tf:"discard_rule,omitempty"`
+
+	// Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
+}
+
+type LogOptionsParameters struct {
+
+	// Set to true to disable Cloud Logging for the balancer
+	// +kubebuilder:validation:Optional
+	Disable *bool `json:"disable,omitempty" tf:"disable,omitempty"`
+
+	// List of rules to discard a fraction of logs. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	DiscardRule []DiscardRuleParameters `json:"discardRule,omitempty" tf:"discard_rule,omitempty"`
+
+	// Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+	// +kubebuilder:validation:Optional
+	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
 }
 
 type RedirectsObservation struct {

@@ -67,6 +67,9 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  announceHostnames:
+                    description: Announce fqdn instead of ip address.
+                    type: boolean
                   config:
                     description: Configuration of the Redis cluster. The structure
                       is documented below.
@@ -83,6 +86,9 @@ spec:
                         databases:
                           description: Number of databases (changing requires redis-server
                             restart).
+                          type: number
+                        maxmemoryPercent:
+                          description: Redis maxmemory usage in percent
                           type: number
                         maxmemoryPolicy:
                           description: Redis key eviction policy for a dataset that
@@ -746,6 +752,9 @@ spec:
             properties:
               atProvider:
                 properties:
+                  announceHostnames:
+                    description: Announce fqdn instead of ip address.
+                    type: boolean
                   config:
                     description: Configuration of the Redis cluster. The structure
                       is documented below.
@@ -762,6 +771,9 @@ spec:
                         databases:
                           description: Number of databases (changing requires redis-server
                             restart).
+                          type: number
+                        maxmemoryPercent:
+                          description: Redis maxmemory usage in percent
                           type: number
                         maxmemoryPolicy:
                           description: Redis key eviction policy for a dataset that

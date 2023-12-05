@@ -71,6 +71,10 @@ spec:
                     description: Whether public IP addresses should be assigned to
                       the Yandex Database cluster.
                     type: boolean
+                  deletionProtection:
+                    description: Inhibits deletion of the database. Can be either
+                      true or false
+                    type: boolean
                   description:
                     description: A description for the Yandex Database cluster.
                     type: string
@@ -602,6 +606,10 @@ spec:
                     description: Full database path of the Yandex Database cluster.
                       Useful for SDK configuration.
                     type: string
+                  deletionProtection:
+                    description: Inhibits deletion of the database. Can be either
+                      true or false
+                    type: boolean
                   description:
                     description: A description for the Yandex Database cluster.
                     type: string

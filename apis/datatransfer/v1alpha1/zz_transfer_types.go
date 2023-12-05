@@ -42,6 +42,11 @@ type TransferObservation struct {
 	// Name of the transfer.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Activation action on create a new incremental transfer.
+	// It is not part of the transfer parameter and is used only on create.
+	// One of "sync_activate", "async_activate", "dont_activate". The default is "sync_activate".
+	OnCreateActivateMode *string `json:"onCreateActivateMode,omitempty" tf:"on_create_activate_mode,omitempty"`
+
 	// ID of the source endpoint for the transfer.
 	SourceID *string `json:"sourceId,omitempty" tf:"source_id,omitempty"`
 
@@ -81,6 +86,12 @@ type TransferParameters struct {
 	// Name of the transfer.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Activation action on create a new incremental transfer.
+	// It is not part of the transfer parameter and is used only on create.
+	// One of "sync_activate", "async_activate", "dont_activate". The default is "sync_activate".
+	// +kubebuilder:validation:Optional
+	OnCreateActivateMode *string `json:"onCreateActivateMode,omitempty" tf:"on_create_activate_mode,omitempty"`
 
 	// ID of the source endpoint for the transfer.
 	// +crossplane:generate:reference:type=Endpoint

@@ -673,6 +673,499 @@ spec:
                                 type: object
                             type: object
                           type: array
+                        kafkaSource:
+                          description: Settings specific to the Kafka source endpoint.
+                          items:
+                            properties:
+                              auth:
+                                description: Authentication data.
+                                items:
+                                  properties:
+                                    noAuth:
+                                      description: Connection without authentication
+                                        data.
+                                      items:
+                                        type: object
+                                      type: array
+                                    sasl:
+                                      description: Authentication using sasl.
+                                      items:
+                                        properties:
+                                          mechanism:
+                                            type: string
+                                          password:
+                                            description: Password for the database
+                                              access. This is a block with a single
+                                              field named raw which should contain
+                                              the password.
+                                            items:
+                                              properties:
+                                                rawSecretRef:
+                                                  description: A SecretKeySelector
+                                                    is a reference to a secret key
+                                                    in an arbitrary namespace.
+                                                  properties:
+                                                    key:
+                                                      description: The key to select.
+                                                      type: string
+                                                    name:
+                                                      description: Name of the secret.
+                                                      type: string
+                                                    namespace:
+                                                      description: Namespace of the
+                                                        secret.
+                                                      type: string
+                                                  required:
+                                                  - key
+                                                  - name
+                                                  - namespace
+                                                  type: object
+                                              type: object
+                                            type: array
+                                          user:
+                                            description: User for the database access.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              connection:
+                                description: Connection settings.
+                                items:
+                                  properties:
+                                    clusterId:
+                                      description: Identifier of the Managed Kafka
+                                        cluster.
+                                      type: string
+                                    onPremise:
+                                      description: Connection settings of the on-premise
+                                        PostgreSQL server.
+                                      items:
+                                        properties:
+                                          brokerUrls:
+                                            description: List of Kafka broker URLs.
+                                            items:
+                                              type: string
+                                            type: array
+                                          subnetId:
+                                            description: '-  Identifier of the Yandex
+                                              Cloud VPC subnetwork to user for accessing
+                                              the database. If omitted, the server
+                                              has to be accessible via Internet.'
+                                            type: string
+                                          tlsMode:
+                                            description: TLS settings for the server
+                                              connection. Empty implies plaintext
+                                              connection. The structure is documented
+                                              below.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: Empty block designating
+                                                    that the connection is not secured,
+                                                    i.e. plaintext connection.
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: If this attribute is
+                                                    not an empty block, then TLS is
+                                                    used for the server connection.
+                                                    The structure is documented below.
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: X.509 certificate
+                                                          of the certificate authority
+                                                          which issued the server's
+                                                          certificate, in PEM format.
+                                                          If empty, the server's certificate
+                                                          must be signed by a well-known
+                                                          CA.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              parser:
+                                description: Data parsing parameters. If not set,
+                                  the source messages are read in raw.
+                                items:
+                                  properties:
+                                    auditTrailsV1Parser:
+                                      description: Parse Audit Trails data. Empty
+                                        struct.
+                                      items:
+                                        type: object
+                                      type: array
+                                    cloudLoggingParser:
+                                      description: Parse Cloud Logging data. Empty
+                                        struct.
+                                      items:
+                                        type: object
+                                      type: array
+                                    jsonParser:
+                                      description: Parse data in json format.
+                                      items:
+                                        properties:
+                                          addRestColumn:
+                                            description: Add fields, that are not
+                                              in the schema, into the _rest column.
+                                            type: boolean
+                                          dataSchema:
+                                            description: Data parsing scheme.The structure
+                                              is documented below.
+                                            items:
+                                              properties:
+                                                fields:
+                                                  description: Description of the
+                                                    data schema in the array of fields
+                                                    structure (documented below).
+                                                  items:
+                                                    properties:
+                                                      fields:
+                                                        description: Description of
+                                                          the data schema in the array
+                                                          of fields structure (documented
+                                                          below).
+                                                        items:
+                                                          properties:
+                                                            key:
+                                                              description: Mark field
+                                                                as Primary Key.
+                                                              type: boolean
+                                                            name:
+                                                              description: Field name.
+                                                              type: string
+                                                            path:
+                                                              description: '-  A path
+                                                                where resulting tables
+                                                                are stored.'
+                                                              type: string
+                                                            required:
+                                                              description: Mark field
+                                                                as required.
+                                                              type: boolean
+                                                            type:
+                                                              description: 'Field
+                                                                type, one of: INT64,
+                                                                INT32, INT16, INT8,
+                                                                UINT64, UINT32, UINT16,
+                                                                UINT8, DOUBLE, BOOLEAN,
+                                                                STRING, UTF8, ANY,
+                                                                DATETIME.'
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                                jsonFields:
+                                                  description: Description of the
+                                                    data schema as JSON specification.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          nullKeysAllowed:
+                                            description: Allow null keys. If false
+                                              - null keys will be putted to unparsed
+                                              data
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    tskvParser:
+                                      description: Parse data if tskv format.
+                                      items:
+                                        properties:
+                                          addRestColumn:
+                                            description: Add fields, that are not
+                                              in the schema, into the _rest column.
+                                            type: boolean
+                                          dataSchema:
+                                            description: Data parsing scheme.The structure
+                                              is documented below.
+                                            items:
+                                              properties:
+                                                fields:
+                                                  description: Description of the
+                                                    data schema in the array of fields
+                                                    structure (documented below).
+                                                  items:
+                                                    properties:
+                                                      fields:
+                                                        description: Description of
+                                                          the data schema in the array
+                                                          of fields structure (documented
+                                                          below).
+                                                        items:
+                                                          properties:
+                                                            key:
+                                                              description: Mark field
+                                                                as Primary Key.
+                                                              type: boolean
+                                                            name:
+                                                              description: Field name.
+                                                              type: string
+                                                            path:
+                                                              description: '-  A path
+                                                                where resulting tables
+                                                                are stored.'
+                                                              type: string
+                                                            required:
+                                                              description: Mark field
+                                                                as required.
+                                                              type: boolean
+                                                            type:
+                                                              description: 'Field
+                                                                type, one of: INT64,
+                                                                INT32, INT16, INT8,
+                                                                UINT64, UINT32, UINT16,
+                                                                UINT8, DOUBLE, BOOLEAN,
+                                                                STRING, UTF8, ANY,
+                                                                DATETIME.'
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                                jsonFields:
+                                                  description: Description of the
+                                                    data schema as JSON specification.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          nullKeysAllowed:
+                                            description: Allow null keys. If false
+                                              - null keys will be putted to unparsed
+                                              data
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              securityGroups:
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
+                                items:
+                                  type: string
+                                type: array
+                              topicName:
+                                description: Full topic name
+                                type: string
+                              transformer:
+                                description: Transform data with a custom Cloud Function.
+                                items:
+                                  properties:
+                                    bufferFlushInterval:
+                                      type: string
+                                    bufferSize:
+                                      type: string
+                                    cloudFunction:
+                                      type: string
+                                    invocationTimeout:
+                                      type: string
+                                    numberOfRetries:
+                                      type: number
+                                    serviceAccountId:
+                                      description: '-  Service account ID for interaction
+                                        with database.'
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        kafkaTarget:
+                          description: Settings specific to the Kafka target endpoint.
+                          items:
+                            properties:
+                              auth:
+                                description: Authentication data.
+                                items:
+                                  properties:
+                                    noAuth:
+                                      description: Connection without authentication
+                                        data.
+                                      items:
+                                        type: object
+                                      type: array
+                                    sasl:
+                                      description: Authentication using sasl.
+                                      items:
+                                        properties:
+                                          mechanism:
+                                            type: string
+                                          password:
+                                            description: Password for the database
+                                              access. This is a block with a single
+                                              field named raw which should contain
+                                              the password.
+                                            items:
+                                              properties:
+                                                rawSecretRef:
+                                                  description: A SecretKeySelector
+                                                    is a reference to a secret key
+                                                    in an arbitrary namespace.
+                                                  properties:
+                                                    key:
+                                                      description: The key to select.
+                                                      type: string
+                                                    name:
+                                                      description: Name of the secret.
+                                                      type: string
+                                                    namespace:
+                                                      description: Namespace of the
+                                                        secret.
+                                                      type: string
+                                                  required:
+                                                  - key
+                                                  - name
+                                                  - namespace
+                                                  type: object
+                                              type: object
+                                            type: array
+                                          user:
+                                            description: User for the database access.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              connection:
+                                description: Connection settings.
+                                items:
+                                  properties:
+                                    clusterId:
+                                      description: Identifier of the Managed Kafka
+                                        cluster.
+                                      type: string
+                                    onPremise:
+                                      description: Connection settings of the on-premise
+                                        PostgreSQL server.
+                                      items:
+                                        properties:
+                                          brokerUrls:
+                                            description: List of Kafka broker URLs.
+                                            items:
+                                              type: string
+                                            type: array
+                                          subnetId:
+                                            description: '-  Identifier of the Yandex
+                                              Cloud VPC subnetwork to user for accessing
+                                              the database. If omitted, the server
+                                              has to be accessible via Internet.'
+                                            type: string
+                                          tlsMode:
+                                            description: TLS settings for the server
+                                              connection. Empty implies plaintext
+                                              connection. The structure is documented
+                                              below.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: Empty block designating
+                                                    that the connection is not secured,
+                                                    i.e. plaintext connection.
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: If this attribute is
+                                                    not an empty block, then TLS is
+                                                    used for the server connection.
+                                                    The structure is documented below.
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: X.509 certificate
+                                                          of the certificate authority
+                                                          which issued the server's
+                                                          certificate, in PEM format.
+                                                          If empty, the server's certificate
+                                                          must be signed by a well-known
+                                                          CA.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              securityGroups:
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
+                                items:
+                                  type: string
+                                type: array
+                              serializer:
+                                description: Data serialization settings.
+                                items:
+                                  properties:
+                                    serializerAuto:
+                                      description: Empty block. Select data serialization
+                                        format automatically.
+                                      items:
+                                        type: object
+                                      type: array
+                                    serializerDebezium:
+                                      description: Serialize data in json format.
+                                        The structure is documented below.
+                                      items:
+                                        properties:
+                                          serializerParameters:
+                                            description: A list of debezium parameters
+                                              set by the structure of the key and
+                                              value string fields.
+                                            items:
+                                              properties:
+                                                key:
+                                                  description: Mark field as Primary
+                                                    Key.
+                                                  type: string
+                                                value:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    serializerJson:
+                                      description: Empty block. Serialize data in
+                                        json format.
+                                      items:
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              topicSettings:
+                                description: Target topic settings.
+                                items:
+                                  properties:
+                                    topic:
+                                      description: All messages will be sent to one
+                                        topic. The structure is documented below.
+                                      items:
+                                        properties:
+                                          saveTxOrder:
+                                            description: Not to split events queue
+                                              into separate per-table queues.
+                                            type: boolean
+                                          topicName:
+                                            description: Full topic name
+                                            type: string
+                                        type: object
+                                      type: array
+                                    topicPrefix:
+                                      description: Topic name prefix. Messages will
+                                        be sent to topic with name <topic_prefix>..<table_name>.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                         mongoSource:
                           description: Settings specific to the MongoDB source endpoint.
                           items:
@@ -1662,6 +2155,8 @@ spec:
                                 items:
                                   properties:
                                     routine:
+                                      type: string
+                                    tables:
                                       type: string
                                     trigger:
                                       description: All of the attrubutes are optional
@@ -2802,6 +3297,8 @@ spec:
                                       type: string
                                     sequenceOwnedBy:
                                       type: string
+                                    sequenceSet:
+                                      type: string
                                     table:
                                       type: string
                                     trigger:
@@ -3561,6 +4058,111 @@ spec:
                                         type: string
                                     type: object
                                 type: object
+                            type: object
+                          type: array
+                        ydbSource:
+                          description: Settings specific to the YDB source endpoint.
+                          items:
+                            properties:
+                              database:
+                                description: '-  Database path in YDB where tables
+                                  are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
+                                type: string
+                              instance:
+                                description: '-  Instance of YDB. Example: "my-cute-ydb.cloud.yandex.ru:2135".'
+                                type: string
+                              paths:
+                                description: '-  A list of paths which should be uploaded.
+                                  When not specified, all available tables are uploaded.'
+                                items:
+                                  type: string
+                                type: array
+                              saKeyContentSecretRef:
+                                description: '-  Authentication key.'
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              securityGroups:
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
+                                items:
+                                  type: string
+                                type: array
+                              serviceAccountId:
+                                description: '-  Service account ID for interaction
+                                  with database.'
+                                type: string
+                              subnetId:
+                                description: '-  Identifier of the Yandex Cloud VPC
+                                  subnetwork to user for accessing the database. If
+                                  omitted, the server has to be accessible via Internet.'
+                                type: string
+                            type: object
+                          type: array
+                        ydbTarget:
+                          description: Settings specific to the YDB target endpoint.
+                          items:
+                            properties:
+                              cleanupPolicy:
+                                description: '-  How to clean collections when activating
+                                  the transfer. One of "YDB_CLEANUP_POLICY_DISABLED"
+                                  or "YDB_CLEANUP_POLICY_DROP".'
+                                type: string
+                              database:
+                                description: '-  Database path in YDB where tables
+                                  are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
+                                type: string
+                              instance:
+                                description: '-  Instance of YDB. Example: "my-cute-ydb.cloud.yandex.ru:2135".'
+                                type: string
+                              path:
+                                description: '-  A path where resulting tables are
+                                  stored.'
+                                type: string
+                              saKeyContentSecretRef:
+                                description: '-  Authentication key.'
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: Name of the secret.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the secret.
+                                    type: string
+                                required:
+                                - key
+                                - name
+                                - namespace
+                                type: object
+                              securityGroups:
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
+                                items:
+                                  type: string
+                                type: array
+                              serviceAccountId:
+                                description: '-  Service account ID for interaction
+                                  with database.'
+                                type: string
+                              subnetId:
+                                description: '-  Identifier of the Yandex Cloud VPC
+                                  subnetwork to user for accessing the database. If
+                                  omitted, the server has to be accessible via Internet.'
+                                type: string
                             type: object
                           type: array
                       type: object
@@ -4131,6 +4733,499 @@ spec:
                                 type: string
                             type: object
                           type: array
+                        kafkaSource:
+                          description: Settings specific to the Kafka source endpoint.
+                          items:
+                            properties:
+                              auth:
+                                description: Authentication data.
+                                items:
+                                  properties:
+                                    noAuth:
+                                      description: Connection without authentication
+                                        data.
+                                      items:
+                                        type: object
+                                      type: array
+                                    sasl:
+                                      description: Authentication using sasl.
+                                      items:
+                                        properties:
+                                          mechanism:
+                                            type: string
+                                          password:
+                                            description: Password for the database
+                                              access. This is a block with a single
+                                              field named raw which should contain
+                                              the password.
+                                            items:
+                                              properties:
+                                                rawSecretRef:
+                                                  description: A SecretKeySelector
+                                                    is a reference to a secret key
+                                                    in an arbitrary namespace.
+                                                  properties:
+                                                    key:
+                                                      description: The key to select.
+                                                      type: string
+                                                    name:
+                                                      description: Name of the secret.
+                                                      type: string
+                                                    namespace:
+                                                      description: Namespace of the
+                                                        secret.
+                                                      type: string
+                                                  required:
+                                                  - key
+                                                  - name
+                                                  - namespace
+                                                  type: object
+                                              type: object
+                                            type: array
+                                          user:
+                                            description: User for the database access.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              connection:
+                                description: Connection settings.
+                                items:
+                                  properties:
+                                    clusterId:
+                                      description: Identifier of the Managed Kafka
+                                        cluster.
+                                      type: string
+                                    onPremise:
+                                      description: Connection settings of the on-premise
+                                        PostgreSQL server.
+                                      items:
+                                        properties:
+                                          brokerUrls:
+                                            description: List of Kafka broker URLs.
+                                            items:
+                                              type: string
+                                            type: array
+                                          subnetId:
+                                            description: '-  Identifier of the Yandex
+                                              Cloud VPC subnetwork to user for accessing
+                                              the database. If omitted, the server
+                                              has to be accessible via Internet.'
+                                            type: string
+                                          tlsMode:
+                                            description: TLS settings for the server
+                                              connection. Empty implies plaintext
+                                              connection. The structure is documented
+                                              below.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: Empty block designating
+                                                    that the connection is not secured,
+                                                    i.e. plaintext connection.
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: If this attribute is
+                                                    not an empty block, then TLS is
+                                                    used for the server connection.
+                                                    The structure is documented below.
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: X.509 certificate
+                                                          of the certificate authority
+                                                          which issued the server's
+                                                          certificate, in PEM format.
+                                                          If empty, the server's certificate
+                                                          must be signed by a well-known
+                                                          CA.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              parser:
+                                description: Data parsing parameters. If not set,
+                                  the source messages are read in raw.
+                                items:
+                                  properties:
+                                    auditTrailsV1Parser:
+                                      description: Parse Audit Trails data. Empty
+                                        struct.
+                                      items:
+                                        type: object
+                                      type: array
+                                    cloudLoggingParser:
+                                      description: Parse Cloud Logging data. Empty
+                                        struct.
+                                      items:
+                                        type: object
+                                      type: array
+                                    jsonParser:
+                                      description: Parse data in json format.
+                                      items:
+                                        properties:
+                                          addRestColumn:
+                                            description: Add fields, that are not
+                                              in the schema, into the _rest column.
+                                            type: boolean
+                                          dataSchema:
+                                            description: Data parsing scheme.The structure
+                                              is documented below.
+                                            items:
+                                              properties:
+                                                fields:
+                                                  description: Description of the
+                                                    data schema in the array of fields
+                                                    structure (documented below).
+                                                  items:
+                                                    properties:
+                                                      fields:
+                                                        description: Description of
+                                                          the data schema in the array
+                                                          of fields structure (documented
+                                                          below).
+                                                        items:
+                                                          properties:
+                                                            key:
+                                                              description: Mark field
+                                                                as Primary Key.
+                                                              type: boolean
+                                                            name:
+                                                              description: Field name.
+                                                              type: string
+                                                            path:
+                                                              description: '-  A path
+                                                                where resulting tables
+                                                                are stored.'
+                                                              type: string
+                                                            required:
+                                                              description: Mark field
+                                                                as required.
+                                                              type: boolean
+                                                            type:
+                                                              description: 'Field
+                                                                type, one of: INT64,
+                                                                INT32, INT16, INT8,
+                                                                UINT64, UINT32, UINT16,
+                                                                UINT8, DOUBLE, BOOLEAN,
+                                                                STRING, UTF8, ANY,
+                                                                DATETIME.'
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                                jsonFields:
+                                                  description: Description of the
+                                                    data schema as JSON specification.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          nullKeysAllowed:
+                                            description: Allow null keys. If false
+                                              - null keys will be putted to unparsed
+                                              data
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    tskvParser:
+                                      description: Parse data if tskv format.
+                                      items:
+                                        properties:
+                                          addRestColumn:
+                                            description: Add fields, that are not
+                                              in the schema, into the _rest column.
+                                            type: boolean
+                                          dataSchema:
+                                            description: Data parsing scheme.The structure
+                                              is documented below.
+                                            items:
+                                              properties:
+                                                fields:
+                                                  description: Description of the
+                                                    data schema in the array of fields
+                                                    structure (documented below).
+                                                  items:
+                                                    properties:
+                                                      fields:
+                                                        description: Description of
+                                                          the data schema in the array
+                                                          of fields structure (documented
+                                                          below).
+                                                        items:
+                                                          properties:
+                                                            key:
+                                                              description: Mark field
+                                                                as Primary Key.
+                                                              type: boolean
+                                                            name:
+                                                              description: Field name.
+                                                              type: string
+                                                            path:
+                                                              description: '-  A path
+                                                                where resulting tables
+                                                                are stored.'
+                                                              type: string
+                                                            required:
+                                                              description: Mark field
+                                                                as required.
+                                                              type: boolean
+                                                            type:
+                                                              description: 'Field
+                                                                type, one of: INT64,
+                                                                INT32, INT16, INT8,
+                                                                UINT64, UINT32, UINT16,
+                                                                UINT8, DOUBLE, BOOLEAN,
+                                                                STRING, UTF8, ANY,
+                                                                DATETIME.'
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                                jsonFields:
+                                                  description: Description of the
+                                                    data schema as JSON specification.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          nullKeysAllowed:
+                                            description: Allow null keys. If false
+                                              - null keys will be putted to unparsed
+                                              data
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              securityGroups:
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
+                                items:
+                                  type: string
+                                type: array
+                              topicName:
+                                description: Full topic name
+                                type: string
+                              transformer:
+                                description: Transform data with a custom Cloud Function.
+                                items:
+                                  properties:
+                                    bufferFlushInterval:
+                                      type: string
+                                    bufferSize:
+                                      type: string
+                                    cloudFunction:
+                                      type: string
+                                    invocationTimeout:
+                                      type: string
+                                    numberOfRetries:
+                                      type: number
+                                    serviceAccountId:
+                                      description: '-  Service account ID for interaction
+                                        with database.'
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        kafkaTarget:
+                          description: Settings specific to the Kafka target endpoint.
+                          items:
+                            properties:
+                              auth:
+                                description: Authentication data.
+                                items:
+                                  properties:
+                                    noAuth:
+                                      description: Connection without authentication
+                                        data.
+                                      items:
+                                        type: object
+                                      type: array
+                                    sasl:
+                                      description: Authentication using sasl.
+                                      items:
+                                        properties:
+                                          mechanism:
+                                            type: string
+                                          password:
+                                            description: Password for the database
+                                              access. This is a block with a single
+                                              field named raw which should contain
+                                              the password.
+                                            items:
+                                              properties:
+                                                rawSecretRef:
+                                                  description: A SecretKeySelector
+                                                    is a reference to a secret key
+                                                    in an arbitrary namespace.
+                                                  properties:
+                                                    key:
+                                                      description: The key to select.
+                                                      type: string
+                                                    name:
+                                                      description: Name of the secret.
+                                                      type: string
+                                                    namespace:
+                                                      description: Namespace of the
+                                                        secret.
+                                                      type: string
+                                                  required:
+                                                  - key
+                                                  - name
+                                                  - namespace
+                                                  type: object
+                                              type: object
+                                            type: array
+                                          user:
+                                            description: User for the database access.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              connection:
+                                description: Connection settings.
+                                items:
+                                  properties:
+                                    clusterId:
+                                      description: Identifier of the Managed Kafka
+                                        cluster.
+                                      type: string
+                                    onPremise:
+                                      description: Connection settings of the on-premise
+                                        PostgreSQL server.
+                                      items:
+                                        properties:
+                                          brokerUrls:
+                                            description: List of Kafka broker URLs.
+                                            items:
+                                              type: string
+                                            type: array
+                                          subnetId:
+                                            description: '-  Identifier of the Yandex
+                                              Cloud VPC subnetwork to user for accessing
+                                              the database. If omitted, the server
+                                              has to be accessible via Internet.'
+                                            type: string
+                                          tlsMode:
+                                            description: TLS settings for the server
+                                              connection. Empty implies plaintext
+                                              connection. The structure is documented
+                                              below.
+                                            items:
+                                              properties:
+                                                disabled:
+                                                  description: Empty block designating
+                                                    that the connection is not secured,
+                                                    i.e. plaintext connection.
+                                                  items:
+                                                    type: object
+                                                  type: array
+                                                enabled:
+                                                  description: If this attribute is
+                                                    not an empty block, then TLS is
+                                                    used for the server connection.
+                                                    The structure is documented below.
+                                                  items:
+                                                    properties:
+                                                      caCertificate:
+                                                        description: X.509 certificate
+                                                          of the certificate authority
+                                                          which issued the server's
+                                                          certificate, in PEM format.
+                                                          If empty, the server's certificate
+                                                          must be signed by a well-known
+                                                          CA.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              securityGroups:
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
+                                items:
+                                  type: string
+                                type: array
+                              serializer:
+                                description: Data serialization settings.
+                                items:
+                                  properties:
+                                    serializerAuto:
+                                      description: Empty block. Select data serialization
+                                        format automatically.
+                                      items:
+                                        type: object
+                                      type: array
+                                    serializerDebezium:
+                                      description: Serialize data in json format.
+                                        The structure is documented below.
+                                      items:
+                                        properties:
+                                          serializerParameters:
+                                            description: A list of debezium parameters
+                                              set by the structure of the key and
+                                              value string fields.
+                                            items:
+                                              properties:
+                                                key:
+                                                  description: Mark field as Primary
+                                                    Key.
+                                                  type: string
+                                                value:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    serializerJson:
+                                      description: Empty block. Serialize data in
+                                        json format.
+                                      items:
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              topicSettings:
+                                description: Target topic settings.
+                                items:
+                                  properties:
+                                    topic:
+                                      description: All messages will be sent to one
+                                        topic. The structure is documented below.
+                                      items:
+                                        properties:
+                                          saveTxOrder:
+                                            description: Not to split events queue
+                                              into separate per-table queues.
+                                            type: boolean
+                                          topicName:
+                                            description: Full topic name
+                                            type: string
+                                        type: object
+                                      type: array
+                                    topicPrefix:
+                                      description: Topic name prefix. Messages will
+                                        be sent to topic with name <topic_prefix>..<table_name>.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                         mongoSource:
                           description: Settings specific to the MongoDB source endpoint.
                           items:
@@ -4527,6 +5622,8 @@ spec:
                                   properties:
                                     routine:
                                       type: string
+                                    tables:
+                                      type: string
                                     trigger:
                                       description: All of the attrubutes are optional
                                         and should be either "BEFORE_DATA", "AFTER_DATA"
@@ -4828,6 +5925,8 @@ spec:
                                       type: string
                                     sequenceOwnedBy:
                                       type: string
+                                    sequenceSet:
+                                      type: string
                                     table:
                                       type: string
                                     trigger:
@@ -5002,6 +6101,77 @@ spec:
                                 type: array
                               user:
                                 description: User for the database access.
+                                type: string
+                            type: object
+                          type: array
+                        ydbSource:
+                          description: Settings specific to the YDB source endpoint.
+                          items:
+                            properties:
+                              database:
+                                description: '-  Database path in YDB where tables
+                                  are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
+                                type: string
+                              instance:
+                                description: '-  Instance of YDB. Example: "my-cute-ydb.cloud.yandex.ru:2135".'
+                                type: string
+                              paths:
+                                description: '-  A list of paths which should be uploaded.
+                                  When not specified, all available tables are uploaded.'
+                                items:
+                                  type: string
+                                type: array
+                              securityGroups:
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
+                                items:
+                                  type: string
+                                type: array
+                              serviceAccountId:
+                                description: '-  Service account ID for interaction
+                                  with database.'
+                                type: string
+                              subnetId:
+                                description: '-  Identifier of the Yandex Cloud VPC
+                                  subnetwork to user for accessing the database. If
+                                  omitted, the server has to be accessible via Internet.'
+                                type: string
+                            type: object
+                          type: array
+                        ydbTarget:
+                          description: Settings specific to the YDB target endpoint.
+                          items:
+                            properties:
+                              cleanupPolicy:
+                                description: '-  How to clean collections when activating
+                                  the transfer. One of "YDB_CLEANUP_POLICY_DISABLED"
+                                  or "YDB_CLEANUP_POLICY_DROP".'
+                                type: string
+                              database:
+                                description: '-  Database path in YDB where tables
+                                  are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".'
+                                type: string
+                              instance:
+                                description: '-  Instance of YDB. Example: "my-cute-ydb.cloud.yandex.ru:2135".'
+                                type: string
+                              path:
+                                description: '-  A path where resulting tables are
+                                  stored.'
+                                type: string
+                              securityGroups:
+                                description: '-  List of security groups that the
+                                  transfer associated with this endpoint should use.'
+                                items:
+                                  type: string
+                                type: array
+                              serviceAccountId:
+                                description: '-  Service account ID for interaction
+                                  with database.'
+                                type: string
+                              subnetId:
+                                description: '-  Identifier of the Yandex Cloud VPC
+                                  subnetwork to user for accessing the database. If
+                                  omitted, the server has to be accessible via Internet.'
                                 type: string
                             type: object
                           type: array

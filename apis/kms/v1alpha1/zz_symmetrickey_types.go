@@ -34,6 +34,8 @@ type SymmetricKeyObservation struct {
 	// generated with the next rotation. The default value is AES_128.
 	DefaultAlgorithm *string `json:"defaultAlgorithm,omitempty" tf:"default_algorithm,omitempty"`
 
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
 	// An optional description of the key.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -65,6 +67,9 @@ type SymmetricKeyParameters struct {
 	// generated with the next rotation. The default value is AES_128.
 	// +kubebuilder:validation:Optional
 	DefaultAlgorithm *string `json:"defaultAlgorithm,omitempty" tf:"default_algorithm,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// An optional description of the key.
 	// +kubebuilder:validation:Optional

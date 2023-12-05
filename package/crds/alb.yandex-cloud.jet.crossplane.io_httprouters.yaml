@@ -160,6 +160,59 @@ spec:
                     description: Name of the HTTP Router. Provided by the client when
                       the HTTP Router is created.
                     type: string
+                  routeOptions:
+                    items:
+                      properties:
+                        rbac:
+                          items:
+                            properties:
+                              action:
+                                type: string
+                              principals:
+                                items:
+                                  properties:
+                                    andPrincipals:
+                                      items:
+                                        properties:
+                                          any:
+                                            type: boolean
+                                          header:
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: Name of the HTTP Router.
+                                                    Provided by the client when the
+                                                    HTTP Router is created.
+                                                  type: string
+                                                value:
+                                                  items:
+                                                    properties:
+                                                      exact:
+                                                        type: string
+                                                      prefix:
+                                                        type: string
+                                                      regex:
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              required:
+                                              - name
+                                              type: object
+                                            type: array
+                                          remoteIp:
+                                            type: string
+                                        type: object
+                                      type: array
+                                  required:
+                                  - andPrincipals
+                                  type: object
+                                type: array
+                            required:
+                            - principals
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                 type: object
               managementPolicy:
                 default: FullControl
@@ -376,6 +429,53 @@ spec:
                     description: Name of the HTTP Router. Provided by the client when
                       the HTTP Router is created.
                     type: string
+                  routeOptions:
+                    items:
+                      properties:
+                        rbac:
+                          items:
+                            properties:
+                              action:
+                                type: string
+                              principals:
+                                items:
+                                  properties:
+                                    andPrincipals:
+                                      items:
+                                        properties:
+                                          any:
+                                            type: boolean
+                                          header:
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: Name of the HTTP Router.
+                                                    Provided by the client when the
+                                                    HTTP Router is created.
+                                                  type: string
+                                                value:
+                                                  items:
+                                                    properties:
+                                                      exact:
+                                                        type: string
+                                                      prefix:
+                                                        type: string
+                                                      regex:
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          remoteIp:
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.

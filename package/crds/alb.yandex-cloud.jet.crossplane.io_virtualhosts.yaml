@@ -227,6 +227,9 @@ spec:
                                           prefix:
                                             description: Match prefix.
                                             type: string
+                                          regex:
+                                            description: Match regex.
+                                            type: string
                                         type: object
                                       type: array
                                   type: object
@@ -404,6 +407,9 @@ spec:
                                           prefix:
                                             description: Match prefix.
                                             type: string
+                                          regex:
+                                            description: Match regex.
+                                            type: string
                                         type: object
                                       type: array
                                   type: object
@@ -575,6 +581,114 @@ spec:
                         name:
                           description: name of the route.
                           type: string
+                        routeOptions:
+                          items:
+                            properties:
+                              rbac:
+                                items:
+                                  properties:
+                                    action:
+                                      type: string
+                                    principals:
+                                      items:
+                                        properties:
+                                          andPrincipals:
+                                            items:
+                                              properties:
+                                                any:
+                                                  type: boolean
+                                                header:
+                                                  items:
+                                                    properties:
+                                                      name:
+                                                        description: name of the route.
+                                                        type: string
+                                                      value:
+                                                        items:
+                                                          properties:
+                                                            exact:
+                                                              description: Match exactly.
+                                                              type: string
+                                                            prefix:
+                                                              description: Match prefix.
+                                                              type: string
+                                                            regex:
+                                                              description: Match regex.
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    required:
+                                                    - name
+                                                    type: object
+                                                  type: array
+                                                remoteIp:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        required:
+                                        - andPrincipals
+                                        type: object
+                                      type: array
+                                  required:
+                                  - principals
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  routeOptions:
+                    items:
+                      properties:
+                        rbac:
+                          items:
+                            properties:
+                              action:
+                                type: string
+                              principals:
+                                items:
+                                  properties:
+                                    andPrincipals:
+                                      items:
+                                        properties:
+                                          any:
+                                            type: boolean
+                                          header:
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: name of the route.
+                                                  type: string
+                                                value:
+                                                  items:
+                                                    properties:
+                                                      exact:
+                                                        description: Match exactly.
+                                                        type: string
+                                                      prefix:
+                                                        description: Match prefix.
+                                                        type: string
+                                                      regex:
+                                                        description: Match regex.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              required:
+                                              - name
+                                              type: object
+                                            type: array
+                                          remoteIp:
+                                            type: string
+                                        type: object
+                                      type: array
+                                  required:
+                                  - andPrincipals
+                                  type: object
+                                type: array
+                            required:
+                            - principals
+                            type: object
+                          type: array
                       type: object
                     type: array
                 type: object
@@ -858,6 +972,9 @@ spec:
                                           prefix:
                                             description: Match prefix.
                                             type: string
+                                          regex:
+                                            description: Match regex.
+                                            type: string
                                         type: object
                                       type: array
                                   type: object
@@ -951,6 +1068,9 @@ spec:
                                           prefix:
                                             description: Match prefix.
                                             type: string
+                                          regex:
+                                            description: Match regex.
+                                            type: string
                                         type: object
                                       type: array
                                   type: object
@@ -1038,6 +1158,102 @@ spec:
                         name:
                           description: name of the route.
                           type: string
+                        routeOptions:
+                          items:
+                            properties:
+                              rbac:
+                                items:
+                                  properties:
+                                    action:
+                                      type: string
+                                    principals:
+                                      items:
+                                        properties:
+                                          andPrincipals:
+                                            items:
+                                              properties:
+                                                any:
+                                                  type: boolean
+                                                header:
+                                                  items:
+                                                    properties:
+                                                      name:
+                                                        description: name of the route.
+                                                        type: string
+                                                      value:
+                                                        items:
+                                                          properties:
+                                                            exact:
+                                                              description: Match exactly.
+                                                              type: string
+                                                            prefix:
+                                                              description: Match prefix.
+                                                              type: string
+                                                            regex:
+                                                              description: Match regex.
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                                remoteIp:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  routeOptions:
+                    items:
+                      properties:
+                        rbac:
+                          items:
+                            properties:
+                              action:
+                                type: string
+                              principals:
+                                items:
+                                  properties:
+                                    andPrincipals:
+                                      items:
+                                        properties:
+                                          any:
+                                            type: boolean
+                                          header:
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: name of the route.
+                                                  type: string
+                                                value:
+                                                  items:
+                                                    properties:
+                                                      exact:
+                                                        description: Match exactly.
+                                                        type: string
+                                                      prefix:
+                                                        description: Match prefix.
+                                                        type: string
+                                                      regex:
+                                                        description: Match regex.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          remoteIp:
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                       type: object
                     type: array
                 type: object

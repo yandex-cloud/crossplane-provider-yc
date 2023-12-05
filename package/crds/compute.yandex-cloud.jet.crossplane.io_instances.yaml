@@ -131,6 +131,27 @@ spec:
                   description:
                     description: Description of the instance.
                     type: string
+                  filesystem:
+                    description: List of filesystems that are attached to the instance.
+                      Structure is documented below.
+                    items:
+                      properties:
+                        deviceName:
+                          description: Name of the device representing the filesystem
+                            on the instance.
+                          type: string
+                        filesystemId:
+                          description: ID of the filesystem that should be attached.
+                          type: string
+                        mode:
+                          description: Mode of access to the filesystem that should
+                            be attached. By default, filesystem is attached in READ_WRITE
+                            mode.
+                          type: string
+                      required:
+                      - filesystemId
+                      type: object
+                    type: array
                   folderId:
                     description: The ID of the folder that the resource belongs to.
                       If it is not provided, the default provider folder is used.
@@ -210,6 +231,10 @@ spec:
                             type: string
                         type: object
                     type: object
+                  gpuClusterId:
+                    description: ID of the GPU cluster to attach this instance to.
+                      The GPU cluster must exist in the same zone as the instance.
+                    type: string
                   hostname:
                     description: Host name for the instance. This field is used to
                       generate the instance fqdn value. The host name must be unique
@@ -240,6 +265,21 @@ spec:
                     description: Metadata key/value pairs to make available from within
                       the instance.
                     type: object
+                  metadataOptions:
+                    description: Options allow user to configure access to instance's
+                      metadata
+                    items:
+                      properties:
+                        awsV1HttpEndpoint:
+                          type: number
+                        awsV1HttpToken:
+                          type: number
+                        gceHttpEndpoint:
+                          type: number
+                        gceHttpToken:
+                          type: number
+                      type: object
+                    type: array
                   name:
                     description: Resource name.
                     type: string
@@ -961,12 +1001,35 @@ spec:
                   description:
                     description: Description of the instance.
                     type: string
+                  filesystem:
+                    description: List of filesystems that are attached to the instance.
+                      Structure is documented below.
+                    items:
+                      properties:
+                        deviceName:
+                          description: Name of the device representing the filesystem
+                            on the instance.
+                          type: string
+                        filesystemId:
+                          description: ID of the filesystem that should be attached.
+                          type: string
+                        mode:
+                          description: Mode of access to the filesystem that should
+                            be attached. By default, filesystem is attached in READ_WRITE
+                            mode.
+                          type: string
+                      type: object
+                    type: array
                   folderId:
                     description: The ID of the folder that the resource belongs to.
                       If it is not provided, the default provider folder is used.
                     type: string
                   fqdn:
                     description: The fully qualified DNS name of this instance.
+                    type: string
+                  gpuClusterId:
+                    description: ID of the GPU cluster to attach this instance to.
+                      The GPU cluster must exist in the same zone as the instance.
                     type: string
                   hostname:
                     description: Host name for the instance. This field is used to
@@ -1001,6 +1064,21 @@ spec:
                     description: Metadata key/value pairs to make available from within
                       the instance.
                     type: object
+                  metadataOptions:
+                    description: Options allow user to configure access to instance's
+                      metadata
+                    items:
+                      properties:
+                        awsV1HttpEndpoint:
+                          type: number
+                        awsV1HttpToken:
+                          type: number
+                        gceHttpEndpoint:
+                          type: number
+                        gceHttpToken:
+                          type: number
+                      type: object
+                    type: array
                   name:
                     description: Resource name.
                     type: string

@@ -64,6 +64,9 @@ type MySQLClusterAccessObservation struct {
 	// Allow access for Yandex DataLens.
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
 
+	// Allow access for DataTransfer
+	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
+
 	// Allows access for SQL queries in the management console.
 	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
 }
@@ -73,6 +76,10 @@ type MySQLClusterAccessParameters struct {
 	// Allow access for Yandex DataLens.
 	// +kubebuilder:validation:Optional
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
+
+	// Allow access for DataTransfer
+	// +kubebuilder:validation:Optional
+	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
 
 	// Allows access for SQL queries in the management console.
 	// +kubebuilder:validation:Optional
@@ -217,6 +224,9 @@ type MySQLClusterObservation struct {
 	// A host of the MySQL cluster. The structure is documented below.
 	AllowRegenerationHost *bool `json:"allowRegenerationHost,omitempty" tf:"allow_regeneration_host,omitempty"`
 
+	// The period in days during which backups are stored.
+	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
+
 	// Time to start the daily backup, in the UTC. The structure is documented below.
 	BackupWindowStart []MySQLClusterBackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
@@ -265,13 +275,13 @@ type MySQLClusterObservation struct {
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
 	// Cluster performance diagnostics settings. The structure is documented below. YC Documentation
-	PerformanceDiagnostics []PerformanceDiagnosticsObservation `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
+	PerformanceDiagnostics []MySQLClusterPerformanceDiagnosticsObservation `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
 
 	// Resources allocated to hosts of the MySQL cluster. The structure is documented below.
 	Resources []MySQLClusterResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
 	// The cluster will be created from the specified backup. The structure is documented below.
-	Restore []RestoreObservation `json:"restore,omitempty" tf:"restore,omitempty"`
+	Restore []MySQLClusterRestoreObservation `json:"restore,omitempty" tf:"restore,omitempty"`
 
 	// A set of ids of security groups assigned to hosts of the cluster.
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
@@ -295,6 +305,10 @@ type MySQLClusterParameters struct {
 	// A host of the MySQL cluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	AllowRegenerationHost *bool `json:"allowRegenerationHost,omitempty" tf:"allow_regeneration_host,omitempty"`
+
+	// The period in days during which backups are stored.
+	// +kubebuilder:validation:Optional
+	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
 
 	// Time to start the daily backup, in the UTC. The structure is documented below.
 	// +kubebuilder:validation:Optional
@@ -368,7 +382,7 @@ type MySQLClusterParameters struct {
 
 	// Cluster performance diagnostics settings. The structure is documented below. YC Documentation
 	// +kubebuilder:validation:Optional
-	PerformanceDiagnostics []PerformanceDiagnosticsParameters `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
+	PerformanceDiagnostics []MySQLClusterPerformanceDiagnosticsParameters `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
 
 	// Resources allocated to hosts of the MySQL cluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
@@ -376,7 +390,7 @@ type MySQLClusterParameters struct {
 
 	// The cluster will be created from the specified backup. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	Restore []RestoreParameters `json:"restore,omitempty" tf:"restore,omitempty"`
+	Restore []MySQLClusterRestoreParameters `json:"restore,omitempty" tf:"restore,omitempty"`
 
 	// A set of ids of security groups assigned to hosts of the cluster.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
@@ -398,6 +412,33 @@ type MySQLClusterParameters struct {
 	// Version of the MySQL cluster. (allowed versions are: 5.7, 8.0)
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+}
+
+type MySQLClusterPerformanceDiagnosticsObservation struct {
+
+	// Enable performance diagnostics
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+	SessionsSamplingInterval *float64 `json:"sessionsSamplingInterval,omitempty" tf:"sessions_sampling_interval,omitempty"`
+
+	// Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+	StatementsSamplingInterval *float64 `json:"statementsSamplingInterval,omitempty" tf:"statements_sampling_interval,omitempty"`
+}
+
+type MySQLClusterPerformanceDiagnosticsParameters struct {
+
+	// Enable performance diagnostics
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+	// +kubebuilder:validation:Required
+	SessionsSamplingInterval *float64 `json:"sessionsSamplingInterval" tf:"sessions_sampling_interval,omitempty"`
+
+	// Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+	// +kubebuilder:validation:Required
+	StatementsSamplingInterval *float64 `json:"statementsSamplingInterval" tf:"statements_sampling_interval,omitempty"`
 }
 
 type MySQLClusterResourcesObservation struct {
@@ -423,6 +464,26 @@ type MySQLClusterResourcesParameters struct {
 
 	// +kubebuilder:validation:Required
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
+}
+
+type MySQLClusterRestoreObservation struct {
+
+	// Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
+	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
+	// Timestamp of the moment to which the MySQL cluster should be restored. (Format: "2006-01-02T15:04:05" - UTC). When not set, current time is used.
+	Time *string `json:"time,omitempty" tf:"time,omitempty"`
+}
+
+type MySQLClusterRestoreParameters struct {
+
+	// Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
+	// +kubebuilder:validation:Required
+	BackupID *string `json:"backupId" tf:"backup_id,omitempty"`
+
+	// Timestamp of the moment to which the MySQL cluster should be restored. (Format: "2006-01-02T15:04:05" - UTC). When not set, current time is used.
+	// +kubebuilder:validation:Optional
+	Time *string `json:"time,omitempty" tf:"time,omitempty"`
 }
 
 type MySQLClusterUserObservation struct {
@@ -474,53 +535,6 @@ type MySQLClusterUserParameters struct {
 	// Set of permissions granted to the user. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Permission []UserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
-}
-
-type PerformanceDiagnosticsObservation struct {
-
-	// Enable performance diagnostics
-	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
-
-	// Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
-	SessionsSamplingInterval *float64 `json:"sessionsSamplingInterval,omitempty" tf:"sessions_sampling_interval,omitempty"`
-
-	// Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
-	StatementsSamplingInterval *float64 `json:"statementsSamplingInterval,omitempty" tf:"statements_sampling_interval,omitempty"`
-}
-
-type PerformanceDiagnosticsParameters struct {
-
-	// Enable performance diagnostics
-	// +kubebuilder:validation:Optional
-	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
-
-	// Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
-	// +kubebuilder:validation:Required
-	SessionsSamplingInterval *float64 `json:"sessionsSamplingInterval" tf:"sessions_sampling_interval,omitempty"`
-
-	// Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
-	// +kubebuilder:validation:Required
-	StatementsSamplingInterval *float64 `json:"statementsSamplingInterval" tf:"statements_sampling_interval,omitempty"`
-}
-
-type RestoreObservation struct {
-
-	// Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
-	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
-
-	// Timestamp of the moment to which the MySQL cluster should be restored. (Format: "2006-01-02T15:04:05" - UTC). When not set, current time is used.
-	Time *string `json:"time,omitempty" tf:"time,omitempty"`
-}
-
-type RestoreParameters struct {
-
-	// Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
-	// +kubebuilder:validation:Required
-	BackupID *string `json:"backupId" tf:"backup_id,omitempty"`
-
-	// Timestamp of the moment to which the MySQL cluster should be restored. (Format: "2006-01-02T15:04:05" - UTC). When not set, current time is used.
-	// +kubebuilder:validation:Optional
-	Time *string `json:"time,omitempty" tf:"time,omitempty"`
 }
 
 type UserPermissionObservation struct {

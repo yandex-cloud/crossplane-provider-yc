@@ -67,6 +67,9 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  deletionProtection:
+                    description: Flag that protects the address from accidental deletion.
+                    type: boolean
                   description:
                     description: An optional description of this resource. Provide
                       this property when you create the resource.
@@ -371,6 +374,9 @@ spec:
                   createdAt:
                     description: Creation timestamp of the key.
                     type: string
+                  deletionProtection:
+                    description: Flag that protects the address from accidental deletion.
+                    type: boolean
                   description:
                     description: An optional description of this resource. Provide
                       this property when you create the resource.

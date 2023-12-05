@@ -146,6 +146,10 @@ spec:
                     description: The maximum number of connections per user. (Default
                       50)
                     type: number
+                  deletionProtection:
+                    description: Inhibits deletion of the user. Can either be true,
+                      false or unspecified.
+                    type: string
                   grants:
                     description: List of the user's grants.
                     items:
@@ -396,6 +400,10 @@ spec:
                     description: The maximum number of connections per user. (Default
                       50)
                     type: number
+                  deletionProtection:
+                    description: Inhibits deletion of the user. Can either be true,
+                      false or unspecified.
+                    type: string
                   grants:
                     description: List of the user's grants.
                     items:

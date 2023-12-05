@@ -67,6 +67,10 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  deletionProtection:
+                    description: Inhibits deletion of the database. Can be either
+                      true or false
+                    type: boolean
                   description:
                     description: A description for the Yandex Database serverless
                       cluster.
@@ -163,6 +167,19 @@ spec:
                   name:
                     description: Name for the Yandex Database serverless cluster.
                     type: string
+                  serverlessDatabase:
+                    items:
+                      properties:
+                        enableThrottlingRcuLimit:
+                          type: boolean
+                        provisionedRcuLimit:
+                          type: number
+                        storageSizeLimit:
+                          type: number
+                        throttlingRcuLimit:
+                          type: number
+                      type: object
+                    type: array
                 type: object
               managementPolicy:
                 default: FullControl
@@ -365,6 +382,10 @@ spec:
                     description: Full database path of the Yandex Database serverless
                       cluster. Useful for SDK configuration.
                     type: string
+                  deletionProtection:
+                    description: Inhibits deletion of the database. Can be either
+                      true or false
+                    type: boolean
                   description:
                     description: A description for the Yandex Database serverless
                       cluster.
@@ -393,6 +414,19 @@ spec:
                   name:
                     description: Name for the Yandex Database serverless cluster.
                     type: string
+                  serverlessDatabase:
+                    items:
+                      properties:
+                        enableThrottlingRcuLimit:
+                          type: boolean
+                        provisionedRcuLimit:
+                          type: number
+                        storageSizeLimit:
+                          type: number
+                        throttlingRcuLimit:
+                          type: number
+                      type: object
+                    type: array
                   status:
                     description: Status of the Yandex Database serverless cluster.
                     type: string

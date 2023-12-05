@@ -71,6 +71,8 @@ spec:
                     description: Encryption algorithm to be used with a new key version,
                       generated with the next rotation. The default value is AES_128.
                     type: string
+                  deletionProtection:
+                    type: boolean
                   description:
                     description: An optional description of the key.
                     type: string
@@ -364,6 +366,8 @@ spec:
                     description: Encryption algorithm to be used with a new key version,
                       generated with the next rotation. The default value is AES_128.
                     type: string
+                  deletionProtection:
+                    type: boolean
                   description:
                     description: An optional description of the key.
                     type: string

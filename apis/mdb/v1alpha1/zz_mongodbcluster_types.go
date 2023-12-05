@@ -29,9 +29,20 @@ type AccessObservation struct {
 
 	// Allow access for Yandex DataLens.
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
+
+	// Allow access for DataTransfer
+	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
 }
 
 type AccessParameters struct {
+
+	// Allow access for Yandex DataLens.
+	// +kubebuilder:validation:Optional
+	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
+
+	// Allow access for DataTransfer
+	// +kubebuilder:validation:Optional
+	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
 }
 
 type AuditLogObservation struct {
@@ -87,14 +98,26 @@ type ClusterConfigObservation struct {
 	// Access policy to the MongoDB cluster. The structure is documented below.
 	Access []AccessObservation `json:"access,omitempty" tf:"access,omitempty"`
 
+	// Retain period of automatically created backup in days.
+	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
+
 	// Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	BackupWindowStart []BackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
 	// Feature compatibility version of MongoDB. If not provided version is taken. Can be either 6.0, 5.0, 4.4 and 4.2.
 	FeatureCompatibilityVersion *string `json:"featureCompatibilityVersion,omitempty" tf:"feature_compatibility_version,omitempty"`
 
+	// Configuration of the mongocfg service. The structure is documented below.
+	Mongocfg []MongocfgObservation `json:"mongocfg,omitempty" tf:"mongocfg,omitempty"`
+
 	// Configuration of the mongod service. The structure is documented below.
 	Mongod []MongodObservation `json:"mongod,omitempty" tf:"mongod,omitempty"`
+
+	// Configuration of the mongos service. The structure is documented below.
+	Mongos []MongosObservation `json:"mongos,omitempty" tf:"mongos,omitempty"`
+
+	// Performance diagnostics to the MongoDB cluster. The structure is documented below.
+	PerformanceDiagnostics []PerformanceDiagnosticsObservation `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
 
 	// Version of the MongoDB server software. Can be either 4.2, 4.4, 4.4-enterprise, 5.0, 5.0-enterprise, 6.0 and 6.0-enterprise.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
@@ -106,6 +129,10 @@ type ClusterConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Access []AccessParameters `json:"access,omitempty" tf:"access,omitempty"`
 
+	// Retain period of automatically created backup in days.
+	// +kubebuilder:validation:Optional
+	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
+
 	// Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	BackupWindowStart []BackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
@@ -114,9 +141,21 @@ type ClusterConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	FeatureCompatibilityVersion *string `json:"featureCompatibilityVersion,omitempty" tf:"feature_compatibility_version,omitempty"`
 
+	// Configuration of the mongocfg service. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Mongocfg []MongocfgParameters `json:"mongocfg,omitempty" tf:"mongocfg,omitempty"`
+
 	// Configuration of the mongod service. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Mongod []MongodParameters `json:"mongod,omitempty" tf:"mongod,omitempty"`
+
+	// Configuration of the mongos service. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Mongos []MongosParameters `json:"mongos,omitempty" tf:"mongos,omitempty"`
+
+	// Performance diagnostics to the MongoDB cluster. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	PerformanceDiagnostics []PerformanceDiagnosticsParameters `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
 
 	// Version of the MongoDB server software. Can be either 4.2, 4.4, 4.4-enterprise, 5.0, 5.0-enterprise, 6.0 and 6.0-enterprise.
 	// +kubebuilder:validation:Required
@@ -134,6 +173,23 @@ type DatabaseParameters struct {
 	// The name of the database.
 	// +kubebuilder:validation:Required
 	Name *string `json:"name" tf:"name,omitempty"`
+}
+
+type JournalObservation struct {
+
+	// The maximum amount of time in milliseconds that the mongod process allows between journal operations.
+	// For more information, see the storage.journal.commitIntervalMs
+	// description in the official documentation.
+	CommitInterval *float64 `json:"commitInterval,omitempty" tf:"commit_interval,omitempty"`
+}
+
+type JournalParameters struct {
+
+	// The maximum amount of time in milliseconds that the mongod process allows between journal operations.
+	// For more information, see the storage.journal.commitIntervalMs
+	// description in the official documentation.
+	// +kubebuilder:validation:Optional
+	CommitInterval *float64 `json:"commitInterval,omitempty" tf:"commit_interval,omitempty"`
 }
 
 type KmipObservation struct {
@@ -197,12 +253,78 @@ type KmipParameters struct {
 	ServerName *string `json:"serverName,omitempty" tf:"server_name,omitempty"`
 }
 
+type MongocfgObservation struct {
+
+	// A set of network settings
+	// (see the net option).
+	// The structure is documented below.
+	Net []NetObservation `json:"net,omitempty" tf:"net,omitempty"`
+
+	// A set of profiling settings
+	// (see the operationProfiling option).
+	// The structure is documented below.
+	OperationProfiling []OperationProfilingObservation `json:"operationProfiling,omitempty" tf:"operation_profiling,omitempty"`
+
+	// A set of storage settings
+	// (see the storage option).
+	// The structure is documented below.
+	Storage []StorageObservation `json:"storage,omitempty" tf:"storage,omitempty"`
+}
+
+type MongocfgParameters struct {
+
+	// A set of network settings
+	// (see the net option).
+	// The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Net []NetParameters `json:"net,omitempty" tf:"net,omitempty"`
+
+	// A set of profiling settings
+	// (see the operationProfiling option).
+	// The structure is documented below.
+	// +kubebuilder:validation:Optional
+	OperationProfiling []OperationProfilingParameters `json:"operationProfiling,omitempty" tf:"operation_profiling,omitempty"`
+
+	// A set of storage settings
+	// (see the storage option).
+	// The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Storage []StorageParameters `json:"storage,omitempty" tf:"storage,omitempty"`
+}
+
+type MongodNetObservation struct {
+
+	// The maximum number of simultaneous connections that host will accept.
+	// For more information, see the net.maxIncomingConnections
+	// description in the official documentation.
+	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+}
+
+type MongodNetParameters struct {
+
+	// The maximum number of simultaneous connections that host will accept.
+	// For more information, see the net.maxIncomingConnections
+	// description in the official documentation.
+	// +kubebuilder:validation:Optional
+	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+}
+
 type MongodObservation struct {
 
 	// A set of audit log settings
 	// (see the auditLog option).
 	// The structure is documented below. Available only in enterprise edition.
 	AuditLog []AuditLogObservation `json:"auditLog,omitempty" tf:"audit_log,omitempty"`
+
+	// A set of network settings
+	// (see the net option).
+	// The structure is documented below.
+	Net []MongodNetObservation `json:"net,omitempty" tf:"net,omitempty"`
+
+	// A set of profiling settings
+	// (see the operationProfiling option).
+	// The structure is documented below.
+	OperationProfiling []MongodOperationProfilingObservation `json:"operationProfiling,omitempty" tf:"operation_profiling,omitempty"`
 
 	// A set of MongoDB Security settings
 	// (see the security option).
@@ -213,6 +335,39 @@ type MongodObservation struct {
 	// (see the setParameter option).
 	// The structure is documented below.
 	SetParameter []SetParameterObservation `json:"setParameter,omitempty" tf:"set_parameter,omitempty"`
+
+	// A set of storage settings
+	// (see the storage option).
+	// The structure is documented below.
+	Storage []MongodStorageObservation `json:"storage,omitempty" tf:"storage,omitempty"`
+}
+
+type MongodOperationProfilingObservation struct {
+
+	// Specifies which operations should be profiled. The following profiler levels are available: off, slow_op, all.
+	// For more information, see the operationProfiling.mode
+	// description in the official documentation.
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow.
+	// For more information, see the operationProfiling.slowOpThresholdMs
+	// description in the official documentation.
+	SlowOpThreshold *float64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
+}
+
+type MongodOperationProfilingParameters struct {
+
+	// Specifies which operations should be profiled. The following profiler levels are available: off, slow_op, all.
+	// For more information, see the operationProfiling.mode
+	// description in the official documentation.
+	// +kubebuilder:validation:Optional
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow.
+	// For more information, see the operationProfiling.slowOpThresholdMs
+	// description in the official documentation.
+	// +kubebuilder:validation:Optional
+	SlowOpThreshold *float64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
 }
 
 type MongodParameters struct {
@@ -222,6 +377,18 @@ type MongodParameters struct {
 	// The structure is documented below. Available only in enterprise edition.
 	// +kubebuilder:validation:Optional
 	AuditLog []AuditLogParameters `json:"auditLog,omitempty" tf:"audit_log,omitempty"`
+
+	// A set of network settings
+	// (see the net option).
+	// The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Net []MongodNetParameters `json:"net,omitempty" tf:"net,omitempty"`
+
+	// A set of profiling settings
+	// (see the operationProfiling option).
+	// The structure is documented below.
+	// +kubebuilder:validation:Optional
+	OperationProfiling []MongodOperationProfilingParameters `json:"operationProfiling,omitempty" tf:"operation_profiling,omitempty"`
 
 	// A set of MongoDB Security settings
 	// (see the security option).
@@ -234,6 +401,38 @@ type MongodParameters struct {
 	// The structure is documented below.
 	// +kubebuilder:validation:Optional
 	SetParameter []SetParameterParameters `json:"setParameter,omitempty" tf:"set_parameter,omitempty"`
+
+	// A set of storage settings
+	// (see the storage option).
+	// The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Storage []MongodStorageParameters `json:"storage,omitempty" tf:"storage,omitempty"`
+}
+
+type MongodStorageObservation struct {
+
+	// The durability journal to ensure data files remain valid and recoverable.
+	// The structure is documented below.
+	Journal []JournalObservation `json:"journal,omitempty" tf:"journal,omitempty"`
+
+	// The WiredTiger engine settings.
+	// (see the storage.wiredTiger option).
+	// These settings available only on mongod hosts. The structure is documented below.
+	WiredTiger []StorageWiredTigerObservation `json:"wiredTiger,omitempty" tf:"wired_tiger,omitempty"`
+}
+
+type MongodStorageParameters struct {
+
+	// The durability journal to ensure data files remain valid and recoverable.
+	// The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Journal []JournalParameters `json:"journal,omitempty" tf:"journal,omitempty"`
+
+	// The WiredTiger engine settings.
+	// (see the storage.wiredTiger option).
+	// These settings available only on mongod hosts. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	WiredTiger []StorageWiredTigerParameters `json:"wiredTiger,omitempty" tf:"wired_tiger,omitempty"`
 }
 
 type MongodbClusterHostObservation struct {
@@ -381,6 +580,21 @@ type MongodbClusterObservation struct {
 	// (DEPRECATED, use resources_* instead) Resources allocated to hosts of the MongoDB cluster. The structure is documented below.
 	Resources []MongodbClusterResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
+	// Resources allocated to mongocfg hosts of the MongoDB cluster. The structure is documented below.
+	ResourcesMongocfg []ResourcesMongocfgObservation `json:"resourcesMongocfg,omitempty" tf:"resources_mongocfg,omitempty"`
+
+	// Resources allocated to mongod hosts of the MongoDB cluster. The structure is documented below.
+	ResourcesMongod []ResourcesMongodObservation `json:"resourcesMongod,omitempty" tf:"resources_mongod,omitempty"`
+
+	// Resources allocated to mongoinfra hosts of the MongoDB cluster. The structure is documented below.
+	ResourcesMongoinfra []ResourcesMongoinfraObservation `json:"resourcesMongoinfra,omitempty" tf:"resources_mongoinfra,omitempty"`
+
+	// Resources allocated to mongos hosts of the MongoDB cluster. The structure is documented below.
+	ResourcesMongos []ResourcesMongosObservation `json:"resourcesMongos,omitempty" tf:"resources_mongos,omitempty"`
+
+	// The cluster will be created from the specified backup. The structure is documented below.
+	Restore []RestoreObservation `json:"restore,omitempty" tf:"restore,omitempty"`
+
 	// A set of ids of security groups assigned to hosts of the cluster.
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
@@ -468,6 +682,26 @@ type MongodbClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Resources []MongodbClusterResourcesParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
+	// Resources allocated to mongocfg hosts of the MongoDB cluster. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	ResourcesMongocfg []ResourcesMongocfgParameters `json:"resourcesMongocfg,omitempty" tf:"resources_mongocfg,omitempty"`
+
+	// Resources allocated to mongod hosts of the MongoDB cluster. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	ResourcesMongod []ResourcesMongodParameters `json:"resourcesMongod,omitempty" tf:"resources_mongod,omitempty"`
+
+	// Resources allocated to mongoinfra hosts of the MongoDB cluster. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	ResourcesMongoinfra []ResourcesMongoinfraParameters `json:"resourcesMongoinfra,omitempty" tf:"resources_mongoinfra,omitempty"`
+
+	// Resources allocated to mongos hosts of the MongoDB cluster. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	ResourcesMongos []ResourcesMongosParameters `json:"resourcesMongos,omitempty" tf:"resources_mongos,omitempty"`
+
+	// The cluster will be created from the specified backup. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Restore []RestoreParameters `json:"restore,omitempty" tf:"restore,omitempty"`
+
 	// A set of ids of security groups assigned to hosts of the cluster.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
@@ -513,6 +747,98 @@ type MongodbClusterResourcesParameters struct {
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
 }
 
+type MongosNetObservation struct {
+
+	// The maximum number of simultaneous connections that host will accept.
+	// For more information, see the net.maxIncomingConnections
+	// description in the official documentation.
+	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+}
+
+type MongosNetParameters struct {
+
+	// The maximum number of simultaneous connections that host will accept.
+	// For more information, see the net.maxIncomingConnections
+	// description in the official documentation.
+	// +kubebuilder:validation:Optional
+	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+}
+
+type MongosObservation struct {
+
+	// A set of network settings
+	// (see the net option).
+	// The structure is documented below.
+	Net []MongosNetObservation `json:"net,omitempty" tf:"net,omitempty"`
+}
+
+type MongosParameters struct {
+
+	// A set of network settings
+	// (see the net option).
+	// The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Net []MongosNetParameters `json:"net,omitempty" tf:"net,omitempty"`
+}
+
+type NetObservation struct {
+
+	// The maximum number of simultaneous connections that host will accept.
+	// For more information, see the net.maxIncomingConnections
+	// description in the official documentation.
+	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+}
+
+type NetParameters struct {
+
+	// The maximum number of simultaneous connections that host will accept.
+	// For more information, see the net.maxIncomingConnections
+	// description in the official documentation.
+	// +kubebuilder:validation:Optional
+	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+}
+
+type OperationProfilingObservation struct {
+
+	// Specifies which operations should be profiled. The following profiler levels are available: off, slow_op, all.
+	// For more information, see the operationProfiling.mode
+	// description in the official documentation.
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow.
+	// For more information, see the operationProfiling.slowOpThresholdMs
+	// description in the official documentation.
+	SlowOpThreshold *float64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
+}
+
+type OperationProfilingParameters struct {
+
+	// Specifies which operations should be profiled. The following profiler levels are available: off, slow_op, all.
+	// For more information, see the operationProfiling.mode
+	// description in the official documentation.
+	// +kubebuilder:validation:Optional
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow.
+	// For more information, see the operationProfiling.slowOpThresholdMs
+	// description in the official documentation.
+	// +kubebuilder:validation:Optional
+	SlowOpThreshold *float64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
+}
+
+type PerformanceDiagnosticsObservation struct {
+
+	// Enable or disable performance diagnostics.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type PerformanceDiagnosticsParameters struct {
+
+	// Enable or disable performance diagnostics.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type PermissionObservation struct {
 
 	// The name of the database that the permission grants access to.
@@ -531,6 +857,134 @@ type PermissionParameters struct {
 	// The roles of the user in this database. For more information see the official documentation.
 	// +kubebuilder:validation:Optional
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
+}
+
+type ResourcesMongocfgObservation struct {
+
+	// Volume of the storage available to a MongoDB host, in gigabytes.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Type of the storage of MongoDB hosts.
+	// For more information see the official documentation.
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
+type ResourcesMongocfgParameters struct {
+
+	// Volume of the storage available to a MongoDB host, in gigabytes.
+	// +kubebuilder:validation:Required
+	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
+
+	// Type of the storage of MongoDB hosts.
+	// For more information see the official documentation.
+	// +kubebuilder:validation:Required
+	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
+
+	// +kubebuilder:validation:Required
+	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
+}
+
+type ResourcesMongodObservation struct {
+
+	// Volume of the storage available to a MongoDB host, in gigabytes.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Type of the storage of MongoDB hosts.
+	// For more information see the official documentation.
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
+type ResourcesMongodParameters struct {
+
+	// Volume of the storage available to a MongoDB host, in gigabytes.
+	// +kubebuilder:validation:Required
+	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
+
+	// Type of the storage of MongoDB hosts.
+	// For more information see the official documentation.
+	// +kubebuilder:validation:Required
+	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
+
+	// +kubebuilder:validation:Required
+	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
+}
+
+type ResourcesMongoinfraObservation struct {
+
+	// Volume of the storage available to a MongoDB host, in gigabytes.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Type of the storage of MongoDB hosts.
+	// For more information see the official documentation.
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
+type ResourcesMongoinfraParameters struct {
+
+	// Volume of the storage available to a MongoDB host, in gigabytes.
+	// +kubebuilder:validation:Required
+	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
+
+	// Type of the storage of MongoDB hosts.
+	// For more information see the official documentation.
+	// +kubebuilder:validation:Required
+	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
+
+	// +kubebuilder:validation:Required
+	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
+}
+
+type ResourcesMongosObservation struct {
+
+	// Volume of the storage available to a MongoDB host, in gigabytes.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Type of the storage of MongoDB hosts.
+	// For more information see the official documentation.
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
+type ResourcesMongosParameters struct {
+
+	// Volume of the storage available to a MongoDB host, in gigabytes.
+	// +kubebuilder:validation:Required
+	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
+
+	// Type of the storage of MongoDB hosts.
+	// For more information see the official documentation.
+	// +kubebuilder:validation:Required
+	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
+
+	// +kubebuilder:validation:Required
+	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
+}
+
+type RestoreObservation struct {
+
+	// Backup ID. The cluster will be created from the specified backup. How to get a list of PostgreSQL backups
+	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
+
+	// Timestamp of the moment to which the MongoDB cluster should be restored. (Format: "2006-01-02T15:04:05" - UTC). When not set, current time is used.
+	Time *string `json:"time,omitempty" tf:"time,omitempty"`
+}
+
+type RestoreParameters struct {
+
+	// Backup ID. The cluster will be created from the specified backup. How to get a list of PostgreSQL backups
+	// +kubebuilder:validation:Required
+	BackupID *string `json:"backupId" tf:"backup_id,omitempty"`
+
+	// Timestamp of the moment to which the MongoDB cluster should be restored. (Format: "2006-01-02T15:04:05" - UTC). When not set, current time is used.
+	// +kubebuilder:validation:Optional
+	Time *string `json:"time,omitempty" tf:"time,omitempty"`
 }
 
 type SecurityObservation struct {
@@ -578,6 +1032,53 @@ type SetParameterParameters struct {
 	AuditAuthorizationSuccess *bool `json:"auditAuthorizationSuccess,omitempty" tf:"audit_authorization_success,omitempty"`
 }
 
+type StorageObservation struct {
+
+	// The WiredTiger engine settings.
+	// (see the storage.wiredTiger option).
+	// These settings available only on mongod hosts. The structure is documented below.
+	WiredTiger []WiredTigerObservation `json:"wiredTiger,omitempty" tf:"wired_tiger,omitempty"`
+}
+
+type StorageParameters struct {
+
+	// The WiredTiger engine settings.
+	// (see the storage.wiredTiger option).
+	// These settings available only on mongod hosts. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	WiredTiger []WiredTigerParameters `json:"wiredTiger,omitempty" tf:"wired_tiger,omitempty"`
+}
+
+type StorageWiredTigerObservation struct {
+
+	// Specifies the default compression for collection data. You can override this on a per-collection basis when creating collections.
+	// Available compressors are: none, snappy, zlib, zstd. This setting available only on mongod hosts.
+	// For more information, see the storage.wiredTiger.collectionConfig.blockCompressor
+	// description in the official documentation.
+	BlockCompressor *string `json:"blockCompressor,omitempty" tf:"block_compressor,omitempty"`
+
+	// Defines the maximum size of the internal cache that WiredTiger will use for all data.
+	// For more information, see the storage.wiredTiger.engineConfig.cacheSizeGB
+	// description in the official documentation.
+	CacheSizeGb *float64 `json:"cacheSizeGb,omitempty" tf:"cache_size_gb,omitempty"`
+}
+
+type StorageWiredTigerParameters struct {
+
+	// Specifies the default compression for collection data. You can override this on a per-collection basis when creating collections.
+	// Available compressors are: none, snappy, zlib, zstd. This setting available only on mongod hosts.
+	// For more information, see the storage.wiredTiger.collectionConfig.blockCompressor
+	// description in the official documentation.
+	// +kubebuilder:validation:Optional
+	BlockCompressor *string `json:"blockCompressor,omitempty" tf:"block_compressor,omitempty"`
+
+	// Defines the maximum size of the internal cache that WiredTiger will use for all data.
+	// For more information, see the storage.wiredTiger.engineConfig.cacheSizeGB
+	// description in the official documentation.
+	// +kubebuilder:validation:Optional
+	CacheSizeGb *float64 `json:"cacheSizeGb,omitempty" tf:"cache_size_gb,omitempty"`
+}
+
 type UserObservation struct {
 
 	// The name of the user.
@@ -600,6 +1101,23 @@ type UserParameters struct {
 	// Set of permissions granted to the user. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Permission []PermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+}
+
+type WiredTigerObservation struct {
+
+	// Defines the maximum size of the internal cache that WiredTiger will use for all data.
+	// For more information, see the storage.wiredTiger.engineConfig.cacheSizeGB
+	// description in the official documentation.
+	CacheSizeGb *float64 `json:"cacheSizeGb,omitempty" tf:"cache_size_gb,omitempty"`
+}
+
+type WiredTigerParameters struct {
+
+	// Defines the maximum size of the internal cache that WiredTiger will use for all data.
+	// For more information, see the storage.wiredTiger.engineConfig.cacheSizeGB
+	// description in the official documentation.
+	// +kubebuilder:validation:Optional
+	CacheSizeGb *float64 `json:"cacheSizeGb,omitempty" tf:"cache_size_gb,omitempty"`
 }
 
 // MongodbClusterSpec defines the desired state of MongodbCluster
@@ -631,7 +1149,6 @@ type MongodbCluster struct {
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.environment)",message="environment is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.host)",message="host is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.resources)",message="resources is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.user)",message="user is a required parameter"
 	Spec   MongodbClusterSpec   `json:"spec"`
 	Status MongodbClusterStatus `json:"status,omitempty"`

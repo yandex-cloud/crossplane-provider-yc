@@ -51,8 +51,23 @@ type ObjectObservation struct {
 	// The name of the object once it is in the bucket.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
+	// Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
+	ObjectLockLegalHoldStatus *string `json:"objectLockLegalHoldStatus,omitempty" tf:"object_lock_legal_hold_status,omitempty"`
+
+	// Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
+	ObjectLockMode *string `json:"objectLockMode,omitempty" tf:"object_lock_mode,omitempty"`
+
+	// Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
+	ObjectLockRetainUntilDate *string `json:"objectLockRetainUntilDate,omitempty" tf:"object_lock_retain_until_date,omitempty"`
+
 	// The path to a file that will be read and uploaded as raw bytes for the object content.
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+
+	// Used to trigger object update when the source content changes. So the only meaningful value is filemd5("path/to/source") (The value is only stored in state and not saved by Yandex Storage).
+	SourceHash *string `json:"sourceHash,omitempty" tf:"source_hash,omitempty"`
+
+	// Specifies an object tags.
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 type ObjectParameters struct {
@@ -104,6 +119,18 @@ type ObjectParameters struct {
 	// +kubebuilder:validation:Optional
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
+	// Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
+	// +kubebuilder:validation:Optional
+	ObjectLockLegalHoldStatus *string `json:"objectLockLegalHoldStatus,omitempty" tf:"object_lock_legal_hold_status,omitempty"`
+
+	// Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
+	// +kubebuilder:validation:Optional
+	ObjectLockMode *string `json:"objectLockMode,omitempty" tf:"object_lock_mode,omitempty"`
+
+	// Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
+	// +kubebuilder:validation:Optional
+	ObjectLockRetainUntilDate *string `json:"objectLockRetainUntilDate,omitempty" tf:"object_lock_retain_until_date,omitempty"`
+
 	// The secret key to use when applying changes. If omitted, storage_secret_key specified in config is used.
 	// +kubebuilder:validation:Optional
 	SecretKeySecretRef *v1.SecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
@@ -111,6 +138,14 @@ type ObjectParameters struct {
 	// The path to a file that will be read and uploaded as raw bytes for the object content.
 	// +kubebuilder:validation:Optional
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+
+	// Used to trigger object update when the source content changes. So the only meaningful value is filemd5("path/to/source") (The value is only stored in state and not saved by Yandex Storage).
+	// +kubebuilder:validation:Optional
+	SourceHash *string `json:"sourceHash,omitempty" tf:"source_hash,omitempty"`
+
+	// Specifies an object tags.
+	// +kubebuilder:validation:Optional
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 // ObjectSpec defines the desired state of Object

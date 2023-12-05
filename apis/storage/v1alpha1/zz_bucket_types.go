@@ -27,6 +27,9 @@ import (
 
 type AnonymousAccessFlagsObservation struct {
 
+	// Allows to read objects in bucket anonymously.
+	ConfigRead *bool `json:"configRead,omitempty" tf:"config_read,omitempty"`
+
 	// Allows to list object in bucket anonymously.
 	List *bool `json:"list,omitempty" tf:"list,omitempty"`
 
@@ -35,6 +38,10 @@ type AnonymousAccessFlagsObservation struct {
 }
 
 type AnonymousAccessFlagsParameters struct {
+
+	// Allows to read objects in bucket anonymously.
+	// +kubebuilder:validation:Optional
+	ConfigRead *bool `json:"configRead,omitempty" tf:"config_read,omitempty"`
 
 	// Allows to list object in bucket anonymously.
 	// +kubebuilder:validation:Optional
@@ -122,10 +129,15 @@ type BucketObservation struct {
 	// The size of bucket, in bytes. See size limiting for more information.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
+	// A configuration of object lock management (documented below).
+	ObjectLockConfiguration []ObjectLockConfigurationObservation `json:"objectLockConfiguration,omitempty" tf:"object_lock_configuration,omitempty"`
+
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
 	// A configuration of server-side encryption for the bucket (documented below)
 	ServerSideEncryptionConfiguration []ServerSideEncryptionConfigurationObservation `json:"serverSideEncryptionConfiguration,omitempty" tf:"server_side_encryption_configuration,omitempty"`
+
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// A state of versioning (documented below)
 	Versioning []VersioningObservation `json:"versioning,omitempty" tf:"versioning,omitempty"`
@@ -224,6 +236,10 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
+	// A configuration of object lock management (documented below).
+	// +kubebuilder:validation:Optional
+	ObjectLockConfiguration []ObjectLockConfigurationParameters `json:"objectLockConfiguration,omitempty" tf:"object_lock_configuration,omitempty"`
+
 	// +kubebuilder:validation:Optional
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
@@ -235,6 +251,9 @@ type BucketParameters struct {
 	// A configuration of server-side encryption for the bucket (documented below)
 	// +kubebuilder:validation:Optional
 	ServerSideEncryptionConfiguration []ServerSideEncryptionConfigurationParameters `json:"serverSideEncryptionConfiguration,omitempty" tf:"server_side_encryption_configuration,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// A state of versioning (documented below)
 	// +kubebuilder:validation:Optional
@@ -292,6 +311,33 @@ type CorsRuleParameters struct {
 	// Specifies time in seconds that browser can cache the response for a preflight request.
 	// +kubebuilder:validation:Optional
 	MaxAgeSeconds *float64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
+}
+
+type DefaultRetentionObservation struct {
+
+	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+
+	// Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
+	Years *float64 `json:"years,omitempty" tf:"years,omitempty"`
+}
+
+type DefaultRetentionParameters struct {
+
+	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
+	// +kubebuilder:validation:Optional
+	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+
+	// Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
+	// +kubebuilder:validation:Required
+	Mode *string `json:"mode" tf:"mode,omitempty"`
+
+	// Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
+	// +kubebuilder:validation:Optional
+	Years *float64 `json:"years,omitempty" tf:"years,omitempty"`
 }
 
 type ExpirationObservation struct {
@@ -385,6 +431,8 @@ type LifecycleRuleObservation struct {
 	// Object key prefix identifying one or more objects to which the rule applies.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
 	// Specifies a period in the object's transitions (documented below).
 	Transition []TransitionObservation `json:"transition,omitempty" tf:"transition,omitempty"`
 }
@@ -418,6 +466,9 @@ type LifecycleRuleParameters struct {
 	// Object key prefix identifying one or more objects to which the rule applies.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Specifies a period in the object's transitions (documented below).
 	// +kubebuilder:validation:Optional
@@ -477,30 +528,60 @@ type NoncurrentVersionTransitionParameters struct {
 	StorageClass *string `json:"storageClass" tf:"storage_class,omitempty"`
 }
 
-type RuleObservation struct {
+type ObjectLockConfigurationObservation struct {
 
-	// A single object for setting server-side encryption by default. (documented below)
-	ApplyServerSideEncryptionByDefault []ApplyServerSideEncryptionByDefaultObservation `json:"applyServerSideEncryptionByDefault,omitempty" tf:"apply_server_side_encryption_by_default,omitempty"`
+	// Enable object locking in a bucket. Require versioning to be enabled.
+	ObjectLockEnabled *string `json:"objectLockEnabled,omitempty" tf:"object_lock_enabled,omitempty"`
+
+	// Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
+	Rule []RuleObservation `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
+type ObjectLockConfigurationParameters struct {
+
+	// Enable object locking in a bucket. Require versioning to be enabled.
+	// +kubebuilder:validation:Optional
+	ObjectLockEnabled *string `json:"objectLockEnabled,omitempty" tf:"object_lock_enabled,omitempty"`
+
+	// Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
+	// +kubebuilder:validation:Optional
+	Rule []RuleParameters `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
+type RuleObservation struct {
+	DefaultRetention []DefaultRetentionObservation `json:"defaultRetention,omitempty" tf:"default_retention,omitempty"`
 }
 
 type RuleParameters struct {
 
-	// A single object for setting server-side encryption by default. (documented below)
 	// +kubebuilder:validation:Required
-	ApplyServerSideEncryptionByDefault []ApplyServerSideEncryptionByDefaultParameters `json:"applyServerSideEncryptionByDefault" tf:"apply_server_side_encryption_by_default,omitempty"`
+	DefaultRetention []DefaultRetentionParameters `json:"defaultRetention" tf:"default_retention,omitempty"`
 }
 
 type ServerSideEncryptionConfigurationObservation struct {
 
 	// Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
-	Rule []RuleObservation `json:"rule,omitempty" tf:"rule,omitempty"`
+	Rule []ServerSideEncryptionConfigurationRuleObservation `json:"rule,omitempty" tf:"rule,omitempty"`
 }
 
 type ServerSideEncryptionConfigurationParameters struct {
 
 	// Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
 	// +kubebuilder:validation:Required
-	Rule []RuleParameters `json:"rule" tf:"rule,omitempty"`
+	Rule []ServerSideEncryptionConfigurationRuleParameters `json:"rule" tf:"rule,omitempty"`
+}
+
+type ServerSideEncryptionConfigurationRuleObservation struct {
+
+	// A single object for setting server-side encryption by default. (documented below)
+	ApplyServerSideEncryptionByDefault []ApplyServerSideEncryptionByDefaultObservation `json:"applyServerSideEncryptionByDefault,omitempty" tf:"apply_server_side_encryption_by_default,omitempty"`
+}
+
+type ServerSideEncryptionConfigurationRuleParameters struct {
+
+	// A single object for setting server-side encryption by default. (documented below)
+	// +kubebuilder:validation:Required
+	ApplyServerSideEncryptionByDefault []ApplyServerSideEncryptionByDefaultParameters `json:"applyServerSideEncryptionByDefault" tf:"apply_server_side_encryption_by_default,omitempty"`
 }
 
 type TransitionObservation struct {

@@ -142,6 +142,10 @@ spec:
                             type: string
                         type: object
                     type: object
+                  deletionProtection:
+                    description: Inhibits deletion of the database. Can either be
+                      true, false or unspecified.
+                    type: string
                   extension:
                     description: Set of database extensions. The structure is documented
                       below
@@ -172,6 +176,9 @@ spec:
                   owner:
                     description: Name of the user assigned as the owner of the database.
                       Forbidden to change in an existing database.
+                    type: string
+                  templateDb:
+                    description: Name of the template database.
                     type: string
                 type: object
               managementPolicy:
@@ -372,6 +379,10 @@ spec:
                 properties:
                   clusterId:
                     type: string
+                  deletionProtection:
+                    description: Inhibits deletion of the database. Can either be
+                      true, false or unspecified.
+                    type: string
                   extension:
                     description: Set of database extensions. The structure is documented
                       below
@@ -402,6 +413,9 @@ spec:
                   owner:
                     description: Name of the user assigned as the owner of the database.
                       Forbidden to change in an existing database.
+                    type: string
+                  templateDb:
+                    description: Name of the template database.
                     type: string
                 type: object
               conditions:

@@ -30,6 +30,9 @@ type AddressObservation struct {
 	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// Flag that protects the address from accidental deletion.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
 	// An optional description of this resource. Provide this property when
 	// you create the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -57,6 +60,10 @@ type AddressObservation struct {
 }
 
 type AddressParameters struct {
+
+	// Flag that protects the address from accidental deletion.
+	// +kubebuilder:validation:Optional
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// An optional description of this resource. Provide this property when
 	// you create the resource.

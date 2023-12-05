@@ -34,6 +34,9 @@ type DatabaseServerlessObservation struct {
 	// Useful for SDK configuration.
 	DatabasePath *string `json:"databasePath,omitempty" tf:"database_path,omitempty"`
 
+	// Inhibits deletion of the database. Can be either true or false
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
 	// A description for the Yandex Database serverless cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -56,6 +59,8 @@ type DatabaseServerlessObservation struct {
 	// Name for the Yandex Database serverless cluster.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	ServerlessDatabase []ServerlessDatabaseObservation `json:"serverlessDatabase,omitempty" tf:"serverless_database,omitempty"`
+
 	// Status of the Yandex Database serverless cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
@@ -72,6 +77,10 @@ type DatabaseServerlessObservation struct {
 }
 
 type DatabaseServerlessParameters struct {
+
+	// Inhibits deletion of the database. Can be either true or false
+	// +kubebuilder:validation:Optional
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// A description for the Yandex Database serverless cluster.
 	// +kubebuilder:validation:Optional
@@ -102,6 +111,34 @@ type DatabaseServerlessParameters struct {
 	// Name for the Yandex Database serverless cluster.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ServerlessDatabase []ServerlessDatabaseParameters `json:"serverlessDatabase,omitempty" tf:"serverless_database,omitempty"`
+}
+
+type ServerlessDatabaseObservation struct {
+	EnableThrottlingRcuLimit *bool `json:"enableThrottlingRcuLimit,omitempty" tf:"enable_throttling_rcu_limit,omitempty"`
+
+	ProvisionedRcuLimit *float64 `json:"provisionedRcuLimit,omitempty" tf:"provisioned_rcu_limit,omitempty"`
+
+	StorageSizeLimit *float64 `json:"storageSizeLimit,omitempty" tf:"storage_size_limit,omitempty"`
+
+	ThrottlingRcuLimit *float64 `json:"throttlingRcuLimit,omitempty" tf:"throttling_rcu_limit,omitempty"`
+}
+
+type ServerlessDatabaseParameters struct {
+
+	// +kubebuilder:validation:Optional
+	EnableThrottlingRcuLimit *bool `json:"enableThrottlingRcuLimit,omitempty" tf:"enable_throttling_rcu_limit,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ProvisionedRcuLimit *float64 `json:"provisionedRcuLimit,omitempty" tf:"provisioned_rcu_limit,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	StorageSizeLimit *float64 `json:"storageSizeLimit,omitempty" tf:"storage_size_limit,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ThrottlingRcuLimit *float64 `json:"throttlingRcuLimit,omitempty" tf:"throttling_rcu_limit,omitempty"`
 }
 
 // DatabaseServerlessSpec defines the desired state of DatabaseServerless

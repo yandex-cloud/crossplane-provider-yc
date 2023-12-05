@@ -114,6 +114,19 @@ type BootDiskParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
+type ContainerNetworkObservation struct {
+
+	// MTU for pods.
+	PodMtu *float64 `json:"podMtu,omitempty" tf:"pod_mtu,omitempty"`
+}
+
+type ContainerNetworkParameters struct {
+
+	// MTU for pods.
+	// +kubebuilder:validation:Optional
+	PodMtu *float64 `json:"podMtu,omitempty" tf:"pod_mtu,omitempty"`
+}
+
 type ContainerRuntimeObservation struct {
 
 	// Type of container runtime. Values: docker, containerd.
@@ -160,19 +173,126 @@ type FixedScaleParameters struct {
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 }
 
+type GpuSettingsObservation struct {
+
+	// GPU cluster id.
+	GpuClusterID *string `json:"gpuClusterId,omitempty" tf:"gpu_cluster_id,omitempty"`
+
+	// GPU environment. Values: runc, runc_drivers_cuda.
+	GpuEnvironment *string `json:"gpuEnvironment,omitempty" tf:"gpu_environment,omitempty"`
+}
+
+type GpuSettingsParameters struct {
+
+	// GPU cluster id.
+	// +kubebuilder:validation:Optional
+	GpuClusterID *string `json:"gpuClusterId,omitempty" tf:"gpu_cluster_id,omitempty"`
+
+	// GPU environment. Values: runc, runc_drivers_cuda.
+	// +kubebuilder:validation:Optional
+	GpuEnvironment *string `json:"gpuEnvironment,omitempty" tf:"gpu_environment,omitempty"`
+}
+
+type IPv4DNSRecordsObservation struct {
+
+	// DNS zone ID (if not set, private zone is used).
+	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
+
+	// DNS record FQDN.
+	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
+
+	// When set to true, also create a PTR DNS record.
+	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
+
+	// DNS record TTL (in seconds).
+	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
+}
+
+type IPv4DNSRecordsParameters struct {
+
+	// DNS zone ID (if not set, private zone is used).
+	// +kubebuilder:validation:Optional
+	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
+
+	// DNS record FQDN.
+	// +kubebuilder:validation:Required
+	Fqdn *string `json:"fqdn" tf:"fqdn,omitempty"`
+
+	// When set to true, also create a PTR DNS record.
+	// +kubebuilder:validation:Optional
+	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
+
+	// DNS record TTL (in seconds).
+	// +kubebuilder:validation:Optional
+	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
+}
+
+type IPv6DNSRecordsObservation struct {
+
+	// DNS zone ID (if not set, private zone is used).
+	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
+
+	// DNS record FQDN.
+	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
+
+	// When set to true, also create a PTR DNS record.
+	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
+
+	// DNS record TTL (in seconds).
+	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
+}
+
+type IPv6DNSRecordsParameters struct {
+
+	// DNS zone ID (if not set, private zone is used).
+	// +kubebuilder:validation:Optional
+	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
+
+	// DNS record FQDN.
+	// +kubebuilder:validation:Required
+	Fqdn *string `json:"fqdn" tf:"fqdn,omitempty"`
+
+	// When set to true, also create a PTR DNS record.
+	// +kubebuilder:validation:Optional
+	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
+
+	// DNS record TTL (in seconds).
+	// +kubebuilder:validation:Optional
+	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
+}
+
 type InstanceTemplateObservation struct {
 
 	// The specifications for boot disks that will be attached to the instance. The structure is documented below.
 	BootDisk []BootDiskObservation `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
 
+	// Container network configuration. The structure is documented below.
+	ContainerNetwork []ContainerNetworkObservation `json:"containerNetwork,omitempty" tf:"container_network,omitempty"`
+
 	// Container runtime configuration. The structure is documented below.
 	ContainerRuntime []ContainerRuntimeObservation `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
+
+	// GPU settings. The structure is documented below.
+	GpuSettings []GpuSettingsObservation `json:"gpuSettings,omitempty" tf:"gpu_settings,omitempty"`
+
+	// Labels that will be assigned to compute nodes (instances), created by the Node Group.
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// The set of metadata key:value pairs assigned to this instance template. This includes custom metadata and predefined keys. Note: key "user-data" won't be provided into instances. It reserved for internal activity in kubernetes_node_group resource.
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
 	// Boolean flag, enables NAT for node group compute instances.
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
+
+	// Name template of the instance.
+	// In order to be unique it must contain at least one of instance unique placeholders:
+	// {instance.short_id}
+	// {instance.index}
+	// combination of {instance.zone_id} and {instance.index_in_zone}
+	// Example: my-instance-{instance.index}
+	// If not set, default is used: {instance_group.id}-{instance.short_id}
+	// It may also contain another placeholders, see Compute Instance group metadata doc for full list.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Type of network acceleration. Values: standard, software_accelerated.
 	NetworkAccelerationType *string `json:"networkAccelerationType,omitempty" tf:"network_acceleration_type,omitempty"`
@@ -198,9 +318,21 @@ type InstanceTemplateParameters struct {
 	// +kubebuilder:validation:Optional
 	BootDisk []BootDiskParameters `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
 
+	// Container network configuration. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	ContainerNetwork []ContainerNetworkParameters `json:"containerNetwork,omitempty" tf:"container_network,omitempty"`
+
 	// Container runtime configuration. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ContainerRuntime []ContainerRuntimeParameters `json:"containerRuntime,omitempty" tf:"container_runtime,omitempty"`
+
+	// GPU settings. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	GpuSettings []GpuSettingsParameters `json:"gpuSettings,omitempty" tf:"gpu_settings,omitempty"`
+
+	// Labels that will be assigned to compute nodes (instances), created by the Node Group.
+	// +kubebuilder:validation:Optional
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// The set of metadata key:value pairs assigned to this instance template. This includes custom metadata and predefined keys. Note: key "user-data" won't be provided into instances. It reserved for internal activity in kubernetes_node_group resource.
 	// +kubebuilder:validation:Optional
@@ -209,6 +341,17 @@ type InstanceTemplateParameters struct {
 	// Boolean flag, enables NAT for node group compute instances.
 	// +kubebuilder:validation:Optional
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
+
+	// Name template of the instance.
+	// In order to be unique it must contain at least one of instance unique placeholders:
+	// {instance.short_id}
+	// {instance.index}
+	// combination of {instance.zone_id} and {instance.index_in_zone}
+	// Example: my-instance-{instance.index}
+	// If not set, default is used: {instance_group.id}-{instance.short_id}
+	// It may also contain another placeholders, see Compute Instance group metadata doc for full list.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Type of network acceleration. Values: standard, software_accelerated.
 	// +kubebuilder:validation:Optional
@@ -259,8 +402,14 @@ type NetworkInterfaceObservation struct {
 	// Allocate an IPv4 address for the interface. The default value is true.
 	IPv4 *bool `json:"ipv4,omitempty" tf:"ipv4,omitempty"`
 
+	// List of configurations for creating ipv4 DNS records. The structure is documented below.
+	IPv4DNSRecords []IPv4DNSRecordsObservation `json:"ipv4DnsRecords,omitempty" tf:"ipv4_dns_records,omitempty"`
+
 	// If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
+
+	// List of configurations for creating ipv6 DNS records. The structure is documented below.
+	IPv6DNSRecords []IPv6DNSRecordsObservation `json:"ipv6DnsRecords,omitempty" tf:"ipv6_dns_records,omitempty"`
 
 	// A public address that can be used to access the internet over NAT.
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
@@ -278,9 +427,17 @@ type NetworkInterfaceParameters struct {
 	// +kubebuilder:validation:Optional
 	IPv4 *bool `json:"ipv4,omitempty" tf:"ipv4,omitempty"`
 
+	// List of configurations for creating ipv4 DNS records. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	IPv4DNSRecords []IPv4DNSRecordsParameters `json:"ipv4DnsRecords,omitempty" tf:"ipv4_dns_records,omitempty"`
+
 	// If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
 	// +kubebuilder:validation:Optional
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
+
+	// List of configurations for creating ipv6 DNS records. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	IPv6DNSRecords []IPv6DNSRecordsParameters `json:"ipv6DnsRecords,omitempty" tf:"ipv6_dns_records,omitempty"`
 
 	// A public address that can be used to access the internet over NAT.
 	// +kubebuilder:validation:Optional

@@ -25,6 +25,44 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AndPrincipalsHeaderObservation struct {
+
+	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	Value []ValueObservation `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type AndPrincipalsHeaderParameters struct {
+
+	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Value []ValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type AndPrincipalsObservation struct {
+	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
+
+	Header []AndPrincipalsHeaderObservation `json:"header,omitempty" tf:"header,omitempty"`
+
+	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
+}
+
+type AndPrincipalsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Header []AndPrincipalsHeaderParameters `json:"header,omitempty" tf:"header,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
+}
+
 type HTTPRouterObservation struct {
 
 	// The HTTP Router creation timestamp.
@@ -46,6 +84,8 @@ type HTTPRouterObservation struct {
 
 	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	RouteOptions []RouteOptionsObservation `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
 }
 
 type HTTPRouterParameters struct {
@@ -76,6 +116,64 @@ type HTTPRouterParameters struct {
 	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	RouteOptions []RouteOptionsParameters `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
+}
+
+type PrincipalsObservation struct {
+	AndPrincipals []AndPrincipalsObservation `json:"andPrincipals,omitempty" tf:"and_principals,omitempty"`
+}
+
+type PrincipalsParameters struct {
+
+	// +kubebuilder:validation:Required
+	AndPrincipals []AndPrincipalsParameters `json:"andPrincipals" tf:"and_principals,omitempty"`
+}
+
+type RbacObservation struct {
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+
+	Principals []PrincipalsObservation `json:"principals,omitempty" tf:"principals,omitempty"`
+}
+
+type RbacParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+
+	// +kubebuilder:validation:Required
+	Principals []PrincipalsParameters `json:"principals" tf:"principals,omitempty"`
+}
+
+type RouteOptionsObservation struct {
+	Rbac []RbacObservation `json:"rbac,omitempty" tf:"rbac,omitempty"`
+}
+
+type RouteOptionsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Rbac []RbacParameters `json:"rbac,omitempty" tf:"rbac,omitempty"`
+}
+
+type ValueObservation struct {
+	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
+
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
+}
+
+type ValueParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 // HTTPRouterSpec defines the desired state of HTTPRouter

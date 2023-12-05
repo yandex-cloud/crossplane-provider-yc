@@ -80,6 +80,9 @@ spec:
                               dataLens:
                                 description: Allow access for Yandex DataLens.
                                 type: boolean
+                              dataTransfer:
+                                description: Allow access for DataTransfer
+                                type: boolean
                               serverless:
                                 description: Allow access for connection to managed
                                   databases from functions
@@ -111,6 +114,25 @@ spec:
                                 description: The minute at which backup will be started
                                   (UTC).
                                 type: number
+                            type: object
+                          type: array
+                        diskSizeAutoscaling:
+                          description: Cluster disk size autoscaling settings. The
+                            structure is documented below.
+                          items:
+                            properties:
+                              diskSizeLimit:
+                                description: Limit of disk size after autoscaling.
+                                type: number
+                              emergencyUsageThreshold:
+                                description: Immediate autoscaling disk usage (percent).
+                                type: number
+                              plannedUsageThreshold:
+                                description: Maintenance window autoscaling disk usage
+                                  (percent).
+                                type: number
+                            required:
+                            - diskSizeLimit
                             type: object
                           type: array
                         performanceDiagnostics:
@@ -214,6 +236,8 @@ spec:
                             the client when the cluster is created.
                           type: string
                         owner:
+                          type: string
+                        templateDb:
                           type: string
                       required:
                       - name
@@ -919,6 +943,9 @@ spec:
                               dataLens:
                                 description: Allow access for Yandex DataLens.
                                 type: boolean
+                              dataTransfer:
+                                description: Allow access for DataTransfer
+                                type: boolean
                               serverless:
                                 description: Allow access for connection to managed
                                   databases from functions
@@ -949,6 +976,23 @@ spec:
                               minutes:
                                 description: The minute at which backup will be started
                                   (UTC).
+                                type: number
+                            type: object
+                          type: array
+                        diskSizeAutoscaling:
+                          description: Cluster disk size autoscaling settings. The
+                            structure is documented below.
+                          items:
+                            properties:
+                              diskSizeLimit:
+                                description: Limit of disk size after autoscaling.
+                                type: number
+                              emergencyUsageThreshold:
+                                description: Immediate autoscaling disk usage (percent).
+                                type: number
+                              plannedUsageThreshold:
+                                description: Maintenance window autoscaling disk usage
+                                  (percent).
                                 type: number
                             type: object
                           type: array
@@ -1045,6 +1089,8 @@ spec:
                             the client when the cluster is created.
                           type: string
                         owner:
+                          type: string
+                        templateDb:
                           type: string
                       type: object
                     type: array

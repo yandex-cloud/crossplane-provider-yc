@@ -25,6 +25,33 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AndPrincipalsHeaderValueObservation struct {
+
+	// Match exactly.
+	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
+
+	// Match prefix.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// Match regex.
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
+}
+
+type AndPrincipalsHeaderValueParameters struct {
+
+	// Match exactly.
+	// +kubebuilder:validation:Optional
+	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
+
+	// Match prefix.
+	// +kubebuilder:validation:Optional
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// Match regex.
+	// +kubebuilder:validation:Optional
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
+}
+
 type DirectResponseActionObservation struct {
 
 	// Response body text.
@@ -54,6 +81,9 @@ type FqmnObservation struct {
 
 	// Match prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// Match regex.
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type FqmnParameters struct {
@@ -65,6 +95,10 @@ type FqmnParameters struct {
 	// Match prefix.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// Match regex.
+	// +kubebuilder:validation:Optional
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type GRPCMatchObservation struct {
@@ -308,6 +342,33 @@ type HTTPRouteParameters struct {
 	RedirectAction []RedirectActionParameters `json:"redirectAction,omitempty" tf:"redirect_action,omitempty"`
 }
 
+type HeaderValueObservation struct {
+
+	// Match exactly.
+	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
+
+	// Match prefix.
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// Match regex.
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
+}
+
+type HeaderValueParameters struct {
+
+	// Match exactly.
+	// +kubebuilder:validation:Optional
+	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
+
+	// Match prefix.
+	// +kubebuilder:validation:Optional
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// Match regex.
+	// +kubebuilder:validation:Optional
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
+}
+
 type ModifyRequestHeadersObservation struct {
 
 	// Append string to the header value.
@@ -387,6 +448,9 @@ type PathObservation struct {
 
 	// Match prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// Match regex.
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type PathParameters struct {
@@ -398,6 +462,96 @@ type PathParameters struct {
 	// Match prefix.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	// Match regex.
+	// +kubebuilder:validation:Optional
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
+}
+
+type PrincipalsAndPrincipalsHeaderObservation struct {
+
+	// name of the route.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	Value []HeaderValueObservation `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type PrincipalsAndPrincipalsHeaderParameters struct {
+
+	// name of the route.
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Value []HeaderValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type PrincipalsAndPrincipalsObservation struct {
+	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
+
+	Header []PrincipalsAndPrincipalsHeaderObservation `json:"header,omitempty" tf:"header,omitempty"`
+
+	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
+}
+
+type PrincipalsAndPrincipalsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Header []PrincipalsAndPrincipalsHeaderParameters `json:"header,omitempty" tf:"header,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
+}
+
+type RbacPrincipalsAndPrincipalsHeaderObservation struct {
+
+	// name of the route.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	Value []AndPrincipalsHeaderValueObservation `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type RbacPrincipalsAndPrincipalsHeaderParameters struct {
+
+	// name of the route.
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Value []AndPrincipalsHeaderValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type RbacPrincipalsAndPrincipalsObservation struct {
+	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
+
+	Header []RbacPrincipalsAndPrincipalsHeaderObservation `json:"header,omitempty" tf:"header,omitempty"`
+
+	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
+}
+
+type RbacPrincipalsAndPrincipalsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Header []RbacPrincipalsAndPrincipalsHeaderParameters `json:"header,omitempty" tf:"header,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
+}
+
+type RbacPrincipalsObservation struct {
+	AndPrincipals []PrincipalsAndPrincipalsObservation `json:"andPrincipals,omitempty" tf:"and_principals,omitempty"`
+}
+
+type RbacPrincipalsParameters struct {
+
+	// +kubebuilder:validation:Required
+	AndPrincipals []PrincipalsAndPrincipalsParameters `json:"andPrincipals" tf:"and_principals,omitempty"`
 }
 
 type RedirectActionObservation struct {
@@ -468,6 +622,33 @@ type RouteObservation struct {
 
 	// name of the route.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	RouteOptions []RouteRouteOptionsObservation `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
+}
+
+type RouteOptionsRbacObservation struct {
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+
+	Principals []RbacPrincipalsObservation `json:"principals,omitempty" tf:"principals,omitempty"`
+}
+
+type RouteOptionsRbacParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+
+	// +kubebuilder:validation:Required
+	Principals []RbacPrincipalsParameters `json:"principals" tf:"principals,omitempty"`
+}
+
+type RouteOptionsRbacPrincipalsObservation struct {
+	AndPrincipals []RbacPrincipalsAndPrincipalsObservation `json:"andPrincipals,omitempty" tf:"and_principals,omitempty"`
+}
+
+type RouteOptionsRbacPrincipalsParameters struct {
+
+	// +kubebuilder:validation:Required
+	AndPrincipals []RbacPrincipalsAndPrincipalsParameters `json:"andPrincipals" tf:"and_principals,omitempty"`
 }
 
 type RouteParameters struct {
@@ -483,6 +664,19 @@ type RouteParameters struct {
 	// name of the route.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	RouteOptions []RouteRouteOptionsParameters `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
+}
+
+type RouteRouteOptionsObservation struct {
+	Rbac []RouteOptionsRbacObservation `json:"rbac,omitempty" tf:"rbac,omitempty"`
+}
+
+type RouteRouteOptionsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Rbac []RouteOptionsRbacParameters `json:"rbac,omitempty" tf:"rbac,omitempty"`
 }
 
 type VirtualHostObservation struct {
@@ -511,6 +705,8 @@ type VirtualHostObservation struct {
 	// A Route resource. Routes are matched in-order. Be careful when adding them to the end. For instance, having
 	// http '/' match first makes all other routes unused. The structure is documented below.
 	Route []RouteObservation `json:"route,omitempty" tf:"route,omitempty"`
+
+	RouteOptions []VirtualHostRouteOptionsObservation `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
 }
 
 type VirtualHostParameters struct {
@@ -551,6 +747,34 @@ type VirtualHostParameters struct {
 	// http '/' match first makes all other routes unused. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Route []RouteParameters `json:"route,omitempty" tf:"route,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	RouteOptions []VirtualHostRouteOptionsParameters `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
+}
+
+type VirtualHostRouteOptionsObservation struct {
+	Rbac []VirtualHostRouteOptionsRbacObservation `json:"rbac,omitempty" tf:"rbac,omitempty"`
+}
+
+type VirtualHostRouteOptionsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Rbac []VirtualHostRouteOptionsRbacParameters `json:"rbac,omitempty" tf:"rbac,omitempty"`
+}
+
+type VirtualHostRouteOptionsRbacObservation struct {
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+
+	Principals []RouteOptionsRbacPrincipalsObservation `json:"principals,omitempty" tf:"principals,omitempty"`
+}
+
+type VirtualHostRouteOptionsRbacParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+
+	// +kubebuilder:validation:Required
+	Principals []RouteOptionsRbacPrincipalsParameters `json:"principals" tf:"principals,omitempty"`
 }
 
 // VirtualHostSpec defines the desired state of VirtualHost

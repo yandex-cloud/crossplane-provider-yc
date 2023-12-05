@@ -48,6 +48,9 @@ type PostgresqlDatabaseExtensionParameters struct {
 type PostgresqlDatabaseObservation struct {
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
+	// Inhibits deletion of the database. Can either be true, false or unspecified.
+	DeletionProtection *string `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
 	// Set of database extensions. The structure is documented below
 	Extension []PostgresqlDatabaseExtensionObservation `json:"extension,omitempty" tf:"extension,omitempty"`
 
@@ -64,6 +67,9 @@ type PostgresqlDatabaseObservation struct {
 
 	// Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	Owner *string `json:"owner,omitempty" tf:"owner,omitempty"`
+
+	// Name of the template database.
+	TemplateDB *string `json:"templateDb,omitempty" tf:"template_db,omitempty"`
 }
 
 type PostgresqlDatabaseParameters struct {
@@ -79,6 +85,10 @@ type PostgresqlDatabaseParameters struct {
 	// Selector for a PostgresqlCluster to populate clusterId.
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
+
+	// Inhibits deletion of the database. Can either be true, false or unspecified.
+	// +kubebuilder:validation:Optional
+	DeletionProtection *string `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// Set of database extensions. The structure is documented below
 	// +kubebuilder:validation:Optional
@@ -99,6 +109,10 @@ type PostgresqlDatabaseParameters struct {
 	// Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	// +kubebuilder:validation:Optional
 	Owner *string `json:"owner,omitempty" tf:"owner,omitempty"`
+
+	// Name of the template database.
+	// +kubebuilder:validation:Optional
+	TemplateDB *string `json:"templateDb,omitempty" tf:"template_db,omitempty"`
 }
 
 // PostgresqlDatabaseSpec defines the desired state of PostgresqlDatabase
