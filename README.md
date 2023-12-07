@@ -92,6 +92,14 @@ metadata:
     crossplane.io/external-name: <cloud-resource-id>
 ```
 
+To avoid making changes to an existing resouce that needs to be references (folder, subnet, etc.),
+add `spec.managementPolicy: ObserveOnly`
+
+```yaml
+spec:
+  managementPolicy: ObserveOnly
+```
+
 ### Do not delete external resource with `kubectl delete`
 
 Add `spec.deletionPolicy: Orphan`
