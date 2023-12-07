@@ -4,6 +4,8 @@ metadata:
   name: example
 spec:
   credentials:
+    cloudId: ${cloud_id}
+    folderId: ${folder_id}
     source: Secret
     secretRef:
       name: yc-creds

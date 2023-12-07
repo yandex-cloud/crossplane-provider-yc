@@ -2,10 +2,12 @@ apiVersion: resourcemanager.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Folder
 metadata:
   name: example-folder
+  annotations:
+    crossplane.io/external-name: ${folder_id}
 spec:
+  managementPolicy: ObserveOnly
   forProvider:
-    name: example-folder
-    cloudId: cloud-id
-    description: Example folder
+    name: crossplane-example
+    cloudId: ${cloud_id}
   providerConfigRef:
-    name: example
+    name: default
