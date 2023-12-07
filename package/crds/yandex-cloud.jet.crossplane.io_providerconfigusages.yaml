@@ -10,7 +10,7 @@ spec:
   names:
     categories:
     - crossplane
-    - managed
+    - provider
     - yandex-cloud
     kind: ProviderConfigUsage
     listKind: ProviderConfigUsageList
