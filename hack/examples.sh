@@ -32,3 +32,4 @@ all=$(find ${1} -name "*.yaml" \
 -not -path "*/resourcemanager/folder.yaml")
 
 join $all
+

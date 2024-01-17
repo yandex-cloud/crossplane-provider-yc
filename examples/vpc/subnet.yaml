@@ -9,8 +9,6 @@ spec:
       name: example-net
     v4CidrBlocks:
       - 10.0.0.0/24
-    folderIdRef:
-      name: example-folder
     zone: ru-central1-a
   providerConfigRef:
-    name: example
+    name: default

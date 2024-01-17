@@ -5,8 +5,6 @@ metadata:
 spec:
   forProvider:
     name: test-ydb-serverless
-    folderIdRef:
-      name: example-folder
     locationId: ru-central1
   providerConfigRef:
-    name: example
+    name: default

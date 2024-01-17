@@ -2,6 +2,8 @@ apiVersion: ydb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: DatabaseDedicated
 metadata:
   name: database1
+  annotations:
+    uptest.upbound.io/timeout: "180"
 spec:
   forProvider:
     location:
@@ -14,6 +16,7 @@ spec:
           - name: example-subnet-a
           - name: example-subnet-b
           - name: example-subnet-c
+          - name: example-subnet-d
     resourcePresetId: medium
     scalePolicy:
     - fixedScale:
@@ -21,10 +24,8 @@ spec:
     storageConfig:
     - groupCount: 1
       storageTypeId: ssd
-    folderIdRef:
-      name: example-folder
   providerConfigRef:
-    name: example
+    name: default
 ---
 apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Subnet
@@ -37,11 +38,9 @@ spec:
       name: example-net
     v4CidrBlocks:
       - 10.0.1.0/24
-    folderIdRef:
-      name: example-folder
     zone: ru-central1-b
   providerConfigRef:
-    name: example
+    name: default
 ---
 apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Subnet
@@ -54,8 +53,21 @@ spec:
       name: example-net
     v4CidrBlocks:
       - 10.0.2.0/24
-    folderIdRef:
-      name: example-folder
     zone: ru-central1-c
   providerConfigRef:
-    name: example
+    name: default
+---
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Subnet
+metadata:
+  name: example-subnet-d
+spec:
+  forProvider:
+    name: example-subnet-d
+    networkIdRef:
+      name: example-net
+    v4CidrBlocks:
+      - 10.0.3.0/24
+    zone: ru-central1-d
+  providerConfigRef:
+    name: default

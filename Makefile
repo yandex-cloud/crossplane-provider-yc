@@ -172,9 +172,11 @@ CROSSPLANE_NAMESPACE = upbound-system
 -include build/makelib/controlplane.mk
 
 # This target requires the following environment variables to be set:
+UPTEST_EXAMPLE_LIST ?= $(shell ./hack/examples.sh ./examples)
 # - UPTEST_EXAMPLE_LIST, a comma-separated list of examples to test
 #   To ensure the proper functioning of the end-to-end test resource pre-deletion hook, it is crucial to arrange your resources appropriately. 
 #   You can check the basic implementation here: https://github.com/upbound/uptest/blob/main/internal/templates/01-delete.yaml.tmpl.
+UPTEST_CLOUD_CREDENTIALS ?= $(shell cat ./key.json)
 # - UPTEST_CLOUD_CREDENTIALS (optional), multiple sets of AWS IAM User credentials specified as key=value pairs.
 #   The support keys are currently `DEFAULT` and `PEER`. So, an example for the value of this env. variable is:
 #   DEFAULT='[default]
@@ -184,10 +186,12 @@ CROSSPLANE_NAMESPACE = upbound-system
 #   aws_access_key_id = REDACTED
 #   aws_secret_access_key = REDACTED'
 #   The associated `ProviderConfig`s will be named as `default` and `peer`.
+UPTEST_DATASOURCE_PATH ?= $(shell ./hack/uptest_data.sh)
 # - UPTEST_DATASOURCE_PATH (optional), see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
+# - CLOUD_ID and FOLDER_ID need to be the IDs of YC cloud and folder, respectively, where tests will be run.
 uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
 	@$(INFO) running automated tests
-	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
+	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) CREDENTIALS='$(UPTEST_CLOUD_CREDENTIALS)' $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
 	@$(OK) running automated tests
 
 local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)

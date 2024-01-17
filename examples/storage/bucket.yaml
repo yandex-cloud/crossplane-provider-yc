@@ -8,9 +8,9 @@ spec:
       name: example-sa-static-key
     secretKeySecretRef:
       name: sa-key-conn
-      namespace: crossplane-system
+      namespace: upbound-system
       key: attribute.secret_key
     bucket: "example-crossplane-test-bucket"
     # acl: "public-read"
   providerConfigRef:
-    name: example
+    name: default

@@ -8,10 +8,8 @@ metadata:
   name: addr
 spec:
   forProvider:
-    folderIdRef:
-      name: example-folder
     externalIpv4Address:
     - zoneId: ru-central1-a
     name: exampleAddress
   providerConfigRef:
-    name: example
+    name: default

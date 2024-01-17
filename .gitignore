@@ -12,4 +12,7 @@ cover.out
 .idea/
 
 # ignore yandex-cloud access key
-key.json
+/key.json
+
+# ignore local testing cluster config
+/kubeconfig

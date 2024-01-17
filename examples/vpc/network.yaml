@@ -5,7 +5,5 @@ metadata:
 spec:
   forProvider:
     name: example-net
-    folderIdRef:
-      name: example-folder
   providerConfigRef:
-    name: example
+    name: default

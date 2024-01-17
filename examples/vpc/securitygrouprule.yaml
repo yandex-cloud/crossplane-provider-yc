@@ -14,4 +14,4 @@ spec:
     protocol: TCP
     description: "rule4 description"
   providerConfigRef:
-    name: example
+    name: default

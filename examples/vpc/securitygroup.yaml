@@ -5,8 +5,6 @@ metadata:
 spec:
   forProvider:
     name: example-sg
-    folderIdRef:
-      name: example-folder
     networkIdRef:
       name: example-net
     ingress:
@@ -31,4 +29,4 @@ spec:
         fromPort: 8090
         toPort: 8099
   providerConfigRef:
-    name: example
+    name: default

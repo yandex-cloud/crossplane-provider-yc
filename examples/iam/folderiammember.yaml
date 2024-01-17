@@ -7,7 +7,6 @@ spec:
     serviceAccountRef:
       name: example-sa
     role: editor
-    folderIdRef:
-      name: example-folder
+    folderId: ${data.folderId}
   providerConfigRef:
-    name: example
+    name: default
