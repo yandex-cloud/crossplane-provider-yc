@@ -15,4 +15,5 @@ cover.out
 /key.json
 
 # ignore local testing cluster config
+/env.list
 /kubeconfig

@@ -194,7 +194,18 @@ uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
 	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) CREDENTIALS='$(UPTEST_CLOUD_CREDENTIALS)' $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
 	@$(OK) running automated tests
 
-local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
+controlplane.up-here:$(UP) $(KUBECTL) $(KIND)
+	@$(INFO) setting up controlplane
+	@$(KIND) get kubeconfig --name $(KIND_CLUSTER_NAME) >/dev/null 2>&1 || $(KIND) create cluster --name=$(KIND_CLUSTER_NAME)
+	@if [[ -z "${DOCKER_CONTAINER_NAME}" ]]; then \
+		$(KIND) export kubeconfig --name $(KIND_CLUSTER_NAME);\
+		$(KUBECTL) config set clusters.kind-$(KIND_CLUSTER_NAME).server https://$(KIND_CLUSTER_NAME)-control-plane:6443; \
+		docker network connect kind uptest-e2e; \
+	fi
+	@$(KUBECTL) -n upbound-system get cm universal-crossplane-config >/dev/null 2>&1 || $(UP) uxp install
+	@$(KUBECTL) -n upbound-system wait deploy crossplane --for condition=Available --timeout=120s
+
+local-deploy: build controlplane.up-here local.xpkg.deploy.provider.$(PROJECT_NAME)
 	@$(INFO) running locally built provider
 	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
 	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
