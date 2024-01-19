@@ -8,8 +8,11 @@ function join {
   fi
 }
 
+## EXCLUDED ON PURPOSE:
 # providerconfig gets created on initializing tests,
 # testing folder requires cloud admin privileges, not feasible
+
+## CURRENTLY FAILING:
 # securitygroup and securitygrouprule can be created, but not really altered (yet?), so don't pass tests
 # iam/serviceaccountkey has a bug: https://nda.ya.ru/t/8HkjK_y074Vmc4
 # storage/object needs investigation

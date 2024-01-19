@@ -194,24 +194,39 @@ uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
 	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) CREDENTIALS='$(UPTEST_CLOUD_CREDENTIALS)' $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
 	@$(OK) running automated tests
 
-controlplane.up-here:$(UP) $(KUBECTL) $(KIND)
+controlplane.up-cloud:$(UP) $(KUBECTL)
 	@$(INFO) setting up controlplane
-	@$(KIND) get kubeconfig --name $(KIND_CLUSTER_NAME) >/dev/null 2>&1 || $(KIND) create cluster --name=$(KIND_CLUSTER_NAME)
-	@if [[ -z "${DOCKER_CONTAINER_NAME}" ]]; then \
-		$(KIND) export kubeconfig --name $(KIND_CLUSTER_NAME);\
-		$(KUBECTL) config set clusters.kind-$(KIND_CLUSTER_NAME).server https://$(KIND_CLUSTER_NAME)-control-plane:6443; \
-		docker network connect kind uptest-e2e; \
-	fi
 	@$(KUBECTL) -n upbound-system get cm universal-crossplane-config >/dev/null 2>&1 || $(UP) uxp install
 	@$(KUBECTL) -n upbound-system wait deploy crossplane --for condition=Available --timeout=120s
 
-local-deploy: build controlplane.up-here local.xpkg.deploy.provider.$(PROJECT_NAME)
+local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
 	@$(INFO) running locally built provider
 	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
 	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
 	@$(OK) running locally built provider
 
-e2e: local-deploy uptest controlplane.dump
+cloud.xpkg.deploy.provider: REGISTRY:=cr.yandex/$(shell yc container registry get crossplane-e2e-cr --format json | jq -r .id)
+cloud.xpkg.deploy.provider: xpkg.push
+	@$(INFO) deploying provider package $(PROJECT_NAME) $(VERSION)
+	@echo '{"apiVersion":"pkg.crossplane.io/v1alpha1","kind":"ControllerConfig","metadata":{"name":"config"},"spec":{"args":["-d"],"image":"$(REGISTRY)/$(PROJECT_NAME)"}}' | $(KUBECTL) apply -f -
+	@echo '{"apiVersion":"pkg.crossplane.io/v1","kind":"Provider","metadata":{"name":"$(PROJECT_NAME)"},"spec":{"package":"$(REGISTRY)/$(PROJECT_NAME)","controllerConfigRef":{"name":"config"}}}' | $(KUBECTL) apply -f -
+	@$(OK) deploying provider package $(PROJECT_NAME) $(VERSION)
+
+xpkg.push: $(UP) 
+	@$(INFO) pushing provider package $(PROJECT_NAME) $(VERSION)
+	@$(UP) xpkg push $(REGISTRY)/$(PROJECT_NAME) -f $(XPKG_OUTPUT_DIR)/$(PLATFORM)/$(PROJECT_NAME)-$(VERSION).xpkg || $(FAIL)
+	@echo $(REGISTRY)
+	@$(OK) pushing provider package $(PROJECT_NAME) $(VERSION)
+
+cloud-deploy: build controlplane.up-cloud cloud.xpkg.deploy.provider
+	@$(INFO) running locally built provider
+	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
+	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
+	@$(OK) running locally built provider
+
+e2e: local-deploy uptest
+
+e2e-cloud: cloud-deploy uptest
 
 crddiff: $(UPTEST)
 	@$(INFO) Checking breaking CRD schema changes

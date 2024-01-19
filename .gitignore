@@ -11,9 +11,12 @@ cover.out
 .vscode/
 .idea/
 
-# ignore yandex-cloud access key
+# ignore yandex-cloud access keys
 /key.json
+/awskey
 
-# ignore local testing cluster config
+# ignore local testing cluster config and harness
 /env.list
 /kubeconfig
+/e2e.sh
+/config.yaml
