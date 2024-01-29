@@ -164,13 +164,13 @@ echo "##teamcity[blockOpened name='dump' description='dump cluster info']"
 make controlplane.dump
 echo "##teamcity[blockClosed name='dump']"
 
-yc iam access-key delete $ACCESSKEY_ID
-yc iam key delete $SAKEY_ID
 if [ $EXITCODE ]; then
   echo "##teamcity[blockOpened name='cleanup' description='clean up test folder']"
   ./hack/folder_cleanup.sh
   echo "##teamcity[blockClosed name='cleanup']"
 fi
+yc iam access-key delete $ACCESSKEY_ID
+yc iam key delete $SAKEY_ID
 
 exit $EXITCODE
 EOF
