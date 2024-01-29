@@ -27,6 +27,7 @@ OS_NAME="$(uname -s)"
 CONTAINER_HOME="/root"
 DOCKER_PARAMS=${DOCKER_PARAMS:-}
 DOCKER_WORKDIR=${DOCKER_WORKDIR:-"$(cd .. && pwd)"}
+AW_TOOLS_COMMON_VERSION=${AW_TOOLS_COMMON_VERSION:-"5"}
 
 if [[ -z "${TEAMCITY_VERSION}" ]]; then
   # enable tty
@@ -143,7 +144,7 @@ make e2e-cloud
 exitcode=$EXITCODE_LITERAL
 
 make controlplane.dump
-yc iam access-key delete $(jq -r .access_key.id awskey)
+yc iam access-key delete $AWS_KEY_ID
 if [ $EXITCODE ]; then
   ./hack/folder_cleanup.sh
 fi
@@ -162,4 +163,4 @@ docker run --rm -i ${DOCKER_PARAMS} --env-file env.list \
   --workdir "${DOCKER_WORKDIR}/provider-jet-yc" \
   --name "${DOCKER_CONTAINER_NAME}" \
   --net=host \
-  cr.yandex/yc-internal/aw-tools-common:5 ./e2e.sh
+  cr.yandex/yc-internal/aw-tools-common:${AW_TOOLS_COMMON_VERSION} ./e2e.sh
