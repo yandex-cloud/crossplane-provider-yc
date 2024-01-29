@@ -226,12 +226,19 @@ xpkg.push: $(UP)
 	@$(OK) pushing provider package $(PROJECT_NAME) $(VERSION)
 	@echo "##teamcity[blockClosed name='push']"
 
-cloud-deploy: build controlplane.up-cloud cloud.xpkg.deploy.provider
+cloud-deploy: tc-build controlplane.up-cloud cloud.xpkg.deploy.provider
 	@$(INFO) running locally built provider
 	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
 	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
 	@$(OK) running locally built provider
 	@echo "##teamcity[blockClosed name='deploy']"
+
+pre-build:
+	@echo "##teamcity[blockOpened name='build' description='build provider image']"
+
+tc-build: pre-build build
+	@echo "##teamcity[blockClosed name='build']"
+
 
 e2e: local-deploy uptest
 

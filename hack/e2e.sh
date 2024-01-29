@@ -120,6 +120,8 @@ env |
   sort > ./env.list
 
 
+ACCESSKEY_ID='$(jq -r .access_key.id awskey)'
+SAKEY_ID='$(jq -r .id key.json)'
 AWS_KEY_ID='$(jq -r .access_key.key_id awskey)'
 AWS_SECRET='$(jq -r .secret awskey)'
 EXITCODE_LITERAL='$?'
@@ -160,9 +162,10 @@ exitcode=$EXITCODE_LITERAL
 
 echo "##teamcity[blockOpened name='dump' description='dump cluster info']"
 make controlplane.dump
-echo "##teamcity[blockClosed name='up']"
+echo "##teamcity[blockClosed name='dump']"
 
-yc iam access-key delete $AWS_KEY_ID
+yc iam access-key delete $ACCESSKEY_ID
+yc iam key delete $SAKEY_ID
 if [ $EXITCODE ]; then
   echo "##teamcity[blockOpened name='cleanup' description='clean up test folder']"
   ./hack/folder_cleanup.sh
@@ -172,6 +175,10 @@ fi
 exit $EXITCODE
 EOF
 chmod +x e2e.sh
+
+echo "##teamcity[blockOpened name='docker pull' description='pull aw-tools-common']"
+docker pull cr.yandex/yc-internal/aw-tools-common:${AW_TOOLS_COMMON_VERSION}
+echo "##teamcity[blockClosed name='docker pull']"
 
 docker run --rm -i ${DOCKER_PARAMS} --env-file env.list \
   --cap-add SYS_PTRACE \
