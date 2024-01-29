@@ -7,16 +7,17 @@
 [ -n "${SUBNET_ID}" ] || { echo SUBNET_ID env var not set, can not proceed; exit 1; }
 [ -n "${CLUSTER_IP}" ] || { echo CLUSTER_IP env var not set, can not proceed; exit 1; }
 
+
+echo "##teamcity[blockOpened name='keys' description='set up YC keys']"
 if [[ -n "${E2E_TEST_OAUTH_TOKEN}" ]]; then
   yc config set token ${E2E_TEST_OAUTH_TOKEN}
 fi
 
 yc iam key create --service-account-id ${SA_ID} --output key.json
 yc iam access-key create --service-account-id ${SA_ID} --format json > awskey
+echo "##teamcity[blockClosed name='keys']"
 
 mkdir -p .cache/tools/linux_x86_64
-
-DOCKER_CONTAINER_NAME="uptest-e2e"
 
 ROOT="$(cd .. && pwd)"
 
@@ -126,27 +127,46 @@ EXITCODE='$exitcode'
 
 cat <<EOF > e2e.sh
 #!/bin/bash
+
 git config --global --add safe.directory ${DOCKER_WORKDIR}
+
+echo "##teamcity[blockOpened name='creds' description='set up YC credentials']"
 yc config profile create sa-profile
 yc config set service-account-key key.json
 yc config set folder-id ${FOLDER_ID}
 yc config set cloud-id ${CLOUD_ID}
-./hack/folder_cleanup.sh
-./hack/provision_e2e.sh
+echo "##teamcity[blockClosed name='creds']"
 
+echo "##teamcity[blockOpened name='cleanup' description='clean up test folder']"
+./hack/folder_cleanup.sh
+echo "##teamcity[blockClosed name='cleanup']"
+
+echo "##teamcity[blockOpened name='provision' description='set up cluster and CR']"
+./hack/provision_e2e.sh
+echo "##teamcity[blockClosed name='provision']"
+
+
+echo "##teamcity[blockOpened name='up' description='fetch patched up']"
 # a temporaty measure to mitigate https://github.com/upbound/up/issues/416
 mkdir ~/.aws && echo [default] > ~/.aws/credentials && echo '  'aws_access_key_id = $AWS_KEY_ID >> ~/.aws/credentials && echo '  'aws_secret_access_key = $AWS_SECRET >> ~/.aws/credentials
 aws s3 --region=ru-central1 --endpoint-url=https://storage.yandexcloud.net cp s3://patched-for-temp-use/up .cache/tools/linux_x86_64/up-v0.21.0
 chmod +x .cache/tools/linux_x86_64/up-v0.21.0
+echo "##teamcity[blockClosed name='up']"
 
 export KUBECONFIG=kubeconfig
 make e2e-cloud
 exitcode=$EXITCODE_LITERAL
 
+
+echo "##teamcity[blockOpened name='dump' description='dump cluster info']"
 make controlplane.dump
+echo "##teamcity[blockClosed name='up']"
+
 yc iam access-key delete $AWS_KEY_ID
 if [ $EXITCODE ]; then
+  echo "##teamcity[blockOpened name='cleanup' description='clean up test folder']"
   ./hack/folder_cleanup.sh
+  echo "##teamcity[blockClosed name='cleanup']"
 fi
 
 exit $EXITCODE
@@ -161,6 +181,5 @@ docker run --rm -i ${DOCKER_PARAMS} --env-file env.list \
   --volume "${DOCKERD_SOCK}:/var/run/docker.sock" \
   --volume "${ROOT}":"${DOCKER_WORKDIR}" \
   --workdir "${DOCKER_WORKDIR}/provider-jet-yc" \
-  --name "${DOCKER_CONTAINER_NAME}" \
   --net=host \
   cr.yandex/yc-internal/aw-tools-common:${AW_TOOLS_COMMON_VERSION} ./e2e.sh
