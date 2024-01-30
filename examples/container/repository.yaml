@@ -6,4 +6,4 @@ spec:
   forProvider:
     name: "<registry-id>/test-repository"
   providerConfigRef:
-    name: example
+    name: default
