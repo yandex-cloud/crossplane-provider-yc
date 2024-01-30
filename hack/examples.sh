@@ -22,7 +22,6 @@ function join {
 all=$(find ${1} -name "*.yaml" \
 -not -path "*/alb/*" \
 -not -path "*/container/repository.yaml" \
--not -path "*/datatransfer/*" \
 -not -path "*/dns/*" \
 -not -path "*/kms/*" \
 -not -path "*/kubernetes/*" \

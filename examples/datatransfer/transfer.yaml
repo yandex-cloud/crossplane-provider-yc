@@ -8,8 +8,6 @@ metadata:
   name: pgpg-transfer
 spec:
   forProvider:
-    folderIdRef:
-      name: example-folder
     name: pgpg
     sourceIdSelector:
       matchLabels:
@@ -19,7 +17,7 @@ spec:
         testing.upbound.io/example-name: pg_target
     type: SNAPSHOT_AND_INCREMENT
   providerConfigRef:
-    name: example
+    name: default
 
 ---
 
@@ -49,10 +47,8 @@ spec:
             key: password
             namespace: default
         slotGigabyteLagLimit: 100
-    folderIdRef:
-      name: example-folder
   providerConfigRef:
-    name: example
+    name: default
 
 ---
 
@@ -66,8 +62,6 @@ metadata:
   name: pg-target
 spec:
   forProvider:
-    folderIdRef:
-      name: example-folder
     name: pg-test-target2
     settings:
     - postgresTarget:
@@ -83,10 +77,8 @@ spec:
             namespace: default
         userRef:
           name: pg-user1
-    folderIdRef:
-      name: example-folder
   providerConfigRef:
-    name: example
+    name: default
 
 ---
 
@@ -142,10 +134,8 @@ spec:
       - zone: ru-central1-a
         subnetIdRef:
           name: example-subnet-a
-    folderIdRef:
-      name: example-folder
   providerConfigRef:
-    name: example
+    name: default
   writeConnectionSecretToRef:
     name: postgress-conn
     namespace: default
@@ -172,7 +162,7 @@ spec:
       default_transaction_isolation: "read committed"
       log_min_duration_statement: "5000"
   providerConfigRef:
-    name: example
+    name: default
 ---
 apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: PostgresqlDatabase
@@ -192,4 +182,4 @@ spec:
     name: db_name
     owner: user1
   providerConfigRef:
-    name: example
+    name: default
