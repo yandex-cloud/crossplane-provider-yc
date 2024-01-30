@@ -19,7 +19,6 @@ function join {
 # storage/bucket does get removed, but Crossplane receives Forbidden; needs investigation
 all=$(find ${1} -name "*.yaml" \
 -not -path "*/alb/*" \
--not -path "*/compute/*" \
 -not -path "*/container/*" \
 -not -path "*/datatransfer/*" \
 -not -path "*/dns/*" \

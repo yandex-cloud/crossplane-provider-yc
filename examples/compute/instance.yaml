@@ -12,15 +12,13 @@ spec:
         memory: 4
     bootDisk:
       - initializeParams:
-          # ubuntu 20.04
-          # yc compute image list --folder-id standard-images | grep 'ubuntu-20-04-lts'
-          - imageId: fd8ot0k0vde438jv0t8j
+          # ubuntu 22.04
+          # yc compute image list --folder-id standard-images | grep 'ubuntu-22-04-lts'
+          - imageId: fd80bm0rh4rkepi5ksdi
     networkInterface:
       - subnetIdRef:
           name: example-subnet-a
     metadata:
       ssh-keys: "ubuntu:<public-key-data>"
-    folderIdRef:
-      name: example-folder
   providerConfigRef:
-    name: example
+    name: default
