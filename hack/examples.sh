@@ -12,6 +12,7 @@ function join {
 # providerconfig gets created on initializing tests,
 # testing folder requires cloud admin privileges, not feasible
 # container/repository needs registry ID explicitly provided
+# datatransfer/transfer actually runs upon creation
 
 ## CURRENTLY FAILING:
 # securitygroup and securitygrouprule can be created, but not really altered (yet?), so don't pass tests
@@ -22,6 +23,7 @@ function join {
 all=$(find ${1} -name "*.yaml" \
 -not -path "*/alb/*" \
 -not -path "*/container/repository.yaml" \
+-not -path "*/datatransfer/transfer.yaml" \
 -not -path "*/dns/*" \
 -not -path "*/kms/*" \
 -not -path "*/kubernetes/*" \
