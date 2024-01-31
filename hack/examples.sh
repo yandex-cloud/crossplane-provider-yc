@@ -26,7 +26,6 @@ all=$(find ${1} -name "*.yaml" \
 -not -path "*/datatransfer/transfer.yaml" \
 -not -path "*/kubernetes/*" \
 -not -path "*/mdb/*" \
--not -path "*/message/*" \
 -not -path "*/vpc/securitygroup*.yaml" \
 -not -path "*/iam/serviceaccountkey.yaml" \
 -not -path "*/storage/object.yaml" \
