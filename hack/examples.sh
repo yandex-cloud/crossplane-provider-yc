@@ -11,6 +11,7 @@ function join {
 ## EXCLUDED ON PURPOSE:
 # providerconfig gets created on initializing tests,
 # testing folder requires cloud admin privileges, not feasible
+# alb/targetgroup needs instance IPs explicitly provided
 # container/repository needs registry ID explicitly provided
 # datatransfer/transfer actually runs upon creation
 # message/queue works, but cleaning it in case of tests failure is a problem

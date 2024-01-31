@@ -12,7 +12,5 @@ spec:
       empty-label: ""
       tf-label: tf-label-value
     name: my-http-router
-    folderIdRef:
-      name: example-folder
   providerConfigRef:
-    name: example
+    name: default

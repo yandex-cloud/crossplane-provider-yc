@@ -16,7 +16,5 @@ spec:
     - ipAddress: ${yandex_compute_instance.example-instance-2.network_interface.0.ip_address}
       subnetIdRef:
         name: example-subnet-a
-    folderIdRef:
-      name: example-folder
   providerConfigRef:
-    name: example
+    name: default

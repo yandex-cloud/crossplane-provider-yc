@@ -26,4 +26,4 @@ spec:
       weight: 1
     name: my-backend-group
   providerConfigRef:
-    name: example
+    name: default
