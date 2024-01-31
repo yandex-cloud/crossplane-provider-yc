@@ -40,4 +40,4 @@ spec:
             duration: "4h30m"
             day: "friday"
   providerConfigRef:
-    name: example
+    name: default

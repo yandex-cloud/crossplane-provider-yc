@@ -29,7 +29,5 @@ spec:
     kmsProvider:
       - keyIdRef:
           name: example-sk
-    folderIdRef:
-      name: example-folder
   providerConfigRef:
-    name: example
+    name: default
