@@ -39,10 +39,8 @@ spec:
       - zone: ru-central1-a
         subnetIdRef:
           name: example-subnet-a
-    folderIdRef:
-      name: example-folder
   providerConfigRef:
-    name: example
+    name: default
   writeConnectionSecretToRef:
     name: postgress-conn
     namespace: default
@@ -68,7 +66,7 @@ spec:
       default_transaction_isolation: "read committed"
       log_min_duration_statement: "5000"
   providerConfigRef:
-    name: example
+    name: default
 ---
 apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: PostgresqlDatabase
@@ -88,4 +86,4 @@ spec:
     name: db_name
     owner: user1
   providerConfigRef:
-    name: example
+    name: default

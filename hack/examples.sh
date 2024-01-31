@@ -9,7 +9,7 @@ function join {
 }
 
 ## EXCLUDED ON PURPOSE:
-# providerconfig gets created on initializing tests,
+# providerconfig gets created on initializing tests
 # testing folder requires cloud admin privileges, not feasible
 # alb/targetgroup needs instance IPs explicitly provided
 # container/repository needs registry ID explicitly provided
@@ -23,16 +23,15 @@ function join {
 # storage/bucket does get removed, but Crossplane receives Forbidden; needs investigation
 # securitygroup and securitygrouprule can be created, but not really altered (yet?), so don't pass tests
 all=$(find ${1} -name "*.yaml" \
--not -path "*/alb/*" \
--not -path "*/container/repository.yaml" \
--not -path "*/datatransfer/transfer.yaml" \
--not -path "*/message/queue.yaml" \
--not -path "*/mdb/*" \
 -not -path "*/vpc/securitygroup*.yaml" \
 -not -path "*/iam/serviceaccountkey.yaml" \
 -not -path "*/kubernetes/nodegroup.yaml" \
 -not -path "*/storage/object.yaml" \
 -not -path "*/storage/bucket.yaml" \
+-not -path "*/alb/*" \
+-not -path "*/container/repository.yaml" \
+-not -path "*/datatransfer/transfer.yaml" \
+-not -path "*/message/queue.yaml" \
 -not -path "*/providerconfig/providerconfig.yaml" \
 -not -path "*/resourcemanager/folder.yaml")
 

@@ -13,6 +13,9 @@ delete_all kms symmetric-key
 delete_all dns zone
 delete_all datatransfer transfer
 delete_all datatransfer endpoint
+delete_all managed-redis cluster
+delete_all managed-mongodb cluster
+delete_all managed-mysql cluster
 delete_all managed-postgresql cluster
 delete_all container image
 delete_all container registry

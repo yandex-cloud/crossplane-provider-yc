@@ -40,10 +40,8 @@ spec:
       - zoneId: ru-central1-a
         subnetIdRef:
           name: example-subnet-a
-    folderIdRef:
-      name: example-folder
   providerConfigRef:
-    name: example
+    name: default
   writeConnectionSecretToRef:
     name: mongodb-conn
     namespace: default
