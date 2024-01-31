@@ -24,7 +24,6 @@ all=$(find ${1} -name "*.yaml" \
 -not -path "*/alb/*" \
 -not -path "*/container/repository.yaml" \
 -not -path "*/datatransfer/transfer.yaml" \
--not -path "*/dns/*" \
 -not -path "*/kms/*" \
 -not -path "*/kubernetes/*" \
 -not -path "*/mdb/*" \

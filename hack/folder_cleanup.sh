@@ -9,6 +9,7 @@ function delete_all {
     done
 }
 
+delete_all dns zone
 delete_all datatransfer transfer
 delete_all datatransfer endpoint
 delete_all managed-postgresql cluster

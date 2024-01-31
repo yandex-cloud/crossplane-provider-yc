@@ -12,7 +12,5 @@ spec:
     public: false
     privateNetworksRefs:
       - name: example-net
-    folderIdRef:
-      name: example-folder
   providerConfigRef:
-    name: example
+    name: default
