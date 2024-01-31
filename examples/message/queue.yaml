@@ -8,7 +8,7 @@ spec:
 
     secretKeySecretRef:
       name: sa-key-conn
-      namespace: crossplane-system
+      namespace: upbound-system
       key: attribute.secret_key
 
     accessKeyRef:

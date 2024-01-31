@@ -27,7 +27,7 @@ WORKDIR=${DOCKER_WORKDIR:-"$(cd .. && pwd)"}
 git config --global --add safe.directory ${WORKDIR}
 
 echo "##teamcity[blockOpened name='cleanup' description='clean up test folder']"
-./hack/folder_cleanup.sh || exit 1
+./hack/folder_cleanup.sh || (echo "##teamcity[buildStatus text='Failed to clean up test folder']"; exit 1)
 echo "##teamcity[blockClosed name='cleanup']"
 
 echo "##teamcity[blockOpened name='provision' description='set up cluster and CR']"
