@@ -43,6 +43,7 @@ chmod +x .cache/tools/linux_x86_64/up-v0.21.0
 echo "##teamcity[blockClosed name='up']"
 
 export KUBECONFIG=kubeconfig
+export DOCKER_CLI_EXPERIMENTAL=enabled
 echo "##teamcity[blockOpened name='make e2e-cloud']"
 make e2e-cloud
 exitcode=$?

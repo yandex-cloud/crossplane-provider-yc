@@ -47,13 +47,20 @@ func serviceAccountKey(attr map[string]interface{}) ([]byte, error) {
 			return nil, fmt.Errorf("required field %s is missing", field)
 		}
 	}
+
+	// private_key is nil when returned for existing serviceAccountKey
+	privateKey, ok := attr["private_key"].(string)
+	if !ok {
+		privateKey = ""
+	}
+
 	result := map[string]string{
 		"id":                 attr["id"].(string),
 		"service_account_id": attr["service_account_id"].(string),
 		"created_at":         attr["created_at"].(string),
 		"key_algorithm":      attr["key_algorithm"].(string),
 		"public_key":         attr["public_key"].(string),
-		"private_key":        attr["private_key"].(string),
+		"private_key":        privateKey,
 	}
 	encoded, err := json.Marshal(result)
 	return encoded, err
