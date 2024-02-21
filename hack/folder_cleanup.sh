@@ -9,6 +9,7 @@ function delete_all {
     done
 }
 
+delete_all compute instance
 delete_all kms symmetric-key
 delete_all dns zone
 delete_all datatransfer transfer
@@ -22,6 +23,7 @@ delete_all container registry
 delete_all managed-kubernetes cluster
 delete_all iam service-account
 delete_all ydb db
+delete_all managed-kafka cluster
 delete_all vpc addr
 delete_all vpc subnet
 delete_all vpc net

@@ -196,7 +196,6 @@ func elasticsearchConnectionStrings(attr map[string]interface{}) map[string]stri
 					fmt.Sprintf("https://%s:%s@%s:9200/%s",
 						u, password, host, db)
 			}
-
 		}
 	}
 	return connstrings
@@ -396,5 +395,35 @@ func Configure(p *config.Provider) {
 		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
 			return elasticsearchConnDetails(attr), nil
 		}
+	})
+	p.AddResourceConfigurator("yandex_mdb_kafka_cluster", func(r *config.Resource) {
+		r.References["network_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
+		}
+		r.References["subnet_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
+		}
+		r.References["security_group_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
+		}
+		r.UseAsync = true
+	})
+	p.AddResourceConfigurator("yandex_mdb_kafka_connector", func(r *config.Resource) {
+		r.References["cluster_id"] = config.Reference{
+			Type: fmt.Sprintf("KafkaCluster"),
+		}
+		r.UseAsync = true
+	})
+	p.AddResourceConfigurator("yandex_mdb_kafka_topic", func(r *config.Resource) {
+		r.References["cluster_id"] = config.Reference{
+			Type: fmt.Sprintf("KafkaCluster"),
+		}
+		r.UseAsync = true
+	})
+	p.AddResourceConfigurator("yandex_mdb_kafka_user", func(r *config.Resource) {
+		r.References["cluster_id"] = config.Reference{
+			Type: fmt.Sprintf("KafkaCluster"),
+		}
+		r.UseAsync = true
 	})
 }

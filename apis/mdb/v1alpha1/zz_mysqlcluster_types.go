@@ -504,7 +504,7 @@ type MySQLClusterUserObservation struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Set of permissions granted to the user. The structure is documented below.
-	Permission []UserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
+	Permission []MySQLClusterUserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type MySQLClusterUserParameters struct {
@@ -534,10 +534,10 @@ type MySQLClusterUserParameters struct {
 
 	// Set of permissions granted to the user. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	Permission []UserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+	Permission []MySQLClusterUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
-type UserPermissionObservation struct {
+type MySQLClusterUserPermissionObservation struct {
 
 	// The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
@@ -548,7 +548,7 @@ type UserPermissionObservation struct {
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
-type UserPermissionParameters struct {
+type MySQLClusterUserPermissionParameters struct {
 
 	// The name of the database that the permission grants access to.
 	// +kubebuilder:validation:Required

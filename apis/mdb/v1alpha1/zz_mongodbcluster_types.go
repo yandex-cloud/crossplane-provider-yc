@@ -25,26 +25,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type AccessObservation struct {
-
-	// Allow access for Yandex DataLens.
-	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
-
-	// Allow access for DataTransfer
-	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
-}
-
-type AccessParameters struct {
-
-	// Allow access for Yandex DataLens.
-	// +kubebuilder:validation:Optional
-	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
-
-	// Allow access for DataTransfer
-	// +kubebuilder:validation:Optional
-	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
-}
-
 type AuditLogObservation struct {
 
 	// Configuration of the audit log filter in JSON format.
@@ -93,10 +73,30 @@ type BackupWindowStartParameters struct {
 	Minutes *float64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
 }
 
+type ClusterConfigAccessObservation struct {
+
+	// Allow access for Yandex DataLens.
+	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
+
+	// Allow access for DataTransfer
+	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
+}
+
+type ClusterConfigAccessParameters struct {
+
+	// Allow access for Yandex DataLens.
+	// +kubebuilder:validation:Optional
+	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
+
+	// Allow access for DataTransfer
+	// +kubebuilder:validation:Optional
+	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
+}
+
 type ClusterConfigObservation struct {
 
 	// Access policy to the MongoDB cluster. The structure is documented below.
-	Access []AccessObservation `json:"access,omitempty" tf:"access,omitempty"`
+	Access []ClusterConfigAccessObservation `json:"access,omitempty" tf:"access,omitempty"`
 
 	// Retain period of automatically created backup in days.
 	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
@@ -127,7 +127,7 @@ type ClusterConfigParameters struct {
 
 	// Access policy to the MongoDB cluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	Access []AccessParameters `json:"access,omitempty" tf:"access,omitempty"`
+	Access []ClusterConfigAccessParameters `json:"access,omitempty" tf:"access,omitempty"`
 
 	// Retain period of automatically created backup in days.
 	// +kubebuilder:validation:Optional
@@ -606,7 +606,7 @@ type MongodbClusterObservation struct {
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
 	// A user of the MongoDB cluster. The structure is documented below.
-	User []UserObservation `json:"user,omitempty" tf:"user,omitempty"`
+	User []MongodbClusterUserObservation `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type MongodbClusterParameters struct {
@@ -717,7 +717,7 @@ type MongodbClusterParameters struct {
 
 	// A user of the MongoDB cluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	User []UserParameters `json:"user,omitempty" tf:"user,omitempty"`
+	User []MongodbClusterUserParameters `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type MongodbClusterResourcesObservation struct {
@@ -745,6 +745,30 @@ type MongodbClusterResourcesParameters struct {
 
 	// +kubebuilder:validation:Required
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
+}
+
+type MongodbClusterUserObservation struct {
+
+	// The name of the user.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Set of permissions granted to the user. The structure is documented below.
+	Permission []UserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
+}
+
+type MongodbClusterUserParameters struct {
+
+	// The name of the user.
+	// +kubebuilder:validation:Required
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// The password of the user.
+	// +kubebuilder:validation:Required
+	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+
+	// Set of permissions granted to the user. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Permission []UserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type MongosNetObservation struct {
@@ -837,26 +861,6 @@ type PerformanceDiagnosticsParameters struct {
 	// Enable or disable performance diagnostics.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
-}
-
-type PermissionObservation struct {
-
-	// The name of the database that the permission grants access to.
-	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
-
-	// The roles of the user in this database. For more information see the official documentation.
-	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
-}
-
-type PermissionParameters struct {
-
-	// The name of the database that the permission grants access to.
-	// +kubebuilder:validation:Required
-	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
-
-	// The roles of the user in this database. For more information see the official documentation.
-	// +kubebuilder:validation:Optional
-	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
 type ResourcesMongocfgObservation struct {
@@ -1079,28 +1083,24 @@ type StorageWiredTigerParameters struct {
 	CacheSizeGb *float64 `json:"cacheSizeGb,omitempty" tf:"cache_size_gb,omitempty"`
 }
 
-type UserObservation struct {
+type UserPermissionObservation struct {
 
-	// The name of the user.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+	// The name of the database that the permission grants access to.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 
-	// Set of permissions granted to the user. The structure is documented below.
-	Permission []PermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
+	// The roles of the user in this database. For more information see the official documentation.
+	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
-type UserParameters struct {
+type UserPermissionParameters struct {
 
-	// The name of the user.
+	// The name of the database that the permission grants access to.
 	// +kubebuilder:validation:Required
-	Name *string `json:"name" tf:"name,omitempty"`
+	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 
-	// The password of the user.
-	// +kubebuilder:validation:Required
-	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
-
-	// Set of permissions granted to the user. The structure is documented below.
+	// The roles of the user in this database. For more information see the official documentation.
 	// +kubebuilder:validation:Optional
-	Permission []PermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
 type WiredTigerObservation struct {

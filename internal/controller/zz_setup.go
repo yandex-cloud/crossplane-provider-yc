@@ -31,6 +31,10 @@ import (
 	cluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/kubernetes/cluster"
 	nodegroup "github.com/yandex-cloud/provider-jet-yc/internal/controller/kubernetes/nodegroup"
 	elasticsearchcluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/elasticsearchcluster"
+	kafkacluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/kafkacluster"
+	kafkaconnector "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/kafkaconnector"
+	kafkatopic "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/kafkatopic"
+	kafkauser "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/kafkauser"
 	mongodbcluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mongodbcluster"
 	mysqlcluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mysqlcluster"
 	mysqldatabase "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mysqldatabase"
@@ -80,6 +84,10 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		cluster.Setup,
 		nodegroup.Setup,
 		elasticsearchcluster.Setup,
+		kafkacluster.Setup,
+		kafkaconnector.Setup,
+		kafkatopic.Setup,
+		kafkauser.Setup,
 		mongodbcluster.Setup,
 		mysqlcluster.Setup,
 		mysqldatabase.Setup,

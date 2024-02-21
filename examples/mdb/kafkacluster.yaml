@@ -1,0 +1,127 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kafka
+  namespace: default
+type: Opaque
+data:
+  password: MTIzNDU2Nzg=
+---
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: KafkaTopic
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/kafkatopic
+  name: kafka-topic
+spec:
+  forProvider:
+    clusterIdRef:
+      name: kafka-cluster
+    name: kafka-topic
+    partitions: 4
+    replicationFactor: 1
+    topicConfig:
+      - cleanupPolicy: CLEANUP_POLICY_COMPACT
+        compressionType: COMPRESSION_TYPE_LZ4
+        deleteRetentionMs: "86400000"
+        fileDeleteDelayMs: "60000"
+        flushMessages: "128"
+        flushMs: "1000"
+        maxMessageBytes: "1048588"
+        minCompactionLagMs: "0"
+        minInsyncReplicas: "1"
+        retentionBytes: "10737418240"
+        retentionMs: "604800000"
+        segmentBytes: "268435456"
+---
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: KafkaUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/kafkauser
+  name: kafka-user
+spec:
+  forProvider:
+    clusterIdRef:
+      name: kafka-cluster
+    name: kafka-user
+    passwordSecretRef:
+      name: kafka
+      key: password
+      namespace: default
+    permission:
+      - allowHosts:
+          - host1.db.yandex.net
+          - host2.db.yandex.net
+        role: ACCESS_ROLE_CONSUMER
+        topicName: kafka-topic
+      - role: ACCESS_ROLE_PRODUCER
+        topicName: kafka-topic
+---
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: KafkaCluster
+metadata:
+  name: kafka-cluster
+spec:
+  forProvider:
+    config:
+      - assignPublicIp: false
+        brokersCount: 1
+        kafka:
+          - kafkaConfig:
+              - compressionType: COMPRESSION_TYPE_ZSTD
+                defaultReplicationFactor: "1"
+                logFlushIntervalMessages: "1024"
+                logFlushIntervalMs: "1000"
+                logFlushSchedulerIntervalMs: "1000"
+                logRetentionBytes: "1073741824"
+                logRetentionHours: "168"
+                logRetentionMinutes: "10080"
+                logRetentionMs: "86400000"
+                logSegmentBytes: "134217728"
+                messageMaxBytes: "1048588"
+                numPartitions: "10"
+                offsetsRetentionMinutes: "10080"
+                replicaFetchMaxBytes: "1048576"
+                saslEnabledMechanisms:
+                  - SASL_MECHANISM_SCRAM_SHA_256
+                  - SASL_MECHANISM_SCRAM_SHA_512
+                sslCipherSuites:
+                  - TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+                  - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+            resources:
+              - diskSize: 32
+                diskTypeId: network-ssd
+                resourcePresetId: s2.micro
+        schemaRegistry: false
+        version: "2.8"
+        zones:
+          - ru-central1-a
+    environment: PRESTABLE
+    name: kafka-cluster
+    networkIdRef:
+      name: example-net
+    subnetIdsRefs:
+      - name: example-subnet-a
+    user:
+      - name: producer-application
+        passwordSecretRef:
+          name: kafka
+          key: password
+          namespace: default
+        permission:
+          - allowHosts:
+              - host1.db.yandex.net
+              - host2.db.yandex.net
+            role: ACCESS_ROLE_PRODUCER
+            topicName: input
+      - name: worker
+        passwordSecretRef:
+          name: kafka
+          key: password
+          namespace: default
+        permission:
+          - role: ACCESS_ROLE_CONSUMER
+            topicName: input
+          - role: ACCESS_ROLE_PRODUCER
+            topicName: output
