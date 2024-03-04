@@ -10,6 +10,11 @@
 
 
 echo "##teamcity[blockOpened name='keys' description='set up YC keys']"
+
+# TODO: remove this when docker image is updated to have yc that can set cluster master location
+curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+source ~/.bashrc
+
 yc config profile create robot
 yc config set token ${OAUTH_TOKEN}
 
