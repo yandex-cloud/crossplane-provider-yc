@@ -368,6 +368,48 @@ spec:
                                 type: boolean
                             type: object
                           type: array
+                        filter:
+                          items:
+                            properties:
+                              and:
+                                items:
+                                  properties:
+                                    objectSizeGreaterThan:
+                                      type: number
+                                    objectSizeLessThan:
+                                      type: number
+                                    prefix:
+                                      description: Object key prefix identifying one
+                                        or more objects to which the rule applies.
+                                      type: string
+                                    tags:
+                                      additionalProperties:
+                                        type: string
+                                      type: object
+                                  type: object
+                                type: array
+                              objectSizeGreaterThan:
+                                type: number
+                              objectSizeLessThan:
+                                type: number
+                              prefix:
+                                description: Object key prefix identifying one or
+                                  more objects to which the rule applies.
+                                type: string
+                              tag:
+                                items:
+                                  properties:
+                                    key:
+                                      type: string
+                                    value:
+                                      type: string
+                                  required:
+                                  - key
+                                  - value
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                         id:
                           description: Unique identifier for the rule. Must be less
                             than or equal to 255 characters in length.
@@ -409,10 +451,6 @@ spec:
                           description: Object key prefix identifying one or more objects
                             to which the rule applies.
                           type: string
-                        tags:
-                          additionalProperties:
-                            type: string
-                          type: object
                         transition:
                           description: Specifies a period in the object's transitions
                             (documented below).
@@ -951,6 +989,45 @@ spec:
                                 type: boolean
                             type: object
                           type: array
+                        filter:
+                          items:
+                            properties:
+                              and:
+                                items:
+                                  properties:
+                                    objectSizeGreaterThan:
+                                      type: number
+                                    objectSizeLessThan:
+                                      type: number
+                                    prefix:
+                                      description: Object key prefix identifying one
+                                        or more objects to which the rule applies.
+                                      type: string
+                                    tags:
+                                      additionalProperties:
+                                        type: string
+                                      type: object
+                                  type: object
+                                type: array
+                              objectSizeGreaterThan:
+                                type: number
+                              objectSizeLessThan:
+                                type: number
+                              prefix:
+                                description: Object key prefix identifying one or
+                                  more objects to which the rule applies.
+                                type: string
+                              tag:
+                                items:
+                                  properties:
+                                    key:
+                                      type: string
+                                    value:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                         id:
                           description: Unique identifier for the rule. Must be less
                             than or equal to 255 characters in length.
@@ -990,10 +1067,6 @@ spec:
                           description: Object key prefix identifying one or more objects
                             to which the rule applies.
                           type: string
-                        tags:
-                          additionalProperties:
-                            type: string
-                          type: object
                         transition:
                           description: Specifies a period in the object's transitions
                             (documented below).

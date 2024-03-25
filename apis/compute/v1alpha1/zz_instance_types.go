@@ -293,6 +293,10 @@ type InstanceObservation struct {
 	// List of local disks that are attached to the instance. Structure is documented below.
 	LocalDisk []LocalDiskObservation `json:"localDisk,omitempty" tf:"local_disk,omitempty"`
 
+	MaintenanceGracePeriod *string `json:"maintenanceGracePeriod,omitempty" tf:"maintenance_grace_period,omitempty"`
+
+	MaintenancePolicy *string `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
+
 	// Metadata key/value pairs to make available from
 	// within the instance.
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
@@ -391,6 +395,12 @@ type InstanceParameters struct {
 	// List of local disks that are attached to the instance. Structure is documented below.
 	// +kubebuilder:validation:Optional
 	LocalDisk []LocalDiskParameters `json:"localDisk,omitempty" tf:"local_disk,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	MaintenanceGracePeriod *string `json:"maintenanceGracePeriod,omitempty" tf:"maintenance_grace_period,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	MaintenancePolicy *string `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
 	// Metadata key/value pairs to make available from
 	// within the instance.
@@ -651,6 +661,8 @@ type PlacementPolicyObservation struct {
 
 	// Specifies the id of the Placement Group to assign to the instance.
 	PlacementGroupID *string `json:"placementGroupId,omitempty" tf:"placement_group_id,omitempty"`
+
+	PlacementGroupPartition *float64 `json:"placementGroupPartition,omitempty" tf:"placement_group_partition,omitempty"`
 }
 
 type PlacementPolicyParameters struct {
@@ -662,6 +674,9 @@ type PlacementPolicyParameters struct {
 	// Specifies the id of the Placement Group to assign to the instance.
 	// +kubebuilder:validation:Optional
 	PlacementGroupID *string `json:"placementGroupId,omitempty" tf:"placement_group_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	PlacementGroupPartition *float64 `json:"placementGroupPartition,omitempty" tf:"placement_group_partition,omitempty"`
 }
 
 type ResourcesObservation struct {

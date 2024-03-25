@@ -148,12 +148,19 @@ type RbacParameters struct {
 
 type RouteOptionsObservation struct {
 	Rbac []RbacObservation `json:"rbac,omitempty" tf:"rbac,omitempty"`
+
+	// The ID of the HTTP Router.
+	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type RouteOptionsParameters struct {
 
 	// +kubebuilder:validation:Optional
 	Rbac []RbacParameters `json:"rbac,omitempty" tf:"rbac,omitempty"`
+
+	// The ID of the HTTP Router.
+	// +kubebuilder:validation:Optional
+	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type ValueObservation struct {

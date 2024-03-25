@@ -25,6 +25,372 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ColumnsObservation struct {
+	ExcludeColumns []*string `json:"excludeColumns,omitempty" tf:"exclude_columns,omitempty"`
+
+	IncludeColumns []*string `json:"includeColumns,omitempty" tf:"include_columns,omitempty"`
+}
+
+type ColumnsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	ExcludeColumns []*string `json:"excludeColumns,omitempty" tf:"exclude_columns,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IncludeColumns []*string `json:"includeColumns,omitempty" tf:"include_columns,omitempty"`
+}
+
+type ConvertToStringObservation struct {
+	Columns []ColumnsObservation `json:"columns,omitempty" tf:"columns,omitempty"`
+
+	Tables []TablesObservation `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type ConvertToStringParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Columns []ColumnsParameters `json:"columns,omitempty" tf:"columns,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Tables []TablesParameters `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type FilterColumnsColumnsObservation struct {
+	ExcludeColumns []*string `json:"excludeColumns,omitempty" tf:"exclude_columns,omitempty"`
+
+	IncludeColumns []*string `json:"includeColumns,omitempty" tf:"include_columns,omitempty"`
+}
+
+type FilterColumnsColumnsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	ExcludeColumns []*string `json:"excludeColumns,omitempty" tf:"exclude_columns,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IncludeColumns []*string `json:"includeColumns,omitempty" tf:"include_columns,omitempty"`
+}
+
+type FilterColumnsObservation struct {
+	Columns []FilterColumnsColumnsObservation `json:"columns,omitempty" tf:"columns,omitempty"`
+
+	Tables []FilterColumnsTablesObservation `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type FilterColumnsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Columns []FilterColumnsColumnsParameters `json:"columns,omitempty" tf:"columns,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Tables []FilterColumnsTablesParameters `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type FilterColumnsTablesObservation struct {
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
+type FilterColumnsTablesParameters struct {
+
+	// +kubebuilder:validation:Optional
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
+type FilterRowsObservation struct {
+	Filter *string `json:"filter,omitempty" tf:"filter,omitempty"`
+
+	Tables []FilterRowsTablesObservation `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type FilterRowsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Filter *string `json:"filter,omitempty" tf:"filter,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Tables []FilterRowsTablesParameters `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type FilterRowsTablesObservation struct {
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
+type FilterRowsTablesParameters struct {
+
+	// +kubebuilder:validation:Optional
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
+type FunctionObservation struct {
+	MaskFunctionHash []MaskFunctionHashObservation `json:"maskFunctionHash,omitempty" tf:"mask_function_hash,omitempty"`
+}
+
+type FunctionParameters struct {
+
+	// +kubebuilder:validation:Optional
+	MaskFunctionHash []MaskFunctionHashParameters `json:"maskFunctionHash,omitempty" tf:"mask_function_hash,omitempty"`
+}
+
+type MaskFieldObservation struct {
+	Columns []*string `json:"columns,omitempty" tf:"columns,omitempty"`
+
+	Function []FunctionObservation `json:"function,omitempty" tf:"function,omitempty"`
+
+	Tables []MaskFieldTablesObservation `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type MaskFieldParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Columns []*string `json:"columns,omitempty" tf:"columns,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Function []FunctionParameters `json:"function,omitempty" tf:"function,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Tables []MaskFieldTablesParameters `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type MaskFieldTablesObservation struct {
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
+type MaskFieldTablesParameters struct {
+
+	// +kubebuilder:validation:Optional
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
+type MaskFunctionHashObservation struct {
+	UserDefinedSalt *string `json:"userDefinedSalt,omitempty" tf:"user_defined_salt,omitempty"`
+}
+
+type MaskFunctionHashParameters struct {
+
+	// +kubebuilder:validation:Optional
+	UserDefinedSalt *string `json:"userDefinedSalt,omitempty" tf:"user_defined_salt,omitempty"`
+}
+
+type NewNameObservation struct {
+
+	// Name of the transfer.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	NameSpace *string `json:"nameSpace,omitempty" tf:"name_space,omitempty"`
+}
+
+type NewNameParameters struct {
+
+	// Name of the transfer.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	NameSpace *string `json:"nameSpace,omitempty" tf:"name_space,omitempty"`
+}
+
+type OriginalNameObservation struct {
+
+	// Name of the transfer.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	NameSpace *string `json:"nameSpace,omitempty" tf:"name_space,omitempty"`
+}
+
+type OriginalNameParameters struct {
+
+	// Name of the transfer.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	NameSpace *string `json:"nameSpace,omitempty" tf:"name_space,omitempty"`
+}
+
+type RenameTablesObservation struct {
+	RenameTables []RenameTablesRenameTablesObservation `json:"renameTables,omitempty" tf:"rename_tables,omitempty"`
+}
+
+type RenameTablesParameters struct {
+
+	// +kubebuilder:validation:Optional
+	RenameTables []RenameTablesRenameTablesParameters `json:"renameTables,omitempty" tf:"rename_tables,omitempty"`
+}
+
+type RenameTablesRenameTablesObservation struct {
+
+	// Name of the transfer.
+	NewName []NewNameObservation `json:"newName,omitempty" tf:"new_name,omitempty"`
+
+	// Name of the transfer.
+	OriginalName []OriginalNameObservation `json:"originalName,omitempty" tf:"original_name,omitempty"`
+}
+
+type RenameTablesRenameTablesParameters struct {
+
+	// Name of the transfer.
+	// +kubebuilder:validation:Optional
+	NewName []NewNameParameters `json:"newName,omitempty" tf:"new_name,omitempty"`
+
+	// Name of the transfer.
+	// +kubebuilder:validation:Optional
+	OriginalName []OriginalNameParameters `json:"originalName,omitempty" tf:"original_name,omitempty"`
+}
+
+type ReplacePrimaryKeyObservation struct {
+	Keys []*string `json:"keys,omitempty" tf:"keys,omitempty"`
+
+	Tables []ReplacePrimaryKeyTablesObservation `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type ReplacePrimaryKeyParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Keys []*string `json:"keys,omitempty" tf:"keys,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Tables []ReplacePrimaryKeyTablesParameters `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type ReplacePrimaryKeyTablesObservation struct {
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
+type ReplacePrimaryKeyTablesParameters struct {
+
+	// +kubebuilder:validation:Optional
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
+type RuntimeObservation struct {
+	YcRuntime []YcRuntimeObservation `json:"ycRuntime,omitempty" tf:"yc_runtime,omitempty"`
+}
+
+type RuntimeParameters struct {
+
+	// +kubebuilder:validation:Optional
+	YcRuntime []YcRuntimeParameters `json:"ycRuntime,omitempty" tf:"yc_runtime,omitempty"`
+}
+
+type SharderTransformerColumnsObservation struct {
+	ExcludeColumns []*string `json:"excludeColumns,omitempty" tf:"exclude_columns,omitempty"`
+
+	IncludeColumns []*string `json:"includeColumns,omitempty" tf:"include_columns,omitempty"`
+}
+
+type SharderTransformerColumnsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	ExcludeColumns []*string `json:"excludeColumns,omitempty" tf:"exclude_columns,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IncludeColumns []*string `json:"includeColumns,omitempty" tf:"include_columns,omitempty"`
+}
+
+type SharderTransformerObservation struct {
+	Columns []SharderTransformerColumnsObservation `json:"columns,omitempty" tf:"columns,omitempty"`
+
+	ShardsCount *float64 `json:"shardsCount,omitempty" tf:"shards_count,omitempty"`
+
+	Tables []SharderTransformerTablesObservation `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type SharderTransformerParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Columns []SharderTransformerColumnsParameters `json:"columns,omitempty" tf:"columns,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ShardsCount *float64 `json:"shardsCount,omitempty" tf:"shards_count,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Tables []SharderTransformerTablesParameters `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type SharderTransformerTablesObservation struct {
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
+type SharderTransformerTablesParameters struct {
+
+	// +kubebuilder:validation:Optional
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
+type TableSplitterTransformerObservation struct {
+	Columns []*string `json:"columns,omitempty" tf:"columns,omitempty"`
+
+	Splitter *string `json:"splitter,omitempty" tf:"splitter,omitempty"`
+
+	Tables []TableSplitterTransformerTablesObservation `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type TableSplitterTransformerParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Columns []*string `json:"columns,omitempty" tf:"columns,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Splitter *string `json:"splitter,omitempty" tf:"splitter,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Tables []TableSplitterTransformerTablesParameters `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type TableSplitterTransformerTablesObservation struct {
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
+type TableSplitterTransformerTablesParameters struct {
+
+	// +kubebuilder:validation:Optional
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
+type TablesObservation struct {
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
+type TablesParameters struct {
+
+	// +kubebuilder:validation:Optional
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+}
+
 type TransferObservation struct {
 
 	// Arbitrary description text for the transfer.
@@ -47,11 +413,15 @@ type TransferObservation struct {
 	// One of "sync_activate", "async_activate", "dont_activate". The default is "sync_activate".
 	OnCreateActivateMode *string `json:"onCreateActivateMode,omitempty" tf:"on_create_activate_mode,omitempty"`
 
+	Runtime []RuntimeObservation `json:"runtime,omitempty" tf:"runtime,omitempty"`
+
 	// ID of the source endpoint for the transfer.
 	SourceID *string `json:"sourceId,omitempty" tf:"source_id,omitempty"`
 
 	// ID of the target endpoint for the transfer.
 	TargetID *string `json:"targetId,omitempty" tf:"target_id,omitempty"`
+
+	Transformation []TransformationObservation `json:"transformation,omitempty" tf:"transformation,omitempty"`
 
 	// Type of the transfer. One of "SNAPSHOT_ONLY", "INCREMENT_ONLY", "SNAPSHOT_AND_INCREMENT".
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -93,6 +463,9 @@ type TransferParameters struct {
 	// +kubebuilder:validation:Optional
 	OnCreateActivateMode *string `json:"onCreateActivateMode,omitempty" tf:"on_create_activate_mode,omitempty"`
 
+	// +kubebuilder:validation:Optional
+	Runtime []RuntimeParameters `json:"runtime,omitempty" tf:"runtime,omitempty"`
+
 	// ID of the source endpoint for the transfer.
 	// +crossplane:generate:reference:type=Endpoint
 	// +kubebuilder:validation:Optional
@@ -119,9 +492,97 @@ type TransferParameters struct {
 	// +kubebuilder:validation:Optional
 	TargetIDSelector *v1.Selector `json:"targetIdSelector,omitempty" tf:"-"`
 
+	// +kubebuilder:validation:Optional
+	Transformation []TransformationParameters `json:"transformation,omitempty" tf:"transformation,omitempty"`
+
 	// Type of the transfer. One of "SNAPSHOT_ONLY", "INCREMENT_ONLY", "SNAPSHOT_AND_INCREMENT".
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type TransformationObservation struct {
+	Transformers []TransformersObservation `json:"transformers,omitempty" tf:"transformers,omitempty"`
+}
+
+type TransformationParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Transformers []TransformersParameters `json:"transformers,omitempty" tf:"transformers,omitempty"`
+}
+
+type TransformersObservation struct {
+	ConvertToString []ConvertToStringObservation `json:"convertToString,omitempty" tf:"convert_to_string,omitempty"`
+
+	FilterColumns []FilterColumnsObservation `json:"filterColumns,omitempty" tf:"filter_columns,omitempty"`
+
+	FilterRows []FilterRowsObservation `json:"filterRows,omitempty" tf:"filter_rows,omitempty"`
+
+	MaskField []MaskFieldObservation `json:"maskField,omitempty" tf:"mask_field,omitempty"`
+
+	RenameTables []RenameTablesObservation `json:"renameTables,omitempty" tf:"rename_tables,omitempty"`
+
+	ReplacePrimaryKey []ReplacePrimaryKeyObservation `json:"replacePrimaryKey,omitempty" tf:"replace_primary_key,omitempty"`
+
+	SharderTransformer []SharderTransformerObservation `json:"sharderTransformer,omitempty" tf:"sharder_transformer,omitempty"`
+
+	TableSplitterTransformer []TableSplitterTransformerObservation `json:"tableSplitterTransformer,omitempty" tf:"table_splitter_transformer,omitempty"`
+}
+
+type TransformersParameters struct {
+
+	// +kubebuilder:validation:Optional
+	ConvertToString []ConvertToStringParameters `json:"convertToString,omitempty" tf:"convert_to_string,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	FilterColumns []FilterColumnsParameters `json:"filterColumns,omitempty" tf:"filter_columns,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	FilterRows []FilterRowsParameters `json:"filterRows,omitempty" tf:"filter_rows,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	MaskField []MaskFieldParameters `json:"maskField,omitempty" tf:"mask_field,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	RenameTables []RenameTablesParameters `json:"renameTables,omitempty" tf:"rename_tables,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ReplacePrimaryKey []ReplacePrimaryKeyParameters `json:"replacePrimaryKey,omitempty" tf:"replace_primary_key,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SharderTransformer []SharderTransformerParameters `json:"sharderTransformer,omitempty" tf:"sharder_transformer,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	TableSplitterTransformer []TableSplitterTransformerParameters `json:"tableSplitterTransformer,omitempty" tf:"table_splitter_transformer,omitempty"`
+}
+
+type UploadShardParamsObservation struct {
+	JobCount *float64 `json:"jobCount,omitempty" tf:"job_count,omitempty"`
+
+	ProcessCount *float64 `json:"processCount,omitempty" tf:"process_count,omitempty"`
+}
+
+type UploadShardParamsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	JobCount *float64 `json:"jobCount,omitempty" tf:"job_count,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ProcessCount *float64 `json:"processCount,omitempty" tf:"process_count,omitempty"`
+}
+
+type YcRuntimeObservation struct {
+	JobCount *float64 `json:"jobCount,omitempty" tf:"job_count,omitempty"`
+
+	UploadShardParams []UploadShardParamsObservation `json:"uploadShardParams,omitempty" tf:"upload_shard_params,omitempty"`
+}
+
+type YcRuntimeParameters struct {
+
+	// +kubebuilder:validation:Optional
+	JobCount *float64 `json:"jobCount,omitempty" tf:"job_count,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	UploadShardParams []UploadShardParamsParameters `json:"uploadShardParams,omitempty" tf:"upload_shard_params,omitempty"`
 }
 
 // TransferSpec defines the desired state of Transfer

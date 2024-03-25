@@ -204,6 +204,10 @@ spec:
                                   option). The structure is documented below.
                                 items:
                                   properties:
+                                    compressors:
+                                      items:
+                                        type: string
+                                      type: array
                                     maxIncomingConnections:
                                       description: The maximum number of simultaneous
                                         connections that host will accept. For more
@@ -225,6 +229,8 @@ spec:
                                         information, see the operationProfiling.mode
                                         description in the official documentation.'
                                       type: string
+                                    slowOpSampleRate:
+                                      type: number
                                     slowOpThreshold:
                                       description: The slow operation time threshold,
                                         in milliseconds. Operations that run for longer
@@ -305,6 +311,8 @@ spec:
                                         description in the official documentation.
                                         Available only in enterprise edition.
                                       type: boolean
+                                    enableFlowControl:
+                                      type: boolean
                                   type: object
                                 type: array
                               storage:
@@ -351,6 +359,8 @@ spec:
                                               see the storage.wiredTiger.engineConfig.cacheSizeGB
                                               description in the official documentation.
                                             type: number
+                                          prefixCompression:
+                                            type: boolean
                                         type: object
                                       type: array
                                   type: object
@@ -367,6 +377,10 @@ spec:
                                   option). The structure is documented below.
                                 items:
                                   properties:
+                                    compressors:
+                                      items:
+                                        type: string
+                                      type: array
                                     maxIncomingConnections:
                                       description: The maximum number of simultaneous
                                         connections that host will accept. For more
@@ -1168,16 +1182,12 @@ spec:
             x-kubernetes-validations:
             - message: clusterConfig is a required parameter
               rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.clusterConfig)
-            - message: database is a required parameter
-              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.database)
             - message: environment is a required parameter
               rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.environment)
             - message: host is a required parameter
               rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.host)
             - message: name is a required parameter
               rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)
-            - message: user is a required parameter
-              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.user)
           status:
             description: MongodbClusterStatus defines the observed state of MongodbCluster.
             properties:
@@ -1320,6 +1330,10 @@ spec:
                                   option). The structure is documented below.
                                 items:
                                   properties:
+                                    compressors:
+                                      items:
+                                        type: string
+                                      type: array
                                     maxIncomingConnections:
                                       description: The maximum number of simultaneous
                                         connections that host will accept. For more
@@ -1341,6 +1355,8 @@ spec:
                                         information, see the operationProfiling.mode
                                         description in the official documentation.'
                                       type: string
+                                    slowOpSampleRate:
+                                      type: number
                                     slowOpThreshold:
                                       description: The slow operation time threshold,
                                         in milliseconds. Operations that run for longer
@@ -1421,6 +1437,8 @@ spec:
                                         description in the official documentation.
                                         Available only in enterprise edition.
                                       type: boolean
+                                    enableFlowControl:
+                                      type: boolean
                                   type: object
                                 type: array
                               storage:
@@ -1467,6 +1485,8 @@ spec:
                                               see the storage.wiredTiger.engineConfig.cacheSizeGB
                                               description in the official documentation.
                                             type: number
+                                          prefixCompression:
+                                            type: boolean
                                         type: object
                                       type: array
                                   type: object
@@ -1483,6 +1503,10 @@ spec:
                                   option). The structure is documented below.
                                 items:
                                   properties:
+                                    compressors:
+                                      items:
+                                        type: string
+                                      type: array
                                     maxIncomingConnections:
                                       description: The maximum number of simultaneous
                                         connections that host will accept. For more

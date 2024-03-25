@@ -211,6 +211,9 @@ spec:
                             - principals
                             type: object
                           type: array
+                        securityProfileId:
+                          description: The ID of the HTTP Router.
+                          type: string
                       type: object
                     type: array
                 type: object
@@ -474,6 +477,9 @@ spec:
                                 type: array
                             type: object
                           type: array
+                        securityProfileId:
+                          description: The ID of the HTTP Router.
+                          type: string
                       type: object
                     type: array
                 type: object

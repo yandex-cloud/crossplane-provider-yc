@@ -293,6 +293,7 @@ type MongocfgParameters struct {
 }
 
 type MongodNetObservation struct {
+	Compressors []*string `json:"compressors,omitempty" tf:"compressors,omitempty"`
 
 	// The maximum number of simultaneous connections that host will accept.
 	// For more information, see the net.maxIncomingConnections
@@ -301,6 +302,9 @@ type MongodNetObservation struct {
 }
 
 type MongodNetParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Compressors []*string `json:"compressors,omitempty" tf:"compressors,omitempty"`
 
 	// The maximum number of simultaneous connections that host will accept.
 	// For more information, see the net.maxIncomingConnections
@@ -349,6 +353,8 @@ type MongodOperationProfilingObservation struct {
 	// description in the official documentation.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
+	SlowOpSampleRate *float64 `json:"slowOpSampleRate,omitempty" tf:"slow_op_sample_rate,omitempty"`
+
 	// The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow.
 	// For more information, see the operationProfiling.slowOpThresholdMs
 	// description in the official documentation.
@@ -362,6 +368,9 @@ type MongodOperationProfilingParameters struct {
 	// description in the official documentation.
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SlowOpSampleRate *float64 `json:"slowOpSampleRate,omitempty" tf:"slow_op_sample_rate,omitempty"`
 
 	// The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow.
 	// For more information, see the operationProfiling.slowOpThresholdMs
@@ -772,6 +781,7 @@ type MongodbClusterUserParameters struct {
 }
 
 type MongosNetObservation struct {
+	Compressors []*string `json:"compressors,omitempty" tf:"compressors,omitempty"`
 
 	// The maximum number of simultaneous connections that host will accept.
 	// For more information, see the net.maxIncomingConnections
@@ -780,6 +790,9 @@ type MongosNetObservation struct {
 }
 
 type MongosNetParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Compressors []*string `json:"compressors,omitempty" tf:"compressors,omitempty"`
 
 	// The maximum number of simultaneous connections that host will accept.
 	// For more information, see the net.maxIncomingConnections
@@ -1025,6 +1038,8 @@ type SetParameterObservation struct {
 	// For more information, see the auditAuthorizationSuccess
 	// description in the official documentation. Available only in enterprise edition.
 	AuditAuthorizationSuccess *bool `json:"auditAuthorizationSuccess,omitempty" tf:"audit_authorization_success,omitempty"`
+
+	EnableFlowControl *bool `json:"enableFlowControl,omitempty" tf:"enable_flow_control,omitempty"`
 }
 
 type SetParameterParameters struct {
@@ -1034,6 +1049,9 @@ type SetParameterParameters struct {
 	// description in the official documentation. Available only in enterprise edition.
 	// +kubebuilder:validation:Optional
 	AuditAuthorizationSuccess *bool `json:"auditAuthorizationSuccess,omitempty" tf:"audit_authorization_success,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	EnableFlowControl *bool `json:"enableFlowControl,omitempty" tf:"enable_flow_control,omitempty"`
 }
 
 type StorageObservation struct {
@@ -1065,6 +1083,8 @@ type StorageWiredTigerObservation struct {
 	// For more information, see the storage.wiredTiger.engineConfig.cacheSizeGB
 	// description in the official documentation.
 	CacheSizeGb *float64 `json:"cacheSizeGb,omitempty" tf:"cache_size_gb,omitempty"`
+
+	PrefixCompression *bool `json:"prefixCompression,omitempty" tf:"prefix_compression,omitempty"`
 }
 
 type StorageWiredTigerParameters struct {
@@ -1081,6 +1101,9 @@ type StorageWiredTigerParameters struct {
 	// description in the official documentation.
 	// +kubebuilder:validation:Optional
 	CacheSizeGb *float64 `json:"cacheSizeGb,omitempty" tf:"cache_size_gb,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	PrefixCompression *bool `json:"prefixCompression,omitempty" tf:"prefix_compression,omitempty"`
 }
 
 type UserPermissionObservation struct {
@@ -1145,11 +1168,9 @@ type MongodbCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.clusterConfig)",message="clusterConfig is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.database)",message="database is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.environment)",message="environment is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.host)",message="host is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.user)",message="user is a required parameter"
 	Spec   MongodbClusterSpec   `json:"spec"`
 	Status MongodbClusterStatus `json:"status,omitempty"`
 }

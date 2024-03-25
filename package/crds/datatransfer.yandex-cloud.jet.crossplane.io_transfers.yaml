@@ -164,6 +164,27 @@ spec:
                       create. One of "sync_activate", "async_activate", "dont_activate".
                       The default is "sync_activate".
                     type: string
+                  runtime:
+                    items:
+                      properties:
+                        ycRuntime:
+                          items:
+                            properties:
+                              jobCount:
+                                type: number
+                              uploadShardParams:
+                                items:
+                                  properties:
+                                    jobCount:
+                                      type: number
+                                    processCount:
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   sourceId:
                     description: ID of the source endpoint for the transfer.
                     type: string
@@ -316,6 +337,243 @@ spec:
                             type: string
                         type: object
                     type: object
+                  transformation:
+                    items:
+                      properties:
+                        transformers:
+                          items:
+                            properties:
+                              convertToString:
+                                items:
+                                  properties:
+                                    columns:
+                                      items:
+                                        properties:
+                                          excludeColumns:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeColumns:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              filterColumns:
+                                items:
+                                  properties:
+                                    columns:
+                                      items:
+                                        properties:
+                                          excludeColumns:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeColumns:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              filterRows:
+                                items:
+                                  properties:
+                                    filter:
+                                      type: string
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              maskField:
+                                items:
+                                  properties:
+                                    columns:
+                                      items:
+                                        type: string
+                                      type: array
+                                    function:
+                                      items:
+                                        properties:
+                                          maskFunctionHash:
+                                            items:
+                                              properties:
+                                                userDefinedSalt:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              renameTables:
+                                items:
+                                  properties:
+                                    renameTables:
+                                      items:
+                                        properties:
+                                          newName:
+                                            description: Name of the transfer.
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: Name of the transfer.
+                                                  type: string
+                                                nameSpace:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          originalName:
+                                            description: Name of the transfer.
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: Name of the transfer.
+                                                  type: string
+                                                nameSpace:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              replacePrimaryKey:
+                                items:
+                                  properties:
+                                    keys:
+                                      items:
+                                        type: string
+                                      type: array
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              sharderTransformer:
+                                items:
+                                  properties:
+                                    columns:
+                                      items:
+                                        properties:
+                                          excludeColumns:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeColumns:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    shardsCount:
+                                      type: number
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              tableSplitterTransformer:
+                                items:
+                                  properties:
+                                    columns:
+                                      items:
+                                        type: string
+                                      type: array
+                                    splitter:
+                                      type: string
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   type:
                     description: Type of the transfer. One of "SNAPSHOT_ONLY", "INCREMENT_ONLY",
                       "SNAPSHOT_AND_INCREMENT".
@@ -537,12 +795,270 @@ spec:
                       create. One of "sync_activate", "async_activate", "dont_activate".
                       The default is "sync_activate".
                     type: string
+                  runtime:
+                    items:
+                      properties:
+                        ycRuntime:
+                          items:
+                            properties:
+                              jobCount:
+                                type: number
+                              uploadShardParams:
+                                items:
+                                  properties:
+                                    jobCount:
+                                      type: number
+                                    processCount:
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   sourceId:
                     description: ID of the source endpoint for the transfer.
                     type: string
                   targetId:
                     description: ID of the target endpoint for the transfer.
                     type: string
+                  transformation:
+                    items:
+                      properties:
+                        transformers:
+                          items:
+                            properties:
+                              convertToString:
+                                items:
+                                  properties:
+                                    columns:
+                                      items:
+                                        properties:
+                                          excludeColumns:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeColumns:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              filterColumns:
+                                items:
+                                  properties:
+                                    columns:
+                                      items:
+                                        properties:
+                                          excludeColumns:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeColumns:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              filterRows:
+                                items:
+                                  properties:
+                                    filter:
+                                      type: string
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              maskField:
+                                items:
+                                  properties:
+                                    columns:
+                                      items:
+                                        type: string
+                                      type: array
+                                    function:
+                                      items:
+                                        properties:
+                                          maskFunctionHash:
+                                            items:
+                                              properties:
+                                                userDefinedSalt:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              renameTables:
+                                items:
+                                  properties:
+                                    renameTables:
+                                      items:
+                                        properties:
+                                          newName:
+                                            description: Name of the transfer.
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: Name of the transfer.
+                                                  type: string
+                                                nameSpace:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          originalName:
+                                            description: Name of the transfer.
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: Name of the transfer.
+                                                  type: string
+                                                nameSpace:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              replacePrimaryKey:
+                                items:
+                                  properties:
+                                    keys:
+                                      items:
+                                        type: string
+                                      type: array
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              sharderTransformer:
+                                items:
+                                  properties:
+                                    columns:
+                                      items:
+                                        properties:
+                                          excludeColumns:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeColumns:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    shardsCount:
+                                      type: number
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              tableSplitterTransformer:
+                                items:
+                                  properties:
+                                    columns:
+                                      items:
+                                        type: string
+                                      type: array
+                                    splitter:
+                                      type: string
+                                    tables:
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   type:
                     description: Type of the transfer. One of "SNAPSHOT_ONLY", "INCREMENT_ONLY",
                       "SNAPSHOT_AND_INCREMENT".

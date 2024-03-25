@@ -172,6 +172,11 @@ func (in *DatabaseDedicatedObservation) DeepCopyInto(out *DatabaseDedicatedObser
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.SleepAfter != nil {
+		in, out := &in.SleepAfter, &out.SleepAfter
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Status != nil {
 		in, out := &in.Status, &out.Status
 		*out = new(string)
@@ -313,6 +318,11 @@ func (in *DatabaseDedicatedParameters) DeepCopyInto(out *DatabaseDedicatedParame
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.SleepAfter != nil {
+		in, out := &in.SleepAfter, &out.SleepAfter
+		*out = new(float64)
+		**out = **in
 	}
 	if in.StorageConfig != nil {
 		in, out := &in.StorageConfig, &out.StorageConfig
@@ -519,6 +529,11 @@ func (in *DatabaseServerlessObservation) DeepCopyInto(out *DatabaseServerlessObs
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.SleepAfter != nil {
+		in, out := &in.SleepAfter, &out.SleepAfter
+		*out = new(float64)
+		**out = **in
+	}
 	if in.Status != nil {
 		in, out := &in.Status, &out.Status
 		*out = new(string)
@@ -610,6 +625,11 @@ func (in *DatabaseServerlessParameters) DeepCopyInto(out *DatabaseServerlessPara
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.SleepAfter != nil {
+		in, out := &in.SleepAfter, &out.SleepAfter
+		*out = new(float64)
+		**out = **in
 	}
 }
 

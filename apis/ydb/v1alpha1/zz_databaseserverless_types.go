@@ -61,6 +61,8 @@ type DatabaseServerlessObservation struct {
 
 	ServerlessDatabase []ServerlessDatabaseObservation `json:"serverlessDatabase,omitempty" tf:"serverless_database,omitempty"`
 
+	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
+
 	// Status of the Yandex Database serverless cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
@@ -114,6 +116,9 @@ type DatabaseServerlessParameters struct {
 
 	// +kubebuilder:validation:Optional
 	ServerlessDatabase []ServerlessDatabaseParameters `json:"serverlessDatabase,omitempty" tf:"serverless_database,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type ServerlessDatabaseObservation struct {

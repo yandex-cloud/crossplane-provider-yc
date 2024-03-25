@@ -671,12 +671,19 @@ type RouteParameters struct {
 
 type RouteRouteOptionsObservation struct {
 	Rbac []RouteOptionsRbacObservation `json:"rbac,omitempty" tf:"rbac,omitempty"`
+
+	// The ID of the virtual host.
+	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type RouteRouteOptionsParameters struct {
 
 	// +kubebuilder:validation:Optional
 	Rbac []RouteOptionsRbacParameters `json:"rbac,omitempty" tf:"rbac,omitempty"`
+
+	// The ID of the virtual host.
+	// +kubebuilder:validation:Optional
+	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type VirtualHostObservation struct {
@@ -754,12 +761,19 @@ type VirtualHostParameters struct {
 
 type VirtualHostRouteOptionsObservation struct {
 	Rbac []VirtualHostRouteOptionsRbacObservation `json:"rbac,omitempty" tf:"rbac,omitempty"`
+
+	// The ID of the virtual host.
+	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type VirtualHostRouteOptionsParameters struct {
 
 	// +kubebuilder:validation:Optional
 	Rbac []VirtualHostRouteOptionsRbacParameters `json:"rbac,omitempty" tf:"rbac,omitempty"`
+
+	// The ID of the virtual host.
+	// +kubebuilder:validation:Optional
+	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type VirtualHostRouteOptionsRbacObservation struct {
