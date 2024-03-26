@@ -9,6 +9,9 @@ function delete_all {
     done
 }
 
+# this needs to be first, so that Crossplane doesn't attempt to recreate resources as we delete them
+delete_all managed-kubernetes cluster
+
 delete_all compute instance
 delete_all kms symmetric-key
 delete_all dns zone
