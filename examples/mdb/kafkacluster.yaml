@@ -12,6 +12,8 @@ kind: KafkaTopic
 metadata:
   annotations:
     meta.upbound.io/example-id: mdb/v1alpha1/kafkatopic
+  labels:
+    testing.upbound.io/example-name: kafka
   name: kafka-topic
 spec:
   forProvider:
@@ -39,6 +41,8 @@ kind: KafkaUser
 metadata:
   annotations:
     meta.upbound.io/example-id: mdb/v1alpha1/kafkauser
+  labels:
+    testing.upbound.io/example-name: kafka
   name: kafka-user
 spec:
   forProvider:
@@ -62,6 +66,8 @@ apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: KafkaCluster
 metadata:
   name: kafka-cluster
+  annotations:
+    uptest.upbound.io/pre-delete-hook: testhooks/delete-kafka-deps.sh
 spec:
   forProvider:
     config:
