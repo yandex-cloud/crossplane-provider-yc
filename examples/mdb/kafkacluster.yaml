@@ -63,6 +63,53 @@ spec:
         topicName: kafka-topic
 ---
 apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: KafkaUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/kafkauser
+  labels:
+    testing.upbound.io/example-name: kafka
+  name: kafka-user-1
+spec:
+  forProvider:
+    clusterIdRef:
+      name: kafka-cluster
+    name: producer-application
+    passwordSecretRef:
+      name: kafka
+      key: password
+      namespace: default
+    permission:
+      - allowHosts:
+          - host1.db.yandex.net
+          - host2.db.yandex.net
+        role: ACCESS_ROLE_PRODUCER
+        topicName: input
+---
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: KafkaUser
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/kafkauser
+  labels:
+    testing.upbound.io/example-name: kafka
+  name: kafka-user-2
+spec:
+  forProvider:
+    clusterIdRef:
+      name: kafka-cluster
+    name: worker
+    passwordSecretRef:
+      name: kafka
+      key: password
+      namespace: default
+    permission:
+      - role: ACCESS_ROLE_CONSUMER
+        topicName: input
+      - role: ACCESS_ROLE_PRODUCER
+        topicName: output
+---
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: KafkaCluster
 metadata:
   name: kafka-cluster
@@ -109,25 +156,3 @@ spec:
       name: example-net
     subnetIdsRefs:
       - name: example-subnet-a
-    user:
-      - name: producer-application
-        passwordSecretRef:
-          name: kafka
-          key: password
-          namespace: default
-        permission:
-          - allowHosts:
-              - host1.db.yandex.net
-              - host2.db.yandex.net
-            role: ACCESS_ROLE_PRODUCER
-            topicName: input
-      - name: worker
-        passwordSecretRef:
-          name: kafka
-          key: password
-          namespace: default
-        permission:
-          - role: ACCESS_ROLE_CONSUMER
-            topicName: input
-          - role: ACCESS_ROLE_PRODUCER
-            topicName: output
