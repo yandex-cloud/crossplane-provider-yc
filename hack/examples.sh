@@ -17,13 +17,11 @@ function join {
 # message/queue works, but cleaning it in case of tests failure is a problem
 
 ## CURRENTLY FAILING:
-# kubernetes/nodegroup needs investigation
 # storage/object needs investigation
 # storage/bucket does get removed, but Crossplane receives Forbidden; needs investigation
 # securitygroup and securitygrouprule can be created, but not really altered (yet?), so don't pass tests
 all=$(find ${1} -name "*.yaml" \
 -not -path "*/vpc/securitygroup*.yaml" \
--not -path "*/kubernetes/nodegroup.yaml" \
 -not -path "*/storage/object.yaml" \
 -not -path "*/storage/bucket.yaml" \
 -not -path "*/alb/*" \

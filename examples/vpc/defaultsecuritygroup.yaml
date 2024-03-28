@@ -13,19 +13,17 @@ spec:
           - "10.0.1.0/24"
           - "10.0.2.0/24"
         port: 8080
+      - protocol: ANY
+        description: "required for k8s master-node interconnection"
+        predefinedTarget: "self_security_group"
+        fromPort: 0
+        toPort: 65535
     egress:
       - protocol: ANY
-        description: "rule2 description"
+        description: "allow all outgoing traffic"
         v4CidrBlocks:
-          - "10.0.1.0/24"
-          - "10.0.2.0/24"
-        fromPort: 8090
-        toPort: 8099
-      - protocol: UDP
-        description: "rule3 description"
-        v4CidrBlocks:
-          - "10.0.1.0/24"
-        fromPort: 8090
-        toPort: 8099
+          - "0.0.0.0/0"
+        fromPort: 0
+        toPort: 65535
   providerConfigRef:
     name: default
