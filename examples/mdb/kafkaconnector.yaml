@@ -15,7 +15,9 @@ spec:
   forProvider:
     config:
       - kafka:
-          - resources:
+          - kafkaConfig:
+              - compressionType: COMPRESSION_TYPE_ZSTD
+            resources:
               - diskSize: 16
                 diskTypeId: network-hdd
                 resourcePresetId: s2.micro
@@ -32,6 +34,8 @@ apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: KafkaConnector
 metadata:
   name: connector
+  annotations:
+    upjet.upbound.io/manual-intervention: "Connector requires both ends to be available."
 spec:
   forProvider:
     clusterIdRef:

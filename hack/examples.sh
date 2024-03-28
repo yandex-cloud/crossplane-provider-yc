@@ -31,8 +31,7 @@ all=$(find ${1} -name "*.yaml" \
 -not -path "*/datatransfer/transfer.yaml" \
 -not -path "*/message/queue.yaml" \
 -not -path "*/providerconfig/providerconfig.yaml" \
--not -path "*/resourcemanager/folder.yaml" \
--not -path "*/mdb/kafkaconnector.yaml")
+-not -path "*/resourcemanager/folder.yaml")
 
 join $all
 
