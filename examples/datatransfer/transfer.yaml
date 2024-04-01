@@ -2,7 +2,7 @@ apiVersion: datatransfer.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Transfer
 metadata:
   annotations:
-    meta.upbound.io/example-id: datatransfer/v1alpha1/transfer
+    upjet.upbound.io/manual-intervention: "Transfer will actually execute upon creation."
   labels:
     testing.upbound.io/example-name: pgpg_transfer
   name: pgpg-transfer
