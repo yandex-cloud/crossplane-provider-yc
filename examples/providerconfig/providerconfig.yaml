@@ -1,11 +1,13 @@
 apiVersion: yandex-cloud.jet.crossplane.io/v1alpha1
 kind: ProviderConfig
 metadata:
-  name: example
+  name: default
+  annotations:
+    upjet.upbound.io/manual-intervention: "Created for tests by init script."
 spec:
   credentials:
-    cloudId: ${cloud_id}
-    folderId: ${folder_id}
+    cloudId: ${data.cloudId}
+    folderId: ${data.folderId}
     source: Secret
     secretRef:
       name: yc-creds
