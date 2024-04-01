@@ -1,17 +1,48 @@
 apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: SecurityGroup
+metadata:
+  name: example-sg2
+spec:
+  forProvider:
+    name: example-sg2
+    networkIdRef:
+      name: example-net
+  providerConfigRef:
+    name: default
+---
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: SecurityGroupRule
 metadata:
-  name: example-sg-rule
+  name: example-sg-rule1
 spec:
   forProvider:
     securityGroupBindingRef:
-      name: example-sg
+      name: example-sg2
     direction: ingress
     v4CidrBlocks:
-      - "10.0.3.0/24"
-      - "10.0.4.0/24"
-    port: 8080
+      - "10.0.1.0/24"
+      - "10.0.2.0/24"
+    port: 80
     protocol: TCP
-    description: "rule4 description"
+    description: "rule1 description"
+  providerConfigRef:
+    name: default
+---
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: SecurityGroupRule
+metadata:
+  name: example-sg-rule2
+spec:
+  forProvider:
+    securityGroupBindingRef:
+      name: example-sg2
+    direction: egress
+    v4CidrBlocks:
+      - "10.0.1.0/24"
+      - "10.0.2.0/24"
+    fromPort: 8081
+    toPort: 8090
+    protocol: ANY
+    description: "rule2 description"
   providerConfigRef:
     name: default
