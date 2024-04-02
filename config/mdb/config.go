@@ -410,19 +410,19 @@ func Configure(p *config.Provider) {
 	})
 	p.AddResourceConfigurator("yandex_mdb_kafka_connector", func(r *config.Resource) {
 		r.References["cluster_id"] = config.Reference{
-			Type: fmt.Sprintf("KafkaCluster"),
+			Type: "KafkaCluster",
 		}
 		r.UseAsync = true
 	})
 	p.AddResourceConfigurator("yandex_mdb_kafka_topic", func(r *config.Resource) {
 		r.References["cluster_id"] = config.Reference{
-			Type: fmt.Sprintf("KafkaCluster"),
+			Type: "KafkaCluster",
 		}
 		r.UseAsync = true
 	})
 	p.AddResourceConfigurator("yandex_mdb_kafka_user", func(r *config.Resource) {
 		r.References["cluster_id"] = config.Reference{
-			Type: fmt.Sprintf("KafkaCluster"),
+			Type: "KafkaCluster",
 		}
 		r.UseAsync = true
 	})
