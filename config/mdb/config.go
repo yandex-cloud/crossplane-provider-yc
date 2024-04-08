@@ -94,7 +94,8 @@ func databases(attr map[string]interface{}) []string {
 	return result
 }
 
-func fqdns(attr map[string]interface{}) []string {
+// hostAttrs returns the values of the given attribute for each host.
+func hostAttrs(attr map[string]interface{}, name string) []string {
 	hostsInterface, ok := attr["host"]
 	if !ok {
 		return nil
@@ -109,30 +110,8 @@ func fqdns(attr map[string]interface{}) []string {
 		if !ok {
 			continue
 		}
-		if fqdn, ok := host["fqdn"].(string); ok {
-			result[i] = fqdn
-		}
-	}
-	return result
-}
-
-func hostnames(attr map[string]interface{}) []string {
-	hostsInterface, ok := attr["host"]
-	if !ok {
-		return nil
-	}
-	hosts, ok := hostsInterface.([]interface{})
-	if !ok {
-		return nil
-	}
-	result := make([]string, len(hosts))
-	for i, hostInterface := range hosts {
-		host, ok := hostInterface.(map[string]interface{})
-		if !ok {
-			continue
-		}
-		if fqdn, ok := host["name"].(string); ok {
-			result[i] = fqdn
+		if attribute, ok := host[name].(string); ok {
+			result[i] = attribute
 		}
 	}
 	return result
@@ -140,7 +119,7 @@ func hostnames(attr map[string]interface{}) []string {
 
 func postgresqlConnectionStrings(attr map[string]interface{}) map[string]string {
 	connstrings := make(map[string]string)
-	hosts := fqdns(attr)
+	hosts := hostAttrs(attr, "fqdn")
 	for _, db := range databases(attr) {
 		ps := passwords(attr)
 		for i, u := range usernames(attr) {
@@ -160,7 +139,7 @@ func mysqlConnectionStrings(attr map[string]interface{}) map[string]string {
 		ps := passwords(attr)
 		for i, u := range usernames(attr) {
 			password := ps[i]
-			for _, host := range fqdns(attr) {
+			for _, host := range hostAttrs(attr, "fqdn") {
 				connstrings[fmt.Sprintf("connection-string.%s.%s.%s", u, db, host)] =
 					fmt.Sprintf("mysql://%s:%s@%s/%s", u, password, host, db)
 			}
@@ -171,7 +150,7 @@ func mysqlConnectionStrings(attr map[string]interface{}) map[string]string {
 
 func mongodbConnectionStrings(attr map[string]interface{}) map[string]string {
 	connstrings := make(map[string]string)
-	hosts := hostnames(attr)
+	hosts := hostAttrs(attr, "name")
 	for _, db := range databases(attr) {
 		ps := passwords(attr)
 		for i, u := range usernames(attr) {
@@ -191,7 +170,7 @@ func elasticsearchConnectionStrings(attr map[string]interface{}) map[string]stri
 		ps := passwords(attr)
 		for i, u := range usernames(attr) {
 			password := ps[i]
-			for _, host := range fqdns(attr) {
+			for _, host := range hostAttrs(attr, "fqdn") {
 				connstrings[fmt.Sprintf("connection-string.%s.%s.%s", u, db, host)] =
 					fmt.Sprintf("https://%s:%s@%s:9200/%s",
 						u, password, host, db)
@@ -203,7 +182,7 @@ func elasticsearchConnectionStrings(attr map[string]interface{}) map[string]stri
 
 func postgresqlConnDetails(attr map[string]interface{}) map[string][]byte {
 	conn := make(map[string][]byte)
-	for i, v := range fqdns(attr) {
+	for i, v := range hostAttrs(attr, "fqdn") {
 		conn[fmt.Sprintf("attribute.host.%d.fqdn", i)] = []byte(v)
 	}
 	for i, v := range usernames(attr) {
@@ -221,7 +200,7 @@ func postgresqlConnDetails(attr map[string]interface{}) map[string][]byte {
 
 func mysqlConnDetails(attr map[string]interface{}) map[string][]byte {
 	conn := make(map[string][]byte)
-	for i, v := range fqdns(attr) {
+	for i, v := range hostAttrs(attr, "fqdn") {
 		conn[fmt.Sprintf("attribute.host.%d.fqdn", i)] = []byte(v)
 	}
 	for i, v := range usernames(attr) {
@@ -239,7 +218,7 @@ func mysqlConnDetails(attr map[string]interface{}) map[string][]byte {
 
 func mongodbConnDetails(attr map[string]interface{}) map[string][]byte {
 	conn := make(map[string][]byte)
-	for i, v := range hostnames(attr) {
+	for i, v := range hostAttrs(attr, "name") {
 		conn[fmt.Sprintf("attribute.host.%d.name", i)] = []byte(v)
 	}
 	for i, v := range usernames(attr) {
@@ -257,7 +236,7 @@ func mongodbConnDetails(attr map[string]interface{}) map[string][]byte {
 
 func elasticsearchConnDetails(attr map[string]interface{}) map[string][]byte {
 	conn := make(map[string][]byte)
-	for i, v := range hostnames(attr) {
+	for i, v := range hostAttrs(attr, "name") {
 		conn[fmt.Sprintf("attribute.host.%d.name", i)] = []byte(v)
 	}
 	for i, v := range usernames(attr) {
@@ -266,7 +245,7 @@ func elasticsearchConnDetails(attr map[string]interface{}) map[string][]byte {
 	for i, v := range databases(attr) {
 		conn[fmt.Sprintf("attribute.database.%d.name", i)] = []byte(v)
 	}
-	for i, v := range fqdns(attr) {
+	for i, v := range hostAttrs(attr, "fqdn") {
 		conn[fmt.Sprintf("attribute.fqdn.%d.name", i)] = []byte(v)
 	}
 	for k, v := range elasticsearchConnectionStrings(attr) {
@@ -282,11 +261,21 @@ func elasticsearchConnDetails(attr map[string]interface{}) map[string][]byte {
 
 func redisConnDetails(attr map[string]interface{}) map[string][]byte {
 	conn := make(map[string][]byte)
-	for i, v := range fqdns(attr) {
+	for i, v := range hostAttrs(attr, "fqdn") {
 		conn[fmt.Sprintf("attribute.host.%d.fqdn", i)] = []byte(v)
 	}
 	for i, v := range databases(attr) {
 		conn[fmt.Sprintf("attribute.database.%d.name", i)] = []byte(v)
+	}
+
+	return conn
+}
+
+// kafkaConnDetails returns connection details for Kafka cluster.
+func kafkaConnDetails(attr map[string]interface{}) map[string][]byte {
+	conn := make(map[string][]byte)
+	for i, v := range hostAttrs(attr, "name") {
+		conn[fmt.Sprintf("attribute.host.%d.fqdn", i)] = []byte(v)
 	}
 
 	return conn
@@ -407,6 +396,9 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
 		}
 		r.UseAsync = true
+		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
+			return kafkaConnDetails(attr), nil
+		}
 	})
 	p.AddResourceConfigurator("yandex_mdb_kafka_connector", func(r *config.Resource) {
 		r.References["cluster_id"] = config.Reference{

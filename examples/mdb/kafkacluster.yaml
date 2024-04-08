@@ -156,3 +156,6 @@ spec:
       name: example-net
     subnetIdsRefs:
       - name: example-subnet-a
+  writeConnectionSecretToRef:
+    name: kafka-conn
+    namespace: default
