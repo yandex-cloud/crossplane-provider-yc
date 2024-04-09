@@ -3,11 +3,12 @@ kind: Folder
 metadata:
   name: example-folder
   annotations:
-    crossplane.io/external-name: ${folder_id}
+    crossplane.io/external-name: ${data.folderId}
+    upjet.upbound.io/manual-intervention: "ObserveOnly doesn't behave well in tests."
 spec:
   managementPolicy: ObserveOnly
   forProvider:
     name: crossplane-example
-    cloudId: ${cloud_id}
+    cloudId: ${data.cloudId}
   providerConfigRef:
     name: default
