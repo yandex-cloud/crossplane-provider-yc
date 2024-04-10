@@ -9,9 +9,17 @@ function delete_all {
     done
 }
 
+function delete_all_by_name {
+    for id in $(yc "${@}" list --folder-id "${FOLDER_ID}" --format json | jq -r '(map({ id: .name}) | .[].id)'); do
+        echo Deleting "${@}" $id...
+        yc "${@}" delete $id || exitcode=1
+    done
+}
+
 # this needs to be first, so that Crossplane doesn't attempt to recreate resources as we delete them
 delete_all managed-kubernetes cluster
 
+delete_all_by_name storage bucket
 delete_all compute instance
 delete_all kms symmetric-key
 delete_all dns zone

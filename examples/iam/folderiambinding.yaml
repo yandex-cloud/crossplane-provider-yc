@@ -2,6 +2,10 @@ apiVersion: iam.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: FolderIAMBinding
 metadata:
   name: crossplane-preprod
+  labels:
+    testing.upbound.io/example-name: storage
+  annotations:
+    uptest.upbound.io/pre-delete-hook: testhooks/delete-storage.sh
 spec:
   forProvider:
     serviceAccountsRef:

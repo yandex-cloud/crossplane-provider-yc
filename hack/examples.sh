@@ -15,10 +15,8 @@ function join {
 
 ## CURRENTLY FAILING:
 # storage/object needs investigation
-# storage/bucket does get removed, but Crossplane receives Forbidden; needs investigation
 all=$(find ${1} -name "*.yaml" \
 -not -path "*/storage/object.yaml" \
--not -path "*/storage/*" \
 -not -path "*/alb/*" \
 -not -path "*/container/repository.yaml" \
 -not -path "*/message/queue.yaml" )

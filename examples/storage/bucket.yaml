@@ -2,6 +2,8 @@ apiVersion: storage.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Bucket
 metadata:
   name: example-bucket
+  labels:
+    testing.upbound.io/example-name: storage
 spec:
   forProvider:
     accessKeyRef:
