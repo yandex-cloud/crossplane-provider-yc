@@ -12,11 +12,7 @@ function join {
 # alb/targetgroup needs instance IPs explicitly provided
 # container/repository needs registry ID explicitly provided
 # message/queue works, but cleaning it in case of tests failure is a problem
-
-## CURRENTLY FAILING:
-# storage/object needs investigation
 all=$(find ${1} -name "*.yaml" \
--not -path "*/storage/object.yaml" \
 -not -path "*/alb/*" \
 -not -path "*/container/repository.yaml" \
 -not -path "*/message/queue.yaml" )
