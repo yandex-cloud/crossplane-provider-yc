@@ -19,6 +19,11 @@ function delete_all_by_name {
 # this needs to be first, so that Crossplane doesn't attempt to recreate resources as we delete them
 delete_all managed-kubernetes cluster
 
+delete_all application-load-balancer load-balancer
+delete_all application-load-balancer http-router
+delete_all application-load-balancer virtual-host
+delete_all application-load-balancer backend-group
+delete_all application-load-balancer target-group
 delete_all_by_name storage bucket
 delete_all compute instance
 delete_all kms symmetric-key

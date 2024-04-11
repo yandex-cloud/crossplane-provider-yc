@@ -10,11 +10,37 @@ spec:
   forProvider:
     name: my-target-group
     target:
-    - ipAddress: ${yandex_compute_instance.example-instance-1.network_interface.0.ip_address}
+    - ipAddress: ${data.ip1}
       subnetIdRef:
         name: example-subnet-a
-    - ipAddress: ${yandex_compute_instance.example-instance-2.network_interface.0.ip_address}
+    - ipAddress: ${data.ip2}
       subnetIdRef:
         name: example-subnet-a
+  providerConfigRef:
+    name: default
+---
+apiVersion: compute.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  name: example-instance2
+spec:
+  forProvider:
+    name: example-instance2
+    platformId: standard-v1
+    zone: ru-central1-a
+    resources:
+      - cores: 2
+        memory: 4
+    bootDisk:
+      - initializeParams:
+          # ubuntu 22.04
+          # yc compute image list --folder-id standard-images | grep 'ubuntu-22-04-lts'
+          - imageId: fd80bm0rh4rkepi5ksdi
+    networkInterface:
+      - subnetIdRef:
+          name: example-subnet-a
+        ipAddress: ${data.ip2}
+    # metadata:
+    #   ssh-keys: "ubuntu:<public-key-data>"
   providerConfigRef:
     name: default

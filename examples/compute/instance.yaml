@@ -18,6 +18,7 @@ spec:
     networkInterface:
       - subnetIdRef:
           name: example-subnet-a
+        ipAddress: ${data.ip1}
     metadata:
       ssh-keys: "ubuntu:<public-key-data>"
   providerConfigRef:

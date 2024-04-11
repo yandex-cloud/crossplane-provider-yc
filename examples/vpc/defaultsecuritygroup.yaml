@@ -18,6 +18,10 @@ spec:
         predefinedTarget: "self_security_group"
         fromPort: 0
         toPort: 65535
+      - protocol: ANY
+        description: "required for ALB"
+        predefinedTarget: "loadbalancer_healthchecks"
+        port: 30080
     egress:
       - protocol: ANY
         description: "allow all outgoing traffic"
