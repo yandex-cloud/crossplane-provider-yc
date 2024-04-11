@@ -8,10 +8,7 @@ function join {
   fi
 }
 
-## EXCLUDED ON PURPOSE:
-# message/queue works, but cleaning it in case of tests failure is a problem
-all=$(find ${1} -name "*.yaml" \
--not -path "*/message/queue.yaml" )
+all=$(find ${1} -name "*.yaml")
 
 join $all
 

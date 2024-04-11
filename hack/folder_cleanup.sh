@@ -9,10 +9,19 @@ function delete_all {
     done
 }
 
-function delete_all_by_name {
-    for id in $(yc "${@}" list --folder-id "${FOLDER_ID}" --format json | jq -r '(map({ id: .name}) | .[].id)'); do
-        echo Deleting "${@}" $id...
-        yc "${@}" delete $id || exitcode=1
+function delete_storage_buckets {
+    for bucket in $(yc storage bucket list --folder-id "${FOLDER_ID}" --format json | jq -r '(map({ id: .name}) | .[].id)'); do
+        aws s3api delete-objects \
+            --endpoint-url https://storage.yandexcloud.net \
+            --bucket $bucket \
+            --delete \
+                "$(aws s3api list-object-versions \
+                --endpoint-url https://storage.yandexcloud.net \
+                --bucket $bucket \
+                --query '{Objects: Versions[].{Key: Key, VersionId: VersionId}}' \
+                --max-items 1000)"
+        echo Deleting "${@}" $bucket...
+        yc storage bucket delete $bucket || exitcode=1
     done
 }
 
@@ -24,7 +33,7 @@ delete_all application-load-balancer http-router
 delete_all application-load-balancer virtual-host
 delete_all application-load-balancer backend-group
 delete_all application-load-balancer target-group
-delete_all_by_name storage bucket
+delete_storage_buckets
 delete_all compute instance
 delete_all kms symmetric-key
 delete_all dns zone
