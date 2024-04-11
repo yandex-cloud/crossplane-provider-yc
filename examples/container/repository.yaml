@@ -2,6 +2,8 @@ apiVersion: container.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Repository
 metadata:
   name: example-repository
+  annotations:
+    upjet.upbound.io/manual-intervention: "Registry ID needs to be provided as part of the name."
 spec:
   forProvider:
     name: "<registry-id>/test-repository"

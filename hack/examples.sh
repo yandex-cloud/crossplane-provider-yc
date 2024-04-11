@@ -9,10 +9,8 @@ function join {
 }
 
 ## EXCLUDED ON PURPOSE:
-# container/repository needs registry ID explicitly provided
 # message/queue works, but cleaning it in case of tests failure is a problem
 all=$(find ${1} -name "*.yaml" \
--not -path "*/container/repository.yaml" \
 -not -path "*/message/queue.yaml" )
 
 join $all
