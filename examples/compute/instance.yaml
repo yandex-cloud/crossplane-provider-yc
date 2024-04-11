@@ -22,3 +22,6 @@ spec:
       ssh-keys: "ubuntu:<public-key-data>"
   providerConfigRef:
     name: default
+  writeConnectionSecretToRef:
+    name: instance-conn
+    namespace: default

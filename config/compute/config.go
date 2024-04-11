@@ -38,5 +38,24 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
 		}
 		r.UseAsync = true
+		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
+			data := make(map[string][]byte)
+			if v, ok := attr["fqdn"].(string); ok && v != "" {
+				data["fqdn"] = []byte(v)
+			}
+			if networkInterfaces, ok := attr["network_interface"].([]interface{}); ok {
+				if len(networkInterfaces) > 0 {
+					if networkInterface, ok := networkInterfaces[0].(map[string]interface{}); ok {
+						if v, ok := networkInterface["ip_address"].(string); ok && v != "" {
+							data["internal_ip"] = []byte(v)
+						}
+						if v, ok := networkInterface["nat_ip_address"].(string); ok && v != "" {
+							data["external_ip"] = []byte(v)
+						}
+					}
+				}
+			}
+			return data, nil
+		}
 	})
 }
