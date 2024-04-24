@@ -73,6 +73,24 @@ func (l *MongodbClusterList) GetItems() []resource.Managed {
 	return items
 }
 
+// GetItems of this MongodbDatabaseList.
+func (l *MongodbDatabaseList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this MongodbUserList.
+func (l *MongodbUserList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this MySQLClusterList.
 func (l *MySQLClusterList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

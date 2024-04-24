@@ -77,6 +77,8 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_kubernetes_cluster$",
 			"yandex_kubernetes_node_group$",
 			"yandex_mdb_mongodb_cluster$",
+			"yandex_mdb_mongodb_database$",
+			"yandex_mdb_mongodb_user$",
 			"yandex_mdb_postgresql_cluster$",
 			"yandex_mdb_postgresql_database$",
 			"yandex_mdb_postgresql_user$",

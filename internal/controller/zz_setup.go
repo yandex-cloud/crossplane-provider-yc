@@ -36,6 +36,8 @@ import (
 	kafkatopic "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/kafkatopic"
 	kafkauser "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/kafkauser"
 	mongodbcluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mongodbcluster"
+	mongodbdatabase "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mongodbdatabase"
+	mongodbuser "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mongodbuser"
 	mysqlcluster "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mysqlcluster"
 	mysqldatabase "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mysqldatabase"
 	mysqluser "github.com/yandex-cloud/provider-jet-yc/internal/controller/mdb/mysqluser"
@@ -89,6 +91,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		kafkatopic.Setup,
 		kafkauser.Setup,
 		mongodbcluster.Setup,
+		mongodbdatabase.Setup,
+		mongodbuser.Setup,
 		mysqlcluster.Setup,
 		mysqldatabase.Setup,
 		mysqluser.Setup,
