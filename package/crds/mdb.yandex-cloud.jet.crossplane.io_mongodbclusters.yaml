@@ -313,6 +313,8 @@ spec:
                                       type: boolean
                                     enableFlowControl:
                                       type: boolean
+                                    minSnapshotHistoryWindowInSeconds:
+                                      type: number
                                   type: object
                                 type: array
                               storage:
@@ -1439,6 +1441,8 @@ spec:
                                       type: boolean
                                     enableFlowControl:
                                       type: boolean
+                                    minSnapshotHistoryWindowInSeconds:
+                                      type: number
                                   type: object
                                 type: array
                               storage:

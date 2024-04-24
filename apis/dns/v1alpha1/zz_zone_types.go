@@ -30,6 +30,8 @@ type ZoneObservation struct {
 	// (Computed) The DNS zone creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
 	// Description of the DNS zone.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -56,6 +58,9 @@ type ZoneObservation struct {
 }
 
 type ZoneParameters struct {
+
+	// +kubebuilder:validation:Optional
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// Description of the DNS zone.
 	// +kubebuilder:validation:Optional

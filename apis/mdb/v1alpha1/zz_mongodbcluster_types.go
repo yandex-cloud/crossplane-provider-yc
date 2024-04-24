@@ -1040,6 +1040,8 @@ type SetParameterObservation struct {
 	AuditAuthorizationSuccess *bool `json:"auditAuthorizationSuccess,omitempty" tf:"audit_authorization_success,omitempty"`
 
 	EnableFlowControl *bool `json:"enableFlowControl,omitempty" tf:"enable_flow_control,omitempty"`
+
+	MinSnapshotHistoryWindowInSeconds *float64 `json:"minSnapshotHistoryWindowInSeconds,omitempty" tf:"min_snapshot_history_window_in_seconds,omitempty"`
 }
 
 type SetParameterParameters struct {
@@ -1052,6 +1054,9 @@ type SetParameterParameters struct {
 
 	// +kubebuilder:validation:Optional
 	EnableFlowControl *bool `json:"enableFlowControl,omitempty" tf:"enable_flow_control,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	MinSnapshotHistoryWindowInSeconds *float64 `json:"minSnapshotHistoryWindowInSeconds,omitempty" tf:"min_snapshot_history_window_in_seconds,omitempty"`
 }
 
 type StorageObservation struct {

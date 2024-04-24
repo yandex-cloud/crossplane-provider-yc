@@ -74,6 +74,22 @@ spec:
                     description: An optional description of this resource. Provide
                       this property when you create the resource.
                     type: string
+                  dnsRecord:
+                    items:
+                      properties:
+                        dnsZoneId:
+                          type: string
+                        fqdn:
+                          type: string
+                        ptr:
+                          type: boolean
+                        ttl:
+                          type: number
+                      required:
+                      - dnsZoneId
+                      - fqdn
+                      type: object
+                    type: array
                   externalIpv4Address:
                     description: spec of IP v4 address
                     items:
@@ -381,6 +397,19 @@ spec:
                     description: An optional description of this resource. Provide
                       this property when you create the resource.
                     type: string
+                  dnsRecord:
+                    items:
+                      properties:
+                        dnsZoneId:
+                          type: string
+                        fqdn:
+                          type: string
+                        ptr:
+                          type: boolean
+                        ttl:
+                          type: number
+                      type: object
+                    type: array
                   externalIpv4Address:
                     description: spec of IP v4 address
                     items:

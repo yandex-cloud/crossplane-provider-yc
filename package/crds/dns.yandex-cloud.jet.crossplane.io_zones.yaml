@@ -67,6 +67,8 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  deletionProtection:
+                    type: boolean
                   description:
                     description: Description of the DNS zone.
                     type: string
@@ -449,6 +451,8 @@ spec:
                   createdAt:
                     description: (Computed) The DNS zone creation timestamp.
                     type: string
+                  deletionProtection:
+                    type: boolean
                   description:
                     description: Description of the DNS zone.
                     type: string
