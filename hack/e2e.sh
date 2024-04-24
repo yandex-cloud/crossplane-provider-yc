@@ -11,10 +11,6 @@
 
 echo "##teamcity[blockOpened name='keys' description='set up YC keys']"
 
-# TODO: remove this when docker image is updated to have yc that can set cluster master location
-curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
-source ~/.bashrc
-
 yc config profile create robot
 yc config set token ${OAUTH_TOKEN}
 
@@ -26,26 +22,23 @@ yc config set service-account-key key.json
 yc config set folder-id ${FOLDER_ID}
 yc config set cloud-id ${CLOUD_ID}
 
+yc lockbox payload get ${SECRET_ID} --key access-key >> awskey
+mkdir ~/.aws && echo [default] > ~/.aws/credentials && echo '  'aws_access_key_id = $(jq -r .access_key.key_id awskey) >> ~/.aws/credentials && echo '  'aws_secret_access_key = $(jq -r .secret awskey) >> ~/.aws/credentials
 echo "##teamcity[blockClosed name='keys']"
 
 WORKDIR=${DOCKER_WORKDIR:-"$(cd .. && pwd)"}
 git config --global --add safe.directory ${WORKDIR}
 
 echo "##teamcity[blockOpened name='cleanup' description='clean up test folder']"
-./hack/folder_cleanup.sh || (echo "##teamcity[buildStatus text='Failed to clean up test folder']"; exit 1)
+if ! ./hack/folder_cleanup.sh; then
+  echo "##teamcity[buildStatus text='Failed to clean up test folder']"
+  exit 1
+fi
 echo "##teamcity[blockClosed name='cleanup']"
 
 echo "##teamcity[blockOpened name='provision' description='set up cluster and CR']"
 ./hack/provision_e2e.sh
 echo "##teamcity[blockClosed name='provision']"
-
-echo "##teamcity[blockOpened name='up' description='a temporaty measure to mitigate https://github.com/upbound/up/issues/416']"
-yc lockbox payload get ${SECRET_ID} --key access-key >> awskey
-mkdir ~/.aws && echo [default] > ~/.aws/credentials && echo '  'aws_access_key_id = $(jq -r .access_key.key_id awskey) >> ~/.aws/credentials && echo '  'aws_secret_access_key = $(jq -r .secret awskey) >> ~/.aws/credentials
-mkdir -p .cache/tools/linux_x86_64
-aws s3 --region=ru-central1 --endpoint-url=https://storage.yandexcloud.net cp s3://patched-for-temp-use/up .cache/tools/linux_x86_64/up-v0.21.0
-chmod +x .cache/tools/linux_x86_64/up-v0.21.0
-echo "##teamcity[blockClosed name='up']"
 
 export KUBECONFIG=kubeconfig
 export DOCKER_CLI_EXPERIMENTAL=enabled

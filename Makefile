@@ -53,7 +53,7 @@ GO111MODULE = on
 # Setup Kubernetes tools
 
 KIND_VERSION = v0.19.0
-UP_VERSION = v0.21.0
+UP_VERSION = v0.28.0
 UP_CHANNEL = stable
 UPTEST_VERSION = v0.6.1
 -include build/makelib/k8s_tools.mk
@@ -210,7 +210,9 @@ local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
 	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
 	@$(OK) running locally built provider
 
-cloud.xpkg.deploy.provider: REGISTRY:=cr.yandex/$(shell yc container registry get crossplane-e2e-cr --format json | jq -r .id)
+cloud-reg:
+	$(eval REGISTRY:=cr.yandex/$(shell yc container registry get crossplane-e2e-cr --format json | jq -r .id))
+
 cloud.xpkg.deploy.provider: xpkg.push
 	@echo "##teamcity[blockOpened name='deploy' description='deploy provider']"
 	@$(INFO) deploying provider package $(PROJECT_NAME) $(VERSION)
@@ -242,7 +244,7 @@ tc-build: pre-build build
 
 e2e: local-deploy uptest
 
-e2e-cloud: cloud-deploy uptest
+e2e-cloud: cloud-reg cloud-deploy uptest
 
 crddiff: $(UPTEST)
 	@$(INFO) Checking breaking CRD schema changes

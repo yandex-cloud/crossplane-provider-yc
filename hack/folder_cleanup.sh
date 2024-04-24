@@ -9,6 +9,13 @@ function delete_all {
     done
 }
 
+function delete_sgs {
+    for id in $(yc vpc security-group list --folder-id "${FOLDER_ID}" --format json | jq -r '(map({ id: .id, def: .default_for_network}) | .[] | select(.def != true) | .id )'); do
+        echo Deleting "${@}" $id...
+        yc vpc security-group delete $id || exitcode=1
+    done
+}
+
 function delete_storage_buckets {
     for bucket in $(yc storage bucket list --folder-id "${FOLDER_ID}" --format json | jq -r '(map({ id: .name}) | .[].id)'); do
         aws s3api delete-objects \
@@ -49,7 +56,7 @@ delete_all managed-kubernetes cluster
 delete_all iam service-account
 delete_all ydb db
 delete_all managed-kafka cluster
-delete_all vpc security-group
+delete_sgs
 delete_all vpc addr
 delete_all vpc subnet
 delete_all vpc net

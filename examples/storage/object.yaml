@@ -2,6 +2,8 @@ apiVersion: storage.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Object
 metadata:
   name: example-object
+  annotations:
+    upjet.upbound.io/manual-intervention: "Cloud test tends to hang on bucket deletion."
 spec:
   forProvider:
     contentBase64: MTIzNDU2Nzg=
