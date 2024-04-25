@@ -25,6 +25,36 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type TargetGroupInitParameters struct {
+
+	// An optional description of the target group. Provide this property when
+	// you create the resource.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The ID of the folder to which the resource belongs.
+	// If omitted, the provider folder is used.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// Labels to assign to this target group. A list of key/value pairs.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Name of the target group. Provided by the client when the target group is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// A Target resource. The structure is documented below.
+	Target []TargetInitParameters `json:"target,omitempty" tf:"target,omitempty"`
+}
+
 type TargetGroupObservation struct {
 
 	// The target group creation timestamp.
@@ -42,6 +72,7 @@ type TargetGroupObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Labels to assign to this target group. A list of key/value pairs.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Name of the target group. Provided by the client when the target group is created.
@@ -74,6 +105,7 @@ type TargetGroupParameters struct {
 
 	// Labels to assign to this target group. A list of key/value pairs.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Name of the target group. Provided by the client when the target group is created.
@@ -83,6 +115,27 @@ type TargetGroupParameters struct {
 	// A Target resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Target []TargetParameters `json:"target,omitempty" tf:"target,omitempty"`
+}
+
+type TargetInitParameters struct {
+
+	// IP address of the target.
+	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
+
+	PrivateIPv4Address *bool `json:"privateIpv4Address,omitempty" tf:"private_ipv4_address,omitempty"`
+
+	// ID of the subnet that targets are connected to.
+	// All targets in the target group must be connected to the same subnet within a single availability zone.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type TargetObservation struct {
@@ -100,7 +153,7 @@ type TargetObservation struct {
 type TargetParameters struct {
 
 	// IP address of the target.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	IPAddress *string `json:"ipAddress" tf:"ip_address,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -125,6 +178,17 @@ type TargetParameters struct {
 type TargetGroupSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     TargetGroupParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider TargetGroupInitParameters `json:"initProvider,omitempty"`
 }
 
 // TargetGroupStatus defines the observed state of TargetGroup.
@@ -134,13 +198,14 @@ type TargetGroupStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // TargetGroup is the Schema for the TargetGroups API. An application load balancer distributes the load across cloud resources that are combined into a target group.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type TargetGroup struct {
 	metav1.TypeMeta   `json:",inline"`

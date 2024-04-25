@@ -20,12 +20,10 @@ import (
 	// Note(ezgidemirel): we are importing this to embed provider schema document
 	_ "embed"
 
-	tjconfig "github.com/upbound/upjet/pkg/config"
+	tjconfig "github.com/crossplane/upjet/pkg/config"
 
 	"github.com/yandex-cloud/provider-jet-yc/config/alb"
 	"github.com/yandex-cloud/provider-jet-yc/config/common"
-
-	// "github.com/yandex-cloud/provider-jet-yc/config/common"
 	"github.com/yandex-cloud/provider-jet-yc/config/compute"
 	"github.com/yandex-cloud/provider-jet-yc/config/datatransfer"
 	"github.com/yandex-cloud/provider-jet-yc/config/dns"

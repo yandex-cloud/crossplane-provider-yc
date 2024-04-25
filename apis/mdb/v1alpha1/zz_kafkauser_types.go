@@ -25,6 +25,26 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type KafkaUserInitParameters struct {
+
+	// +crossplane:generate:reference:type=KafkaCluster
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Reference to a KafkaCluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDRef *v1.Reference `json:"clusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a KafkaCluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
+
+	// The name of the user.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Set of permissions granted to the user. The structure is documented below.
+	Permission []KafkaUserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+}
+
 type KafkaUserObservation struct {
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
@@ -64,9 +84,23 @@ type KafkaUserParameters struct {
 	Permission []KafkaUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
+type KafkaUserPermissionInitParameters struct {
+
+	// Set of hosts, to which this permission grants access to.
+	// +listType=set
+	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
+
+	// The role type to grant to the topic.
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+
+	// The name of the topic that the permission grants access to.
+	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
+}
+
 type KafkaUserPermissionObservation struct {
 
 	// Set of hosts, to which this permission grants access to.
+	// +listType=set
 	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
 
 	// The role type to grant to the topic.
@@ -80,14 +114,15 @@ type KafkaUserPermissionParameters struct {
 
 	// Set of hosts, to which this permission grants access to.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
 
 	// The role type to grant to the topic.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Role *string `json:"role" tf:"role,omitempty"`
 
 	// The name of the topic that the permission grants access to.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	TopicName *string `json:"topicName" tf:"topic_name,omitempty"`
 }
 
@@ -95,6 +130,17 @@ type KafkaUserPermissionParameters struct {
 type KafkaUserSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     KafkaUserParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider KafkaUserInitParameters `json:"initProvider,omitempty"`
 }
 
 // KafkaUserStatus defines the observed state of KafkaUser.
@@ -104,19 +150,20 @@ type KafkaUserStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // KafkaUser is the Schema for the KafkaUsers API. Manages a user of a Kafka cluster within Yandex.Cloud.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type KafkaUser struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.passwordSecretRef)",message="passwordSecretRef is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.passwordSecretRef)",message="spec.forProvider.passwordSecretRef is a required parameter"
 	Spec   KafkaUserSpec   `json:"spec"`
 	Status KafkaUserStatus `json:"status,omitempty"`
 }

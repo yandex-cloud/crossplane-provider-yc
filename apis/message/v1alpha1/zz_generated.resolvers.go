@@ -49,5 +49,21 @@ func (mg *Queue) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mg.Spec.ForProvider.AccessKey = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.AccessKeyRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AccessKey),
+		Extract:      message.ExtractAccessKey(),
+		Reference:    mg.Spec.InitProvider.AccessKeyRef,
+		Selector:     mg.Spec.InitProvider.AccessKeySelector,
+		To: reference.To{
+			List:    &v1alpha1.ServiceAccountStaticAccessKeyList{},
+			Managed: &v1alpha1.ServiceAccountStaticAccessKey{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.AccessKey")
+	}
+	mg.Spec.InitProvider.AccessKey = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.AccessKeyRef = rsp.ResolvedReference
+
 	return nil
 }

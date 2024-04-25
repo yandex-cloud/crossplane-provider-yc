@@ -25,6 +25,15 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AltNamesInitParameters struct {
+
+	// Name of the endpoint.
+	FromName *string `json:"fromName,omitempty" tf:"from_name,omitempty"`
+
+	// Name of the endpoint.
+	ToName *string `json:"toName,omitempty" tf:"to_name,omitempty"`
+}
+
 type AltNamesObservation struct {
 
 	// Name of the endpoint.
@@ -45,10 +54,25 @@ type AltNamesParameters struct {
 	ToName *string `json:"toName,omitempty" tf:"to_name,omitempty"`
 }
 
+type AuditTrailsV1ParserInitParameters struct {
+}
+
 type AuditTrailsV1ParserObservation struct {
 }
 
 type AuditTrailsV1ParserParameters struct {
+}
+
+type AuthInitParameters struct {
+
+	// Connection without authentication data.
+	NoAuth []NoAuthInitParameters `json:"noAuth,omitempty" tf:"no_auth,omitempty"`
+
+	// Authentication using sasl.
+	Sasl []SaslInitParameters `json:"sasl,omitempty" tf:"sasl,omitempty"`
+}
+
+type AuthNoAuthInitParameters struct {
 }
 
 type AuthNoAuthObservation struct {
@@ -77,6 +101,16 @@ type AuthParameters struct {
 	Sasl []SaslParameters `json:"sasl,omitempty" tf:"sasl,omitempty"`
 }
 
+type AuthSaslInitParameters struct {
+	Mechanism *string `json:"mechanism,omitempty" tf:"mechanism,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []AuthSaslPasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
 type AuthSaslObservation struct {
 	Mechanism *string `json:"mechanism,omitempty" tf:"mechanism,omitempty"`
 
@@ -101,6 +135,9 @@ type AuthSaslParameters struct {
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
+type AuthSaslPasswordInitParameters struct {
+}
+
 type AuthSaslPasswordObservation struct {
 }
 
@@ -108,6 +145,33 @@ type AuthSaslPasswordParameters struct {
 
 	// +kubebuilder:validation:Optional
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
+}
+
+type ClickhouseSourceInitParameters struct {
+
+	// Connection settings.
+	Connection []ConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// List of tables which will not be transfered, formatted as schemaname.tablename.
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	// List of tables to transfer, formatted as schemaname.tablename. If omitted or an empty list is specified, all tables will be transferred.
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+
+	// -  List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type ClickhouseSourceObservation struct {
@@ -160,6 +224,12 @@ type ClickhouseSourceParameters struct {
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
+type ClickhouseTargetConnectionInitParameters struct {
+
+	// Connection options. The structure is documented below.
+	ConnectionOptions []ConnectionConnectionOptionsInitParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
+}
+
 type ClickhouseTargetConnectionObservation struct {
 
 	// Connection options. The structure is documented below.
@@ -171,6 +241,39 @@ type ClickhouseTargetConnectionParameters struct {
 	// Connection options. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ConnectionOptions []ConnectionConnectionOptionsParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
+}
+
+type ClickhouseTargetInitParameters struct {
+
+	// Table renaming rules. The structure is documented below.
+	AltNames []AltNamesInitParameters `json:"altNames,omitempty" tf:"alt_names,omitempty"`
+
+	// -  How to clean collections when activating the transfer. One of "YDB_CLEANUP_POLICY_DISABLED" or "YDB_CLEANUP_POLICY_DROP".
+	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
+
+	// Name of the ClickHouse cluster. For managed ClickHouse clusters defaults to managed cluster ID.
+	ClickhouseClusterName *string `json:"clickhouseClusterName,omitempty" tf:"clickhouse_cluster_name,omitempty"`
+
+	// Connection settings.
+	Connection []ClickhouseTargetConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// -  List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// Shard selection rules for the data being transferred. The structure is documented below.
+	Sharding []ShardingInitParameters `json:"sharding,omitempty" tf:"sharding,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type ClickhouseTargetObservation struct {
@@ -237,10 +340,22 @@ type ClickhouseTargetParameters struct {
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
+type CloudLoggingParserInitParameters struct {
+}
+
 type CloudLoggingParserObservation struct {
 }
 
 type CloudLoggingParserParameters struct {
+}
+
+type CollectionsInitParameters struct {
+
+	// Collection name.
+	CollectionName *string `json:"collectionName,omitempty" tf:"collection_name,omitempty"`
+
+	// Database name.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 }
 
 type CollectionsObservation struct {
@@ -263,6 +378,12 @@ type CollectionsParameters struct {
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 }
 
+type ColumnValueHashInitParameters struct {
+
+	// The name of the column to calculate hash from.
+	ColumnName *string `json:"columnName,omitempty" tf:"column_name,omitempty"`
+}
+
 type ColumnValueHashObservation struct {
 
 	// The name of the column to calculate hash from.
@@ -276,19 +397,46 @@ type ColumnValueHashParameters struct {
 	ColumnName *string `json:"columnName,omitempty" tf:"column_name,omitempty"`
 }
 
+type ColumnValueInitParameters struct {
+
+	// The string value of the column.
+	StringValue *string `json:"stringValue,omitempty" tf:"string_value,omitempty"`
+}
+
 type ColumnValueObservation struct {
+
+	// The string value of the column.
 	StringValue *string `json:"stringValue,omitempty" tf:"string_value,omitempty"`
 }
 
 type ColumnValueParameters struct {
 
+	// The string value of the column.
 	// +kubebuilder:validation:Optional
 	StringValue *string `json:"stringValue,omitempty" tf:"string_value,omitempty"`
 }
 
+type ConnectionConnectionOptionsInitParameters struct {
+
+	// -  Database.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// Identifier of the Managed PostgreSQL cluster.
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []ConnectionOptionsOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []ConnectionOptionsPasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
 type ConnectionConnectionOptionsObservation struct {
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Identifier of the Managed PostgreSQL cluster.
@@ -302,6 +450,21 @@ type ConnectionConnectionOptionsObservation struct {
 
 	// User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
+type ConnectionConnectionOptionsOnPremiseInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Replica set name.
+	ReplicaSet *string `json:"replicaSet,omitempty" tf:"replica_set,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []ConnectionOptionsOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type ConnectionConnectionOptionsOnPremiseObservation struct {
@@ -338,10 +501,19 @@ type ConnectionConnectionOptionsOnPremiseParameters struct {
 	TLSMode []ConnectionOptionsOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type ConnectionConnectionOptionsOnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type ConnectionConnectionOptionsOnPremiseTLSModeDisabledObservation struct {
 }
 
 type ConnectionConnectionOptionsOnPremiseTLSModeDisabledParameters struct {
+}
+
+type ConnectionConnectionOptionsOnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type ConnectionConnectionOptionsOnPremiseTLSModeEnabledObservation struct {
@@ -355,6 +527,15 @@ type ConnectionConnectionOptionsOnPremiseTLSModeEnabledParameters struct {
 	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type ConnectionConnectionOptionsOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []ConnectionConnectionOptionsOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []ConnectionConnectionOptionsOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type ConnectionConnectionOptionsOnPremiseTLSModeObservation struct {
@@ -379,7 +560,7 @@ type ConnectionConnectionOptionsOnPremiseTLSModeParameters struct {
 
 type ConnectionConnectionOptionsParameters struct {
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	// +kubebuilder:validation:Optional
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
@@ -400,6 +581,9 @@ type ConnectionConnectionOptionsParameters struct {
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
+type ConnectionConnectionOptionsPasswordInitParameters struct {
+}
+
 type ConnectionConnectionOptionsPasswordObservation struct {
 }
 
@@ -409,10 +593,28 @@ type ConnectionConnectionOptionsPasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type ConnectionInitParameters struct {
+
+	// Connection options. The structure is documented below.
+	ConnectionOptions []ConnectionOptionsInitParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
+}
+
 type ConnectionObservation struct {
 
 	// Connection options. The structure is documented below.
 	ConnectionOptions []ConnectionOptionsObservation `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
+}
+
+type ConnectionOnPremiseInitParameters struct {
+
+	// List of Kafka broker URLs.
+	BrokerUrls []*string `json:"brokerUrls,omitempty" tf:"broker_urls,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []ConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type ConnectionOnPremiseObservation struct {
@@ -442,10 +644,19 @@ type ConnectionOnPremiseParameters struct {
 	TLSMode []ConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type ConnectionOnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type ConnectionOnPremiseTLSModeDisabledObservation struct {
 }
 
 type ConnectionOnPremiseTLSModeDisabledParameters struct {
+}
+
+type ConnectionOnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type ConnectionOnPremiseTLSModeEnabledObservation struct {
@@ -459,6 +670,15 @@ type ConnectionOnPremiseTLSModeEnabledParameters struct {
 	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type ConnectionOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []OnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []OnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type ConnectionOnPremiseTLSModeObservation struct {
@@ -481,9 +701,27 @@ type ConnectionOnPremiseTLSModeParameters struct {
 	Enabled []OnPremiseTLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
+type ConnectionOptionsInitParameters struct {
+
+	// -  Database.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// Identifier of the Managed PostgreSQL cluster.
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []OnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []PasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
 type ConnectionOptionsObservation struct {
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Identifier of the Managed PostgreSQL cluster.
@@ -497,6 +735,21 @@ type ConnectionOptionsObservation struct {
 
 	// User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
+type ConnectionOptionsOnPremiseInitParameters struct {
+
+	// TCP port number for the HTTP interface of the ClickHouse server.
+	HTTPPort *float64 `json:"httpPort,omitempty" tf:"http_port,omitempty"`
+
+	// TCP port number for the native interface of the ClickHouse server.
+	NativePort *float64 `json:"nativePort,omitempty" tf:"native_port,omitempty"`
+
+	// The list of ClickHouse shards. The structure is documented below.
+	Shards []OnPremiseShardsInitParameters `json:"shards,omitempty" tf:"shards,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []OnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type ConnectionOptionsOnPremiseObservation struct {
@@ -533,10 +786,19 @@ type ConnectionOptionsOnPremiseParameters struct {
 	TLSMode []OnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type ConnectionOptionsOnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type ConnectionOptionsOnPremiseTLSModeDisabledObservation struct {
 }
 
 type ConnectionOptionsOnPremiseTLSModeDisabledParameters struct {
+}
+
+type ConnectionOptionsOnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type ConnectionOptionsOnPremiseTLSModeEnabledObservation struct {
@@ -550,6 +812,15 @@ type ConnectionOptionsOnPremiseTLSModeEnabledParameters struct {
 	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type ConnectionOptionsOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []ConnectionOptionsOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []ConnectionOptionsOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type ConnectionOptionsOnPremiseTLSModeObservation struct {
@@ -574,7 +845,7 @@ type ConnectionOptionsOnPremiseTLSModeParameters struct {
 
 type ConnectionOptionsParameters struct {
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	// +kubebuilder:validation:Optional
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
@@ -595,6 +866,9 @@ type ConnectionOptionsParameters struct {
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
+type ConnectionOptionsPasswordInitParameters struct {
+}
+
 type ConnectionOptionsPasswordObservation struct {
 }
 
@@ -611,11 +885,21 @@ type ConnectionParameters struct {
 	ConnectionOptions []ConnectionOptionsParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
 
+type CustomMappingInitParameters struct {
+
+	// The name of the column to calculate hash from.
+	ColumnName *string `json:"columnName,omitempty" tf:"column_name,omitempty"`
+
+	// The mapping of the specified column values to the shard names. The structure is documented below.
+	Mapping []MappingInitParameters `json:"mapping,omitempty" tf:"mapping,omitempty"`
+}
+
 type CustomMappingObservation struct {
 
 	// The name of the column to calculate hash from.
 	ColumnName *string `json:"columnName,omitempty" tf:"column_name,omitempty"`
 
+	// The mapping of the specified column values to the shard names. The structure is documented below.
 	Mapping []MappingObservation `json:"mapping,omitempty" tf:"mapping,omitempty"`
 }
 
@@ -625,8 +909,27 @@ type CustomMappingParameters struct {
 	// +kubebuilder:validation:Optional
 	ColumnName *string `json:"columnName,omitempty" tf:"column_name,omitempty"`
 
+	// The mapping of the specified column values to the shard names. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Mapping []MappingParameters `json:"mapping,omitempty" tf:"mapping,omitempty"`
+}
+
+type DataSchemaFieldsFieldsInitParameters struct {
+
+	// Mark field as Primary Key.
+	Key *bool `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// -  A path where resulting tables are stored.
+	Path *string `json:"path,omitempty" tf:"path,omitempty"`
+
+	// Mark field as required.
+	Required *bool `json:"required,omitempty" tf:"required,omitempty"`
+
+	// Field type, one of: INT64, INT32, INT16, INT8, UINT64, UINT32, UINT16, UINT8, DOUBLE, BOOLEAN, STRING, UTF8, ANY, DATETIME.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type DataSchemaFieldsFieldsObservation struct {
@@ -670,6 +973,12 @@ type DataSchemaFieldsFieldsParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
+type DataSchemaFieldsInitParameters struct {
+
+	// Description of the data schema in the array of fields structure (documented below).
+	Fields []DataSchemaFieldsFieldsInitParameters `json:"fields,omitempty" tf:"fields,omitempty"`
+}
+
 type DataSchemaFieldsObservation struct {
 
 	// Description of the data schema in the array of fields structure (documented below).
@@ -681,6 +990,15 @@ type DataSchemaFieldsParameters struct {
 	// Description of the data schema in the array of fields structure (documented below).
 	// +kubebuilder:validation:Optional
 	Fields []DataSchemaFieldsFieldsParameters `json:"fields,omitempty" tf:"fields,omitempty"`
+}
+
+type DataSchemaInitParameters struct {
+
+	// Description of the data schema in the array of fields structure (documented below).
+	Fields []FieldsInitParameters `json:"fields,omitempty" tf:"fields,omitempty"`
+
+	// Description of the data schema as JSON specification.
+	JSONFields *string `json:"jsonFields,omitempty" tf:"json_fields,omitempty"`
 }
 
 type DataSchemaObservation struct {
@@ -703,10 +1021,19 @@ type DataSchemaParameters struct {
 	JSONFields *string `json:"jsonFields,omitempty" tf:"json_fields,omitempty"`
 }
 
+type DisabledInitParameters struct {
+}
+
 type DisabledObservation struct {
 }
 
 type DisabledParameters struct {
+}
+
+type EnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type EnabledObservation struct {
@@ -722,6 +1049,34 @@ type EnabledParameters struct {
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
+type EndpointInitParameters struct {
+
+	// Arbitrary description text for the endpoint.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// ID of the folder to create the endpoint in. If it is not provided, the default provider folder is used.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// A set of key/value label pairs to assign to the Data Transfer endpoint.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Name of the endpoint.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Settings for the endpoint. The structure is documented below.
+	Settings []SettingsInitParameters `json:"settings,omitempty" tf:"settings,omitempty"`
+}
+
 type EndpointObservation struct {
 
 	// Arbitrary description text for the endpoint.
@@ -734,6 +1089,7 @@ type EndpointObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// A set of key/value label pairs to assign to the Data Transfer endpoint.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Name of the endpoint.
@@ -764,6 +1120,7 @@ type EndpointParameters struct {
 
 	// A set of key/value label pairs to assign to the Data Transfer endpoint.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Name of the endpoint.
@@ -773,6 +1130,15 @@ type EndpointParameters struct {
 	// Settings for the endpoint. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Settings []SettingsParameters `json:"settings,omitempty" tf:"settings,omitempty"`
+}
+
+type ExcludedCollectionsInitParameters struct {
+
+	// Collection name.
+	CollectionName *string `json:"collectionName,omitempty" tf:"collection_name,omitempty"`
+
+	// Database name.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 }
 
 type ExcludedCollectionsObservation struct {
@@ -793,6 +1159,24 @@ type ExcludedCollectionsParameters struct {
 	// Database name.
 	// +kubebuilder:validation:Optional
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
+}
+
+type FieldsFieldsInitParameters struct {
+
+	// Mark field as Primary Key.
+	Key *bool `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// -  A path where resulting tables are stored.
+	Path *string `json:"path,omitempty" tf:"path,omitempty"`
+
+	// Mark field as required.
+	Required *bool `json:"required,omitempty" tf:"required,omitempty"`
+
+	// Field type, one of: INT64, INT32, INT16, INT8, UINT64, UINT32, UINT16, UINT8, DOUBLE, BOOLEAN, STRING, UTF8, ANY, DATETIME.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type FieldsFieldsObservation struct {
@@ -836,6 +1220,12 @@ type FieldsFieldsParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
+type FieldsInitParameters struct {
+
+	// Description of the data schema in the array of fields structure (documented below).
+	Fields []FieldsFieldsInitParameters `json:"fields,omitempty" tf:"fields,omitempty"`
+}
+
 type FieldsObservation struct {
 
 	// Description of the data schema in the array of fields structure (documented below).
@@ -847,6 +1237,24 @@ type FieldsParameters struct {
 	// Description of the data schema in the array of fields structure (documented below).
 	// +kubebuilder:validation:Optional
 	Fields []FieldsFieldsParameters `json:"fields,omitempty" tf:"fields,omitempty"`
+}
+
+type JSONParserDataSchemaFieldsFieldsInitParameters struct {
+
+	// Mark field as Primary Key.
+	Key *bool `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// -  A path where resulting tables are stored.
+	Path *string `json:"path,omitempty" tf:"path,omitempty"`
+
+	// Mark field as required.
+	Required *bool `json:"required,omitempty" tf:"required,omitempty"`
+
+	// Field type, one of: INT64, INT32, INT16, INT8, UINT64, UINT32, UINT16, UINT8, DOUBLE, BOOLEAN, STRING, UTF8, ANY, DATETIME.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type JSONParserDataSchemaFieldsFieldsObservation struct {
@@ -890,6 +1298,12 @@ type JSONParserDataSchemaFieldsFieldsParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
+type JSONParserDataSchemaFieldsInitParameters struct {
+
+	// Description of the data schema in the array of fields structure (documented below).
+	Fields []JSONParserDataSchemaFieldsFieldsInitParameters `json:"fields,omitempty" tf:"fields,omitempty"`
+}
+
 type JSONParserDataSchemaFieldsObservation struct {
 
 	// Description of the data schema in the array of fields structure (documented below).
@@ -901,6 +1315,15 @@ type JSONParserDataSchemaFieldsParameters struct {
 	// Description of the data schema in the array of fields structure (documented below).
 	// +kubebuilder:validation:Optional
 	Fields []JSONParserDataSchemaFieldsFieldsParameters `json:"fields,omitempty" tf:"fields,omitempty"`
+}
+
+type JSONParserDataSchemaInitParameters struct {
+
+	// Description of the data schema in the array of fields structure (documented below).
+	Fields []JSONParserDataSchemaFieldsInitParameters `json:"fields,omitempty" tf:"fields,omitempty"`
+
+	// Description of the data schema as JSON specification.
+	JSONFields *string `json:"jsonFields,omitempty" tf:"json_fields,omitempty"`
 }
 
 type JSONParserDataSchemaObservation struct {
@@ -923,6 +1346,21 @@ type JSONParserDataSchemaParameters struct {
 	JSONFields *string `json:"jsonFields,omitempty" tf:"json_fields,omitempty"`
 }
 
+type JSONParserInitParameters struct {
+
+	// Add fields, that are not in the schema, into the _rest column.
+	AddRestColumn *bool `json:"addRestColumn,omitempty" tf:"add_rest_column,omitempty"`
+
+	// Data parsing scheme.The structure is documented below.
+	DataSchema []DataSchemaInitParameters `json:"dataSchema,omitempty" tf:"data_schema,omitempty"`
+
+	// Allow null keys. If false - null keys will be putted to unparsed data
+	NullKeysAllowed *bool `json:"nullKeysAllowed,omitempty" tf:"null_keys_allowed,omitempty"`
+
+	// Allow unescape string values.
+	UnescapeStringValues *bool `json:"unescapeStringValues,omitempty" tf:"unescape_string_values,omitempty"`
+}
+
 type JSONParserObservation struct {
 
 	// Add fields, that are not in the schema, into the _rest column.
@@ -934,6 +1372,7 @@ type JSONParserObservation struct {
 	// Allow null keys. If false - null keys will be putted to unparsed data
 	NullKeysAllowed *bool `json:"nullKeysAllowed,omitempty" tf:"null_keys_allowed,omitempty"`
 
+	// Allow unescape string values.
 	UnescapeStringValues *bool `json:"unescapeStringValues,omitempty" tf:"unescape_string_values,omitempty"`
 }
 
@@ -951,8 +1390,18 @@ type JSONParserParameters struct {
 	// +kubebuilder:validation:Optional
 	NullKeysAllowed *bool `json:"nullKeysAllowed,omitempty" tf:"null_keys_allowed,omitempty"`
 
+	// Allow unescape string values.
 	// +kubebuilder:validation:Optional
 	UnescapeStringValues *bool `json:"unescapeStringValues,omitempty" tf:"unescape_string_values,omitempty"`
+}
+
+type KafkaSourceConnectionInitParameters struct {
+
+	// Identifier of the Managed Kafka cluster.
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []ConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
 type KafkaSourceConnectionObservation struct {
@@ -975,6 +1424,30 @@ type KafkaSourceConnectionParameters struct {
 	OnPremise []ConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
+type KafkaSourceInitParameters struct {
+
+	// Authentication data.
+	Auth []AuthInitParameters `json:"auth,omitempty" tf:"auth,omitempty"`
+
+	// Connection settings.
+	Connection []KafkaSourceConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// -  Data parsing rules.
+	Parser []ParserInitParameters `json:"parser,omitempty" tf:"parser,omitempty"`
+
+	// -  List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// Full topic name
+	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
+
+	// The list of full source topic names.
+	TopicNames []*string `json:"topicNames,omitempty" tf:"topic_names,omitempty"`
+
+	// Transform data with a custom Cloud Function.
+	Transformer []TransformerInitParameters `json:"transformer,omitempty" tf:"transformer,omitempty"`
+}
+
 type KafkaSourceObservation struct {
 
 	// Authentication data.
@@ -983,7 +1456,7 @@ type KafkaSourceObservation struct {
 	// Connection settings.
 	Connection []KafkaSourceConnectionObservation `json:"connection,omitempty" tf:"connection,omitempty"`
 
-	// Data parsing parameters. If not set, the source messages are read in raw.
+	// -  Data parsing rules.
 	Parser []ParserObservation `json:"parser,omitempty" tf:"parser,omitempty"`
 
 	// -  List of security groups that the transfer associated with this endpoint should use.
@@ -992,6 +1465,7 @@ type KafkaSourceObservation struct {
 	// Full topic name
 	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
 
+	// The list of full source topic names.
 	TopicNames []*string `json:"topicNames,omitempty" tf:"topic_names,omitempty"`
 
 	// Transform data with a custom Cloud Function.
@@ -1008,7 +1482,7 @@ type KafkaSourceParameters struct {
 	// +kubebuilder:validation:Optional
 	Connection []KafkaSourceConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
-	// Data parsing parameters. If not set, the source messages are read in raw.
+	// -  Data parsing rules.
 	// +kubebuilder:validation:Optional
 	Parser []ParserParameters `json:"parser,omitempty" tf:"parser,omitempty"`
 
@@ -1020,12 +1494,22 @@ type KafkaSourceParameters struct {
 	// +kubebuilder:validation:Optional
 	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
 
+	// The list of full source topic names.
 	// +kubebuilder:validation:Optional
 	TopicNames []*string `json:"topicNames,omitempty" tf:"topic_names,omitempty"`
 
 	// Transform data with a custom Cloud Function.
 	// +kubebuilder:validation:Optional
 	Transformer []TransformerParameters `json:"transformer,omitempty" tf:"transformer,omitempty"`
+}
+
+type KafkaTargetAuthInitParameters struct {
+
+	// Connection without authentication data.
+	NoAuth []AuthNoAuthInitParameters `json:"noAuth,omitempty" tf:"no_auth,omitempty"`
+
+	// Authentication using sasl.
+	Sasl []AuthSaslInitParameters `json:"sasl,omitempty" tf:"sasl,omitempty"`
 }
 
 type KafkaTargetAuthObservation struct {
@@ -1048,6 +1532,15 @@ type KafkaTargetAuthParameters struct {
 	Sasl []AuthSaslParameters `json:"sasl,omitempty" tf:"sasl,omitempty"`
 }
 
+type KafkaTargetConnectionInitParameters struct {
+
+	// Identifier of the Managed Kafka cluster.
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []KafkaTargetConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
 type KafkaTargetConnectionObservation struct {
 
 	// Identifier of the Managed Kafka cluster.
@@ -1055,6 +1548,18 @@ type KafkaTargetConnectionObservation struct {
 
 	// Connection settings of the on-premise PostgreSQL server.
 	OnPremise []KafkaTargetConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type KafkaTargetConnectionOnPremiseInitParameters struct {
+
+	// List of Kafka broker URLs.
+	BrokerUrls []*string `json:"brokerUrls,omitempty" tf:"broker_urls,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []KafkaTargetConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type KafkaTargetConnectionOnPremiseObservation struct {
@@ -1082,6 +1587,15 @@ type KafkaTargetConnectionOnPremiseParameters struct {
 	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	TLSMode []KafkaTargetConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
+}
+
+type KafkaTargetConnectionOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []ConnectionOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []ConnectionOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type KafkaTargetConnectionOnPremiseTLSModeObservation struct {
@@ -1115,6 +1629,24 @@ type KafkaTargetConnectionParameters struct {
 	OnPremise []KafkaTargetConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
+type KafkaTargetInitParameters struct {
+
+	// Authentication data.
+	Auth []KafkaTargetAuthInitParameters `json:"auth,omitempty" tf:"auth,omitempty"`
+
+	// Connection settings.
+	Connection []KafkaTargetConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// -  List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// -  Data serialization format.
+	Serializer []SerializerInitParameters `json:"serializer,omitempty" tf:"serializer,omitempty"`
+
+	// Target topic settings.
+	TopicSettings []TopicSettingsInitParameters `json:"topicSettings,omitempty" tf:"topic_settings,omitempty"`
+}
+
 type KafkaTargetObservation struct {
 
 	// Authentication data.
@@ -1126,7 +1658,7 @@ type KafkaTargetObservation struct {
 	// -  List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
-	// Data serialization settings.
+	// -  Data serialization format.
 	Serializer []SerializerObservation `json:"serializer,omitempty" tf:"serializer,omitempty"`
 
 	// Target topic settings.
@@ -1147,7 +1679,7 @@ type KafkaTargetParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
-	// Data serialization settings.
+	// -  Data serialization format.
 	// +kubebuilder:validation:Optional
 	Serializer []SerializerParameters `json:"serializer,omitempty" tf:"serializer,omitempty"`
 
@@ -1156,21 +1688,60 @@ type KafkaTargetParameters struct {
 	TopicSettings []TopicSettingsParameters `json:"topicSettings,omitempty" tf:"topic_settings,omitempty"`
 }
 
+type MappingInitParameters struct {
+
+	// The value of the column. Currently only the string columns are supported. The structure is documented below.
+	ColumnValue []ColumnValueInitParameters `json:"columnValue,omitempty" tf:"column_value,omitempty"`
+
+	// The name of the shard into which all the rows with the specified column_value will be written.
+	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
+}
+
 type MappingObservation struct {
+
+	// The value of the column. Currently only the string columns are supported. The structure is documented below.
 	ColumnValue []ColumnValueObservation `json:"columnValue,omitempty" tf:"column_value,omitempty"`
 
-	// Name of the endpoint.
+	// The name of the shard into which all the rows with the specified column_value will be written.
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
 }
 
 type MappingParameters struct {
 
+	// The value of the column. Currently only the string columns are supported. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ColumnValue []ColumnValueParameters `json:"columnValue,omitempty" tf:"column_value,omitempty"`
 
-	// Name of the endpoint.
+	// The name of the shard into which all the rows with the specified column_value will be written.
 	// +kubebuilder:validation:Optional
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
+}
+
+type MongoSourceConnectionConnectionOptionsInitParameters struct {
+
+	// Name of the database associated with the credentials.
+	AuthSource *string `json:"authSource,omitempty" tf:"auth_source,omitempty"`
+
+	// Identifier of the Managed PostgreSQL cluster.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MongodbCluster
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Reference to a MongodbCluster in mdb to populate mdbClusterId.
+	// +kubebuilder:validation:Optional
+	MdbClusterIDRef *v1.Reference `json:"mdbClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a MongodbCluster in mdb to populate mdbClusterId.
+	// +kubebuilder:validation:Optional
+	MdbClusterIDSelector *v1.Selector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []ConnectionConnectionOptionsOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []ConnectionConnectionOptionsPasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type MongoSourceConnectionConnectionOptionsObservation struct {
@@ -1223,6 +1794,12 @@ type MongoSourceConnectionConnectionOptionsParameters struct {
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
+type MongoSourceConnectionInitParameters struct {
+
+	// Connection options. The structure is documented below.
+	ConnectionOptions []MongoSourceConnectionConnectionOptionsInitParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
+}
+
 type MongoSourceConnectionObservation struct {
 
 	// Connection options. The structure is documented below.
@@ -1234,6 +1811,36 @@ type MongoSourceConnectionParameters struct {
 	// Connection options. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ConnectionOptions []MongoSourceConnectionConnectionOptionsParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
+}
+
+type MongoSourceInitParameters struct {
+
+	// The list of the MongoDB collections that should be transferred. If omitted, all available collections will be transferred. The structure of the list item is documented below.
+	Collections []CollectionsInitParameters `json:"collections,omitempty" tf:"collections,omitempty"`
+
+	// Connection settings.
+	Connection []MongoSourceConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// The list of the MongoDB collections that should not be transferred.
+	ExcludedCollections []ExcludedCollectionsInitParameters `json:"excludedCollections,omitempty" tf:"excluded_collections,omitempty"`
+
+	// whether the secondary server should be preferred to the primary when copying data.
+	SecondaryPreferredMode *bool `json:"secondaryPreferredMode,omitempty" tf:"secondary_preferred_mode,omitempty"`
+
+	// -  List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type MongoSourceObservation struct {
@@ -1293,6 +1900,33 @@ type MongoSourceParameters struct {
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
+type MongoTargetConnectionConnectionOptionsInitParameters struct {
+
+	// Name of the database associated with the credentials.
+	AuthSource *string `json:"authSource,omitempty" tf:"auth_source,omitempty"`
+
+	// Identifier of the Managed PostgreSQL cluster.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MongodbCluster
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Reference to a MongodbCluster in mdb to populate mdbClusterId.
+	// +kubebuilder:validation:Optional
+	MdbClusterIDRef *v1.Reference `json:"mdbClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a MongodbCluster in mdb to populate mdbClusterId.
+	// +kubebuilder:validation:Optional
+	MdbClusterIDSelector *v1.Selector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []MongoTargetConnectionConnectionOptionsOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []MongoTargetConnectionConnectionOptionsPasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
 type MongoTargetConnectionConnectionOptionsObservation struct {
 
 	// Name of the database associated with the credentials.
@@ -1309,6 +1943,21 @@ type MongoTargetConnectionConnectionOptionsObservation struct {
 
 	// User for the database access.
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
+}
+
+type MongoTargetConnectionConnectionOptionsOnPremiseInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Replica set name.
+	ReplicaSet *string `json:"replicaSet,omitempty" tf:"replica_set,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []ConnectionConnectionOptionsOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type MongoTargetConnectionConnectionOptionsOnPremiseObservation struct {
@@ -1377,6 +2026,9 @@ type MongoTargetConnectionConnectionOptionsParameters struct {
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
+type MongoTargetConnectionConnectionOptionsPasswordInitParameters struct {
+}
+
 type MongoTargetConnectionConnectionOptionsPasswordObservation struct {
 }
 
@@ -1384,6 +2036,12 @@ type MongoTargetConnectionConnectionOptionsPasswordParameters struct {
 
 	// +kubebuilder:validation:Optional
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
+}
+
+type MongoTargetConnectionInitParameters struct {
+
+	// Connection options. The structure is documented below.
+	ConnectionOptions []MongoTargetConnectionConnectionOptionsInitParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
 
 type MongoTargetConnectionObservation struct {
@@ -1399,6 +2057,33 @@ type MongoTargetConnectionParameters struct {
 	ConnectionOptions []MongoTargetConnectionConnectionOptionsParameters `json:"connectionOptions,omitempty" tf:"connection_options,omitempty"`
 }
 
+type MongoTargetInitParameters struct {
+
+	// -  How to clean collections when activating the transfer. One of "YDB_CLEANUP_POLICY_DISABLED" or "YDB_CLEANUP_POLICY_DROP".
+	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
+
+	// Connection settings.
+	Connection []MongoTargetConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// -  Database.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// -  List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+}
+
 type MongoTargetObservation struct {
 
 	// -  How to clean collections when activating the transfer. One of "YDB_CLEANUP_POLICY_DISABLED" or "YDB_CLEANUP_POLICY_DROP".
@@ -1407,7 +2092,7 @@ type MongoTargetObservation struct {
 	// Connection settings.
 	Connection []MongoTargetConnectionObservation `json:"connection,omitempty" tf:"connection,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// -  List of security groups that the transfer associated with this endpoint should use.
@@ -1427,7 +2112,7 @@ type MongoTargetParameters struct {
 	// +kubebuilder:validation:Optional
 	Connection []MongoTargetConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	// +kubebuilder:validation:Optional
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
@@ -1449,6 +2134,24 @@ type MongoTargetParameters struct {
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
+type MySQLSourceConnectionInitParameters struct {
+
+	// Identifier of the Managed PostgreSQL cluster.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLCluster
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Reference to a MySQLCluster in mdb to populate mdbClusterId.
+	// +kubebuilder:validation:Optional
+	MdbClusterIDRef *v1.Reference `json:"mdbClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a MySQLCluster in mdb to populate mdbClusterId.
+	// +kubebuilder:validation:Optional
+	MdbClusterIDSelector *v1.Selector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []MySQLSourceConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
 type MySQLSourceConnectionObservation struct {
 
 	// Identifier of the Managed PostgreSQL cluster.
@@ -1456,6 +2159,30 @@ type MySQLSourceConnectionObservation struct {
 
 	// Connection settings of the on-premise PostgreSQL server.
 	OnPremise []MySQLSourceConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type MySQLSourceConnectionOnPremiseInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []MySQLSourceConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type MySQLSourceConnectionOnPremiseObservation struct {
@@ -1501,10 +2228,19 @@ type MySQLSourceConnectionOnPremiseParameters struct {
 	TLSMode []MySQLSourceConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type MySQLSourceConnectionOnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type MySQLSourceConnectionOnPremiseTLSModeDisabledObservation struct {
 }
 
 type MySQLSourceConnectionOnPremiseTLSModeDisabledParameters struct {
+}
+
+type MySQLSourceConnectionOnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type MySQLSourceConnectionOnPremiseTLSModeEnabledObservation struct {
@@ -1518,6 +2254,15 @@ type MySQLSourceConnectionOnPremiseTLSModeEnabledParameters struct {
 	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type MySQLSourceConnectionOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []MySQLSourceConnectionOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []MySQLSourceConnectionOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type MySQLSourceConnectionOnPremiseTLSModeObservation struct {
@@ -1560,12 +2305,74 @@ type MySQLSourceConnectionParameters struct {
 	OnPremise []MySQLSourceConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
+type MySQLSourceInitParameters struct {
+
+	// Connection settings.
+	Connection []MySQLSourceConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// -  Database.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// Reference to a MySQLDatabase in mdb to populate database.
+	// +kubebuilder:validation:Optional
+	DatabaseRef *v1.Reference `json:"databaseRef,omitempty" tf:"-"`
+
+	// Selector for a MySQLDatabase in mdb to populate database.
+	// +kubebuilder:validation:Optional
+	DatabaseSelector *v1.Selector `json:"databaseSelector,omitempty" tf:"-"`
+
+	// Opposite of include_table_regex. The tables matching the specified regular expressions will not be transferred.
+	ExcludeTablesRegex []*string `json:"excludeTablesRegex,omitempty" tf:"exclude_tables_regex,omitempty"`
+
+	// List of regular expressions of table names which should be transferred. A table name is formatted as schemaname.tablename. For example, a single regular expression may look like ^mydb.employees$.
+	IncludeTablesRegex []*string `json:"includeTablesRegex,omitempty" tf:"include_tables_regex,omitempty"`
+
+	// Defines which database schema objects should be transferred, e.g. views, functions, etc.
+	ObjectTransferSettings []ObjectTransferSettingsInitParameters `json:"objectTransferSettings,omitempty" tf:"object_transfer_settings,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []MySQLSourcePasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// -  List of security groups that the transfer associated with this endpoint should use.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// References to SecurityGroup in vpc to populate securityGroups.
+	// +kubebuilder:validation:Optional
+	SecurityGroupsRefs []v1.Reference `json:"securityGroupsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityGroup in vpc to populate securityGroups.
+	// +kubebuilder:validation:Optional
+	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
+
+	// The name of the database where technical tables (__tm_keeper, __tm_gtid_keeper) will be created. Default is the value of the attribute database.
+	ServiceDatabase *string `json:"serviceDatabase,omitempty" tf:"service_database,omitempty"`
+
+	// Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.
+	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
+
+	// User for the database access.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+
+	// Reference to a MySQLUser in mdb to populate user.
+	// +kubebuilder:validation:Optional
+	UserRef *v1.Reference `json:"userRef,omitempty" tf:"-"`
+
+	// Selector for a MySQLUser in mdb to populate user.
+	// +kubebuilder:validation:Optional
+	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
+}
+
 type MySQLSourceObservation struct {
 
 	// Connection settings.
 	Connection []MySQLSourceConnectionObservation `json:"connection,omitempty" tf:"connection,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Opposite of include_table_regex. The tables matching the specified regular expressions will not be transferred.
@@ -1583,6 +2390,7 @@ type MySQLSourceObservation struct {
 	// -  List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
+	// The name of the database where technical tables (__tm_keeper, __tm_gtid_keeper) will be created. Default is the value of the attribute database.
 	ServiceDatabase *string `json:"serviceDatabase,omitempty" tf:"service_database,omitempty"`
 
 	// Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.
@@ -1598,7 +2406,7 @@ type MySQLSourceParameters struct {
 	// +kubebuilder:validation:Optional
 	Connection []MySQLSourceConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
@@ -1641,6 +2449,7 @@ type MySQLSourceParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
 
+	// The name of the database where technical tables (__tm_keeper, __tm_gtid_keeper) will be created. Default is the value of the attribute database.
 	// +kubebuilder:validation:Optional
 	ServiceDatabase *string `json:"serviceDatabase,omitempty" tf:"service_database,omitempty"`
 
@@ -1663,6 +2472,9 @@ type MySQLSourceParameters struct {
 	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
 }
 
+type MySQLSourcePasswordInitParameters struct {
+}
+
 type MySQLSourcePasswordObservation struct {
 }
 
@@ -1672,6 +2484,24 @@ type MySQLSourcePasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type MySQLTargetConnectionInitParameters struct {
+
+	// Identifier of the Managed PostgreSQL cluster.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLCluster
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Reference to a MySQLCluster in mdb to populate mdbClusterId.
+	// +kubebuilder:validation:Optional
+	MdbClusterIDRef *v1.Reference `json:"mdbClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a MySQLCluster in mdb to populate mdbClusterId.
+	// +kubebuilder:validation:Optional
+	MdbClusterIDSelector *v1.Selector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []MySQLTargetConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
 type MySQLTargetConnectionObservation struct {
 
 	// Identifier of the Managed PostgreSQL cluster.
@@ -1679,6 +2509,30 @@ type MySQLTargetConnectionObservation struct {
 
 	// Connection settings of the on-premise PostgreSQL server.
 	OnPremise []MySQLTargetConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type MySQLTargetConnectionOnPremiseInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []MySQLTargetConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type MySQLTargetConnectionOnPremiseObservation struct {
@@ -1724,10 +2578,19 @@ type MySQLTargetConnectionOnPremiseParameters struct {
 	TLSMode []MySQLTargetConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type MySQLTargetConnectionOnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type MySQLTargetConnectionOnPremiseTLSModeDisabledObservation struct {
 }
 
 type MySQLTargetConnectionOnPremiseTLSModeDisabledParameters struct {
+}
+
+type MySQLTargetConnectionOnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type MySQLTargetConnectionOnPremiseTLSModeEnabledObservation struct {
@@ -1741,6 +2604,15 @@ type MySQLTargetConnectionOnPremiseTLSModeEnabledParameters struct {
 	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type MySQLTargetConnectionOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []MySQLTargetConnectionOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []MySQLTargetConnectionOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type MySQLTargetConnectionOnPremiseTLSModeObservation struct {
@@ -1783,6 +2655,68 @@ type MySQLTargetConnectionParameters struct {
 	OnPremise []MySQLTargetConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
+type MySQLTargetInitParameters struct {
+
+	// -  How to clean collections when activating the transfer. One of "YDB_CLEANUP_POLICY_DISABLED" or "YDB_CLEANUP_POLICY_DROP".
+	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
+
+	// Connection settings.
+	Connection []MySQLTargetConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// -  Database.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// Reference to a MySQLDatabase in mdb to populate database.
+	// +kubebuilder:validation:Optional
+	DatabaseRef *v1.Reference `json:"databaseRef,omitempty" tf:"-"`
+
+	// Selector for a MySQLDatabase in mdb to populate database.
+	// +kubebuilder:validation:Optional
+	DatabaseSelector *v1.Selector `json:"databaseSelector,omitempty" tf:"-"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []MySQLTargetPasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// sql_mode to use when interacting with the server. Defaults to "NO_AUTO_VALUE_ON_ZERO,NO_DIR_IN_CREATE,NO_ENGINE_SUBSTITUTION".
+	SQLMode *string `json:"sqlMode,omitempty" tf:"sql_mode,omitempty"`
+
+	// -  List of security groups that the transfer associated with this endpoint should use.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// References to SecurityGroup in vpc to populate securityGroups.
+	// +kubebuilder:validation:Optional
+	SecurityGroupsRefs []v1.Reference `json:"securityGroupsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityGroup in vpc to populate securityGroups.
+	// +kubebuilder:validation:Optional
+	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
+
+	// The name of the database where technical tables (__tm_keeper, __tm_gtid_keeper) will be created. Default is the value of the attribute database.
+	ServiceDatabase *string `json:"serviceDatabase,omitempty" tf:"service_database,omitempty"`
+
+	// When true, disables foreign key checks. See foreign_key_checks. False by default.
+	SkipConstraintChecks *bool `json:"skipConstraintChecks,omitempty" tf:"skip_constraint_checks,omitempty"`
+
+	// Timezone to use for parsing timestamps for saving source timezones. Accepts values from IANA timezone database. Default: local timezone.
+	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
+
+	// User for the database access.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+
+	// Reference to a MySQLUser in mdb to populate user.
+	// +kubebuilder:validation:Optional
+	UserRef *v1.Reference `json:"userRef,omitempty" tf:"-"`
+
+	// Selector for a MySQLUser in mdb to populate user.
+	// +kubebuilder:validation:Optional
+	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
+}
+
 type MySQLTargetObservation struct {
 
 	// -  How to clean collections when activating the transfer. One of "YDB_CLEANUP_POLICY_DISABLED" or "YDB_CLEANUP_POLICY_DROP".
@@ -1791,7 +2725,7 @@ type MySQLTargetObservation struct {
 	// Connection settings.
 	Connection []MySQLTargetConnectionObservation `json:"connection,omitempty" tf:"connection,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Password for the database access. This is a block with a single field named raw which should contain the password.
@@ -1803,6 +2737,7 @@ type MySQLTargetObservation struct {
 	// -  List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
+	// The name of the database where technical tables (__tm_keeper, __tm_gtid_keeper) will be created. Default is the value of the attribute database.
 	ServiceDatabase *string `json:"serviceDatabase,omitempty" tf:"service_database,omitempty"`
 
 	// When true, disables foreign key checks. See foreign_key_checks. False by default.
@@ -1825,7 +2760,7 @@ type MySQLTargetParameters struct {
 	// +kubebuilder:validation:Optional
 	Connection []MySQLTargetConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
@@ -1860,6 +2795,7 @@ type MySQLTargetParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
 
+	// The name of the database where technical tables (__tm_keeper, __tm_gtid_keeper) will be created. Default is the value of the attribute database.
 	// +kubebuilder:validation:Optional
 	ServiceDatabase *string `json:"serviceDatabase,omitempty" tf:"service_database,omitempty"`
 
@@ -1886,6 +2822,9 @@ type MySQLTargetParameters struct {
 	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
 }
 
+type MySQLTargetPasswordInitParameters struct {
+}
+
 type MySQLTargetPasswordObservation struct {
 }
 
@@ -1895,10 +2834,24 @@ type MySQLTargetPasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type NoAuthInitParameters struct {
+}
+
 type NoAuthObservation struct {
 }
 
 type NoAuthParameters struct {
+}
+
+type ObjectTransferSettingsInitParameters struct {
+	Routine *string `json:"routine,omitempty" tf:"routine,omitempty"`
+
+	Tables *string `json:"tables,omitempty" tf:"tables,omitempty"`
+
+	// All of the attrubutes are optional and should be either "BEFORE_DATA", "AFTER_DATA" or "NEVER".
+	Trigger *string `json:"trigger,omitempty" tf:"trigger,omitempty"`
+
+	View *string `json:"view,omitempty" tf:"view,omitempty"`
 }
 
 type ObjectTransferSettingsObservation struct {
@@ -1926,6 +2879,21 @@ type ObjectTransferSettingsParameters struct {
 
 	// +kubebuilder:validation:Optional
 	View *string `json:"view,omitempty" tf:"view,omitempty"`
+}
+
+type OnPremiseInitParameters struct {
+
+	// TCP port number for the HTTP interface of the ClickHouse server.
+	HTTPPort *float64 `json:"httpPort,omitempty" tf:"http_port,omitempty"`
+
+	// TCP port number for the native interface of the ClickHouse server.
+	NativePort *float64 `json:"nativePort,omitempty" tf:"native_port,omitempty"`
+
+	// The list of ClickHouse shards. The structure is documented below.
+	Shards []ShardsInitParameters `json:"shards,omitempty" tf:"shards,omitempty"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []TLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type OnPremiseObservation struct {
@@ -1962,6 +2930,15 @@ type OnPremiseParameters struct {
 	TLSMode []TLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type OnPremiseShardsInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Field name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
 type OnPremiseShardsObservation struct {
 
 	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
@@ -1982,10 +2959,19 @@ type OnPremiseShardsParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
+type OnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type OnPremiseTLSModeDisabledObservation struct {
 }
 
 type OnPremiseTLSModeDisabledParameters struct {
+}
+
+type OnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type OnPremiseTLSModeEnabledObservation struct {
@@ -1999,6 +2985,15 @@ type OnPremiseTLSModeEnabledParameters struct {
 	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type OnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []TLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []TLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type OnPremiseTLSModeObservation struct {
@@ -2021,16 +3016,52 @@ type OnPremiseTLSModeParameters struct {
 	Enabled []TLSModeEnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
+type ParserAuditTrailsV1ParserInitParameters struct {
+}
+
 type ParserAuditTrailsV1ParserObservation struct {
 }
 
 type ParserAuditTrailsV1ParserParameters struct {
 }
 
+type ParserCloudLoggingParserInitParameters struct {
+}
+
 type ParserCloudLoggingParserObservation struct {
 }
 
 type ParserCloudLoggingParserParameters struct {
+}
+
+type ParserInitParameters struct {
+
+	// Parse Audit Trails data. Empty struct.
+	AuditTrailsV1Parser []AuditTrailsV1ParserInitParameters `json:"auditTrailsV1Parser,omitempty" tf:"audit_trails_v1_parser,omitempty"`
+
+	// Parse Cloud Logging data. Empty struct.
+	CloudLoggingParser []CloudLoggingParserInitParameters `json:"cloudLoggingParser,omitempty" tf:"cloud_logging_parser,omitempty"`
+
+	// Parse data in json format.
+	JSONParser []JSONParserInitParameters `json:"jsonParser,omitempty" tf:"json_parser,omitempty"`
+
+	// Parse data if tskv format.
+	TskvParser []TskvParserInitParameters `json:"tskvParser,omitempty" tf:"tskv_parser,omitempty"`
+}
+
+type ParserJSONParserInitParameters struct {
+
+	// Add fields, that are not in the schema, into the _rest column.
+	AddRestColumn *bool `json:"addRestColumn,omitempty" tf:"add_rest_column,omitempty"`
+
+	// Data parsing scheme.The structure is documented below.
+	DataSchema []JSONParserDataSchemaInitParameters `json:"dataSchema,omitempty" tf:"data_schema,omitempty"`
+
+	// Allow null keys. If false - null keys will be putted to unparsed data
+	NullKeysAllowed *bool `json:"nullKeysAllowed,omitempty" tf:"null_keys_allowed,omitempty"`
+
+	// Allow unescape string values.
+	UnescapeStringValues *bool `json:"unescapeStringValues,omitempty" tf:"unescape_string_values,omitempty"`
 }
 
 type ParserJSONParserObservation struct {
@@ -2044,6 +3075,7 @@ type ParserJSONParserObservation struct {
 	// Allow null keys. If false - null keys will be putted to unparsed data
 	NullKeysAllowed *bool `json:"nullKeysAllowed,omitempty" tf:"null_keys_allowed,omitempty"`
 
+	// Allow unescape string values.
 	UnescapeStringValues *bool `json:"unescapeStringValues,omitempty" tf:"unescape_string_values,omitempty"`
 }
 
@@ -2061,6 +3093,7 @@ type ParserJSONParserParameters struct {
 	// +kubebuilder:validation:Optional
 	NullKeysAllowed *bool `json:"nullKeysAllowed,omitempty" tf:"null_keys_allowed,omitempty"`
 
+	// Allow unescape string values.
 	// +kubebuilder:validation:Optional
 	UnescapeStringValues *bool `json:"unescapeStringValues,omitempty" tf:"unescape_string_values,omitempty"`
 }
@@ -2099,6 +3132,15 @@ type ParserParameters struct {
 	TskvParser []TskvParserParameters `json:"tskvParser,omitempty" tf:"tskv_parser,omitempty"`
 }
 
+type ParserTskvParserDataSchemaInitParameters struct {
+
+	// Description of the data schema in the array of fields structure (documented below).
+	Fields []TskvParserDataSchemaFieldsInitParameters `json:"fields,omitempty" tf:"fields,omitempty"`
+
+	// Description of the data schema as JSON specification.
+	JSONFields *string `json:"jsonFields,omitempty" tf:"json_fields,omitempty"`
+}
+
 type ParserTskvParserDataSchemaObservation struct {
 
 	// Description of the data schema in the array of fields structure (documented below).
@@ -2119,6 +3161,21 @@ type ParserTskvParserDataSchemaParameters struct {
 	JSONFields *string `json:"jsonFields,omitempty" tf:"json_fields,omitempty"`
 }
 
+type ParserTskvParserInitParameters struct {
+
+	// Add fields, that are not in the schema, into the _rest column.
+	AddRestColumn *bool `json:"addRestColumn,omitempty" tf:"add_rest_column,omitempty"`
+
+	// Data parsing scheme.The structure is documented below.
+	DataSchema []ParserTskvParserDataSchemaInitParameters `json:"dataSchema,omitempty" tf:"data_schema,omitempty"`
+
+	// Allow null keys. If false - null keys will be putted to unparsed data
+	NullKeysAllowed *bool `json:"nullKeysAllowed,omitempty" tf:"null_keys_allowed,omitempty"`
+
+	// Allow unescape string values.
+	UnescapeStringValues *bool `json:"unescapeStringValues,omitempty" tf:"unescape_string_values,omitempty"`
+}
+
 type ParserTskvParserObservation struct {
 
 	// Add fields, that are not in the schema, into the _rest column.
@@ -2130,6 +3187,7 @@ type ParserTskvParserObservation struct {
 	// Allow null keys. If false - null keys will be putted to unparsed data
 	NullKeysAllowed *bool `json:"nullKeysAllowed,omitempty" tf:"null_keys_allowed,omitempty"`
 
+	// Allow unescape string values.
 	UnescapeStringValues *bool `json:"unescapeStringValues,omitempty" tf:"unescape_string_values,omitempty"`
 }
 
@@ -2147,8 +3205,12 @@ type ParserTskvParserParameters struct {
 	// +kubebuilder:validation:Optional
 	NullKeysAllowed *bool `json:"nullKeysAllowed,omitempty" tf:"null_keys_allowed,omitempty"`
 
+	// Allow unescape string values.
 	// +kubebuilder:validation:Optional
 	UnescapeStringValues *bool `json:"unescapeStringValues,omitempty" tf:"unescape_string_values,omitempty"`
+}
+
+type PasswordInitParameters struct {
 }
 
 type PasswordObservation struct {
@@ -2160,6 +3222,24 @@ type PasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type PostgresSourceConnectionInitParameters struct {
+
+	// Identifier of the Managed PostgreSQL cluster.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlCluster
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Reference to a PostgresqlCluster in mdb to populate mdbClusterId.
+	// +kubebuilder:validation:Optional
+	MdbClusterIDRef *v1.Reference `json:"mdbClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a PostgresqlCluster in mdb to populate mdbClusterId.
+	// +kubebuilder:validation:Optional
+	MdbClusterIDSelector *v1.Selector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []PostgresSourceConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
 type PostgresSourceConnectionObservation struct {
 
 	// Identifier of the Managed PostgreSQL cluster.
@@ -2167,6 +3247,30 @@ type PostgresSourceConnectionObservation struct {
 
 	// Connection settings of the on-premise PostgreSQL server.
 	OnPremise []PostgresSourceConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type PostgresSourceConnectionOnPremiseInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []PostgresSourceConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type PostgresSourceConnectionOnPremiseObservation struct {
@@ -2212,10 +3316,19 @@ type PostgresSourceConnectionOnPremiseParameters struct {
 	TLSMode []PostgresSourceConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type PostgresSourceConnectionOnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type PostgresSourceConnectionOnPremiseTLSModeDisabledObservation struct {
 }
 
 type PostgresSourceConnectionOnPremiseTLSModeDisabledParameters struct {
+}
+
+type PostgresSourceConnectionOnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type PostgresSourceConnectionOnPremiseTLSModeEnabledObservation struct {
@@ -2229,6 +3342,15 @@ type PostgresSourceConnectionOnPremiseTLSModeEnabledParameters struct {
 	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type PostgresSourceConnectionOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []PostgresSourceConnectionOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []PostgresSourceConnectionOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type PostgresSourceConnectionOnPremiseTLSModeObservation struct {
@@ -2269,6 +3391,110 @@ type PostgresSourceConnectionParameters struct {
 	// Connection settings of the on-premise PostgreSQL server.
 	// +kubebuilder:validation:Optional
 	OnPremise []PostgresSourceConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type PostgresSourceInitParameters struct {
+
+	// Connection settings. The structure is documented below.
+	Connection []PostgresSourceConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// Name of the database to transfer.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// Reference to a PostgresqlDatabase in mdb to populate database.
+	// +kubebuilder:validation:Optional
+	DatabaseRef *v1.Reference `json:"databaseRef,omitempty" tf:"-"`
+
+	// Selector for a PostgresqlDatabase in mdb to populate database.
+	// +kubebuilder:validation:Optional
+	DatabaseSelector *v1.Selector `json:"databaseSelector,omitempty" tf:"-"`
+
+	// List of tables which will not be transfered, formatted as schemaname.tablename.
+	ExcludeTables []*string `json:"excludeTables,omitempty" tf:"exclude_tables,omitempty"`
+
+	// List of tables to transfer, formatted as schemaname.tablename. If omitted or an empty list is specified, all tables will be transferred.
+	IncludeTables []*string `json:"includeTables,omitempty" tf:"include_tables,omitempty"`
+
+	// Defines which database schema objects should be transferred, e.g. views, functions, etc.
+	ObjectTransferSettings []PostgresSourceObjectTransferSettingsInitParameters `json:"objectTransferSettings,omitempty" tf:"object_transfer_settings,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []PostgresSourcePasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// List of security groups that the transfer associated with this endpoint should use.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// References to SecurityGroup in vpc to populate securityGroups.
+	// +kubebuilder:validation:Optional
+	SecurityGroupsRefs []v1.Reference `json:"securityGroupsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityGroup in vpc to populate securityGroups.
+	// +kubebuilder:validation:Optional
+	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
+
+	// Name of the database schema in which auxiliary tables needed for the transfer will be created. Empty service_schema implies schema "public".
+	ServiceSchema *string `json:"serviceSchema,omitempty" tf:"service_schema,omitempty"`
+
+	// Maximum WAL size held by the replication slot, in gigabytes. Exceeding this limit will result in a replication failure and deletion of the replication slot. Unlimited by default.
+	SlotGigabyteLagLimit *float64 `json:"slotGigabyteLagLimit,omitempty" tf:"slot_gigabyte_lag_limit,omitempty"`
+
+	// User for the database access.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+
+	// Reference to a PostgresqlUser in mdb to populate user.
+	// +kubebuilder:validation:Optional
+	UserRef *v1.Reference `json:"userRef,omitempty" tf:"-"`
+
+	// Selector for a PostgresqlUser in mdb to populate user.
+	// +kubebuilder:validation:Optional
+	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
+}
+
+type PostgresSourceObjectTransferSettingsInitParameters struct {
+
+	// All of the attrubutes are optional and should be either "BEFORE_DATA", "AFTER_DATA" or "NEVER".
+	Cast *string `json:"cast,omitempty" tf:"cast,omitempty"`
+
+	Collation *string `json:"collation,omitempty" tf:"collation,omitempty"`
+
+	Constraint *string `json:"constraint,omitempty" tf:"constraint,omitempty"`
+
+	DefaultValues *string `json:"defaultValues,omitempty" tf:"default_values,omitempty"`
+
+	FkConstraint *string `json:"fkConstraint,omitempty" tf:"fk_constraint,omitempty"`
+
+	Function *string `json:"function,omitempty" tf:"function,omitempty"`
+
+	Index *string `json:"index,omitempty" tf:"index,omitempty"`
+
+	MaterializedView *string `json:"materializedView,omitempty" tf:"materialized_view,omitempty"`
+
+	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
+
+	PrimaryKey *string `json:"primaryKey,omitempty" tf:"primary_key,omitempty"`
+
+	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
+
+	Sequence *string `json:"sequence,omitempty" tf:"sequence,omitempty"`
+
+	SequenceOwnedBy *string `json:"sequenceOwnedBy,omitempty" tf:"sequence_owned_by,omitempty"`
+
+	SequenceSet *string `json:"sequenceSet,omitempty" tf:"sequence_set,omitempty"`
+
+	Table *string `json:"table,omitempty" tf:"table,omitempty"`
+
+	// All of the attrubutes are optional and should be either "BEFORE_DATA", "AFTER_DATA" or "NEVER".
+	Trigger *string `json:"trigger,omitempty" tf:"trigger,omitempty"`
+
+	// Field type, one of: INT64, INT32, INT16, INT8, UINT64, UINT32, UINT16, UINT8, DOUBLE, BOOLEAN, STRING, UTF8, ANY, DATETIME.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	View *string `json:"view,omitempty" tf:"view,omitempty"`
 }
 
 type PostgresSourceObjectTransferSettingsObservation struct {
@@ -2393,7 +3619,7 @@ type PostgresSourceObservation struct {
 	// Password for the database access. This is a block with a single field named raw which should contain the password.
 	Password []PostgresSourcePasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
-	// -  List of security groups that the transfer associated with this endpoint should use.
+	// List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// Name of the database schema in which auxiliary tables needed for the transfer will be created. Empty service_schema implies schema "public".
@@ -2442,7 +3668,7 @@ type PostgresSourceParameters struct {
 	// +kubebuilder:validation:Optional
 	Password []PostgresSourcePasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
-	// -  List of security groups that the transfer associated with this endpoint should use.
+	// List of security groups that the transfer associated with this endpoint should use.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
@@ -2478,6 +3704,9 @@ type PostgresSourceParameters struct {
 	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
 }
 
+type PostgresSourcePasswordInitParameters struct {
+}
+
 type PostgresSourcePasswordObservation struct {
 }
 
@@ -2487,6 +3716,24 @@ type PostgresSourcePasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type PostgresTargetConnectionInitParameters struct {
+
+	// Identifier of the Managed PostgreSQL cluster.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlCluster
+	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
+
+	// Reference to a PostgresqlCluster in mdb to populate mdbClusterId.
+	// +kubebuilder:validation:Optional
+	MdbClusterIDRef *v1.Reference `json:"mdbClusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a PostgresqlCluster in mdb to populate mdbClusterId.
+	// +kubebuilder:validation:Optional
+	MdbClusterIDSelector *v1.Selector `json:"mdbClusterIdSelector,omitempty" tf:"-"`
+
+	// Connection settings of the on-premise PostgreSQL server.
+	OnPremise []PostgresTargetConnectionOnPremiseInitParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
 type PostgresTargetConnectionObservation struct {
 
 	// Identifier of the Managed PostgreSQL cluster.
@@ -2494,6 +3741,30 @@ type PostgresTargetConnectionObservation struct {
 
 	// Connection settings of the on-premise PostgreSQL server.
 	OnPremise []PostgresTargetConnectionOnPremiseObservation `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
+}
+
+type PostgresTargetConnectionOnPremiseInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Port for the database connection.
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
+	// TLS settings for the server connection. Empty implies plaintext connection. The structure is documented below.
+	TLSMode []PostgresTargetConnectionOnPremiseTLSModeInitParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
 type PostgresTargetConnectionOnPremiseObservation struct {
@@ -2539,10 +3810,19 @@ type PostgresTargetConnectionOnPremiseParameters struct {
 	TLSMode []PostgresTargetConnectionOnPremiseTLSModeParameters `json:"tlsMode,omitempty" tf:"tls_mode,omitempty"`
 }
 
+type PostgresTargetConnectionOnPremiseTLSModeDisabledInitParameters struct {
+}
+
 type PostgresTargetConnectionOnPremiseTLSModeDisabledObservation struct {
 }
 
 type PostgresTargetConnectionOnPremiseTLSModeDisabledParameters struct {
+}
+
+type PostgresTargetConnectionOnPremiseTLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type PostgresTargetConnectionOnPremiseTLSModeEnabledObservation struct {
@@ -2556,6 +3836,15 @@ type PostgresTargetConnectionOnPremiseTLSModeEnabledParameters struct {
 	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type PostgresTargetConnectionOnPremiseTLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []PostgresTargetConnectionOnPremiseTLSModeDisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []PostgresTargetConnectionOnPremiseTLSModeEnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type PostgresTargetConnectionOnPremiseTLSModeObservation struct {
@@ -2598,6 +3887,56 @@ type PostgresTargetConnectionParameters struct {
 	OnPremise []PostgresTargetConnectionOnPremiseParameters `json:"onPremise,omitempty" tf:"on_premise,omitempty"`
 }
 
+type PostgresTargetInitParameters struct {
+
+	// -  How to clean collections when activating the transfer. One of "YDB_CLEANUP_POLICY_DISABLED" or "YDB_CLEANUP_POLICY_DROP".
+	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
+
+	// Connection settings.
+	Connection []PostgresTargetConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
+
+	// -  Database.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// Reference to a PostgresqlDatabase in mdb to populate database.
+	// +kubebuilder:validation:Optional
+	DatabaseRef *v1.Reference `json:"databaseRef,omitempty" tf:"-"`
+
+	// Selector for a PostgresqlDatabase in mdb to populate database.
+	// +kubebuilder:validation:Optional
+	DatabaseSelector *v1.Selector `json:"databaseSelector,omitempty" tf:"-"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []PostgresTargetPasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// -  List of security groups that the transfer associated with this endpoint should use.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// References to SecurityGroup in vpc to populate securityGroups.
+	// +kubebuilder:validation:Optional
+	SecurityGroupsRefs []v1.Reference `json:"securityGroupsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityGroup in vpc to populate securityGroups.
+	// +kubebuilder:validation:Optional
+	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
+
+	// User for the database access.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
+
+	// Reference to a PostgresqlUser in mdb to populate user.
+	// +kubebuilder:validation:Optional
+	UserRef *v1.Reference `json:"userRef,omitempty" tf:"-"`
+
+	// Selector for a PostgresqlUser in mdb to populate user.
+	// +kubebuilder:validation:Optional
+	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
+}
+
 type PostgresTargetObservation struct {
 
 	// -  How to clean collections when activating the transfer. One of "YDB_CLEANUP_POLICY_DISABLED" or "YDB_CLEANUP_POLICY_DROP".
@@ -2606,7 +3945,7 @@ type PostgresTargetObservation struct {
 	// Connection settings.
 	Connection []PostgresTargetConnectionObservation `json:"connection,omitempty" tf:"connection,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Password for the database access. This is a block with a single field named raw which should contain the password.
@@ -2629,7 +3968,7 @@ type PostgresTargetParameters struct {
 	// +kubebuilder:validation:Optional
 	Connection []PostgresTargetConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlDatabase
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
@@ -2675,6 +4014,9 @@ type PostgresTargetParameters struct {
 	UserSelector *v1.Selector `json:"userSelector,omitempty" tf:"-"`
 }
 
+type PostgresTargetPasswordInitParameters struct {
+}
+
 type PostgresTargetPasswordObservation struct {
 }
 
@@ -2684,10 +4026,23 @@ type PostgresTargetPasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type RoundRobinInitParameters struct {
+}
+
 type RoundRobinObservation struct {
 }
 
 type RoundRobinParameters struct {
+}
+
+type SaslInitParameters struct {
+	Mechanism *string `json:"mechanism,omitempty" tf:"mechanism,omitempty"`
+
+	// Password for the database access. This is a block with a single field named raw which should contain the password.
+	Password []SaslPasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
+
+	// User for the database access.
+	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type SaslObservation struct {
@@ -2714,6 +4069,9 @@ type SaslParameters struct {
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 }
 
+type SaslPasswordInitParameters struct {
+}
+
 type SaslPasswordObservation struct {
 }
 
@@ -2723,10 +4081,19 @@ type SaslPasswordParameters struct {
 	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
+type SerializerAutoInitParameters struct {
+}
+
 type SerializerAutoObservation struct {
 }
 
 type SerializerAutoParameters struct {
+}
+
+type SerializerDebeziumInitParameters struct {
+
+	// A list of debezium parameters set by the structure of the key and value string fields.
+	SerializerParameters []SerializerParametersInitParameters `json:"serializerParameters,omitempty" tf:"serializer_parameters,omitempty"`
 }
 
 type SerializerDebeziumObservation struct {
@@ -2740,6 +4107,14 @@ type SerializerDebeziumParameters struct {
 	// A list of debezium parameters set by the structure of the key and value string fields.
 	// +kubebuilder:validation:Optional
 	SerializerParameters []SerializerParametersParameters `json:"serializerParameters,omitempty" tf:"serializer_parameters,omitempty"`
+}
+
+type SerializerDebeziumSerializerParametersInitParameters struct {
+
+	// Mark field as Primary Key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type SerializerDebeziumSerializerParametersObservation struct {
@@ -2758,6 +4133,21 @@ type SerializerDebeziumSerializerParametersParameters struct {
 
 	// +kubebuilder:validation:Optional
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type SerializerInitParameters struct {
+
+	// Empty block. Select data serialization format automatically.
+	SerializerAuto []SerializerAutoInitParameters `json:"serializerAuto,omitempty" tf:"serializer_auto,omitempty"`
+
+	// Serialize data in json format. The structure is documented below.
+	SerializerDebezium []SerializerDebeziumInitParameters `json:"serializerDebezium,omitempty" tf:"serializer_debezium,omitempty"`
+
+	// Empty block. Serialize data in json format.
+	SerializerJSON []SerializerJSONInitParameters `json:"serializerJson,omitempty" tf:"serializer_json,omitempty"`
+}
+
+type SerializerJSONInitParameters struct {
 }
 
 type SerializerJSONObservation struct {
@@ -2793,6 +4183,14 @@ type SerializerParameters struct {
 	SerializerJSON []SerializerJSONParameters `json:"serializerJson,omitempty" tf:"serializer_json,omitempty"`
 }
 
+type SerializerParametersInitParameters struct {
+
+	// Mark field as Primary Key.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
+}
+
 type SerializerParametersObservation struct {
 
 	// Mark field as Primary Key.
@@ -2811,10 +4209,19 @@ type SerializerParametersParameters struct {
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
+type SerializerSerializerAutoInitParameters struct {
+}
+
 type SerializerSerializerAutoObservation struct {
 }
 
 type SerializerSerializerAutoParameters struct {
+}
+
+type SerializerSerializerDebeziumInitParameters struct {
+
+	// A list of debezium parameters set by the structure of the key and value string fields.
+	SerializerParameters []SerializerDebeziumSerializerParametersInitParameters `json:"serializerParameters,omitempty" tf:"serializer_parameters,omitempty"`
 }
 
 type SerializerSerializerDebeziumObservation struct {
@@ -2830,10 +4237,58 @@ type SerializerSerializerDebeziumParameters struct {
 	SerializerParameters []SerializerDebeziumSerializerParametersParameters `json:"serializerParameters,omitempty" tf:"serializer_parameters,omitempty"`
 }
 
+type SerializerSerializerJSONInitParameters struct {
+}
+
 type SerializerSerializerJSONObservation struct {
 }
 
 type SerializerSerializerJSONParameters struct {
+}
+
+type SettingsInitParameters struct {
+
+	// Settings specific to the ClickHouse source endpoint.
+	ClickhouseSource []ClickhouseSourceInitParameters `json:"clickhouseSource,omitempty" tf:"clickhouse_source,omitempty"`
+
+	// Settings specific to the ClickHouse target endpoint.
+	ClickhouseTarget []ClickhouseTargetInitParameters `json:"clickhouseTarget,omitempty" tf:"clickhouse_target,omitempty"`
+
+	// Settings specific to the Kafka source endpoint.
+	KafkaSource []KafkaSourceInitParameters `json:"kafkaSource,omitempty" tf:"kafka_source,omitempty"`
+
+	// Settings specific to the Kafka target endpoint.
+	KafkaTarget []KafkaTargetInitParameters `json:"kafkaTarget,omitempty" tf:"kafka_target,omitempty"`
+
+	// Settings specific to the MongoDB source endpoint.
+	MongoSource []MongoSourceInitParameters `json:"mongoSource,omitempty" tf:"mongo_source,omitempty"`
+
+	// Settings specific to the MongoDB target endpoint.
+	MongoTarget []MongoTargetInitParameters `json:"mongoTarget,omitempty" tf:"mongo_target,omitempty"`
+
+	// Settings specific to the MySQL source endpoint.
+	MySQLSource []MySQLSourceInitParameters `json:"mysqlSource,omitempty" tf:"mysql_source,omitempty"`
+
+	// Settings specific to the MySQL target endpoint.
+	MySQLTarget []MySQLTargetInitParameters `json:"mysqlTarget,omitempty" tf:"mysql_target,omitempty"`
+
+	// Settings specific to the PostgreSQL source endpoint.
+	PostgresSource []PostgresSourceInitParameters `json:"postgresSource,omitempty" tf:"postgres_source,omitempty"`
+
+	// Settings specific to the PostgreSQL target endpoint.
+	PostgresTarget []PostgresTargetInitParameters `json:"postgresTarget,omitempty" tf:"postgres_target,omitempty"`
+
+	// Settings specific to the YDB source endpoint.
+	YdbSource []YdbSourceInitParameters `json:"ydbSource,omitempty" tf:"ydb_source,omitempty"`
+
+	// Settings specific to the YDB target endpoint.
+	YdbTarget []YdbTargetInitParameters `json:"ydbTarget,omitempty" tf:"ydb_target,omitempty"`
+
+	// Settings specific to the YDS source endpoint.
+	YdsSource []YdsSourceInitParameters `json:"ydsSource,omitempty" tf:"yds_source,omitempty"`
+
+	// Settings specific to the YDS target endpoint.
+	YdsTarget []YdsTargetInitParameters `json:"ydsTarget,omitempty" tf:"yds_target,omitempty"`
 }
 
 type SettingsObservation struct {
@@ -2874,8 +4329,10 @@ type SettingsObservation struct {
 	// Settings specific to the YDB target endpoint.
 	YdbTarget []YdbTargetObservation `json:"ydbTarget,omitempty" tf:"ydb_target,omitempty"`
 
+	// Settings specific to the YDS source endpoint.
 	YdsSource []YdsSourceObservation `json:"ydsSource,omitempty" tf:"yds_source,omitempty"`
 
+	// Settings specific to the YDS target endpoint.
 	YdsTarget []YdsTargetObservation `json:"ydsTarget,omitempty" tf:"yds_target,omitempty"`
 }
 
@@ -2929,11 +4386,28 @@ type SettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	YdbTarget []YdbTargetParameters `json:"ydbTarget,omitempty" tf:"ydb_target,omitempty"`
 
+	// Settings specific to the YDS source endpoint.
 	// +kubebuilder:validation:Optional
 	YdsSource []YdsSourceParameters `json:"ydsSource,omitempty" tf:"yds_source,omitempty"`
 
+	// Settings specific to the YDS target endpoint.
 	// +kubebuilder:validation:Optional
 	YdsTarget []YdsTargetParameters `json:"ydsTarget,omitempty" tf:"yds_target,omitempty"`
+}
+
+type ShardingInitParameters struct {
+
+	// Shard data by the hash value of the specified column. The structure is documented below.
+	ColumnValueHash []ColumnValueHashInitParameters `json:"columnValueHash,omitempty" tf:"column_value_hash,omitempty"`
+
+	// A custom shard mapping by the value of the specified column. The structure is documented below.
+	CustomMapping []CustomMappingInitParameters `json:"customMapping,omitempty" tf:"custom_mapping,omitempty"`
+
+	// robin manner. Specify as an empty block to enable.
+	RoundRobin []RoundRobinInitParameters `json:"roundRobin,omitempty" tf:"round_robin,omitempty"`
+
+	// Shard data by ID of the transfer.
+	TransferID []TransferIDInitParameters `json:"transferId,omitempty" tf:"transfer_id,omitempty"`
 }
 
 type ShardingObservation struct {
@@ -2941,8 +4415,10 @@ type ShardingObservation struct {
 	// Shard data by the hash value of the specified column. The structure is documented below.
 	ColumnValueHash []ColumnValueHashObservation `json:"columnValueHash,omitempty" tf:"column_value_hash,omitempty"`
 
+	// A custom shard mapping by the value of the specified column. The structure is documented below.
 	CustomMapping []CustomMappingObservation `json:"customMapping,omitempty" tf:"custom_mapping,omitempty"`
 
+	// robin manner. Specify as an empty block to enable.
 	RoundRobin []RoundRobinParameters `json:"roundRobin,omitempty" tf:"round_robin,omitempty"`
 
 	// Shard data by ID of the transfer.
@@ -2955,15 +4431,26 @@ type ShardingParameters struct {
 	// +kubebuilder:validation:Optional
 	ColumnValueHash []ColumnValueHashParameters `json:"columnValueHash,omitempty" tf:"column_value_hash,omitempty"`
 
+	// A custom shard mapping by the value of the specified column. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	CustomMapping []CustomMappingParameters `json:"customMapping,omitempty" tf:"custom_mapping,omitempty"`
 
+	// robin manner. Specify as an empty block to enable.
 	// +kubebuilder:validation:Optional
 	RoundRobin []RoundRobinParameters `json:"roundRobin,omitempty" tf:"round_robin,omitempty"`
 
 	// Shard data by ID of the transfer.
 	// +kubebuilder:validation:Optional
 	TransferID []TransferIDParameters `json:"transferId,omitempty" tf:"transfer_id,omitempty"`
+}
+
+type ShardsInitParameters struct {
+
+	// List of host names of the PostgreSQL server. Exactly one host is expected currently.
+	Hosts []*string `json:"hosts,omitempty" tf:"hosts,omitempty"`
+
+	// Field name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type ShardsObservation struct {
@@ -2986,10 +4473,19 @@ type ShardsParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
+type TLSModeDisabledInitParameters struct {
+}
+
 type TLSModeDisabledObservation struct {
 }
 
 type TLSModeDisabledParameters struct {
+}
+
+type TLSModeEnabledInitParameters struct {
+
+	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
+	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
 }
 
 type TLSModeEnabledObservation struct {
@@ -3003,6 +4499,15 @@ type TLSModeEnabledParameters struct {
 	// X.509 certificate of the certificate authority which issued the server's certificate, in PEM format. If empty, the server's certificate must be signed by a well-known CA.
 	// +kubebuilder:validation:Optional
 	CACertificate *string `json:"caCertificate,omitempty" tf:"ca_certificate,omitempty"`
+}
+
+type TLSModeInitParameters struct {
+
+	// Empty block designating that the connection is not secured, i.e. plaintext connection.
+	Disabled []DisabledInitParameters `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
+	Enabled []EnabledInitParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type TLSModeObservation struct {
@@ -3025,9 +4530,18 @@ type TLSModeParameters struct {
 	Enabled []EnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
+type TopicInitParameters struct {
+
+	// -  Save transaction order
+	SaveTxOrder *bool `json:"saveTxOrder,omitempty" tf:"save_tx_order,omitempty"`
+
+	// Full topic name
+	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
+}
+
 type TopicObservation struct {
 
-	// Not to split events queue into separate per-table queues.
+	// -  Save transaction order
 	SaveTxOrder *bool `json:"saveTxOrder,omitempty" tf:"save_tx_order,omitempty"`
 
 	// Full topic name
@@ -3036,13 +4550,22 @@ type TopicObservation struct {
 
 type TopicParameters struct {
 
-	// Not to split events queue into separate per-table queues.
+	// -  Save transaction order
 	// +kubebuilder:validation:Optional
 	SaveTxOrder *bool `json:"saveTxOrder,omitempty" tf:"save_tx_order,omitempty"`
 
 	// Full topic name
 	// +kubebuilder:validation:Optional
 	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
+}
+
+type TopicSettingsInitParameters struct {
+
+	// All messages will be sent to one topic. The structure is documented below.
+	Topic []TopicInitParameters `json:"topic,omitempty" tf:"topic,omitempty"`
+
+	// Topic name prefix. Messages will be sent to topic with name <topic_prefix>..<table_name>.
+	TopicPrefix *string `json:"topicPrefix,omitempty" tf:"topic_prefix,omitempty"`
 }
 
 type TopicSettingsObservation struct {
@@ -3065,10 +4588,28 @@ type TopicSettingsParameters struct {
 	TopicPrefix *string `json:"topicPrefix,omitempty" tf:"topic_prefix,omitempty"`
 }
 
+type TransferIDInitParameters struct {
+}
+
 type TransferIDObservation struct {
 }
 
 type TransferIDParameters struct {
+}
+
+type TransformerInitParameters struct {
+	BufferFlushInterval *string `json:"bufferFlushInterval,omitempty" tf:"buffer_flush_interval,omitempty"`
+
+	BufferSize *string `json:"bufferSize,omitempty" tf:"buffer_size,omitempty"`
+
+	CloudFunction *string `json:"cloudFunction,omitempty" tf:"cloud_function,omitempty"`
+
+	InvocationTimeout *string `json:"invocationTimeout,omitempty" tf:"invocation_timeout,omitempty"`
+
+	NumberOfRetries *float64 `json:"numberOfRetries,omitempty" tf:"number_of_retries,omitempty"`
+
+	// -  Service account ID for interaction with database.
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 }
 
 type TransformerObservation struct {
@@ -3106,6 +4647,24 @@ type TransformerParameters struct {
 	// -  Service account ID for interaction with database.
 	// +kubebuilder:validation:Optional
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+}
+
+type TskvParserDataSchemaFieldsFieldsInitParameters struct {
+
+	// Mark field as Primary Key.
+	Key *bool `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Field name.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// -  A path where resulting tables are stored.
+	Path *string `json:"path,omitempty" tf:"path,omitempty"`
+
+	// Mark field as required.
+	Required *bool `json:"required,omitempty" tf:"required,omitempty"`
+
+	// Field type, one of: INT64, INT32, INT16, INT8, UINT64, UINT32, UINT16, UINT8, DOUBLE, BOOLEAN, STRING, UTF8, ANY, DATETIME.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type TskvParserDataSchemaFieldsFieldsObservation struct {
@@ -3149,6 +4708,12 @@ type TskvParserDataSchemaFieldsFieldsParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
+type TskvParserDataSchemaFieldsInitParameters struct {
+
+	// Description of the data schema in the array of fields structure (documented below).
+	Fields []TskvParserDataSchemaFieldsFieldsInitParameters `json:"fields,omitempty" tf:"fields,omitempty"`
+}
+
 type TskvParserDataSchemaFieldsObservation struct {
 
 	// Description of the data schema in the array of fields structure (documented below).
@@ -3160,6 +4725,15 @@ type TskvParserDataSchemaFieldsParameters struct {
 	// Description of the data schema in the array of fields structure (documented below).
 	// +kubebuilder:validation:Optional
 	Fields []TskvParserDataSchemaFieldsFieldsParameters `json:"fields,omitempty" tf:"fields,omitempty"`
+}
+
+type TskvParserDataSchemaInitParameters struct {
+
+	// Description of the data schema in the array of fields structure (documented below).
+	Fields []DataSchemaFieldsInitParameters `json:"fields,omitempty" tf:"fields,omitempty"`
+
+	// Description of the data schema as JSON specification.
+	JSONFields *string `json:"jsonFields,omitempty" tf:"json_fields,omitempty"`
 }
 
 type TskvParserDataSchemaObservation struct {
@@ -3182,6 +4756,21 @@ type TskvParserDataSchemaParameters struct {
 	JSONFields *string `json:"jsonFields,omitempty" tf:"json_fields,omitempty"`
 }
 
+type TskvParserInitParameters struct {
+
+	// Add fields, that are not in the schema, into the _rest column.
+	AddRestColumn *bool `json:"addRestColumn,omitempty" tf:"add_rest_column,omitempty"`
+
+	// Data parsing scheme.The structure is documented below.
+	DataSchema []TskvParserDataSchemaInitParameters `json:"dataSchema,omitempty" tf:"data_schema,omitempty"`
+
+	// Allow null keys. If false - null keys will be putted to unparsed data
+	NullKeysAllowed *bool `json:"nullKeysAllowed,omitempty" tf:"null_keys_allowed,omitempty"`
+
+	// Allow unescape string values.
+	UnescapeStringValues *bool `json:"unescapeStringValues,omitempty" tf:"unescape_string_values,omitempty"`
+}
+
 type TskvParserObservation struct {
 
 	// Add fields, that are not in the schema, into the _rest column.
@@ -3193,6 +4782,7 @@ type TskvParserObservation struct {
 	// Allow null keys. If false - null keys will be putted to unparsed data
 	NullKeysAllowed *bool `json:"nullKeysAllowed,omitempty" tf:"null_keys_allowed,omitempty"`
 
+	// Allow unescape string values.
 	UnescapeStringValues *bool `json:"unescapeStringValues,omitempty" tf:"unescape_string_values,omitempty"`
 }
 
@@ -3210,16 +4800,41 @@ type TskvParserParameters struct {
 	// +kubebuilder:validation:Optional
 	NullKeysAllowed *bool `json:"nullKeysAllowed,omitempty" tf:"null_keys_allowed,omitempty"`
 
+	// Allow unescape string values.
 	// +kubebuilder:validation:Optional
 	UnescapeStringValues *bool `json:"unescapeStringValues,omitempty" tf:"unescape_string_values,omitempty"`
 }
 
-type YdbSourceObservation struct {
+type YdbSourceInitParameters struct {
 
-	// Name of the endpoint.
+	// -  Custom name for changefeed.
 	ChangefeedCustomName *string `json:"changefeedCustomName,omitempty" tf:"changefeed_custom_name,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// -  Instance of YDB. Example: "my-cute-ydb.cloud.yandex.ru:2135".
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// -  A list of paths which should be uploaded. When not specified, all available tables are uploaded.
+	Paths []*string `json:"paths,omitempty" tf:"paths,omitempty"`
+
+	// -  List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// -  Service account ID for interaction with database.
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+}
+
+type YdbSourceObservation struct {
+
+	// -  Custom name for changefeed.
+	ChangefeedCustomName *string `json:"changefeedCustomName,omitempty" tf:"changefeed_custom_name,omitempty"`
+
+	// -  Database.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// -  Instance of YDB. Example: "my-cute-ydb.cloud.yandex.ru:2135".
@@ -3240,11 +4855,11 @@ type YdbSourceObservation struct {
 
 type YdbSourceParameters struct {
 
-	// Name of the endpoint.
+	// -  Custom name for changefeed.
 	// +kubebuilder:validation:Optional
 	ChangefeedCustomName *string `json:"changefeedCustomName,omitempty" tf:"changefeed_custom_name,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	// +kubebuilder:validation:Optional
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
@@ -3273,19 +4888,51 @@ type YdbSourceParameters struct {
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
-type YdbTargetObservation struct {
+type YdbTargetInitParameters struct {
 
 	// -  How to clean collections when activating the transfer. One of "YDB_CLEANUP_POLICY_DISABLED" or "YDB_CLEANUP_POLICY_DROP".
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
+	// -  Compression that will be used for default columns family on YDB table creation One of "YDB_DEFAULT_COMPRESSION_UNSPECIFIED", "YDB_DEFAULT_COMPRESSION_DISABLED", "YDB_DEFAULT_COMPRESSION_LZ4".
 	DefaultCompression *string `json:"defaultCompression,omitempty" tf:"default_compression,omitempty"`
 
 	// -  Instance of YDB. Example: "my-cute-ydb.cloud.yandex.ru:2135".
 	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
 
+	// -  Whether a column-oriented (i.e. OLAP) tables should be created. Default is false (create row-oriented OLTP tables).
+	IsTableColumnOriented *bool `json:"isTableColumnOriented,omitempty" tf:"is_table_column_oriented,omitempty"`
+
+	// -  A path where resulting tables are stored.
+	Path *string `json:"path,omitempty" tf:"path,omitempty"`
+
+	// -  List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// -  Service account ID for interaction with database.
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+}
+
+type YdbTargetObservation struct {
+
+	// -  How to clean collections when activating the transfer. One of "YDB_CLEANUP_POLICY_DISABLED" or "YDB_CLEANUP_POLICY_DROP".
+	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
+
+	// -  Database.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// -  Compression that will be used for default columns family on YDB table creation One of "YDB_DEFAULT_COMPRESSION_UNSPECIFIED", "YDB_DEFAULT_COMPRESSION_DISABLED", "YDB_DEFAULT_COMPRESSION_LZ4".
+	DefaultCompression *string `json:"defaultCompression,omitempty" tf:"default_compression,omitempty"`
+
+	// -  Instance of YDB. Example: "my-cute-ydb.cloud.yandex.ru:2135".
+	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
+
+	// -  Whether a column-oriented (i.e. OLAP) tables should be created. Default is false (create row-oriented OLTP tables).
 	IsTableColumnOriented *bool `json:"isTableColumnOriented,omitempty" tf:"is_table_column_oriented,omitempty"`
 
 	// -  A path where resulting tables are stored.
@@ -3307,10 +4954,11 @@ type YdbTargetParameters struct {
 	// +kubebuilder:validation:Optional
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	// +kubebuilder:validation:Optional
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
+	// -  Compression that will be used for default columns family on YDB table creation One of "YDB_DEFAULT_COMPRESSION_UNSPECIFIED", "YDB_DEFAULT_COMPRESSION_DISABLED", "YDB_DEFAULT_COMPRESSION_LZ4".
 	// +kubebuilder:validation:Optional
 	DefaultCompression *string `json:"defaultCompression,omitempty" tf:"default_compression,omitempty"`
 
@@ -3318,6 +4966,7 @@ type YdbTargetParameters struct {
 	// +kubebuilder:validation:Optional
 	Instance *string `json:"instance,omitempty" tf:"instance,omitempty"`
 
+	// -  Whether a column-oriented (i.e. OLAP) tables should be created. Default is false (create row-oriented OLTP tables).
 	// +kubebuilder:validation:Optional
 	IsTableColumnOriented *bool `json:"isTableColumnOriented,omitempty" tf:"is_table_column_oriented,omitempty"`
 
@@ -3342,17 +4991,54 @@ type YdbTargetParameters struct {
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
-type YdsSourceObservation struct {
+type YdsSourceInitParameters struct {
+
+	// -  Should continue working, if consumer read lag exceed TTL of topic.
 	AllowTTLRewind *bool `json:"allowTtlRewind,omitempty" tf:"allow_ttl_rewind,omitempty"`
 
+	// -  Consumer.
 	Consumer *string `json:"consumer,omitempty" tf:"consumer,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
+	// -  YDS Endpoint.
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// Data parsing parameters. If not set, the source messages are read in raw.
+	// -  Data parsing rules.
+	Parser []YdsSourceParserInitParameters `json:"parser,omitempty" tf:"parser,omitempty"`
+
+	// -  List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// -  Service account ID for interaction with database.
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+
+	// -  Stream.
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// -  List of supported compression codec.
+	SupportedCodecs []*string `json:"supportedCodecs,omitempty" tf:"supported_codecs,omitempty"`
+}
+
+type YdsSourceObservation struct {
+
+	// -  Should continue working, if consumer read lag exceed TTL of topic.
+	AllowTTLRewind *bool `json:"allowTtlRewind,omitempty" tf:"allow_ttl_rewind,omitempty"`
+
+	// -  Consumer.
+	Consumer *string `json:"consumer,omitempty" tf:"consumer,omitempty"`
+
+	// -  Database.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// -  YDS Endpoint.
+	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+
+	// -  Data parsing rules.
 	Parser []YdsSourceParserObservation `json:"parser,omitempty" tf:"parser,omitempty"`
 
 	// -  List of security groups that the transfer associated with this endpoint should use.
@@ -3361,30 +5047,35 @@ type YdsSourceObservation struct {
 	// -  Service account ID for interaction with database.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
+	// -  Stream.
 	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
+	// -  List of supported compression codec.
 	SupportedCodecs []*string `json:"supportedCodecs,omitempty" tf:"supported_codecs,omitempty"`
 }
 
 type YdsSourceParameters struct {
 
+	// -  Should continue working, if consumer read lag exceed TTL of topic.
 	// +kubebuilder:validation:Optional
 	AllowTTLRewind *bool `json:"allowTtlRewind,omitempty" tf:"allow_ttl_rewind,omitempty"`
 
+	// -  Consumer.
 	// +kubebuilder:validation:Optional
 	Consumer *string `json:"consumer,omitempty" tf:"consumer,omitempty"`
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	// +kubebuilder:validation:Optional
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
+	// -  YDS Endpoint.
 	// +kubebuilder:validation:Optional
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// Data parsing parameters. If not set, the source messages are read in raw.
+	// -  Data parsing rules.
 	// +kubebuilder:validation:Optional
 	Parser []YdsSourceParserParameters `json:"parser,omitempty" tf:"parser,omitempty"`
 
@@ -3396,6 +5087,7 @@ type YdsSourceParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
+	// -  Stream.
 	// +kubebuilder:validation:Optional
 	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
 
@@ -3403,8 +5095,24 @@ type YdsSourceParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
+	// -  List of supported compression codec.
 	// +kubebuilder:validation:Optional
 	SupportedCodecs []*string `json:"supportedCodecs,omitempty" tf:"supported_codecs,omitempty"`
+}
+
+type YdsSourceParserInitParameters struct {
+
+	// Parse Audit Trails data. Empty struct.
+	AuditTrailsV1Parser []ParserAuditTrailsV1ParserInitParameters `json:"auditTrailsV1Parser,omitempty" tf:"audit_trails_v1_parser,omitempty"`
+
+	// Parse Cloud Logging data. Empty struct.
+	CloudLoggingParser []ParserCloudLoggingParserInitParameters `json:"cloudLoggingParser,omitempty" tf:"cloud_logging_parser,omitempty"`
+
+	// Parse data in json format.
+	JSONParser []ParserJSONParserInitParameters `json:"jsonParser,omitempty" tf:"json_parser,omitempty"`
+
+	// Parse data if tskv format.
+	TskvParser []ParserTskvParserInitParameters `json:"tskvParser,omitempty" tf:"tskv_parser,omitempty"`
 }
 
 type YdsSourceParserObservation struct {
@@ -3441,25 +5149,54 @@ type YdsSourceParserParameters struct {
 	TskvParser []ParserTskvParserParameters `json:"tskvParser,omitempty" tf:"tskv_parser,omitempty"`
 }
 
-type YdsTargetObservation struct {
+type YdsTargetInitParameters struct {
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
+	// -  YDS Endpoint.
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// Not to split events queue into separate per-table queues.
+	// -  Save transaction order
 	SaveTxOrder *bool `json:"saveTxOrder,omitempty" tf:"save_tx_order,omitempty"`
 
 	// -  List of security groups that the transfer associated with this endpoint should use.
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
-	// Data serialization settings.
+	// -  Data serialization format.
+	Serializer []YdsTargetSerializerInitParameters `json:"serializer,omitempty" tf:"serializer,omitempty"`
+
+	// -  Service account ID for interaction with database.
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+
+	// -  Stream.
+	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
+
+	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+}
+
+type YdsTargetObservation struct {
+
+	// -  Database.
+	Database *string `json:"database,omitempty" tf:"database,omitempty"`
+
+	// -  YDS Endpoint.
+	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+
+	// -  Save transaction order
+	SaveTxOrder *bool `json:"saveTxOrder,omitempty" tf:"save_tx_order,omitempty"`
+
+	// -  List of security groups that the transfer associated with this endpoint should use.
+	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
+
+	// -  Data serialization format.
 	Serializer []YdsTargetSerializerObservation `json:"serializer,omitempty" tf:"serializer,omitempty"`
 
 	// -  Service account ID for interaction with database.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
+	// -  Stream.
 	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
@@ -3468,14 +5205,15 @@ type YdsTargetObservation struct {
 
 type YdsTargetParameters struct {
 
-	// -  Database path in YDB where tables are stored. Example: "/ru/transfer_manager/prod/data-transfer-yt".
+	// -  Database.
 	// +kubebuilder:validation:Optional
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
+	// -  YDS Endpoint.
 	// +kubebuilder:validation:Optional
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// Not to split events queue into separate per-table queues.
+	// -  Save transaction order
 	// +kubebuilder:validation:Optional
 	SaveTxOrder *bool `json:"saveTxOrder,omitempty" tf:"save_tx_order,omitempty"`
 
@@ -3483,7 +5221,7 @@ type YdsTargetParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
-	// Data serialization settings.
+	// -  Data serialization format.
 	// +kubebuilder:validation:Optional
 	Serializer []YdsTargetSerializerParameters `json:"serializer,omitempty" tf:"serializer,omitempty"`
 
@@ -3491,12 +5229,25 @@ type YdsTargetParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
+	// -  Stream.
 	// +kubebuilder:validation:Optional
 	Stream *string `json:"stream,omitempty" tf:"stream,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+}
+
+type YdsTargetSerializerInitParameters struct {
+
+	// Empty block. Select data serialization format automatically.
+	SerializerAuto []SerializerSerializerAutoInitParameters `json:"serializerAuto,omitempty" tf:"serializer_auto,omitempty"`
+
+	// Serialize data in json format. The structure is documented below.
+	SerializerDebezium []SerializerSerializerDebeziumInitParameters `json:"serializerDebezium,omitempty" tf:"serializer_debezium,omitempty"`
+
+	// Empty block. Serialize data in json format.
+	SerializerJSON []SerializerSerializerJSONInitParameters `json:"serializerJson,omitempty" tf:"serializer_json,omitempty"`
 }
 
 type YdsTargetSerializerObservation struct {
@@ -3530,6 +5281,17 @@ type YdsTargetSerializerParameters struct {
 type EndpointSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     EndpointParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider EndpointInitParameters `json:"initProvider,omitempty"`
 }
 
 // EndpointStatus defines the observed state of Endpoint.
@@ -3539,13 +5301,14 @@ type EndpointStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Endpoint is the Schema for the Endpoints API. Manages a Data Transfer endpoint within Yandex.Cloud.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type Endpoint struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -25,6 +25,12 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AccessInitParameters struct {
+
+	// Allow access for DataTransfer
+	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
+}
+
 type AccessObservation struct {
 
 	// Allow access for DataTransfer
@@ -36,6 +42,35 @@ type AccessParameters struct {
 	// Allow access for DataTransfer
 	// +kubebuilder:validation:Optional
 	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
+}
+
+type KafkaClusterConfigInitParameters struct {
+
+	// Access policy to the Kafka cluster. The structure is documented below.
+	Access []AccessInitParameters `json:"access,omitempty" tf:"access,omitempty"`
+
+	// Determines whether each broker will be assigned a public IP address. The default is false.
+	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
+
+	// Count of brokers per availability zone. The default is 1.
+	BrokersCount *float64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
+
+	// Configuration of the Kafka subcluster. The structure is documented below.
+	Kafka []KafkaInitParameters `json:"kafka,omitempty" tf:"kafka,omitempty"`
+
+	// Enables managed schema registry on cluster. The default is false.
+	SchemaRegistry *bool `json:"schemaRegistry,omitempty" tf:"schema_registry,omitempty"`
+
+	UnmanagedTopics *bool `json:"unmanagedTopics,omitempty" tf:"unmanaged_topics,omitempty"`
+
+	// Version of the Kafka server software.
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+
+	// List of availability zones.
+	Zones []*string `json:"zones,omitempty" tf:"zones,omitempty"`
+
+	// Configuration of the ZooKeeper subcluster. The structure is documented below.
+	Zookeeper []ZookeeperInitParameters `json:"zookeeper,omitempty" tf:"zookeeper,omitempty"`
 }
 
 type KafkaClusterConfigObservation struct {
@@ -82,7 +117,7 @@ type KafkaClusterConfigParameters struct {
 	BrokersCount *float64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
 
 	// Configuration of the Kafka subcluster. The structure is documented below.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Kafka []KafkaParameters `json:"kafka" tf:"kafka,omitempty"`
 
 	// Enables managed schema registry on cluster. The default is false.
@@ -93,16 +128,19 @@ type KafkaClusterConfigParameters struct {
 	UnmanagedTopics *bool `json:"unmanagedTopics,omitempty" tf:"unmanaged_topics,omitempty"`
 
 	// Version of the Kafka server software.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Version *string `json:"version" tf:"version,omitempty"`
 
 	// List of availability zones.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Zones []*string `json:"zones" tf:"zones,omitempty"`
 
 	// Configuration of the ZooKeeper subcluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Zookeeper []ZookeeperParameters `json:"zookeeper,omitempty" tf:"zookeeper,omitempty"`
+}
+
+type KafkaClusterHostInitParameters struct {
 }
 
 type KafkaClusterHostObservation struct {
@@ -129,6 +167,103 @@ type KafkaClusterHostObservation struct {
 type KafkaClusterHostParameters struct {
 }
 
+type KafkaClusterInitParameters struct {
+
+	// Configuration of the Kafka cluster. The structure is documented below.
+	Config []KafkaClusterConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
+
+	// Inhibits deletion of the cluster.  Can be either true or false.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// Description of the Kafka cluster.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION.
+	// The default is PRODUCTION.
+	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
+
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// A list of IDs of the host groups to place VMs of the cluster on.
+	// +listType=set
+	HostGroupIds []*string `json:"hostGroupIds,omitempty" tf:"host_group_ids,omitempty"`
+
+	// A set of key/value label pairs to assign to the Kafka cluster.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Maintenance policy of the Kafka cluster. The structure is documented below.
+	MaintenanceWindow []KafkaClusterMaintenanceWindowInitParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+
+	// Name of the Kafka cluster. Provided by the client when the cluster is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// ID of the network, to which the Kafka cluster belongs.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// Reference to a Network in vpc to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+
+	// Selector for a Network in vpc to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
+
+	// Security group ids, to which the Kafka cluster belongs.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +listType=set
+	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+
+	// References to SecurityGroup in vpc to populate securityGroupIds.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIdsRefs []v1.Reference `json:"securityGroupIdsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityGroup in vpc to populate securityGroupIds.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
+
+	// IDs of the subnets, to which the Kafka cluster belongs.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
+
+	// References to Subnet in vpc to populate subnetIds.
+	// +kubebuilder:validation:Optional
+	SubnetIdsRefs []v1.Reference `json:"subnetIdsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of Subnet in vpc to populate subnetIds.
+	// +kubebuilder:validation:Optional
+	SubnetIdsSelector *v1.Selector `json:"subnetIdsSelector,omitempty" tf:"-"`
+
+	// (Deprecated) To manage topics, please switch to using a separate resource type yandex_mdb_kafka_topic.
+	Topic []TopicInitParameters `json:"topic,omitempty" tf:"topic,omitempty"`
+
+	// (Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user.
+	User []UserInitParameters `json:"user,omitempty" tf:"user,omitempty"`
+}
+
+type KafkaClusterMaintenanceWindowInitParameters struct {
+
+	// Day of the week (in DDD format). Allowed values: "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"
+	Day *string `json:"day,omitempty" tf:"day,omitempty"`
+
+	// Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
+
+	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
 type KafkaClusterMaintenanceWindowObservation struct {
 
 	// Day of the week (in DDD format). Allowed values: "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"
@@ -152,7 +287,7 @@ type KafkaClusterMaintenanceWindowParameters struct {
 	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
 
@@ -185,11 +320,13 @@ type KafkaClusterObservation struct {
 	Host []KafkaClusterHostObservation `json:"host,omitempty" tf:"host,omitempty"`
 
 	// A list of IDs of the host groups to place VMs of the cluster on.
+	// +listType=set
 	HostGroupIds []*string `json:"hostGroupIds,omitempty" tf:"host_group_ids,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// A set of key/value label pairs to assign to the Kafka cluster.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Maintenance policy of the Kafka cluster. The structure is documented below.
@@ -202,6 +339,7 @@ type KafkaClusterObservation struct {
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
 	// Security group ids, to which the Kafka cluster belongs.
+	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
@@ -252,10 +390,12 @@ type KafkaClusterParameters struct {
 
 	// A list of IDs of the host groups to place VMs of the cluster on.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	HostGroupIds []*string `json:"hostGroupIds,omitempty" tf:"host_group_ids,omitempty"`
 
 	// A set of key/value label pairs to assign to the Kafka cluster.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Maintenance policy of the Kafka cluster. The structure is documented below.
@@ -282,6 +422,7 @@ type KafkaClusterParameters struct {
 	// Security group ids, to which the Kafka cluster belongs.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// References to SecurityGroup in vpc to populate securityGroupIds.
@@ -312,6 +453,53 @@ type KafkaClusterParameters struct {
 	// (Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user.
 	// +kubebuilder:validation:Optional
 	User []UserParameters `json:"user,omitempty" tf:"user,omitempty"`
+}
+
+type KafkaConfigInitParameters struct {
+	AutoCreateTopicsEnable *bool `json:"autoCreateTopicsEnable,omitempty" tf:"auto_create_topics_enable,omitempty"`
+
+	// Kafka topic settings. For more information, see
+	// the official documentation
+	// and the Kafka documentation.
+	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
+
+	DefaultReplicationFactor *string `json:"defaultReplicationFactor,omitempty" tf:"default_replication_factor,omitempty"`
+
+	LogFlushIntervalMessages *string `json:"logFlushIntervalMessages,omitempty" tf:"log_flush_interval_messages,omitempty"`
+
+	LogFlushIntervalMs *string `json:"logFlushIntervalMs,omitempty" tf:"log_flush_interval_ms,omitempty"`
+
+	LogFlushSchedulerIntervalMs *string `json:"logFlushSchedulerIntervalMs,omitempty" tf:"log_flush_scheduler_interval_ms,omitempty"`
+
+	LogPreallocate *bool `json:"logPreallocate,omitempty" tf:"log_preallocate,omitempty"`
+
+	LogRetentionBytes *string `json:"logRetentionBytes,omitempty" tf:"log_retention_bytes,omitempty"`
+
+	LogRetentionHours *string `json:"logRetentionHours,omitempty" tf:"log_retention_hours,omitempty"`
+
+	LogRetentionMinutes *string `json:"logRetentionMinutes,omitempty" tf:"log_retention_minutes,omitempty"`
+
+	LogRetentionMs *string `json:"logRetentionMs,omitempty" tf:"log_retention_ms,omitempty"`
+
+	LogSegmentBytes *string `json:"logSegmentBytes,omitempty" tf:"log_segment_bytes,omitempty"`
+
+	MessageMaxBytes *string `json:"messageMaxBytes,omitempty" tf:"message_max_bytes,omitempty"`
+
+	NumPartitions *string `json:"numPartitions,omitempty" tf:"num_partitions,omitempty"`
+
+	OffsetsRetentionMinutes *string `json:"offsetsRetentionMinutes,omitempty" tf:"offsets_retention_minutes,omitempty"`
+
+	ReplicaFetchMaxBytes *string `json:"replicaFetchMaxBytes,omitempty" tf:"replica_fetch_max_bytes,omitempty"`
+
+	// +listType=set
+	SSLCipherSuites []*string `json:"sslCipherSuites,omitempty" tf:"ssl_cipher_suites,omitempty"`
+
+	// +listType=set
+	SaslEnabledMechanisms []*string `json:"saslEnabledMechanisms,omitempty" tf:"sasl_enabled_mechanisms,omitempty"`
+
+	SocketReceiveBufferBytes *string `json:"socketReceiveBufferBytes,omitempty" tf:"socket_receive_buffer_bytes,omitempty"`
+
+	SocketSendBufferBytes *string `json:"socketSendBufferBytes,omitempty" tf:"socket_send_buffer_bytes,omitempty"`
 }
 
 type KafkaConfigObservation struct {
@@ -350,8 +538,10 @@ type KafkaConfigObservation struct {
 
 	ReplicaFetchMaxBytes *string `json:"replicaFetchMaxBytes,omitempty" tf:"replica_fetch_max_bytes,omitempty"`
 
+	// +listType=set
 	SSLCipherSuites []*string `json:"sslCipherSuites,omitempty" tf:"ssl_cipher_suites,omitempty"`
 
+	// +listType=set
 	SaslEnabledMechanisms []*string `json:"saslEnabledMechanisms,omitempty" tf:"sasl_enabled_mechanisms,omitempty"`
 
 	SocketReceiveBufferBytes *string `json:"socketReceiveBufferBytes,omitempty" tf:"socket_receive_buffer_bytes,omitempty"`
@@ -413,9 +603,11 @@ type KafkaConfigParameters struct {
 	ReplicaFetchMaxBytes *string `json:"replicaFetchMaxBytes,omitempty" tf:"replica_fetch_max_bytes,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SSLCipherSuites []*string `json:"sslCipherSuites,omitempty" tf:"ssl_cipher_suites,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SaslEnabledMechanisms []*string `json:"saslEnabledMechanisms,omitempty" tf:"sasl_enabled_mechanisms,omitempty"`
 
 	// +kubebuilder:validation:Optional
@@ -423,6 +615,15 @@ type KafkaConfigParameters struct {
 
 	// +kubebuilder:validation:Optional
 	SocketSendBufferBytes *string `json:"socketSendBufferBytes,omitempty" tf:"socket_send_buffer_bytes,omitempty"`
+}
+
+type KafkaInitParameters struct {
+
+	// User-defined settings for the Kafka cluster. The structure is documented below.
+	KafkaConfig []KafkaConfigInitParameters `json:"kafkaConfig,omitempty" tf:"kafka_config,omitempty"`
+
+	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	Resources []KafkaResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type KafkaObservation struct {
@@ -441,8 +642,20 @@ type KafkaParameters struct {
 	KafkaConfig []KafkaConfigParameters `json:"kafkaConfig,omitempty" tf:"kafka_config,omitempty"`
 
 	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Resources []KafkaResourcesParameters `json:"resources" tf:"resources,omitempty"`
+}
+
+type KafkaResourcesInitParameters struct {
+
+	// Volume of the storage available to a ZooKeeper host, in gigabytes.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Type of the storage of ZooKeeper hosts.
+	// For more information see the official documentation.
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type KafkaResourcesObservation struct {
@@ -460,21 +673,35 @@ type KafkaResourcesObservation struct {
 type KafkaResourcesParameters struct {
 
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// Type of the storage of ZooKeeper hosts.
 	// For more information see the official documentation.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
 
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
+}
+
+type PermissionInitParameters struct {
+
+	// Set of hosts, to which this permission grants access to.
+	// +listType=set
+	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
+
+	// The role type to grant to the topic.
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+
+	// The name of the topic that the permission grants access to.
+	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
 }
 
 type PermissionObservation struct {
 
 	// Set of hosts, to which this permission grants access to.
+	// +listType=set
 	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
 
 	// The role type to grant to the topic.
@@ -488,15 +715,47 @@ type PermissionParameters struct {
 
 	// Set of hosts, to which this permission grants access to.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
 
 	// The role type to grant to the topic.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Role *string `json:"role" tf:"role,omitempty"`
 
 	// The name of the topic that the permission grants access to.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	TopicName *string `json:"topicName" tf:"topic_name,omitempty"`
+}
+
+type TopicConfigInitParameters struct {
+	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
+
+	// Kafka topic settings. For more information, see
+	// the official documentation
+	// and the Kafka documentation.
+	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
+
+	DeleteRetentionMs *string `json:"deleteRetentionMs,omitempty" tf:"delete_retention_ms,omitempty"`
+
+	FileDeleteDelayMs *string `json:"fileDeleteDelayMs,omitempty" tf:"file_delete_delay_ms,omitempty"`
+
+	FlushMessages *string `json:"flushMessages,omitempty" tf:"flush_messages,omitempty"`
+
+	FlushMs *string `json:"flushMs,omitempty" tf:"flush_ms,omitempty"`
+
+	MaxMessageBytes *string `json:"maxMessageBytes,omitempty" tf:"max_message_bytes,omitempty"`
+
+	MinCompactionLagMs *string `json:"minCompactionLagMs,omitempty" tf:"min_compaction_lag_ms,omitempty"`
+
+	MinInsyncReplicas *string `json:"minInsyncReplicas,omitempty" tf:"min_insync_replicas,omitempty"`
+
+	Preallocate *bool `json:"preallocate,omitempty" tf:"preallocate,omitempty"`
+
+	RetentionBytes *string `json:"retentionBytes,omitempty" tf:"retention_bytes,omitempty"`
+
+	RetentionMs *string `json:"retentionMs,omitempty" tf:"retention_ms,omitempty"`
+
+	SegmentBytes *string `json:"segmentBytes,omitempty" tf:"segment_bytes,omitempty"`
 }
 
 type TopicConfigObservation struct {
@@ -575,6 +834,21 @@ type TopicConfigParameters struct {
 	SegmentBytes *string `json:"segmentBytes,omitempty" tf:"segment_bytes,omitempty"`
 }
 
+type TopicInitParameters struct {
+
+	// The name of the topic.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The number of the topic's partitions.
+	Partitions *float64 `json:"partitions,omitempty" tf:"partitions,omitempty"`
+
+	// Amount of data copies (replicas) for the topic in the cluster.
+	ReplicationFactor *float64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
+
+	// User-defined settings for the topic. The structure is documented below.
+	TopicConfig []TopicConfigInitParameters `json:"topicConfig,omitempty" tf:"topic_config,omitempty"`
+}
+
 type TopicObservation struct {
 
 	// The name of the topic.
@@ -593,20 +867,29 @@ type TopicObservation struct {
 type TopicParameters struct {
 
 	// The name of the topic.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// The number of the topic's partitions.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Partitions *float64 `json:"partitions" tf:"partitions,omitempty"`
 
 	// Amount of data copies (replicas) for the topic in the cluster.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	ReplicationFactor *float64 `json:"replicationFactor" tf:"replication_factor,omitempty"`
 
 	// User-defined settings for the topic. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	TopicConfig []TopicConfigParameters `json:"topicConfig,omitempty" tf:"topic_config,omitempty"`
+}
+
+type UserInitParameters struct {
+
+	// The name of the user.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Set of permissions granted to the user. The structure is documented below.
+	Permission []PermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type UserObservation struct {
@@ -621,7 +904,7 @@ type UserObservation struct {
 type UserParameters struct {
 
 	// The name of the user.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// The password of the user.
@@ -631,6 +914,12 @@ type UserParameters struct {
 	// Set of permissions granted to the user. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Permission []PermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+}
+
+type ZookeeperInitParameters struct {
+
+	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	Resources []ZookeeperResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type ZookeeperObservation struct {
@@ -644,6 +933,18 @@ type ZookeeperParameters struct {
 	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Resources []ZookeeperResourcesParameters `json:"resources,omitempty" tf:"resources,omitempty"`
+}
+
+type ZookeeperResourcesInitParameters struct {
+
+	// Volume of the storage available to a ZooKeeper host, in gigabytes.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Type of the storage of ZooKeeper hosts.
+	// For more information see the official documentation.
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type ZookeeperResourcesObservation struct {
@@ -677,6 +978,17 @@ type ZookeeperResourcesParameters struct {
 type KafkaClusterSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     KafkaClusterParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider KafkaClusterInitParameters `json:"initProvider,omitempty"`
 }
 
 // KafkaClusterStatus defines the observed state of KafkaCluster.
@@ -686,19 +998,20 @@ type KafkaClusterStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // KafkaCluster is the Schema for the KafkaClusters API. Manages a Kafka cluster within Yandex.Cloud.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type KafkaCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.config)",message="config is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.config) || (has(self.initProvider) && has(self.initProvider.config))",message="spec.forProvider.config is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	Spec   KafkaClusterSpec   `json:"spec"`
 	Status KafkaClusterStatus `json:"status,omitempty"`
 }

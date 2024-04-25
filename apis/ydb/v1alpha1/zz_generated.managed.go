@@ -29,22 +29,14 @@ func (mg *DatabaseDedicated) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this DatabaseDedicated.
-func (mg *DatabaseDedicated) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this DatabaseDedicated.
+func (mg *DatabaseDedicated) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this DatabaseDedicated.
 func (mg *DatabaseDedicated) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this DatabaseDedicated.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *DatabaseDedicated) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this DatabaseDedicated.
@@ -67,22 +59,14 @@ func (mg *DatabaseDedicated) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this DatabaseDedicated.
-func (mg *DatabaseDedicated) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this DatabaseDedicated.
+func (mg *DatabaseDedicated) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this DatabaseDedicated.
 func (mg *DatabaseDedicated) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this DatabaseDedicated.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *DatabaseDedicated) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this DatabaseDedicated.
@@ -105,22 +89,14 @@ func (mg *DatabaseServerless) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this DatabaseServerless.
-func (mg *DatabaseServerless) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this DatabaseServerless.
+func (mg *DatabaseServerless) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this DatabaseServerless.
 func (mg *DatabaseServerless) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this DatabaseServerless.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *DatabaseServerless) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this DatabaseServerless.
@@ -143,22 +119,14 @@ func (mg *DatabaseServerless) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this DatabaseServerless.
-func (mg *DatabaseServerless) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this DatabaseServerless.
+func (mg *DatabaseServerless) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this DatabaseServerless.
 func (mg *DatabaseServerless) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this DatabaseServerless.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *DatabaseServerless) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this DatabaseServerless.

@@ -25,6 +25,18 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AddressInitParameters struct {
+
+	// External IPv4 address. The structure is documented below.
+	ExternalIPv4Address []ExternalIPv4AddressInitParameters `json:"externalIpv4Address,omitempty" tf:"external_ipv4_address,omitempty"`
+
+	// External IPv6 address. The structure is documented below.
+	ExternalIPv6Address []ExternalIPv6AddressInitParameters `json:"externalIpv6Address,omitempty" tf:"external_ipv6_address,omitempty"`
+
+	// Internal IPv4 address. The structure is documented below.
+	InternalIPv4Address []InternalIPv4AddressInitParameters `json:"internalIpv4Address,omitempty" tf:"internal_ipv4_address,omitempty"`
+}
+
 type AddressObservation struct {
 
 	// External IPv4 address. The structure is documented below.
@@ -52,6 +64,12 @@ type AddressParameters struct {
 	InternalIPv4Address []InternalIPv4AddressParameters `json:"internalIpv4Address,omitempty" tf:"internal_ipv4_address,omitempty"`
 }
 
+type AllocationPolicyInitParameters struct {
+
+	// Unique set of locations. The structure is documented below.
+	Location []LocationInitParameters `json:"location,omitempty" tf:"location,omitempty"`
+}
+
 type AllocationPolicyObservation struct {
 
 	// Unique set of locations. The structure is documented below.
@@ -61,14 +79,29 @@ type AllocationPolicyObservation struct {
 type AllocationPolicyParameters struct {
 
 	// Unique set of locations. The structure is documented below.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Location []LocationParameters `json:"location" tf:"location,omitempty"`
+}
+
+type DefaultHandlerInitParameters struct {
+
+	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
+	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+	// +listType=set
+	CertificateIds []*string `json:"certificateIds,omitempty" tf:"certificate_ids,omitempty"`
+
+	// HTTP handler resource. The structure is documented below.
+	HTTPHandler []HTTPHandlerInitParameters `json:"httpHandler,omitempty" tf:"http_handler,omitempty"`
+
+	// Stream handler resource. The structure is documented below.
+	StreamHandler []DefaultHandlerStreamHandlerInitParameters `json:"streamHandler,omitempty" tf:"stream_handler,omitempty"`
 }
 
 type DefaultHandlerObservation struct {
 
 	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
 	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+	// +listType=set
 	CertificateIds []*string `json:"certificateIds,omitempty" tf:"certificate_ids,omitempty"`
 
 	// HTTP handler resource. The structure is documented below.
@@ -82,7 +115,8 @@ type DefaultHandlerParameters struct {
 
 	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
 	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
+	// +listType=set
 	CertificateIds []*string `json:"certificateIds" tf:"certificate_ids,omitempty"`
 
 	// HTTP handler resource. The structure is documented below.
@@ -92,6 +126,12 @@ type DefaultHandlerParameters struct {
 	// Stream handler resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	StreamHandler []DefaultHandlerStreamHandlerParameters `json:"streamHandler,omitempty" tf:"stream_handler,omitempty"`
+}
+
+type DefaultHandlerStreamHandlerInitParameters struct {
+
+	// Backend group id.
+	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
 }
 
 type DefaultHandlerStreamHandlerObservation struct {
@@ -105,6 +145,19 @@ type DefaultHandlerStreamHandlerParameters struct {
 	// Backend group id.
 	// +kubebuilder:validation:Optional
 	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
+}
+
+type DiscardRuleInitParameters struct {
+	DiscardPercent *float64 `json:"discardPercent,omitempty" tf:"discard_percent,omitempty"`
+
+	// list of grpc codes by name, e.g, ["NOT_FOUND", "RESOURCE_EXHAUSTED"]
+	GRPCCodes []*string `json:"grpcCodes,omitempty" tf:"grpc_codes,omitempty"`
+
+	// 5XX or ALL
+	HTTPCodeIntervals []*string `json:"httpCodeIntervals,omitempty" tf:"http_code_intervals,omitempty"`
+
+	// 599
+	HTTPCodes []*float64 `json:"httpCodes,omitempty" tf:"http_codes,omitempty"`
 }
 
 type DiscardRuleObservation struct {
@@ -138,6 +191,15 @@ type DiscardRuleParameters struct {
 	HTTPCodes []*float64 `json:"httpCodes,omitempty" tf:"http_codes,omitempty"`
 }
 
+type EndpointInitParameters struct {
+
+	// Provided by the client or computed automatically.
+	Address []AddressInitParameters `json:"address,omitempty" tf:"address,omitempty"`
+
+	// One or more ports to listen on.
+	Ports []*float64 `json:"ports,omitempty" tf:"ports,omitempty"`
+}
+
 type EndpointObservation struct {
 
 	// Provided by the client or computed automatically.
@@ -150,12 +212,18 @@ type EndpointObservation struct {
 type EndpointParameters struct {
 
 	// Provided by the client or computed automatically.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Address []AddressParameters `json:"address" tf:"address,omitempty"`
 
 	// One or more ports to listen on.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Ports []*float64 `json:"ports" tf:"ports,omitempty"`
+}
+
+type ExternalIPv4AddressInitParameters struct {
+
+	// Provided by the client or computed automatically.
+	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 }
 
 type ExternalIPv4AddressObservation struct {
@@ -168,6 +236,12 @@ type ExternalIPv4AddressParameters struct {
 
 	// Provided by the client or computed automatically.
 	// +kubebuilder:validation:Optional
+	Address *string `json:"address,omitempty" tf:"address,omitempty"`
+}
+
+type ExternalIPv6AddressInitParameters struct {
+
+	// Provided by the client or computed automatically.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 }
 
@@ -184,6 +258,12 @@ type ExternalIPv6AddressParameters struct {
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 }
 
+type HTTPHandlerHttp2OptionsInitParameters struct {
+
+	// Maximum number of concurrent streams.
+	MaxConcurrentStreams *float64 `json:"maxConcurrentStreams,omitempty" tf:"max_concurrent_streams,omitempty"`
+}
+
 type HTTPHandlerHttp2OptionsObservation struct {
 
 	// Maximum number of concurrent streams.
@@ -195,6 +275,21 @@ type HTTPHandlerHttp2OptionsParameters struct {
 	// Maximum number of concurrent streams.
 	// +kubebuilder:validation:Optional
 	MaxConcurrentStreams *float64 `json:"maxConcurrentStreams,omitempty" tf:"max_concurrent_streams,omitempty"`
+}
+
+type HTTPHandlerInitParameters struct {
+
+	// If set, will enable only HTTP1 protocol with HTTP1.0 support.
+	AllowHttp10 *bool `json:"allowHttp10,omitempty" tf:"allow_http10,omitempty"`
+
+	// HTTP router id.
+	HTTPRouterID *string `json:"httpRouterId,omitempty" tf:"http_router_id,omitempty"`
+
+	// If set, will enable HTTP2 protocol for the handler. The structure is documented below.
+	Http2Options []HTTPHandlerHttp2OptionsInitParameters `json:"http2Options,omitempty" tf:"http2_options,omitempty"`
+
+	// When unset, will preserve the incoming x-request-id header, otherwise would rewrite it with a new value.
+	RewriteRequestID *bool `json:"rewriteRequestId,omitempty" tf:"rewrite_request_id,omitempty"`
 }
 
 type HTTPHandlerObservation struct {
@@ -231,6 +326,15 @@ type HTTPHandlerParameters struct {
 	RewriteRequestID *bool `json:"rewriteRequestId,omitempty" tf:"rewrite_request_id,omitempty"`
 }
 
+type HTTPInitParameters struct {
+
+	// Stream handler that sets plaintext Stream backend group. The structure is documented below.
+	Handler []HandlerInitParameters `json:"handler,omitempty" tf:"handler,omitempty"`
+
+	// Shortcut for adding http -> https redirects. The structure is documented below.
+	Redirects []RedirectsInitParameters `json:"redirects,omitempty" tf:"redirects,omitempty"`
+}
+
 type HTTPObservation struct {
 
 	// Stream handler that sets plaintext Stream backend group. The structure is documented below.
@@ -251,6 +355,12 @@ type HTTPParameters struct {
 	Redirects []RedirectsParameters `json:"redirects,omitempty" tf:"redirects,omitempty"`
 }
 
+type HandlerHTTPHandlerHttp2OptionsInitParameters struct {
+
+	// Maximum number of concurrent streams.
+	MaxConcurrentStreams *float64 `json:"maxConcurrentStreams,omitempty" tf:"max_concurrent_streams,omitempty"`
+}
+
 type HandlerHTTPHandlerHttp2OptionsObservation struct {
 
 	// Maximum number of concurrent streams.
@@ -262,6 +372,21 @@ type HandlerHTTPHandlerHttp2OptionsParameters struct {
 	// Maximum number of concurrent streams.
 	// +kubebuilder:validation:Optional
 	MaxConcurrentStreams *float64 `json:"maxConcurrentStreams,omitempty" tf:"max_concurrent_streams,omitempty"`
+}
+
+type HandlerHTTPHandlerInitParameters struct {
+
+	// If set, will enable only HTTP1 protocol with HTTP1.0 support.
+	AllowHttp10 *bool `json:"allowHttp10,omitempty" tf:"allow_http10,omitempty"`
+
+	// HTTP router id.
+	HTTPRouterID *string `json:"httpRouterId,omitempty" tf:"http_router_id,omitempty"`
+
+	// If set, will enable HTTP2 protocol for the handler. The structure is documented below.
+	Http2Options []HandlerHTTPHandlerHttp2OptionsInitParameters `json:"http2Options,omitempty" tf:"http2_options,omitempty"`
+
+	// When unset, will preserve the incoming x-request-id header, otherwise would rewrite it with a new value.
+	RewriteRequestID *bool `json:"rewriteRequestId,omitempty" tf:"rewrite_request_id,omitempty"`
 }
 
 type HandlerHTTPHandlerObservation struct {
@@ -295,6 +420,30 @@ type HandlerHTTPHandlerParameters struct {
 
 	// When unset, will preserve the incoming x-request-id header, otherwise would rewrite it with a new value.
 	// +kubebuilder:validation:Optional
+	RewriteRequestID *bool `json:"rewriteRequestId,omitempty" tf:"rewrite_request_id,omitempty"`
+}
+
+type HandlerInitParameters struct {
+
+	// If set, will enable only HTTP1 protocol with HTTP1.0 support.
+	AllowHttp10 *bool `json:"allowHttp10,omitempty" tf:"allow_http10,omitempty"`
+
+	// HTTP router id.
+	// +crossplane:generate:reference:type=HTTPRouter
+	HTTPRouterID *string `json:"httpRouterId,omitempty" tf:"http_router_id,omitempty"`
+
+	// Reference to a HTTPRouter to populate httpRouterId.
+	// +kubebuilder:validation:Optional
+	HTTPRouterIDRef *v1.Reference `json:"httpRouterIdRef,omitempty" tf:"-"`
+
+	// Selector for a HTTPRouter to populate httpRouterId.
+	// +kubebuilder:validation:Optional
+	HTTPRouterIDSelector *v1.Selector `json:"httpRouterIdSelector,omitempty" tf:"-"`
+
+	// If set, will enable HTTP2 protocol for the handler. The structure is documented below.
+	Http2Options []Http2OptionsInitParameters `json:"http2Options,omitempty" tf:"http2_options,omitempty"`
+
+	// When unset, will preserve the incoming x-request-id header, otherwise would rewrite it with a new value.
 	RewriteRequestID *bool `json:"rewriteRequestId,omitempty" tf:"rewrite_request_id,omitempty"`
 }
 
@@ -341,6 +490,12 @@ type HandlerParameters struct {
 	RewriteRequestID *bool `json:"rewriteRequestId,omitempty" tf:"rewrite_request_id,omitempty"`
 }
 
+type HandlerStreamHandlerInitParameters struct {
+
+	// Backend group id.
+	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
+}
+
 type HandlerStreamHandlerObservation struct {
 
 	// Backend group id.
@@ -354,6 +509,12 @@ type HandlerStreamHandlerParameters struct {
 	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
 }
 
+type Http2OptionsInitParameters struct {
+
+	// Maximum number of concurrent streams.
+	MaxConcurrentStreams *float64 `json:"maxConcurrentStreams,omitempty" tf:"max_concurrent_streams,omitempty"`
+}
+
 type Http2OptionsObservation struct {
 
 	// Maximum number of concurrent streams.
@@ -365,6 +526,24 @@ type Http2OptionsParameters struct {
 	// Maximum number of concurrent streams.
 	// +kubebuilder:validation:Optional
 	MaxConcurrentStreams *float64 `json:"maxConcurrentStreams,omitempty" tf:"max_concurrent_streams,omitempty"`
+}
+
+type InternalIPv4AddressInitParameters struct {
+
+	// Provided by the client or computed automatically.
+	Address *string `json:"address,omitempty" tf:"address,omitempty"`
+
+	// Provided by the client or computed automatically.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
 type InternalIPv4AddressObservation struct {
@@ -396,6 +575,24 @@ type InternalIPv4AddressParameters struct {
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 }
 
+type ListenerInitParameters struct {
+
+	// Network endpoints (addresses and ports) of the listener. The structure is documented below.
+	Endpoint []EndpointInitParameters `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+
+	// HTTP listener resource. The structure is documented below.
+	HTTP []HTTPInitParameters `json:"http,omitempty" tf:"http,omitempty"`
+
+	// name of the listener.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Stream listener resource. The structure is documented below.
+	Stream []StreamInitParameters `json:"stream,omitempty" tf:"stream,omitempty"`
+
+	// TLS listener resource. The structure is documented below.
+	TLS []ListenerTLSInitParameters `json:"tls,omitempty" tf:"tls,omitempty"`
+}
+
 type ListenerObservation struct {
 
 	// Network endpoints (addresses and ports) of the listener. The structure is documented below.
@@ -425,7 +622,7 @@ type ListenerParameters struct {
 	HTTP []HTTPParameters `json:"http,omitempty" tf:"http,omitempty"`
 
 	// name of the listener.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// Stream listener resource. The structure is documented below.
@@ -435,6 +632,15 @@ type ListenerParameters struct {
 	// TLS listener resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	TLS []ListenerTLSParameters `json:"tls,omitempty" tf:"tls,omitempty"`
+}
+
+type ListenerTLSInitParameters struct {
+
+	// TLS handler resource. The structure is documented below.
+	DefaultHandler []DefaultHandlerInitParameters `json:"defaultHandler,omitempty" tf:"default_handler,omitempty"`
+
+	// SNI match resource. The structure is documented below.
+	SniHandler []SniHandlerInitParameters `json:"sniHandler,omitempty" tf:"sni_handler,omitempty"`
 }
 
 type ListenerTLSObservation struct {
@@ -449,12 +655,74 @@ type ListenerTLSObservation struct {
 type ListenerTLSParameters struct {
 
 	// TLS handler resource. The structure is documented below.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	DefaultHandler []DefaultHandlerParameters `json:"defaultHandler" tf:"default_handler,omitempty"`
 
 	// SNI match resource. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	SniHandler []SniHandlerParameters `json:"sniHandler,omitempty" tf:"sni_handler,omitempty"`
+}
+
+type LoadBalancerInitParameters struct {
+
+	// Allocation zones for the Load Balancer instance. The structure is documented below.
+	AllocationPolicy []AllocationPolicyInitParameters `json:"allocationPolicy,omitempty" tf:"allocation_policy,omitempty"`
+
+	// An optional description of the Load Balancer.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// Labels to assign to this Load Balancer. A list of key/value pairs.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// List of listeners for the Load Balancer. The structure is documented below.
+	Listener []ListenerInitParameters `json:"listener,omitempty" tf:"listener,omitempty"`
+
+	// Cloud Logging settings. The structure is documented below.
+	LogOptions []LogOptionsInitParameters `json:"logOptions,omitempty" tf:"log_options,omitempty"`
+
+	// Name of the Load Balancer. Provided by the client when the Load Balancer is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// ID of the network that the Load Balancer is located at.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// Reference to a Network in vpc to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+
+	// Selector for a Network in vpc to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
+
+	// ID of the region that the Load Balancer is located at.
+	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
+
+	// A list of ID's of security groups attached to the Load Balancer.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +listType=set
+	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+
+	// References to SecurityGroup in vpc to populate securityGroupIds.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIdsRefs []v1.Reference `json:"securityGroupIdsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityGroup in vpc to populate securityGroupIds.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 }
 
 type LoadBalancerObservation struct {
@@ -475,6 +743,7 @@ type LoadBalancerObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Labels to assign to this Load Balancer. A list of key/value pairs.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// List of listeners for the Load Balancer. The structure is documented below.
@@ -496,6 +765,7 @@ type LoadBalancerObservation struct {
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
 	// A list of ID's of security groups attached to the Load Balancer.
+	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// Status of the Load Balancer.
@@ -527,6 +797,7 @@ type LoadBalancerParameters struct {
 
 	// Labels to assign to this Load Balancer. A list of key/value pairs.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// List of listeners for the Load Balancer. The structure is documented below.
@@ -561,6 +832,7 @@ type LoadBalancerParameters struct {
 	// A list of ID's of security groups attached to the Load Balancer.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
 	// References to SecurityGroup in vpc to populate securityGroupIds.
@@ -570,6 +842,27 @@ type LoadBalancerParameters struct {
 	// Selector for a list of SecurityGroup in vpc to populate securityGroupIds.
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
+}
+
+type LocationInitParameters struct {
+
+	// If set, will disable all L7 instances in the zone for request handling.
+	DisableTraffic *bool `json:"disableTraffic,omitempty" tf:"disable_traffic,omitempty"`
+
+	// ID of the subnet that location is located at.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+
+	// Reference to a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDRef *v1.Reference `json:"subnetIdRef,omitempty" tf:"-"`
+
+	// Selector for a Subnet in vpc to populate subnetId.
+	// +kubebuilder:validation:Optional
+	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
+
+	// ID of the zone that location is located at.
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 type LocationObservation struct {
@@ -604,8 +897,20 @@ type LocationParameters struct {
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
 	// ID of the zone that location is located at.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	ZoneID *string `json:"zoneId" tf:"zone_id,omitempty"`
+}
+
+type LogOptionsInitParameters struct {
+
+	// Set to true to disable Cloud Logging for the balancer
+	Disable *bool `json:"disable,omitempty" tf:"disable,omitempty"`
+
+	// List of rules to discard a fraction of logs. The structure is documented below.
+	DiscardRule []DiscardRuleInitParameters `json:"discardRule,omitempty" tf:"discard_rule,omitempty"`
+
+	// Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
 }
 
 type LogOptionsObservation struct {
@@ -635,6 +940,12 @@ type LogOptionsParameters struct {
 	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
 }
 
+type RedirectsInitParameters struct {
+
+	// If set redirects all unencrypted HTTP requests to the same URI with scheme changed to https.
+	HTTPToHTTPS *bool `json:"httpToHttps,omitempty" tf:"http_to_https,omitempty"`
+}
+
 type RedirectsObservation struct {
 
 	// If set redirects all unencrypted HTTP requests to the same URI with scheme changed to https.
@@ -648,10 +959,25 @@ type RedirectsParameters struct {
 	HTTPToHTTPS *bool `json:"httpToHttps,omitempty" tf:"http_to_https,omitempty"`
 }
 
+type SniHandlerHandlerInitParameters struct {
+
+	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
+	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+	// +listType=set
+	CertificateIds []*string `json:"certificateIds,omitempty" tf:"certificate_ids,omitempty"`
+
+	// HTTP handler resource. The structure is documented below.
+	HTTPHandler []HandlerHTTPHandlerInitParameters `json:"httpHandler,omitempty" tf:"http_handler,omitempty"`
+
+	// Stream handler resource. The structure is documented below.
+	StreamHandler []HandlerStreamHandlerInitParameters `json:"streamHandler,omitempty" tf:"stream_handler,omitempty"`
+}
+
 type SniHandlerHandlerObservation struct {
 
 	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
 	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+	// +listType=set
 	CertificateIds []*string `json:"certificateIds,omitempty" tf:"certificate_ids,omitempty"`
 
 	// HTTP handler resource. The structure is documented below.
@@ -665,7 +991,8 @@ type SniHandlerHandlerParameters struct {
 
 	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
 	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
+	// +listType=set
 	CertificateIds []*string `json:"certificateIds" tf:"certificate_ids,omitempty"`
 
 	// HTTP handler resource. The structure is documented below.
@@ -677,6 +1004,19 @@ type SniHandlerHandlerParameters struct {
 	StreamHandler []HandlerStreamHandlerParameters `json:"streamHandler,omitempty" tf:"stream_handler,omitempty"`
 }
 
+type SniHandlerInitParameters struct {
+
+	// Stream handler that sets plaintext Stream backend group. The structure is documented below.
+	Handler []SniHandlerHandlerInitParameters `json:"handler,omitempty" tf:"handler,omitempty"`
+
+	// name of SNI match.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// A set of server names.
+	// +listType=set
+	ServerNames []*string `json:"serverNames,omitempty" tf:"server_names,omitempty"`
+}
+
 type SniHandlerObservation struct {
 
 	// Stream handler that sets plaintext Stream backend group. The structure is documented below.
@@ -686,22 +1026,30 @@ type SniHandlerObservation struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// A set of server names.
+	// +listType=set
 	ServerNames []*string `json:"serverNames,omitempty" tf:"server_names,omitempty"`
 }
 
 type SniHandlerParameters struct {
 
 	// Stream handler that sets plaintext Stream backend group. The structure is documented below.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Handler []SniHandlerHandlerParameters `json:"handler" tf:"handler,omitempty"`
 
 	// name of SNI match.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// A set of server names.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
+	// +listType=set
 	ServerNames []*string `json:"serverNames" tf:"server_names,omitempty"`
+}
+
+type StreamHandlerInitParameters struct {
+
+	// Backend group id.
+	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
 }
 
 type StreamHandlerObservation struct {
@@ -715,6 +1063,12 @@ type StreamHandlerParameters struct {
 	// Backend group id.
 	// +kubebuilder:validation:Optional
 	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
+}
+
+type StreamInitParameters struct {
+
+	// Stream handler that sets plaintext Stream backend group. The structure is documented below.
+	Handler []StreamHandlerInitParameters `json:"handler,omitempty" tf:"handler,omitempty"`
 }
 
 type StreamObservation struct {
@@ -734,6 +1088,17 @@ type StreamParameters struct {
 type LoadBalancerSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     LoadBalancerParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider LoadBalancerInitParameters `json:"initProvider,omitempty"`
 }
 
 // LoadBalancerStatus defines the observed state of LoadBalancer.
@@ -743,18 +1108,19 @@ type LoadBalancerStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // LoadBalancer is the Schema for the LoadBalancers API. A Load Balancer is used for receiving incoming traffic and transmitting it to the backend endpoints specified in the ALB Target Groups.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type LoadBalancer struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.allocationPolicy)",message="allocationPolicy is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.allocationPolicy) || (has(self.initProvider) && has(self.initProvider.allocationPolicy))",message="spec.forProvider.allocationPolicy is a required parameter"
 	Spec   LoadBalancerSpec   `json:"spec"`
 	Status LoadBalancerStatus `json:"status,omitempty"`
 }

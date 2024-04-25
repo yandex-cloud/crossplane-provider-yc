@@ -25,6 +25,68 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ObjectInitParameters struct {
+
+	// The predefined ACL to apply. Defaults to private.
+	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
+
+	// The access key to use when applying changes. If omitted, storage_access_key specified in config is used.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/storage.ExtractAccessKey()
+	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
+
+	// Reference to a ServiceAccountStaticAccessKey in iam to populate accessKey.
+	// +kubebuilder:validation:Optional
+	AccessKeyRef *v1.Reference `json:"accessKeyRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceAccountStaticAccessKey in iam to populate accessKey.
+	// +kubebuilder:validation:Optional
+	AccessKeySelector *v1.Selector `json:"accessKeySelector,omitempty" tf:"-"`
+
+	// The name of the containing bucket.
+	// +crossplane:generate:reference:type=Bucket
+	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
+
+	// Reference to a Bucket to populate bucket.
+	// +kubebuilder:validation:Optional
+	BucketRef *v1.Reference `json:"bucketRef,omitempty" tf:"-"`
+
+	// Selector for a Bucket to populate bucket.
+	// +kubebuilder:validation:Optional
+	BucketSelector *v1.Selector `json:"bucketSelector,omitempty" tf:"-"`
+
+	// Literal string value to use as the object content, which will be uploaded as UTF-8-encoded text.
+	Content *string `json:"content,omitempty" tf:"content,omitempty"`
+
+	// Base64-encoded data that will be decoded and uploaded as raw bytes for the object content. This allows safely uploading non-UTF8 binary data, but is recommended only for small content such as the result of the gzipbase64 function with small text strings. For larger objects, use source to stream the content from a disk file.
+	ContentBase64 *string `json:"contentBase64,omitempty" tf:"content_base64,omitempty"`
+
+	// A standard MIME type describing the format of the object data, e.g. application/octet-stream. All Valid MIME Types are valid for this input.
+	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
+
+	// The name of the object once it is in the bucket.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
+	ObjectLockLegalHoldStatus *string `json:"objectLockLegalHoldStatus,omitempty" tf:"object_lock_legal_hold_status,omitempty"`
+
+	// Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
+	ObjectLockMode *string `json:"objectLockMode,omitempty" tf:"object_lock_mode,omitempty"`
+
+	// Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
+	ObjectLockRetainUntilDate *string `json:"objectLockRetainUntilDate,omitempty" tf:"object_lock_retain_until_date,omitempty"`
+
+	// The path to a file that will be read and uploaded as raw bytes for the object content.
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
+
+	// Used to trigger object update when the source content changes. So the only meaningful value is filemd5("path/to/source") (The value is only stored in state and not saved by Yandex Storage).
+	SourceHash *string `json:"sourceHash,omitempty" tf:"source_hash,omitempty"`
+
+	// Specifies an object tags.
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+}
+
 type ObjectObservation struct {
 
 	// The predefined ACL to apply. Defaults to private.
@@ -67,6 +129,7 @@ type ObjectObservation struct {
 	SourceHash *string `json:"sourceHash,omitempty" tf:"source_hash,omitempty"`
 
 	// Specifies an object tags.
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -145,6 +208,7 @@ type ObjectParameters struct {
 
 	// Specifies an object tags.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
@@ -152,6 +216,17 @@ type ObjectParameters struct {
 type ObjectSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ObjectParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ObjectInitParameters `json:"initProvider,omitempty"`
 }
 
 // ObjectStatus defines the observed state of Object.
@@ -161,18 +236,19 @@ type ObjectStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Object is the Schema for the Objects API. Allows management of a Yandex.Cloud Storage Object.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type Object struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.key)",message="key is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.key) || (has(self.initProvider) && has(self.initProvider.key))",message="spec.forProvider.key is a required parameter"
 	Spec   ObjectSpec   `json:"spec"`
 	Status ObjectStatus `json:"status,omitempty"`
 }

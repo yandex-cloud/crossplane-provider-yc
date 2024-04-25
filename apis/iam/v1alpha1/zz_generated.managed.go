@@ -29,22 +29,14 @@ func (mg *FolderIAMBinding) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this FolderIAMBinding.
-func (mg *FolderIAMBinding) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this FolderIAMBinding.
+func (mg *FolderIAMBinding) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this FolderIAMBinding.
 func (mg *FolderIAMBinding) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this FolderIAMBinding.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *FolderIAMBinding) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this FolderIAMBinding.
@@ -67,22 +59,14 @@ func (mg *FolderIAMBinding) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this FolderIAMBinding.
-func (mg *FolderIAMBinding) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this FolderIAMBinding.
+func (mg *FolderIAMBinding) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this FolderIAMBinding.
 func (mg *FolderIAMBinding) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this FolderIAMBinding.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *FolderIAMBinding) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this FolderIAMBinding.
@@ -105,22 +89,14 @@ func (mg *FolderIAMMember) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this FolderIAMMember.
-func (mg *FolderIAMMember) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this FolderIAMMember.
+func (mg *FolderIAMMember) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this FolderIAMMember.
 func (mg *FolderIAMMember) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this FolderIAMMember.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *FolderIAMMember) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this FolderIAMMember.
@@ -143,22 +119,14 @@ func (mg *FolderIAMMember) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this FolderIAMMember.
-func (mg *FolderIAMMember) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this FolderIAMMember.
+func (mg *FolderIAMMember) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this FolderIAMMember.
 func (mg *FolderIAMMember) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this FolderIAMMember.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *FolderIAMMember) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this FolderIAMMember.
@@ -181,22 +149,14 @@ func (mg *ServiceAccount) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this ServiceAccount.
-func (mg *ServiceAccount) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this ServiceAccount.
+func (mg *ServiceAccount) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ServiceAccount.
 func (mg *ServiceAccount) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this ServiceAccount.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *ServiceAccount) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this ServiceAccount.
@@ -219,22 +179,14 @@ func (mg *ServiceAccount) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this ServiceAccount.
-func (mg *ServiceAccount) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this ServiceAccount.
+func (mg *ServiceAccount) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ServiceAccount.
 func (mg *ServiceAccount) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this ServiceAccount.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *ServiceAccount) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this ServiceAccount.
@@ -257,22 +209,14 @@ func (mg *ServiceAccountIAMMember) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this ServiceAccountIAMMember.
-func (mg *ServiceAccountIAMMember) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this ServiceAccountIAMMember.
+func (mg *ServiceAccountIAMMember) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ServiceAccountIAMMember.
 func (mg *ServiceAccountIAMMember) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this ServiceAccountIAMMember.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *ServiceAccountIAMMember) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this ServiceAccountIAMMember.
@@ -295,22 +239,14 @@ func (mg *ServiceAccountIAMMember) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this ServiceAccountIAMMember.
-func (mg *ServiceAccountIAMMember) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this ServiceAccountIAMMember.
+func (mg *ServiceAccountIAMMember) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ServiceAccountIAMMember.
 func (mg *ServiceAccountIAMMember) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this ServiceAccountIAMMember.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *ServiceAccountIAMMember) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this ServiceAccountIAMMember.
@@ -333,22 +269,14 @@ func (mg *ServiceAccountKey) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this ServiceAccountKey.
-func (mg *ServiceAccountKey) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this ServiceAccountKey.
+func (mg *ServiceAccountKey) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ServiceAccountKey.
 func (mg *ServiceAccountKey) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this ServiceAccountKey.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *ServiceAccountKey) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this ServiceAccountKey.
@@ -371,22 +299,14 @@ func (mg *ServiceAccountKey) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this ServiceAccountKey.
-func (mg *ServiceAccountKey) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this ServiceAccountKey.
+func (mg *ServiceAccountKey) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ServiceAccountKey.
 func (mg *ServiceAccountKey) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this ServiceAccountKey.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *ServiceAccountKey) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this ServiceAccountKey.
@@ -409,22 +329,14 @@ func (mg *ServiceAccountStaticAccessKey) GetDeletionPolicy() xpv1.DeletionPolicy
 	return mg.Spec.DeletionPolicy
 }
 
-// GetManagementPolicy of this ServiceAccountStaticAccessKey.
-func (mg *ServiceAccountStaticAccessKey) GetManagementPolicy() xpv1.ManagementPolicy {
-	return mg.Spec.ManagementPolicy
+// GetManagementPolicies of this ServiceAccountStaticAccessKey.
+func (mg *ServiceAccountStaticAccessKey) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this ServiceAccountStaticAccessKey.
 func (mg *ServiceAccountStaticAccessKey) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-/*
-GetProviderReference of this ServiceAccountStaticAccessKey.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *ServiceAccountStaticAccessKey) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
 }
 
 // GetPublishConnectionDetailsTo of this ServiceAccountStaticAccessKey.
@@ -447,22 +359,14 @@ func (mg *ServiceAccountStaticAccessKey) SetDeletionPolicy(r xpv1.DeletionPolicy
 	mg.Spec.DeletionPolicy = r
 }
 
-// SetManagementPolicy of this ServiceAccountStaticAccessKey.
-func (mg *ServiceAccountStaticAccessKey) SetManagementPolicy(r xpv1.ManagementPolicy) {
-	mg.Spec.ManagementPolicy = r
+// SetManagementPolicies of this ServiceAccountStaticAccessKey.
+func (mg *ServiceAccountStaticAccessKey) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this ServiceAccountStaticAccessKey.
 func (mg *ServiceAccountStaticAccessKey) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this ServiceAccountStaticAccessKey.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *ServiceAccountStaticAccessKey) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this ServiceAccountStaticAccessKey.

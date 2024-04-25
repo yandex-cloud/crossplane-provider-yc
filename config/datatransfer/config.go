@@ -19,8 +19,8 @@ import (
 	xpref "github.com/crossplane/crossplane-runtime/pkg/reference"
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 
-	"github.com/upbound/upjet/pkg/config"
-	"github.com/upbound/upjet/pkg/resource"
+	"github.com/crossplane/upjet/pkg/config"
+	"github.com/crossplane/upjet/pkg/resource"
 
 	"github.com/yandex-cloud/provider-jet-yc/config/mdb"
 	"github.com/yandex-cloud/provider-jet-yc/config/vpc"

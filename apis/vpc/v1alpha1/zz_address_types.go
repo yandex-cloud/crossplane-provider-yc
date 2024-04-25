@@ -25,11 +25,48 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AddressInitParameters struct {
+
+	// DNS record specification of address
+	DNSRecord []DNSRecordInitParameters `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
+
+	// Flag that protects the address from accidental deletion.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// An optional description of this resource. Provide this property when
+	// you create the resource.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// spec of IP v4 address
+	ExternalIPv4Address []ExternalIPv4AddressInitParameters `json:"externalIpv4Address,omitempty" tf:"external_ipv4_address,omitempty"`
+
+	// ID of the folder that the resource belongs to. If it
+	// is not provided, the default provider folder is used.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// Labels to apply to this resource. A list of key/value pairs.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Name of the address. Provided by the client when the address is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
 type AddressObservation struct {
 
 	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// DNS record specification of address
 	DNSRecord []DNSRecordObservation `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
 	// Flag that protects the address from accidental deletion.
@@ -49,6 +86,7 @@ type AddressObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Labels to apply to this resource. A list of key/value pairs.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Name of the address. Provided by the client when the address is created.
@@ -63,6 +101,7 @@ type AddressObservation struct {
 
 type AddressParameters struct {
 
+	// DNS record specification of address
 	// +kubebuilder:validation:Optional
 	DNSRecord []DNSRecordParameters `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
@@ -95,6 +134,7 @@ type AddressParameters struct {
 
 	// Labels to apply to this resource. A list of key/value pairs.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Name of the address. Provided by the client when the address is created.
@@ -102,29 +142,65 @@ type AddressParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
-type DNSRecordObservation struct {
+type DNSRecordInitParameters struct {
+
+	// DNS zone id to create record at.
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
+	// FQDN for record to address
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
+	// If PTR record is needed
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
+	// TTL of DNS record
+	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
+}
+
+type DNSRecordObservation struct {
+
+	// DNS zone id to create record at.
+	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
+
+	// FQDN for record to address
+	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
+
+	// If PTR record is needed
+	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
+
+	// TTL of DNS record
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type DNSRecordParameters struct {
 
-	// +kubebuilder:validation:Required
+	// DNS zone id to create record at.
+	// +kubebuilder:validation:Optional
 	DNSZoneID *string `json:"dnsZoneId" tf:"dns_zone_id,omitempty"`
 
-	// +kubebuilder:validation:Required
+	// FQDN for record to address
+	// +kubebuilder:validation:Optional
 	Fqdn *string `json:"fqdn" tf:"fqdn,omitempty"`
 
+	// If PTR record is needed
 	// +kubebuilder:validation:Optional
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
+	// TTL of DNS record
 	// +kubebuilder:validation:Optional
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
+}
+
+type ExternalIPv4AddressInitParameters struct {
+
+	// Enable DDOS protection. Possible values are: "qrator"
+	DdosProtectionProvider *string `json:"ddosProtectionProvider,omitempty" tf:"ddos_protection_provider,omitempty"`
+
+	// Wanted outgoing smtp capability.
+	OutgoingSMTPCapability *string `json:"outgoingSmtpCapability,omitempty" tf:"outgoing_smtp_capability,omitempty"`
+
+	// Zone for allocating address.
+	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 type ExternalIPv4AddressObservation struct {
@@ -161,6 +237,17 @@ type ExternalIPv4AddressParameters struct {
 type AddressSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     AddressParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider AddressInitParameters `json:"initProvider,omitempty"`
 }
 
 // AddressStatus defines the observed state of Address.
@@ -170,13 +257,14 @@ type AddressStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Address is the Schema for the Addresss API. Manages a VPC address within Yandex.Cloud.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type Address struct {
 	metav1.TypeMeta   `json:",inline"`

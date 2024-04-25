@@ -25,6 +25,43 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ServiceAccountIAMMemberInitParameters struct {
+
+	// Identity that will be granted the privilege in role.
+	// Entry can have one of the following values:
+	// +crossplane:generate:reference:type=ServiceAccount
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/iam.ServiceAccountRefValue()
+	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
+	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
+	Member *string `json:"member,omitempty" tf:"member,omitempty"`
+
+	// The role that should be applied. Only one
+	// yandex_iam_service_account_iam_binding can be used per role.
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+
+	// The service account ID to apply a policy to.
+	// +crossplane:generate:reference:type=ServiceAccount
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+
+	// Reference to a ServiceAccount to populate serviceAccountId.
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDRef *v1.Reference `json:"serviceAccountIdRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceAccount to populate serviceAccountId.
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
+
+	// Reference to a ServiceAccount to populate member.
+	// +kubebuilder:validation:Optional
+	ServiceAccountRef *v1.Reference `json:"serviceAccountRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceAccount to populate member.
+	// +kubebuilder:validation:Optional
+	ServiceAccountSelector *v1.Selector `json:"serviceAccountSelector,omitempty" tf:"-"`
+
+	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
+}
+
 type ServiceAccountIAMMemberObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -87,6 +124,17 @@ type ServiceAccountIAMMemberParameters struct {
 type ServiceAccountIAMMemberSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ServiceAccountIAMMemberParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ServiceAccountIAMMemberInitParameters `json:"initProvider,omitempty"`
 }
 
 // ServiceAccountIAMMemberStatus defines the observed state of ServiceAccountIAMMember.
@@ -96,18 +144,19 @@ type ServiceAccountIAMMemberStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ServiceAccountIAMMember is the Schema for the ServiceAccountIAMMembers API. Allows management of a single member for a single IAM binding for a Yandex IAM service account.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type ServiceAccountIAMMember struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.role)",message="role is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.role) || (has(self.initProvider) && has(self.initProvider.role))",message="spec.forProvider.role is a required parameter"
 	Spec   ServiceAccountIAMMemberSpec   `json:"spec"`
 	Status ServiceAccountIAMMemberStatus `json:"status,omitempty"`
 }

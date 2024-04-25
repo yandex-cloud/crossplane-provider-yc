@@ -25,6 +25,14 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AndPrincipalsHeaderInitParameters struct {
+
+	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	Value []ValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
 type AndPrincipalsHeaderObservation struct {
 
 	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
@@ -36,11 +44,19 @@ type AndPrincipalsHeaderObservation struct {
 type AndPrincipalsHeaderParameters struct {
 
 	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	Value []ValueParameters `json:"value,omitempty" tf:"value,omitempty"`
+}
+
+type AndPrincipalsInitParameters struct {
+	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
+
+	Header []AndPrincipalsHeaderInitParameters `json:"header,omitempty" tf:"header,omitempty"`
+
+	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
 }
 
 type AndPrincipalsObservation struct {
@@ -63,6 +79,35 @@ type AndPrincipalsParameters struct {
 	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
 }
 
+type HTTPRouterInitParameters struct {
+
+	// An optional description of the HTTP Router. Provide this property when
+	// you create the resource.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The ID of the folder to which the resource belongs.
+	// If omitted, the provider folder is used.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// Labels to assign to this HTTP Router. A list of key/value pairs.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	RouteOptions []RouteOptionsInitParameters `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
+}
+
 type HTTPRouterObservation struct {
 
 	// The HTTP Router creation timestamp.
@@ -80,6 +125,7 @@ type HTTPRouterObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Labels to assign to this HTTP Router. A list of key/value pairs.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
@@ -111,6 +157,7 @@ type HTTPRouterParameters struct {
 
 	// Labels to assign to this HTTP Router. A list of key/value pairs.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
@@ -121,14 +168,24 @@ type HTTPRouterParameters struct {
 	RouteOptions []RouteOptionsParameters `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
 }
 
+type PrincipalsInitParameters struct {
+	AndPrincipals []AndPrincipalsInitParameters `json:"andPrincipals,omitempty" tf:"and_principals,omitempty"`
+}
+
 type PrincipalsObservation struct {
 	AndPrincipals []AndPrincipalsObservation `json:"andPrincipals,omitempty" tf:"and_principals,omitempty"`
 }
 
 type PrincipalsParameters struct {
 
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	AndPrincipals []AndPrincipalsParameters `json:"andPrincipals" tf:"and_principals,omitempty"`
+}
+
+type RbacInitParameters struct {
+	Action *string `json:"action,omitempty" tf:"action,omitempty"`
+
+	Principals []PrincipalsInitParameters `json:"principals,omitempty" tf:"principals,omitempty"`
 }
 
 type RbacObservation struct {
@@ -142,8 +199,15 @@ type RbacParameters struct {
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	Principals []PrincipalsParameters `json:"principals" tf:"principals,omitempty"`
+}
+
+type RouteOptionsInitParameters struct {
+	Rbac []RbacInitParameters `json:"rbac,omitempty" tf:"rbac,omitempty"`
+
+	// The ID of the HTTP Router.
+	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type RouteOptionsObservation struct {
@@ -161,6 +225,14 @@ type RouteOptionsParameters struct {
 	// The ID of the HTTP Router.
 	// +kubebuilder:validation:Optional
 	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
+}
+
+type ValueInitParameters struct {
+	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
+
+	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
+
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type ValueObservation struct {
@@ -187,6 +259,17 @@ type ValueParameters struct {
 type HTTPRouterSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     HTTPRouterParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider HTTPRouterInitParameters `json:"initProvider,omitempty"`
 }
 
 // HTTPRouterStatus defines the observed state of HTTPRouter.
@@ -196,13 +279,14 @@ type HTTPRouterStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // HTTPRouter is the Schema for the HTTPRouters API. The HTTP router defines the routing rules for HTTP requests to backend groups.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type HTTPRouter struct {
 	metav1.TypeMeta   `json:",inline"`

@@ -25,13 +25,35 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type MongodbUserInitParameters struct {
+
+	// +crossplane:generate:reference:type=MongodbCluster
+	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
+
+	// Reference to a MongodbCluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDRef *v1.Reference `json:"clusterIdRef,omitempty" tf:"-"`
+
+	// Selector for a MongodbCluster to populate clusterId.
+	// +kubebuilder:validation:Optional
+	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
+
+	// The name of the user.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Set of permissions granted to the user. The structure is documented below.
+	Permission []MongodbUserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+}
+
 type MongodbUserObservation struct {
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Set of permissions granted to the user. The structure is documented below.
 	Permission []MongodbUserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
@@ -49,28 +71,48 @@ type MongodbUserParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
+	// The name of the user.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The password of the user.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
+	// Set of permissions granted to the user. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Permission []MongodbUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
-type MongodbUserPermissionObservation struct {
+type MongodbUserPermissionInitParameters struct {
+
+	// The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 
+	// List of strings. The roles of the user in this database. For more information see the official documentation.
+	// +listType=set
+	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
+}
+
+type MongodbUserPermissionObservation struct {
+
+	// The name of the database that the permission grants access to.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
+
+	// List of strings. The roles of the user in this database. For more information see the official documentation.
+	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
 type MongodbUserPermissionParameters struct {
 
-	// +kubebuilder:validation:Required
+	// The name of the database that the permission grants access to.
+	// +kubebuilder:validation:Optional
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 
+	// List of strings. The roles of the user in this database. For more information see the official documentation.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
@@ -78,6 +120,17 @@ type MongodbUserPermissionParameters struct {
 type MongodbUserSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     MongodbUserParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider MongodbUserInitParameters `json:"initProvider,omitempty"`
 }
 
 // MongodbUserStatus defines the observed state of MongodbUser.
@@ -87,19 +140,20 @@ type MongodbUserStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
-// MongodbUser is the Schema for the MongodbUsers API. <no value>
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
+// MongodbUser is the Schema for the MongodbUsers API. Manages a MongoDB user within Yandex.Cloud.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type MongodbUser struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.name)",message="name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.passwordSecretRef)",message="passwordSecretRef is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.passwordSecretRef)",message="spec.forProvider.passwordSecretRef is a required parameter"
 	Spec   MongodbUserSpec   `json:"spec"`
 	Status MongodbUserStatus `json:"status,omitempty"`
 }

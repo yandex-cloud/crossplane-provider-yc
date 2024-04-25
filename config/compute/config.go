@@ -16,7 +16,7 @@ package compute
 import (
 	"fmt"
 
-	"github.com/upbound/upjet/pkg/config"
+	"github.com/crossplane/upjet/pkg/config"
 
 	"github.com/yandex-cloud/provider-jet-yc/config/iam"
 	"github.com/yandex-cloud/provider-jet-yc/config/vpc"

@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.11.4
+    controller-gen.kubebuilder.io/version: v0.14.0
   name: transfers.datatransfer.yandex-cloud.jet.crossplane.io
 spec:
   group: datatransfer.yandex-cloud.jet.crossplane.io
@@ -19,11 +19,11 @@ spec:
   scope: Cluster
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .status.conditions[?(@.type=='Ready')].status
-      name: READY
-      type: string
     - jsonPath: .status.conditions[?(@.type=='Synced')].status
       name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
       type: string
     - jsonPath: .metadata.annotations.crossplane\.io/external-name
       name: EXTERNAL-NAME
@@ -38,14 +38,19 @@ spec:
           Transfer transfer within Yandex.Cloud.
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
             type: string
           metadata:
             type: object
@@ -54,13 +59,14 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: 'DeletionPolicy specifies what will happen to the underlying
-                  external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicy field in a future release. Currently,
-                  both could be set independently and non-default values would be
-                  honored if the feature flag is enabled. See the design doc for more
-                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
                 enum:
                 - Orphan
                 - Delete
@@ -86,21 +92,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -114,8 +120,9 @@ spec:
                       folderId.
                     properties:
                       matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
                         type: boolean
                       matchLabels:
                         additionalProperties:
@@ -128,21 +135,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -155,29 +162,36 @@ spec:
                     description: A set of key/value label pairs to assign to the Data
                       Transfer transfer.
                     type: object
+                    x-kubernetes-map-type: granular
                   name:
                     description: Name of the transfer.
                     type: string
                   onCreateActivateMode:
-                    description: Activation action on create a new incremental transfer.
-                      It is not part of the transfer parameter and is used only on
-                      create. One of "sync_activate", "async_activate", "dont_activate".
-                      The default is "sync_activate".
+                    description: |-
+                      Activation action on create a new incremental transfer.
+                      It is not part of the transfer parameter and is used only on create.
+                      One of "sync_activate", "async_activate", "dont_activate". The default is "sync_activate".
                     type: string
                   runtime:
+                    description: Runtime parameters for the transfer.
                     items:
                       properties:
                         ycRuntime:
+                          description: YC Runtime parameters for the transfer.
                           items:
                             properties:
                               jobCount:
+                                description: Number of workers in parallel replication.
                                 type: number
                               uploadShardParams:
+                                description: Parallel snapshot parameters.
                                 items:
                                   properties:
                                     jobCount:
+                                      description: Number of workers.
                                       type: number
                                     processCount:
+                                      description: Number of threads.
                                       type: number
                                   type: object
                                 type: array
@@ -199,21 +213,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -226,8 +240,9 @@ spec:
                     description: Selector for a Endpoint to populate sourceId.
                     properties:
                       matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
                         type: boolean
                       matchLabels:
                         additionalProperties:
@@ -240,21 +255,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -275,21 +290,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -302,8 +317,9 @@ spec:
                     description: Selector for a Endpoint to populate targetId.
                     properties:
                       matchControllerRef:
-                        description: MatchControllerRef ensures an object with the
-                          same controller reference as the selecting object is selected.
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
                         type: boolean
                       matchLabels:
                         additionalProperties:
@@ -316,21 +332,21 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -338,35 +354,51 @@ spec:
                         type: object
                     type: object
                   transformation:
+                    description: Transformation for the transfer.
                     items:
                       properties:
                         transformers:
+                          description: A list of transformers. You can specify exactly
+                            1 transformer in each element of list.
                           items:
                             properties:
                               convertToString:
+                                description: Convert column values to strings.
                                 items:
                                   properties:
                                     columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
                                       items:
                                         properties:
                                           excludeColumns:
+                                            description: List of columns that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
+                                            description: List of columns that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -375,29 +407,42 @@ spec:
                                   type: object
                                 type: array
                               filterColumns:
+                                description: Set up a list of table columns to transfer.
                                 items:
                                   properties:
                                     columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
                                       items:
                                         properties:
                                           excludeColumns:
+                                            description: List of columns that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
+                                            description: List of columns that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -406,18 +451,32 @@ spec:
                                   type: object
                                 type: array
                               filterRows:
+                                description: This filter only applies to transfers
+                                  with queues (Apache Kafka®) as a data source. When
+                                  running a transfer, only the strings meeting the
+                                  specified criteria remain in a changefeed.
                                 items:
                                   properties:
                                     filter:
+                                      description: 'Filtering criterion. This can
+                                        be comparison operators for numeric, string,
+                                        and Boolean values, comparison to NULL, and
+                                        checking whether a substring is part of a
+                                        string. Details here: https://cloud.yandex.com/en/docs/data-transfer/concepts/data-transformation#append-only-sources'
                                       type: string
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -426,32 +485,48 @@ spec:
                                   type: object
                                 type: array
                               maskField:
+                                description: Mask field transformer allows you to
+                                  hash data.
                                 items:
                                   properties:
                                     columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
                                       items:
                                         type: string
                                       type: array
                                     function:
+                                      description: Mask function.
                                       items:
                                         properties:
                                           maskFunctionHash:
+                                            description: Hash mask function.
                                             items:
                                               properties:
                                                 userDefinedSalt:
+                                                  description: This string will be
+                                                    used in the HMAC(sha256, salt)
+                                                    function applied to the column
+                                                    data.
                                                   type: string
                                               type: object
                                             type: array
                                         type: object
                                       type: array
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -460,13 +535,21 @@ spec:
                                   type: object
                                 type: array
                               renameTables:
+                                description: Set rules for renaming tables by specifying
+                                  the current names of the tables in the source and
+                                  new names for these tables in the target.
                                 items:
                                   properties:
                                     renameTables:
+                                      description: Set rules for renaming tables by
+                                        specifying the current names of the tables
+                                        in the source and new names for these tables
+                                        in the target.
                                       items:
                                         properties:
                                           newName:
-                                            description: Name of the transfer.
+                                            description: Specify the new names for
+                                              this table in the target.
                                             items:
                                               properties:
                                                 name:
@@ -477,7 +560,8 @@ spec:
                                               type: object
                                             type: array
                                           originalName:
-                                            description: Name of the transfer.
+                                            description: Specify the current names
+                                              of the table in the source.
                                             items:
                                               properties:
                                                 name:
@@ -492,20 +576,28 @@ spec:
                                   type: object
                                 type: array
                               replacePrimaryKey:
+                                description: Override primary keys.
                                 items:
                                   properties:
                                     keys:
+                                      description: List of columns to be used as primary
+                                        keys.
                                       items:
                                         type: string
                                       type: array
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -514,31 +606,47 @@ spec:
                                   type: object
                                 type: array
                               sharderTransformer:
+                                description: Set the number of shards for particular
+                                  tables and a list of columns whose values will be
+                                  used for calculating a hash to determine a shard.
                                 items:
                                   properties:
                                     columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
                                       items:
                                         properties:
                                           excludeColumns:
+                                            description: List of columns that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
+                                            description: List of columns that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     shardsCount:
+                                      description: Number of shards.
                                       type: number
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -547,22 +655,35 @@ spec:
                                   type: object
                                 type: array
                               tableSplitterTransformer:
+                                description: Splits the X table into multiple tables
+                                  (X_1, X_2, ..., X_n) based on data.
                                 items:
                                   properties:
                                     columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
                                       items:
                                         type: string
                                       type: array
                                     splitter:
+                                      description: Specify the split string to be
+                                        used for merging components in a new table
+                                        name.
                                       type: string
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -579,107 +700,29 @@ spec:
                       "SNAPSHOT_AND_INCREMENT".
                     type: string
                 type: object
-              managementPolicy:
-                default: FullControl
-                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
-                  It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. ManagementPolicy
-                  specifies the level of control Crossplane has over the managed external
-                  resource. This field is planned to replace the DeletionPolicy field
-                  in a future release. Currently, both could be set independently
-                  and non-default values would be honored if the feature flag is enabled.
-                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
-                enum:
-                - FullControl
-                - ObserveOnly
-                - OrphanOnDelete
-                type: string
-              providerConfigRef:
-                default:
-                  name: default
-                description: ProviderConfigReference specifies how the provider that
-                  will be used to create, observe, update, and delete this managed
-                  resource should be configured.
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
                 properties:
-                  name:
-                    description: Name of the referenced object.
+                  description:
+                    description: Arbitrary description text for the transfer.
                     type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              providerRef:
-                description: 'ProviderReference specifies the provider that will be
-                  used to create, observe, update, and delete this managed resource.
-                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
-                properties:
-                  name:
-                    description: Name of the referenced object.
+                  folderId:
+                    description: ID of the folder to create the transfer in. If it
+                      is not provided, the default provider folder is used.
                     type: string
-                  policy:
-                    description: Policies for referencing.
-                    properties:
-                      resolution:
-                        default: Required
-                        description: Resolution specifies whether resolution of this
-                          reference is required. The default is 'Required', which
-                          means the reconcile will fail if the reference cannot be
-                          resolved. 'Optional' means this reference will be a no-op
-                          if it cannot be resolved.
-                        enum:
-                        - Required
-                        - Optional
-                        type: string
-                      resolve:
-                        description: Resolve specifies when this reference should
-                          be resolved. The default is 'IfNotPresent', which will attempt
-                          to resolve the reference only when the corresponding field
-                          is not present. Use 'Always' to resolve the reference on
-                          every reconcile.
-                        enum:
-                        - Always
-                        - IfNotPresent
-                        type: string
-                    type: object
-                required:
-                - name
-                type: object
-              publishConnectionDetailsTo:
-                description: PublishConnectionDetailsTo specifies the connection secret
-                  config which contains a name, metadata and a reference to secret
-                  store config to which any connection details for this managed resource
-                  should be written. Connection details frequently include the endpoint,
-                  username, and password required to connect to the managed resource.
-                properties:
-                  configRef:
-                    default:
-                      name: default
-                    description: SecretStoreConfigRef specifies which secret store
-                      config should be used for this ConnectionSecret.
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -689,21 +732,718 @@ spec:
                         properties:
                           resolution:
                             default: Required
-                            description: Resolution specifies whether resolution of
-                              this reference is required. The default is 'Required',
-                              which means the reconcile will fail if the reference
-                              cannot be resolved. 'Optional' means this reference
-                              will be a no-op if it cannot be resolved.
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
                             enum:
                             - Required
                             - Optional
                             type: string
                           resolve:
-                            description: Resolve specifies when this reference should
-                              be resolved. The default is 'IfNotPresent', which will
-                              attempt to resolve the reference only when the corresponding
-                              field is not present. Use 'Always' to resolve the reference
-                              on every reconcile.
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: A set of key/value label pairs to assign to the Data
+                      Transfer transfer.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  name:
+                    description: Name of the transfer.
+                    type: string
+                  onCreateActivateMode:
+                    description: |-
+                      Activation action on create a new incremental transfer.
+                      It is not part of the transfer parameter and is used only on create.
+                      One of "sync_activate", "async_activate", "dont_activate". The default is "sync_activate".
+                    type: string
+                  runtime:
+                    description: Runtime parameters for the transfer.
+                    items:
+                      properties:
+                        ycRuntime:
+                          description: YC Runtime parameters for the transfer.
+                          items:
+                            properties:
+                              jobCount:
+                                description: Number of workers in parallel replication.
+                                type: number
+                              uploadShardParams:
+                                description: Parallel snapshot parameters.
+                                items:
+                                  properties:
+                                    jobCount:
+                                      description: Number of workers.
+                                      type: number
+                                    processCount:
+                                      description: Number of threads.
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  sourceId:
+                    description: ID of the source endpoint for the transfer.
+                    type: string
+                  sourceIdRef:
+                    description: Reference to a Endpoint to populate sourceId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  sourceIdSelector:
+                    description: Selector for a Endpoint to populate sourceId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  targetId:
+                    description: ID of the target endpoint for the transfer.
+                    type: string
+                  targetIdRef:
+                    description: Reference to a Endpoint to populate targetId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  targetIdSelector:
+                    description: Selector for a Endpoint to populate targetId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  transformation:
+                    description: Transformation for the transfer.
+                    items:
+                      properties:
+                        transformers:
+                          description: A list of transformers. You can specify exactly
+                            1 transformer in each element of list.
+                          items:
+                            properties:
+                              convertToString:
+                                description: Convert column values to strings.
+                                items:
+                                  properties:
+                                    columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
+                                      items:
+                                        properties:
+                                          excludeColumns:
+                                            description: List of columns that will
+                                              be excluded to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeColumns:
+                                            description: List of columns that will
+                                              be included to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    tables:
+                                      description: Table filter.
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              filterColumns:
+                                description: Set up a list of table columns to transfer.
+                                items:
+                                  properties:
+                                    columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
+                                      items:
+                                        properties:
+                                          excludeColumns:
+                                            description: List of columns that will
+                                              be excluded to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeColumns:
+                                            description: List of columns that will
+                                              be included to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    tables:
+                                      description: Table filter.
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              filterRows:
+                                description: This filter only applies to transfers
+                                  with queues (Apache Kafka®) as a data source. When
+                                  running a transfer, only the strings meeting the
+                                  specified criteria remain in a changefeed.
+                                items:
+                                  properties:
+                                    filter:
+                                      description: 'Filtering criterion. This can
+                                        be comparison operators for numeric, string,
+                                        and Boolean values, comparison to NULL, and
+                                        checking whether a substring is part of a
+                                        string. Details here: https://cloud.yandex.com/en/docs/data-transfer/concepts/data-transformation#append-only-sources'
+                                      type: string
+                                    tables:
+                                      description: Table filter.
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              maskField:
+                                description: Mask field transformer allows you to
+                                  hash data.
+                                items:
+                                  properties:
+                                    columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
+                                      items:
+                                        type: string
+                                      type: array
+                                    function:
+                                      description: Mask function.
+                                      items:
+                                        properties:
+                                          maskFunctionHash:
+                                            description: Hash mask function.
+                                            items:
+                                              properties:
+                                                userDefinedSalt:
+                                                  description: This string will be
+                                                    used in the HMAC(sha256, salt)
+                                                    function applied to the column
+                                                    data.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    tables:
+                                      description: Table filter.
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              renameTables:
+                                description: Set rules for renaming tables by specifying
+                                  the current names of the tables in the source and
+                                  new names for these tables in the target.
+                                items:
+                                  properties:
+                                    renameTables:
+                                      description: Set rules for renaming tables by
+                                        specifying the current names of the tables
+                                        in the source and new names for these tables
+                                        in the target.
+                                      items:
+                                        properties:
+                                          newName:
+                                            description: Specify the new names for
+                                              this table in the target.
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: Name of the transfer.
+                                                  type: string
+                                                nameSpace:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                          originalName:
+                                            description: Specify the current names
+                                              of the table in the source.
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: Name of the transfer.
+                                                  type: string
+                                                nameSpace:
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              replacePrimaryKey:
+                                description: Override primary keys.
+                                items:
+                                  properties:
+                                    keys:
+                                      description: List of columns to be used as primary
+                                        keys.
+                                      items:
+                                        type: string
+                                      type: array
+                                    tables:
+                                      description: Table filter.
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              sharderTransformer:
+                                description: Set the number of shards for particular
+                                  tables and a list of columns whose values will be
+                                  used for calculating a hash to determine a shard.
+                                items:
+                                  properties:
+                                    columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
+                                      items:
+                                        properties:
+                                          excludeColumns:
+                                            description: List of columns that will
+                                              be excluded to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeColumns:
+                                            description: List of columns that will
+                                              be included to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                    shardsCount:
+                                      description: Number of shards.
+                                      type: number
+                                    tables:
+                                      description: Table filter.
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              tableSplitterTransformer:
+                                description: Splits the X table into multiple tables
+                                  (X_1, X_2, ..., X_n) based on data.
+                                items:
+                                  properties:
+                                    columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
+                                      items:
+                                        type: string
+                                      type: array
+                                    splitter:
+                                      description: Specify the split string to be
+                                        used for merging components in a new table
+                                        name.
+                                      type: string
+                                    tables:
+                                      description: Table filter.
+                                      items:
+                                        properties:
+                                          excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                          includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
+                                            items:
+                                              type: string
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  type:
+                    description: Type of the transfer. One of "SNAPSHOT_ONLY", "INCREMENT_ONLY",
+                      "SNAPSHOT_AND_INCREMENT".
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: |-
+                  PublishConnectionDetailsTo specifies the connection secret config which
+                  contains a name, metadata and a reference to secret store config to
+                  which any connection details for this managed resource should be written.
+                  Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: |-
+                      SecretStoreConfigRef specifies which secret store config should be used
+                      for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
                             enum:
                             - Always
                             - IfNotPresent
@@ -718,21 +1458,22 @@ spec:
                       annotations:
                         additionalProperties:
                           type: string
-                        description: Annotations are the annotations to be added to
-                          connection secret. - For Kubernetes secrets, this will be
-                          used as "metadata.annotations". - It is up to Secret Store
-                          implementation for others store types.
+                        description: |-
+                          Annotations are the annotations to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.annotations".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       labels:
                         additionalProperties:
                           type: string
-                        description: Labels are the labels/tags to be added to connection
-                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
-                          - It is up to Secret Store implementation for others store
-                          types.
+                        description: |-
+                          Labels are the labels/tags to be added to connection secret.
+                          - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store types.
                         type: object
                       type:
-                        description: Type is the SecretType for the connection secret.
+                        description: |-
+                          Type is the SecretType for the connection secret.
                           - Only valid for Kubernetes Secret Stores.
                         type: string
                     type: object
@@ -743,14 +1484,15 @@ spec:
                 - name
                 type: object
               writeConnectionSecretToRef:
-                description: WriteConnectionSecretToReference specifies the namespace
-                  and name of a Secret to which any connection details for this managed
-                  resource should be written. Connection details frequently include
-                  the endpoint, username, and password required to connect to the
-                  managed resource. This field is planned to be replaced in a future
-                  release in favor of PublishConnectionDetailsTo. Currently, both
-                  could be set independently and connection details would be published
-                  to both without affecting each other.
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                  This field is planned to be replaced in a future release in favor of
+                  PublishConnectionDetailsTo. Currently, both could be set independently
+                  and connection details would be published to both without affecting
+                  each other.
                 properties:
                   name:
                     description: Name of the secret.
@@ -786,29 +1528,36 @@ spec:
                     description: A set of key/value label pairs to assign to the Data
                       Transfer transfer.
                     type: object
+                    x-kubernetes-map-type: granular
                   name:
                     description: Name of the transfer.
                     type: string
                   onCreateActivateMode:
-                    description: Activation action on create a new incremental transfer.
-                      It is not part of the transfer parameter and is used only on
-                      create. One of "sync_activate", "async_activate", "dont_activate".
-                      The default is "sync_activate".
+                    description: |-
+                      Activation action on create a new incremental transfer.
+                      It is not part of the transfer parameter and is used only on create.
+                      One of "sync_activate", "async_activate", "dont_activate". The default is "sync_activate".
                     type: string
                   runtime:
+                    description: Runtime parameters for the transfer.
                     items:
                       properties:
                         ycRuntime:
+                          description: YC Runtime parameters for the transfer.
                           items:
                             properties:
                               jobCount:
+                                description: Number of workers in parallel replication.
                                 type: number
                               uploadShardParams:
+                                description: Parallel snapshot parameters.
                                 items:
                                   properties:
                                     jobCount:
+                                      description: Number of workers.
                                       type: number
                                     processCount:
+                                      description: Number of threads.
                                       type: number
                                   type: object
                                 type: array
@@ -823,35 +1572,51 @@ spec:
                     description: ID of the target endpoint for the transfer.
                     type: string
                   transformation:
+                    description: Transformation for the transfer.
                     items:
                       properties:
                         transformers:
+                          description: A list of transformers. You can specify exactly
+                            1 transformer in each element of list.
                           items:
                             properties:
                               convertToString:
+                                description: Convert column values to strings.
                                 items:
                                   properties:
                                     columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
                                       items:
                                         properties:
                                           excludeColumns:
+                                            description: List of columns that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
+                                            description: List of columns that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -860,29 +1625,42 @@ spec:
                                   type: object
                                 type: array
                               filterColumns:
+                                description: Set up a list of table columns to transfer.
                                 items:
                                   properties:
                                     columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
                                       items:
                                         properties:
                                           excludeColumns:
+                                            description: List of columns that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
+                                            description: List of columns that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -891,18 +1669,32 @@ spec:
                                   type: object
                                 type: array
                               filterRows:
+                                description: This filter only applies to transfers
+                                  with queues (Apache Kafka®) as a data source. When
+                                  running a transfer, only the strings meeting the
+                                  specified criteria remain in a changefeed.
                                 items:
                                   properties:
                                     filter:
+                                      description: 'Filtering criterion. This can
+                                        be comparison operators for numeric, string,
+                                        and Boolean values, comparison to NULL, and
+                                        checking whether a substring is part of a
+                                        string. Details here: https://cloud.yandex.com/en/docs/data-transfer/concepts/data-transformation#append-only-sources'
                                       type: string
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -911,32 +1703,48 @@ spec:
                                   type: object
                                 type: array
                               maskField:
+                                description: Mask field transformer allows you to
+                                  hash data.
                                 items:
                                   properties:
                                     columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
                                       items:
                                         type: string
                                       type: array
                                     function:
+                                      description: Mask function.
                                       items:
                                         properties:
                                           maskFunctionHash:
+                                            description: Hash mask function.
                                             items:
                                               properties:
                                                 userDefinedSalt:
+                                                  description: This string will be
+                                                    used in the HMAC(sha256, salt)
+                                                    function applied to the column
+                                                    data.
                                                   type: string
                                               type: object
                                             type: array
                                         type: object
                                       type: array
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -945,13 +1753,21 @@ spec:
                                   type: object
                                 type: array
                               renameTables:
+                                description: Set rules for renaming tables by specifying
+                                  the current names of the tables in the source and
+                                  new names for these tables in the target.
                                 items:
                                   properties:
                                     renameTables:
+                                      description: Set rules for renaming tables by
+                                        specifying the current names of the tables
+                                        in the source and new names for these tables
+                                        in the target.
                                       items:
                                         properties:
                                           newName:
-                                            description: Name of the transfer.
+                                            description: Specify the new names for
+                                              this table in the target.
                                             items:
                                               properties:
                                                 name:
@@ -962,7 +1778,8 @@ spec:
                                               type: object
                                             type: array
                                           originalName:
-                                            description: Name of the transfer.
+                                            description: Specify the current names
+                                              of the table in the source.
                                             items:
                                               properties:
                                                 name:
@@ -977,20 +1794,28 @@ spec:
                                   type: object
                                 type: array
                               replacePrimaryKey:
+                                description: Override primary keys.
                                 items:
                                   properties:
                                     keys:
+                                      description: List of columns to be used as primary
+                                        keys.
                                       items:
                                         type: string
                                       type: array
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -999,31 +1824,47 @@ spec:
                                   type: object
                                 type: array
                               sharderTransformer:
+                                description: Set the number of shards for particular
+                                  tables and a list of columns whose values will be
+                                  used for calculating a hash to determine a shard.
                                 items:
                                   properties:
                                     columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
                                       items:
                                         properties:
                                           excludeColumns:
+                                            description: List of columns that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
+                                            description: List of columns that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     shardsCount:
+                                      description: Number of shards.
                                       type: number
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -1032,22 +1873,35 @@ spec:
                                   type: object
                                 type: array
                               tableSplitterTransformer:
+                                description: Splits the X table into multiple tables
+                                  (X_1, X_2, ..., X_n) based on data.
                                 items:
                                   properties:
                                     columns:
+                                      description: List of strings that specify the
+                                        name of the column for data masking (a regular
+                                        expression).
                                       items:
                                         type: string
                                       type: array
                                     splitter:
+                                      description: Specify the split string to be
+                                        used for merging components in a new table
+                                        name.
                                       type: string
                                     tables:
+                                      description: Table filter.
                                       items:
                                         properties:
                                           excludeTables:
+                                            description: List of tables that will
+                                              be excluded to transfer.
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
+                                            description: List of tables that will
+                                              be included to transfer.
                                             items:
                                               type: string
                                             type: array
@@ -1074,14 +1928,23 @@ spec:
                   description: A Condition that may apply to a resource.
                   properties:
                     lastTransitionTime:
-                      description: LastTransitionTime is the last time this condition
-                        transitioned from one status to another.
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
                       format: date-time
                       type: string
                     message:
-                      description: A Message containing details about this condition's
-                        last transition from one status to another, if any.
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
                       type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
                     reason:
                       description: A Reason for this condition's last transition from
                         one status to another.
@@ -1091,8 +1954,9 @@ spec:
                         False, or Unknown?
                       type: string
                     type:
-                      description: Type of this condition. At most one of each condition
-                        type may apply to a resource at any point in time.
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
                       type: string
                   required:
                   - lastTransitionTime
@@ -1101,6 +1965,16 @@ spec:
                   - type
                   type: object
                 type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
             type: object
         required:
         - spec

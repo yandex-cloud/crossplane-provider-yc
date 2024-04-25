@@ -66,6 +66,38 @@ func (mg *Bucket) ResolveReferences(ctx context.Context, c client.Reader) error 
 	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AccessKey),
+		Extract:      storage.ExtractAccessKey(),
+		Reference:    mg.Spec.InitProvider.AccessKeyRef,
+		Selector:     mg.Spec.InitProvider.AccessKeySelector,
+		To: reference.To{
+			List:    &v1alpha1.ServiceAccountStaticAccessKeyList{},
+			Managed: &v1alpha1.ServiceAccountStaticAccessKey{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.AccessKey")
+	}
+	mg.Spec.InitProvider.AccessKey = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.AccessKeyRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FolderID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.FolderIDRef,
+		Selector:     mg.Spec.InitProvider.FolderIDSelector,
+		To: reference.To{
+			List:    &v1alpha11.FolderList{},
+			Managed: &v1alpha11.Folder{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.FolderID")
+	}
+	mg.Spec.InitProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.FolderIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -107,6 +139,38 @@ func (mg *Object) ResolveReferences(ctx context.Context, c client.Reader) error 
 	}
 	mg.Spec.ForProvider.Bucket = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.BucketRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AccessKey),
+		Extract:      storage.ExtractAccessKey(),
+		Reference:    mg.Spec.InitProvider.AccessKeyRef,
+		Selector:     mg.Spec.InitProvider.AccessKeySelector,
+		To: reference.To{
+			List:    &v1alpha1.ServiceAccountStaticAccessKeyList{},
+			Managed: &v1alpha1.ServiceAccountStaticAccessKey{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.AccessKey")
+	}
+	mg.Spec.InitProvider.AccessKey = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.AccessKeyRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Bucket),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.BucketRef,
+		Selector:     mg.Spec.InitProvider.BucketSelector,
+		To: reference.To{
+			List:    &BucketList{},
+			Managed: &Bucket{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Bucket")
+	}
+	mg.Spec.InitProvider.Bucket = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.BucketRef = rsp.ResolvedReference
 
 	return nil
 }

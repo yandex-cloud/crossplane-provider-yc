@@ -19,10 +19,11 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"dario.cat/mergo"
 	"github.com/pkg/errors"
 
-	"github.com/upbound/upjet/pkg/resource"
-	"github.com/upbound/upjet/pkg/resource/json"
+	"github.com/crossplane/upjet/pkg/resource"
+	"github.com/crossplane/upjet/pkg/resource/json"
 )
 
 // GetTerraformResourceType returns Terraform resource type for this Cluster
@@ -81,6 +82,46 @@ func (tr *Cluster) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
+// GetInitParameters of this Cluster
+func (tr *Cluster) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
+// GetInitParameters of this Cluster
+func (tr *Cluster) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
+	params, err := tr.GetParameters()
+	if err != nil {
+		return nil, errors.Wrapf(err, "cannot get parameters for resource '%q'", tr.GetName())
+	}
+	if !shouldMergeInitProvider {
+		return params, nil
+	}
+
+	initParams, err := tr.GetInitParameters()
+	if err != nil {
+		return nil, errors.Wrapf(err, "cannot get init parameters for resource '%q'", tr.GetName())
+	}
+
+	// Note(lsviben): mergo.WithSliceDeepCopy is needed to merge the
+	// slices from the initProvider to forProvider. As it also sets
+	// overwrite to true, we need to set it back to false, we don't
+	// want to overwrite the forProvider fields with the initProvider
+	// fields.
+	err = mergo.Merge(&params, initParams, mergo.WithSliceDeepCopy, func(c *mergo.Config) {
+		c.Overwrite = false
+	})
+	if err != nil {
+		return nil, errors.Wrapf(err, "cannot merge spec.initProvider and spec.forProvider parameters for resource '%q'", tr.GetName())
+	}
+
+	return params, nil
+}
+
 // LateInitialize this Cluster using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *Cluster) LateInitialize(attrs []byte) (bool, error) {
@@ -96,79 +137,5 @@ func (tr *Cluster) LateInitialize(attrs []byte) (bool, error) {
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *Cluster) GetTerraformSchemaVersion() int {
-	return 0
-}
-
-// GetTerraformResourceType returns Terraform resource type for this NodeGroup
-func (mg *NodeGroup) GetTerraformResourceType() string {
-	return "yandex_kubernetes_node_group"
-}
-
-// GetConnectionDetailsMapping for this NodeGroup
-func (tr *NodeGroup) GetConnectionDetailsMapping() map[string]string {
-	return nil
-}
-
-// GetObservation of this NodeGroup
-func (tr *NodeGroup) GetObservation() (map[string]any, error) {
-	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(o, &base)
-}
-
-// SetObservation for this NodeGroup
-func (tr *NodeGroup) SetObservation(obs map[string]any) error {
-	p, err := json.TFParser.Marshal(obs)
-	if err != nil {
-		return err
-	}
-	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
-}
-
-// GetID returns ID of underlying Terraform resource of this NodeGroup
-func (tr *NodeGroup) GetID() string {
-	if tr.Status.AtProvider.ID == nil {
-		return ""
-	}
-	return *tr.Status.AtProvider.ID
-}
-
-// GetParameters of this NodeGroup
-func (tr *NodeGroup) GetParameters() (map[string]any, error) {
-	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
-	if err != nil {
-		return nil, err
-	}
-	base := map[string]any{}
-	return base, json.TFParser.Unmarshal(p, &base)
-}
-
-// SetParameters for this NodeGroup
-func (tr *NodeGroup) SetParameters(params map[string]any) error {
-	p, err := json.TFParser.Marshal(params)
-	if err != nil {
-		return err
-	}
-	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
-}
-
-// LateInitialize this NodeGroup using its observed tfState.
-// returns True if there are any spec changes for the resource.
-func (tr *NodeGroup) LateInitialize(attrs []byte) (bool, error) {
-	params := &NodeGroupParameters{}
-	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
-		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
-	}
-	opts := []resource.GenericLateInitializerOption{resource.WithZeroValueJSONOmitEmptyFilter(resource.CNameWildcard)}
-
-	li := resource.NewGenericLateInitializer(opts...)
-	return li.LateInitialize(&tr.Spec.ForProvider, params)
-}
-
-// GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *NodeGroup) GetTerraformSchemaVersion() int {
 	return 0
 }

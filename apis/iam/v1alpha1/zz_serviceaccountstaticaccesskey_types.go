@@ -25,6 +25,27 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ServiceAccountStaticAccessKeyInitParameters struct {
+
+	// The description of the service account static key.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// An optional PGP key to encrypt the resulting secret key material. May either be a base64-encoded public key or a keybase username in the form keybase:keybaseusername.
+	PgpKey *string `json:"pgpKey,omitempty" tf:"pgp_key,omitempty"`
+
+	// ID of the service account which is used to get a static key.
+	// +crossplane:generate:reference:type=ServiceAccount
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+
+	// Reference to a ServiceAccount to populate serviceAccountId.
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDRef *v1.Reference `json:"serviceAccountIdRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceAccount to populate serviceAccountId.
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
+}
+
 type ServiceAccountStaticAccessKeyObservation struct {
 
 	// ID of the static access key.
@@ -79,6 +100,17 @@ type ServiceAccountStaticAccessKeyParameters struct {
 type ServiceAccountStaticAccessKeySpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ServiceAccountStaticAccessKeyParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ServiceAccountStaticAccessKeyInitParameters `json:"initProvider,omitempty"`
 }
 
 // ServiceAccountStaticAccessKeyStatus defines the observed state of ServiceAccountStaticAccessKey.
@@ -88,13 +120,14 @@ type ServiceAccountStaticAccessKeyStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // ServiceAccountStaticAccessKey is the Schema for the ServiceAccountStaticAccessKeys API. Allows management of a Yandex.Cloud IAM service account static access key.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type ServiceAccountStaticAccessKey struct {
 	metav1.TypeMeta   `json:",inline"`

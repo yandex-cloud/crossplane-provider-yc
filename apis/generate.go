@@ -28,14 +28,12 @@ limitations under the License.
 //go:generate bash -c "find . -type d -empty -delete"
 //go:generate bash -c "find ../internal/controller -iname 'zz_*' -delete"
 //go:generate bash -c "find ../internal/controller -type d -empty -delete"
+//go:generate rm -rf ../examples-generated
 
-// NOTE(muvaf): Some of Terraform AWS provider files have "!generate" build tag
-// that prevent us from using it for generator program.
+// Generate documentation from Terraform docs.
+//go:generate go run github.com/crossplane/upjet/cmd/scraper -n ${TERRAFORM_PROVIDER_SOURCE} -r ../.work/terraform-provider-yandex/website/docs/r -o ../config/provider-metadata.yaml
 
-// Scrape metadata from Terraform registry
-//go:generate go run github.com/upbound/upjet/cmd/scraper -n hashicorp/terraform-provider-aws -r ../.work/terraform-provider-yandex/website/docs/r -o ../config/provider-metadata.yaml
-
-// Run Terrajet generator
+// Run Upjet generator
 //go:generate go run ../cmd/generator/main.go ..
 
 // Generate deepcopy methodsets and CRD manifests
@@ -44,15 +42,11 @@ limitations under the License.
 // Generate crossplane-runtime methodsets (resource.Claim, etc)
 //go:generate go run -tags generate github.com/crossplane/crossplane-tools/cmd/angryjet generate-methodsets --header-file=../hack/boilerplate.go.txt ./...
 
-// Generate html docs
-//go:generate ../scripts/gen-doc-apis.sh
-//go:generate ../scripts/gen-docs-generate.sh
-
 package apis
 
 import (
 	_ "sigs.k8s.io/controller-tools/cmd/controller-gen" //nolint:typecheck
 
 	_ "github.com/crossplane/crossplane-tools/cmd/angryjet" //nolint:typecheck
-	// _ "github.com/upbound/upjet/cmd/scraper"
+	_ "github.com/crossplane/upjet/cmd/scraper"
 )

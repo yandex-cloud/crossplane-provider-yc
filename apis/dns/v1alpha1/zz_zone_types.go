@@ -25,11 +25,59 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type ZoneInitParameters struct {
+
+	// Flag that protects the dns zone from accidental deletion.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// Description of the DNS zone.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// A set of key/value label pairs to assign to the DNS zone.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// User assigned name of a specific resource. Must be unique within the folder.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
+	// +listType=set
+	PrivateNetworks []*string `json:"privateNetworks,omitempty" tf:"private_networks,omitempty"`
+
+	// References to Network in vpc to populate privateNetworks.
+	// +kubebuilder:validation:Optional
+	PrivateNetworksRefs []v1.Reference `json:"privateNetworksRefs,omitempty" tf:"-"`
+
+	// Selector for a list of Network in vpc to populate privateNetworks.
+	// +kubebuilder:validation:Optional
+	PrivateNetworksSelector *v1.Selector `json:"privateNetworksSelector,omitempty" tf:"-"`
+
+	// The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
+	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
+
+	// The DNS name of this zone, e.g. "example.com.". Must ends with dot.
+	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
+}
+
 type ZoneObservation struct {
 
 	// (Computed) The DNS zone creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// Flag that protects the dns zone from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// Description of the DNS zone.
@@ -42,12 +90,14 @@ type ZoneObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// A set of key/value label pairs to assign to the DNS zone.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// User assigned name of a specific resource. Must be unique within the folder.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
+	// +listType=set
 	PrivateNetworks []*string `json:"privateNetworks,omitempty" tf:"private_networks,omitempty"`
 
 	// The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
@@ -59,6 +109,7 @@ type ZoneObservation struct {
 
 type ZoneParameters struct {
 
+	// Flag that protects the dns zone from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
@@ -81,6 +132,7 @@ type ZoneParameters struct {
 
 	// A set of key/value label pairs to assign to the DNS zone.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// User assigned name of a specific resource. Must be unique within the folder.
@@ -90,6 +142,7 @@ type ZoneParameters struct {
 	// For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	PrivateNetworks []*string `json:"privateNetworks,omitempty" tf:"private_networks,omitempty"`
 
 	// References to Network in vpc to populate privateNetworks.
@@ -113,6 +166,17 @@ type ZoneParameters struct {
 type ZoneSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     ZoneParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider ZoneInitParameters `json:"initProvider,omitempty"`
 }
 
 // ZoneStatus defines the observed state of Zone.
@@ -122,18 +186,19 @@ type ZoneStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // Zone is the Schema for the Zones API. Manages a DNS Zone within Yandex.Cloud.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type Zone struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.zone)",message="zone is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.zone) || (has(self.initProvider) && has(self.initProvider.zone))",message="spec.forProvider.zone is a required parameter"
 	Spec   ZoneSpec   `json:"spec"`
 	Status ZoneStatus `json:"status,omitempty"`
 }

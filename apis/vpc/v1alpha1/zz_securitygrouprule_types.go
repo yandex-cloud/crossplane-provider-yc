@@ -25,6 +25,64 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type SecurityGroupRuleInitParameters struct {
+
+	// Description of the rule.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// direction of the rule. Can be ingress (inbound) or egress (outbound).
+	Direction *string `json:"direction,omitempty" tf:"direction,omitempty"`
+
+	// Minimum port number.
+	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
+
+	// Labels to assign to this rule.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// Port number (if applied to a single port).
+	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+
+	// Special-purpose targets such as "self_security_group". See docs for possible options.
+	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
+
+	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
+
+	// ID of the security group this rule belongs to.
+	// +crossplane:generate:reference:type=SecurityGroup
+	SecurityGroupBinding *string `json:"securityGroupBinding,omitempty" tf:"security_group_binding,omitempty"`
+
+	// Reference to a SecurityGroup to populate securityGroupBinding.
+	// +kubebuilder:validation:Optional
+	SecurityGroupBindingRef *v1.Reference `json:"securityGroupBindingRef,omitempty" tf:"-"`
+
+	// Selector for a SecurityGroup to populate securityGroupBinding.
+	// +kubebuilder:validation:Optional
+	SecurityGroupBindingSelector *v1.Selector `json:"securityGroupBindingSelector,omitempty" tf:"-"`
+
+	// Target security group ID for this rule.
+	// +crossplane:generate:reference:type=SecurityGroup
+	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
+
+	// Reference to a SecurityGroup to populate securityGroupId.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIDRef *v1.Reference `json:"securityGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a SecurityGroup to populate securityGroupId.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
+
+	// Maximum port number.
+	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
+
+	// The blocks of IPv4 addresses for this rule.
+	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
+
+	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
+}
+
 type SecurityGroupRuleObservation struct {
 
 	// Description of the rule.
@@ -40,6 +98,7 @@ type SecurityGroupRuleObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// Labels to assign to this rule.
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Port number (if applied to a single port).
@@ -83,6 +142,7 @@ type SecurityGroupRuleParameters struct {
 
 	// Labels to assign to this rule.
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Port number (if applied to a single port).
@@ -140,6 +200,17 @@ type SecurityGroupRuleParameters struct {
 type SecurityGroupRuleSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     SecurityGroupRuleParameters `json:"forProvider"`
+	// THIS IS A BETA FIELD. It will be honored
+	// unless the Management Policies feature flag is disabled.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider SecurityGroupRuleInitParameters `json:"initProvider,omitempty"`
 }
 
 // SecurityGroupRuleStatus defines the observed state of SecurityGroupRule.
@@ -149,18 +220,19 @@ type SecurityGroupRuleStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:storageversion
 
 // SecurityGroupRule is the Schema for the SecurityGroupRules API. Yandex VPC Security Group Rule.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
-// +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,yandex-cloud}
 type SecurityGroupRule struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.direction)",message="direction is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.direction) || (has(self.initProvider) && has(self.initProvider.direction))",message="spec.forProvider.direction is a required parameter"
 	Spec   SecurityGroupRuleSpec   `json:"spec"`
 	Status SecurityGroupRuleStatus `json:"status,omitempty"`
 }

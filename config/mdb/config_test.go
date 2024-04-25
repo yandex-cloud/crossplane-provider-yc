@@ -123,11 +123,12 @@ func Test_connDetails(t *testing.T) {
 	}{{
 		attr: attrs,
 		want: map[string][]byte{
-			"attribute.host.0.fqdn":     []byte("rc1a-y0e4nzvcplls1gsf.mdb.yandexcloud.net"),
-			"attribute.host.1.fqdn":     []byte("rc1b-ob8noo5hcc01rtcf.mdb.yandexcloud.net"),
-			"attribute.host.2.fqdn":     []byte("rc1c-a9byrizp9deqa49b.mdb.yandexcloud.net"),
-			"attribute.database.0.name": []byte("db_name"),
-			"attribute.user.0.name":     []byte("user1"),
+			"attribute.host.0.fqdn":           []byte("rc1a-y0e4nzvcplls1gsf.mdb.yandexcloud.net"),
+			"attribute.host.1.fqdn":           []byte("rc1b-ob8noo5hcc01rtcf.mdb.yandexcloud.net"),
+			"attribute.host.2.fqdn":           []byte("rc1c-a9byrizp9deqa49b.mdb.yandexcloud.net"),
+			"attribute.database.0.name":       []byte("db_name"),
+			"attribute.user.0.name":           []byte("user1"),
+			"connection-string.user1.db_name": []byte("host=rc1a-y0e4nzvcplls1gsf.mdb.yandexcloud.net,rc1b-ob8noo5hcc01rtcf.mdb.yandexcloud.net,rc1c-a9byrizp9deqa49b.mdb.yandexcloud.net port=6432 sslmode=verify-full dbname=db_name user=user1 target_session_attrs=read-write password=12345678"),
 		},
 	}}
 	for _, tt := range tests {
