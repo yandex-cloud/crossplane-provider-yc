@@ -69,30 +69,30 @@ type AuditLogParameters struct {
 type BackupWindowStartInitParameters struct {
 
 	// The hour at which backup will be started.
-	Hours *float64 `json:"hours,omitempty" tf:"hours,omitempty"`
+	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
 
 	// The minute at which backup will be started.
-	Minutes *float64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
+	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
 }
 
 type BackupWindowStartObservation struct {
 
 	// The hour at which backup will be started.
-	Hours *float64 `json:"hours,omitempty" tf:"hours,omitempty"`
+	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
 
 	// The minute at which backup will be started.
-	Minutes *float64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
+	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
 }
 
 type BackupWindowStartParameters struct {
 
 	// The hour at which backup will be started.
 	// +kubebuilder:validation:Optional
-	Hours *float64 `json:"hours,omitempty" tf:"hours,omitempty"`
+	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
 
 	// The minute at which backup will be started.
 	// +kubebuilder:validation:Optional
-	Minutes *float64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
+	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
 }
 
 type ClusterConfigAccessInitParameters struct {
@@ -130,7 +130,7 @@ type ClusterConfigInitParameters struct {
 	Access []ClusterConfigAccessInitParameters `json:"access,omitempty" tf:"access,omitempty"`
 
 	// Retain period of automatically created backup in days.
-	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
+	BackupRetainPeriodDays *int64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
 
 	// Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	BackupWindowStart []BackupWindowStartInitParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
@@ -160,7 +160,7 @@ type ClusterConfigObservation struct {
 	Access []ClusterConfigAccessObservation `json:"access,omitempty" tf:"access,omitempty"`
 
 	// Retain period of automatically created backup in days.
-	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
+	BackupRetainPeriodDays *int64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
 
 	// Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	BackupWindowStart []BackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
@@ -192,7 +192,7 @@ type ClusterConfigParameters struct {
 
 	// Retain period of automatically created backup in days.
 	// +kubebuilder:validation:Optional
-	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
+	BackupRetainPeriodDays *int64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
 
 	// Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	// +kubebuilder:validation:Optional
@@ -247,7 +247,7 @@ type JournalInitParameters struct {
 	// The maximum amount of time in milliseconds that the mongod process allows between journal operations.
 	// For more information, see the storage.journal.commitIntervalMs
 	// description in the official documentation.
-	CommitInterval *float64 `json:"commitInterval,omitempty" tf:"commit_interval,omitempty"`
+	CommitInterval *int64 `json:"commitInterval,omitempty" tf:"commit_interval,omitempty"`
 }
 
 type JournalObservation struct {
@@ -255,7 +255,7 @@ type JournalObservation struct {
 	// The maximum amount of time in milliseconds that the mongod process allows between journal operations.
 	// For more information, see the storage.journal.commitIntervalMs
 	// description in the official documentation.
-	CommitInterval *float64 `json:"commitInterval,omitempty" tf:"commit_interval,omitempty"`
+	CommitInterval *int64 `json:"commitInterval,omitempty" tf:"commit_interval,omitempty"`
 }
 
 type JournalParameters struct {
@@ -264,7 +264,7 @@ type JournalParameters struct {
 	// For more information, see the storage.journal.commitIntervalMs
 	// description in the official documentation.
 	// +kubebuilder:validation:Optional
-	CommitInterval *float64 `json:"commitInterval,omitempty" tf:"commit_interval,omitempty"`
+	CommitInterval *int64 `json:"commitInterval,omitempty" tf:"commit_interval,omitempty"`
 }
 
 type KmipInitParameters struct {
@@ -282,7 +282,7 @@ type KmipInitParameters struct {
 	// Port number to use to communicate with the KMIP server. Default: 5696
 	// For more information see security.kmip.port
 	// description in the official documentation.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+	Port *int64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// Path to CA File. Used for validating secure client connection to KMIP server.
 	// For more information see security.kmip.serverCAFile
@@ -310,7 +310,7 @@ type KmipObservation struct {
 	// Port number to use to communicate with the KMIP server. Default: 5696
 	// For more information see security.kmip.port
 	// description in the official documentation.
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+	Port *int64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// Path to CA File. Used for validating secure client connection to KMIP server.
 	// For more information see security.kmip.serverCAFile
@@ -341,7 +341,7 @@ type KmipParameters struct {
 	// For more information see security.kmip.port
 	// description in the official documentation.
 	// +kubebuilder:validation:Optional
-	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
+	Port *int64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// Path to CA File. Used for validating secure client connection to KMIP server.
 	// For more information see security.kmip.serverCAFile
@@ -457,7 +457,7 @@ type MongodNetInitParameters struct {
 	// The maximum number of simultaneous connections that host will accept.
 	// For more information, see the net.maxIncomingConnections
 	// description in the official documentation.
-	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+	MaxIncomingConnections *int64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
 }
 
 type MongodNetObservation struct {
@@ -471,7 +471,7 @@ type MongodNetObservation struct {
 	// The maximum number of simultaneous connections that host will accept.
 	// For more information, see the net.maxIncomingConnections
 	// description in the official documentation.
-	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+	MaxIncomingConnections *int64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
 }
 
 type MongodNetParameters struct {
@@ -487,7 +487,7 @@ type MongodNetParameters struct {
 	// For more information, see the net.maxIncomingConnections
 	// description in the official documentation.
 	// +kubebuilder:validation:Optional
-	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+	MaxIncomingConnections *int64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
 }
 
 type MongodObservation struct {
@@ -538,7 +538,7 @@ type MongodOperationProfilingInitParameters struct {
 	// The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow.
 	// For more information, see the operationProfiling.slowOpThresholdMs
 	// description in the official documentation.
-	SlowOpThreshold *float64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
+	SlowOpThreshold *int64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
 }
 
 type MongodOperationProfilingObservation struct {
@@ -556,7 +556,7 @@ type MongodOperationProfilingObservation struct {
 	// The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow.
 	// For more information, see the operationProfiling.slowOpThresholdMs
 	// description in the official documentation.
-	SlowOpThreshold *float64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
+	SlowOpThreshold *int64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
 }
 
 type MongodOperationProfilingParameters struct {
@@ -577,7 +577,7 @@ type MongodOperationProfilingParameters struct {
 	// For more information, see the operationProfiling.slowOpThresholdMs
 	// description in the official documentation.
 	// +kubebuilder:validation:Optional
-	SlowOpThreshold *float64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
+	SlowOpThreshold *int64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
 }
 
 type MongodParameters struct {
@@ -855,7 +855,7 @@ type MongodbClusterMaintenanceWindowInitParameters struct {
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
 	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
-	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
+	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -867,7 +867,7 @@ type MongodbClusterMaintenanceWindowObservation struct {
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
 	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
-	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
+	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -881,7 +881,7 @@ type MongodbClusterMaintenanceWindowParameters struct {
 
 	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
 	// +kubebuilder:validation:Optional
-	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
+	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	// +kubebuilder:validation:Optional
@@ -1086,7 +1086,7 @@ type MongodbClusterParameters struct {
 type MongodbClusterResourcesInitParameters struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1098,7 +1098,7 @@ type MongodbClusterResourcesInitParameters struct {
 type MongodbClusterResourcesObservation struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1111,7 +1111,7 @@ type MongodbClusterResourcesParameters struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
 	// +kubebuilder:validation:Optional
-	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1174,7 +1174,7 @@ type MongosNetInitParameters struct {
 	// The maximum number of simultaneous connections that host will accept.
 	// For more information, see the net.maxIncomingConnections
 	// description in the official documentation.
-	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+	MaxIncomingConnections *int64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
 }
 
 type MongosNetObservation struct {
@@ -1188,7 +1188,7 @@ type MongosNetObservation struct {
 	// The maximum number of simultaneous connections that host will accept.
 	// For more information, see the net.maxIncomingConnections
 	// description in the official documentation.
-	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+	MaxIncomingConnections *int64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
 }
 
 type MongosNetParameters struct {
@@ -1204,7 +1204,7 @@ type MongosNetParameters struct {
 	// For more information, see the net.maxIncomingConnections
 	// description in the official documentation.
 	// +kubebuilder:validation:Optional
-	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+	MaxIncomingConnections *int64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
 }
 
 type MongosObservation struct {
@@ -1229,7 +1229,7 @@ type NetInitParameters struct {
 	// The maximum number of simultaneous connections that host will accept.
 	// For more information, see the net.maxIncomingConnections
 	// description in the official documentation.
-	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+	MaxIncomingConnections *int64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
 }
 
 type NetObservation struct {
@@ -1237,7 +1237,7 @@ type NetObservation struct {
 	// The maximum number of simultaneous connections that host will accept.
 	// For more information, see the net.maxIncomingConnections
 	// description in the official documentation.
-	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+	MaxIncomingConnections *int64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
 }
 
 type NetParameters struct {
@@ -1246,7 +1246,7 @@ type NetParameters struct {
 	// For more information, see the net.maxIncomingConnections
 	// description in the official documentation.
 	// +kubebuilder:validation:Optional
-	MaxIncomingConnections *float64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
+	MaxIncomingConnections *int64 `json:"maxIncomingConnections,omitempty" tf:"max_incoming_connections,omitempty"`
 }
 
 type OperationProfilingInitParameters struct {
@@ -1259,7 +1259,7 @@ type OperationProfilingInitParameters struct {
 	// The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow.
 	// For more information, see the operationProfiling.slowOpThresholdMs
 	// description in the official documentation.
-	SlowOpThreshold *float64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
+	SlowOpThreshold *int64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
 }
 
 type OperationProfilingObservation struct {
@@ -1272,7 +1272,7 @@ type OperationProfilingObservation struct {
 	// The slow operation time threshold, in milliseconds. Operations that run for longer than this threshold are considered slow.
 	// For more information, see the operationProfiling.slowOpThresholdMs
 	// description in the official documentation.
-	SlowOpThreshold *float64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
+	SlowOpThreshold *int64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
 }
 
 type OperationProfilingParameters struct {
@@ -1287,7 +1287,7 @@ type OperationProfilingParameters struct {
 	// For more information, see the operationProfiling.slowOpThresholdMs
 	// description in the official documentation.
 	// +kubebuilder:validation:Optional
-	SlowOpThreshold *float64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
+	SlowOpThreshold *int64 `json:"slowOpThreshold,omitempty" tf:"slow_op_threshold,omitempty"`
 }
 
 type PerformanceDiagnosticsInitParameters struct {
@@ -1312,7 +1312,7 @@ type PerformanceDiagnosticsParameters struct {
 type ResourcesMongocfgInitParameters struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1324,7 +1324,7 @@ type ResourcesMongocfgInitParameters struct {
 type ResourcesMongocfgObservation struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1337,7 +1337,7 @@ type ResourcesMongocfgParameters struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
 	// +kubebuilder:validation:Optional
-	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1351,7 +1351,7 @@ type ResourcesMongocfgParameters struct {
 type ResourcesMongodInitParameters struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1363,7 +1363,7 @@ type ResourcesMongodInitParameters struct {
 type ResourcesMongodObservation struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1376,7 +1376,7 @@ type ResourcesMongodParameters struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
 	// +kubebuilder:validation:Optional
-	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1390,7 +1390,7 @@ type ResourcesMongodParameters struct {
 type ResourcesMongoinfraInitParameters struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1402,7 +1402,7 @@ type ResourcesMongoinfraInitParameters struct {
 type ResourcesMongoinfraObservation struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1415,7 +1415,7 @@ type ResourcesMongoinfraParameters struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
 	// +kubebuilder:validation:Optional
-	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1429,7 +1429,7 @@ type ResourcesMongoinfraParameters struct {
 type ResourcesMongosInitParameters struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1441,7 +1441,7 @@ type ResourcesMongosInitParameters struct {
 type ResourcesMongosObservation struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1454,7 +1454,7 @@ type ResourcesMongosParameters struct {
 
 	// Volume of the storage available to a MongoDB host, in gigabytes.
 	// +kubebuilder:validation:Optional
-	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// Type of the storage of MongoDB hosts.
 	// For more information see the official documentation.
@@ -1550,7 +1550,7 @@ type SetParameterInitParameters struct {
 	// The minimum time window in seconds for which the storage engine keeps the snapshot history.
 	// For more information, see the minSnapshotHistoryWindowInSeconds
 	// description in the official documentation.
-	MinSnapshotHistoryWindowInSeconds *float64 `json:"minSnapshotHistoryWindowInSeconds,omitempty" tf:"min_snapshot_history_window_in_seconds,omitempty"`
+	MinSnapshotHistoryWindowInSeconds *int64 `json:"minSnapshotHistoryWindowInSeconds,omitempty" tf:"min_snapshot_history_window_in_seconds,omitempty"`
 }
 
 type SetParameterObservation struct {
@@ -1568,7 +1568,7 @@ type SetParameterObservation struct {
 	// The minimum time window in seconds for which the storage engine keeps the snapshot history.
 	// For more information, see the minSnapshotHistoryWindowInSeconds
 	// description in the official documentation.
-	MinSnapshotHistoryWindowInSeconds *float64 `json:"minSnapshotHistoryWindowInSeconds,omitempty" tf:"min_snapshot_history_window_in_seconds,omitempty"`
+	MinSnapshotHistoryWindowInSeconds *int64 `json:"minSnapshotHistoryWindowInSeconds,omitempty" tf:"min_snapshot_history_window_in_seconds,omitempty"`
 }
 
 type SetParameterParameters struct {
@@ -1589,7 +1589,7 @@ type SetParameterParameters struct {
 	// For more information, see the minSnapshotHistoryWindowInSeconds
 	// description in the official documentation.
 	// +kubebuilder:validation:Optional
-	MinSnapshotHistoryWindowInSeconds *float64 `json:"minSnapshotHistoryWindowInSeconds,omitempty" tf:"min_snapshot_history_window_in_seconds,omitempty"`
+	MinSnapshotHistoryWindowInSeconds *int64 `json:"minSnapshotHistoryWindowInSeconds,omitempty" tf:"min_snapshot_history_window_in_seconds,omitempty"`
 }
 
 type StorageInitParameters struct {

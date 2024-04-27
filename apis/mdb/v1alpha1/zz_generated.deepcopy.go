@@ -165,12 +165,12 @@ func (in *BackupWindowStartInitParameters) DeepCopyInto(out *BackupWindowStartIn
 	*out = *in
 	if in.Hours != nil {
 		in, out := &in.Hours, &out.Hours
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Minutes != nil {
 		in, out := &in.Minutes, &out.Minutes
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -190,12 +190,12 @@ func (in *BackupWindowStartObservation) DeepCopyInto(out *BackupWindowStartObser
 	*out = *in
 	if in.Hours != nil {
 		in, out := &in.Hours, &out.Hours
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Minutes != nil {
 		in, out := &in.Minutes, &out.Minutes
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -215,12 +215,12 @@ func (in *BackupWindowStartParameters) DeepCopyInto(out *BackupWindowStartParame
 	*out = *in
 	if in.Hours != nil {
 		in, out := &in.Hours, &out.Hours
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Minutes != nil {
 		in, out := &in.Minutes, &out.Minutes
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -322,7 +322,7 @@ func (in *ClusterConfigInitParameters) DeepCopyInto(out *ClusterConfigInitParame
 	}
 	if in.BackupRetainPeriodDays != nil {
 		in, out := &in.BackupRetainPeriodDays, &out.BackupRetainPeriodDays
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.BackupWindowStart != nil {
@@ -394,7 +394,7 @@ func (in *ClusterConfigObservation) DeepCopyInto(out *ClusterConfigObservation) 
 	}
 	if in.BackupRetainPeriodDays != nil {
 		in, out := &in.BackupRetainPeriodDays, &out.BackupRetainPeriodDays
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.BackupWindowStart != nil {
@@ -466,7 +466,7 @@ func (in *ClusterConfigParameters) DeepCopyInto(out *ClusterConfigParameters) {
 	}
 	if in.BackupRetainPeriodDays != nil {
 		in, out := &in.BackupRetainPeriodDays, &out.BackupRetainPeriodDays
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.BackupWindowStart != nil {
@@ -2508,7 +2508,7 @@ func (in *JournalInitParameters) DeepCopyInto(out *JournalInitParameters) {
 	*out = *in
 	if in.CommitInterval != nil {
 		in, out := &in.CommitInterval, &out.CommitInterval
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -2528,7 +2528,7 @@ func (in *JournalObservation) DeepCopyInto(out *JournalObservation) {
 	*out = *in
 	if in.CommitInterval != nil {
 		in, out := &in.CommitInterval, &out.CommitInterval
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -2548,7 +2548,7 @@ func (in *JournalParameters) DeepCopyInto(out *JournalParameters) {
 	*out = *in
 	if in.CommitInterval != nil {
 		in, out := &in.CommitInterval, &out.CommitInterval
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -5200,7 +5200,7 @@ func (in *KmipInitParameters) DeepCopyInto(out *KmipInitParameters) {
 	}
 	if in.Port != nil {
 		in, out := &in.Port, &out.Port
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ServerCA != nil {
@@ -5240,7 +5240,7 @@ func (in *KmipObservation) DeepCopyInto(out *KmipObservation) {
 	}
 	if in.Port != nil {
 		in, out := &in.Port, &out.Port
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ServerCA != nil {
@@ -5280,7 +5280,7 @@ func (in *KmipParameters) DeepCopyInto(out *KmipParameters) {
 	}
 	if in.Port != nil {
 		in, out := &in.Port, &out.Port
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ServerCA != nil {
@@ -5732,7 +5732,7 @@ func (in *MongodNetInitParameters) DeepCopyInto(out *MongodNetInitParameters) {
 	}
 	if in.MaxIncomingConnections != nil {
 		in, out := &in.MaxIncomingConnections, &out.MaxIncomingConnections
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -5763,7 +5763,7 @@ func (in *MongodNetObservation) DeepCopyInto(out *MongodNetObservation) {
 	}
 	if in.MaxIncomingConnections != nil {
 		in, out := &in.MaxIncomingConnections, &out.MaxIncomingConnections
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -5794,7 +5794,7 @@ func (in *MongodNetParameters) DeepCopyInto(out *MongodNetParameters) {
 	}
 	if in.MaxIncomingConnections != nil {
 		in, out := &in.MaxIncomingConnections, &out.MaxIncomingConnections
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -5881,7 +5881,7 @@ func (in *MongodOperationProfilingInitParameters) DeepCopyInto(out *MongodOperat
 	}
 	if in.SlowOpThreshold != nil {
 		in, out := &in.SlowOpThreshold, &out.SlowOpThreshold
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -5911,7 +5911,7 @@ func (in *MongodOperationProfilingObservation) DeepCopyInto(out *MongodOperation
 	}
 	if in.SlowOpThreshold != nil {
 		in, out := &in.SlowOpThreshold, &out.SlowOpThreshold
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -5941,7 +5941,7 @@ func (in *MongodOperationProfilingParameters) DeepCopyInto(out *MongodOperationP
 	}
 	if in.SlowOpThreshold != nil {
 		in, out := &in.SlowOpThreshold, &out.SlowOpThreshold
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -6520,7 +6520,7 @@ func (in *MongodbClusterMaintenanceWindowInitParameters) DeepCopyInto(out *Mongo
 	}
 	if in.Hour != nil {
 		in, out := &in.Hour, &out.Hour
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Type != nil {
@@ -6550,7 +6550,7 @@ func (in *MongodbClusterMaintenanceWindowObservation) DeepCopyInto(out *MongodbC
 	}
 	if in.Hour != nil {
 		in, out := &in.Hour, &out.Hour
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Type != nil {
@@ -6580,7 +6580,7 @@ func (in *MongodbClusterMaintenanceWindowParameters) DeepCopyInto(out *MongodbCl
 	}
 	if in.Hour != nil {
 		in, out := &in.Hour, &out.Hour
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Type != nil {
@@ -6970,7 +6970,7 @@ func (in *MongodbClusterResourcesInitParameters) DeepCopyInto(out *MongodbCluste
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -7000,7 +7000,7 @@ func (in *MongodbClusterResourcesObservation) DeepCopyInto(out *MongodbClusterRe
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -7030,7 +7030,7 @@ func (in *MongodbClusterResourcesParameters) DeepCopyInto(out *MongodbClusterRes
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -7713,7 +7713,7 @@ func (in *MongosNetInitParameters) DeepCopyInto(out *MongosNetInitParameters) {
 	}
 	if in.MaxIncomingConnections != nil {
 		in, out := &in.MaxIncomingConnections, &out.MaxIncomingConnections
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -7744,7 +7744,7 @@ func (in *MongosNetObservation) DeepCopyInto(out *MongosNetObservation) {
 	}
 	if in.MaxIncomingConnections != nil {
 		in, out := &in.MaxIncomingConnections, &out.MaxIncomingConnections
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -7775,7 +7775,7 @@ func (in *MongosNetParameters) DeepCopyInto(out *MongosNetParameters) {
 	}
 	if in.MaxIncomingConnections != nil {
 		in, out := &in.MaxIncomingConnections, &out.MaxIncomingConnections
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -10219,7 +10219,7 @@ func (in *NetInitParameters) DeepCopyInto(out *NetInitParameters) {
 	*out = *in
 	if in.MaxIncomingConnections != nil {
 		in, out := &in.MaxIncomingConnections, &out.MaxIncomingConnections
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -10239,7 +10239,7 @@ func (in *NetObservation) DeepCopyInto(out *NetObservation) {
 	*out = *in
 	if in.MaxIncomingConnections != nil {
 		in, out := &in.MaxIncomingConnections, &out.MaxIncomingConnections
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -10259,7 +10259,7 @@ func (in *NetParameters) DeepCopyInto(out *NetParameters) {
 	*out = *in
 	if in.MaxIncomingConnections != nil {
 		in, out := &in.MaxIncomingConnections, &out.MaxIncomingConnections
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -10284,7 +10284,7 @@ func (in *OperationProfilingInitParameters) DeepCopyInto(out *OperationProfiling
 	}
 	if in.SlowOpThreshold != nil {
 		in, out := &in.SlowOpThreshold, &out.SlowOpThreshold
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -10309,7 +10309,7 @@ func (in *OperationProfilingObservation) DeepCopyInto(out *OperationProfilingObs
 	}
 	if in.SlowOpThreshold != nil {
 		in, out := &in.SlowOpThreshold, &out.SlowOpThreshold
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -10334,7 +10334,7 @@ func (in *OperationProfilingParameters) DeepCopyInto(out *OperationProfilingPara
 	}
 	if in.SlowOpThreshold != nil {
 		in, out := &in.SlowOpThreshold, &out.SlowOpThreshold
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -12977,12 +12977,12 @@ func (in *RedisClusterConfigInitParameters) DeepCopyInto(out *RedisClusterConfig
 	}
 	if in.Databases != nil {
 		in, out := &in.Databases, &out.Databases
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MaxmemoryPercent != nil {
 		in, out := &in.MaxmemoryPercent, &out.MaxmemoryPercent
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MaxmemoryPolicy != nil {
@@ -12997,17 +12997,17 @@ func (in *RedisClusterConfigInitParameters) DeepCopyInto(out *RedisClusterConfig
 	}
 	if in.SlowlogLogSlowerThan != nil {
 		in, out := &in.SlowlogLogSlowerThan, &out.SlowlogLogSlowerThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.SlowlogMaxLen != nil {
 		in, out := &in.SlowlogMaxLen, &out.SlowlogMaxLen
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Timeout != nil {
 		in, out := &in.Timeout, &out.Timeout
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Version != nil {
@@ -13042,12 +13042,12 @@ func (in *RedisClusterConfigObservation) DeepCopyInto(out *RedisClusterConfigObs
 	}
 	if in.Databases != nil {
 		in, out := &in.Databases, &out.Databases
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MaxmemoryPercent != nil {
 		in, out := &in.MaxmemoryPercent, &out.MaxmemoryPercent
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MaxmemoryPolicy != nil {
@@ -13062,17 +13062,17 @@ func (in *RedisClusterConfigObservation) DeepCopyInto(out *RedisClusterConfigObs
 	}
 	if in.SlowlogLogSlowerThan != nil {
 		in, out := &in.SlowlogLogSlowerThan, &out.SlowlogLogSlowerThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.SlowlogMaxLen != nil {
 		in, out := &in.SlowlogMaxLen, &out.SlowlogMaxLen
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Timeout != nil {
 		in, out := &in.Timeout, &out.Timeout
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Version != nil {
@@ -13107,12 +13107,12 @@ func (in *RedisClusterConfigParameters) DeepCopyInto(out *RedisClusterConfigPara
 	}
 	if in.Databases != nil {
 		in, out := &in.Databases, &out.Databases
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MaxmemoryPercent != nil {
 		in, out := &in.MaxmemoryPercent, &out.MaxmemoryPercent
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.MaxmemoryPolicy != nil {
@@ -13128,17 +13128,17 @@ func (in *RedisClusterConfigParameters) DeepCopyInto(out *RedisClusterConfigPara
 	out.PasswordSecretRef = in.PasswordSecretRef
 	if in.SlowlogLogSlowerThan != nil {
 		in, out := &in.SlowlogLogSlowerThan, &out.SlowlogLogSlowerThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.SlowlogMaxLen != nil {
 		in, out := &in.SlowlogMaxLen, &out.SlowlogMaxLen
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Timeout != nil {
 		in, out := &in.Timeout, &out.Timeout
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Version != nil {
@@ -13168,7 +13168,7 @@ func (in *RedisClusterHostInitParameters) DeepCopyInto(out *RedisClusterHostInit
 	}
 	if in.ReplicaPriority != nil {
 		in, out := &in.ReplicaPriority, &out.ReplicaPriority
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ShardName != nil {
@@ -13223,7 +13223,7 @@ func (in *RedisClusterHostObservation) DeepCopyInto(out *RedisClusterHostObserva
 	}
 	if in.ReplicaPriority != nil {
 		in, out := &in.ReplicaPriority, &out.ReplicaPriority
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ShardName != nil {
@@ -13263,7 +13263,7 @@ func (in *RedisClusterHostParameters) DeepCopyInto(out *RedisClusterHostParamete
 	}
 	if in.ReplicaPriority != nil {
 		in, out := &in.ReplicaPriority, &out.ReplicaPriority
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ShardName != nil {
@@ -13497,7 +13497,7 @@ func (in *RedisClusterMaintenanceWindowInitParameters) DeepCopyInto(out *RedisCl
 	}
 	if in.Hour != nil {
 		in, out := &in.Hour, &out.Hour
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Type != nil {
@@ -13527,7 +13527,7 @@ func (in *RedisClusterMaintenanceWindowObservation) DeepCopyInto(out *RedisClust
 	}
 	if in.Hour != nil {
 		in, out := &in.Hour, &out.Hour
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Type != nil {
@@ -13557,7 +13557,7 @@ func (in *RedisClusterMaintenanceWindowParameters) DeepCopyInto(out *RedisCluste
 	}
 	if in.Hour != nil {
 		in, out := &in.Hour, &out.Hour
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Type != nil {
@@ -13874,7 +13874,7 @@ func (in *RedisClusterResourcesInitParameters) DeepCopyInto(out *RedisClusterRes
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -13904,7 +13904,7 @@ func (in *RedisClusterResourcesObservation) DeepCopyInto(out *RedisClusterResour
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -13934,7 +13934,7 @@ func (in *RedisClusterResourcesParameters) DeepCopyInto(out *RedisClusterResourc
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -14029,7 +14029,7 @@ func (in *ResourcesMongocfgInitParameters) DeepCopyInto(out *ResourcesMongocfgIn
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -14059,7 +14059,7 @@ func (in *ResourcesMongocfgObservation) DeepCopyInto(out *ResourcesMongocfgObser
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -14089,7 +14089,7 @@ func (in *ResourcesMongocfgParameters) DeepCopyInto(out *ResourcesMongocfgParame
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -14119,7 +14119,7 @@ func (in *ResourcesMongodInitParameters) DeepCopyInto(out *ResourcesMongodInitPa
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -14149,7 +14149,7 @@ func (in *ResourcesMongodObservation) DeepCopyInto(out *ResourcesMongodObservati
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -14179,7 +14179,7 @@ func (in *ResourcesMongodParameters) DeepCopyInto(out *ResourcesMongodParameters
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -14209,7 +14209,7 @@ func (in *ResourcesMongoinfraInitParameters) DeepCopyInto(out *ResourcesMongoinf
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -14239,7 +14239,7 @@ func (in *ResourcesMongoinfraObservation) DeepCopyInto(out *ResourcesMongoinfraO
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -14269,7 +14269,7 @@ func (in *ResourcesMongoinfraParameters) DeepCopyInto(out *ResourcesMongoinfraPa
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -14299,7 +14299,7 @@ func (in *ResourcesMongosInitParameters) DeepCopyInto(out *ResourcesMongosInitPa
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -14329,7 +14329,7 @@ func (in *ResourcesMongosObservation) DeepCopyInto(out *ResourcesMongosObservati
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -14359,7 +14359,7 @@ func (in *ResourcesMongosParameters) DeepCopyInto(out *ResourcesMongosParameters
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -14696,7 +14696,7 @@ func (in *SetParameterInitParameters) DeepCopyInto(out *SetParameterInitParamete
 	}
 	if in.MinSnapshotHistoryWindowInSeconds != nil {
 		in, out := &in.MinSnapshotHistoryWindowInSeconds, &out.MinSnapshotHistoryWindowInSeconds
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -14726,7 +14726,7 @@ func (in *SetParameterObservation) DeepCopyInto(out *SetParameterObservation) {
 	}
 	if in.MinSnapshotHistoryWindowInSeconds != nil {
 		in, out := &in.MinSnapshotHistoryWindowInSeconds, &out.MinSnapshotHistoryWindowInSeconds
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -14756,7 +14756,7 @@ func (in *SetParameterParameters) DeepCopyInto(out *SetParameterParameters) {
 	}
 	if in.MinSnapshotHistoryWindowInSeconds != nil {
 		in, out := &in.MinSnapshotHistoryWindowInSeconds, &out.MinSnapshotHistoryWindowInSeconds
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }

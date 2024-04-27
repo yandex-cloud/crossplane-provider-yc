@@ -6,12 +6,13 @@ PROJECT_REPO := github.com/yandex-cloud/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION := 1.6.1
 
-export TERRAFORM_PROVIDER_HOST ?= hashicorp-releases.yandexcloud.net
+export TERRAFORM_PROVIDER_HOST ?= terraform-mirror.yandexcloud.net/registry.terraform.io
+export TERRAFORM_MIRROR_HOST ?= hashicorp-releases.yandexcloud.net
 export TERRAFORM_PROVIDER_SOURCE := yandex-cloud/yandex
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/yandex-cloud/terraform-provider-yandex
-export TERRAFORM_PROVIDER_VERSION := 0.116.0
+export TERRAFORM_PROVIDER_VERSION := 0.117.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-yandex
-export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://$(TERRAFORM_PROVIDER_HOST)/$(TERRAFORM_PROVIDER_DOWNLOAD_NAME)/$(TERRAFORM_PROVIDER_VERSION)
+export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://$(TERRAFORM_PROVIDER_HOST)/$(TERRAFORM_PROVIDER_SOURCE)
 export TERRAFORM_DOCS_PATH ?= website/docs/r
 export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-yandex_$(TERRAFORM_PROVIDER_VERSION)_x5
 
@@ -107,7 +108,7 @@ TERRAFORM_PROVIDER_SCHEMA := config/schema.json
 $(TERRAFORM):
 	@$(INFO) installing terraform $(HOSTOS)-$(HOSTARCH)
 	@mkdir -p $(TOOLS_HOST_DIR)/tmp-terraform
-	@curl -fsSL https://$(TERRAFORM_PROVIDER_HOST)/terraform/$(TERRAFORM_VERSION)/terraform_$(TERRAFORM_VERSION)_$(SAFEHOST_PLATFORM).zip -o $(TOOLS_HOST_DIR)/tmp-terraform/terraform.zip
+	@curl -fsSL https://$(TERRAFORM_MIRROR_HOST)/terraform/$(TERRAFORM_VERSION)/terraform_$(TERRAFORM_VERSION)_$(SAFEHOST_PLATFORM).zip -o $(TOOLS_HOST_DIR)/tmp-terraform/terraform.zip
 	@unzip $(TOOLS_HOST_DIR)/tmp-terraform/terraform.zip -d $(TOOLS_HOST_DIR)/tmp-terraform
 	@mv $(TOOLS_HOST_DIR)/tmp-terraform/terraform $(TERRAFORM)
 	@rm -fr $(TOOLS_HOST_DIR)/tmp-terraform

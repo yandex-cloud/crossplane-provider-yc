@@ -94,10 +94,12 @@ spec:
                         databases:
                           description: Number of databases (changing requires redis-server
                             restart).
-                          type: number
+                          format: int64
+                          type: integer
                         maxmemoryPercent:
                           description: Redis maxmemory usage in percent
-                          type: number
+                          format: int64
+                          type: integer
                         maxmemoryPolicy:
                           description: |-
                             Redis key eviction policy for a dataset that reaches maximum memory.
@@ -126,14 +128,17 @@ spec:
                           type: object
                         slowlogLogSlowerThan:
                           description: Log slow queries below this number in microseconds.
-                          type: number
+                          format: int64
+                          type: integer
                         slowlogMaxLen:
                           description: Slow queries log length.
-                          type: number
+                          format: int64
+                          type: integer
                         timeout:
                           description: Close the connection after a client is idle
                             for N seconds.
-                          type: number
+                          format: int64
+                          type: integer
                         version:
                           description: Version of Redis (6.2).
                           type: string
@@ -245,7 +250,8 @@ spec:
                         replicaPriority:
                           description: Replica priority of a current replica (usable
                             for non-sharded only).
-                          type: number
+                          format: int64
+                          type: integer
                         shardName:
                           description: The name of the shard to which the host belongs.
                           type: string
@@ -353,7 +359,8 @@ spec:
                         hour:
                           description: Hour of day in UTC time zone (1-24) for maintenance
                             window if window type is weekly.
-                          type: number
+                          format: int64
+                          type: integer
                         type:
                           description: Type of maintenance window. Can be either ANYTIME
                             or WEEKLY. A day and hour of window need to be specified
@@ -453,7 +460,8 @@ spec:
                         diskSize:
                           description: Volume of the storage available to a host,
                             in gigabytes.
-                          type: number
+                          format: int64
+                          type: integer
                         diskTypeId:
                           description: Type of the storage of Redis hosts - environment
                             default is used if missing.
@@ -590,10 +598,12 @@ spec:
                         databases:
                           description: Number of databases (changing requires redis-server
                             restart).
-                          type: number
+                          format: int64
+                          type: integer
                         maxmemoryPercent:
                           description: Redis maxmemory usage in percent
-                          type: number
+                          format: int64
+                          type: integer
                         maxmemoryPolicy:
                           description: |-
                             Redis key eviction policy for a dataset that reaches maximum memory.
@@ -605,14 +615,17 @@ spec:
                           type: string
                         slowlogLogSlowerThan:
                           description: Log slow queries below this number in microseconds.
-                          type: number
+                          format: int64
+                          type: integer
                         slowlogMaxLen:
                           description: Slow queries log length.
-                          type: number
+                          format: int64
+                          type: integer
                         timeout:
                           description: Close the connection after a client is idle
                             for N seconds.
-                          type: number
+                          format: int64
+                          type: integer
                         version:
                           description: Version of Redis (6.2).
                           type: string
@@ -722,7 +735,8 @@ spec:
                         replicaPriority:
                           description: Replica priority of a current replica (usable
                             for non-sharded only).
-                          type: number
+                          format: int64
+                          type: integer
                         shardName:
                           description: The name of the shard to which the host belongs.
                           type: string
@@ -830,7 +844,8 @@ spec:
                         hour:
                           description: Hour of day in UTC time zone (1-24) for maintenance
                             window if window type is weekly.
-                          type: number
+                          format: int64
+                          type: integer
                         type:
                           description: Type of maintenance window. Can be either ANYTIME
                             or WEEKLY. A day and hour of window need to be specified
@@ -930,7 +945,8 @@ spec:
                         diskSize:
                           description: Volume of the storage available to a host,
                             in gigabytes.
-                          type: number
+                          format: int64
+                          type: integer
                         diskTypeId:
                           description: Type of the storage of Redis hosts - environment
                             default is used if missing.
@@ -1247,10 +1263,12 @@ spec:
                         databases:
                           description: Number of databases (changing requires redis-server
                             restart).
-                          type: number
+                          format: int64
+                          type: integer
                         maxmemoryPercent:
                           description: Redis maxmemory usage in percent
-                          type: number
+                          format: int64
+                          type: integer
                         maxmemoryPolicy:
                           description: |-
                             Redis key eviction policy for a dataset that reaches maximum memory.
@@ -1262,14 +1280,17 @@ spec:
                           type: string
                         slowlogLogSlowerThan:
                           description: Log slow queries below this number in microseconds.
-                          type: number
+                          format: int64
+                          type: integer
                         slowlogMaxLen:
                           description: Slow queries log length.
-                          type: number
+                          format: int64
+                          type: integer
                         timeout:
                           description: Close the connection after a client is idle
                             for N seconds.
-                          type: number
+                          format: int64
+                          type: integer
                         version:
                           description: Version of Redis (6.2).
                           type: string
@@ -1314,7 +1335,8 @@ spec:
                         replicaPriority:
                           description: Replica priority of a current replica (usable
                             for non-sharded only).
-                          type: number
+                          format: int64
+                          type: integer
                         shardName:
                           description: The name of the shard to which the host belongs.
                           type: string
@@ -1350,7 +1372,8 @@ spec:
                         hour:
                           description: Hour of day in UTC time zone (1-24) for maintenance
                             window if window type is weekly.
-                          type: number
+                          format: int64
+                          type: integer
                         type:
                           description: Type of maintenance window. Can be either ANYTIME
                             or WEEKLY. A day and hour of window need to be specified
@@ -1376,7 +1399,8 @@ spec:
                         diskSize:
                           description: Volume of the storage available to a host,
                             in gigabytes.
-                          type: number
+                          format: int64
+                          type: integer
                         diskTypeId:
                           description: Type of the storage of Redis hosts - environment
                             default is used if missing.

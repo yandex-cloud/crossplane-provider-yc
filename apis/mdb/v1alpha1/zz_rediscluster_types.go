@@ -36,10 +36,10 @@ type RedisClusterConfigInitParameters struct {
 	ClientOutputBufferLimitPubsub *string `json:"clientOutputBufferLimitPubsub,omitempty" tf:"client_output_buffer_limit_pubsub,omitempty"`
 
 	// Number of databases (changing requires redis-server restart).
-	Databases *float64 `json:"databases,omitempty" tf:"databases,omitempty"`
+	Databases *int64 `json:"databases,omitempty" tf:"databases,omitempty"`
 
 	// Redis maxmemory usage in percent
-	MaxmemoryPercent *float64 `json:"maxmemoryPercent,omitempty" tf:"maxmemory_percent,omitempty"`
+	MaxmemoryPercent *int64 `json:"maxmemoryPercent,omitempty" tf:"maxmemory_percent,omitempty"`
 
 	// Redis key eviction policy for a dataset that reaches maximum memory.
 	// Can be any of the listed in the official RedisDB documentation.
@@ -49,13 +49,13 @@ type RedisClusterConfigInitParameters struct {
 	NotifyKeyspaceEvents *string `json:"notifyKeyspaceEvents,omitempty" tf:"notify_keyspace_events,omitempty"`
 
 	// Log slow queries below this number in microseconds.
-	SlowlogLogSlowerThan *float64 `json:"slowlogLogSlowerThan,omitempty" tf:"slowlog_log_slower_than,omitempty"`
+	SlowlogLogSlowerThan *int64 `json:"slowlogLogSlowerThan,omitempty" tf:"slowlog_log_slower_than,omitempty"`
 
 	// Slow queries log length.
-	SlowlogMaxLen *float64 `json:"slowlogMaxLen,omitempty" tf:"slowlog_max_len,omitempty"`
+	SlowlogMaxLen *int64 `json:"slowlogMaxLen,omitempty" tf:"slowlog_max_len,omitempty"`
 
 	// Close the connection after a client is idle for N seconds.
-	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
+	Timeout *int64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
 	// Version of Redis (6.2).
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
@@ -72,10 +72,10 @@ type RedisClusterConfigObservation struct {
 	ClientOutputBufferLimitPubsub *string `json:"clientOutputBufferLimitPubsub,omitempty" tf:"client_output_buffer_limit_pubsub,omitempty"`
 
 	// Number of databases (changing requires redis-server restart).
-	Databases *float64 `json:"databases,omitempty" tf:"databases,omitempty"`
+	Databases *int64 `json:"databases,omitempty" tf:"databases,omitempty"`
 
 	// Redis maxmemory usage in percent
-	MaxmemoryPercent *float64 `json:"maxmemoryPercent,omitempty" tf:"maxmemory_percent,omitempty"`
+	MaxmemoryPercent *int64 `json:"maxmemoryPercent,omitempty" tf:"maxmemory_percent,omitempty"`
 
 	// Redis key eviction policy for a dataset that reaches maximum memory.
 	// Can be any of the listed in the official RedisDB documentation.
@@ -85,13 +85,13 @@ type RedisClusterConfigObservation struct {
 	NotifyKeyspaceEvents *string `json:"notifyKeyspaceEvents,omitempty" tf:"notify_keyspace_events,omitempty"`
 
 	// Log slow queries below this number in microseconds.
-	SlowlogLogSlowerThan *float64 `json:"slowlogLogSlowerThan,omitempty" tf:"slowlog_log_slower_than,omitempty"`
+	SlowlogLogSlowerThan *int64 `json:"slowlogLogSlowerThan,omitempty" tf:"slowlog_log_slower_than,omitempty"`
 
 	// Slow queries log length.
-	SlowlogMaxLen *float64 `json:"slowlogMaxLen,omitempty" tf:"slowlog_max_len,omitempty"`
+	SlowlogMaxLen *int64 `json:"slowlogMaxLen,omitempty" tf:"slowlog_max_len,omitempty"`
 
 	// Close the connection after a client is idle for N seconds.
-	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
+	Timeout *int64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
 	// Version of Redis (6.2).
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
@@ -111,11 +111,11 @@ type RedisClusterConfigParameters struct {
 
 	// Number of databases (changing requires redis-server restart).
 	// +kubebuilder:validation:Optional
-	Databases *float64 `json:"databases,omitempty" tf:"databases,omitempty"`
+	Databases *int64 `json:"databases,omitempty" tf:"databases,omitempty"`
 
 	// Redis maxmemory usage in percent
 	// +kubebuilder:validation:Optional
-	MaxmemoryPercent *float64 `json:"maxmemoryPercent,omitempty" tf:"maxmemory_percent,omitempty"`
+	MaxmemoryPercent *int64 `json:"maxmemoryPercent,omitempty" tf:"maxmemory_percent,omitempty"`
 
 	// Redis key eviction policy for a dataset that reaches maximum memory.
 	// Can be any of the listed in the official RedisDB documentation.
@@ -132,15 +132,15 @@ type RedisClusterConfigParameters struct {
 
 	// Log slow queries below this number in microseconds.
 	// +kubebuilder:validation:Optional
-	SlowlogLogSlowerThan *float64 `json:"slowlogLogSlowerThan,omitempty" tf:"slowlog_log_slower_than,omitempty"`
+	SlowlogLogSlowerThan *int64 `json:"slowlogLogSlowerThan,omitempty" tf:"slowlog_log_slower_than,omitempty"`
 
 	// Slow queries log length.
 	// +kubebuilder:validation:Optional
-	SlowlogMaxLen *float64 `json:"slowlogMaxLen,omitempty" tf:"slowlog_max_len,omitempty"`
+	SlowlogMaxLen *int64 `json:"slowlogMaxLen,omitempty" tf:"slowlog_max_len,omitempty"`
 
 	// Close the connection after a client is idle for N seconds.
 	// +kubebuilder:validation:Optional
-	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
+	Timeout *int64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
 	// Version of Redis (6.2).
 	// +kubebuilder:validation:Optional
@@ -153,7 +153,7 @@ type RedisClusterHostInitParameters struct {
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
 	// Replica priority of a current replica (usable for non-sharded only).
-	ReplicaPriority *float64 `json:"replicaPriority,omitempty" tf:"replica_priority,omitempty"`
+	ReplicaPriority *int64 `json:"replicaPriority,omitempty" tf:"replica_priority,omitempty"`
 
 	// The name of the shard to which the host belongs.
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
@@ -185,7 +185,7 @@ type RedisClusterHostObservation struct {
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
 	// Replica priority of a current replica (usable for non-sharded only).
-	ReplicaPriority *float64 `json:"replicaPriority,omitempty" tf:"replica_priority,omitempty"`
+	ReplicaPriority *int64 `json:"replicaPriority,omitempty" tf:"replica_priority,omitempty"`
 
 	// The name of the shard to which the host belongs.
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
@@ -207,7 +207,7 @@ type RedisClusterHostParameters struct {
 
 	// Replica priority of a current replica (usable for non-sharded only).
 	// +kubebuilder:validation:Optional
-	ReplicaPriority *float64 `json:"replicaPriority,omitempty" tf:"replica_priority,omitempty"`
+	ReplicaPriority *int64 `json:"replicaPriority,omitempty" tf:"replica_priority,omitempty"`
 
 	// The name of the shard to which the host belongs.
 	// +kubebuilder:validation:Optional
@@ -320,7 +320,7 @@ type RedisClusterMaintenanceWindowInitParameters struct {
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
 	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
-	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
+	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -332,7 +332,7 @@ type RedisClusterMaintenanceWindowObservation struct {
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
 	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
-	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
+	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -346,7 +346,7 @@ type RedisClusterMaintenanceWindowParameters struct {
 
 	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
 	// +kubebuilder:validation:Optional
-	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
+	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	// +kubebuilder:validation:Optional
@@ -520,7 +520,7 @@ type RedisClusterParameters struct {
 type RedisClusterResourcesInitParameters struct {
 
 	// Volume of the storage available to a host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of Redis hosts - environment default is used if missing.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
@@ -531,7 +531,7 @@ type RedisClusterResourcesInitParameters struct {
 type RedisClusterResourcesObservation struct {
 
 	// Volume of the storage available to a host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of Redis hosts - environment default is used if missing.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
@@ -543,7 +543,7 @@ type RedisClusterResourcesParameters struct {
 
 	// Volume of the storage available to a host, in gigabytes.
 	// +kubebuilder:validation:Optional
-	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// Type of the storage of Redis hosts - environment default is used if missing.
 	// +kubebuilder:validation:Optional
