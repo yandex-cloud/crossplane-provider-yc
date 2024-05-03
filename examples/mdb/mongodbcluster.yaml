@@ -1,41 +1,23 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: mongodb
-  namespace: default
-type: Opaque
-data:
-  # 12345678
-  password: MTIzNDU2Nzg=
----
 apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: MongodbCluster
 metadata:
   name: example-mongodb
+  annotations:
+    uptest.upbound.io/pre-delete-hook: testhooks/delete-mongo-deps.sh
 spec:
   forProvider:
     name: example-mongodb
-    environment: PRESTABLE
+    environment: PRODUCTION
     networkIdRef:
       name: example-net
     clusterConfig:
-      - version: "5.0"
+      - version: "6.0"
     resources:
       - diskSize: 16
         diskTypeId: network-hdd
         resourcePresetId: s2.micro
     maintenanceWindow:
       - type: ANYTIME
-    database:
-      - name: testdb
-    user:
-      - name: john
-        passwordSecretRef:
-          name: mongodb
-          key: password
-          namespace: default
-        permission:
-          - databaseName: testdb
     host:
       - zoneId: ru-central1-a
         subnetIdRef:
