@@ -68,17 +68,3 @@ spec:
           - ALL
   providerConfigRef:
     name: default
----
-apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
-kind: MySQLDatabase
-metadata:
-  annotations:
-    meta.upbound.io/example-id: mdb/v1alpha1/mysqldatabase
-  name: mysql-database1
-spec:
-  forProvider:
-    clusterIdRef:
-      name: example-mysql
-    name: db_name
-  providerConfigRef:
-    name: default
