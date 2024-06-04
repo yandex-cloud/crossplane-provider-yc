@@ -144,8 +144,8 @@ type BucketInitParameters struct {
 
 	// The access key to use when applying changes. If omitted, storage_access_key specified in
 	// provider config (explicitly or within shared_credentials_file) is used.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/storage.ExtractAccessKey()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/storage.ExtractAccessKey()
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
 
 	// Reference to a ServiceAccountStaticAccessKey in iam to populate accessKey.
@@ -177,7 +177,7 @@ type BucketInitParameters struct {
 	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
 
 	// Allow to create bucket in different folder.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -320,8 +320,8 @@ type BucketParameters struct {
 
 	// The access key to use when applying changes. If omitted, storage_access_key specified in
 	// provider config (explicitly or within shared_credentials_file) is used.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/storage.ExtractAccessKey()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/storage.ExtractAccessKey()
 	// +kubebuilder:validation:Optional
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
 
@@ -359,7 +359,7 @@ type BucketParameters struct {
 	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
 
 	// Allow to create bucket in different folder.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 

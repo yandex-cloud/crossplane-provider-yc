@@ -40,12 +40,12 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	"github.com/yandex-cloud/provider-jet-yc/apis"
-	"github.com/yandex-cloud/provider-jet-yc/apis/v1alpha1"
-	"github.com/yandex-cloud/provider-jet-yc/config"
-	"github.com/yandex-cloud/provider-jet-yc/internal/clients"
-	"github.com/yandex-cloud/provider-jet-yc/internal/controller"
-	"github.com/yandex-cloud/provider-jet-yc/internal/features"
+	"github.com/yandex-cloud/crossplane-provider-yc/apis"
+	"github.com/yandex-cloud/crossplane-provider-yc/apis/v1alpha1"
+	"github.com/yandex-cloud/crossplane-provider-yc/config"
+	"github.com/yandex-cloud/crossplane-provider-yc/internal/clients"
+	"github.com/yandex-cloud/crossplane-provider-yc/internal/controller"
+	"github.com/yandex-cloud/crossplane-provider-yc/internal/features"
 )
 
 func main() {
@@ -68,7 +68,7 @@ func main() {
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 
 	zl := zap.New(zap.UseDevMode(*debug))
-	log := logging.NewLogrLogger(zl.WithName("provider-jet-yc"))
+	log := logging.NewLogrLogger(zl.WithName("crossplane-provider-yc"))
 	if *debug {
 		// The controller-runtime runs with a no-op logger by default. It is
 		// *very* verbose even at info level, so we only provide it a real

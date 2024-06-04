@@ -25,7 +25,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/pipeline"
 
-	"github.com/yandex-cloud/provider-jet-yc/config"
+	"github.com/yandex-cloud/crossplane-provider-yc/config"
 )
 
 func main() {

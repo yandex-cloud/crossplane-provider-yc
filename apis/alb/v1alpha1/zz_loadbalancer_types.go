@@ -536,7 +536,7 @@ type InternalIPv4AddressInitParameters struct {
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
 	// Provided by the client or computed automatically.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -564,7 +564,7 @@ type InternalIPv4AddressParameters struct {
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
 	// Provided by the client or computed automatically.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -674,7 +674,7 @@ type LoadBalancerInitParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -699,7 +699,7 @@ type LoadBalancerInitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// ID of the network that the Load Balancer is located at.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
 	// Reference to a Network in vpc to populate networkId.
@@ -714,7 +714,7 @@ type LoadBalancerInitParameters struct {
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
 	// A list of ID's of security groups attached to the Load Balancer.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
@@ -785,7 +785,7 @@ type LoadBalancerParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -815,7 +815,7 @@ type LoadBalancerParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// ID of the network that the Load Balancer is located at.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
@@ -832,7 +832,7 @@ type LoadBalancerParameters struct {
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
 	// A list of ID's of security groups attached to the Load Balancer.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
@@ -852,7 +852,7 @@ type LocationInitParameters struct {
 	DisableTraffic *bool `json:"disableTraffic,omitempty" tf:"disable_traffic,omitempty"`
 
 	// ID of the subnet that location is located at.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -886,7 +886,7 @@ type LocationParameters struct {
 	DisableTraffic *bool `json:"disableTraffic,omitempty" tf:"disable_traffic,omitempty"`
 
 	// ID of the subnet that location is located at.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 

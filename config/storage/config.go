@@ -27,7 +27,7 @@ import (
 	"github.com/crossplane/upjet/pkg/config"
 	"github.com/crossplane/upjet/pkg/resource"
 
-	"github.com/yandex-cloud/provider-jet-yc/config/iam"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/iam"
 )
 
 // Configure adds configurations for storage group.
@@ -51,7 +51,7 @@ func Configure(p *config.Provider) {
 
 const (
 	// APISPackagePath is the package path for generated APIs root package
-	APISPackagePath = "github.com/yandex-cloud/provider-jet-yc/config/storage"
+	APISPackagePath = "github.com/yandex-cloud/crossplane-provider-yc/config/storage"
 	// ExtractPublicKeyFuncPath holds the Azure resource ID extractor func name
 	ExtractPublicKeyFuncPath = APISPackagePath + ".ExtractAccessKey()"
 )

@@ -24,7 +24,7 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/crossplane/upjet/pkg/controller"
 
-	"github.com/yandex-cloud/provider-jet-yc/apis/v1beta1"
+	"github.com/yandex-cloud/crossplane-provider-yc/apis/v1beta1"
 )
 
 // Setup adds a controller that reconciles ProviderConfigs by accounting for

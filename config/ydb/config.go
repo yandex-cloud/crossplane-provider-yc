@@ -23,7 +23,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/config"
 
-	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/vpc"
 )
 
 // Configure adds configurations for ydb group.

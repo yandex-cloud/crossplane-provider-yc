@@ -1,4 +1,4 @@
-module github.com/yandex-cloud/provider-jet-yc
+module github.com/yandex-cloud/crossplane-provider-yc
 
 go 1.21
 

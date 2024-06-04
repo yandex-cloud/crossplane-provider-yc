@@ -369,7 +369,7 @@ type InstanceInitParameters struct {
 
 	// The ID of the folder that the resource belongs to. If it
 	// is not provided, the default provider folder is used.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -437,7 +437,7 @@ type InstanceInitParameters struct {
 	SecondaryDisk []SecondaryDiskInitParameters `json:"secondaryDisk,omitempty" tf:"secondary_disk,omitempty"`
 
 	// ID of the service account authorized for this instance.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
 	// Reference to a ServiceAccount in iam to populate serviceAccountId.
@@ -573,7 +573,7 @@ type InstanceParameters struct {
 
 	// The ID of the folder that the resource belongs to. If it
 	// is not provided, the default provider folder is used.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -658,7 +658,7 @@ type InstanceParameters struct {
 	SecondaryDisk []SecondaryDiskParameters `json:"secondaryDisk,omitempty" tf:"secondary_disk,omitempty"`
 
 	// ID of the service account authorized for this instance.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
@@ -814,7 +814,7 @@ type NetworkInterfaceInitParameters struct {
 	NATIPAddress *string `json:"natIpAddress,omitempty" tf:"nat_ip_address,omitempty"`
 
 	// Security group ids for network interface.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
@@ -829,7 +829,7 @@ type NetworkInterfaceInitParameters struct {
 	// ID of the subnet to attach this
 	// interface to. The subnet must exist in the same zone where this instance will be
 	// created.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -929,7 +929,7 @@ type NetworkInterfaceParameters struct {
 	NATIPAddress *string `json:"natIpAddress,omitempty" tf:"nat_ip_address,omitempty"`
 
 	// Security group ids for network interface.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
@@ -945,7 +945,7 @@ type NetworkInterfaceParameters struct {
 	// ID of the subnet to attach this
 	// interface to. The subnet must exist in the same zone where this instance will be
 	// created.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 

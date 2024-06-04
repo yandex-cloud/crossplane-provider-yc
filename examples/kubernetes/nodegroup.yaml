@@ -7,7 +7,7 @@ spec:
     clusterIdRef:
       name: example-cluster
     name: example-cluster
-    description: provider-jet-yc nodegroup
+    description: crossplane-provider-yc nodegroup
     version: "1.29"
     instanceTemplate:
       - platformId: "standard-v2"

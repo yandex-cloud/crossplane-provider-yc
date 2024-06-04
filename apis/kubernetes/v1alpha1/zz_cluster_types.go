@@ -51,7 +51,7 @@ type ClusterInitParameters struct {
 
 	// The ID of the folder that the Kubernetes cluster belongs to.
 	// If it is not provided, the default provider folder is used.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -76,7 +76,7 @@ type ClusterInitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The ID of the cluster network.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
 	// Reference to a Network in vpc to populate networkId.
@@ -98,7 +98,7 @@ type ClusterInitParameters struct {
 
 	// Service account to be used by the worker nodes of the Kubernetes cluster
 	// to access Container Registry or to push node logs and metrics.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	NodeServiceAccountID *string `json:"nodeServiceAccountId,omitempty" tf:"node_service_account_id,omitempty"`
 
 	// Reference to a ServiceAccount in iam to populate nodeServiceAccountId.
@@ -115,7 +115,7 @@ type ClusterInitParameters struct {
 	// Service account to be used for provisioning Compute Cloud and VPC resources
 	// for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes
 	// cluster will be located and on the folder where selected network resides.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
 	// Reference to a ServiceAccount in iam to populate serviceAccountId.
@@ -231,7 +231,7 @@ type ClusterParameters struct {
 
 	// The ID of the folder that the Kubernetes cluster belongs to.
 	// If it is not provided, the default provider folder is used.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -261,7 +261,7 @@ type ClusterParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The ID of the cluster network.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Network
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
@@ -287,7 +287,7 @@ type ClusterParameters struct {
 
 	// Service account to be used by the worker nodes of the Kubernetes cluster
 	// to access Container Registry or to push node logs and metrics.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
 	NodeServiceAccountID *string `json:"nodeServiceAccountId,omitempty" tf:"node_service_account_id,omitempty"`
 
@@ -306,7 +306,7 @@ type ClusterParameters struct {
 	// Service account to be used for provisioning Compute Cloud and VPC resources
 	// for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes
 	// cluster will be located and on the folder where selected network resides.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccount
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
@@ -332,7 +332,7 @@ type ClusterParameters struct {
 type KMSProviderInitParameters struct {
 
 	// KMS key ID.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/kms/v1alpha1.SymmetricKey
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/kms/v1alpha1.SymmetricKey
 	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
 	// Reference to a SymmetricKey in kms to populate keyId.
@@ -353,7 +353,7 @@ type KMSProviderObservation struct {
 type KMSProviderParameters struct {
 
 	// KMS key ID.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/kms/v1alpha1.SymmetricKey
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/kms/v1alpha1.SymmetricKey
 	// +kubebuilder:validation:Optional
 	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
@@ -369,7 +369,7 @@ type KMSProviderParameters struct {
 type LocationInitParameters struct {
 
 	// ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -396,7 +396,7 @@ type LocationObservation struct {
 type LocationParameters struct {
 
 	// ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -503,7 +503,7 @@ type MasterInitParameters struct {
 	Regional []RegionalInitParameters `json:"regional,omitempty" tf:"regional,omitempty"`
 
 	// List of security group IDs to which the Kubernetes cluster belongs.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
@@ -723,7 +723,7 @@ type MasterParameters struct {
 	Regional []RegionalParameters `json:"regional,omitempty" tf:"regional,omitempty"`
 
 	// List of security group IDs to which the Kubernetes cluster belongs.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
@@ -822,7 +822,7 @@ type VersionInfoParameters struct {
 type ZonalInitParameters struct {
 
 	// ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -849,7 +849,7 @@ type ZonalObservation struct {
 type ZonalParameters struct {
 
 	// ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 

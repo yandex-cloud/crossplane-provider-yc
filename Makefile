@@ -1,7 +1,7 @@
 # ====================================================================================
 # Setup Project
 
-PROJECT_NAME := provider-jet-yc
+PROJECT_NAME := crossplane-provider-yc
 PROJECT_REPO := github.com/yandex-cloud/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION := 1.6.1
@@ -93,7 +93,7 @@ fallthrough: submodules
 
 # NOTE(hasheddan): we force image building to happen prior to xpkg build so that
 # we ensure image is present in daemon.
-xpkg.build.provider-jet-yc: do.build.images
+xpkg.build.crossplane-provider-yc: do.build.images
 
 # NOTE(hasheddan): we ensure up is installed prior to running platform-specific
 # build steps in parallel to avoid encountering an installation race condition.

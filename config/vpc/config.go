@@ -24,7 +24,7 @@ import (
 
 const (
 	// ApisPackagePath is the golang path for this package.
-	ApisPackagePath = "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
+	ApisPackagePath = "github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1"
 )
 
 // Configure adds configurations for vpc group.

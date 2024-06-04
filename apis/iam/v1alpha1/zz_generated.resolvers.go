@@ -23,8 +23,8 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
-	iam "github.com/yandex-cloud/provider-jet-yc/config/iam"
+	v1alpha1 "github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1"
+	iam "github.com/yandex-cloud/crossplane-provider-yc/config/iam"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 

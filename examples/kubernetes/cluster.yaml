@@ -5,7 +5,7 @@ metadata:
 spec:
   forProvider:
     name: example-cluster
-    description: provider-jet-yc cluster
+    description: crossplane-provider-yc cluster
     networkIdRef:
       name: example-net
     master:

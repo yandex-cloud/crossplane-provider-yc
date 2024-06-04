@@ -164,7 +164,7 @@ type ClickhouseSourceInitParameters struct {
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -213,7 +213,7 @@ type ClickhouseSourceParameters struct {
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -266,7 +266,7 @@ type ClickhouseTargetInitParameters struct {
 	Sharding []ShardingInitParameters `json:"sharding,omitempty" tf:"sharding,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -329,7 +329,7 @@ type ClickhouseTargetParameters struct {
 	Sharding []ShardingParameters `json:"sharding,omitempty" tf:"sharding,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -1057,7 +1057,7 @@ type EndpointInitParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// ID of the folder to create the endpoint in. If it is not provided, the default provider folder is used.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -1108,7 +1108,7 @@ type EndpointParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// ID of the folder to create the endpoint in. If it is not provided, the default provider folder is used.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -1725,7 +1725,7 @@ type MongoSourceConnectionConnectionOptionsInitParameters struct {
 	AuthSource *string `json:"authSource,omitempty" tf:"auth_source,omitempty"`
 
 	// Identifier of the Managed PostgreSQL cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MongodbCluster
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MongodbCluster
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
 	// Reference to a MongodbCluster in mdb to populate mdbClusterId.
@@ -1771,7 +1771,7 @@ type MongoSourceConnectionConnectionOptionsParameters struct {
 	AuthSource *string `json:"authSource,omitempty" tf:"auth_source,omitempty"`
 
 	// Identifier of the Managed PostgreSQL cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MongodbCluster
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MongodbCluster
 	// +kubebuilder:validation:Optional
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
@@ -1833,7 +1833,7 @@ type MongoSourceInitParameters struct {
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -1889,7 +1889,7 @@ type MongoSourceParameters struct {
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -1908,7 +1908,7 @@ type MongoTargetConnectionConnectionOptionsInitParameters struct {
 	AuthSource *string `json:"authSource,omitempty" tf:"auth_source,omitempty"`
 
 	// Identifier of the Managed PostgreSQL cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MongodbCluster
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MongodbCluster
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
 	// Reference to a MongodbCluster in mdb to populate mdbClusterId.
@@ -2003,7 +2003,7 @@ type MongoTargetConnectionConnectionOptionsParameters struct {
 	AuthSource *string `json:"authSource,omitempty" tf:"auth_source,omitempty"`
 
 	// Identifier of the Managed PostgreSQL cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MongodbCluster
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MongodbCluster
 	// +kubebuilder:validation:Optional
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
@@ -2074,7 +2074,7 @@ type MongoTargetInitParameters struct {
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -2123,7 +2123,7 @@ type MongoTargetParameters struct {
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -2139,7 +2139,7 @@ type MongoTargetParameters struct {
 type MySQLSourceConnectionInitParameters struct {
 
 	// Identifier of the Managed PostgreSQL cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLCluster
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MySQLCluster
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
 	// Reference to a MySQLCluster in mdb to populate mdbClusterId.
@@ -2172,7 +2172,7 @@ type MySQLSourceConnectionOnPremiseInitParameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -2213,7 +2213,7 @@ type MySQLSourceConnectionOnPremiseParameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -2290,7 +2290,7 @@ type MySQLSourceConnectionOnPremiseTLSModeParameters struct {
 type MySQLSourceConnectionParameters struct {
 
 	// Identifier of the Managed PostgreSQL cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLCluster
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MySQLCluster
 	// +kubebuilder:validation:Optional
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
@@ -2313,8 +2313,8 @@ type MySQLSourceInitParameters struct {
 	Connection []MySQLSourceConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
 	// -  Database.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MySQLDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Reference to a MySQLDatabase in mdb to populate database.
@@ -2338,7 +2338,7 @@ type MySQLSourceInitParameters struct {
 	Password []MySQLSourcePasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
 
 	// -  List of security groups that the transfer associated with this endpoint should use.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// References to SecurityGroup in vpc to populate securityGroups.
@@ -2356,8 +2356,8 @@ type MySQLSourceInitParameters struct {
 	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
 
 	// User for the database access.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MySQLUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 
 	// Reference to a MySQLUser in mdb to populate user.
@@ -2409,8 +2409,8 @@ type MySQLSourceParameters struct {
 	Connection []MySQLSourceConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
 	// -  Database.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MySQLDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
@@ -2439,7 +2439,7 @@ type MySQLSourceParameters struct {
 	Password []MySQLSourcePasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
 	// -  List of security groups that the transfer associated with this endpoint should use.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
@@ -2460,8 +2460,8 @@ type MySQLSourceParameters struct {
 	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
 
 	// User for the database access.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MySQLUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 
@@ -2489,7 +2489,7 @@ type MySQLSourcePasswordParameters struct {
 type MySQLTargetConnectionInitParameters struct {
 
 	// Identifier of the Managed PostgreSQL cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLCluster
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MySQLCluster
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
 	// Reference to a MySQLCluster in mdb to populate mdbClusterId.
@@ -2522,7 +2522,7 @@ type MySQLTargetConnectionOnPremiseInitParameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -2563,7 +2563,7 @@ type MySQLTargetConnectionOnPremiseParameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -2640,7 +2640,7 @@ type MySQLTargetConnectionOnPremiseTLSModeParameters struct {
 type MySQLTargetConnectionParameters struct {
 
 	// Identifier of the Managed PostgreSQL cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLCluster
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MySQLCluster
 	// +kubebuilder:validation:Optional
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
@@ -2666,8 +2666,8 @@ type MySQLTargetInitParameters struct {
 	Connection []MySQLTargetConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
 	// -  Database.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MySQLDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Reference to a MySQLDatabase in mdb to populate database.
@@ -2685,7 +2685,7 @@ type MySQLTargetInitParameters struct {
 	SQLMode *string `json:"sqlMode,omitempty" tf:"sql_mode,omitempty"`
 
 	// -  List of security groups that the transfer associated with this endpoint should use.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// References to SecurityGroup in vpc to populate securityGroups.
@@ -2706,8 +2706,8 @@ type MySQLTargetInitParameters struct {
 	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
 
 	// User for the database access.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MySQLUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 
 	// Reference to a MySQLUser in mdb to populate user.
@@ -2763,8 +2763,8 @@ type MySQLTargetParameters struct {
 	Connection []MySQLTargetConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
 	// -  Database.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLDatabase
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MySQLDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
@@ -2785,7 +2785,7 @@ type MySQLTargetParameters struct {
 	SQLMode *string `json:"sqlMode,omitempty" tf:"sql_mode,omitempty"`
 
 	// -  List of security groups that the transfer associated with this endpoint should use.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
@@ -2810,8 +2810,8 @@ type MySQLTargetParameters struct {
 	Timezone *string `json:"timezone,omitempty" tf:"timezone,omitempty"`
 
 	// User for the database access.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.MySQLUser
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.MySQLUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 
@@ -3227,7 +3227,7 @@ type PasswordParameters struct {
 type PostgresSourceConnectionInitParameters struct {
 
 	// Identifier of the Managed PostgreSQL cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlCluster
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.PostgresqlCluster
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
 	// Reference to a PostgresqlCluster in mdb to populate mdbClusterId.
@@ -3260,7 +3260,7 @@ type PostgresSourceConnectionOnPremiseInitParameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -3301,7 +3301,7 @@ type PostgresSourceConnectionOnPremiseParameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -3378,7 +3378,7 @@ type PostgresSourceConnectionOnPremiseTLSModeParameters struct {
 type PostgresSourceConnectionParameters struct {
 
 	// Identifier of the Managed PostgreSQL cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlCluster
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.PostgresqlCluster
 	// +kubebuilder:validation:Optional
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
@@ -3401,8 +3401,8 @@ type PostgresSourceInitParameters struct {
 	Connection []PostgresSourceConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
 	// Name of the database to transfer.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlDatabase
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.PostgresqlDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Reference to a PostgresqlDatabase in mdb to populate database.
@@ -3426,7 +3426,7 @@ type PostgresSourceInitParameters struct {
 	Password []PostgresSourcePasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
 
 	// List of security groups that the transfer associated with this endpoint should use.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// References to SecurityGroup in vpc to populate securityGroups.
@@ -3444,8 +3444,8 @@ type PostgresSourceInitParameters struct {
 	SlotGigabyteLagLimit *float64 `json:"slotGigabyteLagLimit,omitempty" tf:"slot_gigabyte_lag_limit,omitempty"`
 
 	// User for the database access.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.PostgresqlUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 
 	// Reference to a PostgresqlUser in mdb to populate user.
@@ -3641,8 +3641,8 @@ type PostgresSourceParameters struct {
 	Connection []PostgresSourceConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
 	// Name of the database to transfer.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlDatabase
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.PostgresqlDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
@@ -3671,7 +3671,7 @@ type PostgresSourceParameters struct {
 	Password []PostgresSourcePasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
 	// List of security groups that the transfer associated with this endpoint should use.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
@@ -3692,8 +3692,8 @@ type PostgresSourceParameters struct {
 	SlotGigabyteLagLimit *float64 `json:"slotGigabyteLagLimit,omitempty" tf:"slot_gigabyte_lag_limit,omitempty"`
 
 	// User for the database access.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.PostgresqlUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 
@@ -3721,7 +3721,7 @@ type PostgresSourcePasswordParameters struct {
 type PostgresTargetConnectionInitParameters struct {
 
 	// Identifier of the Managed PostgreSQL cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlCluster
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.PostgresqlCluster
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
 	// Reference to a PostgresqlCluster in mdb to populate mdbClusterId.
@@ -3754,7 +3754,7 @@ type PostgresTargetConnectionOnPremiseInitParameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// Reference to a Subnet in vpc to populate subnetId.
@@ -3795,7 +3795,7 @@ type PostgresTargetConnectionOnPremiseParameters struct {
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
 	// -  Identifier of the Yandex Cloud VPC subnetwork to user for accessing the database. If omitted, the server has to be accessible via Internet.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.Subnet
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -3872,7 +3872,7 @@ type PostgresTargetConnectionOnPremiseTLSModeParameters struct {
 type PostgresTargetConnectionParameters struct {
 
 	// Identifier of the Managed PostgreSQL cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlCluster
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.PostgresqlCluster
 	// +kubebuilder:validation:Optional
 	MdbClusterID *string `json:"mdbClusterId,omitempty" tf:"mdb_cluster_id,omitempty"`
 
@@ -3898,8 +3898,8 @@ type PostgresTargetInitParameters struct {
 	Connection []PostgresTargetConnectionInitParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
 	// -  Database.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlDatabase
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.PostgresqlDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Reference to a PostgresqlDatabase in mdb to populate database.
@@ -3914,7 +3914,7 @@ type PostgresTargetInitParameters struct {
 	Password []PostgresTargetPasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
 
 	// -  List of security groups that the transfer associated with this endpoint should use.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
 	// References to SecurityGroup in vpc to populate securityGroups.
@@ -3926,8 +3926,8 @@ type PostgresTargetInitParameters struct {
 	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
 
 	// User for the database access.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.PostgresqlUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 
 	// Reference to a PostgresqlUser in mdb to populate user.
@@ -3971,8 +3971,8 @@ type PostgresTargetParameters struct {
 	Connection []PostgresTargetConnectionParameters `json:"connection,omitempty" tf:"connection,omitempty"`
 
 	// -  Database.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlDatabase
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.PostgresqlDatabase
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	Database *string `json:"database,omitempty" tf:"database,omitempty"`
 
@@ -3989,7 +3989,7 @@ type PostgresTargetParameters struct {
 	Password []PostgresTargetPasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
 	// -  List of security groups that the transfer associated with this endpoint should use.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	SecurityGroups []*string `json:"securityGroups,omitempty" tf:"security_groups,omitempty"`
 
@@ -4002,8 +4002,8 @@ type PostgresTargetParameters struct {
 	SecurityGroupsSelector *v1.Selector `json:"securityGroupsSelector,omitempty" tf:"-"`
 
 	// User for the database access.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1.PostgresqlUser
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/datatransfer.ExtractSpecName()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1.PostgresqlUser
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer.ExtractSpecName()
 	// +kubebuilder:validation:Optional
 	User *string `json:"user,omitempty" tf:"user,omitempty"`
 

@@ -26,19 +26,19 @@ import (
 	sdk "github.com/yandex-cloud/terraform-provider-yandex/yandex"
 	framework "github.com/yandex-cloud/terraform-provider-yandex/yandex-framework"
 
-	"github.com/yandex-cloud/provider-jet-yc/config/alb"
-	"github.com/yandex-cloud/provider-jet-yc/config/common"
-	"github.com/yandex-cloud/provider-jet-yc/config/compute"
-	"github.com/yandex-cloud/provider-jet-yc/config/datatransfer"
-	"github.com/yandex-cloud/provider-jet-yc/config/dns"
-	"github.com/yandex-cloud/provider-jet-yc/config/iam"
-	"github.com/yandex-cloud/provider-jet-yc/config/kubernetes"
-	"github.com/yandex-cloud/provider-jet-yc/config/mdb"
-	ymq "github.com/yandex-cloud/provider-jet-yc/config/message"
-	"github.com/yandex-cloud/provider-jet-yc/config/resourcemanager"
-	"github.com/yandex-cloud/provider-jet-yc/config/storage"
-	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
-	"github.com/yandex-cloud/provider-jet-yc/config/ydb"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/alb"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/common"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/compute"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/dns"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/iam"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/kubernetes"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/mdb"
+	ymq "github.com/yandex-cloud/crossplane-provider-yc/config/message"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/resourcemanager"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/storage"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/vpc"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/ydb"
 )
 
 //go:embed schema.json
@@ -49,7 +49,7 @@ var providerMetadata string
 
 const (
 	resourcePrefix = "yandex-cloud"
-	modulePath     = "github.com/yandex-cloud/provider-jet-yc"
+	modulePath     = "github.com/yandex-cloud/crossplane-provider-yc"
 )
 
 // GetProvider returns provider configuration

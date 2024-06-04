@@ -27,8 +27,8 @@ import (
 	"github.com/crossplane/upjet/pkg/config"
 	"github.com/crossplane/upjet/pkg/resource"
 
-	"github.com/yandex-cloud/provider-jet-yc/config/mdb"
-	"github.com/yandex-cloud/provider-jet-yc/config/vpc"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/mdb"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/vpc"
 )
 
 // Configure adds configurations for datatransfer group.
@@ -152,7 +152,7 @@ func Configure(p *config.Provider) {
 
 const (
 	// APISPackagePath is the package path for generated APIs root package
-	APISPackagePath = "github.com/yandex-cloud/provider-jet-yc/config/datatransfer"
+	APISPackagePath = "github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer"
 
 	// ExtractSpecNameFunc extracts username from MySQLUser or PotgresqlUser resource
 	ExtractSpecNameFunc = APISPackagePath + ".ExtractSpecName()"

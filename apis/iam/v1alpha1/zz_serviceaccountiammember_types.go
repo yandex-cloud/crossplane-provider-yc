@@ -32,7 +32,7 @@ type ServiceAccountIAMMemberInitParameters struct {
 	// Identity that will be granted the privilege in role.
 	// Entry can have one of the following values:
 	// +crossplane:generate:reference:type=ServiceAccount
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/iam.ServiceAccountRefValue()
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
 	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
 	Member *string `json:"member,omitempty" tf:"member,omitempty"`
@@ -86,7 +86,7 @@ type ServiceAccountIAMMemberParameters struct {
 	// Identity that will be granted the privilege in role.
 	// Entry can have one of the following values:
 	// +crossplane:generate:reference:type=ServiceAccount
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/iam.ServiceAccountRefValue()
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
 	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
 	// +kubebuilder:validation:Optional

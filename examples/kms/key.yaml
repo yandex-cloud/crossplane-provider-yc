@@ -5,7 +5,7 @@ metadata:
 spec:
   forProvider:
     name: example-sk
-    description: provider-jet-yc created KMS key
+    description: crossplane-provider-yc created KMS key
     defaultAlgorithm: AES_128
     rotationPeriod: 8760h
   providerConfigRef:

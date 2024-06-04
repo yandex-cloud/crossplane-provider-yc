@@ -1,12 +1,12 @@
-# Yandex.Cloud Crossplane Provider
+# Yandex Cloud Crossplane Provider
 
-`provider-jet-yc` is a [Crossplane](https://crossplane.io/) provider that is built
+`crossplane-provider-yc` is a [Crossplane](https://crossplane.io/) provider that is built
 using [Upjet](https://github.com/crossplane/upjet/) code generation tools and exposes XRM-conformant
-managed resources for [Yandex.Cloud](https://cloud.yandex.com/).
+managed resources for [Yandex Cloud](https://cloud.yandex.com/).
 
 ## Getting Started
 
-### Install crossplane/provder-jet-yc
+### Install crossplane-provider-yc
 
 Install crossplane:
 
@@ -37,7 +37,7 @@ sudo mv kubectl-crossplane $(dirname $(which kubectl))
 Install the provider by using the following command after changing the image tag to the latest release
 
 ```
-kubectl crossplane install provider cr.yandex/crp0kch415f0lke009ft/crossplane/provider-jet-yc:v0.1.37
+kubectl crossplane install provider cr.yandex/crp0kch415f0lke009ft/crossplane/crossplane-provider-yc:v0.1.37
 ```
 
 ### Setup ProviderConfig
@@ -72,12 +72,12 @@ Apply example ProviderConfig:
 kubectl apply -f examples/providerconfig/providerconfig.yaml
 ```
 
-### Update crossplane/provder-jet-yc
+### Update crossplane-provider-yc
 
 Update provider version on new tag (e.g. v0.1.37):
 
 ```
-kubectl crossplane update provider crp0kch415f0lke009ft-crossplane-provider-jet-yc v0.1.37
+kubectl crossplane update provider crp0kch415f0lke009ft-crossplane-crossplane-provider-yc v0.1.37
 ```
 
 ## Useful things
@@ -127,4 +127,4 @@ You can enforce `deletionPolicy: Orphan` with gatekeeper if you need.
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please open
-an [issue](https://github.com/yandex-cloud/provider-jet-yc/issues).
+an [issue](https://github.com/yandex-cloud/crossplane-provider-yc/issues).

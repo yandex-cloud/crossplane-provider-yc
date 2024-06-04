@@ -23,12 +23,12 @@ import (
 
 	"github.com/crossplane/upjet/pkg/config"
 
-	"github.com/yandex-cloud/provider-jet-yc/config/iam"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/iam"
 )
 
 const (
 	// ApisPackagePath is the golang path for this package.
-	ApisPackagePath = "github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1"
+	ApisPackagePath = "github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1"
 )
 
 // Configure adds configurations for resourcemanager group.

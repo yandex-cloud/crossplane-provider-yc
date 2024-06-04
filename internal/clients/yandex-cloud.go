@@ -33,7 +33,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/yandex-cloud/provider-jet-yc/apis/v1beta1"
+	"github.com/yandex-cloud/crossplane-provider-yc/apis/v1beta1"
 )
 
 const (

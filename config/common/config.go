@@ -21,7 +21,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/config"
 
-	"github.com/yandex-cloud/provider-jet-yc/config/resourcemanager"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/resourcemanager"
 )
 
 // DefaultResourceOverrides returns a default resource configuration to be used while

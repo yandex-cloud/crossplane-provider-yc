@@ -34,9 +34,9 @@ import (
 	"github.com/pkg/errors"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/mdb/v1alpha1"
-	ujcontroller "github.com/yandex-cloud/provider-jet-yc/hack/controller"
-	features "github.com/yandex-cloud/provider-jet-yc/internal/features"
+	v1alpha1 "github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1"
+	ujcontroller "github.com/yandex-cloud/crossplane-provider-yc/hack/controller"
+	features "github.com/yandex-cloud/crossplane-provider-yc/internal/features"
 )
 
 // Setup adds a controller that reconciles MongodbDatabase managed resources.

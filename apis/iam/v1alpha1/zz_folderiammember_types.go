@@ -30,7 +30,7 @@ import (
 type FolderIAMMemberInitParameters struct {
 
 	// ID of the folder to attach a policy to.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Reference to a Folder in resourcemanager to populate folderId.
@@ -44,7 +44,7 @@ type FolderIAMMemberInitParameters struct {
 	// The identity that will be granted the privilege that is specified in the role field.
 	// This field can have one of the following values:
 	// +crossplane:generate:reference:type=ServiceAccount
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/iam.ServiceAccountRefValue()
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
 	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
 	Member *string `json:"member,omitempty" tf:"member,omitempty"`
@@ -83,7 +83,7 @@ type FolderIAMMemberObservation struct {
 type FolderIAMMemberParameters struct {
 
 	// ID of the folder to attach a policy to.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/resourcemanager/v1alpha1.Folder
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -98,7 +98,7 @@ type FolderIAMMemberParameters struct {
 	// The identity that will be granted the privilege that is specified in the role field.
 	// This field can have one of the following values:
 	// +crossplane:generate:reference:type=ServiceAccount
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/iam.ServiceAccountRefValue()
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
 	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
 	// +kubebuilder:validation:Optional

@@ -35,8 +35,8 @@ import (
 	"github.com/pkg/errors"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1alpha1 "github.com/yandex-cloud/provider-jet-yc/apis/vpc/v1alpha1"
-	features "github.com/yandex-cloud/provider-jet-yc/internal/features"
+	v1alpha1 "github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1"
+	features "github.com/yandex-cloud/crossplane-provider-yc/internal/features"
 )
 
 // Setup adds a controller that reconciles SecurityGroup managed resources.

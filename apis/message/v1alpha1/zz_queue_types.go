@@ -30,8 +30,8 @@ import (
 type QueueInitParameters struct {
 
 	// The access key to use when applying changes. If omitted, ymq_access_key specified in provider config is used. For more information see documentation.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/message.ExtractAccessKey()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/message.ExtractAccessKey()
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
 
 	// Reference to a ServiceAccountStaticAccessKey in iam to populate accessKey.
@@ -126,8 +126,8 @@ type QueueObservation struct {
 type QueueParameters struct {
 
 	// The access key to use when applying changes. If omitted, ymq_access_key specified in provider config is used. For more information see documentation.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/provider-jet-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/provider-jet-yc/config/message.ExtractAccessKey()
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/message.ExtractAccessKey()
 	// +kubebuilder:validation:Optional
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
 
