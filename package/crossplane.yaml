@@ -2,3 +2,9 @@ apiVersion: meta.pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: crossplane-provider-yc
+  annotations:
+    meta.crossplane.io/maintainer: Yandex Cloud
+    meta.crossplane.io/source: github.com/yandex-cloud/crossplane-provider-yc
+    meta.crossplane.io/license: Apache-2.0
+    meta.crossplane.io/description: |
+      The Yandex Cloud Crossplane Provider enables management of Yandex Cloud resources.  

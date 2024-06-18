@@ -34,11 +34,11 @@ curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.
 sudo mv kubectl-crossplane $(dirname $(which kubectl))
 ```
 
-Install the provider by using the following command after changing the image name and tag to the latest release
-(image name and tag can be found in the [current release page](https://yandex.cloud/en-ru/marketplace/products/yc/crossplane#docker-images))
+Install the provider by using the following command after changing tag to the latest release:
+
 
 ```
-kubectl crossplane install provider cr.yandex/yc-marketplace/yandex-cloud/crossplane/provider-jet-yc1715238233618419317890636198513831921783193441180:v0.4.0
+kubectl crossplane install provider xpkg.upbound.io/yandexcloud/crossplane-provider-yc:v0.4.1
 ```
 
 ### Setup ProviderConfig
@@ -71,6 +71,14 @@ Apply example ProviderConfig:
 
 ```
 kubectl apply -f examples/providerconfig/providerconfig.yaml
+```
+
+### Update crossplane-provider-yc
+
+Update provider version on new tag (e.g. v0.4.1):
+
+```
+kubectl crossplane update provider crossplane-provider-yc v0.4.1
 ```
 
 ## Useful things
