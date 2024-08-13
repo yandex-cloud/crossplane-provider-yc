@@ -4,6 +4,8 @@
 PROJECT_NAME := crossplane-provider-yc
 PROJECT_REPO := github.com/yandex-cloud/$(PROJECT_NAME)
 
+INTERNAL_CR ?= crpih38ka022n1ng31n0
+
 export TERRAFORM_VERSION := 1.6.1
 
 export TERRAFORM_PROVIDER_HOST ?= terraform-mirror.yandexcloud.net/registry.terraform.io
@@ -17,7 +19,7 @@ export TERRAFORM_DOCS_PATH ?= website/docs/r
 export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-yandex_$(TERRAFORM_PROVIDER_VERSION)_x5
 
 
-PLATFORMS ?= linux_amd64 linux_arm64
+PLATFORMS ?= linux_amd64
 
 # -include will silently skip missing files, which allows us
 # to load those files with a target in the Makefile. If only
@@ -62,15 +64,14 @@ UPTEST_VERSION = v0.6.1
 # ====================================================================================
 # Setup Images
 
-# DOCKER_REGISTRY := cr.yandex/crpp95idm4jatfbm05e9/yandex-cloud/crossplane
-REGISTRY_ORGS ?= cr.yandex/crpp95idm4jatfbm05e9/yandex-cloud
+REGISTRY_ORGS ?= cr.yandex/$(INTERNAL_CR)/yandex-cloud xpkg.upbound.io/yandexcloud
 IMAGES = $(PROJECT_NAME)
 -include build/makelib/imagelight.mk
 
 # ====================================================================================
 # Setup XPKG
 
-XPKG_REG_ORGS ?= cr.yandex/crpp95idm4jatfbm05e9/yandex-cloud/crossplane
+XPKG_REG_ORGS ?= cr.yandex/$(INTERNAL_CR)/yandex-cloud/crossplane xpkg.upbound.io/yandexcloud
 # NOTE(hasheddan): skip promoting on xpkg.upbound.io as channel tags are
 # inferred.
 XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/upbound
