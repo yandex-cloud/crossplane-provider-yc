@@ -15,12 +15,10 @@ yc config set service-account-key sa_key.json
 
 yc container registry configure-docker
 
-make build.init
-
 yc config set folder-id ${FOLDER_ID}
 yc config set cloud-id ${CLOUD_ID}
 
-UP_TOKEN=$(yc lockbox payload get --id ${SECRET_ID} --key ${SECRET_KEY}) up login
+UP_TOKEN=$(yc lockbox payload get --id ${SECRET_ID} --key ${SECRET_KEY}) make up-login
 
 echo "##teamcity[blockClosed name='keys']"
 

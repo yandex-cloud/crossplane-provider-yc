@@ -301,3 +301,6 @@ help-special: crossplane.help
 .PHONY: test-all
 
 test-all: lint test
+
+up-login: $(UP)
+	@$(UP) login
