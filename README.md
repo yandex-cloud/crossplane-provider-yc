@@ -30,15 +30,15 @@ kubectl get all -n crossplane-system
 Install crossplane CLI:
 
 ```shell
-curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | sh
-sudo mv kubectl-crossplane $(dirname $(which kubectl))
+curl -sL https://raw.githubusercontent.com/crossplane/crossplane/master/install.sh | sh && \
+sudo mv crossplane $(dirname $(which kubectl))
 ```
 
 Install the provider by using the following command after changing tag to the latest release:
 
 
 ```
-kubectl crossplane install provider xpkg.upbound.io/yandexcloud/crossplane-provider-yc:v0.4.1
+crossplane xpkg install provider xpkg.upbound.io/yandexcloud/crossplane-provider-yc:v0.4.1
 ```
 
 ### Setup ProviderConfig
