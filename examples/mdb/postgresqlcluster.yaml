@@ -11,6 +11,9 @@ data:
 apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: PostgresqlCluster
 metadata:
+  annotations:
+    uptest.upbound.io/pre-delete-hook: testhooks/delete-postgres-deps.sh
+    uptest.upbound.io/timeout: '2700'
   name: example-pg
 spec:
   forProvider:
@@ -50,6 +53,8 @@ kind: PostgresqlUser
 metadata:
   annotations:
     meta.upbound.io/example-id: mdb/v1alpha1/postgresqluser
+  labels:
+    testing.upbound.io/example-name: postgres
   name: pg-user1
 spec:
   forProvider:
@@ -73,6 +78,8 @@ kind: PostgresqlDatabase
 metadata:
   annotations:
     meta.upbound.io/example-id: mdb/v1alpha1/postgresqldatabase
+  labels:
+    testing.upbound.io/example-name: postgres
   name: pg-database1
 spec:
   forProvider:

@@ -3,6 +3,8 @@ kind: MySQLDatabase
 metadata:
   annotations:
     meta.upbound.io/example-id: mdb/v1alpha1/mysqldatabase
+  labels:
+    testing.upbound.io/example-name: mysql
   name: mysql-database1
 spec:
   forProvider:
