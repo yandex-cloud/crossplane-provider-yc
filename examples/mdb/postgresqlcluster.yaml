@@ -19,7 +19,7 @@ spec:
     networkIdRef:
       name: example-net
     config:
-      - version: "12"
+      - version: "15"
         resources:
           - diskSize: 16
             diskTypeId: network-hdd
