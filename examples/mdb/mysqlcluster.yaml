@@ -49,7 +49,6 @@ kind: MySQLUser
 metadata:
   annotations:
     meta.upbound.io/example-id: mdb/v1alpha1/mysqluser
-    uptest.upbound.io/timeout: '2700'
   labels:
     testing.upbound.io/example-name: mysql
   name: mysql-user1

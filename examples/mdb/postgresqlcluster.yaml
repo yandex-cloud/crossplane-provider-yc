@@ -13,7 +13,6 @@ kind: PostgresqlCluster
 metadata:
   annotations:
     uptest.upbound.io/pre-delete-hook: testhooks/delete-postgres-deps.sh
-    uptest.upbound.io/timeout: '2700'
   name: example-pg
 spec:
   forProvider:
