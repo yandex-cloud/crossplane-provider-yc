@@ -12,6 +12,7 @@ apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: PostgresqlCluster
 metadata:
   annotations:
+    uptest.upbound.io/conditions: 'Ready,Synced'
     uptest.upbound.io/pre-delete-hook: testhooks/delete-postgres-deps.sh
   name: example-pg
 spec:

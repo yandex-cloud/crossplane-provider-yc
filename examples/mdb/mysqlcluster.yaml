@@ -13,6 +13,7 @@ kind: MySQLCluster
 metadata:
   name: example-mysql
   annotations:
+    uptest.upbound.io/conditions: 'Ready,Synced'
     uptest.upbound.io/pre-delete-hook: testhooks/delete-mysql-deps.sh
 spec:
   forProvider:

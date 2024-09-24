@@ -194,7 +194,7 @@ UPTEST_DATASOURCE_PATH ?= $(shell ./hack/uptest_data.sh)
 uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
 	@echo "##teamcity[blockOpened name='uptest' description='run automated e2e tests']"
 	@$(INFO) running automated tests
-	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) CREDENTIALS='$(UPTEST_CLOUD_CREDENTIALS)' $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Ready" || $(FAIL)
+	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) CREDENTIALS='$(UPTEST_CLOUD_CREDENTIALS)' $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
 	@$(OK) running automated tests
 	@echo "##teamcity[blockClosed name='uptest']"
 

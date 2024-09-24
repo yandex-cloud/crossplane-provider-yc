@@ -3,6 +3,7 @@ kind: MongodbCluster
 metadata:
   name: example-mongodb
   annotations:
+    uptest.upbound.io/conditions: 'Ready,Synced'
     uptest.upbound.io/pre-delete-hook: testhooks/delete-mongo-deps.sh
 spec:
   forProvider:
