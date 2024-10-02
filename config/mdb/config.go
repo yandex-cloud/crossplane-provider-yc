@@ -101,7 +101,12 @@ func databases(attr map[string]interface{}) []string {
 
 // hostAttrs returns the values of the given attribute for each host.
 func hostAttrs(attr map[string]interface{}, name string) []string {
-	hostsInterface, ok := attr["host"]
+	return extractParamFromAttrs(attr, "host", name)
+}
+
+// extractParamFromAttrs returns list of values extracted from specified param
+func extractParamFromAttrs(attr map[string]interface{}, param, name string) []string {
+	hostsInterface, ok := attr[param]
 	if !ok {
 		return nil
 	}
@@ -286,8 +291,32 @@ func kafkaConnDetails(attr map[string]interface{}) map[string][]byte {
 	return conn
 }
 
+// opensearchConnDetails returns connection details for opensearch cluster.
+func opensearchConnDetails(attr map[string]interface{}) map[string][]byte {
+	conn := make(map[string][]byte)
+	for i, v := range extractParamFromAttrs(attr, "hosts", "fqdn") {
+		conn[fmt.Sprintf("attribute.host.%d.fqdn", i)] = []byte(v)
+	}
+	return conn
+}
+
 // Configure adds configurations for mdb group.
 func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("yandex_mdb_opensearch_cluster", func(r *config.Resource) {
+		r.References["network_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
+		}
+		r.References["config.opensearch.node_groups.subnet_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
+		}
+		r.References["security_group_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
+		}
+		r.UseAsync = true
+		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
+			return opensearchConnDetails(attr), nil
+		}
+	})
 	p.AddResourceConfigurator("yandex_mdb_postgresql_cluster", func(r *config.Resource) {
 		r.References["network_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),

@@ -70,6 +70,7 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_mdb_mongodb_user$",
 		}),
 		tjconfig.WithIncludeList([]string{
+			"yandex_mdb_opensearch_cluster$",
 			"yandex_mdb_postgresql_cluster$",
 			"yandex_mdb_postgresql_database$",
 			"yandex_mdb_postgresql_user$",
