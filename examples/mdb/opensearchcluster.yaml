@@ -40,7 +40,7 @@ spec:
     environment: PRESTABLE
     maintenanceWindow:
       - type: ANYTIME
-    name: example-opensearch-cluster
+    name: opensearch-cluster
     networkIdRef:
       name: example-net
   writeConnectionSecretToRef:
