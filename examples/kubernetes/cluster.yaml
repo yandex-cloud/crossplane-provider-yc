@@ -6,6 +6,8 @@ spec:
   forProvider:
     name: example-cluster
     description: crossplane-provider-yc cluster
+    clusterIpv4Range: 10.113.0.0/16
+    serviceIpv4Range: 10.97.0.0/16
     networkIdRef:
       name: example-net
     master:

@@ -17,6 +17,11 @@ export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-yandex
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://$(TERRAFORM_PROVIDER_HOST)/$(TERRAFORM_PROVIDER_SOURCE)
 export TERRAFORM_DOCS_PATH ?= website/docs/r
 export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-yandex_$(TERRAFORM_PROVIDER_VERSION)_x5
+# the version of chainsaw to use
+export CHAINSAW_VERSION ?= 0.2.0
+export CROSSPLANE_CLI_VERSION ?= current
+export CROSSPLANE_CLI_CHANNEL ?= stable
+
 
 
 PLATFORMS ?= linux_amd64
@@ -58,7 +63,7 @@ GO111MODULE = on
 KIND_VERSION = v0.19.0
 UP_VERSION = v0.28.0
 UP_CHANNEL = stable
-UPTEST_VERSION = v0.6.1
+UPTEST_VERSION = v1.1.2
 -include build/makelib/k8s_tools.mk
 
 # ====================================================================================
@@ -105,6 +110,17 @@ build.init: $(UP)
 TERRAFORM := $(TOOLS_HOST_DIR)/terraform-$(TERRAFORM_VERSION)
 TERRAFORM_WORKDIR := $(WORK_DIR)/terraform
 TERRAFORM_PROVIDER_SCHEMA := config/schema.json
+CHAINSAW := $(TOOLS_HOST_DIR)/chainsaw-$(CHAINSAW_VERSION)
+CROSSPLANE_CLI := $(TOOLS_HOST_DIR)/crossplane-cli-$(CROSSPLANE_CLI_VERSION)
+
+CROSSPLANE_UPTEST := $(TOOLS_HOST_DIR)/crossplane-uptest-$(UPTEST_VERSION)
+
+# override target from k8s_tools
+$(CROSSPLANE_UPTEST):
+	@$(INFO) installing uptest $(CROSSPLANE_UPTEST)
+	@curl -fsSLo $(CROSSPLANE_UPTEST) https://github.com/crossplane/uptest/releases/download/$(UPTEST_VERSION)/uptest_$(SAFEHOSTPLATFORM) || $(FAIL)
+	@chmod +x $(CROSSPLANE_UPTEST)
+	@$(OK) installing uptest $(CROSSPLANE_UPTEST)
 
 $(TERRAFORM):
 	@$(INFO) installing terraform $(HOSTOS)-$(HOSTARCH)
@@ -114,6 +130,25 @@ $(TERRAFORM):
 	@mv $(TOOLS_HOST_DIR)/tmp-terraform/terraform $(TERRAFORM)
 	@rm -fr $(TOOLS_HOST_DIR)/tmp-terraform
 	@$(OK) installing terraform $(HOSTOS)-$(HOSTARCH)
+
+# chainsaw download and install
+$(CHAINSAW):
+	@$(INFO) installing chainsaw $(CHAINSAW_VERSION)
+	@mkdir -p $(TOOLS_HOST_DIR)
+	@curl -fsSLo $(CHAINSAW).tar.gz --create-dirs https://github.com/kyverno/chainsaw/releases/download/v$(CHAINSAW_VERSION)/chainsaw_$(SAFEHOST_PLATFORM).tar.gz || $(FAIL)
+	@tar -xvf $(CHAINSAW).tar.gz chainsaw
+	@mv chainsaw $(CHAINSAW)
+	@chmod +x $(CHAINSAW)
+	@rm $(CHAINSAW).tar.gz
+	@$(OK) installing chainsaw $(CHAINSAW_VERSION)
+
+# Crossplane CLI download and install
+$(CROSSPLANE_CLI):
+	@$(INFO) installing Crossplane CLI $(CROSSPLANE_CLI_VERSION)
+	@curl -fsSLo $(CROSSPLANE_CLI) --create-dirs https://releases.crossplane.io/$(CROSSPLANE_CLI_CHANNEL)/$(CROSSPLANE_CLI_VERSION)/bin/$(SAFEHOST_PLATFORM)/crank?source=build || $(FAIL)
+	@chmod +x $(CROSSPLANE_CLI)
+	@$(OK) installing Crossplane CLI $(CROSSPLANE_CLI_VERSION)
+
 
 $(TERRAFORM_PROVIDER_SCHEMA): $(TERRAFORM)
 	@$(INFO) generating provider schema for $(TERRAFORM_PROVIDER_SOURCE) $(TERRAFORM_PROVIDER_VERSION)
@@ -191,10 +226,11 @@ UPTEST_CLOUD_CREDENTIALS ?= $(shell cat ./key.json)
 UPTEST_DATASOURCE_PATH ?= $(shell ./hack/uptest_data.sh)
 # - UPTEST_DATASOURCE_PATH (optional), see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
 # - CLOUD_ID and FOLDER_ID need to be the IDs of YC cloud and folder, respectively, where tests will be run.
-uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
+
+uptest: $(CROSSPLANE_UPTEST) $(KUBECTL) $(CHAINSAW) $(CROSSPLANE_CLI)
 	@echo "##teamcity[blockOpened name='uptest' description='run automated e2e tests']"
 	@$(INFO) running automated tests
-	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) CREDENTIALS='$(UPTEST_CLOUD_CREDENTIALS)' $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
+	@KUBECTL=$(KUBECTL) CHAINSAW=$(CHAINSAW) CROSSPLANE_CLI=$(CROSSPLANE_CLI) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) CREDENTIALS='$(UPTEST_CLOUD_CREDENTIALS)' $(CROSSPLANE_UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
 	@$(OK) running automated tests
 	@echo "##teamcity[blockClosed name='uptest']"
 
@@ -232,6 +268,8 @@ xpkg.push: $(UP)
 
 cloud-deploy: tc-build controlplane.up-cloud cloud.xpkg.deploy.provider
 	@$(INFO) running locally built provider
+	$(eval export PATH=$(PATH):$(TOOLS_HOST_DIR))
+	@ln -s $(KUBECTL) $(TOOLS_HOST_DIR)/kubectl
 	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
 	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
 	@$(OK) running locally built provider
@@ -248,7 +286,7 @@ e2e: local-deploy uptest
 
 e2e-cloud: cloud-reg cloud-deploy uptest
 
-crddiff: $(UPTEST)
+crddiff: $(CROSSPLANE_UPTEST)
 	@$(INFO) Checking breaking CRD schema changes
 	@for crd in $${MODIFIED_CRD_LIST}; do \
 		if ! git cat-file -e "$${GITHUB_BASE_REF}:$${crd}" 2>/dev/null; then \
@@ -256,7 +294,7 @@ crddiff: $(UPTEST)
 			continue ; \
 		fi ; \
 		echo "Checking $${crd} for breaking API changes..." ; \
-		changes_detected=$$($(UPTEST) crddiff revision <(git cat-file -p "$${GITHUB_BASE_REF}:$${crd}") "$${crd}" 2>&1) ; \
+		changes_detected=$(CROSSPLANE_UPTEST) crddiff revision <(git cat-file -p "$${GITHUB_BASE_REF}:$${crd}") "$${crd}" 2>&1) ; \
 		if [[ $$? != 0 ]] ; then \
 			printf "\033[31m"; echo "Breaking change detected!"; printf "\033[0m" ; \
 			echo "$${changes_detected}" ; \

@@ -56,6 +56,7 @@ delete_all managed-kubernetes cluster
 delete_all iam service-account
 delete_all ydb db
 delete_all managed-kafka cluster
+delete_all opensearch cluster
 delete_sgs
 delete_all vpc addr
 delete_all vpc subnet
