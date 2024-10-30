@@ -4,7 +4,7 @@
 PROJECT_NAME := crossplane-provider-yc
 PROJECT_REPO := github.com/yandex-cloud/$(PROJECT_NAME)
 
-INTERNAL_CR ?= crpih38ka022n1ng31n0
+INTERNAL_CR ?= crpdm72eobaai6aa8ver
 
 export TERRAFORM_VERSION := 1.6.1
 
@@ -69,14 +69,14 @@ UPTEST_VERSION = v1.1.2
 # ====================================================================================
 # Setup Images
 
-REGISTRY_ORGS ?= cr.yandex/$(INTERNAL_CR)/yandex-cloud xpkg.upbound.io/yandexcloud
+REGISTRY_ORGS ?= cr.yandex/$(INTERNAL_CR)/yandex-cloud
 IMAGES = $(PROJECT_NAME)
 -include build/makelib/imagelight.mk
 
 # ====================================================================================
 # Setup XPKG
 
-XPKG_REG_ORGS ?= cr.yandex/$(INTERNAL_CR)/yandex-cloud/crossplane xpkg.upbound.io/yandexcloud
+XPKG_REG_ORGS ?= cr.yandex/$(INTERNAL_CR)/yandex-cloud/crossplane
 # NOTE(hasheddan): skip promoting on xpkg.upbound.io as channel tags are
 # inferred.
 XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/upbound
