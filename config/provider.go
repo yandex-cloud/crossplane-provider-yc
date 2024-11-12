@@ -24,7 +24,7 @@ import (
 
 	tjconfig "github.com/crossplane/upjet/pkg/config"
 	sdk "github.com/yandex-cloud/terraform-provider-yandex/yandex"
-	framework "github.com/yandex-cloud/terraform-provider-yandex/yandex-framework"
+	framework "github.com/yandex-cloud/terraform-provider-yandex/yandex-framework/provider"
 
 	"github.com/yandex-cloud/crossplane-provider-yc/config/alb"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/common"

@@ -1218,6 +1218,52 @@ spec:
                                 type: array
                             type: object
                           type: array
+                        metrikaSource:
+                          items:
+                            properties:
+                              counterIds:
+                                items:
+                                  type: number
+                                type: array
+                              streams:
+                                items:
+                                  properties:
+                                    columns:
+                                      items:
+                                        type: string
+                                      type: array
+                                    type:
+                                      description: 'Field type, one of: INT64, INT32,
+                                        INT16, INT8, UINT64, UINT32, UINT16, UINT8,
+                                        DOUBLE, BOOLEAN, STRING, UTF8, ANY, DATETIME.'
+                                      type: string
+                                  type: object
+                                type: array
+                              token:
+                                items:
+                                  properties:
+                                    rawSecretRef:
+                                      description: A SecretKeySelector is a reference
+                                        to a secret key in an arbitrary namespace.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                         mongoSource:
                           description: Settings specific to the MongoDB source endpoint.
                           items:
@@ -5420,6 +5466,33 @@ spec:
                                 type: array
                             type: object
                           type: array
+                        metrikaSource:
+                          items:
+                            properties:
+                              counterIds:
+                                items:
+                                  type: number
+                                type: array
+                              streams:
+                                items:
+                                  properties:
+                                    columns:
+                                      items:
+                                        type: string
+                                      type: array
+                                    type:
+                                      description: 'Field type, one of: INT64, INT32,
+                                        INT16, INT8, UINT64, UINT32, UINT16, UINT8,
+                                        DOUBLE, BOOLEAN, STRING, UTF8, ANY, DATETIME.'
+                                      type: string
+                                  type: object
+                                type: array
+                              token:
+                                items:
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
                         mongoSource:
                           description: Settings specific to the MongoDB source endpoint.
                           items:
@@ -9484,6 +9557,52 @@ spec:
                                       description: Topic name prefix. Messages will
                                         be sent to topic with name <topic_prefix>..<table_name>.
                                       type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        metrikaSource:
+                          items:
+                            properties:
+                              counterIds:
+                                items:
+                                  type: number
+                                type: array
+                              streams:
+                                items:
+                                  properties:
+                                    columns:
+                                      items:
+                                        type: string
+                                      type: array
+                                    type:
+                                      description: 'Field type, one of: INT64, INT32,
+                                        INT16, INT8, UINT64, UINT32, UINT16, UINT8,
+                                        DOUBLE, BOOLEAN, STRING, UTF8, ANY, DATETIME.'
+                                      type: string
+                                  type: object
+                                type: array
+                              token:
+                                items:
+                                  properties:
+                                    rawSecretRef:
+                                      description: A SecretKeySelector is a reference
+                                        to a secret key in an arbitrary namespace.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
                                   type: object
                                 type: array
                             type: object

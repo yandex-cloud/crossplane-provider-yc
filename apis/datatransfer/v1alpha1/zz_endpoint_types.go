@@ -1719,6 +1719,34 @@ type MappingParameters struct {
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
 }
 
+type MetrikaSourceInitParameters struct {
+	CounterIds []*float64 `json:"counterIds,omitempty" tf:"counter_ids,omitempty"`
+
+	Streams []StreamsInitParameters `json:"streams,omitempty" tf:"streams,omitempty"`
+
+	Token []TokenInitParameters `json:"token,omitempty" tf:"token,omitempty"`
+}
+
+type MetrikaSourceObservation struct {
+	CounterIds []*float64 `json:"counterIds,omitempty" tf:"counter_ids,omitempty"`
+
+	Streams []StreamsObservation `json:"streams,omitempty" tf:"streams,omitempty"`
+
+	Token []TokenParameters `json:"token,omitempty" tf:"token,omitempty"`
+}
+
+type MetrikaSourceParameters struct {
+
+	// +kubebuilder:validation:Optional
+	CounterIds []*float64 `json:"counterIds,omitempty" tf:"counter_ids,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Streams []StreamsParameters `json:"streams,omitempty" tf:"streams,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Token []TokenParameters `json:"token,omitempty" tf:"token,omitempty"`
+}
+
 type MongoSourceConnectionConnectionOptionsInitParameters struct {
 
 	// Name of the database associated with the credentials.
@@ -4262,6 +4290,8 @@ type SettingsInitParameters struct {
 	// Settings specific to the Kafka target endpoint.
 	KafkaTarget []KafkaTargetInitParameters `json:"kafkaTarget,omitempty" tf:"kafka_target,omitempty"`
 
+	MetrikaSource []MetrikaSourceInitParameters `json:"metrikaSource,omitempty" tf:"metrika_source,omitempty"`
+
 	// Settings specific to the MongoDB source endpoint.
 	MongoSource []MongoSourceInitParameters `json:"mongoSource,omitempty" tf:"mongo_source,omitempty"`
 
@@ -4306,6 +4336,8 @@ type SettingsObservation struct {
 
 	// Settings specific to the Kafka target endpoint.
 	KafkaTarget []KafkaTargetObservation `json:"kafkaTarget,omitempty" tf:"kafka_target,omitempty"`
+
+	MetrikaSource []MetrikaSourceObservation `json:"metrikaSource,omitempty" tf:"metrika_source,omitempty"`
 
 	// Settings specific to the MongoDB source endpoint.
 	MongoSource []MongoSourceObservation `json:"mongoSource,omitempty" tf:"mongo_source,omitempty"`
@@ -4355,6 +4387,9 @@ type SettingsParameters struct {
 	// Settings specific to the Kafka target endpoint.
 	// +kubebuilder:validation:Optional
 	KafkaTarget []KafkaTargetParameters `json:"kafkaTarget,omitempty" tf:"kafka_target,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	MetrikaSource []MetrikaSourceParameters `json:"metrikaSource,omitempty" tf:"metrika_source,omitempty"`
 
 	// Settings specific to the MongoDB source endpoint.
 	// +kubebuilder:validation:Optional
@@ -4475,6 +4510,30 @@ type ShardsParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
+type StreamsInitParameters struct {
+	Columns []*string `json:"columns,omitempty" tf:"columns,omitempty"`
+
+	// Field type, one of: INT64, INT32, INT16, INT8, UINT64, UINT32, UINT16, UINT8, DOUBLE, BOOLEAN, STRING, UTF8, ANY, DATETIME.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type StreamsObservation struct {
+	Columns []*string `json:"columns,omitempty" tf:"columns,omitempty"`
+
+	// Field type, one of: INT64, INT32, INT16, INT8, UINT64, UINT32, UINT16, UINT8, DOUBLE, BOOLEAN, STRING, UTF8, ANY, DATETIME.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
+type StreamsParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Columns []*string `json:"columns,omitempty" tf:"columns,omitempty"`
+
+	// Field type, one of: INT64, INT32, INT16, INT8, UINT64, UINT32, UINT16, UINT8, DOUBLE, BOOLEAN, STRING, UTF8, ANY, DATETIME.
+	// +kubebuilder:validation:Optional
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+}
+
 type TLSModeDisabledInitParameters struct {
 }
 
@@ -4530,6 +4589,18 @@ type TLSModeParameters struct {
 	// If this attribute is not an empty block, then TLS is used for the server connection. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Enabled []EnabledParameters `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type TokenInitParameters struct {
+}
+
+type TokenObservation struct {
+}
+
+type TokenParameters struct {
+
+	// +kubebuilder:validation:Optional
+	RawSecretRef *v1.SecretKeySelector `json:"rawSecretRef,omitempty" tf:"-"`
 }
 
 type TopicInitParameters struct {

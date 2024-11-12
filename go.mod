@@ -14,7 +14,7 @@ require (
 	github.com/hashicorp/terraform-plugin-go v0.22.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.33.0
 	github.com/pkg/errors v0.9.1
-	github.com/yandex-cloud/terraform-provider-yandex v0.117.0
+	github.com/yandex-cloud/terraform-provider-yandex v0.123.0
 	github.com/zclconf/go-cty v1.14.3
 	github.com/zclconf/go-cty-yaml v1.0.3
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
@@ -123,9 +123,9 @@ require (
 	github.com/vmihailenco/msgpack v4.0.4+incompatible // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
-	github.com/yandex-cloud/go-genproto v0.0.0-20240401111333-b9ee0d3d9e6b // indirect
-	github.com/yandex-cloud/go-sdk v0.0.0-20240306121756-2977336ccf27 // indirect
-	github.com/ydb-platform/terraform-provider-ydb v0.0.19 // indirect
+	github.com/yandex-cloud/go-genproto v0.0.0-20240618172339-aafa8543bd63 // indirect
+	github.com/yandex-cloud/go-sdk v0.0.0-20240621081111-1018f7c96dc7 // indirect
+	github.com/ydb-platform/terraform-provider-ydb v0.0.20 // indirect
 	github.com/ydb-platform/ydb-go-genproto v0.0.0-20240315124112-fc0fbffd6613 // indirect
 	github.com/ydb-platform/ydb-go-sdk/v3 v3.56.2 // indirect
 	github.com/yuin/goldmark v1.4.13 // indirect
@@ -144,9 +144,9 @@ require (
 	golang.org/x/tools v0.17.0 // indirect
 	gomodules.xyz/jsonpatch/v2 v2.4.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/genproto v0.0.0-20240304212257-790db918fca8 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20240304212257-790db918fca8 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240304212257-790db918fca8 // indirect
+	google.golang.org/genproto v0.0.0-20240325203815-454cdb8f5daa // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20240325203815-454cdb8f5daa // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240325203815-454cdb8f5daa // indirect
 	google.golang.org/grpc v1.62.1 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect

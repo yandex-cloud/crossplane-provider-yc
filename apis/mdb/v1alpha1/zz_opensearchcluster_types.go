@@ -51,25 +51,20 @@ type HostsInitParameters struct {
 
 type HostsObservation struct {
 
-	// Sets whether the host should get a public IP address. Can be either true or false.
+	// Sets whether the hosts should get a public IP address on creation.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
-	// The fully qualified domain name of the host.
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// The roles of the deployed host. Can contain DATA and/or MANAGER roles. Will be empty for DASHBOARDS type.
+	// A set of OpenSearch roles assigned to hosts. Available roles are: DATA, MANAGER. Default: [DATA, MANAGER]
 	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 
-	// The ID of the subnet, to which the host belongs. The subnet must
-	// be a part of the network to which the cluster belongs.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// The type of the deployed host. Can be either OPENSEARCH or DASHBOARDS.
+	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// The availability zone where the OpenSearch host will be created.
-	// For more information see the official documentation.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
@@ -351,7 +346,6 @@ type OpensearchClusterObservation struct {
 	// For more information see health field of JSON representation in the official documentation.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
-	// A hosts of the OpenSearch cluster. The structure is documented below.
 	Hosts []HostsObservation `json:"hosts,omitempty" tf:"hosts,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`

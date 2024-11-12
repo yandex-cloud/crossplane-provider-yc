@@ -1702,6 +1702,11 @@ func (in *NetworkInterfaceInitParameters) DeepCopyInto(out *NetworkInterfaceInit
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Index != nil {
+		in, out := &in.Index, &out.Index
+		*out = new(float64)
+		**out = **in
+	}
 	if in.NAT != nil {
 		in, out := &in.NAT, &out.NAT
 		*out = new(bool)
@@ -1902,6 +1907,11 @@ func (in *NetworkInterfaceParameters) DeepCopyInto(out *NetworkInterfaceParamete
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.Index != nil {
+		in, out := &in.Index, &out.Index
+		*out = new(float64)
+		**out = **in
 	}
 	if in.NAT != nil {
 		in, out := &in.NAT, &out.NAT

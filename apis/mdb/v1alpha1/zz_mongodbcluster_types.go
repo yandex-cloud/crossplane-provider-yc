@@ -244,6 +244,44 @@ type DatabaseParameters struct {
 	Name *string `json:"name" tf:"name,omitempty"`
 }
 
+type HostParametersInitParameters struct {
+	Hidden *bool `json:"hidden,omitempty" tf:"hidden,omitempty"`
+
+	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
+
+	SecondaryDelaySecs *int64 `json:"secondaryDelaySecs,omitempty" tf:"secondary_delay_secs,omitempty"`
+
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+}
+
+type HostParametersObservation struct {
+	Hidden *bool `json:"hidden,omitempty" tf:"hidden,omitempty"`
+
+	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
+
+	SecondaryDelaySecs *int64 `json:"secondaryDelaySecs,omitempty" tf:"secondary_delay_secs,omitempty"`
+
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+}
+
+type HostParametersParameters struct {
+
+	// +kubebuilder:validation:Optional
+	Hidden *bool `json:"hidden,omitempty" tf:"hidden,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SecondaryDelaySecs *int64 `json:"secondaryDelaySecs,omitempty" tf:"secondary_delay_secs,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
+}
+
 type JournalInitParameters struct {
 
 	// The maximum amount of time in milliseconds that the mongod process allows between journal operations.
@@ -664,6 +702,8 @@ type MongodbClusterHostInitParameters struct {
 	// Should this host have assigned public IP assigned. Can be either true or false.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
+	HostParameters []HostParametersInitParameters `json:"hostParameters,omitempty" tf:"host_parameters,omitempty"`
+
 	// The role of the cluster (either PRIMARY or SECONDARY).
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
@@ -699,6 +739,8 @@ type MongodbClusterHostObservation struct {
 	// (Computed) The health of the host.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
+	HostParameters []HostParametersObservation `json:"hostParameters,omitempty" tf:"host_parameters,omitempty"`
+
 	// (Computed) The fully qualified domain name of the host. Computed on server side.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -725,6 +767,9 @@ type MongodbClusterHostParameters struct {
 	// Should this host have assigned public IP assigned. Can be either true or false.
 	// +kubebuilder:validation:Optional
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	HostParameters []HostParametersParameters `json:"hostParameters,omitempty" tf:"host_parameters,omitempty"`
 
 	// The role of the cluster (either PRIMARY or SECONDARY).
 	// +kubebuilder:validation:Optional

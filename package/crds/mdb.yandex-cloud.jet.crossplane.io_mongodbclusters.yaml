@@ -564,6 +564,23 @@ spec:
                           description: Should this host have assigned public IP assigned.
                             Can be either true or false.
                           type: boolean
+                        hostParameters:
+                          items:
+                            properties:
+                              hidden:
+                                type: boolean
+                              priority:
+                                type: number
+                              secondaryDelaySecs:
+                                format: int64
+                                type: integer
+                              tags:
+                                additionalProperties:
+                                  type: string
+                                type: object
+                                x-kubernetes-map-type: granular
+                            type: object
+                          type: array
                         role:
                           description: The role of the cluster (either PRIMARY or
                             SECONDARY).
@@ -1521,6 +1538,23 @@ spec:
                           description: Should this host have assigned public IP assigned.
                             Can be either true or false.
                           type: boolean
+                        hostParameters:
+                          items:
+                            properties:
+                              hidden:
+                                type: boolean
+                              priority:
+                                type: number
+                              secondaryDelaySecs:
+                                format: int64
+                                type: integer
+                              tags:
+                                additionalProperties:
+                                  type: string
+                                type: object
+                                x-kubernetes-map-type: granular
+                            type: object
+                          type: array
                         role:
                           description: The role of the cluster (either PRIMARY or
                             SECONDARY).
@@ -2570,6 +2604,23 @@ spec:
                         health:
                           description: (Computed) The health of the host.
                           type: string
+                        hostParameters:
+                          items:
+                            properties:
+                              hidden:
+                                type: boolean
+                              priority:
+                                type: number
+                              secondaryDelaySecs:
+                                format: int64
+                                type: integer
+                              tags:
+                                additionalProperties:
+                                  type: string
+                                type: object
+                                x-kubernetes-map-type: granular
+                            type: object
+                          type: array
                         name:
                           description: (Computed) The fully qualified domain name
                             of the host. Computed on server side.
