@@ -281,6 +281,9 @@ pre-build:
 tc-build: pre-build build
 	@echo "##teamcity[blockClosed name='build']"
 
+publish.init: $(UP)
+	@:
+
 
 e2e: local-deploy uptest
 

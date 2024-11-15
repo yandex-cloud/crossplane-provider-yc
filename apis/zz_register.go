@@ -25,6 +25,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 
 	v1alpha1 "github.com/yandex-cloud/crossplane-provider-yc/apis/alb/v1alpha1"
+	v1alpha1cdn "github.com/yandex-cloud/crossplane-provider-yc/apis/cdn/v1alpha1"
 	v1alpha1compute "github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1"
 	v1alpha1container "github.com/yandex-cloud/crossplane-provider-yc/apis/container/v1alpha1"
 	v1alpha1datatransfer "github.com/yandex-cloud/crossplane-provider-yc/apis/datatransfer/v1alpha1"
@@ -46,6 +47,7 @@ func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1cdn.SchemeBuilder.AddToScheme,
 		v1alpha1compute.SchemeBuilder.AddToScheme,
 		v1alpha1container.SchemeBuilder.AddToScheme,
 		v1alpha1datatransfer.SchemeBuilder.AddToScheme,

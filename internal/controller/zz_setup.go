@@ -28,6 +28,8 @@ import (
 	loadbalancer "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/alb/loadbalancer"
 	targetgroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/alb/targetgroup"
 	virtualhost "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/alb/virtualhost"
+	origingroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cdn/origingroup"
+	resource "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cdn/resource"
 	instance "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/compute/instance"
 	registry "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/container/registry"
 	repository "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/container/repository"
@@ -84,6 +86,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		loadbalancer.Setup,
 		targetgroup.Setup,
 		virtualhost.Setup,
+		origingroup.Setup,
+		resource.Setup,
 		instance.Setup,
 		registry.Setup,
 		repository.Setup,

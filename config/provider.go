@@ -27,6 +27,7 @@ import (
 	framework "github.com/yandex-cloud/terraform-provider-yandex/yandex-framework/provider"
 
 	"github.com/yandex-cloud/crossplane-provider-yc/config/alb"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/cdn"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/common"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/compute"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/datatransfer"
@@ -71,6 +72,8 @@ func GetProvider() *tjconfig.Provider {
 		}),
 		tjconfig.WithIncludeList([]string{
 			"yandex_mdb_opensearch_cluster$",
+			"yandex_cdn_resource$",
+			"yandex_cdn_origin_group$",
 			"yandex_mdb_postgresql_cluster$",
 			"yandex_mdb_postgresql_database$",
 			"yandex_mdb_postgresql_user$",
@@ -131,6 +134,7 @@ func GetProvider() *tjconfig.Provider {
 		resourcemanager.Configure,
 		ydb.Configure,
 		ymq.Configure,
+		cdn.Configure,
 	} {
 		configure(pc)
 	}

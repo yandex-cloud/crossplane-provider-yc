@@ -1,0 +1,25 @@
+# NOTE: CDN provider must be activated prior usage of CDN resources, either via UI console or via yc cli command: yc cdn provider activate --folder-id <folder-id> --type gcore
+apiVersion: cdn.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Resource
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cdn/v1alpha1/resource
+  labels:
+    testing.upbound.io/example-name: my_resource
+  name: my-resource
+spec:
+  forProvider:
+    active: false
+    cname: cdn1.yandex-example.ru
+    options:
+    - edgeCacheSettings: 345600
+      ignoreCookie: true
+      staticRequestHeaders:
+        is-from-cdn: "yes"
+      staticResponseHeaders:
+        is-cdn: "yes"
+    originGroupIdRef:
+      name: my-group
+    originProtocol: https
+    secondaryHostnames:
+    - cdn-example-2.yandex.ru
