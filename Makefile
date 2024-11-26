@@ -4,7 +4,9 @@
 PROJECT_NAME := crossplane-provider-yc
 PROJECT_REPO := github.com/yandex-cloud/$(PROJECT_NAME)
 
-INTERNAL_CR ?= crpdm72eobaai6aa8ver
+REGISTRY_ID ?= crpdm72eobaai6aa8ver
+
+INTERNAL_CR ?= $(REGISTRY_ID)
 
 export TERRAFORM_VERSION := 1.6.1
 

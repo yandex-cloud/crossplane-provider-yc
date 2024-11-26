@@ -622,7 +622,16 @@ type FilterParameters struct {
 type GrantInitParameters struct {
 
 	// Canonical user id to grant for. Used only when type is CanonicalUser.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Reference to a ServiceAccount in iam to populate id.
+	// +kubebuilder:validation:Optional
+	IDRef *v1.Reference `json:"idRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceAccount in iam to populate id.
+	// +kubebuilder:validation:Optional
+	IDSelector *v1.Selector `json:"idSelector,omitempty" tf:"-"`
 
 	// List of permissions to apply for grantee. Valid values are READ, WRITE, FULL_CONTROL.
 	// +listType=set
@@ -654,8 +663,17 @@ type GrantObservation struct {
 type GrantParameters struct {
 
 	// Canonical user id to grant for. Used only when type is CanonicalUser.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Reference to a ServiceAccount in iam to populate id.
+	// +kubebuilder:validation:Optional
+	IDRef *v1.Reference `json:"idRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceAccount in iam to populate id.
+	// +kubebuilder:validation:Optional
+	IDSelector *v1.Selector `json:"idSelector,omitempty" tf:"-"`
 
 	// List of permissions to apply for grantee. Valid values are READ, WRITE, FULL_CONTROL.
 	// +kubebuilder:validation:Optional

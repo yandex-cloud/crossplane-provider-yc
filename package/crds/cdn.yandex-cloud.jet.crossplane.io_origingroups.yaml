@@ -55,11 +55,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: |-
-              OriginGroupSpec defines the desired state of OriginGroup
-              NOTE: CDN provider must be activated prior usage of CDN resources, 
-              either via UI console or via yc cli command: 
-              yc cdn provider activate --folder-id <folder-id> --type gcore
+            description: OriginGroupSpec defines the desired state of OriginGroup
             properties:
               deletionPolicy:
                 default: Delete

@@ -1436,29 +1436,38 @@ spec:
                       For more information see health field of JSON representation in the official documentation.
                     type: string
                   hosts:
+                    description: A hosts of the OpenSearch cluster. The structure
+                      is documented below.
                     items:
                       properties:
                         assignPublicIp:
-                          description: Sets whether the hosts should get a public
-                            IP address on creation.
+                          description: Sets whether the host should get a public IP
+                            address. Can be either true or false.
                           type: boolean
                         fqdn:
+                          description: The fully qualified domain name of the host.
                           type: string
                         roles:
-                          description: 'A set of OpenSearch roles assigned to hosts.
-                            Available roles are: DATA, MANAGER. Default: [DATA, MANAGER]'
+                          description: The roles of the deployed host. Can contain
+                            DATA and/or MANAGER roles. Will be empty for DASHBOARDS
+                            type.
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         subnetId:
+                          description: |-
+                            The ID of the subnet, to which the host belongs. The subnet must
+                            be a part of the network to which the cluster belongs.
                           type: string
                         type:
-                          description: Type of maintenance window. Can be either ANYTIME
-                            or WEEKLY. A day and hour of window need to be specified
-                            with weekly window.
+                          description: The type of the deployed host. Can be either
+                            OPENSEARCH or DASHBOARDS.
                           type: string
                         zone:
+                          description: |-
+                            The availability zone where the OpenSearch host will be created.
+                            For more information see the official documentation.
                           type: string
                       type: object
                     type: array

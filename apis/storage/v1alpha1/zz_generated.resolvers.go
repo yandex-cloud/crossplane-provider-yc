@@ -68,6 +68,24 @@ func (mg *Bucket) ResolveReferences(ctx context.Context, c client.Reader) error 
 	mg.Spec.ForProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.FolderIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Grant); i3++ {
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Grant[i3].ID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.ForProvider.Grant[i3].IDRef,
+			Selector:     mg.Spec.ForProvider.Grant[i3].IDSelector,
+			To: reference.To{
+				List:    &v1alpha1.ServiceAccountList{},
+				Managed: &v1alpha1.ServiceAccount{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.Grant[i3].ID")
+		}
+		mg.Spec.ForProvider.Grant[i3].ID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.Grant[i3].IDRef = rsp.ResolvedReference
+
+	}
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AccessKey),
 		Extract:      storage.ExtractAccessKey(),
@@ -99,6 +117,25 @@ func (mg *Bucket) ResolveReferences(ctx context.Context, c client.Reader) error 
 	}
 	mg.Spec.InitProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.FolderIDRef = rsp.ResolvedReference
+
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Grant); i3++ {
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Grant[i3].ID),
+			Extract:      reference.ExternalName(),
+			Reference:    mg.Spec.InitProvider.Grant[i3].IDRef,
+			Selector:     mg.Spec.InitProvider.Grant[i3].IDSelector,
+			To: reference.To{
+				List:    &v1alpha1.ServiceAccountList{},
+				Managed: &v1alpha1.ServiceAccount{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.Grant[i3].ID")
+		}
+		mg.Spec.InitProvider.Grant[i3].ID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.Grant[i3].IDRef = rsp.ResolvedReference
+
+	}
 
 	return nil
 }

@@ -37,6 +37,9 @@ func Configure(p *config.Provider) {
 			Type:      fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccountStaticAccessKey"),
 			Extractor: ExtractPublicKeyFuncPath,
 		}
+		r.References["grant.id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccount"),
+		}
 	})
 	p.AddResourceConfigurator("yandex_storage_object", func(r *config.Resource) {
 		r.References["access_key"] = config.Reference{
