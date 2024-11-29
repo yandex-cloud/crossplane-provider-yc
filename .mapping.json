@@ -227,7 +227,6 @@
   "apis/ydb/v1alpha1/zz_generated.resolvers.go":"opensource/crossplane-provider-yc/apis/ydb/v1alpha1/zz_generated.resolvers.go",
   "apis/ydb/v1alpha1/zz_groupversion_info.go":"opensource/crossplane-provider-yc/apis/ydb/v1alpha1/zz_groupversion_info.go",
   "apis/zz_register.go":"opensource/crossplane-provider-yc/apis/zz_register.go",
-  "build/.gitignore":"opensource/crossplane-provider-yc/build/.gitignore",
   "build/CODE_OF_CONDUCT.md":"opensource/crossplane-provider-yc/build/CODE_OF_CONDUCT.md",
   "build/CONTRIBUTING.md":"opensource/crossplane-provider-yc/build/CONTRIBUTING.md",
   "build/DCO":"opensource/crossplane-provider-yc/build/DCO",
