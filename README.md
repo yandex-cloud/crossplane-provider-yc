@@ -5,6 +5,7 @@ using [Upjet](https://github.com/crossplane/upjet/) code generation tools and ex
 managed resources for [Yandex Cloud](https://cloud.yandex.com/).
 
 ## Getting Started
+Testing magpie
 
 ### Install crossplane-provider-yc
 
