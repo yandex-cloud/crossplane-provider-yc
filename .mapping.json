@@ -348,6 +348,7 @@
   "go.mod":"opensource/crossplane-provider-yc/go.mod",
   "go.sum":"opensource/crossplane-provider-yc/go.sum",
   "hack/boilerplate.go.txt":"opensource/crossplane-provider-yc/hack/boilerplate.go.txt",
+  "hack/check_unreleased.sh":"opensource/crossplane-provider-yc/hack/check_unreleased.sh",
   "hack/controller/api.go":"opensource/crossplane-provider-yc/hack/controller/api.go",
   "hack/controller/api_test.go":"opensource/crossplane-provider-yc/hack/controller/api_test.go",
   "hack/controller/conversion/functions.go":"opensource/crossplane-provider-yc/hack/controller/conversion/functions.go",
