@@ -75,7 +75,7 @@ DEBUG ?= 0
 
 # TODO(hasheddan): change default to main and remove master as valid option.
 CHANNEL ?= master
-ifeq ($(filter master main alpha beta stable,$(CHANNEL)),)
+ifeq ($(filter trunk master main alpha beta stable,$(CHANNEL)),)
 $(error invalid channel $(CHANNEL))
 endif
 

@@ -110,7 +110,7 @@ endif
 
 # only publish package for main / master and release branches
 # TODO(hasheddan): remove master and support overriding
-ifneq ($(filter main master release-%,$(BRANCH_NAME)),)
+ifneq ($(filter trunk main master release-%,$(BRANCH_NAME)),)
 publish.artifacts: $(foreach r,$(XPKG_REG_ORGS), $(foreach x,$(XPKGS),xpkg.release.publish.$(r).$(x)))
 endif
 

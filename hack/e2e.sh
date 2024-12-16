@@ -1,9 +1,6 @@
 #!/bin/bash
 
-[ -n "${OAUTH_TOKEN}" ] || { echo OAUTH_TOKEN env var not set, can not proceed; exit 1; }
 [ -n "${SECRET_ID}" ] || { echo SECRET_ID env var not set, can not proceed; exit 1; }
-[ -n "${CLOUD_ID}" ] || { echo CLOUD_ID env var not set, can not proceed; exit 1; }
-[ -n "${FOLDER_ID}" ] || { echo FOLDER_ID env var not set, can not proceed; exit 1; }
 [ -n "${NETWORK_ID}" ] || { echo NETWORK_ID env var not set, can not proceed; exit 1; }
 [ -n "${SUBNET_ID}" ] || { echo SUBNET_ID env var not set, can not proceed; exit 1; }
 [ -n "${CLUSTER_IP}" ] || { echo CLUSTER_IP env var not set, can not proceed; exit 1; }
@@ -11,23 +8,23 @@
 
 echo "##teamcity[blockOpened name='keys' description='set up YC keys']"
 
-yc config profile create robot
-yc config set token ${OAUTH_TOKEN}
+#yc config profile create robot
+#yc config set token ${OAUTH_TOKEN}
+#
+#yc lockbox payload get --id ${SECRET_ID} --key key > key.json
+#
+#yc config profile create sa-profile
+#yc config set service-account-key key.json
+#yc config set folder-id ${FOLDER_ID}
+#yc config set cloud-id ${CLOUD_ID}
 
-yc lockbox payload get --id ${SECRET_ID} --key key > key.json
-export SA_ID=$(jq -r .service_account_id key.json)
-
-yc config profile create sa-profile
-yc config set service-account-key key.json
-yc config set folder-id ${FOLDER_ID}
-yc config set cloud-id ${CLOUD_ID}
-
-yc lockbox payload get ${SECRET_ID} --key access-key >> awskey
+export SA_ID=$(jq -r .service_account_id ${SA_KEY_FILE})
+yc lockbox payload get --id ${SECRET_ID} --key access-key >> awskey
 mkdir ~/.aws && echo [default] > ~/.aws/credentials && echo '  'aws_access_key_id = $(jq -r .access_key.key_id awskey) >> ~/.aws/credentials && echo '  'aws_secret_access_key = $(jq -r .secret awskey) >> ~/.aws/credentials
 echo "##teamcity[blockClosed name='keys']"
 
-WORKDIR=${DOCKER_WORKDIR:-"$(cd .. && pwd)"}
-git config --global --add safe.directory ${WORKDIR}
+#WORKDIR=${DOCKER_WORKDIR:-"$(cd .. && pwd)"}
+#git config --global --add safe.directory ${WORKDIR}
 
 echo "##teamcity[blockOpened name='cleanup' description='clean up test folder']"
 if ! ./hack/folder_cleanup.sh; then

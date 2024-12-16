@@ -215,7 +215,8 @@ UPTEST_EXAMPLE_LIST ?= $(shell ./hack/examples.sh ./examples)
 # - UPTEST_EXAMPLE_LIST, a comma-separated list of examples to test
 #   To ensure the proper functioning of the end-to-end test resource pre-deletion hook, it is crucial to arrange your resources appropriately. 
 #   You can check the basic implementation here: https://github.com/upbound/uptest/blob/main/internal/templates/01-delete.yaml.tmpl.
-UPTEST_CLOUD_CREDENTIALS ?= $(shell cat ./key.json)
+SA_KEY_FILE ?= ./key.json
+UPTEST_CLOUD_CREDENTIALS ?= $(shell cat ${SA_KEY_FILE})
 # - UPTEST_CLOUD_CREDENTIALS (optional), multiple sets of AWS IAM User credentials specified as key=value pairs.
 #   The support keys are currently `DEFAULT` and `PEER`. So, an example for the value of this env. variable is:
 #   DEFAULT='[default]
@@ -347,3 +348,6 @@ test-all: lint test
 
 up-login: $(UP)
 	@$(UP) login
+
+ci-e2e-crossplane:
+	./hack/e2e.sh
