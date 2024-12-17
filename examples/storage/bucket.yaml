@@ -1,7 +1,7 @@
 apiVersion: storage.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Bucket
 metadata:
-  name: example-bucket
+  name: example-bucket-${data.randomId}
   labels:
     testing.upbound.io/example-name: storage
 spec:

@@ -41,6 +41,8 @@ delete_all application-load-balancer virtual-host
 delete_all application-load-balancer backend-group
 delete_all application-load-balancer target-group
 delete_storage_buckets
+delete_all cdn resource
+delete_all cdn origin-group
 delete_all compute instance
 delete_all kms symmetric-key
 delete_all dns zone

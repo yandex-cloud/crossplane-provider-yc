@@ -1,7 +1,7 @@
 apiVersion: storage.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Object
 metadata:
-  name: example-object
+  name: example-object-${data.randomId}
   annotations:
     upjet.upbound.io/manual-intervention: "Cloud test tends to hang on bucket deletion."
 spec:
@@ -15,6 +15,6 @@ spec:
       namespace: upbound-system
       key: attribute.secret_key
     bucketRef:
-      name: example-bucket
+      name: example-bucket-${data.randomId}
   providerConfigRef:
     name: default

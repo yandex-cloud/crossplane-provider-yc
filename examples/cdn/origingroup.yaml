@@ -6,10 +6,10 @@ metadata:
     meta.upbound.io/example-id: cdn/v1alpha1/origingroup
   labels:
     testing.upbound.io/example-name: my_group
-  name: my-group
+  name: my-group-${data.randomId}
 spec:
   forProvider:
-    name: my-group-1
+    name: my-group-${data.randomId}
     origin:
     - source: ya.ru
     - source: yandex.ru

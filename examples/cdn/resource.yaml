@@ -10,7 +10,7 @@ metadata:
 spec:
   forProvider:
     active: false
-    cname: cdn1.yandex-example.ru
+    cname: cdn1-${data.randomId}.yandex-example.ru
     options:
     - edgeCacheSettings: 345600
       ignoreCookie: true
@@ -19,7 +19,7 @@ spec:
       staticResponseHeaders:
         is-cdn: "yes"
     originGroupIdRef:
-      name: my-group
+      name: my-group-${data.randomId}
     originProtocol: https
     secondaryHostnames:
     - cdn-example-2.yandex.ru
