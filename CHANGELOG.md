@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.6.1 - December 18, 2024
+### Fixed
+* Allow ID references in bucket/grant.
+
 ## v0.6.0
 ### Added
 * Add CDN resource.
