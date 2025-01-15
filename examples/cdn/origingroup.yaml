@@ -4,6 +4,7 @@ kind: OriginGroup
 metadata:
   annotations:
     meta.upbound.io/example-id: cdn/v1alpha1/origingroup
+    uptest.upbound.io/pre-create-hook: testhooks/activate-cdn.sh
   labels:
     testing.upbound.io/example-name: my_group
   name: my-group-${data.randomId}

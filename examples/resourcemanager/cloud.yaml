@@ -1,0 +1,13 @@
+apiVersion: resourcemanager.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Cloud
+metadata:
+  annotations:
+    meta.upbound.io/example-id: resourcemanager/v1alpha1/cloud
+    crossplane.io/external-name: ${data.cloudId}
+    upjet.upbound.io/manual-intervention: "ObserveOnly doesn't behave well in tests."
+  labels:
+    testing.upbound.io/example-name: cloud1
+  name: cloud1
+spec:
+  forProvider:
+    organizationId: my_organization_id

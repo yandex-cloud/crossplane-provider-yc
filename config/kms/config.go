@@ -18,7 +18,27 @@ limitations under the License.
 
 package kms
 
+import (
+	"fmt"
+	"github.com/crossplane/upjet/pkg/config"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/iam"
+)
+
 const (
 	// ApisPackagePath is the golang path for this package.
 	ApisPackagePath = "github.com/yandex-cloud/crossplane-provider-yc/apis/kms/v1alpha1"
 )
+
+func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("yandex_kms_symmetric_key_iam_binding", func(r *config.Resource) {
+		r.References["symmetric_key_id"] = config.Reference{
+			Type: "SymmetricKey",
+		}
+		r.References["members"] = config.Reference{
+			Type:              "ServiceAccount",
+			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
+			RefFieldName:      "ServiceAccountRef",
+			SelectorFieldName: "ServiceAccountSelector",
+		}
+	})
+}

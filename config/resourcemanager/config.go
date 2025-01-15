@@ -33,6 +33,43 @@ const (
 
 // Configure adds configurations for resourcemanager group.
 func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("yandex_organizationmanager_organization_iam_binding", func(r *config.Resource) {
+		r.ShortGroup = "iam"
+		r.References["members"] = config.Reference{
+			Type:              "ServiceAccount",
+			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
+			RefFieldName:      "ServiceAccountRef",
+			SelectorFieldName: "ServiceAccountSelector",
+		}
+	})
+	p.AddResourceConfigurator("yandex_organizationmanager_group_iam_member", func(r *config.Resource) {
+		r.ShortGroup = "iam"
+		r.References["member"] = config.Reference{
+			Type:              "ServiceAccount",
+			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
+			RefFieldName:      "ServiceAccountRef",
+			SelectorFieldName: "ServiceAccountSelector",
+		}
+	})
+	p.AddResourceConfigurator("yandex_resourcemanager_cloud_iam_member", func(r *config.Resource) {
+		r.ShortGroup = "iam"
+		r.References["member"] = config.Reference{
+			Type:              "ServiceAccount",
+			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
+			RefFieldName:      "ServiceAccountRef",
+			SelectorFieldName: "ServiceAccountSelector",
+		}
+	})
+	p.AddResourceConfigurator("yandex_resourcemanager_cloud_iam_binding", func(r *config.Resource) {
+		r.ShortGroup = "iam"
+		r.References["members"] = config.Reference{
+			Type:              "ServiceAccount",
+			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
+			RefFieldName:      "ServiceAccountRef",
+			SelectorFieldName: "ServiceAccountSelector",
+		}
+	})
+
 	p.AddResourceConfigurator("yandex_resourcemanager_folder_iam_member", func(r *config.Resource) {
 		r.ShortGroup = "iam"
 		r.References["member"] = config.Reference{

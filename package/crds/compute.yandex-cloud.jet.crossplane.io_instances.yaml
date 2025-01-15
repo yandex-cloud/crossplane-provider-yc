@@ -333,6 +333,9 @@ spec:
                             type: object
                           type: array
                         index:
+                          description: |-
+                            Index of network interface, will be calculated automatically for instance create or update operations
+                            if not specified. Required for attach/detach operations.
                           type: number
                         ipAddress:
                           description: |-
@@ -1022,6 +1025,9 @@ spec:
                             type: object
                           type: array
                         index:
+                          description: |-
+                            Index of network interface, will be calculated automatically for instance create or update operations
+                            if not specified. Required for attach/detach operations.
                           type: number
                         ipAddress:
                           description: |-
@@ -1818,6 +1824,9 @@ spec:
                             type: object
                           type: array
                         index:
+                          description: |-
+                            Index of network interface, will be calculated automatically for instance create or update operations
+                            if not specified. Required for attach/detach operations.
                           type: number
                         ipAddress:
                           description: |-

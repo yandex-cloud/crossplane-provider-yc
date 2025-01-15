@@ -89,7 +89,7 @@ type NodeGroupsInitParameters struct {
 	// Resources allocated to hosts of this OpenSearch node group. The structure is documented below.
 	Resources []NodeGroupsResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs.
+	// A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs. No other parameters should be changed simultaneously with this one, except zones_ids.
 	// +listType=set
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
@@ -110,7 +110,7 @@ type NodeGroupsObservation struct {
 	// Resources allocated to hosts of this OpenSearch node group. The structure is documented below.
 	Resources []NodeGroupsResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs.
+	// A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs. No other parameters should be changed simultaneously with this one, except zones_ids.
 	// +listType=set
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
@@ -135,7 +135,7 @@ type NodeGroupsParameters struct {
 	// +kubebuilder:validation:Optional
 	Resources []NodeGroupsResourcesParameters `json:"resources" tf:"resources,omitempty"`
 
-	// A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs.
+	// A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs. No other parameters should be changed simultaneously with this one, except zones_ids.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
@@ -482,7 +482,7 @@ type OpensearchNodeGroupsInitParameters struct {
 	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 
-	// A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs.
+	// A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs. No other parameters should be changed simultaneously with this one, except zones_ids.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +listType=set
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
@@ -516,7 +516,7 @@ type OpensearchNodeGroupsObservation struct {
 	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 
-	// A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs.
+	// A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs. No other parameters should be changed simultaneously with this one, except zones_ids.
 	// +listType=set
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
@@ -546,7 +546,7 @@ type OpensearchNodeGroupsParameters struct {
 	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 
-	// A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs.
+	// A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs. No other parameters should be changed simultaneously with this one, except zones_ids.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	// +listType=set

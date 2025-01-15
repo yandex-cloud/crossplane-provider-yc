@@ -103,12 +103,32 @@ func Configure(p *config.Provider) {
 		}
 		r.Sensitive.AdditionalConnectionDetailsFn = serviceAccountStaticKey
 	})
-	p.AddResourceConfigurator("yandex_iam_service_account_iam_member", func(r *config.Resource) {
+	p.AddResourceConfigurator("yandex_iam_service_account_iam_policy", func(r *config.Resource) {
 		r.References["service_account_id"] = config.Reference{
 			Type: "ServiceAccount",
 		}
 	})
+	p.AddResourceConfigurator("yandex_iam_service_account_api_key", func(r *config.Resource) {
+		r.References["service_account_id"] = config.Reference{
+			Type: "ServiceAccount",
+		}
+	})
+	p.AddResourceConfigurator("yandex_iam_service_account_iam_binding", func(r *config.Resource) {
+		r.References["service_account_id"] = config.Reference{
+			Type: "ServiceAccount",
+		}
+		r.References["members"] = config.Reference{
+			Type:              "ServiceAccount",
+			Extractor:         fmt.Sprintf("%s.%s", ConfigPath, ServiceAccountRefValueFn),
+			RefFieldName:      "ServiceAccountRef",
+			SelectorFieldName: "ServiceAccountSelector",
+		}
+	})
+
 	p.AddResourceConfigurator("yandex_iam_service_account_iam_member", func(r *config.Resource) {
+		r.References["service_account_id"] = config.Reference{
+			Type: "ServiceAccount",
+		}
 		r.References["member"] = config.Reference{
 			Type:              "ServiceAccount",
 			Extractor:         fmt.Sprintf("%s.%s", ConfigPath, ServiceAccountRefValueFn),

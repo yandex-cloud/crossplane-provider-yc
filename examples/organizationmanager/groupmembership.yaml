@@ -1,0 +1,14 @@
+apiVersion: organizationmanager.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: GroupMembership
+metadata:
+  annotations:
+    meta.upbound.io/example-id: organizationmanager/v1alpha1/groupmembership
+  labels:
+    testing.upbound.io/example-name: group
+  name: group
+spec:
+  forProvider:
+    groupIdRef:
+      name: group
+    members:
+      - ajepo9f0b991qaa2h2jf

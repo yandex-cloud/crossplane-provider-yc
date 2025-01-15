@@ -80,3 +80,63 @@ func (mg *SymmetricKey) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionD
 func (mg *SymmetricKey) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
+
+// GetCondition of this SymmetricKeyIAMBinding.
+func (mg *SymmetricKeyIAMBinding) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this SymmetricKeyIAMBinding.
+func (mg *SymmetricKeyIAMBinding) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this SymmetricKeyIAMBinding.
+func (mg *SymmetricKeyIAMBinding) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this SymmetricKeyIAMBinding.
+func (mg *SymmetricKeyIAMBinding) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this SymmetricKeyIAMBinding.
+func (mg *SymmetricKeyIAMBinding) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this SymmetricKeyIAMBinding.
+func (mg *SymmetricKeyIAMBinding) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this SymmetricKeyIAMBinding.
+func (mg *SymmetricKeyIAMBinding) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this SymmetricKeyIAMBinding.
+func (mg *SymmetricKeyIAMBinding) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this SymmetricKeyIAMBinding.
+func (mg *SymmetricKeyIAMBinding) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this SymmetricKeyIAMBinding.
+func (mg *SymmetricKeyIAMBinding) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this SymmetricKeyIAMBinding.
+func (mg *SymmetricKeyIAMBinding) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this SymmetricKeyIAMBinding.
+func (mg *SymmetricKeyIAMBinding) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}

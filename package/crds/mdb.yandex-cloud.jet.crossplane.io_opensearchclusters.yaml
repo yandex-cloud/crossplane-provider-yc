@@ -136,6 +136,8 @@ spec:
                                       description: A set of the subnets, to which
                                         the hosts belongs. The subnets must be a part
                                         of the network to which the cluster belongs.
+                                        No other parameters should be changed simultaneously
+                                        with this one, except zones_ids.
                                       items:
                                         type: string
                                       type: array
@@ -198,6 +200,8 @@ spec:
                                       description: A set of the subnets, to which
                                         the hosts belongs. The subnets must be a part
                                         of the network to which the cluster belongs.
+                                        No other parameters should be changed simultaneously
+                                        with this one, except zones_ids.
                                       items:
                                         type: string
                                       type: array
@@ -650,6 +654,8 @@ spec:
                                       description: A set of the subnets, to which
                                         the hosts belongs. The subnets must be a part
                                         of the network to which the cluster belongs.
+                                        No other parameters should be changed simultaneously
+                                        with this one, except zones_ids.
                                       items:
                                         type: string
                                       type: array
@@ -712,6 +718,8 @@ spec:
                                       description: A set of the subnets, to which
                                         the hosts belongs. The subnets must be a part
                                         of the network to which the cluster belongs.
+                                        No other parameters should be changed simultaneously
+                                        with this one, except zones_ids.
                                       items:
                                         type: string
                                       type: array
@@ -1326,6 +1334,8 @@ spec:
                                       description: A set of the subnets, to which
                                         the hosts belongs. The subnets must be a part
                                         of the network to which the cluster belongs.
+                                        No other parameters should be changed simultaneously
+                                        with this one, except zones_ids.
                                       items:
                                         type: string
                                       type: array
@@ -1388,6 +1398,8 @@ spec:
                                       description: A set of the subnets, to which
                                         the hosts belongs. The subnets must be a part
                                         of the network to which the cluster belongs.
+                                        No other parameters should be changed simultaneously
+                                        with this one, except zones_ids.
                                       items:
                                         type: string
                                       type: array

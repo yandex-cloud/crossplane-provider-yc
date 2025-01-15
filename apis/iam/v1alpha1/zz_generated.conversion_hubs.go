@@ -24,6 +24,12 @@ package v1alpha1
 func (tr *ServiceAccount) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *ServiceAccountAPIKey) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *ServiceAccountIAMBinding) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *ServiceAccountIAMMember) Hub() {}
 
 // Hub marks this type as a conversion hub.
@@ -31,6 +37,18 @@ func (tr *ServiceAccountKey) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *ServiceAccountStaticAccessKey) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *GroupIAMMember) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *OrganizationIAMBinding) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *CloudIAMBinding) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *CloudIAMMember) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *FolderIAMBinding) Hub() {}

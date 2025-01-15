@@ -21,6 +21,7 @@ package config
 import (
 	// Note(ezgidemirel): we are importing this to embed provider schema document
 	_ "embed"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/organizationmanager"
 
 	tjconfig "github.com/crossplane/upjet/pkg/config"
 	sdk "github.com/yandex-cloud/terraform-provider-yandex/yandex"
@@ -71,6 +72,21 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_mdb_mongodb_user$",
 		}),
 		tjconfig.WithIncludeList([]string{
+			"yandex_resourcemanager_cloud_iam_binding$",
+			"yandex_resourcemanager_cloud_iam_member$",
+			"yandex_resourcemanager_cloud$",
+
+			"yandex_kms_symmetric_key_iam_binding$",
+
+			"yandex_organizationmanager_saml_federation_user_account$",
+			"yandex_organizationmanager_saml_federation$",
+			"yandex_organizationmanager_organization_iam_binding$",
+			"yandex_organizationmanager_group_iam_member$",
+			"yandex_organizationmanager_group$",
+
+			"yandex_iam_service_account_api_key$",
+			"yandex_iam_service_account_iam_binding$",
+
 			"yandex_mdb_opensearch_cluster$",
 			"yandex_cdn_resource$",
 			"yandex_cdn_origin_group$",
@@ -135,6 +151,7 @@ func GetProvider() *tjconfig.Provider {
 		ydb.Configure,
 		ymq.Configure,
 		cdn.Configure,
+		organizationmanager.Configure,
 	} {
 		configure(pc)
 	}

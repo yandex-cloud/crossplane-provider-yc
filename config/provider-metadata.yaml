@@ -466,6 +466,7 @@ resources:
                     }
                   ],
                   "description": "any description",
+                  "execution_timeout": "300",
                   "labels": {
                     "empty-label": "",
                     "label": "label"
@@ -493,6 +494,7 @@ resources:
             description: '- (Optional) Description of the Yandex Cloud API Gateway.'
             disabled: '- Is logging from API Gateway disabled'
             domain: '- Default domain for the Yandex API Gateway. Generated at creation time.'
+            execution_timeout: '- Execution timeout in seconds for the Yandex Cloud API Gateway.'
             folder_id: '- (Optional) Folder ID for the Yandex Cloud API Gateway. If it is not provided, the default provider folder is used.'
             labels: '- (Optional) A set of key/value label pairs to assign to the Yandex Cloud API Gateway.'
             log_group_id: '- Log entries are written to specified log group'
@@ -590,6 +592,129 @@ resources:
                   ],
                   "name": "a-trail",
                   "service_account_id": "trail-service-account"
+                }
+            - name: basic_trail
+              manifest: |-
+                {
+                  "data_stream_destination": [
+                    {
+                      "database_id": "some-database",
+                      "stream_name": "some-stream"
+                    }
+                  ],
+                  "description": "Some trail description",
+                  "filter": [
+                    {
+                      "event_filters": [
+                        {
+                          "categories": [
+                            {
+                              "plane": "DATA_PLANE",
+                              "type": "WRITE"
+                            }
+                          ],
+                          "path_filter": [
+                            {
+                              "any_filter": [
+                                {
+                                  "resource_id": "some-organization",
+                                  "resource_type": "organization-manager.organization"
+                                }
+                              ]
+                            }
+                          ],
+                          "service": "storage"
+                        },
+                        {
+                          "categories": [
+                            {
+                              "plane": "DATA_PLANE",
+                              "type": "READ"
+                            }
+                          ],
+                          "path_filter": [
+                            {
+                              "any_filter": [
+                                {
+                                  "resource_id": "some-organization",
+                                  "resource_type": "organization-manager.organization"
+                                }
+                              ]
+                            }
+                          ],
+                          "service": "dns"
+                        }
+                      ],
+                      "path_filter": [
+                        {
+                          "any_filter": [
+                            {
+                              "resource_id": "some-organization",
+                              "resource_type": "organization-manager.organization"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "folder_id": "home-folder",
+                  "labels": {
+                    "key": "value"
+                  },
+                  "name": "a-trail",
+                  "service_account_id": "trail-service-account"
+                }
+            - name: basic_trail
+              manifest: |-
+                {
+                  "description": "Some trail description",
+                  "filter": [
+                    {
+                      "event_filters": [
+                        {
+                          "categories": [
+                            {
+                              "plane": "DATA_PLANE",
+                              "type": "WRITE"
+                            }
+                          ],
+                          "path_filter": [
+                            {
+                              "any_filter": [
+                                {
+                                  "resource_id": "home-folder",
+                                  "resource_type": "resource-manager.folder"
+                                }
+                              ]
+                            }
+                          ],
+                          "service": "mdb.postgresql"
+                        }
+                      ],
+                      "path_filter": [
+                        {
+                          "any_filter": [
+                            {
+                              "resource_id": "home-folder",
+                              "resource_type": "resource-manager.folder"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "folder_id": "home-folder",
+                  "labels": {
+                    "key": "value"
+                  },
+                  "name": "a-trail",
+                  "service_account_id": "trail-service-account",
+                  "storage_destination": [
+                    {
+                      "bucket_name": "some-bucket",
+                      "object_prefix": "some-prefix"
+                    }
+                  ]
                 }
         argumentDocs:
             any_filter: '- Structure describing that events will be gathered from all cloud resources that belong to the parent resource. Mutually exclusive with some_filter.'
@@ -902,6 +1027,7 @@ resources:
             ip_address_acl.excepted_values: '- the list of specified IP addresses to be allowed or denied depending on acl policy type.'
             ip_address_acl.policy_type: '- the policy type for ip_address_acl option, one of "allow" or "deny" values.'
             options: (Optional) - CDN Resource settings and options to tune CDN edge behavior.
+            provider_cname: (Optional) - provider CNAME of CDN resource, computed value for read and update operations.
             proxy_cache_methods_set: '- allows caching for GET, HEAD and POST requests.'
             query_params_blacklist: '- files with the specified query parameters are cached as objects with the same key, files with other parameters are cached as objects with different keys.'
             query_params_whitelist: '- files with the specified query parameters are cached as objects with different keys, files with other parameters are cached as objects with the same key.'
@@ -1125,6 +1251,41 @@ resources:
                 (Optional)
                 Availability zone where the disk will reside.
         importStatements: []
+    yandex_compute_disk_iam_binding:
+        subCategory: unknown
+        description: Allows management of a single IAM binding for a Disk.
+        name: yandex_compute_disk_iam_binding
+        title: yandex_compute_disk_iam_binding
+        examples:
+            - name: editor
+              manifest: |-
+                {
+                  "disk_id": "${data.yandex_compute_disk.disk1.id}",
+                  "members": [
+                    "userAccount:some_user_id"
+                  ],
+                  "role": "editor"
+                }
+              dependencies:
+                yandex_compute_disk.disk1: |-
+                    {
+                      "image_id": "ubuntu-16.04-v20180727",
+                      "labels": {
+                        "environment": "test"
+                      },
+                      "name": "disk-name",
+                      "type": "network-ssd",
+                      "zone": "ru-central1-a"
+                    }
+        argumentDocs:
+            disk_id: '- (Required) ID of the disk to attach the policy to.'
+            members: |-
+                - (Required) An array of identities that will be granted the privilege in the role.
+                Each entry can have one of the following values:
+            role: |-
+                - (Required) The role that should be assigned. Only one
+                yandex_compute_disk_iam_binding can be used per role.
+        importStatements: []
     yandex_compute_disk_placement_group:
         subCategory: unknown
         description: Manages a Disk Placement Group resource.
@@ -1148,6 +1309,37 @@ resources:
             status: '- Status of the Disk Placement Group.'
             update: '- Default is 1 minute.'
             zone: '- ID of the zone where the Disk Placement Group resides.'
+        importStatements: []
+    yandex_compute_disk_placement_group_iam_binding:
+        subCategory: unknown
+        description: Allows management of a single IAM binding for a Disk Placement Group.
+        name: yandex_compute_disk_placement_group_iam_binding
+        title: yandex_compute_disk_placement_group_iam_binding
+        examples:
+            - name: editor
+              manifest: |-
+                {
+                  "disk_placement_group_id": "${data.yandex_compute_disk_placement_group.group1.id}",
+                  "members": [
+                    "userAccount:some_user_id"
+                  ],
+                  "role": "editor"
+                }
+              dependencies:
+                yandex_compute_disk_placement_group.group1: |-
+                    {
+                      "description": "my description",
+                      "folder_id": "abc*********123",
+                      "name": "test-pg"
+                    }
+        argumentDocs:
+            disk_placement_group_id: '- (Required) ID of the disk placement group to attach the policy to.'
+            members: |-
+                - (Required) An array of identities that will be granted the privilege in the role.
+                Each entry can have one of the following values:
+            role: |-
+                - (Required) The role that should be assigned. Only one
+                yandex_compute_disk_placement_group_iam_binding can be used per role.
         importStatements: []
     yandex_compute_filesystem:
         subCategory: unknown
@@ -1185,6 +1377,41 @@ resources:
             update: '- Default is 5 minutes.'
             zone: '- (Optional) Availability zone where the filesystem will reside.'
         importStatements: []
+    yandex_compute_filesystem_iam_binding:
+        subCategory: unknown
+        description: Allows management of a single IAM binding for a Filesystem.
+        name: yandex_compute_filesystem_iam_binding
+        title: yandex_compute_filesystem_iam_binding
+        examples:
+            - name: editor
+              manifest: |-
+                {
+                  "filesystem_id": "${data.yandex_compute_filesystem.fs1.id}",
+                  "members": [
+                    "userAccount:some_user_id"
+                  ],
+                  "role": "editor"
+                }
+              dependencies:
+                yandex_compute_filesystem.fs1: |-
+                    {
+                      "labels": {
+                        "environment": "test"
+                      },
+                      "name": "fs-name",
+                      "size": 10,
+                      "type": "network-ssd",
+                      "zone": "ru-central1-a"
+                    }
+        argumentDocs:
+            filesystem_id: '- (Required) ID of the filesystem to attach the policy to.'
+            members: |-
+                - (Required) An array of identities that will be granted the privilege in the role.
+                Each entry can have one of the following values:
+            role: |-
+                - (Required) The role that should be assigned. Only one
+                yandex_compute_filesystem_iam_binding can be used per role.
+        importStatements: []
     yandex_compute_gpu_cluster:
         subCategory: unknown
         description: GPU Cluster connects multiple Compute GPU Instances in the same availability zone with high-speed low-latency network.
@@ -1219,6 +1446,40 @@ resources:
             status: '- The status of the GPU cluster.'
             update: '- Default is 5 minutes.'
             zone: '- (Optional) Availability zone where the GPU cluster will reside.'
+        importStatements: []
+    yandex_compute_gpu_cluster_iam_binding:
+        subCategory: unknown
+        description: Allows management of a single IAM binding for a GPU Cluster.
+        name: yandex_compute_gpu_cluster_iam_binding
+        title: yandex_compute_gpu_cluster_iam_binding
+        examples:
+            - name: editor
+              manifest: |-
+                {
+                  "gpu_cluster_id": "${data.yandex_compute_gpu_cluster.cluster1.id}",
+                  "members": [
+                    "userAccount:some_user_id"
+                  ],
+                  "role": "editor"
+                }
+              dependencies:
+                yandex_compute_gpu_cluster.cluster1: |-
+                    {
+                      "interconnect_type": "infiniband",
+                      "labels": {
+                        "environment": "test"
+                      },
+                      "name": "gpu-cluster-name",
+                      "zone": "ru-central1-a"
+                    }
+        argumentDocs:
+            gpu_cluster_id: '- (Required) ID of the gpu cluster to attach the policy to.'
+            members: |-
+                - (Required) An array of identities that will be granted the privilege in the role.
+                Each entry can have one of the following values:
+            role: |-
+                - (Required) The role that should be assigned. Only one
+                yandex_compute_gpu_cluster_iam_binding can be used per role.
         importStatements: []
     yandex_compute_image:
         subCategory: unknown
@@ -1285,6 +1546,36 @@ resources:
             status: '- The status of the image.'
             update: '- Default 5 minutes'
         importStatements: []
+    yandex_compute_image_iam_binding:
+        subCategory: unknown
+        description: Allows management of a single IAM binding for an image.
+        name: yandex_compute_image_iam_binding
+        title: yandex_compute_image_iam_binding
+        examples:
+            - name: editor
+              manifest: |-
+                {
+                  "image_id": "${data.yandex_compute_image.image1.id}",
+                  "members": [
+                    "userAccount:some_user_id"
+                  ],
+                  "role": "editor"
+                }
+              dependencies:
+                yandex_compute_image.image1: |-
+                    {
+                      "name": "my-custom-image",
+                      "source_url": "https://storage.yandexcloud.net/lucky-images/kube-it.img"
+                    }
+        argumentDocs:
+            image_id: '- (Required) ID of the image to attach the policy to.'
+            members: |-
+                - (Required) An array of identities that will be granted the privilege in the role.
+                Each entry can have one of the following values:
+            role: |-
+                - (Required) The role that should be assigned. Only one
+                yandex_compute_image_iam_binding can be used per role.
+        importStatements: []
     yandex_compute_instance:
         subCategory: unknown
         description: Manages a VM instance resource.
@@ -1306,6 +1597,7 @@ resources:
                   "name": "test",
                   "network_interface": [
                     {
+                      "index": 1,
                       "subnet_id": "${yandex_vpc_subnet.foo.id}"
                     }
                   ],
@@ -1406,6 +1698,9 @@ resources:
             network_interface.0.ip_address: '- The internal IP address of the instance.'
             network_interface.0.nat_ip_address: '- The external IP address of the instance.'
             network_interface.dns_record: '- (Optional) List of configurations for creating ipv4 DNS records. The structure is documented below.'
+            network_interface.index: |-
+                - (Optional) Index of network interface, will be calculated automatically for instance create or update operations
+                if not specified. Required for attach/detach operations.
             network_interface.ip_address: |-
                 - (Optional) The private IP address to assign to the instance. If
                 empty, the address will be automatically assigned from the specified subnet.
@@ -1746,6 +2041,67 @@ resources:
             update: '- Default 30 minutes'
             variables: '- (Optional) A set of key/value  variables pairs to assign to the instance group.'
         importStatements: []
+    yandex_compute_instance_iam_binding:
+        subCategory: unknown
+        description: Allows management of a single IAM binding for an instance.
+        name: yandex_compute_instance_iam_binding
+        title: yandex_compute_instance_iam_binding
+        examples:
+            - name: editor
+              manifest: |-
+                {
+                  "instance_id": "${data.yandex_compute_instance.instance1.id}",
+                  "members": [
+                    "userAccount:some_user_id"
+                  ],
+                  "role": "editor"
+                }
+              dependencies:
+                yandex_compute_instance.instance1: |-
+                    {
+                      "boot_disk": [
+                        {
+                          "disk_id": "${yandex_compute_disk.boot-disk.id}"
+                        }
+                      ],
+                      "metadata": {
+                        "foo": "bar",
+                        "ssh-keys": "ubuntu:${file(\"~/.ssh/id_rsa.pub\")}"
+                      },
+                      "name": "test",
+                      "network_interface": [
+                        {
+                          "index": 1,
+                          "subnet_id": "${yandex_vpc_subnet.foo.id}"
+                        }
+                      ],
+                      "platform_id": "standard-v1",
+                      "resources": [
+                        {
+                          "cores": 2,
+                          "memory": 4
+                        }
+                      ],
+                      "zone": "ru-central1-a"
+                    }
+                yandex_vpc_network.foo: '{}'
+                yandex_vpc_subnet.foo: |-
+                    {
+                      "network_id": "${yandex_vpc_network.foo.id}",
+                      "v4_cidr_blocks": [
+                        "10.5.0.0/24"
+                      ],
+                      "zone": "ru-central1-a"
+                    }
+        argumentDocs:
+            instance_id: '- (Required) ID of the instance to attach the policy to.'
+            members: |-
+                - (Required) An array of identities that will be granted the privilege in the role.
+                Each entry can have one of the following values:
+            role: |-
+                - (Required) The role that should be assigned. Only one
+                yandex_compute_instance_iam_binding can be used per role.
+        importStatements: []
     yandex_compute_placement_group:
         subCategory: unknown
         description: Manages a Placement group resource.
@@ -1769,6 +2125,37 @@ resources:
             placement_strategy_partitions: '- A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).'
             placement_strategy_spread: '- A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).'
             update: '- Default is 1 minute.'
+        importStatements: []
+    yandex_compute_placement_group_iam_binding:
+        subCategory: unknown
+        description: Allows management of a single IAM binding for a Placement Group.
+        name: yandex_compute_placement_group_iam_binding
+        title: yandex_compute_placement_group_iam_binding
+        examples:
+            - name: editor
+              manifest: |-
+                {
+                  "members": [
+                    "userAccount:some_user_id"
+                  ],
+                  "placement_group_id": "${data.yandex_compute_placement_group.pg1.id}",
+                  "role": "editor"
+                }
+              dependencies:
+                yandex_compute_placement_group.pg1: |-
+                    {
+                      "description": "my description",
+                      "folder_id": "abc*********123",
+                      "name": "test-pg"
+                    }
+        argumentDocs:
+            members: |-
+                - (Required) An array of identities that will be granted the privilege in the role.
+                Each entry can have one of the following values:
+            placement_group_id: '- (Required) ID of the placement group to attach the policy to.'
+            role: |-
+                - (Required) The role that should be assigned. Only one
+                yandex_compute_placement_group_iam_binding can be used per role.
         importStatements: []
     yandex_compute_snapshot:
         subCategory: unknown
@@ -1799,6 +2186,39 @@ resources:
             source_disk_id: '- (Required) ID of the disk to create a snapshot from.'
             storage_size: '- Size of the snapshot, specified in GB.'
             update: '- Default 20 minutes'
+        importStatements: []
+    yandex_compute_snapshot_iam_binding:
+        subCategory: unknown
+        description: Allows management of a single IAM binding for a Snapshot.
+        name: yandex_compute_snapshot_iam_binding
+        title: yandex_compute_snapshot_iam_binding
+        examples:
+            - name: editor
+              manifest: |-
+                {
+                  "members": [
+                    "userAccount:some_user_id"
+                  ],
+                  "role": "editor",
+                  "snapshot_id": "${data.yandex_compute_snapshot.snapshot1.id}"
+                }
+              dependencies:
+                yandex_compute_snapshot.snapshot1: |-
+                    {
+                      "labels": {
+                        "my-label": "my-label-value"
+                      },
+                      "name": "test-snapshot",
+                      "source_disk_id": "test_disk_id"
+                    }
+        argumentDocs:
+            members: |-
+                - (Required) An array of identities that will be granted the privilege in the role.
+                Each entry can have one of the following values:
+            role: |-
+                - (Required) The role that should be assigned. Only one
+                yandex_compute_snapshot_iam_binding can be used per role.
+            snapshot_id: '- (Required) ID of the snapshot to attach the policy to.'
         importStatements: []
     yandex_compute_snapshot_schedule:
         subCategory: unknown
@@ -1872,6 +2292,49 @@ resources:
             snapshot_spec.labels: '- (Optional) A set of key/value label pairs to assign to snapshots created by this snapshot schedule.'
             status: '- The status of the snapshot schedule.'
             update: '- Default 5 minutes'
+        importStatements: []
+    yandex_compute_snapshot_schedule_iam_binding:
+        subCategory: unknown
+        description: Allows management of a single IAM binding for a Snapshot Schedule.
+        name: yandex_compute_snapshot_schedule_iam_binding
+        title: yandex_compute_snapshot_schedule_iam_binding
+        examples:
+            - name: editor
+              manifest: |-
+                {
+                  "members": [
+                    "userAccount:some_user_id"
+                  ],
+                  "role": "editor",
+                  "snapshot_schedule_id": "${data.yandex_compute_snapshot_schedule.schedule1.id}"
+                }
+              dependencies:
+                yandex_compute_snapshot_schedule.schedule1: |-
+                    {
+                      "disk_ids": [
+                        "test_disk_id",
+                        "another_test_disk_id"
+                      ],
+                      "retention_period": "12h",
+                      "schedule_policy": [
+                        {
+                          "expression": "0 0 * * *"
+                        }
+                      ],
+                      "snapshot_spec": [
+                        {
+                          "description": "retention-snapshot"
+                        }
+                      ]
+                    }
+        argumentDocs:
+            members: |-
+                - (Required) An array of identities that will be granted the privilege in the role.
+                Each entry can have one of the following values:
+            role: |-
+                - (Required) The role that should be assigned. Only one
+                yandex_compute_snapshot_schedule_iam_binding can be used per role.
+            snapshot_schedule_id: '- (Required) ID of the snapshot schedule to attach the policy to.'
         importStatements: []
     yandex_container_registry:
         subCategory: unknown
@@ -2089,6 +2552,15 @@ resources:
                     {
                       "hadoop": [
                         {
+                          "initialization_action": [
+                            {
+                              "args": [
+                                "arg1",
+                                "arg2"
+                              ],
+                              "uri": "s3a://yandex_storage_bucket.foo.bucket/scripts/script.sh"
+                            }
+                          ],
                           "properties": {
                             "yarn:yarn.resourcemanager.am.max-attempts": 5
                           },
@@ -2242,6 +2714,10 @@ resources:
             cluster_config: '- (Required) Configuration and resources for hosts that should be created with the cluster. The structure is documented below.'
             cluster_config.0.subcluster_spec.X.id: '- (Computed) ID of the subcluster.'
             cluster_config.hadoop: '- (Optional) Data Proc specific options. The structure is documented below.'
+            cluster_config.hadoop.initialization_action: '- (Optional) List of initialization scripts. The structure is documented below.'
+            cluster_config.hadoop.initialization_action.args: '- (Optional) List of arguments of the initialization script.'
+            cluster_config.hadoop.initialization_action.timeout: '- (Optional) Script execution timeout, in seconds.'
+            cluster_config.hadoop.initialization_action.uri: '- (Required) Script URI.'
             cluster_config.hadoop.properties: '- (Optional) A set of key/value pairs that are used to configure cluster services.'
             cluster_config.hadoop.services: '- (Optional) List of services to run on Data Proc cluster.'
             cluster_config.hadoop.ssh_public_keys: '- (Optional) List of SSH public keys to put to the hosts of the cluster. For information on how to connect to the cluster, see the official documentation.'
@@ -3082,6 +3558,7 @@ resources:
             async_invocation.ymq_success_target.log_options: 'block supports:'
             async_invocation.ymq_success_target.min_level: '- Minimum log entry level'
             async_invocation.ymq_success_target.service_account_id: '- Service account used for writing result to queue'
+            concurrency: '- The maximum number of requests processed by a function instance at the same time.'
             connectivity: '- Function version connectivity. If specified the version will be attached to specified network.'
             connectivity.0.network_id: '- Network the version will have access to. It''s essential to specify network with subnets in all availability zones.'
             content: '- Version deployment content for Yandex Cloud Function code. Can be only one package or content section. Either package or content section must be specified.'
@@ -4346,6 +4823,7 @@ resources:
             compute_instance.labels: '- (Optional) A set of key/value label pairs to assign to the instance.'
             compute_instance.metadata: '- (Optional) A set of metadata key/value pairs to make available from within the instance.'
             compute_instance.network_interface: '- (Required) Network specifications for the instance. This can be used multiple times for adding multiple interfaces. The structure is documented below.'
+            compute_instance.platform_id: '- (Optional) The Compute platform of virtual machine. If it is not provided, the standard-v2 platform will be used.'
             compute_instance.resources: '- (Required) Compute resource specifications for the instance. The structure is documented below.'
             compute_instance.service_account_id: '- (Required) The ID of the service account authorized for this load testing agent. Service account should have loadtesting.generatorClient or loadtesting.externalAgent role in the folder.'
             compute_instance.zone_id: |-
@@ -4469,6 +4947,34 @@ resources:
             entries.key: '- (Required) The key of the entry.'
             entries.text_value: '- (Optional) The text value of the entry.'
             secret_id: '- (Required) The Yandex Cloud Lockbox secret ID where to add the version.'
+        importStatements: []
+    yandex_lockbox_secret_version_hashed:
+        subCategory: unknown
+        description: Manages Yandex Cloud Lockbox secret version (with values hashed in state).
+        name: yandex_lockbox_secret_version_hashed
+        title: yandex_lockbox_secret_version_hashed
+        examples:
+            - name: my_version
+              manifest: |-
+                {
+                  "key_1": "key1",
+                  "key_2": "k2",
+                  "secret_id": "${yandex_lockbox_secret.my_secret.id}",
+                  "text_value_1": "sensitive value 1",
+                  "text_value_2": "sensitive value 2"
+                }
+              references:
+                secret_id: yandex_lockbox_secret.my_secret.id
+              dependencies:
+                yandex_lockbox_secret.my_secret: |-
+                    {
+                      "name": "test secret"
+                    }
+        argumentDocs:
+            description: '- (Optional) The Yandex Cloud Lockbox secret version description.'
+            key_<NUMBER>: '- (Optional) Each of the entry keys in the Yandex Cloud Lockbox secret version.'
+            secret_id: '- (Required) The Yandex Cloud Lockbox secret ID where to add the version.'
+            text_value_<NUMBER>: '- (Optional) Each of the entry values in the Yandex Cloud Lockbox secret version.'
         importStatements: []
     yandex_logging_group:
         subCategory: unknown
@@ -6350,7 +6856,7 @@ resources:
             cluster_id: '- The ID of the cluster.'
             create: '- Default 30 minutes.'
             created_at: '- Creation timestamp of the key.'
-            database: '- (Required) A database of the MongoDB cluster. The structure is documented below.'
+            database: '- (Optional) A database of the MongoDB cluster. The structure is documented below.'
             database.name: '- (Required) The name of the database.'
             delete: '- Default 30 minutes.'
             deletion_protection: '- (Optional) Inhibits deletion of the cluster.  Can be either true or false.'
@@ -6362,9 +6868,11 @@ resources:
             health: |-
                 - Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN.
                 For more information see health field of JSON representation in the official documentation.
+            hidden: '- (Optional) Should this host be hidden in replicaset. Can be either true of false. For more information see the official documentation'
             host: '- (Required) A host of the MongoDB cluster. The structure is documented below.'
             host.assign_public_ip: -(Optional)  Should this host have assigned public IP assigned. Can be either true or false.
             host.health: '- (Computed) The health of the host.'
+            host.host_parameters: '- (Optional) The parameters of mongod host in replicaset.'
             host.name: '- (Computed) The fully qualified domain name of the host. Computed on server side.'
             host.role: '- (Optional) The role of the cluster (either PRIMARY or SECONDARY).'
             host.shard_name: '- (Optional) The name of the shard to which the host belongs. Only for sharded cluster.'
@@ -6470,6 +6978,7 @@ resources:
             performance_diagnostics.enabled: '- (Optional) Enable or disable performance diagnostics.'
             permission.database_name: '- (Required) The name of the database that the permission grants access to.'
             permission.roles: '- (Optional) The roles of the user in this database. For more information see the official documentation.'
+            priority: '- (Optional) A floating point number that indicates the relative likelihood of a replica set member to become the primary. For more information see the official documentation'
             resources: '- (DEPRECATED, use resources_* instead) Resources allocated to hosts of the MongoDB cluster. The structure is documented below.'
             resources.disk_size: '- (Required) Volume of the storage available to a MongoDB host, in gigabytes.'
             resources.disk_type_id: |-
@@ -6485,6 +6994,7 @@ resources:
             restore: '- (Optional, ForceNew) The cluster will be created from the specified backup. The structure is documented below.'
             restore.backup_id: '- (Required, ForceNew) Backup ID. The cluster will be created from the specified backup. How to get a list of PostgreSQL backups'
             restore.time: '- (Optional, ForceNew) Timestamp of the moment to which the MongoDB cluster should be restored. (Format: "2006-01-02T15:04:05" - UTC). When not set, current time is used.'
+            secondary_delay_secs: '- (Optional) The number of seconds "behind" the primary that this replica set member should "lag". For more information see the official documentation'
             security.enable_encryption: |-
                 - (Optional) Enables the encryption for the WiredTiger storage engine. Can be either true or false.
                 For more information see security.enableEncryption
@@ -6517,8 +7027,9 @@ resources:
                 - (Optional) The WiredTiger engine settings.
                 (see the storage.wiredTiger option).
                 These settings available only on mongod hosts. The structure is documented below.
+            tags: '- (Optional) A set of key/value pairs to assign for the replica set member. For more information see the official documentation'
             update: '- Default 60 minutes.'
-            user: '- (Required) A user of the MongoDB cluster. The structure is documented below.'
+            user: '- (Optional) A user of the MongoDB cluster. The structure is documented below.'
             user.name: '- (Required) The name of the user.'
             user.password: '- (Required) The password of the user.'
             user.permission: '- (Optional) Set of permissions granted to the user. The structure is documented below.'
@@ -7498,6 +8009,17 @@ resources:
             health: |-
                 - Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN.
                 For more information see health field of JSON representation in the official documentation.
+            hosts: '- A hosts of the OpenSearch cluster. The structure is documented below.'
+            hosts.assign_public_ip: '- Sets whether the host should get a public IP address. Can be either true or false.'
+            hosts.fqdn: '- The fully qualified domain name of the host.'
+            hosts.roles: '- The roles of the deployed host. Can contain DATA and/or MANAGER roles. Will be empty for DASHBOARDS type.'
+            hosts.subnet_id: |-
+                - The ID of the subnet, to which the host belongs. The subnet must
+                be a part of the network to which the cluster belongs.
+            hosts.type: '- The type of the deployed host. Can be either OPENSEARCH or DASHBOARDS.'
+            hosts.zone: |-
+                - The availability zone where the OpenSearch host will be created.
+                For more information see the official documentation.
             labels: '- (Optional) A set of key/value label pairs to assign to the OpenSearch cluster.'
             maintenance_window.day: '- (Optional) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.'
             maintenance_window.hour: '- (Optional) Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.'
@@ -7509,8 +8031,8 @@ resources:
             node_groups.name: '- (Required) Name of OpenSearch node group.'
             node_groups.resources: '- (Required) Resources allocated to hosts of this OpenSearch node group. The structure is documented below.'
             node_groups.roles: '- (Optional) A set of OpenSearch roles assigned to hosts. Available roles are: DATA, MANAGER. Default: [DATA, MANAGER]'
-            node_groups.subnet_ids: '- (Optional) A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs.'
-            node_groups.zones_ids: '- (Required) A set of availability zones where hosts of node group may be allocated.'
+            node_groups.subnet_ids: '- (Optional) A set of the subnets, to which the hosts belongs. The subnets must be a part of the network to which the cluster belongs. No other parameters should be changed simultaneously with this one, except zones_ids.'
+            node_groups.zones_ids: '- (Required) A set of availability zones where hosts of node group may be allocated. No other parameters should be changed simultaneously with this one, except subnet_ids.'
             opensearch.node_groups: '- (Required) A set of named OpenSearch node group configurations. The structure is documented below.'
             opensearch.plugins: '- (Optional) A set of requested OpenSearch plugins.'
             resources.disk_size: '- (Required) Volume of the storage available to a host, in bytes.'
@@ -7777,7 +8299,7 @@ resources:
             config.pooler_config: '- (Optional) Configuration of the connection pooler. The structure is documented below.'
             config.postgresql_config: '- (Optional) PostgreSQL cluster config. Detail info in "postresql config" section (documented below).'
             config.resources: '- (Required) Resources allocated to hosts of the PostgreSQL cluster. The structure is documented below.'
-            config.version: '- (Required) Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c)'
+            config.version: '- (Required) Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16)'
             created_at: '- Timestamp of cluster creation.'
             deletion_protection: '- (Optional) Inhibits deletion of the cluster.  Can be either true or false.'
             description: '- (Optional) Description of the PostgreSQL cluster.'

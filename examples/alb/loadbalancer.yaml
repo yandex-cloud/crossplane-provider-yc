@@ -25,7 +25,7 @@ spec:
         - httpRouterIdRef:
             name: test-router
       name: my-listener
-    name: my-load-balancer
+    name: my-load-balancer-${data.randomId}
     networkIdRef:
       name: example-net
   providerConfigRef:

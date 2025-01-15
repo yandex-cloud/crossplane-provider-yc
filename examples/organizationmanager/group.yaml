@@ -1,0 +1,13 @@
+apiVersion: organizationmanager.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: organizationmanager/v1alpha1/group
+  labels:
+    testing.upbound.io/example-name: group
+  name: group
+spec:
+  forProvider:
+    description: My new Group
+    name: my-group
+    organizationId: yc.organization-manager.sandbox

@@ -160,12 +160,12 @@ spec:
                     type: string
                   role:
                     description: The role that should be assigned.
-                    type: string
                     # WARNING: This will be deleted upon generation, see https://github.com/crossplane/upjet/issues/78 -
                     # WARNING: restore this manually!
                     x-kubernetes-validations:
-                    - message: 'Role can not be changed after creation. If changes are needed, delete this FolderIAMMember and create a new one.'
-                      rule: self == oldSelf
+                      - message: 'Role can not be changed after creation. If changes are needed, delete this FolderIAMMember and create a new one.'
+                        rule: self == oldSelf
+                    type: string
                   serviceAccountRef:
                     description: Reference to a ServiceAccount to populate member.
                     properties:

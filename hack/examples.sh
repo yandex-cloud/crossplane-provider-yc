@@ -8,7 +8,7 @@ function join {
   fi
 }
 
-all=$(find ${1} -name "*.yaml" -not -path "*/mdb/*" -not -path "*/datatransfer/*" -not -path "*/alb/*" -not -path "*/ydb/*")
+all=$(find ${1} -name "*.yaml" -not -path "*/mdb/*" -not -path "*/datatransfer/*" -not -path "*/ydb/*" -not -path "*/organizationmanager/*")
 
 
 join $all

@@ -389,7 +389,7 @@ type ResourceObservation struct {
 
 	OriginProtocol *string `json:"originProtocol,omitempty" tf:"origin_protocol,omitempty"`
 
-	// CDN endpoint CNAME, must be unique among resources.
+	// provider CNAME of CDN resource, computed value for read and update operations.
 	ProviderCname *string `json:"providerCname,omitempty" tf:"provider_cname,omitempty"`
 
 	// SSL certificate of CDN resource.

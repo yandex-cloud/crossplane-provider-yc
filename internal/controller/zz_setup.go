@@ -37,13 +37,20 @@ import (
 	transfer "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/datatransfer/transfer"
 	recordset "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/dns/recordset"
 	zone "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/dns/zone"
+	cloudiambinding "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/iam/cloudiambinding"
+	cloudiammember "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/iam/cloudiammember"
 	folderiambinding "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/iam/folderiambinding"
 	folderiammember "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/iam/folderiammember"
+	groupiammember "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/iam/groupiammember"
+	organizationiambinding "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/iam/organizationiambinding"
 	serviceaccount "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/iam/serviceaccount"
+	serviceaccountapikey "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/iam/serviceaccountapikey"
+	serviceaccountiambinding "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/iam/serviceaccountiambinding"
 	serviceaccountiammember "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/iam/serviceaccountiammember"
 	serviceaccountkey "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/iam/serviceaccountkey"
 	serviceaccountstaticaccesskey "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/iam/serviceaccountstaticaccesskey"
 	symmetrickey "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/kms/symmetrickey"
+	symmetrickeyiambinding "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/kms/symmetrickeyiambinding"
 	cluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/kubernetes/cluster"
 	nodegroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/kubernetes/nodegroup"
 	elasticsearchcluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/mdb/elasticsearchcluster"
@@ -63,7 +70,11 @@ import (
 	postgresqluser "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/mdb/postgresqluser"
 	rediscluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/mdb/rediscluster"
 	queue "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/message/queue"
+	group "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/organizationmanager/group"
+	samlfederation "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/organizationmanager/samlfederation"
+	samlfederationuseraccount "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/organizationmanager/samlfederationuseraccount"
 	providerconfig "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/providerconfig"
+	cloud "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/resourcemanager/cloud"
 	folder "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/resourcemanager/folder"
 	bucket "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/storage/bucket"
 	object "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/storage/object"
@@ -95,13 +106,20 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		transfer.Setup,
 		recordset.Setup,
 		zone.Setup,
+		cloudiambinding.Setup,
+		cloudiammember.Setup,
 		folderiambinding.Setup,
 		folderiammember.Setup,
+		groupiammember.Setup,
+		organizationiambinding.Setup,
 		serviceaccount.Setup,
+		serviceaccountapikey.Setup,
+		serviceaccountiambinding.Setup,
 		serviceaccountiammember.Setup,
 		serviceaccountkey.Setup,
 		serviceaccountstaticaccesskey.Setup,
 		symmetrickey.Setup,
+		symmetrickeyiambinding.Setup,
 		cluster.Setup,
 		nodegroup.Setup,
 		elasticsearchcluster.Setup,
@@ -121,7 +139,11 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		postgresqluser.Setup,
 		rediscluster.Setup,
 		queue.Setup,
+		group.Setup,
+		samlfederation.Setup,
+		samlfederationuseraccount.Setup,
 		providerconfig.Setup,
+		cloud.Setup,
 		folder.Setup,
 		bucket.Setup,
 		object.Setup,

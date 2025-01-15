@@ -1097,7 +1097,8 @@ spec:
                   originProtocol:
                     type: string
                   providerCname:
-                    description: CDN endpoint CNAME, must be unique among resources.
+                    description: provider CNAME of CDN resource, computed value for
+                      read and update operations.
                     type: string
                   secondaryHostnames:
                     description: list of secondary hostname strings.

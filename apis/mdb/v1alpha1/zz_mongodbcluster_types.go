@@ -245,38 +245,52 @@ type DatabaseParameters struct {
 }
 
 type HostParametersInitParameters struct {
+
+	// Should this host be hidden in replicaset. Can be either true of false. For more information see the official documentation
 	Hidden *bool `json:"hidden,omitempty" tf:"hidden,omitempty"`
 
+	// A floating point number that indicates the relative likelihood of a replica set member to become the primary. For more information see the official documentation
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
+	// The number of seconds "behind" the primary that this replica set member should "lag". For more information see the official documentation
 	SecondaryDelaySecs *int64 `json:"secondaryDelaySecs,omitempty" tf:"secondary_delay_secs,omitempty"`
 
+	// A set of key/value pairs to assign for the replica set member. For more information see the official documentation
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 type HostParametersObservation struct {
+
+	// Should this host be hidden in replicaset. Can be either true of false. For more information see the official documentation
 	Hidden *bool `json:"hidden,omitempty" tf:"hidden,omitempty"`
 
+	// A floating point number that indicates the relative likelihood of a replica set member to become the primary. For more information see the official documentation
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
+	// The number of seconds "behind" the primary that this replica set member should "lag". For more information see the official documentation
 	SecondaryDelaySecs *int64 `json:"secondaryDelaySecs,omitempty" tf:"secondary_delay_secs,omitempty"`
 
+	// A set of key/value pairs to assign for the replica set member. For more information see the official documentation
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 }
 
 type HostParametersParameters struct {
 
+	// Should this host be hidden in replicaset. Can be either true of false. For more information see the official documentation
 	// +kubebuilder:validation:Optional
 	Hidden *bool `json:"hidden,omitempty" tf:"hidden,omitempty"`
 
+	// A floating point number that indicates the relative likelihood of a replica set member to become the primary. For more information see the official documentation
 	// +kubebuilder:validation:Optional
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
+	// The number of seconds "behind" the primary that this replica set member should "lag". For more information see the official documentation
 	// +kubebuilder:validation:Optional
 	SecondaryDelaySecs *int64 `json:"secondaryDelaySecs,omitempty" tf:"secondary_delay_secs,omitempty"`
 
+	// A set of key/value pairs to assign for the replica set member. For more information see the official documentation
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -702,6 +716,7 @@ type MongodbClusterHostInitParameters struct {
 	// Should this host have assigned public IP assigned. Can be either true or false.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
+	// The parameters of mongod host in replicaset.
 	HostParameters []HostParametersInitParameters `json:"hostParameters,omitempty" tf:"host_parameters,omitempty"`
 
 	// The role of the cluster (either PRIMARY or SECONDARY).
@@ -739,6 +754,7 @@ type MongodbClusterHostObservation struct {
 	// (Computed) The health of the host.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
+	// The parameters of mongod host in replicaset.
 	HostParameters []HostParametersObservation `json:"hostParameters,omitempty" tf:"host_parameters,omitempty"`
 
 	// (Computed) The fully qualified domain name of the host. Computed on server side.
@@ -768,6 +784,7 @@ type MongodbClusterHostParameters struct {
 	// +kubebuilder:validation:Optional
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
+	// The parameters of mongod host in replicaset.
 	// +kubebuilder:validation:Optional
 	HostParameters []HostParametersParameters `json:"hostParameters,omitempty" tf:"host_parameters,omitempty"`
 

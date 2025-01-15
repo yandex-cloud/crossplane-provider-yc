@@ -565,18 +565,32 @@ spec:
                             Can be either true or false.
                           type: boolean
                         hostParameters:
+                          description: The parameters of mongod host in replicaset.
                           items:
                             properties:
                               hidden:
+                                description: Should this host be hidden in replicaset.
+                                  Can be either true of false. For more information
+                                  see the official documentation
                                 type: boolean
                               priority:
+                                description: A floating point number that indicates
+                                  the relative likelihood of a replica set member
+                                  to become the primary. For more information see
+                                  the official documentation
                                 type: number
                               secondaryDelaySecs:
+                                description: The number of seconds "behind" the primary
+                                  that this replica set member should "lag". For more
+                                  information see the official documentation
                                 format: int64
                                 type: integer
                               tags:
                                 additionalProperties:
                                   type: string
+                                description: A set of key/value pairs to assign for
+                                  the replica set member. For more information see
+                                  the official documentation
                                 type: object
                                 x-kubernetes-map-type: granular
                             type: object
@@ -1539,18 +1553,32 @@ spec:
                             Can be either true or false.
                           type: boolean
                         hostParameters:
+                          description: The parameters of mongod host in replicaset.
                           items:
                             properties:
                               hidden:
+                                description: Should this host be hidden in replicaset.
+                                  Can be either true of false. For more information
+                                  see the official documentation
                                 type: boolean
                               priority:
+                                description: A floating point number that indicates
+                                  the relative likelihood of a replica set member
+                                  to become the primary. For more information see
+                                  the official documentation
                                 type: number
                               secondaryDelaySecs:
+                                description: The number of seconds "behind" the primary
+                                  that this replica set member should "lag". For more
+                                  information see the official documentation
                                 format: int64
                                 type: integer
                               tags:
                                 additionalProperties:
                                   type: string
+                                description: A set of key/value pairs to assign for
+                                  the replica set member. For more information see
+                                  the official documentation
                                 type: object
                                 x-kubernetes-map-type: granular
                             type: object
@@ -2605,18 +2633,32 @@ spec:
                           description: (Computed) The health of the host.
                           type: string
                         hostParameters:
+                          description: The parameters of mongod host in replicaset.
                           items:
                             properties:
                               hidden:
+                                description: Should this host be hidden in replicaset.
+                                  Can be either true of false. For more information
+                                  see the official documentation
                                 type: boolean
                               priority:
+                                description: A floating point number that indicates
+                                  the relative likelihood of a replica set member
+                                  to become the primary. For more information see
+                                  the official documentation
                                 type: number
                               secondaryDelaySecs:
+                                description: The number of seconds "behind" the primary
+                                  that this replica set member should "lag". For more
+                                  information see the official documentation
                                 format: int64
                                 type: integer
                               tags:
                                 additionalProperties:
                                   type: string
+                                description: A set of key/value pairs to assign for
+                                  the replica set member. For more information see
+                                  the official documentation
                                 type: object
                                 x-kubernetes-map-type: granular
                             type: object

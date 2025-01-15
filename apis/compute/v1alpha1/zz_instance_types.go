@@ -804,6 +804,8 @@ type NetworkInterfaceInitParameters struct {
 	// List of configurations for creating ipv6 DNS records. The structure is documented below.
 	IPv6DNSRecord []IPv6DNSRecordInitParameters `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
 
+	// Index of network interface, will be calculated automatically for instance create or update operations
+	// if not specified. Required for attach/detach operations.
 	Index *float64 `json:"index,omitempty" tf:"index,omitempty"`
 
 	// Provide a public address, for instance, to access the internet over NAT.
@@ -865,6 +867,8 @@ type NetworkInterfaceObservation struct {
 	// List of configurations for creating ipv6 DNS records. The structure is documented below.
 	IPv6DNSRecord []IPv6DNSRecordObservation `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
 
+	// Index of network interface, will be calculated automatically for instance create or update operations
+	// if not specified. Required for attach/detach operations.
 	Index *float64 `json:"index,omitempty" tf:"index,omitempty"`
 
 	MacAddress *string `json:"macAddress,omitempty" tf:"mac_address,omitempty"`
@@ -918,6 +922,8 @@ type NetworkInterfaceParameters struct {
 	// +kubebuilder:validation:Optional
 	IPv6DNSRecord []IPv6DNSRecordParameters `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
 
+	// Index of network interface, will be calculated automatically for instance create or update operations
+	// if not specified. Required for attach/detach operations.
 	// +kubebuilder:validation:Optional
 	Index *float64 `json:"index,omitempty" tf:"index,omitempty"`
 

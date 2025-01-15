@@ -28,6 +28,90 @@ import (
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
+// ResolveReferences of this CloudIAMBinding.
+func (mg *CloudIAMBinding) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Members),
+		Extract:       iam.ServiceAccountRefValue(),
+		References:    mg.Spec.ForProvider.ServiceAccountRef,
+		Selector:      mg.Spec.ForProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Members")
+	}
+	mg.Spec.ForProvider.Members = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.ServiceAccountRef = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.Members),
+		Extract:       iam.ServiceAccountRefValue(),
+		References:    mg.Spec.InitProvider.ServiceAccountRef,
+		Selector:      mg.Spec.InitProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Members")
+	}
+	mg.Spec.InitProvider.Members = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.ServiceAccountRef = mrsp.ResolvedReferences
+
+	return nil
+}
+
+// ResolveReferences of this CloudIAMMember.
+func (mg *CloudIAMMember) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Member),
+		Extract:      iam.ServiceAccountRefValue(),
+		Reference:    mg.Spec.ForProvider.ServiceAccountRef,
+		Selector:     mg.Spec.ForProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Member")
+	}
+	mg.Spec.ForProvider.Member = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ServiceAccountRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Member),
+		Extract:      iam.ServiceAccountRefValue(),
+		Reference:    mg.Spec.InitProvider.ServiceAccountRef,
+		Selector:     mg.Spec.InitProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Member")
+	}
+	mg.Spec.InitProvider.Member = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServiceAccountRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this FolderIAMBinding.
 func (mg *FolderIAMBinding) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
@@ -177,6 +261,90 @@ func (mg *FolderIAMMember) ResolveReferences(ctx context.Context, c client.Reade
 	return nil
 }
 
+// ResolveReferences of this GroupIAMMember.
+func (mg *GroupIAMMember) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Member),
+		Extract:      iam.ServiceAccountRefValue(),
+		Reference:    mg.Spec.ForProvider.ServiceAccountRef,
+		Selector:     mg.Spec.ForProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Member")
+	}
+	mg.Spec.ForProvider.Member = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ServiceAccountRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Member),
+		Extract:      iam.ServiceAccountRefValue(),
+		Reference:    mg.Spec.InitProvider.ServiceAccountRef,
+		Selector:     mg.Spec.InitProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Member")
+	}
+	mg.Spec.InitProvider.Member = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServiceAccountRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this OrganizationIAMBinding.
+func (mg *OrganizationIAMBinding) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Members),
+		Extract:       iam.ServiceAccountRefValue(),
+		References:    mg.Spec.ForProvider.ServiceAccountRef,
+		Selector:      mg.Spec.ForProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Members")
+	}
+	mg.Spec.ForProvider.Members = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.ServiceAccountRef = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.Members),
+		Extract:       iam.ServiceAccountRefValue(),
+		References:    mg.Spec.InitProvider.ServiceAccountRef,
+		Selector:      mg.Spec.InitProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Members")
+	}
+	mg.Spec.InitProvider.Members = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.ServiceAccountRef = mrsp.ResolvedReferences
+
+	return nil
+}
+
 // ResolveReferences of this ServiceAccount.
 func (mg *ServiceAccount) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
@@ -215,6 +383,123 @@ func (mg *ServiceAccount) ResolveReferences(ctx context.Context, c client.Reader
 	}
 	mg.Spec.InitProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.FolderIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this ServiceAccountAPIKey.
+func (mg *ServiceAccountAPIKey) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ServiceAccountID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.ServiceAccountIDRef,
+		Selector:     mg.Spec.ForProvider.ServiceAccountIDSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ServiceAccountID")
+	}
+	mg.Spec.ForProvider.ServiceAccountID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ServiceAccountIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServiceAccountID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServiceAccountIDRef,
+		Selector:     mg.Spec.InitProvider.ServiceAccountIDSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServiceAccountID")
+	}
+	mg.Spec.InitProvider.ServiceAccountID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServiceAccountIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this ServiceAccountIAMBinding.
+func (mg *ServiceAccountIAMBinding) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Members),
+		Extract:       iam.ServiceAccountRefValue(),
+		References:    mg.Spec.ForProvider.ServiceAccountRef,
+		Selector:      mg.Spec.ForProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Members")
+	}
+	mg.Spec.ForProvider.Members = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.ServiceAccountRef = mrsp.ResolvedReferences
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ServiceAccountID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.ServiceAccountIDRef,
+		Selector:     mg.Spec.ForProvider.ServiceAccountIDSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ServiceAccountID")
+	}
+	mg.Spec.ForProvider.ServiceAccountID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ServiceAccountIDRef = rsp.ResolvedReference
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.Members),
+		Extract:       iam.ServiceAccountRefValue(),
+		References:    mg.Spec.InitProvider.ServiceAccountRef,
+		Selector:      mg.Spec.InitProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Members")
+	}
+	mg.Spec.InitProvider.Members = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.ServiceAccountRef = mrsp.ResolvedReferences
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServiceAccountID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServiceAccountIDRef,
+		Selector:     mg.Spec.InitProvider.ServiceAccountIDSelector,
+		To: reference.To{
+			List:    &ServiceAccountList{},
+			Managed: &ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServiceAccountID")
+	}
+	mg.Spec.InitProvider.ServiceAccountID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServiceAccountIDRef = rsp.ResolvedReference
 
 	return nil
 }

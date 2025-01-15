@@ -35,6 +35,7 @@ import (
 	v1alpha1kubernetes "github.com/yandex-cloud/crossplane-provider-yc/apis/kubernetes/v1alpha1"
 	v1alpha1mdb "github.com/yandex-cloud/crossplane-provider-yc/apis/mdb/v1alpha1"
 	v1alpha1message "github.com/yandex-cloud/crossplane-provider-yc/apis/message/v1alpha1"
+	v1alpha1organizationmanager "github.com/yandex-cloud/crossplane-provider-yc/apis/organizationmanager/v1alpha1"
 	v1alpha1resourcemanager "github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1"
 	v1alpha1storage "github.com/yandex-cloud/crossplane-provider-yc/apis/storage/v1alpha1"
 	v1alpha1apis "github.com/yandex-cloud/crossplane-provider-yc/apis/v1alpha1"
@@ -57,6 +58,7 @@ func init() {
 		v1alpha1kubernetes.SchemeBuilder.AddToScheme,
 		v1alpha1mdb.SchemeBuilder.AddToScheme,
 		v1alpha1message.SchemeBuilder.AddToScheme,
+		v1alpha1organizationmanager.SchemeBuilder.AddToScheme,
 		v1alpha1resourcemanager.SchemeBuilder.AddToScheme,
 		v1alpha1storage.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,

@@ -1,0 +1,16 @@
+apiVersion: organizationmanager.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: SAMLFederation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: organizationmanager/v1alpha1/samlfederation
+  labels:
+    testing.upbound.io/example-name: federation
+  name: federation
+spec:
+  forProvider:
+    description: My new SAML federation
+    issuer: my-issuer
+    name: my-federation
+    organizationId: sdf4*********3fr
+    ssoBinding: POST
+    ssoUrl: https://my-sso.url
