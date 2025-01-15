@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.0 - January 15, 2025
+### Added
+* support for iam resources most of IAM resources
+
 ## v0.6.1 - December 18, 2024
 ### Fixed
 * Allow ID references in bucket/grant.

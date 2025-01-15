@@ -1,6 +1,7 @@
 {
   "":"opensource/crossplane-provider-yc",
   ".":"opensource/crossplane-provider-yc",
+  ".changes/0.7.0.md":"opensource/crossplane-provider-yc/.changes/0.7.0.md",
   ".changes/header.tpl.md":"opensource/crossplane-provider-yc/.changes/header.tpl.md",
   ".changes/unreleased/.gitkeep":"opensource/crossplane-provider-yc/.changes/unreleased/.gitkeep",
   ".changes/v0.6.0.md":"opensource/crossplane-provider-yc/.changes/v0.6.0.md",
