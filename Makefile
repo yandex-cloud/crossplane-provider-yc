@@ -230,12 +230,22 @@ UPTEST_DATASOURCE_PATH ?= $(shell ./hack/uptest_data.sh)
 # - UPTEST_DATASOURCE_PATH (optional), see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
 # - CLOUD_ID and FOLDER_ID need to be the IDs of YC cloud and folder, respectively, where tests will be run.
 
+
 uptest: $(CROSSPLANE_UPTEST) $(KUBECTL) $(CHAINSAW) $(CROSSPLANE_CLI)
 	@echo "##teamcity[blockOpened name='uptest' description='run automated e2e tests']"
 	@$(INFO) running automated tests
-	@KUBECTL=$(KUBECTL) CHAINSAW=$(CHAINSAW) CROSSPLANE_CLI=$(CROSSPLANE_CLI) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) CREDENTIALS='$(UPTEST_CLOUD_CREDENTIALS)' $(CROSSPLANE_UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
-	@$(OK) running automated tests
+	@rm -f uptest.log
+	@(KUBECTL=$(KUBECTL) CHAINSAW=$(CHAINSAW) CROSSPLANE_CLI=$(CROSSPLANE_CLI) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) CREDENTIALS='$(UPTEST_CLOUD_CREDENTIALS)' $(CROSSPLANE_UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test") > uptest.log 2>&1 || true
+	@cat uptest.log
+	@grep -qE 'Failed\s+tests\s+[1-9][0-9]*' uptest.log; \
+	if [ $$? -eq 0 ]; then \
+	  echo "Tests failed"; \
+      $(FAIL) \
+	else \
+  	$(OK) running automated tests; \
+	fi
 	@echo "##teamcity[blockClosed name='uptest']"
+
 
 controlplane.up-cloud:$(UP) $(KUBECTL)
 	@echo "##teamcity[blockOpened name='crossplane' description='set up Crossplane']"
