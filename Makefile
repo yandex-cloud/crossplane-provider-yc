@@ -242,6 +242,7 @@ uptest: $(CROSSPLANE_UPTEST) $(KUBECTL) $(CHAINSAW) $(CROSSPLANE_CLI)
 	 echo "Tests failed"; \
 	 $(FAIL) \
 	else \
+	  touch passed; \
 	 $(OK) running automated tests; \
 	fi
 	@echo "##teamcity[blockClosed name='uptest']"
