@@ -21,6 +21,7 @@ package config
 import (
 	// Note(ezgidemirel): we are importing this to embed provider schema document
 	_ "embed"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/nlb"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/organizationmanager"
 
 	tjconfig "github.com/crossplane/upjet/pkg/config"
@@ -72,6 +73,12 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_mdb_mongodb_user$",
 		}),
 		tjconfig.WithIncludeList([]string{
+			"yandex_vpc_gateway$",
+			"yandex_vpc_route_table$",
+
+			"yandex_lb_network_load_balancer$",
+			"yandex_lb_target_group$",
+
 			"yandex_resourcemanager_cloud_iam_binding$",
 			"yandex_resourcemanager_cloud_iam_member$",
 			"yandex_resourcemanager_cloud$",
@@ -152,6 +159,7 @@ func GetProvider() *tjconfig.Provider {
 		ymq.Configure,
 		cdn.Configure,
 		organizationmanager.Configure,
+		nlb.Configure,
 	} {
 		configure(pc)
 	}

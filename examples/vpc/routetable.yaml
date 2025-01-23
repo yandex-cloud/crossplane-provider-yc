@@ -1,0 +1,16 @@
+apiVersion: vpc.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: RouteTable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: vpc/v1alpha1/routetable
+  name: example-rt
+spec:
+  forProvider:
+    networkIdRef:
+      name: example-net
+    staticRoute:
+    - destinationPrefix: 10.2.0.0/16
+      nextHopAddress: 172.16.10.10
+    - destinationPrefix: 0.0.0.0/0
+      gatewayIdRef:
+        name: example-gateway

@@ -27,6 +27,11 @@ import (
 	"github.com/yandex-cloud/crossplane-provider-yc/config/vpc"
 )
 
+const (
+	// ApisPackagePath is the golang path for this package.
+	ApisPackagePath = "github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1"
+)
+
 // Configure adds configurations for compute group.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_compute_instance", func(r *config.Resource) {

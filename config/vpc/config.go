@@ -52,4 +52,13 @@ func Configure(p *config.Provider) {
 			Type: "SecurityGroup",
 		}
 	})
+
+	p.AddResourceConfigurator("yandex_vpc_route_table", func(r *config.Resource) {
+		r.References["network_id"] = config.Reference{
+			Type: "Network",
+		}
+		r.References["static_route.gateway_id"] = config.Reference{
+			Type: "Gateway",
+		}
+	})
 }

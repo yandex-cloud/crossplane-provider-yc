@@ -40,6 +40,10 @@ delete_all application-load-balancer http-router
 delete_all application-load-balancer virtual-host
 delete_all application-load-balancer backend-group
 delete_all application-load-balancer target-group
+delete_all vpc route-table
+delete_all vpc gateway
+delete_all load-balancer network-load-balancer
+delete_all load-balancer target-group
 delete_storage_buckets
 delete_all cdn resource
 delete_all cdn origin-group

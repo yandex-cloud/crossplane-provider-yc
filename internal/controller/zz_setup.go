@@ -53,6 +53,8 @@ import (
 	symmetrickeyiambinding "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/kms/symmetrickeyiambinding"
 	cluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/kubernetes/cluster"
 	nodegroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/kubernetes/nodegroup"
+	networkloadbalancer "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/lb/networkloadbalancer"
+	targetgrouplb "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/lb/targetgroup"
 	elasticsearchcluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/mdb/elasticsearchcluster"
 	kafkacluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/mdb/kafkacluster"
 	kafkaconnector "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/mdb/kafkaconnector"
@@ -80,7 +82,9 @@ import (
 	object "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/storage/object"
 	address "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/vpc/address"
 	defaultsecuritygroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/vpc/defaultsecuritygroup"
+	gateway "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/vpc/gateway"
 	network "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/vpc/network"
+	routetable "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/vpc/routetable"
 	securitygroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/vpc/securitygroup"
 	securitygrouprule "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/vpc/securitygrouprule"
 	subnet "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/vpc/subnet"
@@ -122,6 +126,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		symmetrickeyiambinding.Setup,
 		cluster.Setup,
 		nodegroup.Setup,
+		networkloadbalancer.Setup,
+		targetgrouplb.Setup,
 		elasticsearchcluster.Setup,
 		kafkacluster.Setup,
 		kafkaconnector.Setup,
@@ -149,7 +155,9 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		object.Setup,
 		address.Setup,
 		defaultsecuritygroup.Setup,
+		gateway.Setup,
 		network.Setup,
+		routetable.Setup,
 		securitygroup.Setup,
 		securitygrouprule.Setup,
 		subnet.Setup,

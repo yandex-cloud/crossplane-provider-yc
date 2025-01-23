@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.0 - January 22, 2025
+### Added
+* support for most of VPC resources
+* support for Network Load Balancer
+
 ## 0.7.0 - January 15, 2025
 ### Added
 * support for most of IAM resources
