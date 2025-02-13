@@ -168,7 +168,7 @@ pull-docs:
 	@git -C "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))" sparse-checkout set "$(TERRAFORM_DOCS_PATH)"
 	@./scripts/add_subcategory_html.sh
 
-generate.init: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs
+generate.init: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs $(GOIMPORTS)
 
 .PHONY: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs
 # ====================================================================================
