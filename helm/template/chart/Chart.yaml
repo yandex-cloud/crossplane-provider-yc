@@ -1,0 +1,39 @@
+apiVersion: v1
+appVersion: ${IMAGE_TAG}
+description: Crossplane is an open source Kubernetes add-on that enables platform
+  teams to assemble infrastructure from multiple vendors, and expose higher level
+  self-service APIs for application teams to consume.
+home: https://crossplane.io
+icon: https://docs.crossplane.io/android-chrome-192x192.png
+keywords:
+- cloud
+- infrastructure
+- services
+- application
+- database
+- cache
+- bucket
+- infra
+- app
+- ops
+- gcp
+- azure
+- aws
+- alibaba
+- cloudsql
+- rds
+- s3
+- azuredatabase
+- asparadb
+- gke
+- aks
+- eks
+maintainers:
+  - name: Evgeny Kuznetsov
+    email: eugenschmidt@yandex-team.ru
+  - name: Ivan Tarasov
+    email: vaniog@yandex-team.ru
+  - name: Mikhail Kadysev
+    email: kadysev@yandex-team.ru
+name: crossplane
+version: ${CHART_TAG}

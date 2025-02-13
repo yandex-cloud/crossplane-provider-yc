@@ -1,0 +1,26 @@
+# Link to helm chart in publisher registry.
+helm_chart:
+  name: ${REGISTRY}/${CHART_PATH}/${CHART_NAME}
+  tag: ${CHART_TAG}
+
+# Required parameters.
+requirements:
+  k8s_version: ">=1.14.0-0"
+
+images:
+  - name_with_registry: image.repository
+    tag: image.tag
+  - full: providerJetYc.package
+
+# Configurable parameters that might be changed by end user during installation of product. Should be presented in values.yaml
+# Supported types: integer, boolean, string, string selector, integer selector.
+user_values:
+  - name: providerJetYc.creds
+    title:
+      en: Service account key
+      ru: Ключ сервисного аккаунта
+    description:
+      en: The content of the key.json file is the authorized key generated for the service account. Use the command `yc iam key create --service-account-id --output key.json & tr -d ' ' < key.json`.
+      ru: Содержимое файла key.json — авторизованный ключ cервисного аккаунта. Используйте команду `yc iam key create --service-account-id --output key.json & tr -d ' ' < key.json`.
+    service_account_key_value:
+      required: true
