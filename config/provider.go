@@ -21,6 +21,7 @@ package config
 import (
 	// Note(ezgidemirel): we are importing this to embed provider schema document
 	_ "embed"
+
 	"github.com/yandex-cloud/crossplane-provider-yc/config/nlb"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/organizationmanager"
 
@@ -73,6 +74,16 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_mdb_mongodb_user$",
 		}),
 		tjconfig.WithIncludeList([]string{
+			"yandex_compute_disk$",
+			"yandex_compute_disk_placement_group$",
+			"yandex_compute_filesystem$",
+			"yandex_compute_gpu_cluster$",
+			"yandex_compute_image$",
+			"yandex_compute_instance_group$",
+			"yandex_compute_placement_group$",
+			"yandex_compute_snapshot$",
+			"yandex_compute_snapshot_schedule$",
+
 			"yandex_vpc_gateway$",
 			"yandex_vpc_route_table$",
 

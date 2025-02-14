@@ -47,6 +47,20 @@ func Configure(p *config.Provider) {
 		r.References["network_interface.security_group_ids"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
 		}
+		r.References["filesystem.filesystem_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "Filesystem"),
+		}
+		r.References["placement_policy.placement_group_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "PlacementGroup"),
+		}
+
+		r.References["boot_disk.disk_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "Disk"),
+		}
+		r.References["secondary_disk.disk_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "Disk"),
+		}
+
 		r.UseAsync = true
 		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
 			data := make(map[string][]byte)
@@ -66,6 +80,55 @@ func Configure(p *config.Provider) {
 				}
 			}
 			return data, nil
+		}
+	})
+	p.AddResourceConfigurator("yandex_compute_disk", func(r *config.Resource) {
+		r.References["disk_placement_policy.disk_placement_group_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "DiskPlacementGroup"),
+		}
+	})
+
+	p.AddResourceConfigurator("yandex_compute_instance_group", func(r *config.Resource) {
+		r.References["instance_template.network_interface.network_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Network"),
+		}
+		r.References["service_account_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccount"),
+		}
+		r.References["instance_template.network_interface.subnet_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "Subnet"),
+		}
+		r.References["instance_template.network_interface.security_group_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
+		}
+		r.References["instance_template.filesystem.filesystem_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "Filesystem"),
+		}
+		r.References["instance_template.placement_policy.placement_group_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "PlacementGroup"),
+		}
+
+		r.References["instance_template.boot_disk.disk_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "Disk"),
+		}
+		r.References["instance_template.secondary_disk.disk_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "Disk"),
+		}
+	})
+
+	p.AddResourceConfigurator("yandex_compute_snapshot", func(r *config.Resource) {
+		r.References["source_disk_id"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "Disk"),
+		}
+	})
+
+	p.AddResourceConfigurator("yandex_compute_disk", func(r *config.Resource) {
+		r.LateInitializer.IgnoredFields = append(r.LateInitializer.IgnoredFields, "disk_placement_policy")
+	})
+
+	p.AddResourceConfigurator("yandex_compute_snapshot_schedule", func(r *config.Resource) {
+		r.References["disk_ids"] = config.Reference{
+			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "Disk"),
 		}
 	})
 }

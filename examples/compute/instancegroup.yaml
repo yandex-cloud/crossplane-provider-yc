@@ -1,0 +1,74 @@
+apiVersion: compute.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: InstanceGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/instancegroup
+  labels:
+    testing.upbound.io/example-name: ig
+  name: example-ig
+spec:
+  forProvider:
+    serviceAccountIdRef:
+      name: ig-sa
+    allocationPolicy:
+      - zones:
+          - ru-central1-a
+    deployPolicy:
+      - maxCreating: 2
+        maxDeleting: 2
+        maxExpansion: 2
+        maxUnavailable: 2
+    folderId: ${data.folderId}
+    instanceTemplate:
+      - bootDisk:
+          - initializeParams:
+              # ubuntu 22.04
+              # yc compute image list --folder-id standard-images | grep 'ubuntu-22-04-lts'
+              - imageId: fd80bm0rh4rkepi5ksdi
+        networkInterface:
+          - networkIdRef:
+              name: example-net
+            subnetIdsRefs:
+              - name: example-subnet-a
+        metadata:
+          ssh-keys: "ubuntu:<public-key-data>"
+        labels:
+          label1: label1-value
+          label2: label2-value
+        networkSettings:
+          - type: STANDARD
+        platformId: standard-v1
+        resources:
+          - cores: 2
+            memory: 2
+    name: example-ig
+    scalePolicy:
+      - fixedScale:
+          - size: 2
+---
+apiVersion: iam.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: FolderIAMMember
+metadata:
+  name: ig-iam
+  annotations:
+    uptest.upbound.io/pre-delete-hook: testhooks/delete-instance-group.sh
+spec:
+  forProvider:
+    serviceAccountRef:
+      name: ig-sa
+    role: admin
+    folderId: ${data.folderId}
+  providerConfigRef:
+    name: default
+---
+apiVersion: iam.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: ServiceAccount
+metadata:
+  name: ig-sa
+  labels:
+    testing.upbound.io/example-name: ig-sa
+spec:
+  forProvider:
+    name: ig-sa
+  providerConfigRef:
+    name: default

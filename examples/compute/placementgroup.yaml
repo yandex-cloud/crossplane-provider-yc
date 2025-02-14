@@ -1,0 +1,13 @@
+apiVersion: compute.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: PlacementGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/placementgroup
+  labels:
+    testing.upbound.io/example-name: group1
+  name: example-pg
+spec:
+  forProvider:
+    description: my description
+    folderId: ${data.folderId}
+    name: example-pg

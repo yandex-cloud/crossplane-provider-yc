@@ -1,0 +1,16 @@
+apiVersion: compute.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Filesystem
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/filesystem
+  labels:
+    testing.upbound.io/example-name: default
+  name: example-fs
+spec:
+  forProvider:
+    labels:
+      environment: test
+    name: example-fs
+    size: 10
+    type: network-ssd
+    zone: ru-central1-a

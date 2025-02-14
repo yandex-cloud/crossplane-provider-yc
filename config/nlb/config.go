@@ -20,10 +20,12 @@ package nlb
 
 import (
 	"fmt"
+
 	xpref "github.com/crossplane/crossplane-runtime/pkg/reference"
 	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/crossplane/upjet/pkg/config"
 	"github.com/crossplane/upjet/pkg/resource"
+
 	"github.com/yandex-cloud/crossplane-provider-yc/config/compute"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/vpc"
 )

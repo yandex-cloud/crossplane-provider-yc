@@ -1,0 +1,10 @@
+apiVersion: compute.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Image
+metadata:
+  labels:
+    testing.upbound.io/example-name: foo-image
+  name: example-image
+spec:
+  forProvider:
+    name: example-image
+    sourceImage: fd80bm0rh4rkepi5ksdi

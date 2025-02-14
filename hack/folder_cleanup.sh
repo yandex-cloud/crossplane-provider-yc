@@ -47,7 +47,16 @@ delete_all load-balancer target-group
 delete_storage_buckets
 delete_all cdn resource
 delete_all cdn origin-group
+delete_all compute instance-group
+sleep 10 # wait for instance group deleting
 delete_all compute instance
+delete_all compute disk
+delete_all compute filesystem
+delete_all compute snapshot
+delete_all compute snapshot-schedule
+delete_all compute gpu-cluster
+delete_all compute placement-group
+delete_all compute disk-placement-group
 delete_all kms symmetric-key
 delete_all dns zone
 delete_all datatransfer transfer

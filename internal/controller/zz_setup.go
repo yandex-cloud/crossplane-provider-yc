@@ -30,7 +30,16 @@ import (
 	virtualhost "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/alb/virtualhost"
 	origingroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cdn/origingroup"
 	resource "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cdn/resource"
+	disk "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/compute/disk"
+	diskplacementgroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/compute/diskplacementgroup"
+	filesystem "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/compute/filesystem"
+	gpucluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/compute/gpucluster"
+	image "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/compute/image"
 	instance "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/compute/instance"
+	instancegroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/compute/instancegroup"
+	placementgroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/compute/placementgroup"
+	snapshot "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/compute/snapshot"
+	snapshotschedule "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/compute/snapshotschedule"
 	registry "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/container/registry"
 	repository "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/container/repository"
 	endpoint "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/datatransfer/endpoint"
@@ -103,7 +112,16 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		virtualhost.Setup,
 		origingroup.Setup,
 		resource.Setup,
+		disk.Setup,
+		diskplacementgroup.Setup,
+		filesystem.Setup,
+		gpucluster.Setup,
+		image.Setup,
 		instance.Setup,
+		instancegroup.Setup,
+		placementgroup.Setup,
+		snapshot.Setup,
+		snapshotschedule.Setup,
 		registry.Setup,
 		repository.Setup,
 		endpoint.Setup,

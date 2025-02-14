@@ -1,0 +1,13 @@
+apiVersion: compute.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: DiskPlacementGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/diskplacementgroup
+  labels:
+    testing.upbound.io/example-name: group1
+  name: example-disk-pg
+spec:
+  forProvider:
+    description: my description
+    folderId: ${data.folderId}
+    name: example-disk-pg

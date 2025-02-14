@@ -1,0 +1,15 @@
+apiVersion: compute.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: Snapshot
+metadata:
+  annotations:
+    meta.upbound.io/example-id: compute/v1alpha1/snapshot
+  labels:
+    testing.upbound.io/example-name: default
+  name: example-snapshot
+spec:
+  forProvider:
+    labels:
+      my-label: my-label-value
+    name: example-snapshot
+    sourceDiskIdRef:
+      name: example-disk

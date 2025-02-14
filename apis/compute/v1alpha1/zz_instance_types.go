@@ -38,7 +38,16 @@ type BootDiskInitParameters struct {
 
 	// The ID of the existing disk (such as those managed by
 	// yandex_compute_disk) to attach as a boot disk.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Disk
 	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
+
+	// Reference to a Disk in compute to populate diskId.
+	// +kubebuilder:validation:Optional
+	DiskIDRef *v1.Reference `json:"diskIdRef,omitempty" tf:"-"`
+
+	// Selector for a Disk in compute to populate diskId.
+	// +kubebuilder:validation:Optional
+	DiskIDSelector *v1.Selector `json:"diskIdSelector,omitempty" tf:"-"`
 
 	// Parameters for a new disk that will be created
 	// alongside the new instance. Either initialize_params or disk_id must be set. The structure is documented below.
@@ -82,8 +91,17 @@ type BootDiskParameters struct {
 
 	// The ID of the existing disk (such as those managed by
 	// yandex_compute_disk) to attach as a boot disk.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Disk
 	// +kubebuilder:validation:Optional
 	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
+
+	// Reference to a Disk in compute to populate diskId.
+	// +kubebuilder:validation:Optional
+	DiskIDRef *v1.Reference `json:"diskIdRef,omitempty" tf:"-"`
+
+	// Selector for a Disk in compute to populate diskId.
+	// +kubebuilder:validation:Optional
+	DiskIDSelector *v1.Selector `json:"diskIdSelector,omitempty" tf:"-"`
 
 	// Parameters for a new disk that will be created
 	// alongside the new instance. Either initialize_params or disk_id must be set. The structure is documented below.
@@ -142,48 +160,6 @@ type DNSRecordParameters struct {
 	// DNS record TTL. in seconds
 	// +kubebuilder:validation:Optional
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
-}
-
-type FilesystemInitParameters struct {
-
-	// Name of the device representing the filesystem on the instance.
-	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
-
-	// ID of the filesystem that should be attached.
-	FilesystemID *string `json:"filesystemId,omitempty" tf:"filesystem_id,omitempty"`
-
-	// Mode of access to the filesystem that should be attached. By default, filesystem is attached
-	// in READ_WRITE mode.
-	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
-}
-
-type FilesystemObservation struct {
-
-	// Name of the device representing the filesystem on the instance.
-	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
-
-	// ID of the filesystem that should be attached.
-	FilesystemID *string `json:"filesystemId,omitempty" tf:"filesystem_id,omitempty"`
-
-	// Mode of access to the filesystem that should be attached. By default, filesystem is attached
-	// in READ_WRITE mode.
-	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
-}
-
-type FilesystemParameters struct {
-
-	// Name of the device representing the filesystem on the instance.
-	// +kubebuilder:validation:Optional
-	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
-
-	// ID of the filesystem that should be attached.
-	// +kubebuilder:validation:Optional
-	FilesystemID *string `json:"filesystemId" tf:"filesystem_id,omitempty"`
-
-	// Mode of access to the filesystem that should be attached. By default, filesystem is attached
-	// in READ_WRITE mode.
-	// +kubebuilder:validation:Optional
-	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 }
 
 type HostAffinityRulesInitParameters struct {
@@ -350,6 +326,66 @@ type InitializeParamsParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
+type InstanceFilesystemInitParameters struct {
+
+	// Name of the device representing the filesystem on the instance.
+	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
+
+	// ID of the filesystem that should be attached.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Filesystem
+	FilesystemID *string `json:"filesystemId,omitempty" tf:"filesystem_id,omitempty"`
+
+	// Reference to a Filesystem in compute to populate filesystemId.
+	// +kubebuilder:validation:Optional
+	FilesystemIDRef *v1.Reference `json:"filesystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a Filesystem in compute to populate filesystemId.
+	// +kubebuilder:validation:Optional
+	FilesystemIDSelector *v1.Selector `json:"filesystemIdSelector,omitempty" tf:"-"`
+
+	// Mode of access to the filesystem that should be attached. By default, filesystem is attached
+	// in READ_WRITE mode.
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+}
+
+type InstanceFilesystemObservation struct {
+
+	// Name of the device representing the filesystem on the instance.
+	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
+
+	// ID of the filesystem that should be attached.
+	FilesystemID *string `json:"filesystemId,omitempty" tf:"filesystem_id,omitempty"`
+
+	// Mode of access to the filesystem that should be attached. By default, filesystem is attached
+	// in READ_WRITE mode.
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+}
+
+type InstanceFilesystemParameters struct {
+
+	// Name of the device representing the filesystem on the instance.
+	// +kubebuilder:validation:Optional
+	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
+
+	// ID of the filesystem that should be attached.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Filesystem
+	// +kubebuilder:validation:Optional
+	FilesystemID *string `json:"filesystemId,omitempty" tf:"filesystem_id,omitempty"`
+
+	// Reference to a Filesystem in compute to populate filesystemId.
+	// +kubebuilder:validation:Optional
+	FilesystemIDRef *v1.Reference `json:"filesystemIdRef,omitempty" tf:"-"`
+
+	// Selector for a Filesystem in compute to populate filesystemId.
+	// +kubebuilder:validation:Optional
+	FilesystemIDSelector *v1.Selector `json:"filesystemIdSelector,omitempty" tf:"-"`
+
+	// Mode of access to the filesystem that should be attached. By default, filesystem is attached
+	// in READ_WRITE mode.
+	// +kubebuilder:validation:Optional
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+}
+
 type InstanceInitParameters struct {
 
 	// Default 5 minutes
@@ -365,7 +401,7 @@ type InstanceInitParameters struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// List of filesystems that are attached to the instance. Structure is documented below.
-	Filesystem []FilesystemInitParameters `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
+	Filesystem []InstanceFilesystemInitParameters `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
 
 	// The ID of the folder that the resource belongs to. If it
 	// is not provided, the default provider folder is used.
@@ -471,7 +507,7 @@ type InstanceObservation struct {
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// List of filesystems that are attached to the instance. Structure is documented below.
-	Filesystem []FilesystemObservation `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
+	Filesystem []InstanceFilesystemObservation `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
 
 	// The ID of the folder that the resource belongs to. If it
 	// is not provided, the default provider folder is used.
@@ -569,7 +605,7 @@ type InstanceParameters struct {
 
 	// List of filesystems that are attached to the instance. Structure is documented below.
 	// +kubebuilder:validation:Optional
-	Filesystem []FilesystemParameters `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
+	Filesystem []InstanceFilesystemParameters `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
 
 	// The ID of the folder that the resource belongs to. If it
 	// is not provided, the default provider folder is used.
@@ -975,7 +1011,16 @@ type PlacementPolicyInitParameters struct {
 	HostAffinityRules []HostAffinityRulesInitParameters `json:"hostAffinityRules,omitempty" tf:"host_affinity_rules,omitempty"`
 
 	// Specifies the id of the Placement Group to assign to the instance.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.PlacementGroup
 	PlacementGroupID *string `json:"placementGroupId,omitempty" tf:"placement_group_id,omitempty"`
+
+	// Reference to a PlacementGroup in compute to populate placementGroupId.
+	// +kubebuilder:validation:Optional
+	PlacementGroupIDRef *v1.Reference `json:"placementGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a PlacementGroup in compute to populate placementGroupId.
+	// +kubebuilder:validation:Optional
+	PlacementGroupIDSelector *v1.Selector `json:"placementGroupIdSelector,omitempty" tf:"-"`
 
 	PlacementGroupPartition *float64 `json:"placementGroupPartition,omitempty" tf:"placement_group_partition,omitempty"`
 }
@@ -998,8 +1043,17 @@ type PlacementPolicyParameters struct {
 	HostAffinityRules []HostAffinityRulesParameters `json:"hostAffinityRules,omitempty" tf:"host_affinity_rules,omitempty"`
 
 	// Specifies the id of the Placement Group to assign to the instance.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.PlacementGroup
 	// +kubebuilder:validation:Optional
 	PlacementGroupID *string `json:"placementGroupId,omitempty" tf:"placement_group_id,omitempty"`
+
+	// Reference to a PlacementGroup in compute to populate placementGroupId.
+	// +kubebuilder:validation:Optional
+	PlacementGroupIDRef *v1.Reference `json:"placementGroupIdRef,omitempty" tf:"-"`
+
+	// Selector for a PlacementGroup in compute to populate placementGroupId.
+	// +kubebuilder:validation:Optional
+	PlacementGroupIDSelector *v1.Selector `json:"placementGroupIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	PlacementGroupPartition *float64 `json:"placementGroupPartition,omitempty" tf:"placement_group_partition,omitempty"`
@@ -1084,7 +1138,16 @@ type SecondaryDiskInitParameters struct {
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
 	// ID of the disk that is attached to the instance.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Disk
 	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
+
+	// Reference to a Disk in compute to populate diskId.
+	// +kubebuilder:validation:Optional
+	DiskIDRef *v1.Reference `json:"diskIdRef,omitempty" tf:"-"`
+
+	// Selector for a Disk in compute to populate diskId.
+	// +kubebuilder:validation:Optional
+	DiskIDSelector *v1.Selector `json:"diskIdSelector,omitempty" tf:"-"`
 
 	// Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
@@ -1120,8 +1183,17 @@ type SecondaryDiskParameters struct {
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
 	// ID of the disk that is attached to the instance.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Disk
 	// +kubebuilder:validation:Optional
-	DiskID *string `json:"diskId" tf:"disk_id,omitempty"`
+	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
+
+	// Reference to a Disk in compute to populate diskId.
+	// +kubebuilder:validation:Optional
+	DiskIDRef *v1.Reference `json:"diskIdRef,omitempty" tf:"-"`
+
+	// Selector for a Disk in compute to populate diskId.
+	// +kubebuilder:validation:Optional
+	DiskIDSelector *v1.Selector `json:"diskIdSelector,omitempty" tf:"-"`
 
 	// Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
 	// +kubebuilder:validation:Optional
