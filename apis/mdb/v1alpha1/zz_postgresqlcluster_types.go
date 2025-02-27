@@ -27,55 +27,6 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type ConfigAccessInitParameters struct {
-
-	// Allow access for Yandex DataLens.
-	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
-
-	// Allow access for DataTransfer
-	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
-
-	// Allow access for connection to managed databases from functions
-	Serverless *bool `json:"serverless,omitempty" tf:"serverless,omitempty"`
-
-	// Allow access for SQL queries in the management console
-	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
-}
-
-type ConfigAccessObservation struct {
-
-	// Allow access for Yandex DataLens.
-	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
-
-	// Allow access for DataTransfer
-	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
-
-	// Allow access for connection to managed databases from functions
-	Serverless *bool `json:"serverless,omitempty" tf:"serverless,omitempty"`
-
-	// Allow access for SQL queries in the management console
-	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
-}
-
-type ConfigAccessParameters struct {
-
-	// Allow access for Yandex DataLens.
-	// +kubebuilder:validation:Optional
-	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
-
-	// Allow access for DataTransfer
-	// +kubebuilder:validation:Optional
-	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
-
-	// Allow access for connection to managed databases from functions
-	// +kubebuilder:validation:Optional
-	Serverless *bool `json:"serverless,omitempty" tf:"serverless,omitempty"`
-
-	// Allow access for SQL queries in the management console
-	// +kubebuilder:validation:Optional
-	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
-}
-
 type ConfigBackupWindowStartInitParameters struct {
 
 	// The hour at which backup will be started (UTC).
@@ -277,10 +228,59 @@ type PoolerConfigParameters struct {
 	PoolingMode *string `json:"poolingMode,omitempty" tf:"pooling_mode,omitempty"`
 }
 
+type PostgresqlClusterConfigAccessInitParameters struct {
+
+	// Allow access for Yandex DataLens.
+	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
+
+	// Allow access for DataTransfer
+	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
+
+	// Allow access for connection to managed databases from functions
+	Serverless *bool `json:"serverless,omitempty" tf:"serverless,omitempty"`
+
+	// Allow access for SQL queries in the management console
+	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
+}
+
+type PostgresqlClusterConfigAccessObservation struct {
+
+	// Allow access for Yandex DataLens.
+	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
+
+	// Allow access for DataTransfer
+	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
+
+	// Allow access for connection to managed databases from functions
+	Serverless *bool `json:"serverless,omitempty" tf:"serverless,omitempty"`
+
+	// Allow access for SQL queries in the management console
+	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
+}
+
+type PostgresqlClusterConfigAccessParameters struct {
+
+	// Allow access for Yandex DataLens.
+	// +kubebuilder:validation:Optional
+	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
+
+	// Allow access for DataTransfer
+	// +kubebuilder:validation:Optional
+	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
+
+	// Allow access for connection to managed databases from functions
+	// +kubebuilder:validation:Optional
+	Serverless *bool `json:"serverless,omitempty" tf:"serverless,omitempty"`
+
+	// Allow access for SQL queries in the management console
+	// +kubebuilder:validation:Optional
+	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
+}
+
 type PostgresqlClusterConfigInitParameters struct {
 
 	// Access policy to the PostgreSQL cluster. The structure is documented below.
-	Access []ConfigAccessInitParameters `json:"access,omitempty" tf:"access,omitempty"`
+	Access []PostgresqlClusterConfigAccessInitParameters `json:"access,omitempty" tf:"access,omitempty"`
 
 	// Configuration setting which enables/disables autofailover in cluster.
 	Autofailover *bool `json:"autofailover,omitempty" tf:"autofailover,omitempty"`
@@ -314,7 +314,7 @@ type PostgresqlClusterConfigInitParameters struct {
 type PostgresqlClusterConfigObservation struct {
 
 	// Access policy to the PostgreSQL cluster. The structure is documented below.
-	Access []ConfigAccessObservation `json:"access,omitempty" tf:"access,omitempty"`
+	Access []PostgresqlClusterConfigAccessObservation `json:"access,omitempty" tf:"access,omitempty"`
 
 	// Configuration setting which enables/disables autofailover in cluster.
 	Autofailover *bool `json:"autofailover,omitempty" tf:"autofailover,omitempty"`
@@ -349,7 +349,7 @@ type PostgresqlClusterConfigParameters struct {
 
 	// Access policy to the PostgreSQL cluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	Access []ConfigAccessParameters `json:"access,omitempty" tf:"access,omitempty"`
+	Access []PostgresqlClusterConfigAccessParameters `json:"access,omitempty" tf:"access,omitempty"`
 
 	// Configuration setting which enables/disables autofailover in cluster.
 	// +kubebuilder:validation:Optional

@@ -27,7 +27,7 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type KafkaTopicInitParameters struct {
+type KafkaTopicInitParameters_2 struct {
 
 	// +crossplane:generate:reference:type=KafkaCluster
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
@@ -53,7 +53,7 @@ type KafkaTopicInitParameters struct {
 	TopicConfig []KafkaTopicTopicConfigInitParameters `json:"topicConfig,omitempty" tf:"topic_config,omitempty"`
 }
 
-type KafkaTopicObservation struct {
+type KafkaTopicObservation_2 struct {
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -71,7 +71,7 @@ type KafkaTopicObservation struct {
 	TopicConfig []KafkaTopicTopicConfigObservation `json:"topicConfig,omitempty" tf:"topic_config,omitempty"`
 }
 
-type KafkaTopicParameters struct {
+type KafkaTopicParameters_2 struct {
 
 	// +crossplane:generate:reference:type=KafkaCluster
 	// +kubebuilder:validation:Optional
@@ -214,7 +214,7 @@ type KafkaTopicTopicConfigParameters struct {
 // KafkaTopicSpec defines the desired state of KafkaTopic
 type KafkaTopicSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     KafkaTopicParameters `json:"forProvider"`
+	ForProvider     KafkaTopicParameters_2 `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -225,13 +225,13 @@ type KafkaTopicSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider KafkaTopicInitParameters `json:"initProvider,omitempty"`
+	InitProvider KafkaTopicInitParameters_2 `json:"initProvider,omitempty"`
 }
 
 // KafkaTopicStatus defines the observed state of KafkaTopic.
 type KafkaTopicStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        KafkaTopicObservation `json:"atProvider,omitempty"`
+	AtProvider        KafkaTopicObservation_2 `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

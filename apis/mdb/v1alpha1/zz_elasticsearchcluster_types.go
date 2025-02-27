@@ -27,7 +27,62 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type ConfigInitParameters struct {
+type DataNodeInitParameters struct {
+
+	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
+	Resources []DataNodeResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
+}
+
+type DataNodeObservation struct {
+
+	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
+	Resources []DataNodeResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
+}
+
+type DataNodeParameters struct {
+
+	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Resources []DataNodeResourcesParameters `json:"resources" tf:"resources,omitempty"`
+}
+
+type DataNodeResourcesInitParameters struct {
+
+	// Volume of the storage available to a host, in gigabytes.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Type of the storage of Elasticsearch hosts.
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
+type DataNodeResourcesObservation struct {
+
+	// Volume of the storage available to a host, in gigabytes.
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Type of the storage of Elasticsearch hosts.
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
+type DataNodeResourcesParameters struct {
+
+	// Volume of the storage available to a host, in gigabytes.
+	// +kubebuilder:validation:Optional
+	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
+
+	// Type of the storage of Elasticsearch hosts.
+	// +kubebuilder:validation:Optional
+	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
+}
+
+type ElasticsearchClusterConfigInitParameters struct {
 
 	// Configuration for Elasticsearch data nodes subcluster. The structure is documented below.
 	DataNode []DataNodeInitParameters `json:"dataNode,omitempty" tf:"data_node,omitempty"`
@@ -46,7 +101,7 @@ type ConfigInitParameters struct {
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
-type ConfigObservation struct {
+type ElasticsearchClusterConfigObservation struct {
 
 	// Configuration for Elasticsearch data nodes subcluster. The structure is documented below.
 	DataNode []DataNodeObservation `json:"dataNode,omitempty" tf:"data_node,omitempty"`
@@ -65,7 +120,7 @@ type ConfigObservation struct {
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
-type ConfigParameters struct {
+type ElasticsearchClusterConfigParameters struct {
 
 	// Password for admin user of Elasticsearch.
 	// +kubebuilder:validation:Required
@@ -93,243 +148,7 @@ type ConfigParameters struct {
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
-type DataNodeInitParameters struct {
-
-	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
-	Resources []ResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type DataNodeObservation struct {
-
-	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
-	Resources []ResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type DataNodeParameters struct {
-
-	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
-	// +kubebuilder:validation:Optional
-	Resources []ResourcesParameters `json:"resources" tf:"resources,omitempty"`
-}
-
-type ElasticsearchClusterInitParameters struct {
-
-	// Configuration of the Elasticsearch cluster. The structure is documented below.
-	Config []ConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
-
-	// Inhibits deletion of the cluster.  Can be either true or false.
-	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
-
-	// Description of the Elasticsearch cluster.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
-	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
-
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
-	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
-
-	// Reference to a Folder in resourcemanager to populate folderId.
-	// +kubebuilder:validation:Optional
-	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
-
-	// Selector for a Folder in resourcemanager to populate folderId.
-	// +kubebuilder:validation:Optional
-	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
-
-	// A host of the Elasticsearch cluster. The structure is documented below.
-	Host []HostInitParameters `json:"host,omitempty" tf:"host,omitempty"`
-
-	// A set of key/value label pairs to assign to the Elasticsearch cluster.
-	// +mapType=granular
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
-	MaintenanceWindow []MaintenanceWindowInitParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
-
-	// Name of the Elasticsearch cluster. Provided by the client when the cluster is created.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// ID of the network, to which the Elasticsearch cluster belongs.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
-	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
-
-	// Reference to a Network in vpc to populate networkId.
-	// +kubebuilder:validation:Optional
-	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
-
-	// Selector for a Network in vpc to populate networkId.
-	// +kubebuilder:validation:Optional
-	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
-
-	// A set of ids of security groups assigned to hosts of the cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
-	// +listType=set
-	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
-
-	// References to SecurityGroup in vpc to populate securityGroupIds.
-	// +kubebuilder:validation:Optional
-	SecurityGroupIdsRefs []v1.Reference `json:"securityGroupIdsRefs,omitempty" tf:"-"`
-
-	// Selector for a list of SecurityGroup in vpc to populate securityGroupIds.
-	// +kubebuilder:validation:Optional
-	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
-
-	// ID of the service account authorized for this cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
-	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
-
-	// Reference to a ServiceAccount in iam to populate serviceAccountId.
-	// +kubebuilder:validation:Optional
-	ServiceAccountIDRef *v1.Reference `json:"serviceAccountIdRef,omitempty" tf:"-"`
-
-	// Selector for a ServiceAccount in iam to populate serviceAccountId.
-	// +kubebuilder:validation:Optional
-	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
-}
-
-type ElasticsearchClusterObservation struct {
-
-	// Configuration of the Elasticsearch cluster. The structure is documented below.
-	Config []ConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
-
-	// Creation timestamp of the key.
-	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
-
-	// Inhibits deletion of the cluster.  Can be either true or false.
-	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
-
-	// Description of the Elasticsearch cluster.
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
-	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
-
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
-	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
-
-	// Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN.
-	// For more information see health field of JSON representation in the official documentation.
-	Health *string `json:"health,omitempty" tf:"health,omitempty"`
-
-	// A host of the Elasticsearch cluster. The structure is documented below.
-	Host []HostObservation `json:"host,omitempty" tf:"host,omitempty"`
-
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// A set of key/value label pairs to assign to the Elasticsearch cluster.
-	// +mapType=granular
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
-	MaintenanceWindow []MaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
-
-	// Name of the Elasticsearch cluster. Provided by the client when the cluster is created.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// ID of the network, to which the Elasticsearch cluster belongs.
-	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
-
-	// A set of ids of security groups assigned to hosts of the cluster.
-	// +listType=set
-	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
-
-	// ID of the service account authorized for this cluster.
-	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
-
-	// Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
-	// For more information see status field of JSON representation in the official documentation.
-	Status *string `json:"status,omitempty" tf:"status,omitempty"`
-}
-
-type ElasticsearchClusterParameters struct {
-
-	// Configuration of the Elasticsearch cluster. The structure is documented below.
-	// +kubebuilder:validation:Optional
-	Config []ConfigParameters `json:"config,omitempty" tf:"config,omitempty"`
-
-	// Inhibits deletion of the cluster.  Can be either true or false.
-	// +kubebuilder:validation:Optional
-	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
-
-	// Description of the Elasticsearch cluster.
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
-	// +kubebuilder:validation:Optional
-	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
-
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
-	// +kubebuilder:validation:Optional
-	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
-
-	// Reference to a Folder in resourcemanager to populate folderId.
-	// +kubebuilder:validation:Optional
-	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
-
-	// Selector for a Folder in resourcemanager to populate folderId.
-	// +kubebuilder:validation:Optional
-	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
-
-	// A host of the Elasticsearch cluster. The structure is documented below.
-	// +kubebuilder:validation:Optional
-	Host []HostParameters `json:"host,omitempty" tf:"host,omitempty"`
-
-	// A set of key/value label pairs to assign to the Elasticsearch cluster.
-	// +kubebuilder:validation:Optional
-	// +mapType=granular
-	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	MaintenanceWindow []MaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
-
-	// Name of the Elasticsearch cluster. Provided by the client when the cluster is created.
-	// +kubebuilder:validation:Optional
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-
-	// ID of the network, to which the Elasticsearch cluster belongs.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
-	// +kubebuilder:validation:Optional
-	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
-
-	// Reference to a Network in vpc to populate networkId.
-	// +kubebuilder:validation:Optional
-	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
-
-	// Selector for a Network in vpc to populate networkId.
-	// +kubebuilder:validation:Optional
-	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
-
-	// A set of ids of security groups assigned to hosts of the cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
-	// +kubebuilder:validation:Optional
-	// +listType=set
-	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
-
-	// References to SecurityGroup in vpc to populate securityGroupIds.
-	// +kubebuilder:validation:Optional
-	SecurityGroupIdsRefs []v1.Reference `json:"securityGroupIdsRefs,omitempty" tf:"-"`
-
-	// Selector for a list of SecurityGroup in vpc to populate securityGroupIds.
-	// +kubebuilder:validation:Optional
-	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
-
-	// ID of the service account authorized for this cluster.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
-	// +kubebuilder:validation:Optional
-	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
-
-	// Reference to a ServiceAccount in iam to populate serviceAccountId.
-	// +kubebuilder:validation:Optional
-	ServiceAccountIDRef *v1.Reference `json:"serviceAccountIdRef,omitempty" tf:"-"`
-
-	// Selector for a ServiceAccount in iam to populate serviceAccountId.
-	// +kubebuilder:validation:Optional
-	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
-}
-
-type HostInitParameters struct {
+type ElasticsearchClusterHostInitParameters struct {
 
 	// Sets whether the host should get a public IP address on creation. Can be either true or false.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
@@ -358,7 +177,7 @@ type HostInitParameters struct {
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
-type HostObservation struct {
+type ElasticsearchClusterHostObservation struct {
 
 	// Sets whether the host should get a public IP address on creation. Can be either true or false.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
@@ -381,7 +200,7 @@ type HostObservation struct {
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
-type HostParameters struct {
+type ElasticsearchClusterHostParameters struct {
 
 	// Sets whether the host should get a public IP address on creation. Can be either true or false.
 	// +kubebuilder:validation:Optional
@@ -415,7 +234,83 @@ type HostParameters struct {
 	Zone *string `json:"zone" tf:"zone,omitempty"`
 }
 
-type MaintenanceWindowInitParameters struct {
+type ElasticsearchClusterInitParameters struct {
+
+	// Configuration of the Elasticsearch cluster. The structure is documented below.
+	Config []ElasticsearchClusterConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
+
+	// Inhibits deletion of the cluster.  Can be either true or false.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// Description of the Elasticsearch cluster.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
+
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// A host of the Elasticsearch cluster. The structure is documented below.
+	Host []ElasticsearchClusterHostInitParameters `json:"host,omitempty" tf:"host,omitempty"`
+
+	// A set of key/value label pairs to assign to the Elasticsearch cluster.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	MaintenanceWindow []ElasticsearchClusterMaintenanceWindowInitParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+
+	// Name of the Elasticsearch cluster. Provided by the client when the cluster is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// ID of the network, to which the Elasticsearch cluster belongs.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// Reference to a Network in vpc to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+
+	// Selector for a Network in vpc to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
+
+	// A set of ids of security groups assigned to hosts of the cluster.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +listType=set
+	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+
+	// References to SecurityGroup in vpc to populate securityGroupIds.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIdsRefs []v1.Reference `json:"securityGroupIdsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityGroup in vpc to populate securityGroupIds.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
+
+	// ID of the service account authorized for this cluster.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+
+	// Reference to a ServiceAccount in iam to populate serviceAccountId.
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDRef *v1.Reference `json:"serviceAccountIdRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceAccount in iam to populate serviceAccountId.
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
+}
+
+type ElasticsearchClusterMaintenanceWindowInitParameters struct {
 
 	// Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
@@ -427,7 +322,7 @@ type MaintenanceWindowInitParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
-type MaintenanceWindowObservation struct {
+type ElasticsearchClusterMaintenanceWindowObservation struct {
 
 	// Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
@@ -439,7 +334,7 @@ type MaintenanceWindowObservation struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
-type MaintenanceWindowParameters struct {
+type ElasticsearchClusterMaintenanceWindowParameters struct {
 
 	// Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
 	// +kubebuilder:validation:Optional
@@ -452,6 +347,147 @@ type MaintenanceWindowParameters struct {
 	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
+}
+
+type ElasticsearchClusterObservation struct {
+
+	// Configuration of the Elasticsearch cluster. The structure is documented below.
+	Config []ElasticsearchClusterConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
+
+	// Creation timestamp of the key.
+	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
+
+	// Inhibits deletion of the cluster.  Can be either true or false.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// Description of the Elasticsearch cluster.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
+
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN.
+	// For more information see health field of JSON representation in the official documentation.
+	Health *string `json:"health,omitempty" tf:"health,omitempty"`
+
+	// A host of the Elasticsearch cluster. The structure is documented below.
+	Host []ElasticsearchClusterHostObservation `json:"host,omitempty" tf:"host,omitempty"`
+
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// A set of key/value label pairs to assign to the Elasticsearch cluster.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	MaintenanceWindow []ElasticsearchClusterMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+
+	// Name of the Elasticsearch cluster. Provided by the client when the cluster is created.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// ID of the network, to which the Elasticsearch cluster belongs.
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// A set of ids of security groups assigned to hosts of the cluster.
+	// +listType=set
+	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+
+	// ID of the service account authorized for this cluster.
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+
+	// Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
+	// For more information see status field of JSON representation in the official documentation.
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+}
+
+type ElasticsearchClusterParameters struct {
+
+	// Configuration of the Elasticsearch cluster. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Config []ElasticsearchClusterConfigParameters `json:"config,omitempty" tf:"config,omitempty"`
+
+	// Inhibits deletion of the cluster.  Can be either true or false.
+	// +kubebuilder:validation:Optional
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// Description of the Elasticsearch cluster.
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+	// +kubebuilder:validation:Optional
+	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
+
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
+	// +kubebuilder:validation:Optional
+	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Reference to a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDRef *v1.Reference `json:"folderIdRef,omitempty" tf:"-"`
+
+	// Selector for a Folder in resourcemanager to populate folderId.
+	// +kubebuilder:validation:Optional
+	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// A host of the Elasticsearch cluster. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Host []ElasticsearchClusterHostParameters `json:"host,omitempty" tf:"host,omitempty"`
+
+	// A set of key/value label pairs to assign to the Elasticsearch cluster.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	MaintenanceWindow []ElasticsearchClusterMaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
+
+	// Name of the Elasticsearch cluster. Provided by the client when the cluster is created.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// ID of the network, to which the Elasticsearch cluster belongs.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
+	// +kubebuilder:validation:Optional
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// Reference to a Network in vpc to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDRef *v1.Reference `json:"networkIdRef,omitempty" tf:"-"`
+
+	// Selector for a Network in vpc to populate networkId.
+	// +kubebuilder:validation:Optional
+	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
+
+	// A set of ids of security groups assigned to hosts of the cluster.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
+
+	// References to SecurityGroup in vpc to populate securityGroupIds.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIdsRefs []v1.Reference `json:"securityGroupIdsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of SecurityGroup in vpc to populate securityGroupIds.
+	// +kubebuilder:validation:Optional
+	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
+
+	// ID of the service account authorized for this cluster.
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
+	// +kubebuilder:validation:Optional
+	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
+
+	// Reference to a ServiceAccount in iam to populate serviceAccountId.
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDRef *v1.Reference `json:"serviceAccountIdRef,omitempty" tf:"-"`
+
+	// Selector for a ServiceAccount in iam to populate serviceAccountId.
+	// +kubebuilder:validation:Optional
+	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 }
 
 type MasterNodeInitParameters struct {
@@ -496,42 +532,6 @@ type MasterNodeResourcesObservation struct {
 }
 
 type MasterNodeResourcesParameters struct {
-
-	// Volume of the storage available to a host, in gigabytes.
-	// +kubebuilder:validation:Optional
-	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
-
-	// Type of the storage of Elasticsearch hosts.
-	// +kubebuilder:validation:Optional
-	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
-}
-
-type ResourcesInitParameters struct {
-
-	// Volume of the storage available to a host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
-
-	// Type of the storage of Elasticsearch hosts.
-	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
-
-	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
-}
-
-type ResourcesObservation struct {
-
-	// Volume of the storage available to a host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
-
-	// Type of the storage of Elasticsearch hosts.
-	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
-
-	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
-}
-
-type ResourcesParameters struct {
 
 	// Volume of the storage available to a host, in gigabytes.
 	// +kubebuilder:validation:Optional

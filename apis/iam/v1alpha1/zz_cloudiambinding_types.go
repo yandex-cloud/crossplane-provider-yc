@@ -53,7 +53,7 @@ type CloudIAMBindingInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountSelector *v1.Selector `json:"serviceAccountSelector,omitempty" tf:"-"`
 
-	SleepAfter *int64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
+	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type CloudIAMBindingObservation struct {
@@ -72,7 +72,7 @@ type CloudIAMBindingObservation struct {
 	// yandex_resourcemanager_cloud_iam_binding can be used per role.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
-	SleepAfter *int64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
+	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type CloudIAMBindingParameters struct {
@@ -105,7 +105,7 @@ type CloudIAMBindingParameters struct {
 	ServiceAccountSelector *v1.Selector `json:"serviceAccountSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
-	SleepAfter *int64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
+	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 // CloudIAMBindingSpec defines the desired state of CloudIAMBinding

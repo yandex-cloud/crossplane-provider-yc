@@ -92,7 +92,7 @@ func (in *CloudIAMBindingInitParameters) DeepCopyInto(out *CloudIAMBindingInitPa
 	}
 	if in.SleepAfter != nil {
 		in, out := &in.SleepAfter, &out.SleepAfter
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 }
@@ -170,7 +170,7 @@ func (in *CloudIAMBindingObservation) DeepCopyInto(out *CloudIAMBindingObservati
 	}
 	if in.SleepAfter != nil {
 		in, out := &in.SleepAfter, &out.SleepAfter
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 }
@@ -223,7 +223,7 @@ func (in *CloudIAMBindingParameters) DeepCopyInto(out *CloudIAMBindingParameters
 	}
 	if in.SleepAfter != nil {
 		in, out := &in.SleepAfter, &out.SleepAfter
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 }
@@ -330,7 +330,7 @@ func (in *CloudIAMMemberInitParameters) DeepCopyInto(out *CloudIAMMemberInitPara
 	}
 	if in.SleepAfter != nil {
 		in, out := &in.SleepAfter, &out.SleepAfter
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 }
@@ -402,7 +402,7 @@ func (in *CloudIAMMemberObservation) DeepCopyInto(out *CloudIAMMemberObservation
 	}
 	if in.SleepAfter != nil {
 		in, out := &in.SleepAfter, &out.SleepAfter
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 }
@@ -447,7 +447,7 @@ func (in *CloudIAMMemberParameters) DeepCopyInto(out *CloudIAMMemberParameters) 
 	}
 	if in.SleepAfter != nil {
 		in, out := &in.SleepAfter, &out.SleepAfter
-		*out = new(int64)
+		*out = new(float64)
 		**out = **in
 	}
 }

@@ -51,7 +51,7 @@ type CloudIAMMemberInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountSelector *v1.Selector `json:"serviceAccountSelector,omitempty" tf:"-"`
 
-	SleepAfter *int64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
+	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type CloudIAMMemberObservation struct {
@@ -68,7 +68,7 @@ type CloudIAMMemberObservation struct {
 	// The role that should be assigned.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
-	SleepAfter *int64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
+	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type CloudIAMMemberParameters struct {
@@ -99,7 +99,7 @@ type CloudIAMMemberParameters struct {
 	ServiceAccountSelector *v1.Selector `json:"serviceAccountSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
-	SleepAfter *int64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
+	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 // CloudIAMMemberSpec defines the desired state of CloudIAMMember

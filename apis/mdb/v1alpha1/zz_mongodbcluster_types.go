@@ -68,35 +68,6 @@ type AuditLogParameters struct {
 	RuntimeConfiguration *bool `json:"runtimeConfiguration,omitempty" tf:"runtime_configuration,omitempty"`
 }
 
-type BackupWindowStartInitParameters struct {
-
-	// The hour at which backup will be started.
-	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
-
-	// The minute at which backup will be started.
-	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
-}
-
-type BackupWindowStartObservation struct {
-
-	// The hour at which backup will be started.
-	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
-
-	// The minute at which backup will be started.
-	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
-}
-
-type BackupWindowStartParameters struct {
-
-	// The hour at which backup will be started.
-	// +kubebuilder:validation:Optional
-	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
-
-	// The minute at which backup will be started.
-	// +kubebuilder:validation:Optional
-	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
-}
-
 type ClusterConfigAccessInitParameters struct {
 
 	// Allow access for Yandex DataLens.
@@ -126,6 +97,35 @@ type ClusterConfigAccessParameters struct {
 	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
 }
 
+type ClusterConfigBackupWindowStartInitParameters struct {
+
+	// The hour at which backup will be started.
+	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
+
+	// The minute at which backup will be started.
+	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
+}
+
+type ClusterConfigBackupWindowStartObservation struct {
+
+	// The hour at which backup will be started.
+	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
+
+	// The minute at which backup will be started.
+	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
+}
+
+type ClusterConfigBackupWindowStartParameters struct {
+
+	// The hour at which backup will be started.
+	// +kubebuilder:validation:Optional
+	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
+
+	// The minute at which backup will be started.
+	// +kubebuilder:validation:Optional
+	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
+}
+
 type ClusterConfigInitParameters struct {
 
 	// Access policy to the MongoDB cluster. The structure is documented below.
@@ -135,7 +135,7 @@ type ClusterConfigInitParameters struct {
 	BackupRetainPeriodDays *int64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
 
 	// Time to start the daily backup, in the UTC timezone. The structure is documented below.
-	BackupWindowStart []BackupWindowStartInitParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
+	BackupWindowStart []ClusterConfigBackupWindowStartInitParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
 	// Feature compatibility version of MongoDB. If not provided version is taken. Can be either 6.0, 5.0, 4.4 and 4.2.
 	FeatureCompatibilityVersion *string `json:"featureCompatibilityVersion,omitempty" tf:"feature_compatibility_version,omitempty"`
@@ -165,7 +165,7 @@ type ClusterConfigObservation struct {
 	BackupRetainPeriodDays *int64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
 
 	// Time to start the daily backup, in the UTC timezone. The structure is documented below.
-	BackupWindowStart []BackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
+	BackupWindowStart []ClusterConfigBackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
 	// Feature compatibility version of MongoDB. If not provided version is taken. Can be either 6.0, 5.0, 4.4 and 4.2.
 	FeatureCompatibilityVersion *string `json:"featureCompatibilityVersion,omitempty" tf:"feature_compatibility_version,omitempty"`
@@ -198,7 +198,7 @@ type ClusterConfigParameters struct {
 
 	// Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	BackupWindowStart []BackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
+	BackupWindowStart []ClusterConfigBackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
 	// Feature compatibility version of MongoDB. If not provided version is taken. Can be either 6.0, 5.0, 4.4 and 4.2.
 	// +kubebuilder:validation:Optional
@@ -223,25 +223,6 @@ type ClusterConfigParameters struct {
 	// Version of the MongoDB server software. Can be either 4.2, 4.4, 4.4-enterprise, 5.0, 5.0-enterprise, 6.0 and 6.0-enterprise.
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version" tf:"version,omitempty"`
-}
-
-type DatabaseInitParameters struct {
-
-	// The name of the database.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-}
-
-type DatabaseObservation struct {
-
-	// The name of the database.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
-}
-
-type DatabaseParameters struct {
-
-	// The name of the database.
-	// +kubebuilder:validation:Optional
-	Name *string `json:"name" tf:"name,omitempty"`
 }
 
 type HostParametersInitParameters struct {
@@ -711,6 +692,25 @@ type MongodStorageParameters struct {
 	WiredTiger []StorageWiredTigerParameters `json:"wiredTiger,omitempty" tf:"wired_tiger,omitempty"`
 }
 
+type MongodbClusterDatabaseInitParameters struct {
+
+	// The name of the database.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
+type MongodbClusterDatabaseObservation struct {
+
+	// The name of the database.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+}
+
+type MongodbClusterDatabaseParameters struct {
+
+	// The name of the database.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name" tf:"name,omitempty"`
+}
+
 type MongodbClusterHostInitParameters struct {
 
 	// Should this host have assigned public IP assigned. Can be either true or false.
@@ -829,7 +829,7 @@ type MongodbClusterInitParameters struct {
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
 	// A database of the MongoDB cluster. The structure is documented below.
-	Database []DatabaseInitParameters `json:"database,omitempty" tf:"database,omitempty"`
+	Database []MongodbClusterDatabaseInitParameters `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Inhibits deletion of the cluster.  Can be either true or false.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
@@ -964,7 +964,7 @@ type MongodbClusterObservation struct {
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
 	// A database of the MongoDB cluster. The structure is documented below.
-	Database []DatabaseObservation `json:"database,omitempty" tf:"database,omitempty"`
+	Database []MongodbClusterDatabaseObservation `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Inhibits deletion of the cluster.  Can be either true or false.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
@@ -1046,7 +1046,7 @@ type MongodbClusterParameters struct {
 
 	// A database of the MongoDB cluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	Database []DatabaseParameters `json:"database,omitempty" tf:"database,omitempty"`
+	Database []MongodbClusterDatabaseParameters `json:"database,omitempty" tf:"database,omitempty"`
 
 	// Inhibits deletion of the cluster.  Can be either true or false.
 	// +kubebuilder:validation:Optional
@@ -1192,7 +1192,7 @@ type MongodbClusterUserInitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Set of permissions granted to the user. The structure is documented below.
-	Permission []UserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+	Permission []MongodbClusterUserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type MongodbClusterUserObservation struct {
@@ -1201,7 +1201,7 @@ type MongodbClusterUserObservation struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Set of permissions granted to the user. The structure is documented below.
-	Permission []UserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
+	Permission []MongodbClusterUserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type MongodbClusterUserParameters struct {
@@ -1216,7 +1216,36 @@ type MongodbClusterUserParameters struct {
 
 	// Set of permissions granted to the user. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	Permission []UserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+	Permission []MongodbClusterUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+}
+
+type MongodbClusterUserPermissionInitParameters struct {
+
+	// The name of the database that the permission grants access to.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
+
+	// The roles of the user in this database. For more information see the official documentation.
+	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
+}
+
+type MongodbClusterUserPermissionObservation struct {
+
+	// The name of the database that the permission grants access to.
+	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
+
+	// The roles of the user in this database. For more information see the official documentation.
+	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
+}
+
+type MongodbClusterUserPermissionParameters struct {
+
+	// The name of the database that the permission grants access to.
+	// +kubebuilder:validation:Optional
+	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
+
+	// The roles of the user in this database. For more information see the official documentation.
+	// +kubebuilder:validation:Optional
+	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
 type MongosInitParameters struct {
@@ -1739,35 +1768,6 @@ type StorageWiredTigerParameters struct {
 	// description in the official documentation.
 	// +kubebuilder:validation:Optional
 	PrefixCompression *bool `json:"prefixCompression,omitempty" tf:"prefix_compression,omitempty"`
-}
-
-type UserPermissionInitParameters struct {
-
-	// The name of the database that the permission grants access to.
-	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
-
-	// The roles of the user in this database. For more information see the official documentation.
-	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
-}
-
-type UserPermissionObservation struct {
-
-	// The name of the database that the permission grants access to.
-	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
-
-	// The roles of the user in this database. For more information see the official documentation.
-	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
-}
-
-type UserPermissionParameters struct {
-
-	// The name of the database that the permission grants access to.
-	// +kubebuilder:validation:Optional
-	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
-
-	// The roles of the user in this database. For more information see the official documentation.
-	// +kubebuilder:validation:Optional
-	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
 type WiredTigerInitParameters struct {

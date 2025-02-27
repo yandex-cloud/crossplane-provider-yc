@@ -27,29 +27,116 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type AccessInitParameters struct {
+type ConfigAccessInitParameters struct {
 
 	// Allow access for DataTransfer
 	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
 }
 
-type AccessObservation struct {
+type ConfigAccessObservation struct {
 
 	// Allow access for DataTransfer
 	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
 }
 
-type AccessParameters struct {
+type ConfigAccessParameters struct {
 
 	// Allow access for DataTransfer
 	// +kubebuilder:validation:Optional
 	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
 }
 
+type ConfigKafkaInitParameters struct {
+
+	// User-defined settings for the Kafka cluster. The structure is documented below.
+	KafkaConfig []KafkaConfigInitParameters `json:"kafkaConfig,omitempty" tf:"kafka_config,omitempty"`
+
+	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	Resources []KafkaResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
+}
+
+type ConfigKafkaObservation struct {
+
+	// User-defined settings for the Kafka cluster. The structure is documented below.
+	KafkaConfig []KafkaConfigObservation `json:"kafkaConfig,omitempty" tf:"kafka_config,omitempty"`
+
+	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	Resources []KafkaResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
+}
+
+type ConfigKafkaParameters struct {
+
+	// User-defined settings for the Kafka cluster. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	KafkaConfig []KafkaConfigParameters `json:"kafkaConfig,omitempty" tf:"kafka_config,omitempty"`
+
+	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Resources []KafkaResourcesParameters `json:"resources" tf:"resources,omitempty"`
+}
+
+type ConfigZookeeperInitParameters struct {
+
+	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	Resources []ConfigZookeeperResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
+}
+
+type ConfigZookeeperObservation struct {
+
+	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	Resources []ConfigZookeeperResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
+}
+
+type ConfigZookeeperParameters struct {
+
+	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Resources []ConfigZookeeperResourcesParameters `json:"resources,omitempty" tf:"resources,omitempty"`
+}
+
+type ConfigZookeeperResourcesInitParameters struct {
+
+	// Volume of the storage available to a ZooKeeper host, in gigabytes.
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Type of the storage of ZooKeeper hosts.
+	// For more information see the official documentation.
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
+type ConfigZookeeperResourcesObservation struct {
+
+	// Volume of the storage available to a ZooKeeper host, in gigabytes.
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Type of the storage of ZooKeeper hosts.
+	// For more information see the official documentation.
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
+type ConfigZookeeperResourcesParameters struct {
+
+	// Volume of the storage available to a ZooKeeper host, in gigabytes.
+	// +kubebuilder:validation:Optional
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Type of the storage of ZooKeeper hosts.
+	// For more information see the official documentation.
+	// +kubebuilder:validation:Optional
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
 type KafkaClusterConfigInitParameters struct {
 
 	// Access policy to the Kafka cluster. The structure is documented below.
-	Access []AccessInitParameters `json:"access,omitempty" tf:"access,omitempty"`
+	Access []ConfigAccessInitParameters `json:"access,omitempty" tf:"access,omitempty"`
 
 	// Determines whether each broker will be assigned a public IP address. The default is false.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
@@ -58,7 +145,7 @@ type KafkaClusterConfigInitParameters struct {
 	BrokersCount *int64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
 
 	// Configuration of the Kafka subcluster. The structure is documented below.
-	Kafka []KafkaInitParameters `json:"kafka,omitempty" tf:"kafka,omitempty"`
+	Kafka []ConfigKafkaInitParameters `json:"kafka,omitempty" tf:"kafka,omitempty"`
 
 	// Enables managed schema registry on cluster. The default is false.
 	SchemaRegistry *bool `json:"schemaRegistry,omitempty" tf:"schema_registry,omitempty"`
@@ -72,13 +159,13 @@ type KafkaClusterConfigInitParameters struct {
 	Zones []*string `json:"zones,omitempty" tf:"zones,omitempty"`
 
 	// Configuration of the ZooKeeper subcluster. The structure is documented below.
-	Zookeeper []ZookeeperInitParameters `json:"zookeeper,omitempty" tf:"zookeeper,omitempty"`
+	Zookeeper []ConfigZookeeperInitParameters `json:"zookeeper,omitempty" tf:"zookeeper,omitempty"`
 }
 
 type KafkaClusterConfigObservation struct {
 
 	// Access policy to the Kafka cluster. The structure is documented below.
-	Access []AccessObservation `json:"access,omitempty" tf:"access,omitempty"`
+	Access []ConfigAccessObservation `json:"access,omitempty" tf:"access,omitempty"`
 
 	// Determines whether each broker will be assigned a public IP address. The default is false.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
@@ -87,7 +174,7 @@ type KafkaClusterConfigObservation struct {
 	BrokersCount *int64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
 
 	// Configuration of the Kafka subcluster. The structure is documented below.
-	Kafka []KafkaObservation `json:"kafka,omitempty" tf:"kafka,omitempty"`
+	Kafka []ConfigKafkaObservation `json:"kafka,omitempty" tf:"kafka,omitempty"`
 
 	// Enables managed schema registry on cluster. The default is false.
 	SchemaRegistry *bool `json:"schemaRegistry,omitempty" tf:"schema_registry,omitempty"`
@@ -101,14 +188,14 @@ type KafkaClusterConfigObservation struct {
 	Zones []*string `json:"zones,omitempty" tf:"zones,omitempty"`
 
 	// Configuration of the ZooKeeper subcluster. The structure is documented below.
-	Zookeeper []ZookeeperObservation `json:"zookeeper,omitempty" tf:"zookeeper,omitempty"`
+	Zookeeper []ConfigZookeeperObservation `json:"zookeeper,omitempty" tf:"zookeeper,omitempty"`
 }
 
 type KafkaClusterConfigParameters struct {
 
 	// Access policy to the Kafka cluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	Access []AccessParameters `json:"access,omitempty" tf:"access,omitempty"`
+	Access []ConfigAccessParameters `json:"access,omitempty" tf:"access,omitempty"`
 
 	// Determines whether each broker will be assigned a public IP address. The default is false.
 	// +kubebuilder:validation:Optional
@@ -120,7 +207,7 @@ type KafkaClusterConfigParameters struct {
 
 	// Configuration of the Kafka subcluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	Kafka []KafkaParameters `json:"kafka" tf:"kafka,omitempty"`
+	Kafka []ConfigKafkaParameters `json:"kafka" tf:"kafka,omitempty"`
 
 	// Enables managed schema registry on cluster. The default is false.
 	// +kubebuilder:validation:Optional
@@ -139,7 +226,7 @@ type KafkaClusterConfigParameters struct {
 
 	// Configuration of the ZooKeeper subcluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
-	Zookeeper []ZookeeperParameters `json:"zookeeper,omitempty" tf:"zookeeper,omitempty"`
+	Zookeeper []ConfigZookeeperParameters `json:"zookeeper,omitempty" tf:"zookeeper,omitempty"`
 }
 
 type KafkaClusterHostInitParameters struct {
@@ -251,7 +338,7 @@ type KafkaClusterInitParameters struct {
 	Topic []TopicInitParameters `json:"topic,omitempty" tf:"topic,omitempty"`
 
 	// (Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user.
-	User []UserInitParameters `json:"user,omitempty" tf:"user,omitempty"`
+	User []KafkaClusterUserInitParameters `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type KafkaClusterMaintenanceWindowInitParameters struct {
@@ -355,7 +442,7 @@ type KafkaClusterObservation struct {
 	Topic []TopicObservation `json:"topic,omitempty" tf:"topic,omitempty"`
 
 	// (Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user.
-	User []UserObservation `json:"user,omitempty" tf:"user,omitempty"`
+	User []KafkaClusterUserObservation `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type KafkaClusterParameters struct {
@@ -454,7 +541,40 @@ type KafkaClusterParameters struct {
 
 	// (Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user.
 	// +kubebuilder:validation:Optional
-	User []UserParameters `json:"user,omitempty" tf:"user,omitempty"`
+	User []KafkaClusterUserParameters `json:"user,omitempty" tf:"user,omitempty"`
+}
+
+type KafkaClusterUserInitParameters struct {
+
+	// The name of the user.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Set of permissions granted to the user. The structure is documented below.
+	Permission []UserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+}
+
+type KafkaClusterUserObservation struct {
+
+	// The name of the user.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Set of permissions granted to the user. The structure is documented below.
+	Permission []UserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
+}
+
+type KafkaClusterUserParameters struct {
+
+	// The name of the user.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name" tf:"name,omitempty"`
+
+	// The password of the user.
+	// +kubebuilder:validation:Required
+	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+
+	// Set of permissions granted to the user. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	Permission []UserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type KafkaConfigInitParameters struct {
@@ -619,35 +739,6 @@ type KafkaConfigParameters struct {
 	SocketSendBufferBytes *string `json:"socketSendBufferBytes,omitempty" tf:"socket_send_buffer_bytes,omitempty"`
 }
 
-type KafkaInitParameters struct {
-
-	// User-defined settings for the Kafka cluster. The structure is documented below.
-	KafkaConfig []KafkaConfigInitParameters `json:"kafkaConfig,omitempty" tf:"kafka_config,omitempty"`
-
-	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
-	Resources []KafkaResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type KafkaObservation struct {
-
-	// User-defined settings for the Kafka cluster. The structure is documented below.
-	KafkaConfig []KafkaConfigObservation `json:"kafkaConfig,omitempty" tf:"kafka_config,omitempty"`
-
-	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
-	Resources []KafkaResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type KafkaParameters struct {
-
-	// User-defined settings for the Kafka cluster. The structure is documented below.
-	// +kubebuilder:validation:Optional
-	KafkaConfig []KafkaConfigParameters `json:"kafkaConfig,omitempty" tf:"kafka_config,omitempty"`
-
-	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
-	// +kubebuilder:validation:Optional
-	Resources []KafkaResourcesParameters `json:"resources" tf:"resources,omitempty"`
-}
-
 type KafkaResourcesInitParameters struct {
 
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
@@ -685,48 +776,6 @@ type KafkaResourcesParameters struct {
 
 	// +kubebuilder:validation:Optional
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
-}
-
-type PermissionInitParameters struct {
-
-	// Set of hosts, to which this permission grants access to.
-	// +listType=set
-	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
-
-	// The role type to grant to the topic.
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
-
-	// The name of the topic that the permission grants access to.
-	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
-}
-
-type PermissionObservation struct {
-
-	// Set of hosts, to which this permission grants access to.
-	// +listType=set
-	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
-
-	// The role type to grant to the topic.
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
-
-	// The name of the topic that the permission grants access to.
-	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
-}
-
-type PermissionParameters struct {
-
-	// Set of hosts, to which this permission grants access to.
-	// +kubebuilder:validation:Optional
-	// +listType=set
-	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
-
-	// The role type to grant to the topic.
-	// +kubebuilder:validation:Optional
-	Role *string `json:"role" tf:"role,omitempty"`
-
-	// The name of the topic that the permission grants access to.
-	// +kubebuilder:validation:Optional
-	TopicName *string `json:"topicName" tf:"topic_name,omitempty"`
 }
 
 type TopicConfigInitParameters struct {
@@ -885,95 +934,46 @@ type TopicParameters struct {
 	TopicConfig []TopicConfigParameters `json:"topicConfig,omitempty" tf:"topic_config,omitempty"`
 }
 
-type UserInitParameters struct {
+type UserPermissionInitParameters struct {
 
-	// The name of the user.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+	// Set of hosts, to which this permission grants access to.
+	// +listType=set
+	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
 
-	// Set of permissions granted to the user. The structure is documented below.
-	Permission []PermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+	// The role type to grant to the topic.
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+
+	// The name of the topic that the permission grants access to.
+	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
 }
 
-type UserObservation struct {
+type UserPermissionObservation struct {
 
-	// The name of the user.
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+	// Set of hosts, to which this permission grants access to.
+	// +listType=set
+	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
 
-	// Set of permissions granted to the user. The structure is documented below.
-	Permission []PermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
+	// The role type to grant to the topic.
+	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+
+	// The name of the topic that the permission grants access to.
+	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
 }
 
-type UserParameters struct {
+type UserPermissionParameters struct {
 
-	// The name of the user.
+	// Set of hosts, to which this permission grants access to.
 	// +kubebuilder:validation:Optional
-	Name *string `json:"name" tf:"name,omitempty"`
+	// +listType=set
+	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
 
-	// The password of the user.
-	// +kubebuilder:validation:Required
-	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
-
-	// Set of permissions granted to the user. The structure is documented below.
+	// The role type to grant to the topic.
 	// +kubebuilder:validation:Optional
-	Permission []PermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
-}
+	Role *string `json:"role" tf:"role,omitempty"`
 
-type ZookeeperInitParameters struct {
-
-	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
-	Resources []ZookeeperResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type ZookeeperObservation struct {
-
-	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
-	Resources []ZookeeperResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type ZookeeperParameters struct {
-
-	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	// The name of the topic that the permission grants access to.
 	// +kubebuilder:validation:Optional
-	Resources []ZookeeperResourcesParameters `json:"resources,omitempty" tf:"resources,omitempty"`
-}
-
-type ZookeeperResourcesInitParameters struct {
-
-	// Volume of the storage available to a ZooKeeper host, in gigabytes.
-	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
-
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
-	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
-
-	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
-}
-
-type ZookeeperResourcesObservation struct {
-
-	// Volume of the storage available to a ZooKeeper host, in gigabytes.
-	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
-
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
-	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
-
-	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
-}
-
-type ZookeeperResourcesParameters struct {
-
-	// Volume of the storage available to a ZooKeeper host, in gigabytes.
-	// +kubebuilder:validation:Optional
-	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
-
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
-	// +kubebuilder:validation:Optional
-	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
-
-	// +kubebuilder:validation:Optional
-	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+	TopicName *string `json:"topicName" tf:"topic_name,omitempty"`
 }
 
 // KafkaClusterSpec defines the desired state of KafkaCluster

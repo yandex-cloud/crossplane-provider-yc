@@ -68,11 +68,6 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_mdb_mongodb_cluster$",
 			"yandex_mdb_redis_cluster$",
 
-			"yandex_resourcemanager_cloud_iam_binding$",
-			"yandex_resourcemanager_cloud_iam_member$",
-
-			"yandex_resourcemanager_cloud$",
-
 			"yandex_mdb_kafka_cluster$",
 			"yandex_mdb_kafka_connector$",
 
@@ -96,6 +91,17 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_compute_snapshot_schedule$",
 			"yandex_container_repository$",
 			"yandex_container_registry$",
+			"yandex_mdb_clickhouse_cluster$",
+
+			"yandex_vpc_gateway$",
+			"yandex_vpc_route_table$",
+
+			"yandex_lb_network_load_balancer$",
+			"yandex_lb_target_group$",
+
+			"yandex_resourcemanager_cloud_iam_binding$",
+			"yandex_resourcemanager_cloud_iam_member$",
+			"yandex_resourcemanager_cloud$",
 
 			"yandex_kms_symmetric_key_iam_binding$",
 			"yandex_iam_service_account_api_key$",

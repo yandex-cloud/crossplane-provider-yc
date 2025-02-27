@@ -1,0 +1,119 @@
+apiVersion: mdb.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: ClickhouseCluster
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mdb/v1alpha1/clickhousecluster
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    clickhouse:
+      - config:
+          - backgroundPoolSize: 16
+            backgroundSchedulePoolSize: 16
+            compression:
+              - method: LZ4
+                minPartSize: 1024
+                minPartSizeRatio: 0.5
+              - method: ZSTD
+                minPartSize: 2048
+                minPartSizeRatio: 0.7
+            geobaseUri: ""
+            graphiteRollup:
+              - name: rollup1
+                pattern:
+                  - function: func1
+                    regexp: abc
+                    retention:
+                      - age: 1000
+                        precision: 3
+              - name: rollup2
+                pattern:
+                  - function: func2
+                    retention:
+                      - age: 2000
+                        precision: 5
+            keepAliveTimeout: 3000
+            logLevel: TRACE
+            markCacheSize: 5368709120
+            maxConcurrentQueries: 50
+            maxConnections: 100
+            maxPartitionSizeToDrop: 53687091200
+            maxTableSizeToDrop: 53687091200
+            mergeTree:
+              - maxBytesToMergeAtMinSpaceInPool: 1048576
+                maxReplicatedMergesInQueue: 16
+                numberOfFreeEntriesInPoolToLowerMaxSizeOfMerge: 8
+                partsToDelayInsert: 150
+                partsToThrowInsert: 300
+                replicatedDeduplicationWindow: 100
+                replicatedDeduplicationWindowSeconds: 604800
+            metricLogEnabled: false
+            partLogRetentionSize: 536870912
+            partLogRetentionTime: 2592000000  # 30 дней в секундах исправлено на 2592000000
+            queryLogRetentionSize: 1073741824
+            queryLogRetentionTime: 2592000000  # 30 дней в секундах исправлено на 2592000000
+            queryThreadLogEnabled: true
+            queryThreadLogRetentionSize: 536870912
+            queryThreadLogRetentionTime: 2592000000  # 30 дней в секундах исправлено на 2592000000
+            textLogEnabled: true
+            textLogLevel: TRACE
+            textLogRetentionSize: 536870912
+            textLogRetentionTime: 2592000000  # 30 дней в секундах исправлено на 2592000000
+            timezone: UTC
+            traceLogEnabled: true
+            traceLogRetentionSize: 536870912
+            traceLogRetentionTime: 2592000000  # 30 дней в секундах исправлено на 2592000000
+            uncompressedCacheSize: 8589934592
+        resources:
+          - diskSize: 32
+            diskTypeId: network-ssd
+            resourcePresetId: s2.micro
+    cloudStorage:
+      - enabled: false
+    database:
+      - name: db_name
+    environment: PRESTABLE
+    host:
+      - subnetIdRef:
+          name: example-subnet-a
+        type: CLICKHOUSE
+        zone: ru-central1-a
+    maintenanceWindow:
+      - type: ANYTIME
+    name: test
+    networkIdRef:
+      name: example-net
+    serviceAccountIdRef:
+      name: example-sa
+    user:
+      - name: user
+        passwordSecretRef:
+          key: example-key
+          name: clickhouse-secret
+          namespace: upbound-system
+        permission:
+          - databaseName: db_name
+        quota:
+          - errors: 1000
+            intervalDuration: 3600000
+            queries: 10000
+          - errors: 5000
+            intervalDuration: 79800000
+            queries: 50000
+        settings:
+          - maxMemoryUsageForUser: 1000000000
+            outputFormatJsonQuote64BitIntegers: true
+            readOverflowMode: throw
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: clickhouse-secret
+  namespace: upbound-system
+type: Opaque
+data:
+  example-key: cGFzc3dvcmQ=  # Здесь 'cGFzc3dvcmQ=' — это base64-закодированная строка "password".

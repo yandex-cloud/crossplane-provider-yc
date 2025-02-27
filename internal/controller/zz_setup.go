@@ -64,6 +64,7 @@ import (
 	nodegroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/kubernetes/nodegroup"
 	networkloadbalancer "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/lb/networkloadbalancer"
 	targetgrouplb "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/lb/targetgroup"
+	clickhousecluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/mdb/clickhousecluster"
 	elasticsearchcluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/mdb/elasticsearchcluster"
 	kafkacluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/mdb/kafkacluster"
 	kafkaconnector "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/mdb/kafkaconnector"
@@ -146,6 +147,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		nodegroup.Setup,
 		networkloadbalancer.Setup,
 		targetgrouplb.Setup,
+		clickhousecluster.Setup,
 		elasticsearchcluster.Setup,
 		kafkacluster.Setup,
 		kafkaconnector.Setup,

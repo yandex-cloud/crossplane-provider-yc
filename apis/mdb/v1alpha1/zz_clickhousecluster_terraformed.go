@@ -28,18 +28,18 @@ import (
 	"github.com/crossplane/upjet/pkg/resource/json"
 )
 
-// GetTerraformResourceType returns Terraform resource type for this KafkaTopic
-func (mg *KafkaTopic) GetTerraformResourceType() string {
-	return "yandex_mdb_kafka_topic"
+// GetTerraformResourceType returns Terraform resource type for this ClickhouseCluster
+func (mg *ClickhouseCluster) GetTerraformResourceType() string {
+	return "yandex_mdb_clickhouse_cluster"
 }
 
-// GetConnectionDetailsMapping for this KafkaTopic
-func (tr *KafkaTopic) GetConnectionDetailsMapping() map[string]string {
-	return nil
+// GetConnectionDetailsMapping for this ClickhouseCluster
+func (tr *ClickhouseCluster) GetConnectionDetailsMapping() map[string]string {
+	return map[string]string{"admin_password": "spec.forProvider.adminPasswordSecretRef", "clickhouse[*].config[*].kafka[*].sasl_password": "spec.forProvider.clickhouse[*].config[*].kafka[*].saslPasswordSecretRef", "clickhouse[*].config[*].kafka_topic[*].settings[*].sasl_password": "spec.forProvider.clickhouse[*].config[*].kafkaTopic[*].settings[*].saslPasswordSecretRef", "clickhouse[*].config[*].rabbitmq[*].password": "spec.forProvider.clickhouse[*].config[*].rabbitmq[*].passwordSecretRef", "user[*].password": "spec.forProvider.user[*].passwordSecretRef"}
 }
 
-// GetObservation of this KafkaTopic
-func (tr *KafkaTopic) GetObservation() (map[string]any, error) {
+// GetObservation of this ClickhouseCluster
+func (tr *ClickhouseCluster) GetObservation() (map[string]any, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -48,8 +48,8 @@ func (tr *KafkaTopic) GetObservation() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this KafkaTopic
-func (tr *KafkaTopic) SetObservation(obs map[string]any) error {
+// SetObservation for this ClickhouseCluster
+func (tr *ClickhouseCluster) SetObservation(obs map[string]any) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -57,16 +57,16 @@ func (tr *KafkaTopic) SetObservation(obs map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this KafkaTopic
-func (tr *KafkaTopic) GetID() string {
+// GetID returns ID of underlying Terraform resource of this ClickhouseCluster
+func (tr *ClickhouseCluster) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this KafkaTopic
-func (tr *KafkaTopic) GetParameters() (map[string]any, error) {
+// GetParameters of this ClickhouseCluster
+func (tr *ClickhouseCluster) GetParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -75,8 +75,8 @@ func (tr *KafkaTopic) GetParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this KafkaTopic
-func (tr *KafkaTopic) SetParameters(params map[string]any) error {
+// SetParameters for this ClickhouseCluster
+func (tr *ClickhouseCluster) SetParameters(params map[string]any) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -84,8 +84,8 @@ func (tr *KafkaTopic) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// GetInitParameters of this KafkaTopic
-func (tr *KafkaTopic) GetInitParameters() (map[string]any, error) {
+// GetInitParameters of this ClickhouseCluster
+func (tr *ClickhouseCluster) GetInitParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
 	if err != nil {
 		return nil, err
@@ -94,8 +94,8 @@ func (tr *KafkaTopic) GetInitParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// GetInitParameters of this KafkaTopic
-func (tr *KafkaTopic) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
+// GetInitParameters of this ClickhouseCluster
+func (tr *ClickhouseCluster) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
 	params, err := tr.GetParameters()
 	if err != nil {
 		return nil, errors.Wrapf(err, "cannot get parameters for resource '%q'", tr.GetName())
@@ -124,10 +124,10 @@ func (tr *KafkaTopic) GetMergedParameters(shouldMergeInitProvider bool) (map[str
 	return params, nil
 }
 
-// LateInitialize this KafkaTopic using its observed tfState.
+// LateInitialize this ClickhouseCluster using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *KafkaTopic) LateInitialize(attrs []byte) (bool, error) {
-	params := &KafkaTopicParameters_2{}
+func (tr *ClickhouseCluster) LateInitialize(attrs []byte) (bool, error) {
+	params := &ClickhouseClusterParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -138,6 +138,6 @@ func (tr *KafkaTopic) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *KafkaTopic) GetTerraformSchemaVersion() int {
+func (tr *ClickhouseCluster) GetTerraformSchemaVersion() int {
 	return 0
 }
