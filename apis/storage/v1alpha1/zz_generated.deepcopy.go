@@ -32,12 +32,12 @@ func (in *AndInitParameters) DeepCopyInto(out *AndInitParameters) {
 	*out = *in
 	if in.ObjectSizeGreaterThan != nil {
 		in, out := &in.ObjectSizeGreaterThan, &out.ObjectSizeGreaterThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ObjectSizeLessThan != nil {
 		in, out := &in.ObjectSizeLessThan, &out.ObjectSizeLessThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Prefix != nil {
@@ -78,12 +78,12 @@ func (in *AndObservation) DeepCopyInto(out *AndObservation) {
 	*out = *in
 	if in.ObjectSizeGreaterThan != nil {
 		in, out := &in.ObjectSizeGreaterThan, &out.ObjectSizeGreaterThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ObjectSizeLessThan != nil {
 		in, out := &in.ObjectSizeLessThan, &out.ObjectSizeLessThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Prefix != nil {
@@ -124,12 +124,12 @@ func (in *AndParameters) DeepCopyInto(out *AndParameters) {
 	*out = *in
 	if in.ObjectSizeGreaterThan != nil {
 		in, out := &in.ObjectSizeGreaterThan, &out.ObjectSizeGreaterThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ObjectSizeLessThan != nil {
 		in, out := &in.ObjectSizeLessThan, &out.ObjectSizeLessThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Prefix != nil {
@@ -459,7 +459,7 @@ func (in *BucketInitParameters) DeepCopyInto(out *BucketInitParameters) {
 	}
 	if in.MaxSize != nil {
 		in, out := &in.MaxSize, &out.MaxSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ObjectLockConfiguration != nil {
@@ -657,7 +657,7 @@ func (in *BucketObservation) DeepCopyInto(out *BucketObservation) {
 	}
 	if in.MaxSize != nil {
 		in, out := &in.MaxSize, &out.MaxSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ObjectLockConfiguration != nil {
@@ -833,7 +833,7 @@ func (in *BucketParameters) DeepCopyInto(out *BucketParameters) {
 	}
 	if in.MaxSize != nil {
 		in, out := &in.MaxSize, &out.MaxSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ObjectLockConfiguration != nil {
@@ -996,7 +996,7 @@ func (in *CorsRuleInitParameters) DeepCopyInto(out *CorsRuleInitParameters) {
 	}
 	if in.MaxAgeSeconds != nil {
 		in, out := &in.MaxAgeSeconds, &out.MaxAgeSeconds
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -1060,7 +1060,7 @@ func (in *CorsRuleObservation) DeepCopyInto(out *CorsRuleObservation) {
 	}
 	if in.MaxAgeSeconds != nil {
 		in, out := &in.MaxAgeSeconds, &out.MaxAgeSeconds
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -1124,7 +1124,7 @@ func (in *CorsRuleParameters) DeepCopyInto(out *CorsRuleParameters) {
 	}
 	if in.MaxAgeSeconds != nil {
 		in, out := &in.MaxAgeSeconds, &out.MaxAgeSeconds
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -1144,7 +1144,7 @@ func (in *DefaultRetentionInitParameters) DeepCopyInto(out *DefaultRetentionInit
 	*out = *in
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Mode != nil {
@@ -1154,7 +1154,7 @@ func (in *DefaultRetentionInitParameters) DeepCopyInto(out *DefaultRetentionInit
 	}
 	if in.Years != nil {
 		in, out := &in.Years, &out.Years
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -1174,7 +1174,7 @@ func (in *DefaultRetentionObservation) DeepCopyInto(out *DefaultRetentionObserva
 	*out = *in
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Mode != nil {
@@ -1184,7 +1184,7 @@ func (in *DefaultRetentionObservation) DeepCopyInto(out *DefaultRetentionObserva
 	}
 	if in.Years != nil {
 		in, out := &in.Years, &out.Years
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -1204,7 +1204,7 @@ func (in *DefaultRetentionParameters) DeepCopyInto(out *DefaultRetentionParamete
 	*out = *in
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Mode != nil {
@@ -1214,7 +1214,7 @@ func (in *DefaultRetentionParameters) DeepCopyInto(out *DefaultRetentionParamete
 	}
 	if in.Years != nil {
 		in, out := &in.Years, &out.Years
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -1239,7 +1239,7 @@ func (in *ExpirationInitParameters) DeepCopyInto(out *ExpirationInitParameters) 
 	}
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ExpiredObjectDeleteMarker != nil {
@@ -1269,7 +1269,7 @@ func (in *ExpirationObservation) DeepCopyInto(out *ExpirationObservation) {
 	}
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ExpiredObjectDeleteMarker != nil {
@@ -1299,7 +1299,7 @@ func (in *ExpirationParameters) DeepCopyInto(out *ExpirationParameters) {
 	}
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ExpiredObjectDeleteMarker != nil {
@@ -1331,12 +1331,12 @@ func (in *FilterInitParameters) DeepCopyInto(out *FilterInitParameters) {
 	}
 	if in.ObjectSizeGreaterThan != nil {
 		in, out := &in.ObjectSizeGreaterThan, &out.ObjectSizeGreaterThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ObjectSizeLessThan != nil {
 		in, out := &in.ObjectSizeLessThan, &out.ObjectSizeLessThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Prefix != nil {
@@ -1375,12 +1375,12 @@ func (in *FilterObservation) DeepCopyInto(out *FilterObservation) {
 	}
 	if in.ObjectSizeGreaterThan != nil {
 		in, out := &in.ObjectSizeGreaterThan, &out.ObjectSizeGreaterThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ObjectSizeLessThan != nil {
 		in, out := &in.ObjectSizeLessThan, &out.ObjectSizeLessThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Prefix != nil {
@@ -1419,12 +1419,12 @@ func (in *FilterParameters) DeepCopyInto(out *FilterParameters) {
 	}
 	if in.ObjectSizeGreaterThan != nil {
 		in, out := &in.ObjectSizeGreaterThan, &out.ObjectSizeGreaterThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ObjectSizeLessThan != nil {
 		in, out := &in.ObjectSizeLessThan, &out.ObjectSizeLessThan
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Prefix != nil {
@@ -1659,7 +1659,7 @@ func (in *LifecycleRuleInitParameters) DeepCopyInto(out *LifecycleRuleInitParame
 	*out = *in
 	if in.AbortIncompleteMultipartUploadDays != nil {
 		in, out := &in.AbortIncompleteMultipartUploadDays, &out.AbortIncompleteMultipartUploadDays
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Enabled != nil {
@@ -1729,7 +1729,7 @@ func (in *LifecycleRuleObservation) DeepCopyInto(out *LifecycleRuleObservation) 
 	*out = *in
 	if in.AbortIncompleteMultipartUploadDays != nil {
 		in, out := &in.AbortIncompleteMultipartUploadDays, &out.AbortIncompleteMultipartUploadDays
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Enabled != nil {
@@ -1799,7 +1799,7 @@ func (in *LifecycleRuleParameters) DeepCopyInto(out *LifecycleRuleParameters) {
 	*out = *in
 	if in.AbortIncompleteMultipartUploadDays != nil {
 		in, out := &in.AbortIncompleteMultipartUploadDays, &out.AbortIncompleteMultipartUploadDays
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Enabled != nil {
@@ -1944,7 +1944,7 @@ func (in *NoncurrentVersionExpirationInitParameters) DeepCopyInto(out *Noncurren
 	*out = *in
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -1964,7 +1964,7 @@ func (in *NoncurrentVersionExpirationObservation) DeepCopyInto(out *NoncurrentVe
 	*out = *in
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -1984,7 +1984,7 @@ func (in *NoncurrentVersionExpirationParameters) DeepCopyInto(out *NoncurrentVer
 	*out = *in
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -2004,7 +2004,7 @@ func (in *NoncurrentVersionTransitionInitParameters) DeepCopyInto(out *Noncurren
 	*out = *in
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.StorageClass != nil {
@@ -2029,7 +2029,7 @@ func (in *NoncurrentVersionTransitionObservation) DeepCopyInto(out *NoncurrentVe
 	*out = *in
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.StorageClass != nil {
@@ -2054,7 +2054,7 @@ func (in *NoncurrentVersionTransitionParameters) DeepCopyInto(out *NoncurrentVer
 	*out = *in
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.StorageClass != nil {
@@ -2855,7 +2855,7 @@ func (in *TransitionInitParameters) DeepCopyInto(out *TransitionInitParameters) 
 	}
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.StorageClass != nil {
@@ -2885,7 +2885,7 @@ func (in *TransitionObservation) DeepCopyInto(out *TransitionObservation) {
 	}
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.StorageClass != nil {
@@ -2915,7 +2915,7 @@ func (in *TransitionParameters) DeepCopyInto(out *TransitionParameters) {
 	}
 	if in.Days != nil {
 		in, out := &in.Days, &out.Days
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.StorageClass != nil {

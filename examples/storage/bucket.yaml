@@ -2,6 +2,8 @@ apiVersion: storage.yandex-cloud.jet.crossplane.io/v1alpha1
 kind: Bucket
 metadata:
   name: example-bucket-${data.randomId}
+  annotations:
+    uptest.upbound.io/conditions: 'Ready,Synced'
   labels:
     testing.upbound.io/example-name: storage
 spec:
@@ -12,7 +14,7 @@ spec:
       name: sa-key-conn
       namespace: upbound-system
       key: attribute.secret_key
-    bucket: "example-crossplane-test-bucket"
+    bucket: example-bucket-${data.randomId}
     # acl: "public-read"
   providerConfigRef:
     name: default

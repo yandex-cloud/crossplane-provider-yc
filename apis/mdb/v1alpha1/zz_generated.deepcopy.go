@@ -1149,7 +1149,7 @@ func (in *ConnectorConfigMirrormakerInitParameters) DeepCopyInto(out *ConnectorC
 	*out = *in
 	if in.ReplicationFactor != nil {
 		in, out := &in.ReplicationFactor, &out.ReplicationFactor
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.SourceCluster != nil {
@@ -1188,7 +1188,7 @@ func (in *ConnectorConfigMirrormakerObservation) DeepCopyInto(out *ConnectorConf
 	*out = *in
 	if in.ReplicationFactor != nil {
 		in, out := &in.ReplicationFactor, &out.ReplicationFactor
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.SourceCluster != nil {
@@ -1227,7 +1227,7 @@ func (in *ConnectorConfigMirrormakerParameters) DeepCopyInto(out *ConnectorConfi
 	*out = *in
 	if in.ReplicationFactor != nil {
 		in, out := &in.ReplicationFactor, &out.ReplicationFactor
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.SourceCluster != nil {
@@ -1271,7 +1271,7 @@ func (in *ConnectorConfigS3SinkInitParameters) DeepCopyInto(out *ConnectorConfig
 	}
 	if in.FileMaxRecords != nil {
 		in, out := &in.FileMaxRecords, &out.FileMaxRecords
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.S3Connection != nil {
@@ -1308,7 +1308,7 @@ func (in *ConnectorConfigS3SinkObservation) DeepCopyInto(out *ConnectorConfigS3S
 	}
 	if in.FileMaxRecords != nil {
 		in, out := &in.FileMaxRecords, &out.FileMaxRecords
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.S3Connection != nil {
@@ -1345,7 +1345,7 @@ func (in *ConnectorConfigS3SinkParameters) DeepCopyInto(out *ConnectorConfigS3Si
 	}
 	if in.FileMaxRecords != nil {
 		in, out := &in.FileMaxRecords, &out.FileMaxRecords
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.S3Connection != nil {
@@ -2894,7 +2894,7 @@ func (in *KafkaClusterConfigInitParameters) DeepCopyInto(out *KafkaClusterConfig
 	}
 	if in.BrokersCount != nil {
 		in, out := &in.BrokersCount, &out.BrokersCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Kafka != nil {
@@ -2966,7 +2966,7 @@ func (in *KafkaClusterConfigObservation) DeepCopyInto(out *KafkaClusterConfigObs
 	}
 	if in.BrokersCount != nil {
 		in, out := &in.BrokersCount, &out.BrokersCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Kafka != nil {
@@ -3038,7 +3038,7 @@ func (in *KafkaClusterConfigParameters) DeepCopyInto(out *KafkaClusterConfigPara
 	}
 	if in.BrokersCount != nil {
 		in, out := &in.BrokersCount, &out.BrokersCount
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Kafka != nil {
@@ -3376,7 +3376,7 @@ func (in *KafkaClusterMaintenanceWindowInitParameters) DeepCopyInto(out *KafkaCl
 	}
 	if in.Hour != nil {
 		in, out := &in.Hour, &out.Hour
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Type != nil {
@@ -3406,7 +3406,7 @@ func (in *KafkaClusterMaintenanceWindowObservation) DeepCopyInto(out *KafkaClust
 	}
 	if in.Hour != nil {
 		in, out := &in.Hour, &out.Hour
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Type != nil {
@@ -3436,7 +3436,7 @@ func (in *KafkaClusterMaintenanceWindowParameters) DeepCopyInto(out *KafkaCluste
 	}
 	if in.Hour != nil {
 		in, out := &in.Hour, &out.Hour
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.Type != nil {
@@ -4269,7 +4269,7 @@ func (in *KafkaConnectorInitParameters) DeepCopyInto(out *KafkaConnectorInitPara
 	}
 	if in.TasksMax != nil {
 		in, out := &in.TasksMax, &out.TasksMax
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -4366,7 +4366,7 @@ func (in *KafkaConnectorObservation) DeepCopyInto(out *KafkaConnectorObservation
 	}
 	if in.TasksMax != nil {
 		in, out := &in.TasksMax, &out.TasksMax
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -4436,7 +4436,7 @@ func (in *KafkaConnectorParameters) DeepCopyInto(out *KafkaConnectorParameters) 
 	}
 	if in.TasksMax != nil {
 		in, out := &in.TasksMax, &out.TasksMax
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 }
@@ -4578,7 +4578,7 @@ func (in *KafkaResourcesInitParameters) DeepCopyInto(out *KafkaResourcesInitPara
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -4608,7 +4608,7 @@ func (in *KafkaResourcesObservation) DeepCopyInto(out *KafkaResourcesObservation
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -4638,7 +4638,7 @@ func (in *KafkaResourcesParameters) DeepCopyInto(out *KafkaResourcesParameters) 
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -17218,12 +17218,12 @@ func (in *TopicInitParameters) DeepCopyInto(out *TopicInitParameters) {
 	}
 	if in.Partitions != nil {
 		in, out := &in.Partitions, &out.Partitions
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ReplicationFactor != nil {
 		in, out := &in.ReplicationFactor, &out.ReplicationFactor
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.TopicConfig != nil {
@@ -17255,12 +17255,12 @@ func (in *TopicObservation) DeepCopyInto(out *TopicObservation) {
 	}
 	if in.Partitions != nil {
 		in, out := &in.Partitions, &out.Partitions
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ReplicationFactor != nil {
 		in, out := &in.ReplicationFactor, &out.ReplicationFactor
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.TopicConfig != nil {
@@ -17292,12 +17292,12 @@ func (in *TopicParameters) DeepCopyInto(out *TopicParameters) {
 	}
 	if in.Partitions != nil {
 		in, out := &in.Partitions, &out.Partitions
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.ReplicationFactor != nil {
 		in, out := &in.ReplicationFactor, &out.ReplicationFactor
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.TopicConfig != nil {
@@ -17625,7 +17625,7 @@ func (in *ZookeeperResourcesInitParameters) DeepCopyInto(out *ZookeeperResources
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -17655,7 +17655,7 @@ func (in *ZookeeperResourcesObservation) DeepCopyInto(out *ZookeeperResourcesObs
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {
@@ -17685,7 +17685,7 @@ func (in *ZookeeperResourcesParameters) DeepCopyInto(out *ZookeeperResourcesPara
 	*out = *in
 	if in.DiskSize != nil {
 		in, out := &in.DiskSize, &out.DiskSize
-		*out = new(float64)
+		*out = new(int64)
 		**out = **in
 	}
 	if in.DiskTypeID != nil {

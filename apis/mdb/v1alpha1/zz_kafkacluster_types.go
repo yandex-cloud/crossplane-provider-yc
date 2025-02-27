@@ -55,7 +55,7 @@ type KafkaClusterConfigInitParameters struct {
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
 	// Count of brokers per availability zone. The default is 1.
-	BrokersCount *float64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
+	BrokersCount *int64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
 
 	// Configuration of the Kafka subcluster. The structure is documented below.
 	Kafka []KafkaInitParameters `json:"kafka,omitempty" tf:"kafka,omitempty"`
@@ -84,7 +84,7 @@ type KafkaClusterConfigObservation struct {
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
 	// Count of brokers per availability zone. The default is 1.
-	BrokersCount *float64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
+	BrokersCount *int64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
 
 	// Configuration of the Kafka subcluster. The structure is documented below.
 	Kafka []KafkaObservation `json:"kafka,omitempty" tf:"kafka,omitempty"`
@@ -116,7 +116,7 @@ type KafkaClusterConfigParameters struct {
 
 	// Count of brokers per availability zone. The default is 1.
 	// +kubebuilder:validation:Optional
-	BrokersCount *float64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
+	BrokersCount *int64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
 
 	// Configuration of the Kafka subcluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
@@ -260,7 +260,7 @@ type KafkaClusterMaintenanceWindowInitParameters struct {
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
 	// Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
-	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
+	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -272,7 +272,7 @@ type KafkaClusterMaintenanceWindowObservation struct {
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
 	// Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
-	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
+	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -286,7 +286,7 @@ type KafkaClusterMaintenanceWindowParameters struct {
 
 	// Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
 	// +kubebuilder:validation:Optional
-	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
+	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
 	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	// +kubebuilder:validation:Optional
@@ -651,7 +651,7 @@ type KafkaParameters struct {
 type KafkaResourcesInitParameters struct {
 
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of ZooKeeper hosts.
 	// For more information see the official documentation.
@@ -663,7 +663,7 @@ type KafkaResourcesInitParameters struct {
 type KafkaResourcesObservation struct {
 
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of ZooKeeper hosts.
 	// For more information see the official documentation.
@@ -676,7 +676,7 @@ type KafkaResourcesParameters struct {
 
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	// +kubebuilder:validation:Optional
-	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
 
 	// Type of the storage of ZooKeeper hosts.
 	// For more information see the official documentation.
@@ -842,10 +842,10 @@ type TopicInitParameters struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The number of the topic's partitions.
-	Partitions *float64 `json:"partitions,omitempty" tf:"partitions,omitempty"`
+	Partitions *int64 `json:"partitions,omitempty" tf:"partitions,omitempty"`
 
 	// Amount of data copies (replicas) for the topic in the cluster.
-	ReplicationFactor *float64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
+	ReplicationFactor *int64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
 
 	// User-defined settings for the topic. The structure is documented below.
 	TopicConfig []TopicConfigInitParameters `json:"topicConfig,omitempty" tf:"topic_config,omitempty"`
@@ -857,10 +857,10 @@ type TopicObservation struct {
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The number of the topic's partitions.
-	Partitions *float64 `json:"partitions,omitempty" tf:"partitions,omitempty"`
+	Partitions *int64 `json:"partitions,omitempty" tf:"partitions,omitempty"`
 
 	// Amount of data copies (replicas) for the topic in the cluster.
-	ReplicationFactor *float64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
+	ReplicationFactor *int64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
 
 	// User-defined settings for the topic. The structure is documented below.
 	TopicConfig []TopicConfigObservation `json:"topicConfig,omitempty" tf:"topic_config,omitempty"`
@@ -874,11 +874,11 @@ type TopicParameters struct {
 
 	// The number of the topic's partitions.
 	// +kubebuilder:validation:Optional
-	Partitions *float64 `json:"partitions" tf:"partitions,omitempty"`
+	Partitions *int64 `json:"partitions" tf:"partitions,omitempty"`
 
 	// Amount of data copies (replicas) for the topic in the cluster.
 	// +kubebuilder:validation:Optional
-	ReplicationFactor *float64 `json:"replicationFactor" tf:"replication_factor,omitempty"`
+	ReplicationFactor *int64 `json:"replicationFactor" tf:"replication_factor,omitempty"`
 
 	// User-defined settings for the topic. The structure is documented below.
 	// +kubebuilder:validation:Optional
@@ -940,7 +940,7 @@ type ZookeeperParameters struct {
 type ZookeeperResourcesInitParameters struct {
 
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of ZooKeeper hosts.
 	// For more information see the official documentation.
@@ -952,7 +952,7 @@ type ZookeeperResourcesInitParameters struct {
 type ZookeeperResourcesObservation struct {
 
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of ZooKeeper hosts.
 	// For more information see the official documentation.
@@ -965,7 +965,7 @@ type ZookeeperResourcesParameters struct {
 
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	// +kubebuilder:validation:Optional
-	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
 	// Type of the storage of ZooKeeper hosts.
 	// For more information see the official documentation.

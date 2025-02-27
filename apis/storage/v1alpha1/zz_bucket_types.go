@@ -28,9 +28,9 @@ import (
 )
 
 type AndInitParameters struct {
-	ObjectSizeGreaterThan *float64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
+	ObjectSizeGreaterThan *int64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
 
-	ObjectSizeLessThan *float64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
+	ObjectSizeLessThan *int64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
 
 	// Object key prefix identifying one or more objects to which the rule applies.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
@@ -40,9 +40,9 @@ type AndInitParameters struct {
 }
 
 type AndObservation struct {
-	ObjectSizeGreaterThan *float64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
+	ObjectSizeGreaterThan *int64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
 
-	ObjectSizeLessThan *float64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
+	ObjectSizeLessThan *int64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
 
 	// Object key prefix identifying one or more objects to which the rule applies.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
@@ -54,10 +54,10 @@ type AndObservation struct {
 type AndParameters struct {
 
 	// +kubebuilder:validation:Optional
-	ObjectSizeGreaterThan *float64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
+	ObjectSizeGreaterThan *int64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	ObjectSizeLessThan *float64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
+	ObjectSizeLessThan *int64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
 
 	// Object key prefix identifying one or more objects to which the rule applies.
 	// +kubebuilder:validation:Optional
@@ -204,7 +204,7 @@ type BucketInitParameters struct {
 	Logging []LoggingInitParameters `json:"logging,omitempty" tf:"logging,omitempty"`
 
 	// The size of bucket, in bytes. See size limiting for more information.
-	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
+	MaxSize *int64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
 	// A configuration of object lock management (documented below).
 	ObjectLockConfiguration []ObjectLockConfigurationInitParameters `json:"objectLockConfiguration,omitempty" tf:"object_lock_configuration,omitempty"`
@@ -285,7 +285,7 @@ type BucketObservation struct {
 	Logging []LoggingObservation `json:"logging,omitempty" tf:"logging,omitempty"`
 
 	// The size of bucket, in bytes. See size limiting for more information.
-	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
+	MaxSize *int64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
 	// A configuration of object lock management (documented below).
 	ObjectLockConfiguration []ObjectLockConfigurationObservation `json:"objectLockConfiguration,omitempty" tf:"object_lock_configuration,omitempty"`
@@ -393,7 +393,7 @@ type BucketParameters struct {
 
 	// The size of bucket, in bytes. See size limiting for more information.
 	// +kubebuilder:validation:Optional
-	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
+	MaxSize *int64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
 	// A configuration of object lock management (documented below).
 	// +kubebuilder:validation:Optional
@@ -447,7 +447,7 @@ type CorsRuleInitParameters struct {
 	ExposeHeaders []*string `json:"exposeHeaders,omitempty" tf:"expose_headers,omitempty"`
 
 	// Specifies time in seconds that browser can cache the response for a preflight request.
-	MaxAgeSeconds *float64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
+	MaxAgeSeconds *int64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
 }
 
 type CorsRuleObservation struct {
@@ -465,7 +465,7 @@ type CorsRuleObservation struct {
 	ExposeHeaders []*string `json:"exposeHeaders,omitempty" tf:"expose_headers,omitempty"`
 
 	// Specifies time in seconds that browser can cache the response for a preflight request.
-	MaxAgeSeconds *float64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
+	MaxAgeSeconds *int64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
 }
 
 type CorsRuleParameters struct {
@@ -488,38 +488,38 @@ type CorsRuleParameters struct {
 
 	// Specifies time in seconds that browser can cache the response for a preflight request.
 	// +kubebuilder:validation:Optional
-	MaxAgeSeconds *float64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
+	MaxAgeSeconds *int64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
 }
 
 type DefaultRetentionInitParameters struct {
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
 	// Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
-	Years *float64 `json:"years,omitempty" tf:"years,omitempty"`
+	Years *int64 `json:"years,omitempty" tf:"years,omitempty"`
 }
 
 type DefaultRetentionObservation struct {
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
 	// Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
-	Years *float64 `json:"years,omitempty" tf:"years,omitempty"`
+	Years *int64 `json:"years,omitempty" tf:"years,omitempty"`
 }
 
 type DefaultRetentionParameters struct {
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
 	// +kubebuilder:validation:Optional
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
 	// +kubebuilder:validation:Optional
@@ -527,7 +527,7 @@ type DefaultRetentionParameters struct {
 
 	// Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
 	// +kubebuilder:validation:Optional
-	Years *float64 `json:"years,omitempty" tf:"years,omitempty"`
+	Years *int64 `json:"years,omitempty" tf:"years,omitempty"`
 }
 
 type ExpirationInitParameters struct {
@@ -536,7 +536,7 @@ type ExpirationInitParameters struct {
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// On a versioned bucket (versioning-enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
 	ExpiredObjectDeleteMarker *bool `json:"expiredObjectDeleteMarker,omitempty" tf:"expired_object_delete_marker,omitempty"`
@@ -548,7 +548,7 @@ type ExpirationObservation struct {
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// On a versioned bucket (versioning-enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
 	ExpiredObjectDeleteMarker *bool `json:"expiredObjectDeleteMarker,omitempty" tf:"expired_object_delete_marker,omitempty"`
@@ -562,7 +562,7 @@ type ExpirationParameters struct {
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
 	// +kubebuilder:validation:Optional
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// On a versioned bucket (versioning-enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
 	// +kubebuilder:validation:Optional
@@ -574,9 +574,9 @@ type FilterInitParameters struct {
 	// operator applied to one or more filter parameters. It should be used when both prefix and tags are used. It supports the following parameters:
 	And []AndInitParameters `json:"and,omitempty" tf:"and,omitempty"`
 
-	ObjectSizeGreaterThan *float64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
+	ObjectSizeGreaterThan *int64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
 
-	ObjectSizeLessThan *float64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
+	ObjectSizeLessThan *int64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
 
 	// Object key prefix identifying one or more objects to which the rule applies.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
@@ -589,9 +589,9 @@ type FilterObservation struct {
 	// operator applied to one or more filter parameters. It should be used when both prefix and tags are used. It supports the following parameters:
 	And []AndObservation `json:"and,omitempty" tf:"and,omitempty"`
 
-	ObjectSizeGreaterThan *float64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
+	ObjectSizeGreaterThan *int64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
 
-	ObjectSizeLessThan *float64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
+	ObjectSizeLessThan *int64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
 
 	// Object key prefix identifying one or more objects to which the rule applies.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
@@ -606,10 +606,10 @@ type FilterParameters struct {
 	And []AndParameters `json:"and,omitempty" tf:"and,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	ObjectSizeGreaterThan *float64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
+	ObjectSizeGreaterThan *int64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
 
 	// +kubebuilder:validation:Optional
-	ObjectSizeLessThan *float64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
+	ObjectSizeLessThan *int64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
 
 	// Object key prefix identifying one or more objects to which the rule applies.
 	// +kubebuilder:validation:Optional
@@ -711,7 +711,7 @@ type HTTPSParameters struct {
 type LifecycleRuleInitParameters struct {
 
 	// Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
-	AbortIncompleteMultipartUploadDays *float64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
+	AbortIncompleteMultipartUploadDays *int64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
 
 	// Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
@@ -741,7 +741,7 @@ type LifecycleRuleInitParameters struct {
 type LifecycleRuleObservation struct {
 
 	// Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
-	AbortIncompleteMultipartUploadDays *float64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
+	AbortIncompleteMultipartUploadDays *int64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
 
 	// Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
@@ -772,7 +772,7 @@ type LifecycleRuleParameters struct {
 
 	// Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
 	// +kubebuilder:validation:Optional
-	AbortIncompleteMultipartUploadDays *float64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
+	AbortIncompleteMultipartUploadDays *int64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
 
 	// Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
 	// +kubebuilder:validation:Optional
@@ -839,26 +839,26 @@ type LoggingParameters struct {
 type NoncurrentVersionExpirationInitParameters struct {
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 }
 
 type NoncurrentVersionExpirationObservation struct {
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 }
 
 type NoncurrentVersionExpirationParameters struct {
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
 	// +kubebuilder:validation:Optional
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 }
 
 type NoncurrentVersionTransitionInitParameters struct {
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// Specifies the storage class to which you want the object to transition. Supported values: [STANDARD_IA, COLD, ICE].
 	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
@@ -867,7 +867,7 @@ type NoncurrentVersionTransitionInitParameters struct {
 type NoncurrentVersionTransitionObservation struct {
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// Specifies the storage class to which you want the object to transition. Supported values: [STANDARD_IA, COLD, ICE].
 	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
@@ -877,7 +877,7 @@ type NoncurrentVersionTransitionParameters struct {
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
 	// +kubebuilder:validation:Optional
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// Specifies the storage class to which you want the object to transition. Supported values: [STANDARD_IA, COLD, ICE].
 	// +kubebuilder:validation:Optional
@@ -992,7 +992,7 @@ type TransitionInitParameters struct {
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// Specifies the storage class to which you want the object to transition. Supported values: [STANDARD_IA, COLD, ICE].
 	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
@@ -1004,7 +1004,7 @@ type TransitionObservation struct {
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// Specifies the storage class to which you want the object to transition. Supported values: [STANDARD_IA, COLD, ICE].
 	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
@@ -1018,7 +1018,7 @@ type TransitionParameters struct {
 
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with years.
 	// +kubebuilder:validation:Optional
-	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+	Days *int64 `json:"days,omitempty" tf:"days,omitempty"`
 
 	// Specifies the storage class to which you want the object to transition. Supported values: [STANDARD_IA, COLD, ICE].
 	// +kubebuilder:validation:Optional

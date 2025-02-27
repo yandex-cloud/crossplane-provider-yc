@@ -95,7 +95,8 @@ spec:
                         brokersCount:
                           description: Count of brokers per availability zone. The
                             default is 1.
-                          type: number
+                          format: int64
+                          type: integer
                         kafka:
                           description: Configuration of the Kafka subcluster. The
                             structure is documented below.
@@ -166,7 +167,8 @@ spec:
                                     diskSize:
                                       description: Volume of the storage available
                                         to a ZooKeeper host, in gigabytes.
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     diskTypeId:
                                       description: |-
                                         Type of the storage of ZooKeeper hosts.
@@ -205,7 +207,8 @@ spec:
                                     diskSize:
                                       description: Volume of the storage available
                                         to a ZooKeeper host, in gigabytes.
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     diskTypeId:
                                       description: |-
                                         Type of the storage of ZooKeeper hosts.
@@ -337,7 +340,8 @@ spec:
                         hour:
                           description: Hour of the day in UTC (in HH format). Allowed
                             value is between 1 and 24.
-                          type: number
+                          format: int64
+                          type: integer
                         type:
                           description: Type of maintenance window. Can be either ANYTIME
                             or WEEKLY. A day and hour of window need to be specified
@@ -603,11 +607,13 @@ spec:
                           type: string
                         partitions:
                           description: The number of the topic's partitions.
-                          type: number
+                          format: int64
+                          type: integer
                         replicationFactor:
                           description: Amount of data copies (replicas) for the topic
                             in the cluster.
-                          type: number
+                          format: int64
+                          type: integer
                         topicConfig:
                           description: User-defined settings for the topic. The structure
                             is documented below.
@@ -733,7 +739,8 @@ spec:
                         brokersCount:
                           description: Count of brokers per availability zone. The
                             default is 1.
-                          type: number
+                          format: int64
+                          type: integer
                         kafka:
                           description: Configuration of the Kafka subcluster. The
                             structure is documented below.
@@ -804,7 +811,8 @@ spec:
                                     diskSize:
                                       description: Volume of the storage available
                                         to a ZooKeeper host, in gigabytes.
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     diskTypeId:
                                       description: |-
                                         Type of the storage of ZooKeeper hosts.
@@ -843,7 +851,8 @@ spec:
                                     diskSize:
                                       description: Volume of the storage available
                                         to a ZooKeeper host, in gigabytes.
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     diskTypeId:
                                       description: |-
                                         Type of the storage of ZooKeeper hosts.
@@ -975,7 +984,8 @@ spec:
                         hour:
                           description: Hour of the day in UTC (in HH format). Allowed
                             value is between 1 and 24.
-                          type: number
+                          format: int64
+                          type: integer
                         type:
                           description: Type of maintenance window. Can be either ANYTIME
                             or WEEKLY. A day and hour of window need to be specified
@@ -1241,11 +1251,13 @@ spec:
                           type: string
                         partitions:
                           description: The number of the topic's partitions.
-                          type: number
+                          format: int64
+                          type: integer
                         replicationFactor:
                           description: Amount of data copies (replicas) for the topic
                             in the cluster.
-                          type: number
+                          format: int64
+                          type: integer
                         topicConfig:
                           description: User-defined settings for the topic. The structure
                             is documented below.
@@ -1520,7 +1532,8 @@ spec:
                         brokersCount:
                           description: Count of brokers per availability zone. The
                             default is 1.
-                          type: number
+                          format: int64
+                          type: integer
                         kafka:
                           description: Configuration of the Kafka subcluster. The
                             structure is documented below.
@@ -1591,7 +1604,8 @@ spec:
                                     diskSize:
                                       description: Volume of the storage available
                                         to a ZooKeeper host, in gigabytes.
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     diskTypeId:
                                       description: |-
                                         Type of the storage of ZooKeeper hosts.
@@ -1630,7 +1644,8 @@ spec:
                                     diskSize:
                                       description: Volume of the storage available
                                         to a ZooKeeper host, in gigabytes.
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     diskTypeId:
                                       description: |-
                                         Type of the storage of ZooKeeper hosts.
@@ -1723,7 +1738,8 @@ spec:
                         hour:
                           description: Hour of the day in UTC (in HH format). Allowed
                             value is between 1 and 24.
-                          type: number
+                          format: int64
+                          type: integer
                         type:
                           description: Type of maintenance window. Can be either ANYTIME
                             or WEEKLY. A day and hour of window need to be specified
@@ -1764,11 +1780,13 @@ spec:
                           type: string
                         partitions:
                           description: The number of the topic's partitions.
-                          type: number
+                          format: int64
+                          type: integer
                         replicationFactor:
                           description: Amount of data copies (replicas) for the topic
                             in the cluster.
-                          type: number
+                          format: int64
+                          type: integer
                         topicConfig:
                           description: User-defined settings for the topic. The structure
                             is documented below.

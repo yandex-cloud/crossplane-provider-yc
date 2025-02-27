@@ -4,6 +4,6 @@ metadata:
   name: example-net
 spec:
   forProvider:
-    name: example-net
+    name: example-net-1
   providerConfigRef:
     name: default

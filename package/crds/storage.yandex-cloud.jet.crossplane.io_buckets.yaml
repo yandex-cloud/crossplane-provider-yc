@@ -214,7 +214,8 @@ spec:
                         maxAgeSeconds:
                           description: Specifies time in seconds that browser can
                             cache the response for a preflight request.
-                          type: number
+                          format: int64
+                          type: integer
                       type: object
                     type: array
                   defaultStorageClass:
@@ -427,7 +428,8 @@ spec:
                         abortIncompleteMultipartUploadDays:
                           description: Specifies the number of days after initiating
                             a multipart upload when the multipart upload must be completed.
-                          type: number
+                          format: int64
+                          type: integer
                         enabled:
                           description: Enable versioning. Once you version-enable
                             a bucket, it can never return to an unversioned state.
@@ -447,7 +449,8 @@ spec:
                                   after uploading an object version. It must be a
                                   positive integer. You can't set it simultaneously
                                   with years.
-                                type: number
+                                format: int64
+                                type: integer
                               expiredObjectDeleteMarker:
                                 description: On a versioned bucket (versioning-enabled
                                   or versioning-suspended bucket), you can add this
@@ -470,9 +473,11 @@ spec:
                                 items:
                                   properties:
                                     objectSizeGreaterThan:
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     objectSizeLessThan:
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     prefix:
                                       description: Object key prefix identifying one
                                         or more objects to which the rule applies.
@@ -485,9 +490,11 @@ spec:
                                   type: object
                                 type: array
                               objectSizeGreaterThan:
-                                type: number
+                                format: int64
+                                type: integer
                               objectSizeLessThan:
-                                type: number
+                                format: int64
+                                type: integer
                               prefix:
                                 description: Object key prefix identifying one or
                                   more objects to which the rule applies.
@@ -517,7 +524,8 @@ spec:
                                   after uploading an object version. It must be a
                                   positive integer. You can't set it simultaneously
                                   with years.
-                                type: number
+                                format: int64
+                                type: integer
                             type: object
                           type: array
                         noncurrentVersionTransition:
@@ -530,7 +538,8 @@ spec:
                                   after uploading an object version. It must be a
                                   positive integer. You can't set it simultaneously
                                   with years.
-                                type: number
+                                format: int64
+                                type: integer
                               storageClass:
                                 description: 'Specifies the storage class to which
                                   you want the object to transition. Supported values:
@@ -556,7 +565,8 @@ spec:
                                   after uploading an object version. It must be a
                                   positive integer. You can't set it simultaneously
                                   with years.
-                                type: number
+                                format: int64
+                                type: integer
                               storageClass:
                                 description: 'Specifies the storage class to which
                                   you want the object to transition. Supported values:
@@ -582,7 +592,8 @@ spec:
                   maxSize:
                     description: The size of bucket, in bytes. See size limiting for
                       more information.
-                    type: number
+                    format: int64
+                    type: integer
                   objectLockConfiguration:
                     description: A configuration of object lock management (documented
                       below).
@@ -605,7 +616,8 @@ spec:
                                         days after uploading an object version. It
                                         must be a positive integer. You can't set
                                         it simultaneously with years.
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     mode:
                                       description: Specifies a type of object lock.
                                         One of ["GOVERNANCE", "COMPLIANCE"].
@@ -615,7 +627,8 @@ spec:
                                         years after uploading an object version. It
                                         must be a positive integer. You can't set
                                         it simultaneously with days.
-                                      type: number
+                                      format: int64
+                                      type: integer
                                   type: object
                                 type: array
                             type: object
@@ -877,7 +890,8 @@ spec:
                         maxAgeSeconds:
                           description: Specifies time in seconds that browser can
                             cache the response for a preflight request.
-                          type: number
+                          format: int64
+                          type: integer
                       type: object
                     type: array
                   defaultStorageClass:
@@ -1090,7 +1104,8 @@ spec:
                         abortIncompleteMultipartUploadDays:
                           description: Specifies the number of days after initiating
                             a multipart upload when the multipart upload must be completed.
-                          type: number
+                          format: int64
+                          type: integer
                         enabled:
                           description: Enable versioning. Once you version-enable
                             a bucket, it can never return to an unversioned state.
@@ -1110,7 +1125,8 @@ spec:
                                   after uploading an object version. It must be a
                                   positive integer. You can't set it simultaneously
                                   with years.
-                                type: number
+                                format: int64
+                                type: integer
                               expiredObjectDeleteMarker:
                                 description: On a versioned bucket (versioning-enabled
                                   or versioning-suspended bucket), you can add this
@@ -1133,9 +1149,11 @@ spec:
                                 items:
                                   properties:
                                     objectSizeGreaterThan:
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     objectSizeLessThan:
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     prefix:
                                       description: Object key prefix identifying one
                                         or more objects to which the rule applies.
@@ -1148,9 +1166,11 @@ spec:
                                   type: object
                                 type: array
                               objectSizeGreaterThan:
-                                type: number
+                                format: int64
+                                type: integer
                               objectSizeLessThan:
-                                type: number
+                                format: int64
+                                type: integer
                               prefix:
                                 description: Object key prefix identifying one or
                                   more objects to which the rule applies.
@@ -1180,7 +1200,8 @@ spec:
                                   after uploading an object version. It must be a
                                   positive integer. You can't set it simultaneously
                                   with years.
-                                type: number
+                                format: int64
+                                type: integer
                             type: object
                           type: array
                         noncurrentVersionTransition:
@@ -1193,7 +1214,8 @@ spec:
                                   after uploading an object version. It must be a
                                   positive integer. You can't set it simultaneously
                                   with years.
-                                type: number
+                                format: int64
+                                type: integer
                               storageClass:
                                 description: 'Specifies the storage class to which
                                   you want the object to transition. Supported values:
@@ -1219,7 +1241,8 @@ spec:
                                   after uploading an object version. It must be a
                                   positive integer. You can't set it simultaneously
                                   with years.
-                                type: number
+                                format: int64
+                                type: integer
                               storageClass:
                                 description: 'Specifies the storage class to which
                                   you want the object to transition. Supported values:
@@ -1245,7 +1268,8 @@ spec:
                   maxSize:
                     description: The size of bucket, in bytes. See size limiting for
                       more information.
-                    type: number
+                    format: int64
+                    type: integer
                   objectLockConfiguration:
                     description: A configuration of object lock management (documented
                       below).
@@ -1268,7 +1292,8 @@ spec:
                                         days after uploading an object version. It
                                         must be a positive integer. You can't set
                                         it simultaneously with years.
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     mode:
                                       description: Specifies a type of object lock.
                                         One of ["GOVERNANCE", "COMPLIANCE"].
@@ -1278,7 +1303,8 @@ spec:
                                         years after uploading an object version. It
                                         must be a positive integer. You can't set
                                         it simultaneously with days.
-                                      type: number
+                                      format: int64
+                                      type: integer
                                   type: object
                                 type: array
                             type: object
@@ -1607,7 +1633,8 @@ spec:
                         maxAgeSeconds:
                           description: Specifies time in seconds that browser can
                             cache the response for a preflight request.
-                          type: number
+                          format: int64
+                          type: integer
                       type: object
                     type: array
                   defaultStorageClass:
@@ -1672,7 +1699,8 @@ spec:
                         abortIncompleteMultipartUploadDays:
                           description: Specifies the number of days after initiating
                             a multipart upload when the multipart upload must be completed.
-                          type: number
+                          format: int64
+                          type: integer
                         enabled:
                           description: Enable versioning. Once you version-enable
                             a bucket, it can never return to an unversioned state.
@@ -1692,7 +1720,8 @@ spec:
                                   after uploading an object version. It must be a
                                   positive integer. You can't set it simultaneously
                                   with years.
-                                type: number
+                                format: int64
+                                type: integer
                               expiredObjectDeleteMarker:
                                 description: On a versioned bucket (versioning-enabled
                                   or versioning-suspended bucket), you can add this
@@ -1715,9 +1744,11 @@ spec:
                                 items:
                                   properties:
                                     objectSizeGreaterThan:
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     objectSizeLessThan:
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     prefix:
                                       description: Object key prefix identifying one
                                         or more objects to which the rule applies.
@@ -1730,9 +1761,11 @@ spec:
                                   type: object
                                 type: array
                               objectSizeGreaterThan:
-                                type: number
+                                format: int64
+                                type: integer
                               objectSizeLessThan:
-                                type: number
+                                format: int64
+                                type: integer
                               prefix:
                                 description: Object key prefix identifying one or
                                   more objects to which the rule applies.
@@ -1762,7 +1795,8 @@ spec:
                                   after uploading an object version. It must be a
                                   positive integer. You can't set it simultaneously
                                   with years.
-                                type: number
+                                format: int64
+                                type: integer
                             type: object
                           type: array
                         noncurrentVersionTransition:
@@ -1775,7 +1809,8 @@ spec:
                                   after uploading an object version. It must be a
                                   positive integer. You can't set it simultaneously
                                   with years.
-                                type: number
+                                format: int64
+                                type: integer
                               storageClass:
                                 description: 'Specifies the storage class to which
                                   you want the object to transition. Supported values:
@@ -1801,7 +1836,8 @@ spec:
                                   after uploading an object version. It must be a
                                   positive integer. You can't set it simultaneously
                                   with years.
-                                type: number
+                                format: int64
+                                type: integer
                               storageClass:
                                 description: 'Specifies the storage class to which
                                   you want the object to transition. Supported values:
@@ -1827,7 +1863,8 @@ spec:
                   maxSize:
                     description: The size of bucket, in bytes. See size limiting for
                       more information.
-                    type: number
+                    format: int64
+                    type: integer
                   objectLockConfiguration:
                     description: A configuration of object lock management (documented
                       below).
@@ -1850,7 +1887,8 @@ spec:
                                         days after uploading an object version. It
                                         must be a positive integer. You can't set
                                         it simultaneously with years.
-                                      type: number
+                                      format: int64
+                                      type: integer
                                     mode:
                                       description: Specifies a type of object lock.
                                         One of ["GOVERNANCE", "COMPLIANCE"].
@@ -1860,7 +1898,8 @@ spec:
                                         years after uploading an object version. It
                                         must be a positive integer. You can't set
                                         it simultaneously with days.
-                                      type: number
+                                      format: int64
+                                      type: integer
                                   type: object
                                 type: array
                             type: object

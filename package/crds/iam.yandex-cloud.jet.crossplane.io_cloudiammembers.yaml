@@ -160,7 +160,8 @@ spec:
                         type: object
                     type: object
                   sleepAfter:
-                    type: number
+                    format: int64
+                    type: integer
                 type: object
               initProvider:
                 description: |-
@@ -261,7 +262,8 @@ spec:
                         type: object
                     type: object
                   sleepAfter:
-                    type: number
+                    format: int64
+                    type: integer
                 type: object
               managementPolicies:
                 default:
@@ -458,7 +460,8 @@ spec:
                     description: The role that should be assigned.
                     type: string
                   sleepAfter:
-                    type: number
+                    format: int64
+                    type: integer
                 type: object
               conditions:
                 description: Conditions of the resource.

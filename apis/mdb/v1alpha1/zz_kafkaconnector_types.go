@@ -30,7 +30,7 @@ import (
 type ConnectorConfigMirrormakerInitParameters struct {
 
 	// Replication factor for topics created in target cluster
-	ReplicationFactor *float64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
+	ReplicationFactor *int64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
 
 	// Settings for source cluster. The structure is documented below.
 	SourceCluster []SourceClusterInitParameters `json:"sourceCluster,omitempty" tf:"source_cluster,omitempty"`
@@ -45,7 +45,7 @@ type ConnectorConfigMirrormakerInitParameters struct {
 type ConnectorConfigMirrormakerObservation struct {
 
 	// Replication factor for topics created in target cluster
-	ReplicationFactor *float64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
+	ReplicationFactor *int64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
 
 	// Settings for source cluster. The structure is documented below.
 	SourceCluster []SourceClusterObservation `json:"sourceCluster,omitempty" tf:"source_cluster,omitempty"`
@@ -61,7 +61,7 @@ type ConnectorConfigMirrormakerParameters struct {
 
 	// Replication factor for topics created in target cluster
 	// +kubebuilder:validation:Optional
-	ReplicationFactor *float64 `json:"replicationFactor" tf:"replication_factor,omitempty"`
+	ReplicationFactor *int64 `json:"replicationFactor" tf:"replication_factor,omitempty"`
 
 	// Settings for source cluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
@@ -82,7 +82,7 @@ type ConnectorConfigS3SinkInitParameters struct {
 	FileCompressionType *string `json:"fileCompressionType,omitempty" tf:"file_compression_type,omitempty"`
 
 	// Max records per file.
-	FileMaxRecords *float64 `json:"fileMaxRecords,omitempty" tf:"file_max_records,omitempty"`
+	FileMaxRecords *int64 `json:"fileMaxRecords,omitempty" tf:"file_max_records,omitempty"`
 
 	// Settings for connection to s3-compatible storage. The structure is documented below.
 	S3Connection []S3ConnectionInitParameters `json:"s3Connection,omitempty" tf:"s3_connection,omitempty"`
@@ -97,7 +97,7 @@ type ConnectorConfigS3SinkObservation struct {
 	FileCompressionType *string `json:"fileCompressionType,omitempty" tf:"file_compression_type,omitempty"`
 
 	// Max records per file.
-	FileMaxRecords *float64 `json:"fileMaxRecords,omitempty" tf:"file_max_records,omitempty"`
+	FileMaxRecords *int64 `json:"fileMaxRecords,omitempty" tf:"file_max_records,omitempty"`
 
 	// Settings for connection to s3-compatible storage. The structure is documented below.
 	S3Connection []S3ConnectionObservation `json:"s3Connection,omitempty" tf:"s3_connection,omitempty"`
@@ -114,7 +114,7 @@ type ConnectorConfigS3SinkParameters struct {
 
 	// Max records per file.
 	// +kubebuilder:validation:Optional
-	FileMaxRecords *float64 `json:"fileMaxRecords,omitempty" tf:"file_max_records,omitempty"`
+	FileMaxRecords *int64 `json:"fileMaxRecords,omitempty" tf:"file_max_records,omitempty"`
 
 	// Settings for connection to s3-compatible storage. The structure is documented below.
 	// +kubebuilder:validation:Optional
@@ -248,7 +248,7 @@ type KafkaConnectorInitParameters struct {
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
 	// The number of the connector's parallel working tasks. Default is the number of brokers
-	TasksMax *float64 `json:"tasksMax,omitempty" tf:"tasks_max,omitempty"`
+	TasksMax *int64 `json:"tasksMax,omitempty" tf:"tasks_max,omitempty"`
 }
 
 type KafkaConnectorObservation struct {
@@ -270,7 +270,7 @@ type KafkaConnectorObservation struct {
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
 	// The number of the connector's parallel working tasks. Default is the number of brokers
-	TasksMax *float64 `json:"tasksMax,omitempty" tf:"tasks_max,omitempty"`
+	TasksMax *int64 `json:"tasksMax,omitempty" tf:"tasks_max,omitempty"`
 }
 
 type KafkaConnectorParameters struct {
@@ -306,7 +306,7 @@ type KafkaConnectorParameters struct {
 
 	// The number of the connector's parallel working tasks. Default is the number of brokers
 	// +kubebuilder:validation:Optional
-	TasksMax *float64 `json:"tasksMax,omitempty" tf:"tasks_max,omitempty"`
+	TasksMax *int64 `json:"tasksMax,omitempty" tf:"tasks_max,omitempty"`
 }
 
 type S3ConnectionInitParameters struct {

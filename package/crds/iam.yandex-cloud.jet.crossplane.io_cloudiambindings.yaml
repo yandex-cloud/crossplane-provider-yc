@@ -168,7 +168,8 @@ spec:
                         type: object
                     type: object
                   sleepAfter:
-                    type: number
+                    format: int64
+                    type: integer
                 type: object
               initProvider:
                 description: |-
@@ -278,7 +279,8 @@ spec:
                         type: object
                     type: object
                   sleepAfter:
-                    type: number
+                    format: int64
+                    type: integer
                 type: object
               managementPolicies:
                 default:
@@ -480,7 +482,8 @@ spec:
                       yandex_resourcemanager_cloud_iam_binding can be used per role.
                     type: string
                   sleepAfter:
-                    type: number
+                    format: int64
+                    type: integer
                 type: object
               conditions:
                 description: Conditions of the resource.

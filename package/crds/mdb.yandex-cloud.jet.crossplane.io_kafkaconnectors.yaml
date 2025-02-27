@@ -157,7 +157,8 @@ spec:
                         replicationFactor:
                           description: Replication factor for topics created in target
                             cluster
-                          type: number
+                          format: int64
+                          type: integer
                         sourceCluster:
                           description: Settings for source cluster. The structure
                             is documented below.
@@ -285,7 +286,8 @@ spec:
                           type: string
                         fileMaxRecords:
                           description: Max records per file.
-                          type: number
+                          format: int64
+                          type: integer
                         s3Connection:
                           description: Settings for connection to s3-compatible storage.
                             The structure is documented below.
@@ -349,7 +351,8 @@ spec:
                   tasksMax:
                     description: The number of the connector's parallel working tasks.
                       Default is the number of brokers
-                    type: number
+                    format: int64
+                    type: integer
                 type: object
               initProvider:
                 description: |-
@@ -448,7 +451,8 @@ spec:
                         replicationFactor:
                           description: Replication factor for topics created in target
                             cluster
-                          type: number
+                          format: int64
+                          type: integer
                         sourceCluster:
                           description: Settings for source cluster. The structure
                             is documented below.
@@ -540,7 +544,8 @@ spec:
                           type: string
                         fileMaxRecords:
                           description: Max records per file.
-                          type: number
+                          format: int64
+                          type: integer
                         s3Connection:
                           description: Settings for connection to s3-compatible storage.
                             The structure is documented below.
@@ -586,7 +591,8 @@ spec:
                   tasksMax:
                     description: The number of the connector's parallel working tasks.
                       Default is the number of brokers
-                    type: number
+                    format: int64
+                    type: integer
                 type: object
               managementPolicies:
                 default:
@@ -775,7 +781,8 @@ spec:
                         replicationFactor:
                           description: Replication factor for topics created in target
                             cluster
-                          type: number
+                          format: int64
+                          type: integer
                         sourceCluster:
                           description: Settings for source cluster. The structure
                             is documented below.
@@ -867,7 +874,8 @@ spec:
                           type: string
                         fileMaxRecords:
                           description: Max records per file.
-                          type: number
+                          format: int64
+                          type: integer
                         s3Connection:
                           description: Settings for connection to s3-compatible storage.
                             The structure is documented below.
@@ -915,7 +923,8 @@ spec:
                   tasksMax:
                     description: The number of the connector's parallel working tasks.
                       Default is the number of brokers
-                    type: number
+                    format: int64
+                    type: integer
                 type: object
               conditions:
                 description: Conditions of the resource.

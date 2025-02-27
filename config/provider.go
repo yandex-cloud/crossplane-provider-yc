@@ -67,6 +67,17 @@ func GetProvider() *tjconfig.Provider {
 		tjconfig.WithTerraformPluginSDKIncludeList([]string{
 			"yandex_mdb_mongodb_cluster$",
 			"yandex_mdb_redis_cluster$",
+
+			"yandex_resourcemanager_cloud_iam_binding$",
+			"yandex_resourcemanager_cloud_iam_member$",
+
+			"yandex_resourcemanager_cloud$",
+
+			"yandex_mdb_kafka_cluster$",
+			"yandex_mdb_kafka_connector$",
+
+			"yandex_storage_bucket$",
+			"yandex_storage_object$",
 		}),
 		tjconfig.WithTerraformPluginFrameworkProvider(framework.NewFrameworkProvider()),
 		tjconfig.WithTerraformPluginFrameworkIncludeList([]string{
@@ -83,18 +94,24 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_compute_placement_group$",
 			"yandex_compute_snapshot$",
 			"yandex_compute_snapshot_schedule$",
+			"yandex_container_repository$",
+			"yandex_container_registry$",
 
-			"yandex_vpc_gateway$",
-			"yandex_vpc_route_table$",
+			"yandex_kms_symmetric_key_iam_binding$",
+			"yandex_iam_service_account_api_key$",
+			"yandex_iam_service_account_iam_binding$",
+
+			"yandex_alb_backend_group$",
+			"yandex_alb_http_router$",
+			"yandex_alb_load_balancer$",
+			"yandex_alb_target_group$",
+			"yandex_alb_virtual_host$",
 
 			"yandex_lb_network_load_balancer$",
 			"yandex_lb_target_group$",
 
-			"yandex_resourcemanager_cloud_iam_binding$",
-			"yandex_resourcemanager_cloud_iam_member$",
-			"yandex_resourcemanager_cloud$",
-
-			"yandex_kms_symmetric_key_iam_binding$",
+			"yandex_vpc_gateway$",
+			"yandex_vpc_route_table$",
 
 			"yandex_organizationmanager_saml_federation_user_account$",
 			"yandex_organizationmanager_saml_federation$",
@@ -102,56 +119,53 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_organizationmanager_group_iam_member$",
 			"yandex_organizationmanager_group$",
 
-			"yandex_iam_service_account_api_key$",
-			"yandex_iam_service_account_iam_binding$",
-
-			"yandex_mdb_opensearch_cluster$",
-			"yandex_cdn_resource$",
-			"yandex_cdn_origin_group$",
-			"yandex_mdb_postgresql_cluster$",
-			"yandex_mdb_postgresql_database$",
-			"yandex_mdb_postgresql_user$",
-			"yandex_mdb_elasticsearch_cluster$",
-			"yandex_alb_backend_group$",
-			"yandex_alb_http_router$",
-			"yandex_alb_load_balancer$",
-			"yandex_alb_target_group$",
-			"yandex_alb_virtual_host$",
-			"yandex_compute_instance$",
-			"yandex_container_registry$",
-			"yandex_container_repository$",
-			"yandex_dns_zone$",
-			"yandex_dns_recordset$",
 			"yandex_iam_service_account$",
 			"yandex_iam_service_account_key$",
 			"yandex_iam_service_account_static_access_key$",
 			"yandex_iam_service_account_iam_member$",
-			"yandex_kubernetes_cluster$",
-			"yandex_kubernetes_node_group$",
-			"yandex_mdb_kafka_cluster$",
-			"yandex_mdb_kafka_connector$",
-			"yandex_mdb_kafka_topic$",
-			"yandex_mdb_kafka_user$",
-			"yandex_mdb_mysql_cluster$",
-			"yandex_mdb_mysql_database$",
-			"yandex_mdb_mysql_user$",
-			"yandex_resourcemanager_folder$",
-			"yandex_resourcemanager_folder_iam_member$",
-			"yandex_resourcemanager_folder_iam_binding$",
+
+			"yandex_dns_zone$",
+			"yandex_dns_recordset$",
+
+			"yandex_compute_instance$",
+
 			"yandex_vpc_default_security_group$",
 			"yandex_vpc_network$",
 			"yandex_vpc_subnet$",
 			"yandex_vpc_security_group$",
 			"yandex_vpc_security_group_rule$",
 			"yandex_vpc_address$",
-			"yandex_storage_bucket$",
-			"yandex_storage_object$",
+
+			"yandex_cdn_resource$",
+			"yandex_cdn_origin_group$",
+
+			"yandex_resourcemanager_folder$",
+			"yandex_resourcemanager_folder_iam_member$",
+			"yandex_resourcemanager_folder_iam_binding$",
+
+			"yandex_mdb_kafka_topic$",
+			"yandex_mdb_postgresql_cluster$",
+			"yandex_mdb_mysql_cluster$",
+
+			"yandex_mdb_opensearch_cluster$",
+			"yandex_mdb_kafka_user$",
+
+			"yandex_kubernetes_cluster$",
+			"yandex_kubernetes_node_group$",
+
+			"yandex_mdb_mysql_database$",
+			"yandex_mdb_mysql_user$",
+
+			"yandex_mdb_postgresql_database$",
+			"yandex_mdb_postgresql_user$",
 			"yandex_kms_symmetric_key$",
+
+			"yandex_mdb_elasticsearch_cluster$",
 			"yandex_datatransfer_endpoint$",
 			"yandex_datatransfer_transfer$",
 			"yandex_ydb_database_dedicated$",
-			"yandex_ydb_database_serverless$",
 			"yandex_message_queue$",
+			"yandex_ydb_database_serverless$",
 		}),
 	)
 
