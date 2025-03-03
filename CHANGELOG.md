@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.10.0 - March 3, 2025
+### Added
+* support for Clickhouse clusters
+### Fixed
+* non-forking reconcile for Kafka
+* non-forking reconcile for Storage
+
+## 0.9.0 - February 14, 2025
+### Added
+* support for Compute resources: Disk, DiskPlacementGroup, Filesystem, GPUCluster, Image, InstanceGroup, PlacementGroup, Snapshot, SnapshotSchedule
+
 ## 0.8.0 - January 22, 2025
 ### Added
 * support for most of VPC resources
