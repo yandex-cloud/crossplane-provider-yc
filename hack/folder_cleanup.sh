@@ -57,6 +57,7 @@ delete_all compute snapshot-schedule
 delete_all compute gpu-cluster
 delete_all compute placement-group
 delete_all compute disk-placement-group
+delete_all compute image
 delete_all kms symmetric-key
 delete_all dns zone
 delete_all datatransfer transfer
