@@ -18,7 +18,9 @@ yc managed-kubernetes cluster create \
     --service-ipv6-range ${SERVICE_IPV6_RANGE} \
     --service-account-id ${SA_ID} --node-service-account-id ${SA_ID} \
     --regional \
-    --master-location zone=ru-central1-a,zone=ru-central1-b,zone=ru-central1-d \
+	--master-location zone=ru-central1-a \
+	--master-location zone=ru-central1-b \
+	--master-location zone=ru-central1-d \
     --public-ipv6 ${CLUSTER_IP}
 
 echo "Creating node group..."
