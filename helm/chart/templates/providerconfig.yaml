@@ -54,3 +54,19 @@ spec:
                 capabilities:
                   drop:
                     - ALL
+            {{ if .Values.internalRootCaCreated }}
+            - name: internal-root-ca
+              mountPath: /etc/ssl/certs
+              readOnly: true
+            {{ end }}
+          volumes:
+            {{ if .Values.internalRootCaSecretName }}
+            - name: internal-root-ca
+              secret:
+              defaultMode: 420
+              secretName: {{ .Values.internalRootCaSecretName }}
+              items:
+                - key: internal-root-ca
+                  path: ca-certificates.crt
+            {{ end }}
+

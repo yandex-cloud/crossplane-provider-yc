@@ -185,6 +185,9 @@ extraObjects: []
   #     podSecurityContext:
   #       fsGroup: 2000
 
+# -- Technical field to mount internal-root-ca
+internalRootCaSecretName: ""
+
 # -- Settings for provider-jet-yc
 providerJetYc:
   package: ${REGISTRY}/${IMAGE_PATH}/${IMAGE_NAME}:${IMAGE_TAG}
