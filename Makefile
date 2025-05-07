@@ -359,8 +359,5 @@ help-special: crossplane.help
 
 test-all: lint test
 
-up-login: $(UP)
-	@$(UP) login
-
 ci-e2e-crossplane:
 	./hack/e2e.sh

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "##teamcity[blockOpened name='keys' description='set up credentials']"
-make up-login
+echo "$UP_TOKEN" | docker login xpkg.upbound.io -u dbb80626-2a02-4eb6-87d7-b6414272916e --password-stdin
 echo "##teamcity[blockClosed name='keys']"
 
 if [[ -z "$VERSION" ]]; then
