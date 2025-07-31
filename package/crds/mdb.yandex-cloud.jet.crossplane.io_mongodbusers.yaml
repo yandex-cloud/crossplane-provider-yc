@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: mongodbusers.mdb.yandex-cloud.jet.crossplane.io
 spec:
   group: mdb.yandex-cloud.jet.crossplane.io
@@ -280,6 +280,23 @@ spec:
                   name:
                     description: The name of the user.
                     type: string
+                  passwordSecretRef:
+                    description: The password of the user.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   permission:
                     description: Set of permissions granted to the user. The structure
                       is documented below.
@@ -298,6 +315,8 @@ spec:
                           x-kubernetes-list-type: set
                       type: object
                     type: array
+                required:
+                - passwordSecretRef
                 type: object
               managementPolicies:
                 default:

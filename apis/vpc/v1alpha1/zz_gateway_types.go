@@ -29,12 +29,10 @@ import (
 
 type GatewayInitParameters struct {
 
-	// An optional description of this resource. Provide this property when
-	// you create the resource.
+	// An optional description of this resource. Provide this property when you create the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -62,12 +60,10 @@ type GatewayObservation struct {
 	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// An optional description of this resource. Provide this property when
-	// you create the resource.
+	// An optional description of this resource. Provide this property when you create the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -85,13 +81,11 @@ type GatewayObservation struct {
 
 type GatewayParameters struct {
 
-	// An optional description of this resource. Provide this property when
-	// you create the resource.
+	// An optional description of this resource. Provide this property when you create the resource.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`

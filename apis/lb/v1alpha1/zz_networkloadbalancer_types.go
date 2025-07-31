@@ -327,12 +327,10 @@ type NetworkLoadBalancerInitParameters struct {
 	// Flag that protects the network load balancer from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// An optional description of the network load balancer. Provide this property when
-	// you create the resource.
+	// An optional description of the network load balancer. Provide this property when you create the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs.
-	// If omitted, the provider folder is used.
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -354,8 +352,7 @@ type NetworkLoadBalancerInitParameters struct {
 	// Name of the network load balancer. Provided by the client when the network load balancer is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the availability zone where the network load balancer resides.
-	// If omitted, default region is being used.
+	// ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
 	// Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
@@ -373,12 +370,10 @@ type NetworkLoadBalancerObservation struct {
 	// Flag that protects the network load balancer from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// An optional description of the network load balancer. Provide this property when
-	// you create the resource.
+	// An optional description of the network load balancer. Provide this property when you create the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs.
-	// If omitted, the provider folder is used.
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// The ID of the network load balancer.
@@ -394,8 +389,7 @@ type NetworkLoadBalancerObservation struct {
 	// Name of the network load balancer. Provided by the client when the network load balancer is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the availability zone where the network load balancer resides.
-	// If omitted, default region is being used.
+	// ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
 	// Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
@@ -412,13 +406,11 @@ type NetworkLoadBalancerParameters struct {
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// An optional description of the network load balancer. Provide this property when
-	// you create the resource.
+	// An optional description of the network load balancer. Provide this property when you create the resource.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs.
-	// If omitted, the provider folder is used.
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -444,8 +436,7 @@ type NetworkLoadBalancerParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the availability zone where the network load balancer resides.
-	// If omitted, default region is being used.
+	// ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
 	// +kubebuilder:validation:Optional
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 

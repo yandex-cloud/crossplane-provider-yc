@@ -399,8 +399,7 @@ type InstanceTemplateInitParameters struct {
 	// Boolean flag, enables NAT for node group compute instances.
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
-	// Name template of the instance.
-	// In order to be unique it must contain at least one of instance unique placeholders:
+	// Name template of the instance. In order to be unique it must contain at least one of instance unique placeholders:
 	// {instance.short_id}
 	// {instance.index}
 	// combination of {instance.zone_id} and {instance.index_in_zone}
@@ -452,8 +451,7 @@ type InstanceTemplateObservation struct {
 	// Boolean flag, enables NAT for node group compute instances.
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
-	// Name template of the instance.
-	// In order to be unique it must contain at least one of instance unique placeholders:
+	// Name template of the instance. In order to be unique it must contain at least one of instance unique placeholders:
 	// {instance.short_id}
 	// {instance.index}
 	// combination of {instance.zone_id} and {instance.index_in_zone}
@@ -512,8 +510,7 @@ type InstanceTemplateParameters struct {
 	// +kubebuilder:validation:Optional
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
-	// Name template of the instance.
-	// In order to be unique it must contain at least one of instance unique placeholders:
+	// Name template of the instance. In order to be unique it must contain at least one of instance unique placeholders:
 	// {instance.short_id}
 	// {instance.index}
 	// combination of {instance.zone_id} and {instance.index_in_zone}
@@ -729,10 +726,7 @@ type NodeGroupInitParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Computed) Maintenance policy for this Kubernetes node group.
-	// If policy is omitted, automatic revision upgrades are enabled and could happen at any time.
-	// Revision upgrades are performed only within the same minor version, e.g. 1.13.
-	// Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+	// (Computed) Maintenance policy for this Kubernetes node group. If policy is omitted, automatic revision upgrades are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.13. Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
 	MaintenancePolicy []NodeGroupMaintenancePolicyInitParameters `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
 	// Name of a specific Kubernetes node group.
@@ -823,10 +817,7 @@ type NodeGroupObservation struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Computed) Maintenance policy for this Kubernetes node group.
-	// If policy is omitted, automatic revision upgrades are enabled and could happen at any time.
-	// Revision upgrades are performed only within the same minor version, e.g. 1.13.
-	// Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+	// (Computed) Maintenance policy for this Kubernetes node group. If policy is omitted, automatic revision upgrades are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.13. Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
 	MaintenancePolicy []NodeGroupMaintenancePolicyObservation `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
 	// Name of a specific Kubernetes node group.
@@ -892,10 +883,7 @@ type NodeGroupParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Computed) Maintenance policy for this Kubernetes node group.
-	// If policy is omitted, automatic revision upgrades are enabled and could happen at any time.
-	// Revision upgrades are performed only within the same minor version, e.g. 1.13.
-	// Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+	// (Computed) Maintenance policy for this Kubernetes node group. If policy is omitted, automatic revision upgrades are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.13. Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	MaintenancePolicy []NodeGroupMaintenancePolicyParameters `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
@@ -929,18 +917,13 @@ type NodeGroupVersionInfoObservation struct {
 	// Current Kubernetes version, major.minor (e.g. 1.15).
 	CurrentVersion *string `json:"currentVersion,omitempty" tf:"current_version,omitempty"`
 
-	// True/false flag.
-	// Newer revisions may include Kubernetes patches (e.g 1.15.1 -> 1.15.2) as well
-	// as some internal component updates - new features or bug fixes in yandex-specific
-	// components either on the master or nodes.
+	// True/false flag. Newer revisions may include Kubernetes patches (e.g 1.15.1 -> 1.15.2) as well as some internal component updates - new features or bug fixes in yandex-specific components either on the master or nodes.
 	NewRevisionAvailable *bool `json:"newRevisionAvailable,omitempty" tf:"new_revision_available,omitempty"`
 
-	// Human readable description of the changes to be applied
-	// when updating to the latest revision. Empty if new_revision_available is false.
+	// Human readable description of the changes to be applied when updating to the latest revision. Empty if new_revision_available is false.
 	NewRevisionSummary *string `json:"newRevisionSummary,omitempty" tf:"new_revision_summary,omitempty"`
 
-	// True/false flag. The current version is on the deprecation schedule,
-	// component (master or node group) should be upgraded.
+	// True/false flag. The current version is on the deprecation schedule, component (master or node group) should be upgraded.
 	VersionDeprecated *bool `json:"versionDeprecated,omitempty" tf:"version_deprecated,omitempty"`
 }
 

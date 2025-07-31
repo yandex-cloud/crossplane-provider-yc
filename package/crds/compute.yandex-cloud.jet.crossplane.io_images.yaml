@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: images.compute.yandex-cloud.jet.crossplane.io
 spec:
   group: compute.yandex-cloud.jet.crossplane.io
@@ -74,18 +74,16 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: |-
-                      An optional description of the image. Provide this property when
-                      you create a resource.
+                    description: An optional description of the image. Provide this
+                      property when you create a resource.
                     type: string
                   family:
                     description: The name of the image family to which this image
                       belongs.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the resource belongs to. If it
-                      is not provided, the default provider folder is used.
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -163,6 +161,22 @@ spec:
                             type: string
                         type: object
                     type: object
+                  hardwareGeneration:
+                    items:
+                      properties:
+                        generation2Features:
+                          items:
+                            type: object
+                          type: array
+                        legacyFeatures:
+                          items:
+                            properties:
+                              pciTopology:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   labels:
                     additionalProperties:
                       type: string
@@ -184,38 +198,32 @@ spec:
                     description: Optimize the image to create a disk.
                     type: boolean
                   productIds:
-                    description: |-
-                      License IDs that indicate which licenses are
-                      attached to this image.
+                    description: License IDs that indicate which licenses are attached
+                      to this image.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   sourceDisk:
-                    description: |-
-                      The ID of a disk to use as the source of the
-                      image. Changing this ID forces a new resource to be created.
+                    description: The ID of a disk to use as the source of the image.
+                      Changing this ID forces a new resource to be created.
                     type: string
                   sourceFamily:
-                    description: |-
-                      The name of the family to use as the source of the new image.
-                      The ID of the latest image is taken from the "standard-images" folder. Changing the family forces
-                      a new resource to be created.
+                    description: The name of the family to use as the source of the
+                      new image. The ID of the latest image is taken from the "standard-images"
+                      folder. Changing the family forces a new resource to be created.
                     type: string
                   sourceImage:
-                    description: |-
-                      The ID of an existing image to use as the source of the
-                      image. Changing this ID forces a new resource to be created.
+                    description: The ID of an existing image to use as the source
+                      of the image. Changing this ID forces a new resource to be created.
                     type: string
                   sourceSnapshot:
-                    description: |-
-                      The ID of a snapshot to use as the source of the
+                    description: The ID of a snapshot to use as the source of the
                       image. Changing this ID forces a new resource to be created.
                     type: string
                   sourceUrl:
-                    description: |-
-                      The URL to use as the source of the
-                      image. Changing this URL forces a new resource to be created.
+                    description: The URL to use as the source of the image. Changing
+                      this URL forces a new resource to be created.
                     type: string
                 type: object
               initProvider:
@@ -232,18 +240,16 @@ spec:
                   autoscaler.
                 properties:
                   description:
-                    description: |-
-                      An optional description of the image. Provide this property when
-                      you create a resource.
+                    description: An optional description of the image. Provide this
+                      property when you create a resource.
                     type: string
                   family:
                     description: The name of the image family to which this image
                       belongs.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the resource belongs to. If it
-                      is not provided, the default provider folder is used.
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -321,6 +327,22 @@ spec:
                             type: string
                         type: object
                     type: object
+                  hardwareGeneration:
+                    items:
+                      properties:
+                        generation2Features:
+                          items:
+                            type: object
+                          type: array
+                        legacyFeatures:
+                          items:
+                            properties:
+                              pciTopology:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   labels:
                     additionalProperties:
                       type: string
@@ -342,38 +364,32 @@ spec:
                     description: Optimize the image to create a disk.
                     type: boolean
                   productIds:
-                    description: |-
-                      License IDs that indicate which licenses are
-                      attached to this image.
+                    description: License IDs that indicate which licenses are attached
+                      to this image.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   sourceDisk:
-                    description: |-
-                      The ID of a disk to use as the source of the
-                      image. Changing this ID forces a new resource to be created.
+                    description: The ID of a disk to use as the source of the image.
+                      Changing this ID forces a new resource to be created.
                     type: string
                   sourceFamily:
-                    description: |-
-                      The name of the family to use as the source of the new image.
-                      The ID of the latest image is taken from the "standard-images" folder. Changing the family forces
-                      a new resource to be created.
+                    description: The name of the family to use as the source of the
+                      new image. The ID of the latest image is taken from the "standard-images"
+                      folder. Changing the family forces a new resource to be created.
                     type: string
                   sourceImage:
-                    description: |-
-                      The ID of an existing image to use as the source of the
-                      image. Changing this ID forces a new resource to be created.
+                    description: The ID of an existing image to use as the source
+                      of the image. Changing this ID forces a new resource to be created.
                     type: string
                   sourceSnapshot:
-                    description: |-
-                      The ID of a snapshot to use as the source of the
+                    description: The ID of a snapshot to use as the source of the
                       image. Changing this ID forces a new resource to be created.
                     type: string
                   sourceUrl:
-                    description: |-
-                      The URL to use as the source of the
-                      image. Changing this URL forces a new resource to be created.
+                    description: The URL to use as the source of the image. Changing
+                      this URL forces a new resource to be created.
                     type: string
                 type: object
               managementPolicies:
@@ -552,19 +568,33 @@ spec:
                     description: Creation timestamp of the image.
                     type: string
                   description:
-                    description: |-
-                      An optional description of the image. Provide this property when
-                      you create a resource.
+                    description: An optional description of the image. Provide this
+                      property when you create a resource.
                     type: string
                   family:
                     description: The name of the image family to which this image
                       belongs.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the resource belongs to. If it
-                      is not provided, the default provider folder is used.
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
+                  hardwareGeneration:
+                    items:
+                      properties:
+                        generation2Features:
+                          items:
+                            type: object
+                          type: array
+                        legacyFeatures:
+                          items:
+                            properties:
+                              pciTopology:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   id:
                     type: string
                   labels:
@@ -588,9 +618,8 @@ spec:
                     description: Optimize the image to create a disk.
                     type: boolean
                   productIds:
-                    description: |-
-                      License IDs that indicate which licenses are
-                      attached to this image.
+                    description: License IDs that indicate which licenses are attached
+                      to this image.
                     items:
                       type: string
                     type: array
@@ -599,30 +628,25 @@ spec:
                     description: The size of the image, specified in GB.
                     type: number
                   sourceDisk:
-                    description: |-
-                      The ID of a disk to use as the source of the
-                      image. Changing this ID forces a new resource to be created.
+                    description: The ID of a disk to use as the source of the image.
+                      Changing this ID forces a new resource to be created.
                     type: string
                   sourceFamily:
-                    description: |-
-                      The name of the family to use as the source of the new image.
-                      The ID of the latest image is taken from the "standard-images" folder. Changing the family forces
-                      a new resource to be created.
+                    description: The name of the family to use as the source of the
+                      new image. The ID of the latest image is taken from the "standard-images"
+                      folder. Changing the family forces a new resource to be created.
                     type: string
                   sourceImage:
-                    description: |-
-                      The ID of an existing image to use as the source of the
-                      image. Changing this ID forces a new resource to be created.
+                    description: The ID of an existing image to use as the source
+                      of the image. Changing this ID forces a new resource to be created.
                     type: string
                   sourceSnapshot:
-                    description: |-
-                      The ID of a snapshot to use as the source of the
+                    description: The ID of a snapshot to use as the source of the
                       image. Changing this ID forces a new resource to be created.
                     type: string
                   sourceUrl:
-                    description: |-
-                      The URL to use as the source of the
-                      image. Changing this URL forces a new resource to be created.
+                    description: The URL to use as the source of the image. Changing
+                      this URL forces a new resource to be created.
                     type: string
                   status:
                     description: The status of the image.

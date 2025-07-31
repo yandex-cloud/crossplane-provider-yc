@@ -27,13 +27,69 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type SnapshotHardwareGenerationGeneration2FeaturesInitParameters struct {
+}
+
+type SnapshotHardwareGenerationGeneration2FeaturesObservation struct {
+}
+
+type SnapshotHardwareGenerationGeneration2FeaturesParameters struct {
+}
+
+type SnapshotHardwareGenerationInitParameters struct {
+
+	// A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot.
+	Generation2Features []SnapshotHardwareGenerationGeneration2FeaturesInitParameters `json:"generation2Features,omitempty" tf:"generation2_features,omitempty"`
+
+	// Defines the first known hardware generation and its features, which are:
+	LegacyFeatures []SnapshotHardwareGenerationLegacyFeaturesInitParameters `json:"legacyFeatures,omitempty" tf:"legacy_features,omitempty"`
+}
+
+type SnapshotHardwareGenerationLegacyFeaturesInitParameters struct {
+
+	// A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
+	PciTopology *string `json:"pciTopology,omitempty" tf:"pci_topology,omitempty"`
+}
+
+type SnapshotHardwareGenerationLegacyFeaturesObservation struct {
+
+	// A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
+	PciTopology *string `json:"pciTopology,omitempty" tf:"pci_topology,omitempty"`
+}
+
+type SnapshotHardwareGenerationLegacyFeaturesParameters struct {
+
+	// A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
+	// +kubebuilder:validation:Optional
+	PciTopology *string `json:"pciTopology,omitempty" tf:"pci_topology,omitempty"`
+}
+
+type SnapshotHardwareGenerationObservation struct {
+
+	// A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot.
+	Generation2Features []SnapshotHardwareGenerationGeneration2FeaturesParameters `json:"generation2Features,omitempty" tf:"generation2_features,omitempty"`
+
+	// Defines the first known hardware generation and its features, which are:
+	LegacyFeatures []SnapshotHardwareGenerationLegacyFeaturesObservation `json:"legacyFeatures,omitempty" tf:"legacy_features,omitempty"`
+}
+
+type SnapshotHardwareGenerationParameters struct {
+
+	// A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot.
+	// +kubebuilder:validation:Optional
+	Generation2Features []SnapshotHardwareGenerationGeneration2FeaturesParameters `json:"generation2Features,omitempty" tf:"generation2_features,omitempty"`
+
+	// Defines the first known hardware generation and its features, which are:
+	// +kubebuilder:validation:Optional
+	LegacyFeatures []SnapshotHardwareGenerationLegacyFeaturesParameters `json:"legacyFeatures,omitempty" tf:"legacy_features,omitempty"`
+}
+
 type SnapshotInitParameters struct {
 
 	// Description of the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -44,6 +100,12 @@ type SnapshotInitParameters struct {
 	// Selector for a Folder in resourcemanager to populate folderId.
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// Hardware generation and its features,
+	// which will be applied to the instance when this snapshot is used as a boot
+	// disk source. Provide this property if you wish to override this value, which
+	// otherwise is inherited from the source. The structure is documented below.
+	HardwareGeneration []SnapshotHardwareGenerationInitParameters `json:"hardwareGeneration,omitempty" tf:"hardware_generation,omitempty"`
 
 	// A set of key/value label pairs to assign to the snapshot.
 	// +mapType=granular
@@ -76,9 +138,14 @@ type SnapshotObservation struct {
 	// Size of the disk when the snapshot was created, specified in GB.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Hardware generation and its features,
+	// which will be applied to the instance when this snapshot is used as a boot
+	// disk source. Provide this property if you wish to override this value, which
+	// otherwise is inherited from the source. The structure is documented below.
+	HardwareGeneration []SnapshotHardwareGenerationObservation `json:"hardwareGeneration,omitempty" tf:"hardware_generation,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -102,8 +169,7 @@ type SnapshotParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -115,6 +181,13 @@ type SnapshotParameters struct {
 	// Selector for a Folder in resourcemanager to populate folderId.
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
+
+	// Hardware generation and its features,
+	// which will be applied to the instance when this snapshot is used as a boot
+	// disk source. Provide this property if you wish to override this value, which
+	// otherwise is inherited from the source. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	HardwareGeneration []SnapshotHardwareGenerationParameters `json:"hardwareGeneration,omitempty" tf:"hardware_generation,omitempty"`
 
 	// A set of key/value label pairs to assign to the snapshot.
 	// +kubebuilder:validation:Optional

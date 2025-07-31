@@ -21,6 +21,24 @@ limitations under the License.
 package v1alpha1
 
 // Hub marks this type as a conversion hub.
+func (tr *CloudIAMBinding) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *CloudIAMMember) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *FolderIAMBinding) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *FolderIAMMember) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *GroupIAMMember) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *OrganizationIAMBinding) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *ServiceAccount) Hub() {}
 
 // Hub marks this type as a conversion hub.
@@ -37,21 +55,3 @@ func (tr *ServiceAccountKey) Hub() {}
 
 // Hub marks this type as a conversion hub.
 func (tr *ServiceAccountStaticAccessKey) Hub() {}
-
-// Hub marks this type as a conversion hub.
-func (tr *GroupIAMMember) Hub() {}
-
-// Hub marks this type as a conversion hub.
-func (tr *OrganizationIAMBinding) Hub() {}
-
-// Hub marks this type as a conversion hub.
-func (tr *CloudIAMBinding) Hub() {}
-
-// Hub marks this type as a conversion hub.
-func (tr *CloudIAMMember) Hub() {}
-
-// Hub marks this type as a conversion hub.
-func (tr *FolderIAMBinding) Hub() {}
-
-// Hub marks this type as a conversion hub.
-func (tr *FolderIAMMember) Hub() {}

@@ -35,7 +35,7 @@ func (mg *ClickhouseCluster) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this ClickhouseCluster
 func (tr *ClickhouseCluster) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"admin_password": "spec.forProvider.adminPasswordSecretRef", "clickhouse[*].config[*].kafka[*].sasl_password": "spec.forProvider.clickhouse[*].config[*].kafka[*].saslPasswordSecretRef", "clickhouse[*].config[*].kafka_topic[*].settings[*].sasl_password": "spec.forProvider.clickhouse[*].config[*].kafkaTopic[*].settings[*].saslPasswordSecretRef", "clickhouse[*].config[*].rabbitmq[*].password": "spec.forProvider.clickhouse[*].config[*].rabbitmq[*].passwordSecretRef", "user[*].password": "spec.forProvider.user[*].passwordSecretRef"}
+	return map[string]string{"admin_password": "adminPasswordSecretRef", "clickhouse[*].config[*].kafka[*].sasl_password": "clickhouse[*].config[*].kafka[*].saslPasswordSecretRef", "clickhouse[*].config[*].kafka_topic[*].settings[*].sasl_password": "clickhouse[*].config[*].kafkaTopic[*].settings[*].saslPasswordSecretRef", "clickhouse[*].config[*].rabbitmq[*].password": "clickhouse[*].config[*].rabbitmq[*].passwordSecretRef", "user[*].password": "user[*].passwordSecretRef"}
 }
 
 // GetObservation of this ClickhouseCluster

@@ -32,8 +32,7 @@ type CloudIAMBindingInitParameters struct {
 	// ID of the cloud to attach the policy to.
 	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
 
-	// An array of identities that will be granted the privilege in the role.
-	// Each entry can have one of the following values:
+	// An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
@@ -41,8 +40,7 @@ type CloudIAMBindingInitParameters struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// The role that should be assigned. Only one
-	// yandex_resourcemanager_cloud_iam_binding can be used per role.
+	// The role that should be assigned. Only one yandex_resourcemanager_cloud_iam_binding can be used per role.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// References to ServiceAccount to populate members.
@@ -63,13 +61,11 @@ type CloudIAMBindingObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// An array of identities that will be granted the privilege in the role.
-	// Each entry can have one of the following values:
+	// An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// The role that should be assigned. Only one
-	// yandex_resourcemanager_cloud_iam_binding can be used per role.
+	// The role that should be assigned. Only one yandex_resourcemanager_cloud_iam_binding can be used per role.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
@@ -81,8 +77,7 @@ type CloudIAMBindingParameters struct {
 	// +kubebuilder:validation:Optional
 	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
 
-	// An array of identities that will be granted the privilege in the role.
-	// Each entry can have one of the following values:
+	// An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
@@ -91,8 +86,7 @@ type CloudIAMBindingParameters struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// The role that should be assigned. Only one
-	// yandex_resourcemanager_cloud_iam_binding can be used per role.
+	// The role that should be assigned. Only one yandex_resourcemanager_cloud_iam_binding can be used per role.
 	// +kubebuilder:validation:Optional
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 

@@ -153,7 +153,6 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_mdb_postgresql_cluster$",
 			"yandex_mdb_mysql_cluster$",
 
-			"yandex_mdb_opensearch_cluster$",
 			"yandex_mdb_kafka_user$",
 
 			"yandex_kubernetes_cluster$",

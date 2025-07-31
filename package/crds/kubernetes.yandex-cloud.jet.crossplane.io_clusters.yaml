@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: clusters.kubernetes.yandex-cloud.jet.crossplane.io
 spec:
   group: kubernetes.yandex-cloud.jet.crossplane.io
@@ -74,10 +74,10 @@ spec:
               forProvider:
                 properties:
                   clusterIpv4Range:
-                    description: |-
-                      CIDR block. IP range for allocating pod addresses.
-                      It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be
-                      set up for this CIDR blocks in node subnets.
+                    description: CIDR block. IP range for allocating pod addresses.
+                      It should not overlap with any subnet in the network the Kubernetes
+                      cluster located in. Static routes will be set up for this CIDR
+                      blocks in node subnets.
                     type: string
                   clusterIpv6Range:
                     description: Identical to cluster_ipv4_range but for IPv6 protocol.
@@ -86,9 +86,9 @@ spec:
                     description: A description of the Kubernetes cluster.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the Kubernetes cluster belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: The ID of the folder that the Kubernetes cluster
+                      belongs to. If it is not provided, the default provider folder
+                      is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -268,11 +268,13 @@ spec:
                         externalV6Address:
                           type: string
                         maintenancePolicy:
-                          description: |-
-                            (Computed) Maintenance policy for Kubernetes master.
-                            If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time.
-                            Revision upgrades are performed only within the same minor version, e.g. 1.13.
-                            Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+                          description: (Computed) Maintenance policy for Kubernetes
+                            master. If policy is omitted, automatic revision upgrades
+                            of the kubernetes master are enabled and could happen
+                            at any time. Revision upgrades are performed only within
+                            the same minor version, e.g. 1.13. Minor version upgrades
+                            (e.g. 1.13->1.14) should be performed manually. The structure
+                            is documented below.
                           items:
                             properties:
                               autoUpgrade:
@@ -281,10 +283,13 @@ spec:
                                   value is TRUE.
                                 type: boolean
                               maintenanceWindow:
-                                description: |-
-                                  (Computed) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time.
-                                  To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration.
-                                  Please see zonal_cluster_resource_name config example.
+                                description: (Computed) This structure specifies maintenance
+                                  window, when update for master is allowed. When
+                                  omitted, it defaults to any time. To specify time
+                                  of day interval, for all days, one element should
+                                  be provided, with two fields set, start_time and
+                                  duration. Please see zonal_cluster_resource_name
+                                  config example.
                                 items:
                                   properties:
                                     day:
@@ -298,11 +303,13 @@ spec:
                             type: object
                           type: array
                         masterLocation:
-                          description: |-
-                            Cluster master's instances locations array (zone and subnet).
-                            Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location.
-                            Can be updated inplace. When creating regional cluster (three master instances), its region will be evaluated automatically by backend.
-                            The structure is documented below.
+                          description: Cluster master's instances locations array
+                            (zone and subnet). Cannot be used together with zonal
+                            or regional. Currently, supports either one, for zonal
+                            master, or three instances of master_location. Can be
+                            updated inplace. When creating regional cluster (three
+                            master instances), its region will be evaluated automatically
+                            by backend. The structure is documented below.
                           items:
                             properties:
                               subnetId:
@@ -743,9 +750,9 @@ spec:
                       each node.
                     type: number
                   nodeServiceAccountId:
-                    description: |-
-                      Service account to be used by the worker nodes of the Kubernetes cluster
-                      to access Container Registry or to push node logs and metrics.
+                    description: Service account to be used by the worker nodes of
+                      the Kubernetes cluster to access Container Registry or to push
+                      node logs and metrics.
                     type: string
                   nodeServiceAccountIdRef:
                     description: Reference to a ServiceAccount in iam to populate
@@ -827,10 +834,11 @@ spec:
                     description: Cluster release channel.
                     type: string
                   serviceAccountId:
-                    description: |-
-                      Service account to be used for provisioning Compute Cloud and VPC resources
-                      for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes
-                      cluster will be located and on the folder where selected network resides.
+                    description: Service account to be used for provisioning Compute
+                      Cloud and VPC resources for Kubernetes cluster. Selected service
+                      account should have edit role on the folder where the Kubernetes
+                      cluster will be located and on the folder where selected network
+                      resides.
                     type: string
                   serviceAccountIdRef:
                     description: Reference to a ServiceAccount in iam to populate
@@ -909,10 +917,10 @@ spec:
                         type: object
                     type: object
                   serviceIpv4Range:
-                    description: |-
-                      CIDR block. IP range Kubernetes service Kubernetes cluster
-                      IP addresses will be allocated from. It should not overlap with any subnet in the network
-                      the Kubernetes cluster located in.
+                    description: CIDR block. IP range Kubernetes service Kubernetes
+                      cluster IP addresses will be allocated from. It should not overlap
+                      with any subnet in the network the Kubernetes cluster located
+                      in.
                     type: string
                   serviceIpv6Range:
                     description: Identical to service_ipv4_range but for IPv6 protocol.
@@ -932,10 +940,10 @@ spec:
                   autoscaler.
                 properties:
                   clusterIpv4Range:
-                    description: |-
-                      CIDR block. IP range for allocating pod addresses.
-                      It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be
-                      set up for this CIDR blocks in node subnets.
+                    description: CIDR block. IP range for allocating pod addresses.
+                      It should not overlap with any subnet in the network the Kubernetes
+                      cluster located in. Static routes will be set up for this CIDR
+                      blocks in node subnets.
                     type: string
                   clusterIpv6Range:
                     description: Identical to cluster_ipv4_range but for IPv6 protocol.
@@ -944,9 +952,9 @@ spec:
                     description: A description of the Kubernetes cluster.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the Kubernetes cluster belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: The ID of the folder that the Kubernetes cluster
+                      belongs to. If it is not provided, the default provider folder
+                      is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -1126,11 +1134,13 @@ spec:
                         externalV6Address:
                           type: string
                         maintenancePolicy:
-                          description: |-
-                            (Computed) Maintenance policy for Kubernetes master.
-                            If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time.
-                            Revision upgrades are performed only within the same minor version, e.g. 1.13.
-                            Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+                          description: (Computed) Maintenance policy for Kubernetes
+                            master. If policy is omitted, automatic revision upgrades
+                            of the kubernetes master are enabled and could happen
+                            at any time. Revision upgrades are performed only within
+                            the same minor version, e.g. 1.13. Minor version upgrades
+                            (e.g. 1.13->1.14) should be performed manually. The structure
+                            is documented below.
                           items:
                             properties:
                               autoUpgrade:
@@ -1139,10 +1149,13 @@ spec:
                                   value is TRUE.
                                 type: boolean
                               maintenanceWindow:
-                                description: |-
-                                  (Computed) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time.
-                                  To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration.
-                                  Please see zonal_cluster_resource_name config example.
+                                description: (Computed) This structure specifies maintenance
+                                  window, when update for master is allowed. When
+                                  omitted, it defaults to any time. To specify time
+                                  of day interval, for all days, one element should
+                                  be provided, with two fields set, start_time and
+                                  duration. Please see zonal_cluster_resource_name
+                                  config example.
                                 items:
                                   properties:
                                     day:
@@ -1156,11 +1169,13 @@ spec:
                             type: object
                           type: array
                         masterLocation:
-                          description: |-
-                            Cluster master's instances locations array (zone and subnet).
-                            Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location.
-                            Can be updated inplace. When creating regional cluster (three master instances), its region will be evaluated automatically by backend.
-                            The structure is documented below.
+                          description: Cluster master's instances locations array
+                            (zone and subnet). Cannot be used together with zonal
+                            or regional. Currently, supports either one, for zonal
+                            master, or three instances of master_location. Can be
+                            updated inplace. When creating regional cluster (three
+                            master instances), its region will be evaluated automatically
+                            by backend. The structure is documented below.
                           items:
                             properties:
                               subnetId:
@@ -1601,9 +1616,9 @@ spec:
                       each node.
                     type: number
                   nodeServiceAccountId:
-                    description: |-
-                      Service account to be used by the worker nodes of the Kubernetes cluster
-                      to access Container Registry or to push node logs and metrics.
+                    description: Service account to be used by the worker nodes of
+                      the Kubernetes cluster to access Container Registry or to push
+                      node logs and metrics.
                     type: string
                   nodeServiceAccountIdRef:
                     description: Reference to a ServiceAccount in iam to populate
@@ -1685,10 +1700,11 @@ spec:
                     description: Cluster release channel.
                     type: string
                   serviceAccountId:
-                    description: |-
-                      Service account to be used for provisioning Compute Cloud and VPC resources
-                      for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes
-                      cluster will be located and on the folder where selected network resides.
+                    description: Service account to be used for provisioning Compute
+                      Cloud and VPC resources for Kubernetes cluster. Selected service
+                      account should have edit role on the folder where the Kubernetes
+                      cluster will be located and on the folder where selected network
+                      resides.
                     type: string
                   serviceAccountIdRef:
                     description: Reference to a ServiceAccount in iam to populate
@@ -1767,10 +1783,10 @@ spec:
                         type: object
                     type: object
                   serviceIpv4Range:
-                    description: |-
-                      CIDR block. IP range Kubernetes service Kubernetes cluster
-                      IP addresses will be allocated from. It should not overlap with any subnet in the network
-                      the Kubernetes cluster located in.
+                    description: CIDR block. IP range Kubernetes service Kubernetes
+                      cluster IP addresses will be allocated from. It should not overlap
+                      with any subnet in the network the Kubernetes cluster located
+                      in.
                     type: string
                   serviceIpv6Range:
                     description: Identical to service_ipv4_range but for IPv6 protocol.
@@ -1954,10 +1970,10 @@ spec:
               atProvider:
                 properties:
                   clusterIpv4Range:
-                    description: |-
-                      CIDR block. IP range for allocating pod addresses.
-                      It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be
-                      set up for this CIDR blocks in node subnets.
+                    description: CIDR block. IP range for allocating pod addresses.
+                      It should not overlap with any subnet in the network the Kubernetes
+                      cluster located in. Static routes will be set up for this CIDR
+                      blocks in node subnets.
                     type: string
                   clusterIpv6Range:
                     description: Identical to cluster_ipv4_range but for IPv6 protocol.
@@ -1969,9 +1985,9 @@ spec:
                     description: A description of the Kubernetes cluster.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the Kubernetes cluster belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: The ID of the folder that the Kubernetes cluster
+                      belongs to. If it is not provided, the default provider folder
+                      is used.
                     type: string
                   health:
                     description: (Computed) Health of the Kubernetes cluster.
@@ -2032,11 +2048,13 @@ spec:
                             to connect to the master from cloud networks.
                           type: string
                         maintenancePolicy:
-                          description: |-
-                            (Computed) Maintenance policy for Kubernetes master.
-                            If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time.
-                            Revision upgrades are performed only within the same minor version, e.g. 1.13.
-                            Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+                          description: (Computed) Maintenance policy for Kubernetes
+                            master. If policy is omitted, automatic revision upgrades
+                            of the kubernetes master are enabled and could happen
+                            at any time. Revision upgrades are performed only within
+                            the same minor version, e.g. 1.13. Minor version upgrades
+                            (e.g. 1.13->1.14) should be performed manually. The structure
+                            is documented below.
                           items:
                             properties:
                               autoUpgrade:
@@ -2045,10 +2063,13 @@ spec:
                                   value is TRUE.
                                 type: boolean
                               maintenanceWindow:
-                                description: |-
-                                  (Computed) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time.
-                                  To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration.
-                                  Please see zonal_cluster_resource_name config example.
+                                description: (Computed) This structure specifies maintenance
+                                  window, when update for master is allowed. When
+                                  omitted, it defaults to any time. To specify time
+                                  of day interval, for all days, one element should
+                                  be provided, with two fields set, start_time and
+                                  duration. Please see zonal_cluster_resource_name
+                                  config example.
                                 items:
                                   properties:
                                     day:
@@ -2062,11 +2083,13 @@ spec:
                             type: object
                           type: array
                         masterLocation:
-                          description: |-
-                            Cluster master's instances locations array (zone and subnet).
-                            Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location.
-                            Can be updated inplace. When creating regional cluster (three master instances), its region will be evaluated automatically by backend.
-                            The structure is documented below.
+                          description: Cluster master's instances locations array
+                            (zone and subnet). Cannot be used together with zonal
+                            or regional. Currently, supports either one, for zonal
+                            master, or three instances of master_location. Can be
+                            updated inplace. When creating regional cluster (three
+                            master instances), its region will be evaluated automatically
+                            by backend. The structure is documented below.
                           items:
                             properties:
                               subnetId:
@@ -2166,21 +2189,21 @@ spec:
                                   (e.g. 1.15).
                                 type: string
                               newRevisionAvailable:
-                                description: |-
-                                  Boolean flag.
-                                  Newer revisions may include Kubernetes patches (e.g 1.15.1 -> 1.15.2) as well
-                                  as some internal component updates - new features or bug fixes in yandex-specific
-                                  components either on the master or nodes.
+                                description: Boolean flag. Newer revisions may include
+                                  Kubernetes patches (e.g 1.15.1 -> 1.15.2) as well
+                                  as some internal component updates - new features
+                                  or bug fixes in yandex-specific components either
+                                  on the master or nodes.
                                 type: boolean
                               newRevisionSummary:
-                                description: |-
-                                  Human readable description of the changes to be applied
-                                  when updating to the latest revision. Empty if new_revision_available is false.
+                                description: Human readable description of the changes
+                                  to be applied when updating to the latest revision.
+                                  Empty if new_revision_available is false.
                                 type: string
                               versionDeprecated:
-                                description: |-
-                                  Boolean flag. The current version is on the deprecation schedule,
-                                  component (master or node group) should be upgraded.
+                                description: Boolean flag. The current version is
+                                  on the deprecation schedule, component (master or
+                                  node group) should be upgraded.
                                 type: boolean
                             type: object
                           type: array
@@ -2230,24 +2253,25 @@ spec:
                       each node.
                     type: number
                   nodeServiceAccountId:
-                    description: |-
-                      Service account to be used by the worker nodes of the Kubernetes cluster
-                      to access Container Registry or to push node logs and metrics.
+                    description: Service account to be used by the worker nodes of
+                      the Kubernetes cluster to access Container Registry or to push
+                      node logs and metrics.
                     type: string
                   releaseChannel:
                     description: Cluster release channel.
                     type: string
                   serviceAccountId:
-                    description: |-
-                      Service account to be used for provisioning Compute Cloud and VPC resources
-                      for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes
-                      cluster will be located and on the folder where selected network resides.
+                    description: Service account to be used for provisioning Compute
+                      Cloud and VPC resources for Kubernetes cluster. Selected service
+                      account should have edit role on the folder where the Kubernetes
+                      cluster will be located and on the folder where selected network
+                      resides.
                     type: string
                   serviceIpv4Range:
-                    description: |-
-                      CIDR block. IP range Kubernetes service Kubernetes cluster
-                      IP addresses will be allocated from. It should not overlap with any subnet in the network
-                      the Kubernetes cluster located in.
+                    description: CIDR block. IP range Kubernetes service Kubernetes
+                      cluster IP addresses will be allocated from. It should not overlap
+                      with any subnet in the network the Kubernetes cluster located
+                      in.
                     type: string
                   serviceIpv6Range:
                     description: Identical to service_ipv4_range but for IPv6 protocol.

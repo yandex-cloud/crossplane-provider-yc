@@ -35,7 +35,7 @@ func (mg *MongodbUser) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this MongodbUser
 func (tr *MongodbUser) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"password": "spec.forProvider.passwordSecretRef"}
+	return map[string]string{"password": "passwordSecretRef"}
 }
 
 // GetObservation of this MongodbUser

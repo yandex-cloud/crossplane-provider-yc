@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: filesystems.compute.yandex-cloud.jet.crossplane.io
 spec:
   group: compute.yandex-cloud.jet.crossplane.io
@@ -82,9 +82,8 @@ spec:
                       when you create a resource.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the filesystem belongs to. If it is not provided, the default
-                      provider folder is used.
+                    description: The ID of the folder that the filesystem belongs
+                      to. If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -165,9 +164,8 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: |-
-                      Labels to assign to this filesystem. A list of key/value pairs. For details about the concept,
-                      see documentation.
+                    description: Labels to assign to this filesystem. A list of key/value
+                      pairs. For details about the concept, see documentation.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
@@ -206,9 +204,8 @@ spec:
                       when you create a resource.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the filesystem belongs to. If it is not provided, the default
-                      provider folder is used.
+                    description: The ID of the folder that the filesystem belongs
+                      to. If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -289,9 +286,8 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: |-
-                      Labels to assign to this filesystem. A list of key/value pairs. For details about the concept,
-                      see documentation.
+                    description: Labels to assign to this filesystem. A list of key/value
+                      pairs. For details about the concept, see documentation.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
@@ -492,18 +488,16 @@ spec:
                       when you create a resource.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the filesystem belongs to. If it is not provided, the default
-                      provider folder is used.
+                    description: The ID of the folder that the filesystem belongs
+                      to. If it is not provided, the default provider folder is used.
                     type: string
                   id:
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: |-
-                      Labels to assign to this filesystem. A list of key/value pairs. For details about the concept,
-                      see documentation.
+                    description: Labels to assign to this filesystem. A list of key/value
+                      pairs. For details about the concept, see documentation.
                     type: object
                     x-kubernetes-map-type: granular
                   name:

@@ -29,16 +29,14 @@ import (
 
 type ServiceAccountIAMMemberInitParameters struct {
 
-	// Identity that will be granted the privilege in role.
-	// Entry can have one of the following values:
+	// Identity that will be granted the privilege in role. Entry can have one of the following values:
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
 	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
 	Member *string `json:"member,omitempty" tf:"member,omitempty"`
 
-	// The role that should be applied. Only one
-	// yandex_iam_service_account_iam_binding can be used per role.
+	// The role that should be applied. Only one yandex_iam_service_account_iam_binding can be used per role.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// The service account ID to apply a policy to.
@@ -67,12 +65,10 @@ type ServiceAccountIAMMemberInitParameters struct {
 type ServiceAccountIAMMemberObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Identity that will be granted the privilege in role.
-	// Entry can have one of the following values:
+	// Identity that will be granted the privilege in role. Entry can have one of the following values:
 	Member *string `json:"member,omitempty" tf:"member,omitempty"`
 
-	// The role that should be applied. Only one
-	// yandex_iam_service_account_iam_binding can be used per role.
+	// The role that should be applied. Only one yandex_iam_service_account_iam_binding can be used per role.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// The service account ID to apply a policy to.
@@ -83,8 +79,7 @@ type ServiceAccountIAMMemberObservation struct {
 
 type ServiceAccountIAMMemberParameters struct {
 
-	// Identity that will be granted the privilege in role.
-	// Entry can have one of the following values:
+	// Identity that will be granted the privilege in role. Entry can have one of the following values:
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
@@ -92,8 +87,7 @@ type ServiceAccountIAMMemberParameters struct {
 	// +kubebuilder:validation:Optional
 	Member *string `json:"member,omitempty" tf:"member,omitempty"`
 
-	// The role that should be applied. Only one
-	// yandex_iam_service_account_iam_binding can be used per role.
+	// The role that should be applied. Only one yandex_iam_service_account_iam_binding can be used per role.
 	// +kubebuilder:validation:Optional
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 

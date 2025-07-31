@@ -283,7 +283,7 @@ type MySQLClusterInitParameters struct {
 	// (Deprecated) To manage databases, please switch to using a separate resource type yandex_mdb_mysql_databases.
 	Database []MySQLClusterDatabaseInitParameters `json:"database,omitempty" tf:"database,omitempty"`
 
-	// Inhibits deletion of the cluster.  Can be either true or false.
+	// Inhibits deletion of the cluster. Can be either true or false.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// Description of the MySQL cluster.
@@ -292,8 +292,7 @@ type MySQLClusterInitParameters struct {
 	// Deployment environment of the MySQL cluster.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -425,7 +424,7 @@ type MySQLClusterObservation struct {
 	// (Deprecated) To manage databases, please switch to using a separate resource type yandex_mdb_mysql_databases.
 	Database []MySQLClusterDatabaseObservation `json:"database,omitempty" tf:"database,omitempty"`
 
-	// Inhibits deletion of the cluster.  Can be either true or false.
+	// Inhibits deletion of the cluster. Can be either true or false.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// Description of the MySQL cluster.
@@ -434,8 +433,7 @@ type MySQLClusterObservation struct {
 	// Deployment environment of the MySQL cluster.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// Aggregated health of the cluster.
@@ -511,7 +509,7 @@ type MySQLClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Database []MySQLClusterDatabaseParameters `json:"database,omitempty" tf:"database,omitempty"`
 
-	// Inhibits deletion of the cluster.  Can be either true or false.
+	// Inhibits deletion of the cluster. Can be either true or false.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
@@ -523,8 +521,7 @@ type MySQLClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -720,18 +717,19 @@ type MySQLClusterUserInitParameters struct {
 	// Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD)
 	AuthenticationPlugin *string `json:"authenticationPlugin,omitempty" tf:"authentication_plugin,omitempty"`
 
-	// User's connection limits. The structure is documented below.
-	// If the attribute is not specified there will be no changes.
+	// User's connection limits. The structure is documented below. If the attribute is not specified there will be no changes.
 	ConnectionLimits []ConnectionLimitsInitParameters `json:"connectionLimits,omitempty" tf:"connection_limits,omitempty"`
 
 	// List user's global permissions
-	// Allowed permissions:  REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list.
-	// If the attribute is not specified there will be no changes.
+	// Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
 	// +listType=set
 	GlobalPermissions []*string `json:"globalPermissions,omitempty" tf:"global_permissions,omitempty"`
 
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The password of the user.
+	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// Set of permissions granted to the user. The structure is documented below.
 	Permission []MySQLClusterUserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
@@ -742,13 +740,11 @@ type MySQLClusterUserObservation struct {
 	// Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD)
 	AuthenticationPlugin *string `json:"authenticationPlugin,omitempty" tf:"authentication_plugin,omitempty"`
 
-	// User's connection limits. The structure is documented below.
-	// If the attribute is not specified there will be no changes.
+	// User's connection limits. The structure is documented below. If the attribute is not specified there will be no changes.
 	ConnectionLimits []ConnectionLimitsObservation `json:"connectionLimits,omitempty" tf:"connection_limits,omitempty"`
 
 	// List user's global permissions
-	// Allowed permissions:  REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list.
-	// If the attribute is not specified there will be no changes.
+	// Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
 	// +listType=set
 	GlobalPermissions []*string `json:"globalPermissions,omitempty" tf:"global_permissions,omitempty"`
 
@@ -765,14 +761,12 @@ type MySQLClusterUserParameters struct {
 	// +kubebuilder:validation:Optional
 	AuthenticationPlugin *string `json:"authenticationPlugin,omitempty" tf:"authentication_plugin,omitempty"`
 
-	// User's connection limits. The structure is documented below.
-	// If the attribute is not specified there will be no changes.
+	// User's connection limits. The structure is documented below. If the attribute is not specified there will be no changes.
 	// +kubebuilder:validation:Optional
 	ConnectionLimits []ConnectionLimitsParameters `json:"connectionLimits,omitempty" tf:"connection_limits,omitempty"`
 
 	// List user's global permissions
-	// Allowed permissions:  REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list.
-	// If the attribute is not specified there will be no changes.
+	// Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	GlobalPermissions []*string `json:"globalPermissions,omitempty" tf:"global_permissions,omitempty"`
@@ -782,7 +776,7 @@ type MySQLClusterUserParameters struct {
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// The password of the user.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// Set of permissions granted to the user. The structure is documented below.
@@ -795,9 +789,7 @@ type MySQLClusterUserPermissionInitParameters struct {
 	// The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 
-	// List user's roles in the database.
-	// Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES,
-	// CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
+	// List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
@@ -806,9 +798,7 @@ type MySQLClusterUserPermissionObservation struct {
 	// The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 
-	// List user's roles in the database.
-	// Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES,
-	// CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
+	// List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
@@ -818,9 +808,7 @@ type MySQLClusterUserPermissionParameters struct {
 	// +kubebuilder:validation:Optional
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 
-	// List user's roles in the database.
-	// Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES,
-	// CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
+	// List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
 	// +kubebuilder:validation:Optional
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }

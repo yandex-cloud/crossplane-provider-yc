@@ -99,8 +99,7 @@ type ConfigZookeeperResourcesInitParameters struct {
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
@@ -111,8 +110,7 @@ type ConfigZookeeperResourcesObservation struct {
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
@@ -124,13 +122,51 @@ type ConfigZookeeperResourcesParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	// +kubebuilder:validation:Optional
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
+type DiskSizeAutoscalingInitParameters struct {
+
+	// Maximum possible size of disk in bytes.
+	DiskSizeLimit *int64 `json:"diskSizeLimit,omitempty" tf:"disk_size_limit,omitempty"`
+
+	// Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
+	EmergencyUsageThreshold *int64 `json:"emergencyUsageThreshold,omitempty" tf:"emergency_usage_threshold,omitempty"`
+
+	// Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
+	PlannedUsageThreshold *int64 `json:"plannedUsageThreshold,omitempty" tf:"planned_usage_threshold,omitempty"`
+}
+
+type DiskSizeAutoscalingObservation struct {
+
+	// Maximum possible size of disk in bytes.
+	DiskSizeLimit *int64 `json:"diskSizeLimit,omitempty" tf:"disk_size_limit,omitempty"`
+
+	// Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
+	EmergencyUsageThreshold *int64 `json:"emergencyUsageThreshold,omitempty" tf:"emergency_usage_threshold,omitempty"`
+
+	// Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
+	PlannedUsageThreshold *int64 `json:"plannedUsageThreshold,omitempty" tf:"planned_usage_threshold,omitempty"`
+}
+
+type DiskSizeAutoscalingParameters struct {
+
+	// Maximum possible size of disk in bytes.
+	// +kubebuilder:validation:Optional
+	DiskSizeLimit *int64 `json:"diskSizeLimit" tf:"disk_size_limit,omitempty"`
+
+	// Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
+	// +kubebuilder:validation:Optional
+	EmergencyUsageThreshold *int64 `json:"emergencyUsageThreshold,omitempty" tf:"emergency_usage_threshold,omitempty"`
+
+	// Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
+	// +kubebuilder:validation:Optional
+	PlannedUsageThreshold *int64 `json:"plannedUsageThreshold,omitempty" tf:"planned_usage_threshold,omitempty"`
 }
 
 type KafkaClusterConfigInitParameters struct {
@@ -143,6 +179,9 @@ type KafkaClusterConfigInitParameters struct {
 
 	// Count of brokers per availability zone. The default is 1.
 	BrokersCount *int64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
+
+	// Disk autoscaling settings of the Kafka cluster. The structure is documented below.
+	DiskSizeAutoscaling []DiskSizeAutoscalingInitParameters `json:"diskSizeAutoscaling,omitempty" tf:"disk_size_autoscaling,omitempty"`
 
 	// Configuration of the Kafka subcluster. The structure is documented below.
 	Kafka []ConfigKafkaInitParameters `json:"kafka,omitempty" tf:"kafka,omitempty"`
@@ -172,6 +211,9 @@ type KafkaClusterConfigObservation struct {
 
 	// Count of brokers per availability zone. The default is 1.
 	BrokersCount *int64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
+
+	// Disk autoscaling settings of the Kafka cluster. The structure is documented below.
+	DiskSizeAutoscaling []DiskSizeAutoscalingObservation `json:"diskSizeAutoscaling,omitempty" tf:"disk_size_autoscaling,omitempty"`
 
 	// Configuration of the Kafka subcluster. The structure is documented below.
 	Kafka []ConfigKafkaObservation `json:"kafka,omitempty" tf:"kafka,omitempty"`
@@ -204,6 +246,10 @@ type KafkaClusterConfigParameters struct {
 	// Count of brokers per availability zone. The default is 1.
 	// +kubebuilder:validation:Optional
 	BrokersCount *int64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
+
+	// Disk autoscaling settings of the Kafka cluster. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	DiskSizeAutoscaling []DiskSizeAutoscalingParameters `json:"diskSizeAutoscaling,omitempty" tf:"disk_size_autoscaling,omitempty"`
 
 	// Configuration of the Kafka subcluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
@@ -261,14 +307,13 @@ type KafkaClusterInitParameters struct {
 	// Configuration of the Kafka cluster. The structure is documented below.
 	Config []KafkaClusterConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
 
-	// Inhibits deletion of the cluster.  Can be either true or false.
+	// Inhibits deletion of the cluster. Can be either true or false.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// Description of the Kafka cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION.
-	// The default is PRODUCTION.
+	// Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
 	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
@@ -388,21 +433,19 @@ type KafkaClusterObservation struct {
 	// Timestamp of cluster creation.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Inhibits deletion of the cluster.  Can be either true or false.
+	// Inhibits deletion of the cluster. Can be either true or false.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// Description of the Kafka cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION.
-	// The default is PRODUCTION.
+	// Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
 	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN.
-	// For more information see health field of JSON representation in the official documentation.
+	// Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
 	// A host of the Kafka cluster. The structure is documented below.
@@ -431,8 +474,7 @@ type KafkaClusterObservation struct {
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
-	// For more information see status field of JSON representation in the official documentation.
+	// Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
 	// IDs of the subnets, to which the Kafka cluster belongs.
@@ -451,7 +493,7 @@ type KafkaClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Config []KafkaClusterConfigParameters `json:"config,omitempty" tf:"config,omitempty"`
 
-	// Inhibits deletion of the cluster.  Can be either true or false.
+	// Inhibits deletion of the cluster. Can be either true or false.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
@@ -459,8 +501,7 @@ type KafkaClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION.
-	// The default is PRODUCTION.
+	// Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
 	// +kubebuilder:validation:Optional
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
@@ -549,6 +590,9 @@ type KafkaClusterUserInitParameters struct {
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The password of the user.
+	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+
 	// Set of permissions granted to the user. The structure is documented below.
 	Permission []UserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
@@ -569,7 +613,7 @@ type KafkaClusterUserParameters struct {
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// The password of the user.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// Set of permissions granted to the user. The structure is documented below.
@@ -580,9 +624,7 @@ type KafkaClusterUserParameters struct {
 type KafkaConfigInitParameters struct {
 	AutoCreateTopicsEnable *bool `json:"autoCreateTopicsEnable,omitempty" tf:"auto_create_topics_enable,omitempty"`
 
-	// Kafka topic settings. For more information, see
-	// the official documentation
-	// and the Kafka documentation.
+	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
 	DefaultReplicationFactor *string `json:"defaultReplicationFactor,omitempty" tf:"default_replication_factor,omitempty"`
@@ -627,9 +669,7 @@ type KafkaConfigInitParameters struct {
 type KafkaConfigObservation struct {
 	AutoCreateTopicsEnable *bool `json:"autoCreateTopicsEnable,omitempty" tf:"auto_create_topics_enable,omitempty"`
 
-	// Kafka topic settings. For more information, see
-	// the official documentation
-	// and the Kafka documentation.
+	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
 	DefaultReplicationFactor *string `json:"defaultReplicationFactor,omitempty" tf:"default_replication_factor,omitempty"`
@@ -676,9 +716,7 @@ type KafkaConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoCreateTopicsEnable *bool `json:"autoCreateTopicsEnable,omitempty" tf:"auto_create_topics_enable,omitempty"`
 
-	// Kafka topic settings. For more information, see
-	// the official documentation
-	// and the Kafka documentation.
+	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
 	// +kubebuilder:validation:Optional
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
@@ -744,8 +782,7 @@ type KafkaResourcesInitParameters struct {
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
@@ -756,8 +793,7 @@ type KafkaResourcesObservation struct {
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
@@ -769,8 +805,7 @@ type KafkaResourcesParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	// +kubebuilder:validation:Optional
 	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
 
@@ -781,9 +816,7 @@ type KafkaResourcesParameters struct {
 type TopicConfigInitParameters struct {
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
-	// Kafka topic settings. For more information, see
-	// the official documentation
-	// and the Kafka documentation.
+	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
 	DeleteRetentionMs *string `json:"deleteRetentionMs,omitempty" tf:"delete_retention_ms,omitempty"`
@@ -812,9 +845,7 @@ type TopicConfigInitParameters struct {
 type TopicConfigObservation struct {
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
-	// Kafka topic settings. For more information, see
-	// the official documentation
-	// and the Kafka documentation.
+	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
 	DeleteRetentionMs *string `json:"deleteRetentionMs,omitempty" tf:"delete_retention_ms,omitempty"`
@@ -845,9 +876,7 @@ type TopicConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
-	// Kafka topic settings. For more information, see
-	// the official documentation
-	// and the Kafka documentation.
+	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
 	// +kubebuilder:validation:Optional
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 

@@ -29,12 +29,15 @@ import (
 
 type ZoneInitParameters struct {
 
+	// (Boolean) Flag that protects the dns zone from accidental deletion.
 	// Flag that protects the dns zone from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
+	// (String) Description of the DNS zone.
 	// Description of the DNS zone.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
 	// ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -47,13 +50,16 @@ type ZoneInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// (Map of String) A set of key/value label pairs to assign to the DNS zone.
 	// A set of key/value label pairs to assign to the DNS zone.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (String) User assigned name of a specific resource. Must be unique within the folder.
 	// User assigned name of a specific resource. Must be unique within the folder.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Set of String) For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	// +listType=set
@@ -67,58 +73,72 @@ type ZoneInitParameters struct {
 	// +kubebuilder:validation:Optional
 	PrivateNetworksSelector *v1.Selector `json:"privateNetworksSelector,omitempty" tf:"-"`
 
+	// (Boolean) The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	// The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
 
+	// (String) The DNS name of this zone, e.g. "example.com.". Must ends with dot.
 	// The DNS name of this zone, e.g. "example.com.". Must ends with dot.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type ZoneObservation struct {
 
-	// (Computed) The DNS zone creation timestamp.
+	// (String) The DNS zone creation timestamp.
+	// The DNS zone creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// (Boolean) Flag that protects the dns zone from accidental deletion.
 	// Flag that protects the dns zone from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
+	// (String) Description of the DNS zone.
 	// Description of the DNS zone.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
 	// ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (Computed) ID of a new DNS zone.
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Map of String) A set of key/value label pairs to assign to the DNS zone.
 	// A set of key/value label pairs to assign to the DNS zone.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (String) User assigned name of a specific resource. Must be unique within the folder.
 	// User assigned name of a specific resource. Must be unique within the folder.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Set of String) For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// +listType=set
 	PrivateNetworks []*string `json:"privateNetworks,omitempty" tf:"private_networks,omitempty"`
 
+	// (Boolean) The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	// The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
 
+	// (String) The DNS name of this zone, e.g. "example.com.". Must ends with dot.
 	// The DNS name of this zone, e.g. "example.com.". Must ends with dot.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type ZoneParameters struct {
 
+	// (Boolean) Flag that protects the dns zone from accidental deletion.
 	// Flag that protects the dns zone from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
+	// (String) Description of the DNS zone.
 	// Description of the DNS zone.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
 	// ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
@@ -132,15 +152,18 @@ type ZoneParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// (Map of String) A set of key/value label pairs to assign to the DNS zone.
 	// A set of key/value label pairs to assign to the DNS zone.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (String) User assigned name of a specific resource. Must be unique within the folder.
 	// User assigned name of a specific resource. Must be unique within the folder.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Set of String) For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
@@ -155,10 +178,12 @@ type ZoneParameters struct {
 	// +kubebuilder:validation:Optional
 	PrivateNetworksSelector *v1.Selector `json:"privateNetworksSelector,omitempty" tf:"-"`
 
+	// (Boolean) The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	// The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	// +kubebuilder:validation:Optional
 	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
 
+	// (String) The DNS name of this zone, e.g. "example.com.". Must ends with dot.
 	// The DNS name of this zone, e.g. "example.com.". Must ends with dot.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`

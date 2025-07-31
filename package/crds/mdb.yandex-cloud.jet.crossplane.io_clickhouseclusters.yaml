@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: clickhouseclusters.mdb.yandex-cloud.jet.crossplane.io
 spec:
   group: mdb.yandex-cloud.jet.crossplane.io
@@ -122,6 +122,9 @@ spec:
                     - name
                     - namespace
                     type: object
+                  backupRetainPeriodDays:
+                    description: The period in days during which backups are stored.
+                    type: number
                   backupWindowStart:
                     description: Time to start the daily backup, in the UTC timezone.
                       The structure is documented below.
@@ -144,11 +147,31 @@ spec:
                           description: Main ClickHouse cluster configuration.
                           items:
                             properties:
+                              asynchronousInsertLogEnabled:
+                                type: boolean
+                              asynchronousInsertLogRetentionSize:
+                                type: number
+                              asynchronousInsertLogRetentionTime:
+                                type: number
+                              asynchronousMetricLogEnabled:
+                                type: boolean
+                              asynchronousMetricLogRetentionSize:
+                                type: number
+                              asynchronousMetricLogRetentionTime:
+                                type: number
+                              backgroundBufferFlushSchedulePoolSize:
+                                type: number
+                              backgroundCommonPoolSize:
+                                type: number
+                              backgroundDistributedSchedulePoolSize:
+                                type: number
                               backgroundFetchesPoolSize:
                                 type: number
                               backgroundMergesMutationsConcurrencyRatio:
                                 type: number
                               backgroundMessageBrokerSchedulePoolSize:
+                                type: number
+                              backgroundMovePoolSize:
                                 type: number
                               backgroundPoolSize:
                                 type: number
@@ -186,6 +209,8 @@ spec:
                                 description: A database of the ClickHouse cluster.
                                   The structure is documented below.
                                 type: string
+                              dictionariesLazyLoad:
+                                type: boolean
                               geobaseEnabled:
                                 type: boolean
                               geobaseUri:
@@ -197,6 +222,11 @@ spec:
                                   properties:
                                     name:
                                       description: The name of the user.
+                                      type: string
+                                    pathColumnName:
+                                      description: 'The name of the column storing
+                                        the metric name (Graphite sensor). Default
+                                        value: Path.'
                                       type: string
                                     pattern:
                                       description: Set of thinning rules.
@@ -225,6 +255,21 @@ spec:
                                             type: array
                                         type: object
                                       type: array
+                                    timeColumnName:
+                                      description: 'The name of the column storing
+                                        the time of measuring the metric. Default
+                                        value: Time.'
+                                      type: string
+                                    valueColumnName:
+                                      description: 'The name of the column storing
+                                        the value of the metric at the time set in
+                                        time_column_name. Default value: Value.'
+                                      type: string
+                                    versionColumnName:
+                                      description: 'The name of the column storing
+                                        the version of the metric. Default value:
+                                        Timestamp.'
+                                      type: string
                                   type: object
                                 type: array
                               kafka:
@@ -232,6 +277,21 @@ spec:
                                   is documented below.
                                 items:
                                   properties:
+                                    autoOffsetReset:
+                                      description: 'Action to take when there is no
+                                        initial offset in offset store or the desired
+                                        offset is out of range: ''smallest'',''earliest''
+                                        - automatically reset the offset to the smallest
+                                        offset, ''largest'',''latest'' - automatically
+                                        reset the offset to the largest offset, ''error''
+                                        - trigger an error (ERR__AUTO_OFFSET_RESET)
+                                        which is retrieved by consuming messages and
+                                        checking ''message->err''.'
+                                      type: string
+                                    debug:
+                                      description: A comma-separated list of debug
+                                        contexts to enable.
+                                      type: string
                                     enableSslCertificateVerification:
                                       description: enable verification of SSL certificates.
                                       type: boolean
@@ -295,6 +355,22 @@ spec:
                                         is documented below.
                                       items:
                                         properties:
+                                          autoOffsetReset:
+                                            description: 'Action to take when there
+                                              is no initial offset in offset store
+                                              or the desired offset is out of range:
+                                              ''smallest'',''earliest'' - automatically
+                                              reset the offset to the smallest offset,
+                                              ''largest'',''latest'' - automatically
+                                              reset the offset to the largest offset,
+                                              ''error'' - trigger an error (ERR__AUTO_OFFSET_RESET)
+                                              which is retrieved by consuming messages
+                                              and checking ''message->err''.'
+                                            type: string
+                                          debug:
+                                            description: A comma-separated list of
+                                              debug contexts to enable.
+                                            type: string
                                           enableSslCertificateVerification:
                                             description: enable verification of SSL
                                               certificates.
@@ -354,9 +430,8 @@ spec:
                               keepAliveTimeout:
                                 type: number
                               logLevel:
-                                description: |-
-                                  ClickHouse server parameters. For more information, see
-                                  the official documentation.
+                                description: ClickHouse server parameters. For more
+                                  information, see the official documentation.
                                 type: string
                               markCacheSize:
                                 type: number
@@ -373,9 +448,40 @@ spec:
                                   is documented below.
                                 items:
                                   properties:
+                                    allowRemoteFsZeroCopyReplication:
+                                      description: When this setting has a value greater
+                                        than zero only a single replica starts the
+                                        merge immediately if merged part on shared
+                                        storage and allow_remote_fs_zero_copy_replication
+                                        is enabled.
+                                      type: boolean
+                                    checkSampleColumnIsCorrect:
+                                      description: 'Enables the check at table creation,
+                                        that the data type of a column for sampling
+                                        or sampling expression is correct. The data
+                                        type must be one of unsigned integer types:
+                                        UInt8, UInt16, UInt32, UInt64. Default value:
+                                        true.'
+                                      type: boolean
                                     cleanupDelayPeriod:
                                       description: Minimum period to clean old queue
                                         logs, blocks hashes and parts.
+                                      type: number
+                                    inactivePartsToDelayInsert:
+                                      description: If the number of inactive parts
+                                        in a single partition in the table at least
+                                        that many the inactive_parts_to_delay_insert
+                                        value, an INSERT artificially slows down.
+                                        It is useful when a server fails to clean
+                                        up parts quickly enough.
+                                      type: number
+                                    inactivePartsToThrowInsert:
+                                      description: If the number of inactive parts
+                                        in a single partition more than the inactive_parts_to_throw_insert
+                                        value, INSERT is interrupted with the "Too
+                                        many inactive parts (N). Parts cleaning are
+                                        processing significantly slower than inserts"
+                                        exception.
                                       type: number
                                     maxAvgPartSizeForTooManyParts:
                                       description: The too many parts check according
@@ -391,11 +497,32 @@ spec:
                                         does not affect the thresholds on inactive
                                         parts or total parts.
                                       type: number
+                                    maxBytesToMergeAtMaxSpaceInPool:
+                                      description: The maximum total parts size (in
+                                        bytes) to be merged into one part, if there
+                                        are enough resources available. max_bytes_to_merge_at_max_space_in_pool
+                                        -- roughly corresponds to the maximum possible
+                                        part size created by an automatic background
+                                        merge.
+                                      type: number
                                     maxBytesToMergeAtMinSpaceInPool:
                                       description: 'Max bytes to merge at min space
                                         in pool: Maximum total size of a data part
                                         to merge when the number of free threads in
                                         the background pool is minimum.'
+                                      type: number
+                                    maxCleanupDelayPeriod:
+                                      description: 'Maximum period to clean old queue
+                                        logs, blocks hashes and parts. Default value:
+                                        300 seconds.'
+                                      type: number
+                                    maxMergeSelectingSleepMs:
+                                      description: 'Maximum sleep time for merge selecting,
+                                        a lower setting will trigger selecting tasks
+                                        in background_schedule_pool frequently which
+                                        result in large amount of requests to zookeeper
+                                        in large-scale clusters. Default value: 60000
+                                        milliseconds (60 seconds).'
                                       type: number
                                     maxNumberOfMergesWithTtlInPool:
                                       description: When there is more than specified
@@ -411,6 +538,11 @@ spec:
                                         Maximum number of merge tasks that can be
                                         in the ReplicatedMergeTree queue at the same
                                         time.'
+                                      type: number
+                                    mergeMaxBlockSize:
+                                      description: 'The number of rows that are read
+                                        from the merged parts into memory. Default
+                                        value: 8192.'
                                       type: number
                                     mergeSelectingSleepMs:
                                       description: Sleep time for merge selecting
@@ -449,6 +581,13 @@ spec:
                                         part that can be stored in Wide format. You
                                         can set one, both or none of these settings.
                                       type: number
+                                    numberOfFreeEntriesInPoolToExecuteMutation:
+                                      description: 'When there is less than specified
+                                        number of free entries in pool, do not execute
+                                        part mutations. This is to leave free threads
+                                        for regular merges and avoid "Too many parts".
+                                        Default value: 20.'
+                                      type: number
                                     numberOfFreeEntriesInPoolToLowerMaxSizeOfMerge:
                                       description: 'Number of free entries in pool
                                         to lower max size of merge: Threshold value
@@ -482,9 +621,8 @@ spec:
                                         the hash blocks (the old ones wil be deleted).'
                                       type: number
                                     ttlOnlyDropParts:
-                                      description: Enables or disables complete dropping
-                                        of data parts where all rows are expired in
-                                        MergeTree tables.
+                                      description: Enables zero-copy replication when
+                                        a replica is located on a remote filesystem.
                                       type: boolean
                                   type: object
                                 type: array
@@ -494,19 +632,76 @@ spec:
                                 type: number
                               metricLogRetentionTime:
                                 type: number
+                              opentelemetrySpanLogEnabled:
+                                type: boolean
+                              opentelemetrySpanLogRetentionSize:
+                                type: number
+                              opentelemetrySpanLogRetentionTime:
+                                type: number
                               partLogRetentionSize:
                                 type: number
                               partLogRetentionTime:
                                 type: number
+                              queryCache:
+                                description: Query cache configuration. The structure
+                                  is documented below.
+                                items:
+                                  properties:
+                                    maxEntries:
+                                      description: 'The maximum number of SELECT query
+                                        results stored in the cache. Default value:
+                                        1024.'
+                                      type: number
+                                    maxEntrySizeInBytes:
+                                      description: 'The maximum size in bytes SELECT
+                                        query results may have to be saved in the
+                                        cache. Default value: 1048576 (1 MiB).'
+                                      type: number
+                                    maxEntrySizeInRows:
+                                      description: 'The maximum number of rows SELECT
+                                        query results may have to be saved in the
+                                        cache. Default value: 30000000 (30 mil).'
+                                      type: number
+                                    maxSizeInBytes:
+                                      description: 'The maximum cache size in bytes.
+                                        0 means the query cache is disabled. Default
+                                        value: 1073741824 (1 GiB).'
+                                      type: number
+                                  type: object
+                                type: array
                               queryLogRetentionSize:
                                 type: number
                               queryLogRetentionTime:
                                 type: number
+                              queryMaskingRules:
+                                description: Query masking rules configuration. The
+                                  structure is documented below.
+                                items:
+                                  properties:
+                                    name:
+                                      description: The name of the user.
+                                      type: string
+                                    regexp:
+                                      description: Regular expression that the metric
+                                        name must match.
+                                      type: string
+                                    replace:
+                                      description: 'Substitution string for sensitive
+                                        data. Default value: six asterisks.'
+                                      type: string
+                                  type: object
+                                type: array
                               queryThreadLogEnabled:
                                 type: boolean
                               queryThreadLogRetentionSize:
                                 type: number
                               queryThreadLogRetentionTime:
+                                type: number
+                              queryViewsLogEnabled:
+                                type: boolean
+                              queryViewsLogRetentionSize:
+                                type: number
+                              queryViewsLogRetentionTime:
                                 type: number
                               rabbitmq:
                                 description: RabbitMQ connection configuration. The
@@ -538,6 +733,12 @@ spec:
                                       type: string
                                   type: object
                                 type: array
+                              sessionLogEnabled:
+                                type: boolean
+                              sessionLogRetentionSize:
+                                type: number
+                              sessionLogRetentionTime:
+                                type: number
                               textLogEnabled:
                                 type: boolean
                               textLogLevel:
@@ -558,6 +759,12 @@ spec:
                                 type: number
                               uncompressedCacheSize:
                                 type: number
+                              zookeeperLogEnabled:
+                                type: boolean
+                              zookeeperLogRetentionSize:
+                                type: number
+                              zookeeperLogRetentionTime:
+                                type: number
                             type: object
                           type: array
                         resources:
@@ -570,8 +777,7 @@ spec:
                                   ZooKeeper host, in gigabytes.
                                 type: number
                               diskTypeId:
-                                description: |-
-                                  Type of the storage of ZooKeeper hosts.
+                                description: Type of the storage of ZooKeeper hosts.
                                   For more information see the official documentation.
                                 type: string
                               resourcePresetId:
@@ -625,8 +831,8 @@ spec:
                       type: object
                     type: array
                   deletionProtection:
-                    description: Inhibits deletion of the cluster.  Can be either
-                      true or false.
+                    description: Inhibits deletion of the cluster. Can be either true
+                      or false.
                     type: boolean
                   description:
                     description: Description of the ClickHouse cluster.
@@ -641,9 +847,8 @@ spec:
                       Can be either PRESTABLE or PRODUCTION.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the resource belongs to. If it
-                      is not provided, the default provider folder is used.
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -834,9 +1039,9 @@ spec:
                             either CLICKHOUSE or ZOOKEEPER.
                           type: string
                         zone:
-                          description: |-
-                            The availability zone where the ClickHouse host will be created.
-                            For more information see the official documentation.
+                          description: The availability zone where the ClickHouse
+                            host will be created. For more information see the official
+                            documentation.
                           type: string
                       type: object
                     type: array
@@ -1070,8 +1275,7 @@ spec:
                                   ZooKeeper host, in gigabytes.
                                 type: number
                               diskTypeId:
-                                description: |-
-                                  Type of the storage of ZooKeeper hosts.
+                                description: Type of the storage of ZooKeeper hosts.
                                   For more information see the official documentation.
                                 type: string
                               resourcePresetId:
@@ -1195,6 +1399,10 @@ spec:
                                   TABLE statements. Enabling this may increase merge
                                   times and memory consumption.
                                 type: boolean
+                              anyJoinDistinctRightTableKeys:
+                                description: enables legacy ClickHouse server behaviour
+                                  in ANY INNER|LEFT JOIN operations.
+                                type: boolean
                               asyncInsert:
                                 description: Enables asynchronous inserts. Disabled
                                   by default.
@@ -1225,9 +1433,9 @@ spec:
                                   Default value: 16.'
                                 type: number
                               cancelHttpReadonlyQueriesOnClientClose:
-                                description: |-
-                                  Cancels HTTP read-only queries (e.g. SELECT) when a client closes the connection without waiting for the response.
-                                  Default value: false.
+                                description: 'Cancels HTTP read-only queries (e.g.
+                                  SELECT) when a client closes the connection without
+                                  waiting for the response. Default value: false.'
                                 type: boolean
                               compile:
                                 description: Enable compilation of queries.
@@ -1252,6 +1460,23 @@ spec:
                                   should be used to perform the COUNT(DISTINCT …)
                                   construction.
                                 type: string
+                              dateTimeInputFormat:
+                                description: 'Allows choosing a parser of the text
+                                  representation of date and time, one of: best_effort,
+                                  basic, best_effort_us. Default value: basic. Cloud
+                                  default value: best_effort.'
+                                type: string
+                              dateTimeOutputFormat:
+                                description: 'Allows choosing different output formats
+                                  of the text representation of date and time, one
+                                  of: simple, iso, unix_timestamp. Default value:
+                                  simple.'
+                                type: string
+                              deduplicateBlocksInDependentMaterializedViews:
+                                description: Enables or disables the deduplication
+                                  check for materialized views that receive data from
+                                  Replicated* tables.
+                                type: boolean
                               distinctOverflowMode:
                                 description: 'Sets behaviour on overflow when using
                                   DISTINCT. Possible values:'
@@ -1289,6 +1514,12 @@ spec:
                                 description: Disables query execution if indexing
                                   by the primary key is not possible.
                                 type: boolean
+                              formatRegexp:
+                                description: Regular expression (for Regexp format).
+                                type: string
+                              formatRegexpSkipUnmatched:
+                                description: Skip lines unmatched by regular expression.
+                                type: boolean
                               groupByOverflowMode:
                                 description: 'Sets behaviour on overflow while GROUP
                                   BY operation. Possible values:'
@@ -1300,6 +1531,11 @@ spec:
                               groupByTwoLevelThresholdBytes:
                                 description: Sets the threshold of the number of bytes,
                                   after that the two-level aggregation should be used.
+                                type: number
+                              hedgedConnectionTimeoutMs:
+                                description: 'Connection timeout for establishing
+                                  connection with replica for Hedged requests. Default
+                                  value: 50 milliseconds.'
                                 type: number
                               httpConnectionTimeout:
                                 description: Timeout for HTTP connection in milliseconds.
@@ -1314,6 +1550,11 @@ spec:
                               httpSendTimeout:
                                 description: Timeout for HTTP connection in milliseconds.
                                 type: number
+                              idleConnectionTimeout:
+                                description: 'Timeout to close idle TCP connections
+                                  after specified number of seconds. Default value:
+                                  3600 seconds.'
+                                type: number
                               inputFormatDefaultsForOmittedFields:
                                 description: When performing INSERT queries, replace
                                   omitted input column values with default values
@@ -1323,6 +1564,11 @@ spec:
                                 description: Enables or disables the insertion of
                                   JSON data with nested objects.
                                 type: boolean
+                              inputFormatNullAsDefault:
+                                description: Enables or disables the initialization
+                                  of NULL fields with default values, if data type
+                                  of these fields is not nullable.
+                                type: boolean
                               inputFormatParallelParsing:
                                 description: Enables or disables order-preserving
                                   parallel parsing of data formats. Supported only
@@ -1331,6 +1577,10 @@ spec:
                               inputFormatValuesInterpretExpressions:
                                 description: Enables or disables the full SQL parser
                                   if the fast stream parser can’t parse the data.
+                                type: boolean
+                              inputFormatWithNamesUseHeader:
+                                description: Enables or disables checking the column
+                                  order when inserting data.
                                 type: boolean
                               insertKeeperMaxRetries:
                                 description: The setting sets the maximum number of
@@ -1348,9 +1598,19 @@ spec:
                               insertQuorum:
                                 description: Enables the quorum writes.
                                 type: number
+                              insertQuorumParallel:
+                                description: Enables or disables parallelism for quorum
+                                  INSERT queries.
+                                type: boolean
                               insertQuorumTimeout:
                                 description: Write to a quorum timeout in milliseconds.
                                 type: number
+                              joinAlgorithm:
+                                description: 'Specifies which JOIN algorithm is used.
+                                  Possible values:'
+                                items:
+                                  type: string
+                                type: array
                               joinOverflowMode:
                                 description: 'Sets behaviour on overflow in JOIN.
                                   Possible values:'
@@ -1364,10 +1624,24 @@ spec:
                                 description: Require aliases for subselects and table
                                   functions in FROM that more than one table is present.
                                 type: boolean
+                              loadBalancing:
+                                description: 'Specifies the algorithm of replicas
+                                  selection that is used for distributed query processing,
+                                  one of: random, nearest_hostname, in_order, first_or_random,
+                                  round_robin. Default value: random.'
+                                type: string
                               localFilesystemReadMethod:
                                 description: 'Method of reading data from local filesystem.
                                   Possible values:'
                                 type: string
+                              logQueryThreads:
+                                description: 'Setting up query threads logging. Query
+                                  threads log into the system.query_thread_log table.
+                                  This setting has effect only when log_queries is
+                                  true. Queries’ threads run by ClickHouse with this
+                                  setup are logged according to the rules in the query_thread_log
+                                  server configuration parameter. Default value: true.'
+                                type: boolean
                               lowCardinalityAllowInNativeFormat:
                                 description: Allows or restricts using the LowCardinality
                                   data type with the Native format.
@@ -1445,6 +1719,10 @@ spec:
                               maxInsertBlockSize:
                                 description: The size of blocks (in a count of rows)
                                   to form for insertion into a table.
+                                type: number
+                              maxInsertThreads:
+                                description: 'The maximum number of threads to execute
+                                  the INSERT SELECT query. Default value: 0.'
                                 type: number
                               maxMemoryUsage:
                                 description: Limits the maximum memory usage (in bytes)
@@ -1559,7 +1837,7 @@ spec:
                                   values: from 0 to 1. Default: 0.'
                                 type: number
                               memoryProfilerStep:
-                                description: 'Memory profiler step (in bytes).  If
+                                description: 'Memory profiler step (in bytes). If
                                   the next query step requires more memory than this
                                   parameter specifies, the memory profiler collects
                                   the allocating stack trace. Values lower than a
@@ -1634,6 +1912,11 @@ spec:
                                 description: Enables +nan, -nan, +inf, -inf outputs
                                   in JSON output format.
                                 type: boolean
+                              preferLocalhostReplica:
+                                description: 'Enables/disables preferable using the
+                                  localhost replica when processing distributed queries.
+                                  Default value: true.'
+                                type: boolean
                               priority:
                                 description: Query priority.
                                 type: number
@@ -1690,9 +1973,10 @@ spec:
                                   Possible values:'
                                 type: string
                               timeoutBeforeCheckingExecutionSpeed:
-                                description: |-
-                                  Timeout (in seconds) between checks of execution speed. It is checked that execution speed is not less that specified in min_execution_speed parameter.
-                                  Must be at least 1000.
+                                description: Timeout (in seconds) between checks of
+                                  execution speed. It is checked that execution speed
+                                  is not less that specified in min_execution_speed
+                                  parameter. Must be at least 1000.
                                 type: number
                               timeoutOverflowMode:
                                 description: 'Sets behaviour on overflow. Possible
@@ -1705,6 +1989,18 @@ spec:
                               transformNullIn:
                                 description: Enables equality of NULL values for IN
                                   operator.
+                                type: boolean
+                              useHedgedRequests:
+                                description: 'Enables hedged requests logic for remote
+                                  queries. It allows to establish many connections
+                                  with different replicas for query. New connection
+                                  is enabled in case existent connection(s) with replica(s)
+                                  were not established within hedged_connection_timeout
+                                  or no data was received within receive_data_timeout.
+                                  Query uses the first connection which send non empty
+                                  progress packet (or data packet, if allow_changing_replica_until_first_data_packet);
+                                  other connections are cancelled. Queries with max_parallel_replicas
+                                  > 1 are supported. Default value: true.'
                                 type: boolean
                               useUncompressedCache:
                                 description: Whether to use a cache of uncompressed
@@ -1722,8 +2018,6 @@ spec:
                                 type: number
                             type: object
                           type: array
-                      required:
-                      - passwordSecretRef
                       type: object
                     type: array
                   version:
@@ -1744,8 +2038,7 @@ spec:
                                   ZooKeeper host, in gigabytes.
                                 type: number
                               diskTypeId:
-                                description: |-
-                                  Type of the storage of ZooKeeper hosts.
+                                description: Type of the storage of ZooKeeper hosts.
                                   For more information see the official documentation.
                                 type: string
                               resourcePresetId:
@@ -1799,6 +2092,27 @@ spec:
                           type: boolean
                       type: object
                     type: array
+                  adminPasswordSecretRef:
+                    description: A password used to authorize as user admin when sql_user_management
+                      enabled.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  backupRetainPeriodDays:
+                    description: The period in days during which backups are stored.
+                    type: number
                   backupWindowStart:
                     description: Time to start the daily backup, in the UTC timezone.
                       The structure is documented below.
@@ -1821,11 +2135,31 @@ spec:
                           description: Main ClickHouse cluster configuration.
                           items:
                             properties:
+                              asynchronousInsertLogEnabled:
+                                type: boolean
+                              asynchronousInsertLogRetentionSize:
+                                type: number
+                              asynchronousInsertLogRetentionTime:
+                                type: number
+                              asynchronousMetricLogEnabled:
+                                type: boolean
+                              asynchronousMetricLogRetentionSize:
+                                type: number
+                              asynchronousMetricLogRetentionTime:
+                                type: number
+                              backgroundBufferFlushSchedulePoolSize:
+                                type: number
+                              backgroundCommonPoolSize:
+                                type: number
+                              backgroundDistributedSchedulePoolSize:
+                                type: number
                               backgroundFetchesPoolSize:
                                 type: number
                               backgroundMergesMutationsConcurrencyRatio:
                                 type: number
                               backgroundMessageBrokerSchedulePoolSize:
+                                type: number
+                              backgroundMovePoolSize:
                                 type: number
                               backgroundPoolSize:
                                 type: number
@@ -1863,6 +2197,8 @@ spec:
                                 description: A database of the ClickHouse cluster.
                                   The structure is documented below.
                                 type: string
+                              dictionariesLazyLoad:
+                                type: boolean
                               geobaseEnabled:
                                 type: boolean
                               geobaseUri:
@@ -1874,6 +2210,11 @@ spec:
                                   properties:
                                     name:
                                       description: The name of the user.
+                                      type: string
+                                    pathColumnName:
+                                      description: 'The name of the column storing
+                                        the metric name (Graphite sensor). Default
+                                        value: Path.'
                                       type: string
                                     pattern:
                                       description: Set of thinning rules.
@@ -1902,6 +2243,21 @@ spec:
                                             type: array
                                         type: object
                                       type: array
+                                    timeColumnName:
+                                      description: 'The name of the column storing
+                                        the time of measuring the metric. Default
+                                        value: Time.'
+                                      type: string
+                                    valueColumnName:
+                                      description: 'The name of the column storing
+                                        the value of the metric at the time set in
+                                        time_column_name. Default value: Value.'
+                                      type: string
+                                    versionColumnName:
+                                      description: 'The name of the column storing
+                                        the version of the metric. Default value:
+                                        Timestamp.'
+                                      type: string
                                   type: object
                                 type: array
                               kafka:
@@ -1909,6 +2265,21 @@ spec:
                                   is documented below.
                                 items:
                                   properties:
+                                    autoOffsetReset:
+                                      description: 'Action to take when there is no
+                                        initial offset in offset store or the desired
+                                        offset is out of range: ''smallest'',''earliest''
+                                        - automatically reset the offset to the smallest
+                                        offset, ''largest'',''latest'' - automatically
+                                        reset the offset to the largest offset, ''error''
+                                        - trigger an error (ERR__AUTO_OFFSET_RESET)
+                                        which is retrieved by consuming messages and
+                                        checking ''message->err''.'
+                                      type: string
+                                    debug:
+                                      description: A comma-separated list of debug
+                                        contexts to enable.
+                                      type: string
                                     enableSslCertificateVerification:
                                       description: enable verification of SSL certificates.
                                       type: boolean
@@ -1923,6 +2294,23 @@ spec:
                                     saslMechanism:
                                       description: SASL mechanism used in kafka authentication.
                                       type: string
+                                    saslPasswordSecretRef:
+                                      description: User password on kafka server.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
                                     saslUsername:
                                       description: Username on kafka server.
                                       type: string
@@ -1955,6 +2343,22 @@ spec:
                                         is documented below.
                                       items:
                                         properties:
+                                          autoOffsetReset:
+                                            description: 'Action to take when there
+                                              is no initial offset in offset store
+                                              or the desired offset is out of range:
+                                              ''smallest'',''earliest'' - automatically
+                                              reset the offset to the smallest offset,
+                                              ''largest'',''latest'' - automatically
+                                              reset the offset to the largest offset,
+                                              ''error'' - trigger an error (ERR__AUTO_OFFSET_RESET)
+                                              which is retrieved by consuming messages
+                                              and checking ''message->err''.'
+                                            type: string
+                                          debug:
+                                            description: A comma-separated list of
+                                              debug contexts to enable.
+                                            type: string
                                           enableSslCertificateVerification:
                                             description: enable verification of SSL
                                               certificates.
@@ -1972,6 +2376,23 @@ spec:
                                             description: SASL mechanism used in kafka
                                               authentication.
                                             type: string
+                                          saslPasswordSecretRef:
+                                            description: User password on kafka server.
+                                            properties:
+                                              key:
+                                                description: The key to select.
+                                                type: string
+                                              name:
+                                                description: Name of the secret.
+                                                type: string
+                                              namespace:
+                                                description: Namespace of the secret.
+                                                type: string
+                                            required:
+                                            - key
+                                            - name
+                                            - namespace
+                                            type: object
                                           saslUsername:
                                             description: Username on kafka server.
                                             type: string
@@ -1997,9 +2418,8 @@ spec:
                               keepAliveTimeout:
                                 type: number
                               logLevel:
-                                description: |-
-                                  ClickHouse server parameters. For more information, see
-                                  the official documentation.
+                                description: ClickHouse server parameters. For more
+                                  information, see the official documentation.
                                 type: string
                               markCacheSize:
                                 type: number
@@ -2016,9 +2436,40 @@ spec:
                                   is documented below.
                                 items:
                                   properties:
+                                    allowRemoteFsZeroCopyReplication:
+                                      description: When this setting has a value greater
+                                        than zero only a single replica starts the
+                                        merge immediately if merged part on shared
+                                        storage and allow_remote_fs_zero_copy_replication
+                                        is enabled.
+                                      type: boolean
+                                    checkSampleColumnIsCorrect:
+                                      description: 'Enables the check at table creation,
+                                        that the data type of a column for sampling
+                                        or sampling expression is correct. The data
+                                        type must be one of unsigned integer types:
+                                        UInt8, UInt16, UInt32, UInt64. Default value:
+                                        true.'
+                                      type: boolean
                                     cleanupDelayPeriod:
                                       description: Minimum period to clean old queue
                                         logs, blocks hashes and parts.
+                                      type: number
+                                    inactivePartsToDelayInsert:
+                                      description: If the number of inactive parts
+                                        in a single partition in the table at least
+                                        that many the inactive_parts_to_delay_insert
+                                        value, an INSERT artificially slows down.
+                                        It is useful when a server fails to clean
+                                        up parts quickly enough.
+                                      type: number
+                                    inactivePartsToThrowInsert:
+                                      description: If the number of inactive parts
+                                        in a single partition more than the inactive_parts_to_throw_insert
+                                        value, INSERT is interrupted with the "Too
+                                        many inactive parts (N). Parts cleaning are
+                                        processing significantly slower than inserts"
+                                        exception.
                                       type: number
                                     maxAvgPartSizeForTooManyParts:
                                       description: The too many parts check according
@@ -2034,11 +2485,32 @@ spec:
                                         does not affect the thresholds on inactive
                                         parts or total parts.
                                       type: number
+                                    maxBytesToMergeAtMaxSpaceInPool:
+                                      description: The maximum total parts size (in
+                                        bytes) to be merged into one part, if there
+                                        are enough resources available. max_bytes_to_merge_at_max_space_in_pool
+                                        -- roughly corresponds to the maximum possible
+                                        part size created by an automatic background
+                                        merge.
+                                      type: number
                                     maxBytesToMergeAtMinSpaceInPool:
                                       description: 'Max bytes to merge at min space
                                         in pool: Maximum total size of a data part
                                         to merge when the number of free threads in
                                         the background pool is minimum.'
+                                      type: number
+                                    maxCleanupDelayPeriod:
+                                      description: 'Maximum period to clean old queue
+                                        logs, blocks hashes and parts. Default value:
+                                        300 seconds.'
+                                      type: number
+                                    maxMergeSelectingSleepMs:
+                                      description: 'Maximum sleep time for merge selecting,
+                                        a lower setting will trigger selecting tasks
+                                        in background_schedule_pool frequently which
+                                        result in large amount of requests to zookeeper
+                                        in large-scale clusters. Default value: 60000
+                                        milliseconds (60 seconds).'
                                       type: number
                                     maxNumberOfMergesWithTtlInPool:
                                       description: When there is more than specified
@@ -2054,6 +2526,11 @@ spec:
                                         Maximum number of merge tasks that can be
                                         in the ReplicatedMergeTree queue at the same
                                         time.'
+                                      type: number
+                                    mergeMaxBlockSize:
+                                      description: 'The number of rows that are read
+                                        from the merged parts into memory. Default
+                                        value: 8192.'
                                       type: number
                                     mergeSelectingSleepMs:
                                       description: Sleep time for merge selecting
@@ -2092,6 +2569,13 @@ spec:
                                         part that can be stored in Wide format. You
                                         can set one, both or none of these settings.
                                       type: number
+                                    numberOfFreeEntriesInPoolToExecuteMutation:
+                                      description: 'When there is less than specified
+                                        number of free entries in pool, do not execute
+                                        part mutations. This is to leave free threads
+                                        for regular merges and avoid "Too many parts".
+                                        Default value: 20.'
+                                      type: number
                                     numberOfFreeEntriesInPoolToLowerMaxSizeOfMerge:
                                       description: 'Number of free entries in pool
                                         to lower max size of merge: Threshold value
@@ -2125,9 +2609,8 @@ spec:
                                         the hash blocks (the old ones wil be deleted).'
                                       type: number
                                     ttlOnlyDropParts:
-                                      description: Enables or disables complete dropping
-                                        of data parts where all rows are expired in
-                                        MergeTree tables.
+                                      description: Enables zero-copy replication when
+                                        a replica is located on a remote filesystem.
                                       type: boolean
                                   type: object
                                 type: array
@@ -2137,25 +2620,99 @@ spec:
                                 type: number
                               metricLogRetentionTime:
                                 type: number
+                              opentelemetrySpanLogEnabled:
+                                type: boolean
+                              opentelemetrySpanLogRetentionSize:
+                                type: number
+                              opentelemetrySpanLogRetentionTime:
+                                type: number
                               partLogRetentionSize:
                                 type: number
                               partLogRetentionTime:
                                 type: number
+                              queryCache:
+                                description: Query cache configuration. The structure
+                                  is documented below.
+                                items:
+                                  properties:
+                                    maxEntries:
+                                      description: 'The maximum number of SELECT query
+                                        results stored in the cache. Default value:
+                                        1024.'
+                                      type: number
+                                    maxEntrySizeInBytes:
+                                      description: 'The maximum size in bytes SELECT
+                                        query results may have to be saved in the
+                                        cache. Default value: 1048576 (1 MiB).'
+                                      type: number
+                                    maxEntrySizeInRows:
+                                      description: 'The maximum number of rows SELECT
+                                        query results may have to be saved in the
+                                        cache. Default value: 30000000 (30 mil).'
+                                      type: number
+                                    maxSizeInBytes:
+                                      description: 'The maximum cache size in bytes.
+                                        0 means the query cache is disabled. Default
+                                        value: 1073741824 (1 GiB).'
+                                      type: number
+                                  type: object
+                                type: array
                               queryLogRetentionSize:
                                 type: number
                               queryLogRetentionTime:
                                 type: number
+                              queryMaskingRules:
+                                description: Query masking rules configuration. The
+                                  structure is documented below.
+                                items:
+                                  properties:
+                                    name:
+                                      description: The name of the user.
+                                      type: string
+                                    regexp:
+                                      description: Regular expression that the metric
+                                        name must match.
+                                      type: string
+                                    replace:
+                                      description: 'Substitution string for sensitive
+                                        data. Default value: six asterisks.'
+                                      type: string
+                                  type: object
+                                type: array
                               queryThreadLogEnabled:
                                 type: boolean
                               queryThreadLogRetentionSize:
                                 type: number
                               queryThreadLogRetentionTime:
                                 type: number
+                              queryViewsLogEnabled:
+                                type: boolean
+                              queryViewsLogRetentionSize:
+                                type: number
+                              queryViewsLogRetentionTime:
+                                type: number
                               rabbitmq:
                                 description: RabbitMQ connection configuration. The
                                   structure is documented below.
                                 items:
                                   properties:
+                                    passwordSecretRef:
+                                      description: The password of the user.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: Name of the secret.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the secret.
+                                          type: string
+                                      required:
+                                      - key
+                                      - name
+                                      - namespace
+                                      type: object
                                     username:
                                       description: RabbitMQ username.
                                       type: string
@@ -2164,6 +2721,12 @@ spec:
                                       type: string
                                   type: object
                                 type: array
+                              sessionLogEnabled:
+                                type: boolean
+                              sessionLogRetentionSize:
+                                type: number
+                              sessionLogRetentionTime:
+                                type: number
                               textLogEnabled:
                                 type: boolean
                               textLogLevel:
@@ -2184,6 +2747,12 @@ spec:
                                 type: number
                               uncompressedCacheSize:
                                 type: number
+                              zookeeperLogEnabled:
+                                type: boolean
+                              zookeeperLogRetentionSize:
+                                type: number
+                              zookeeperLogRetentionTime:
+                                type: number
                             type: object
                           type: array
                         resources:
@@ -2196,8 +2765,7 @@ spec:
                                   ZooKeeper host, in gigabytes.
                                 type: number
                               diskTypeId:
-                                description: |-
-                                  Type of the storage of ZooKeeper hosts.
+                                description: Type of the storage of ZooKeeper hosts.
                                   For more information see the official documentation.
                                 type: string
                               resourcePresetId:
@@ -2251,8 +2819,8 @@ spec:
                       type: object
                     type: array
                   deletionProtection:
-                    description: Inhibits deletion of the cluster.  Can be either
-                      true or false.
+                    description: Inhibits deletion of the cluster. Can be either true
+                      or false.
                     type: boolean
                   description:
                     description: Description of the ClickHouse cluster.
@@ -2267,9 +2835,8 @@ spec:
                       Can be either PRESTABLE or PRODUCTION.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the resource belongs to. If it
-                      is not provided, the default provider folder is used.
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -2460,9 +3027,9 @@ spec:
                             either CLICKHOUSE or ZOOKEEPER.
                           type: string
                         zone:
-                          description: |-
-                            The availability zone where the ClickHouse host will be created.
-                            For more information see the official documentation.
+                          description: The availability zone where the ClickHouse
+                            host will be created. For more information see the official
+                            documentation.
                           type: string
                       type: object
                     type: array
@@ -2696,8 +3263,7 @@ spec:
                                   ZooKeeper host, in gigabytes.
                                 type: number
                               diskTypeId:
-                                description: |-
-                                  Type of the storage of ZooKeeper hosts.
+                                description: Type of the storage of ZooKeeper hosts.
                                   For more information see the official documentation.
                                 type: string
                               resourcePresetId:
@@ -2743,6 +3309,23 @@ spec:
                         name:
                           description: The name of the user.
                           type: string
+                        passwordSecretRef:
+                          description: The password of the user.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
                         permission:
                           description: Set of permissions granted to the user. The
                             structure is documented below.
@@ -2804,6 +3387,10 @@ spec:
                                   TABLE statements. Enabling this may increase merge
                                   times and memory consumption.
                                 type: boolean
+                              anyJoinDistinctRightTableKeys:
+                                description: enables legacy ClickHouse server behaviour
+                                  in ANY INNER|LEFT JOIN operations.
+                                type: boolean
                               asyncInsert:
                                 description: Enables asynchronous inserts. Disabled
                                   by default.
@@ -2834,9 +3421,9 @@ spec:
                                   Default value: 16.'
                                 type: number
                               cancelHttpReadonlyQueriesOnClientClose:
-                                description: |-
-                                  Cancels HTTP read-only queries (e.g. SELECT) when a client closes the connection without waiting for the response.
-                                  Default value: false.
+                                description: 'Cancels HTTP read-only queries (e.g.
+                                  SELECT) when a client closes the connection without
+                                  waiting for the response. Default value: false.'
                                 type: boolean
                               compile:
                                 description: Enable compilation of queries.
@@ -2861,6 +3448,23 @@ spec:
                                   should be used to perform the COUNT(DISTINCT …)
                                   construction.
                                 type: string
+                              dateTimeInputFormat:
+                                description: 'Allows choosing a parser of the text
+                                  representation of date and time, one of: best_effort,
+                                  basic, best_effort_us. Default value: basic. Cloud
+                                  default value: best_effort.'
+                                type: string
+                              dateTimeOutputFormat:
+                                description: 'Allows choosing different output formats
+                                  of the text representation of date and time, one
+                                  of: simple, iso, unix_timestamp. Default value:
+                                  simple.'
+                                type: string
+                              deduplicateBlocksInDependentMaterializedViews:
+                                description: Enables or disables the deduplication
+                                  check for materialized views that receive data from
+                                  Replicated* tables.
+                                type: boolean
                               distinctOverflowMode:
                                 description: 'Sets behaviour on overflow when using
                                   DISTINCT. Possible values:'
@@ -2898,6 +3502,12 @@ spec:
                                 description: Disables query execution if indexing
                                   by the primary key is not possible.
                                 type: boolean
+                              formatRegexp:
+                                description: Regular expression (for Regexp format).
+                                type: string
+                              formatRegexpSkipUnmatched:
+                                description: Skip lines unmatched by regular expression.
+                                type: boolean
                               groupByOverflowMode:
                                 description: 'Sets behaviour on overflow while GROUP
                                   BY operation. Possible values:'
@@ -2909,6 +3519,11 @@ spec:
                               groupByTwoLevelThresholdBytes:
                                 description: Sets the threshold of the number of bytes,
                                   after that the two-level aggregation should be used.
+                                type: number
+                              hedgedConnectionTimeoutMs:
+                                description: 'Connection timeout for establishing
+                                  connection with replica for Hedged requests. Default
+                                  value: 50 milliseconds.'
                                 type: number
                               httpConnectionTimeout:
                                 description: Timeout for HTTP connection in milliseconds.
@@ -2923,6 +3538,11 @@ spec:
                               httpSendTimeout:
                                 description: Timeout for HTTP connection in milliseconds.
                                 type: number
+                              idleConnectionTimeout:
+                                description: 'Timeout to close idle TCP connections
+                                  after specified number of seconds. Default value:
+                                  3600 seconds.'
+                                type: number
                               inputFormatDefaultsForOmittedFields:
                                 description: When performing INSERT queries, replace
                                   omitted input column values with default values
@@ -2932,6 +3552,11 @@ spec:
                                 description: Enables or disables the insertion of
                                   JSON data with nested objects.
                                 type: boolean
+                              inputFormatNullAsDefault:
+                                description: Enables or disables the initialization
+                                  of NULL fields with default values, if data type
+                                  of these fields is not nullable.
+                                type: boolean
                               inputFormatParallelParsing:
                                 description: Enables or disables order-preserving
                                   parallel parsing of data formats. Supported only
@@ -2940,6 +3565,10 @@ spec:
                               inputFormatValuesInterpretExpressions:
                                 description: Enables or disables the full SQL parser
                                   if the fast stream parser can’t parse the data.
+                                type: boolean
+                              inputFormatWithNamesUseHeader:
+                                description: Enables or disables checking the column
+                                  order when inserting data.
                                 type: boolean
                               insertKeeperMaxRetries:
                                 description: The setting sets the maximum number of
@@ -2957,9 +3586,19 @@ spec:
                               insertQuorum:
                                 description: Enables the quorum writes.
                                 type: number
+                              insertQuorumParallel:
+                                description: Enables or disables parallelism for quorum
+                                  INSERT queries.
+                                type: boolean
                               insertQuorumTimeout:
                                 description: Write to a quorum timeout in milliseconds.
                                 type: number
+                              joinAlgorithm:
+                                description: 'Specifies which JOIN algorithm is used.
+                                  Possible values:'
+                                items:
+                                  type: string
+                                type: array
                               joinOverflowMode:
                                 description: 'Sets behaviour on overflow in JOIN.
                                   Possible values:'
@@ -2973,10 +3612,24 @@ spec:
                                 description: Require aliases for subselects and table
                                   functions in FROM that more than one table is present.
                                 type: boolean
+                              loadBalancing:
+                                description: 'Specifies the algorithm of replicas
+                                  selection that is used for distributed query processing,
+                                  one of: random, nearest_hostname, in_order, first_or_random,
+                                  round_robin. Default value: random.'
+                                type: string
                               localFilesystemReadMethod:
                                 description: 'Method of reading data from local filesystem.
                                   Possible values:'
                                 type: string
+                              logQueryThreads:
+                                description: 'Setting up query threads logging. Query
+                                  threads log into the system.query_thread_log table.
+                                  This setting has effect only when log_queries is
+                                  true. Queries’ threads run by ClickHouse with this
+                                  setup are logged according to the rules in the query_thread_log
+                                  server configuration parameter. Default value: true.'
+                                type: boolean
                               lowCardinalityAllowInNativeFormat:
                                 description: Allows or restricts using the LowCardinality
                                   data type with the Native format.
@@ -3054,6 +3707,10 @@ spec:
                               maxInsertBlockSize:
                                 description: The size of blocks (in a count of rows)
                                   to form for insertion into a table.
+                                type: number
+                              maxInsertThreads:
+                                description: 'The maximum number of threads to execute
+                                  the INSERT SELECT query. Default value: 0.'
                                 type: number
                               maxMemoryUsage:
                                 description: Limits the maximum memory usage (in bytes)
@@ -3168,7 +3825,7 @@ spec:
                                   values: from 0 to 1. Default: 0.'
                                 type: number
                               memoryProfilerStep:
-                                description: 'Memory profiler step (in bytes).  If
+                                description: 'Memory profiler step (in bytes). If
                                   the next query step requires more memory than this
                                   parameter specifies, the memory profiler collects
                                   the allocating stack trace. Values lower than a
@@ -3243,6 +3900,11 @@ spec:
                                 description: Enables +nan, -nan, +inf, -inf outputs
                                   in JSON output format.
                                 type: boolean
+                              preferLocalhostReplica:
+                                description: 'Enables/disables preferable using the
+                                  localhost replica when processing distributed queries.
+                                  Default value: true.'
+                                type: boolean
                               priority:
                                 description: Query priority.
                                 type: number
@@ -3299,9 +3961,10 @@ spec:
                                   Possible values:'
                                 type: string
                               timeoutBeforeCheckingExecutionSpeed:
-                                description: |-
-                                  Timeout (in seconds) between checks of execution speed. It is checked that execution speed is not less that specified in min_execution_speed parameter.
-                                  Must be at least 1000.
+                                description: Timeout (in seconds) between checks of
+                                  execution speed. It is checked that execution speed
+                                  is not less that specified in min_execution_speed
+                                  parameter. Must be at least 1000.
                                 type: number
                               timeoutOverflowMode:
                                 description: 'Sets behaviour on overflow. Possible
@@ -3314,6 +3977,18 @@ spec:
                               transformNullIn:
                                 description: Enables equality of NULL values for IN
                                   operator.
+                                type: boolean
+                              useHedgedRequests:
+                                description: 'Enables hedged requests logic for remote
+                                  queries. It allows to establish many connections
+                                  with different replicas for query. New connection
+                                  is enabled in case existent connection(s) with replica(s)
+                                  were not established within hedged_connection_timeout
+                                  or no data was received within receive_data_timeout.
+                                  Query uses the first connection which send non empty
+                                  progress packet (or data packet, if allow_changing_replica_until_first_data_packet);
+                                  other connections are cancelled. Queries with max_parallel_replicas
+                                  > 1 are supported. Default value: true.'
                                 type: boolean
                               useUncompressedCache:
                                 description: Whether to use a cache of uncompressed
@@ -3331,6 +4006,8 @@ spec:
                                 type: number
                             type: object
                           type: array
+                      required:
+                      - passwordSecretRef
                       type: object
                     type: array
                   version:
@@ -3351,8 +4028,7 @@ spec:
                                   ZooKeeper host, in gigabytes.
                                 type: number
                               diskTypeId:
-                                description: |-
-                                  Type of the storage of ZooKeeper hosts.
+                                description: Type of the storage of ZooKeeper hosts.
                                   For more information see the official documentation.
                                 type: string
                               resourcePresetId:
@@ -3578,6 +4254,9 @@ spec:
                           type: boolean
                       type: object
                     type: array
+                  backupRetainPeriodDays:
+                    description: The period in days during which backups are stored.
+                    type: number
                   backupWindowStart:
                     description: Time to start the daily backup, in the UTC timezone.
                       The structure is documented below.
@@ -3600,11 +4279,31 @@ spec:
                           description: Main ClickHouse cluster configuration.
                           items:
                             properties:
+                              asynchronousInsertLogEnabled:
+                                type: boolean
+                              asynchronousInsertLogRetentionSize:
+                                type: number
+                              asynchronousInsertLogRetentionTime:
+                                type: number
+                              asynchronousMetricLogEnabled:
+                                type: boolean
+                              asynchronousMetricLogRetentionSize:
+                                type: number
+                              asynchronousMetricLogRetentionTime:
+                                type: number
+                              backgroundBufferFlushSchedulePoolSize:
+                                type: number
+                              backgroundCommonPoolSize:
+                                type: number
+                              backgroundDistributedSchedulePoolSize:
+                                type: number
                               backgroundFetchesPoolSize:
                                 type: number
                               backgroundMergesMutationsConcurrencyRatio:
                                 type: number
                               backgroundMessageBrokerSchedulePoolSize:
+                                type: number
+                              backgroundMovePoolSize:
                                 type: number
                               backgroundPoolSize:
                                 type: number
@@ -3642,6 +4341,8 @@ spec:
                                 description: A database of the ClickHouse cluster.
                                   The structure is documented below.
                                 type: string
+                              dictionariesLazyLoad:
+                                type: boolean
                               geobaseEnabled:
                                 type: boolean
                               geobaseUri:
@@ -3653,6 +4354,11 @@ spec:
                                   properties:
                                     name:
                                       description: The name of the user.
+                                      type: string
+                                    pathColumnName:
+                                      description: 'The name of the column storing
+                                        the metric name (Graphite sensor). Default
+                                        value: Path.'
                                       type: string
                                     pattern:
                                       description: Set of thinning rules.
@@ -3681,6 +4387,21 @@ spec:
                                             type: array
                                         type: object
                                       type: array
+                                    timeColumnName:
+                                      description: 'The name of the column storing
+                                        the time of measuring the metric. Default
+                                        value: Time.'
+                                      type: string
+                                    valueColumnName:
+                                      description: 'The name of the column storing
+                                        the value of the metric at the time set in
+                                        time_column_name. Default value: Value.'
+                                      type: string
+                                    versionColumnName:
+                                      description: 'The name of the column storing
+                                        the version of the metric. Default value:
+                                        Timestamp.'
+                                      type: string
                                   type: object
                                 type: array
                               kafka:
@@ -3688,6 +4409,21 @@ spec:
                                   is documented below.
                                 items:
                                   properties:
+                                    autoOffsetReset:
+                                      description: 'Action to take when there is no
+                                        initial offset in offset store or the desired
+                                        offset is out of range: ''smallest'',''earliest''
+                                        - automatically reset the offset to the smallest
+                                        offset, ''largest'',''latest'' - automatically
+                                        reset the offset to the largest offset, ''error''
+                                        - trigger an error (ERR__AUTO_OFFSET_RESET)
+                                        which is retrieved by consuming messages and
+                                        checking ''message->err''.'
+                                      type: string
+                                    debug:
+                                      description: A comma-separated list of debug
+                                        contexts to enable.
+                                      type: string
                                     enableSslCertificateVerification:
                                       description: enable verification of SSL certificates.
                                       type: boolean
@@ -3734,6 +4470,22 @@ spec:
                                         is documented below.
                                       items:
                                         properties:
+                                          autoOffsetReset:
+                                            description: 'Action to take when there
+                                              is no initial offset in offset store
+                                              or the desired offset is out of range:
+                                              ''smallest'',''earliest'' - automatically
+                                              reset the offset to the smallest offset,
+                                              ''largest'',''latest'' - automatically
+                                              reset the offset to the largest offset,
+                                              ''error'' - trigger an error (ERR__AUTO_OFFSET_RESET)
+                                              which is retrieved by consuming messages
+                                              and checking ''message->err''.'
+                                            type: string
+                                          debug:
+                                            description: A comma-separated list of
+                                              debug contexts to enable.
+                                            type: string
                                           enableSslCertificateVerification:
                                             description: enable verification of SSL
                                               certificates.
@@ -3776,9 +4528,8 @@ spec:
                               keepAliveTimeout:
                                 type: number
                               logLevel:
-                                description: |-
-                                  ClickHouse server parameters. For more information, see
-                                  the official documentation.
+                                description: ClickHouse server parameters. For more
+                                  information, see the official documentation.
                                 type: string
                               markCacheSize:
                                 type: number
@@ -3795,9 +4546,40 @@ spec:
                                   is documented below.
                                 items:
                                   properties:
+                                    allowRemoteFsZeroCopyReplication:
+                                      description: When this setting has a value greater
+                                        than zero only a single replica starts the
+                                        merge immediately if merged part on shared
+                                        storage and allow_remote_fs_zero_copy_replication
+                                        is enabled.
+                                      type: boolean
+                                    checkSampleColumnIsCorrect:
+                                      description: 'Enables the check at table creation,
+                                        that the data type of a column for sampling
+                                        or sampling expression is correct. The data
+                                        type must be one of unsigned integer types:
+                                        UInt8, UInt16, UInt32, UInt64. Default value:
+                                        true.'
+                                      type: boolean
                                     cleanupDelayPeriod:
                                       description: Minimum period to clean old queue
                                         logs, blocks hashes and parts.
+                                      type: number
+                                    inactivePartsToDelayInsert:
+                                      description: If the number of inactive parts
+                                        in a single partition in the table at least
+                                        that many the inactive_parts_to_delay_insert
+                                        value, an INSERT artificially slows down.
+                                        It is useful when a server fails to clean
+                                        up parts quickly enough.
+                                      type: number
+                                    inactivePartsToThrowInsert:
+                                      description: If the number of inactive parts
+                                        in a single partition more than the inactive_parts_to_throw_insert
+                                        value, INSERT is interrupted with the "Too
+                                        many inactive parts (N). Parts cleaning are
+                                        processing significantly slower than inserts"
+                                        exception.
                                       type: number
                                     maxAvgPartSizeForTooManyParts:
                                       description: The too many parts check according
@@ -3813,11 +4595,32 @@ spec:
                                         does not affect the thresholds on inactive
                                         parts or total parts.
                                       type: number
+                                    maxBytesToMergeAtMaxSpaceInPool:
+                                      description: The maximum total parts size (in
+                                        bytes) to be merged into one part, if there
+                                        are enough resources available. max_bytes_to_merge_at_max_space_in_pool
+                                        -- roughly corresponds to the maximum possible
+                                        part size created by an automatic background
+                                        merge.
+                                      type: number
                                     maxBytesToMergeAtMinSpaceInPool:
                                       description: 'Max bytes to merge at min space
                                         in pool: Maximum total size of a data part
                                         to merge when the number of free threads in
                                         the background pool is minimum.'
+                                      type: number
+                                    maxCleanupDelayPeriod:
+                                      description: 'Maximum period to clean old queue
+                                        logs, blocks hashes and parts. Default value:
+                                        300 seconds.'
+                                      type: number
+                                    maxMergeSelectingSleepMs:
+                                      description: 'Maximum sleep time for merge selecting,
+                                        a lower setting will trigger selecting tasks
+                                        in background_schedule_pool frequently which
+                                        result in large amount of requests to zookeeper
+                                        in large-scale clusters. Default value: 60000
+                                        milliseconds (60 seconds).'
                                       type: number
                                     maxNumberOfMergesWithTtlInPool:
                                       description: When there is more than specified
@@ -3833,6 +4636,11 @@ spec:
                                         Maximum number of merge tasks that can be
                                         in the ReplicatedMergeTree queue at the same
                                         time.'
+                                      type: number
+                                    mergeMaxBlockSize:
+                                      description: 'The number of rows that are read
+                                        from the merged parts into memory. Default
+                                        value: 8192.'
                                       type: number
                                     mergeSelectingSleepMs:
                                       description: Sleep time for merge selecting
@@ -3871,6 +4679,13 @@ spec:
                                         part that can be stored in Wide format. You
                                         can set one, both or none of these settings.
                                       type: number
+                                    numberOfFreeEntriesInPoolToExecuteMutation:
+                                      description: 'When there is less than specified
+                                        number of free entries in pool, do not execute
+                                        part mutations. This is to leave free threads
+                                        for regular merges and avoid "Too many parts".
+                                        Default value: 20.'
+                                      type: number
                                     numberOfFreeEntriesInPoolToLowerMaxSizeOfMerge:
                                       description: 'Number of free entries in pool
                                         to lower max size of merge: Threshold value
@@ -3904,9 +4719,8 @@ spec:
                                         the hash blocks (the old ones wil be deleted).'
                                       type: number
                                     ttlOnlyDropParts:
-                                      description: Enables or disables complete dropping
-                                        of data parts where all rows are expired in
-                                        MergeTree tables.
+                                      description: Enables zero-copy replication when
+                                        a replica is located on a remote filesystem.
                                       type: boolean
                                   type: object
                                 type: array
@@ -3916,19 +4730,76 @@ spec:
                                 type: number
                               metricLogRetentionTime:
                                 type: number
+                              opentelemetrySpanLogEnabled:
+                                type: boolean
+                              opentelemetrySpanLogRetentionSize:
+                                type: number
+                              opentelemetrySpanLogRetentionTime:
+                                type: number
                               partLogRetentionSize:
                                 type: number
                               partLogRetentionTime:
                                 type: number
+                              queryCache:
+                                description: Query cache configuration. The structure
+                                  is documented below.
+                                items:
+                                  properties:
+                                    maxEntries:
+                                      description: 'The maximum number of SELECT query
+                                        results stored in the cache. Default value:
+                                        1024.'
+                                      type: number
+                                    maxEntrySizeInBytes:
+                                      description: 'The maximum size in bytes SELECT
+                                        query results may have to be saved in the
+                                        cache. Default value: 1048576 (1 MiB).'
+                                      type: number
+                                    maxEntrySizeInRows:
+                                      description: 'The maximum number of rows SELECT
+                                        query results may have to be saved in the
+                                        cache. Default value: 30000000 (30 mil).'
+                                      type: number
+                                    maxSizeInBytes:
+                                      description: 'The maximum cache size in bytes.
+                                        0 means the query cache is disabled. Default
+                                        value: 1073741824 (1 GiB).'
+                                      type: number
+                                  type: object
+                                type: array
                               queryLogRetentionSize:
                                 type: number
                               queryLogRetentionTime:
                                 type: number
+                              queryMaskingRules:
+                                description: Query masking rules configuration. The
+                                  structure is documented below.
+                                items:
+                                  properties:
+                                    name:
+                                      description: The name of the user.
+                                      type: string
+                                    regexp:
+                                      description: Regular expression that the metric
+                                        name must match.
+                                      type: string
+                                    replace:
+                                      description: 'Substitution string for sensitive
+                                        data. Default value: six asterisks.'
+                                      type: string
+                                  type: object
+                                type: array
                               queryThreadLogEnabled:
                                 type: boolean
                               queryThreadLogRetentionSize:
                                 type: number
                               queryThreadLogRetentionTime:
+                                type: number
+                              queryViewsLogEnabled:
+                                type: boolean
+                              queryViewsLogRetentionSize:
+                                type: number
+                              queryViewsLogRetentionTime:
                                 type: number
                               rabbitmq:
                                 description: RabbitMQ connection configuration. The
@@ -3943,6 +4814,12 @@ spec:
                                       type: string
                                   type: object
                                 type: array
+                              sessionLogEnabled:
+                                type: boolean
+                              sessionLogRetentionSize:
+                                type: number
+                              sessionLogRetentionTime:
+                                type: number
                               textLogEnabled:
                                 type: boolean
                               textLogLevel:
@@ -3963,6 +4840,12 @@ spec:
                                 type: number
                               uncompressedCacheSize:
                                 type: number
+                              zookeeperLogEnabled:
+                                type: boolean
+                              zookeeperLogRetentionSize:
+                                type: number
+                              zookeeperLogRetentionTime:
+                                type: number
                             type: object
                           type: array
                         resources:
@@ -3975,8 +4858,7 @@ spec:
                                   ZooKeeper host, in gigabytes.
                                 type: number
                               diskTypeId:
-                                description: |-
-                                  Type of the storage of ZooKeeper hosts.
+                                description: Type of the storage of ZooKeeper hosts.
                                   For more information see the official documentation.
                                 type: string
                               resourcePresetId:
@@ -4033,8 +4915,8 @@ spec:
                       type: object
                     type: array
                   deletionProtection:
-                    description: Inhibits deletion of the cluster.  Can be either
-                      true or false.
+                    description: Inhibits deletion of the cluster. Can be either true
+                      or false.
                     type: boolean
                   description:
                     description: Description of the ClickHouse cluster.
@@ -4049,9 +4931,8 @@ spec:
                       Can be either PRESTABLE or PRODUCTION.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the resource belongs to. If it
-                      is not provided, the default provider folder is used.
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   formatSchema:
                     description: A set of protobuf or capnproto format schemas. The
@@ -4071,9 +4952,9 @@ spec:
                       type: object
                     type: array
                   health:
-                    description: |-
-                      Aggregated health of the cluster. Can be ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN.
-                      For more information see health field of JSON representation in the official documentation.
+                    description: Aggregated health of the cluster. Can be ALIVE, DEGRADED,
+                      DEAD or HEALTH_UNKNOWN. For more information see health field
+                      of JSON representation in the official documentation.
                     type: string
                   host:
                     description: A host of the ClickHouse cluster. The structure is
@@ -4101,9 +4982,9 @@ spec:
                             either CLICKHOUSE or ZOOKEEPER.
                           type: string
                         zone:
-                          description: |-
-                            The availability zone where the ClickHouse host will be created.
-                            For more information see the official documentation.
+                          description: The availability zone where the ClickHouse
+                            host will be created. For more information see the official
+                            documentation.
                           type: string
                       type: object
                     type: array
@@ -4189,8 +5070,7 @@ spec:
                                   ZooKeeper host, in gigabytes.
                                 type: number
                               diskTypeId:
-                                description: |-
-                                  Type of the storage of ZooKeeper hosts.
+                                description: Type of the storage of ZooKeeper hosts.
                                   For more information see the official documentation.
                                 type: string
                               resourcePresetId:
@@ -4229,9 +5109,10 @@ spec:
                     description: Enables admin user with user management permission.
                     type: boolean
                   status:
-                    description: |-
-                      Status of the cluster. Can be CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
-                      For more information see status field of JSON representation in the official documentation.
+                    description: Status of the cluster. Can be CREATING, STARTING,
+                      RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
+                      For more information see status field of JSON representation
+                      in the official documentation.
                     type: string
                   user:
                     description: A user of the ClickHouse cluster. The structure is
@@ -4302,6 +5183,10 @@ spec:
                                   TABLE statements. Enabling this may increase merge
                                   times and memory consumption.
                                 type: boolean
+                              anyJoinDistinctRightTableKeys:
+                                description: enables legacy ClickHouse server behaviour
+                                  in ANY INNER|LEFT JOIN operations.
+                                type: boolean
                               asyncInsert:
                                 description: Enables asynchronous inserts. Disabled
                                   by default.
@@ -4332,9 +5217,9 @@ spec:
                                   Default value: 16.'
                                 type: number
                               cancelHttpReadonlyQueriesOnClientClose:
-                                description: |-
-                                  Cancels HTTP read-only queries (e.g. SELECT) when a client closes the connection without waiting for the response.
-                                  Default value: false.
+                                description: 'Cancels HTTP read-only queries (e.g.
+                                  SELECT) when a client closes the connection without
+                                  waiting for the response. Default value: false.'
                                 type: boolean
                               compile:
                                 description: Enable compilation of queries.
@@ -4359,6 +5244,23 @@ spec:
                                   should be used to perform the COUNT(DISTINCT …)
                                   construction.
                                 type: string
+                              dateTimeInputFormat:
+                                description: 'Allows choosing a parser of the text
+                                  representation of date and time, one of: best_effort,
+                                  basic, best_effort_us. Default value: basic. Cloud
+                                  default value: best_effort.'
+                                type: string
+                              dateTimeOutputFormat:
+                                description: 'Allows choosing different output formats
+                                  of the text representation of date and time, one
+                                  of: simple, iso, unix_timestamp. Default value:
+                                  simple.'
+                                type: string
+                              deduplicateBlocksInDependentMaterializedViews:
+                                description: Enables or disables the deduplication
+                                  check for materialized views that receive data from
+                                  Replicated* tables.
+                                type: boolean
                               distinctOverflowMode:
                                 description: 'Sets behaviour on overflow when using
                                   DISTINCT. Possible values:'
@@ -4396,6 +5298,12 @@ spec:
                                 description: Disables query execution if indexing
                                   by the primary key is not possible.
                                 type: boolean
+                              formatRegexp:
+                                description: Regular expression (for Regexp format).
+                                type: string
+                              formatRegexpSkipUnmatched:
+                                description: Skip lines unmatched by regular expression.
+                                type: boolean
                               groupByOverflowMode:
                                 description: 'Sets behaviour on overflow while GROUP
                                   BY operation. Possible values:'
@@ -4407,6 +5315,11 @@ spec:
                               groupByTwoLevelThresholdBytes:
                                 description: Sets the threshold of the number of bytes,
                                   after that the two-level aggregation should be used.
+                                type: number
+                              hedgedConnectionTimeoutMs:
+                                description: 'Connection timeout for establishing
+                                  connection with replica for Hedged requests. Default
+                                  value: 50 milliseconds.'
                                 type: number
                               httpConnectionTimeout:
                                 description: Timeout for HTTP connection in milliseconds.
@@ -4421,6 +5334,11 @@ spec:
                               httpSendTimeout:
                                 description: Timeout for HTTP connection in milliseconds.
                                 type: number
+                              idleConnectionTimeout:
+                                description: 'Timeout to close idle TCP connections
+                                  after specified number of seconds. Default value:
+                                  3600 seconds.'
+                                type: number
                               inputFormatDefaultsForOmittedFields:
                                 description: When performing INSERT queries, replace
                                   omitted input column values with default values
@@ -4430,6 +5348,11 @@ spec:
                                 description: Enables or disables the insertion of
                                   JSON data with nested objects.
                                 type: boolean
+                              inputFormatNullAsDefault:
+                                description: Enables or disables the initialization
+                                  of NULL fields with default values, if data type
+                                  of these fields is not nullable.
+                                type: boolean
                               inputFormatParallelParsing:
                                 description: Enables or disables order-preserving
                                   parallel parsing of data formats. Supported only
@@ -4438,6 +5361,10 @@ spec:
                               inputFormatValuesInterpretExpressions:
                                 description: Enables or disables the full SQL parser
                                   if the fast stream parser can’t parse the data.
+                                type: boolean
+                              inputFormatWithNamesUseHeader:
+                                description: Enables or disables checking the column
+                                  order when inserting data.
                                 type: boolean
                               insertKeeperMaxRetries:
                                 description: The setting sets the maximum number of
@@ -4455,9 +5382,19 @@ spec:
                               insertQuorum:
                                 description: Enables the quorum writes.
                                 type: number
+                              insertQuorumParallel:
+                                description: Enables or disables parallelism for quorum
+                                  INSERT queries.
+                                type: boolean
                               insertQuorumTimeout:
                                 description: Write to a quorum timeout in milliseconds.
                                 type: number
+                              joinAlgorithm:
+                                description: 'Specifies which JOIN algorithm is used.
+                                  Possible values:'
+                                items:
+                                  type: string
+                                type: array
                               joinOverflowMode:
                                 description: 'Sets behaviour on overflow in JOIN.
                                   Possible values:'
@@ -4471,10 +5408,24 @@ spec:
                                 description: Require aliases for subselects and table
                                   functions in FROM that more than one table is present.
                                 type: boolean
+                              loadBalancing:
+                                description: 'Specifies the algorithm of replicas
+                                  selection that is used for distributed query processing,
+                                  one of: random, nearest_hostname, in_order, first_or_random,
+                                  round_robin. Default value: random.'
+                                type: string
                               localFilesystemReadMethod:
                                 description: 'Method of reading data from local filesystem.
                                   Possible values:'
                                 type: string
+                              logQueryThreads:
+                                description: 'Setting up query threads logging. Query
+                                  threads log into the system.query_thread_log table.
+                                  This setting has effect only when log_queries is
+                                  true. Queries’ threads run by ClickHouse with this
+                                  setup are logged according to the rules in the query_thread_log
+                                  server configuration parameter. Default value: true.'
+                                type: boolean
                               lowCardinalityAllowInNativeFormat:
                                 description: Allows or restricts using the LowCardinality
                                   data type with the Native format.
@@ -4552,6 +5503,10 @@ spec:
                               maxInsertBlockSize:
                                 description: The size of blocks (in a count of rows)
                                   to form for insertion into a table.
+                                type: number
+                              maxInsertThreads:
+                                description: 'The maximum number of threads to execute
+                                  the INSERT SELECT query. Default value: 0.'
                                 type: number
                               maxMemoryUsage:
                                 description: Limits the maximum memory usage (in bytes)
@@ -4666,7 +5621,7 @@ spec:
                                   values: from 0 to 1. Default: 0.'
                                 type: number
                               memoryProfilerStep:
-                                description: 'Memory profiler step (in bytes).  If
+                                description: 'Memory profiler step (in bytes). If
                                   the next query step requires more memory than this
                                   parameter specifies, the memory profiler collects
                                   the allocating stack trace. Values lower than a
@@ -4741,6 +5696,11 @@ spec:
                                 description: Enables +nan, -nan, +inf, -inf outputs
                                   in JSON output format.
                                 type: boolean
+                              preferLocalhostReplica:
+                                description: 'Enables/disables preferable using the
+                                  localhost replica when processing distributed queries.
+                                  Default value: true.'
+                                type: boolean
                               priority:
                                 description: Query priority.
                                 type: number
@@ -4797,9 +5757,10 @@ spec:
                                   Possible values:'
                                 type: string
                               timeoutBeforeCheckingExecutionSpeed:
-                                description: |-
-                                  Timeout (in seconds) between checks of execution speed. It is checked that execution speed is not less that specified in min_execution_speed parameter.
-                                  Must be at least 1000.
+                                description: Timeout (in seconds) between checks of
+                                  execution speed. It is checked that execution speed
+                                  is not less that specified in min_execution_speed
+                                  parameter. Must be at least 1000.
                                 type: number
                               timeoutOverflowMode:
                                 description: 'Sets behaviour on overflow. Possible
@@ -4812,6 +5773,18 @@ spec:
                               transformNullIn:
                                 description: Enables equality of NULL values for IN
                                   operator.
+                                type: boolean
+                              useHedgedRequests:
+                                description: 'Enables hedged requests logic for remote
+                                  queries. It allows to establish many connections
+                                  with different replicas for query. New connection
+                                  is enabled in case existent connection(s) with replica(s)
+                                  were not established within hedged_connection_timeout
+                                  or no data was received within receive_data_timeout.
+                                  Query uses the first connection which send non empty
+                                  progress packet (or data packet, if allow_changing_replica_until_first_data_packet);
+                                  other connections are cancelled. Queries with max_parallel_replicas
+                                  > 1 are supported. Default value: true.'
                                 type: boolean
                               useUncompressedCache:
                                 description: Whether to use a cache of uncompressed
@@ -4849,8 +5822,7 @@ spec:
                                   ZooKeeper host, in gigabytes.
                                 type: number
                               diskTypeId:
-                                description: |-
-                                  Type of the storage of ZooKeeper hosts.
+                                description: Type of the storage of ZooKeeper hosts.
                                   For more information see the official documentation.
                                 type: string
                               resourcePresetId:

@@ -35,15 +35,13 @@ type DiskInitParameters struct {
 	// Block size of the disk, specified in bytes.
 	BlockSize *float64 `json:"blockSize,omitempty" tf:"block_size,omitempty"`
 
-	// Description of the disk. Provide this property when
-	// you create a resource.
+	// Description of the disk. Provide this property when you create a resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// Disk placement policy configuration. The structure is documented below.
 	DiskPlacementPolicy []DiskPlacementPolicyInitParameters `json:"diskPlacementPolicy,omitempty" tf:"disk_placement_policy,omitempty"`
 
-	// The ID of the folder that the disk belongs to.
-	// If it is not provided, the default provider folder is used.
+	// The ID of the folder that the disk belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -55,6 +53,12 @@ type DiskInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// Hardware generation and its features,
+	// which will be applied to the instance when this disk is used as a boot
+	// disk. Provide this property if you wish to override this value, which
+	// otherwise is inherited from the source. The structure is documented below.
+	HardwareGeneration []HardwareGenerationInitParameters `json:"hardwareGeneration,omitempty" tf:"hardware_generation,omitempty"`
+
 	// The source image to use for disk creation.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
@@ -62,16 +66,10 @@ type DiskInitParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the disk. Provide this property when
-	// you create a resource.
+	// Name of the disk. Provide this property when you create a resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Size of the persistent disk, specified in GB. You can specify this
-	// field when creating a persistent disk using the image_id or snapshot_id
-	// parameter, or specify it alone to create an empty persistent disk.
-	// If you specify this field along with image_id or snapshot_id,
-	// the size value must not be less than the size of the source image
-	// or the size of the snapshot.
+	// Size of the persistent disk, specified in GB. You can specify this field when creating a persistent disk using the image_id or snapshot_id parameter, or specify it alone to create an empty persistent disk. If you specify this field along with image_id or snapshot_id, the size value must not be less than the size of the source image or the size of the snapshot.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
 	// The source snapshot to use for disk creation.
@@ -95,16 +93,20 @@ type DiskObservation struct {
 	// Creation timestamp of the disk.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Description of the disk. Provide this property when
-	// you create a resource.
+	// Description of the disk. Provide this property when you create a resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// Disk placement policy configuration. The structure is documented below.
 	DiskPlacementPolicy []DiskPlacementPolicyObservation `json:"diskPlacementPolicy,omitempty" tf:"disk_placement_policy,omitempty"`
 
-	// The ID of the folder that the disk belongs to.
-	// If it is not provided, the default provider folder is used.
+	// The ID of the folder that the disk belongs to. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
+
+	// Hardware generation and its features,
+	// which will be applied to the instance when this disk is used as a boot
+	// disk. Provide this property if you wish to override this value, which
+	// otherwise is inherited from the source. The structure is documented below.
+	HardwareGeneration []HardwareGenerationObservation `json:"hardwareGeneration,omitempty" tf:"hardware_generation,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -115,18 +117,12 @@ type DiskObservation struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the disk. Provide this property when
-	// you create a resource.
+	// Name of the disk. Provide this property when you create a resource.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	ProductIds []*string `json:"productIds,omitempty" tf:"product_ids,omitempty"`
 
-	// Size of the persistent disk, specified in GB. You can specify this
-	// field when creating a persistent disk using the image_id or snapshot_id
-	// parameter, or specify it alone to create an empty persistent disk.
-	// If you specify this field along with image_id or snapshot_id,
-	// the size value must not be less than the size of the source image
-	// or the size of the snapshot.
+	// Size of the persistent disk, specified in GB. You can specify this field when creating a persistent disk using the image_id or snapshot_id parameter, or specify it alone to create an empty persistent disk. If you specify this field along with image_id or snapshot_id, the size value must not be less than the size of the source image or the size of the snapshot.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
 	// The source snapshot to use for disk creation.
@@ -152,8 +148,7 @@ type DiskParameters struct {
 	// +kubebuilder:validation:Optional
 	BlockSize *float64 `json:"blockSize,omitempty" tf:"block_size,omitempty"`
 
-	// Description of the disk. Provide this property when
-	// you create a resource.
+	// Description of the disk. Provide this property when you create a resource.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -161,8 +156,7 @@ type DiskParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskPlacementPolicy []DiskPlacementPolicyParameters `json:"diskPlacementPolicy,omitempty" tf:"disk_placement_policy,omitempty"`
 
-	// The ID of the folder that the disk belongs to.
-	// If it is not provided, the default provider folder is used.
+	// The ID of the folder that the disk belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -175,6 +169,13 @@ type DiskParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// Hardware generation and its features,
+	// which will be applied to the instance when this disk is used as a boot
+	// disk. Provide this property if you wish to override this value, which
+	// otherwise is inherited from the source. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	HardwareGeneration []HardwareGenerationParameters `json:"hardwareGeneration,omitempty" tf:"hardware_generation,omitempty"`
+
 	// The source image to use for disk creation.
 	// +kubebuilder:validation:Optional
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
@@ -184,17 +185,11 @@ type DiskParameters struct {
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the disk. Provide this property when
-	// you create a resource.
+	// Name of the disk. Provide this property when you create a resource.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Size of the persistent disk, specified in GB. You can specify this
-	// field when creating a persistent disk using the image_id or snapshot_id
-	// parameter, or specify it alone to create an empty persistent disk.
-	// If you specify this field along with image_id or snapshot_id,
-	// the size value must not be less than the size of the source image
-	// or the size of the snapshot.
+	// Size of the persistent disk, specified in GB. You can specify this field when creating a persistent disk using the image_id or snapshot_id parameter, or specify it alone to create an empty persistent disk. If you specify this field along with image_id or snapshot_id, the size value must not be less than the size of the source image or the size of the snapshot.
 	// +kubebuilder:validation:Optional
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
@@ -246,6 +241,63 @@ type DiskPlacementPolicyParameters struct {
 	// Selector for a DiskPlacementGroup in compute to populate diskPlacementGroupId.
 	// +kubebuilder:validation:Optional
 	DiskPlacementGroupIDSelector *v1.Selector `json:"diskPlacementGroupIdSelector,omitempty" tf:"-"`
+}
+
+type Generation2FeaturesInitParameters struct {
+}
+
+type Generation2FeaturesObservation struct {
+}
+
+type Generation2FeaturesParameters struct {
+}
+
+type HardwareGenerationInitParameters struct {
+
+	// A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot.
+	Generation2Features []Generation2FeaturesInitParameters `json:"generation2Features,omitempty" tf:"generation2_features,omitempty"`
+
+	// Defines the first known hardware generation and its features, which are:
+	LegacyFeatures []LegacyFeaturesInitParameters `json:"legacyFeatures,omitempty" tf:"legacy_features,omitempty"`
+}
+
+type HardwareGenerationObservation struct {
+
+	// A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot.
+	Generation2Features []Generation2FeaturesParameters `json:"generation2Features,omitempty" tf:"generation2_features,omitempty"`
+
+	// Defines the first known hardware generation and its features, which are:
+	LegacyFeatures []LegacyFeaturesObservation `json:"legacyFeatures,omitempty" tf:"legacy_features,omitempty"`
+}
+
+type HardwareGenerationParameters struct {
+
+	// A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot.
+	// +kubebuilder:validation:Optional
+	Generation2Features []Generation2FeaturesParameters `json:"generation2Features,omitempty" tf:"generation2_features,omitempty"`
+
+	// Defines the first known hardware generation and its features, which are:
+	// +kubebuilder:validation:Optional
+	LegacyFeatures []LegacyFeaturesParameters `json:"legacyFeatures,omitempty" tf:"legacy_features,omitempty"`
+}
+
+type LegacyFeaturesInitParameters struct {
+
+	// A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
+	PciTopology *string `json:"pciTopology,omitempty" tf:"pci_topology,omitempty"`
+}
+
+type LegacyFeaturesObservation struct {
+
+	// A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
+	PciTopology *string `json:"pciTopology,omitempty" tf:"pci_topology,omitempty"`
+}
+
+type LegacyFeaturesParameters struct {
+
+	// A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
+	// +kubebuilder:validation:Optional
+	PciTopology *string `json:"pciTopology,omitempty" tf:"pci_topology,omitempty"`
 }
 
 // DiskSpec defines the desired state of Disk

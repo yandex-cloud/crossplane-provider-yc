@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: targetgroups.alb.yandex-cloud.jet.crossplane.io
 spec:
   group: alb.yandex-cloud.jet.crossplane.io
@@ -75,13 +75,11 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: |-
-                      An optional description of the target group. Provide this property when
-                      you create the resource.
+                    description: An optional description of the target group. Provide
+                      this property when you create the resource.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder to which the resource belongs.
+                    description: The ID of the folder to which the resource belongs.
                       If omitted, the provider folder is used.
                     type: string
                   folderIdRef:
@@ -181,9 +179,9 @@ spec:
                         privateIpv4Address:
                           type: boolean
                         subnetId:
-                          description: |-
-                            ID of the subnet that targets are connected to.
-                            All targets in the target group must be connected to the same subnet within a single availability zone.
+                          description: ID of the subnet that targets are connected
+                            to. All targets in the target group must be connected
+                            to the same subnet within a single availability zone.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -276,13 +274,11 @@ spec:
                   autoscaler.
                 properties:
                   description:
-                    description: |-
-                      An optional description of the target group. Provide this property when
-                      you create the resource.
+                    description: An optional description of the target group. Provide
+                      this property when you create the resource.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder to which the resource belongs.
+                    description: The ID of the folder to which the resource belongs.
                       If omitted, the provider folder is used.
                     type: string
                   folderIdRef:
@@ -382,9 +378,9 @@ spec:
                         privateIpv4Address:
                           type: boolean
                         subnetId:
-                          description: |-
-                            ID of the subnet that targets are connected to.
-                            All targets in the target group must be connected to the same subnet within a single availability zone.
+                          description: ID of the subnet that targets are connected
+                            to. All targets in the target group must be connected
+                            to the same subnet within a single availability zone.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -639,13 +635,11 @@ spec:
                     description: The target group creation timestamp.
                     type: string
                   description:
-                    description: |-
-                      An optional description of the target group. Provide this property when
-                      you create the resource.
+                    description: An optional description of the target group. Provide
+                      this property when you create the resource.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder to which the resource belongs.
+                    description: The ID of the folder to which the resource belongs.
                       If omitted, the provider folder is used.
                     type: string
                   id:
@@ -672,9 +666,9 @@ spec:
                         privateIpv4Address:
                           type: boolean
                         subnetId:
-                          description: |-
-                            ID of the subnet that targets are connected to.
-                            All targets in the target group must be connected to the same subnet within a single availability zone.
+                          description: ID of the subnet that targets are connected
+                            to. All targets in the target group must be connected
+                            to the same subnet within a single availability zone.
                           type: string
                       type: object
                     type: array

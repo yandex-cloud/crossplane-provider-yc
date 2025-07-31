@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: symmetrickeys.kms.yandex-cloud.jet.crossplane.io
 spec:
   group: kms.yandex-cloud.jet.crossplane.io
@@ -74,8 +74,7 @@ spec:
               forProvider:
                 properties:
                   defaultAlgorithm:
-                    description: |-
-                      Encryption algorithm to be used with a new key version,
+                    description: Encryption algorithm to be used with a new key version,
                       generated with the next rotation. The default value is AES_128.
                     type: string
                   deletionProtection:
@@ -84,9 +83,8 @@ spec:
                     description: An optional description of the key.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the resource belongs to. If it
-                      is not provided, the default provider folder is used.
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -192,8 +190,7 @@ spec:
                   autoscaler.
                 properties:
                   defaultAlgorithm:
-                    description: |-
-                      Encryption algorithm to be used with a new key version,
+                    description: Encryption algorithm to be used with a new key version,
                       generated with the next rotation. The default value is AES_128.
                     type: string
                   deletionProtection:
@@ -202,9 +199,8 @@ spec:
                     description: An optional description of the key.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the resource belongs to. If it
-                      is not provided, the default provider folder is used.
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -472,8 +468,7 @@ spec:
                     description: Creation timestamp of the key.
                     type: string
                   defaultAlgorithm:
-                    description: |-
-                      Encryption algorithm to be used with a new key version,
+                    description: Encryption algorithm to be used with a new key version,
                       generated with the next rotation. The default value is AES_128.
                     type: string
                   deletionProtection:
@@ -482,9 +477,8 @@ spec:
                     description: An optional description of the key.
                     type: string
                   folderId:
-                    description: |-
-                      The ID of the folder that the resource belongs to. If it
-                      is not provided, the default provider folder is used.
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   id:
                     type: string

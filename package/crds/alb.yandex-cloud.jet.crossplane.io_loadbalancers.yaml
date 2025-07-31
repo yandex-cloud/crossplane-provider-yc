@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: loadbalancers.alb.yandex-cloud.jet.crossplane.io
 spec:
   group: alb.yandex-cloud.jet.crossplane.io
@@ -560,9 +560,11 @@ spec:
                                 items:
                                   properties:
                                     certificateIds:
-                                      description: |-
-                                        Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
-                                        with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                      description: Certificate IDs in the Certificate
+                                        Manager. Multiple TLS certificates can be
+                                        associated with the same context to allow
+                                        both RSA and ECDSA certificates. Only the
+                                        first certificate of each type will be used.
                                       items:
                                         type: string
                                       type: array
@@ -622,9 +624,12 @@ spec:
                                       items:
                                         properties:
                                           certificateIds:
-                                            description: |-
-                                              Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
-                                              with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                            description: Certificate IDs in the Certificate
+                                              Manager. Multiple TLS certificates can
+                                              be associated with the same context
+                                              to allow both RSA and ECDSA certificates.
+                                              Only the first certificate of each type
+                                              will be used.
                                             items:
                                               type: string
                                             type: array
@@ -1400,9 +1405,11 @@ spec:
                                 items:
                                   properties:
                                     certificateIds:
-                                      description: |-
-                                        Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
-                                        with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                      description: Certificate IDs in the Certificate
+                                        Manager. Multiple TLS certificates can be
+                                        associated with the same context to allow
+                                        both RSA and ECDSA certificates. Only the
+                                        first certificate of each type will be used.
                                       items:
                                         type: string
                                       type: array
@@ -1462,9 +1469,12 @@ spec:
                                       items:
                                         properties:
                                           certificateIds:
-                                            description: |-
-                                              Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
-                                              with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                            description: Certificate IDs in the Certificate
+                                              Manager. Multiple TLS certificates can
+                                              be associated with the same context
+                                              to allow both RSA and ECDSA certificates.
+                                              Only the first certificate of each type
+                                              will be used.
                                             items:
                                               type: string
                                             type: array
@@ -2105,9 +2115,11 @@ spec:
                                 items:
                                   properties:
                                     certificateIds:
-                                      description: |-
-                                        Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
-                                        with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                      description: Certificate IDs in the Certificate
+                                        Manager. Multiple TLS certificates can be
+                                        associated with the same context to allow
+                                        both RSA and ECDSA certificates. Only the
+                                        first certificate of each type will be used.
                                       items:
                                         type: string
                                       type: array
@@ -2167,9 +2179,12 @@ spec:
                                       items:
                                         properties:
                                           certificateIds:
-                                            description: |-
-                                              Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
-                                              with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                            description: Certificate IDs in the Certificate
+                                              Manager. Multiple TLS certificates can
+                                              be associated with the same context
+                                              to allow both RSA and ECDSA certificates.
+                                              Only the first certificate of each type
+                                              will be used.
                                             items:
                                               type: string
                                             type: array

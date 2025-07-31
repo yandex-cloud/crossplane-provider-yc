@@ -122,6 +122,11 @@ func (in *QueueInitParameters) DeepCopyInto(out *QueueInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SecretKeySecretRef != nil {
+		in, out := &in.SecretKeySecretRef, &out.SecretKeySecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
 	if in.VisibilityTimeoutSeconds != nil {
 		in, out := &in.VisibilityTimeoutSeconds, &out.VisibilityTimeoutSeconds
 		*out = new(float64)

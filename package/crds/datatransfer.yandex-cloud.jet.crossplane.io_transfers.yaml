@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: transfers.datatransfer.yandex-cloud.jet.crossplane.io
 spec:
   group: datatransfer.yandex-cloud.jet.crossplane.io
@@ -34,8 +34,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Transfer is the Schema for the Transfers API. Manages a Data
-          Transfer transfer within Yandex.Cloud.
+        description: Transfer is the Schema for the Transfers API.
         properties:
           apiVersion:
             description: |-
@@ -74,11 +73,10 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: Arbitrary description text for the transfer.
+                    description: (String)
                     type: string
                   folderId:
-                    description: ID of the folder to create the transfer in. If it
-                      is not provided, the default provider folder is used.
+                    description: (String)
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -159,39 +157,37 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Data
-                      Transfer transfer.
+                    description: (Map of String)
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the transfer.
+                    description: (String)
                     type: string
                   onCreateActivateMode:
-                    description: |-
-                      Activation action on create a new incremental transfer.
-                      It is not part of the transfer parameter and is used only on create.
-                      One of "sync_activate", "async_activate", "dont_activate". The default is "sync_activate".
+                    description: (String)
                     type: string
                   runtime:
-                    description: Runtime parameters for the transfer.
+                    description: '(Block List, Max: 1) (see below for nested schema)'
                     items:
                       properties:
                         ycRuntime:
-                          description: YC Runtime parameters for the transfer.
+                          description: '(Block List, Max: 1) (see below for nested
+                            schema)'
                           items:
                             properties:
                               jobCount:
-                                description: Number of workers in parallel replication.
+                                description: (Number)
                                 type: number
                               uploadShardParams:
-                                description: Parallel snapshot parameters.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     jobCount:
-                                      description: Number of workers.
+                                      description: (Number)
                                       type: number
                                     processCount:
-                                      description: Number of threads.
+                                      description: (Number)
                                       type: number
                                   type: object
                                 type: array
@@ -200,7 +196,7 @@ spec:
                       type: object
                     type: array
                   sourceId:
-                    description: ID of the source endpoint for the transfer.
+                    description: (String)
                     type: string
                   sourceIdRef:
                     description: Reference to a Endpoint to populate sourceId.
@@ -277,7 +273,7 @@ spec:
                         type: object
                     type: object
                   targetId:
-                    description: ID of the target endpoint for the transfer.
+                    description: (String)
                     type: string
                   targetIdRef:
                     description: Reference to a Endpoint to populate targetId.
@@ -354,51 +350,47 @@ spec:
                         type: object
                     type: object
                   transformation:
-                    description: Transformation for the transfer.
+                    description: '(Block List, Max: 1) (see below for nested schema)'
                     items:
                       properties:
                         transformers:
-                          description: A list of transformers. You can specify exactly
-                            1 transformer in each element of list.
+                          description: (Block List) (see below for nested schema)
                           items:
                             properties:
                               convertToString:
-                                description: Convert column values to strings.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeColumns:
-                                            description: List of columns that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
-                                            description: List of columns that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -407,42 +399,39 @@ spec:
                                   type: object
                                 type: array
                               filterColumns:
-                                description: Set up a list of table columns to transfer.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeColumns:
-                                            description: List of columns that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
-                                            description: List of columns that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -451,32 +440,25 @@ spec:
                                   type: object
                                 type: array
                               filterRows:
-                                description: This filter only applies to transfers
-                                  with queues (Apache Kafka®) as a data source. When
-                                  running a transfer, only the strings meeting the
-                                  specified criteria remain in a changefeed.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     filter:
-                                      description: 'Filtering criterion. This can
-                                        be comparison operators for numeric, string,
-                                        and Boolean values, comparison to NULL, and
-                                        checking whether a substring is part of a
-                                        string. Details here: https://cloud.yandex.com/en/docs/data-transfer/concepts/data-transformation#append-only-sources'
+                                      description: (String)
                                       type: string
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -485,48 +467,45 @@ spec:
                                   type: object
                                 type: array
                               maskField:
-                                description: Mask field transformer allows you to
-                                  hash data.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         type: string
                                       type: array
                                     function:
-                                      description: Mask function.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           maskFunctionHash:
-                                            description: Hash mask function.
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
                                             items:
                                               properties:
                                                 userDefinedSalt:
-                                                  description: This string will be
-                                                    used in the HMAC(sha256, salt)
-                                                    function applied to the column
-                                                    data.
+                                                  description: (String)
                                                   type: string
                                               type: object
                                             type: array
                                         type: object
                                       type: array
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -535,39 +514,38 @@ spec:
                                   type: object
                                 type: array
                               renameTables:
-                                description: Set rules for renaming tables by specifying
-                                  the current names of the tables in the source and
-                                  new names for these tables in the target.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     renameTables:
-                                      description: Set rules for renaming tables by
-                                        specifying the current names of the tables
-                                        in the source and new names for these tables
-                                        in the target.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           newName:
-                                            description: Specify the new names for
-                                              this table in the target.
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
                                             items:
                                               properties:
                                                 name:
-                                                  description: Name of the transfer.
+                                                  description: (String)
                                                   type: string
                                                 nameSpace:
+                                                  description: (String)
                                                   type: string
                                               type: object
                                             type: array
                                           originalName:
-                                            description: Specify the current names
-                                              of the table in the source.
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
                                             items:
                                               properties:
                                                 name:
-                                                  description: Name of the transfer.
+                                                  description: (String)
                                                   type: string
                                                 nameSpace:
+                                                  description: (String)
                                                   type: string
                                               type: object
                                             type: array
@@ -576,28 +554,27 @@ spec:
                                   type: object
                                 type: array
                               replacePrimaryKey:
-                                description: Override primary keys.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     keys:
-                                      description: List of columns to be used as primary
-                                        keys.
+                                      description: (List of String)
                                       items:
                                         type: string
                                       type: array
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -606,47 +583,42 @@ spec:
                                   type: object
                                 type: array
                               sharderTransformer:
-                                description: Set the number of shards for particular
-                                  tables and a list of columns whose values will be
-                                  used for calculating a hash to determine a shard.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeColumns:
-                                            description: List of columns that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
-                                            description: List of columns that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     shardsCount:
-                                      description: Number of shards.
+                                      description: (Number)
                                       type: number
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -655,35 +627,31 @@ spec:
                                   type: object
                                 type: array
                               tableSplitterTransformer:
-                                description: Splits the X table into multiple tables
-                                  (X_1, X_2, ..., X_n) based on data.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         type: string
                                       type: array
                                     splitter:
-                                      description: Specify the split string to be
-                                        used for merging components in a new table
-                                        name.
+                                      description: (String)
                                       type: string
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -696,8 +664,7 @@ spec:
                       type: object
                     type: array
                   type:
-                    description: Type of the transfer. One of "SNAPSHOT_ONLY", "INCREMENT_ONLY",
-                      "SNAPSHOT_AND_INCREMENT".
+                    description: (String)
                     type: string
                 type: object
               initProvider:
@@ -714,11 +681,10 @@ spec:
                   autoscaler.
                 properties:
                   description:
-                    description: Arbitrary description text for the transfer.
+                    description: (String)
                     type: string
                   folderId:
-                    description: ID of the folder to create the transfer in. If it
-                      is not provided, the default provider folder is used.
+                    description: (String)
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -799,39 +765,37 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Data
-                      Transfer transfer.
+                    description: (Map of String)
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the transfer.
+                    description: (String)
                     type: string
                   onCreateActivateMode:
-                    description: |-
-                      Activation action on create a new incremental transfer.
-                      It is not part of the transfer parameter and is used only on create.
-                      One of "sync_activate", "async_activate", "dont_activate". The default is "sync_activate".
+                    description: (String)
                     type: string
                   runtime:
-                    description: Runtime parameters for the transfer.
+                    description: '(Block List, Max: 1) (see below for nested schema)'
                     items:
                       properties:
                         ycRuntime:
-                          description: YC Runtime parameters for the transfer.
+                          description: '(Block List, Max: 1) (see below for nested
+                            schema)'
                           items:
                             properties:
                               jobCount:
-                                description: Number of workers in parallel replication.
+                                description: (Number)
                                 type: number
                               uploadShardParams:
-                                description: Parallel snapshot parameters.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     jobCount:
-                                      description: Number of workers.
+                                      description: (Number)
                                       type: number
                                     processCount:
-                                      description: Number of threads.
+                                      description: (Number)
                                       type: number
                                   type: object
                                 type: array
@@ -840,7 +804,7 @@ spec:
                       type: object
                     type: array
                   sourceId:
-                    description: ID of the source endpoint for the transfer.
+                    description: (String)
                     type: string
                   sourceIdRef:
                     description: Reference to a Endpoint to populate sourceId.
@@ -917,7 +881,7 @@ spec:
                         type: object
                     type: object
                   targetId:
-                    description: ID of the target endpoint for the transfer.
+                    description: (String)
                     type: string
                   targetIdRef:
                     description: Reference to a Endpoint to populate targetId.
@@ -994,51 +958,47 @@ spec:
                         type: object
                     type: object
                   transformation:
-                    description: Transformation for the transfer.
+                    description: '(Block List, Max: 1) (see below for nested schema)'
                     items:
                       properties:
                         transformers:
-                          description: A list of transformers. You can specify exactly
-                            1 transformer in each element of list.
+                          description: (Block List) (see below for nested schema)
                           items:
                             properties:
                               convertToString:
-                                description: Convert column values to strings.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeColumns:
-                                            description: List of columns that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
-                                            description: List of columns that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1047,42 +1007,39 @@ spec:
                                   type: object
                                 type: array
                               filterColumns:
-                                description: Set up a list of table columns to transfer.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeColumns:
-                                            description: List of columns that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
-                                            description: List of columns that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1091,32 +1048,25 @@ spec:
                                   type: object
                                 type: array
                               filterRows:
-                                description: This filter only applies to transfers
-                                  with queues (Apache Kafka®) as a data source. When
-                                  running a transfer, only the strings meeting the
-                                  specified criteria remain in a changefeed.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     filter:
-                                      description: 'Filtering criterion. This can
-                                        be comparison operators for numeric, string,
-                                        and Boolean values, comparison to NULL, and
-                                        checking whether a substring is part of a
-                                        string. Details here: https://cloud.yandex.com/en/docs/data-transfer/concepts/data-transformation#append-only-sources'
+                                      description: (String)
                                       type: string
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1125,48 +1075,45 @@ spec:
                                   type: object
                                 type: array
                               maskField:
-                                description: Mask field transformer allows you to
-                                  hash data.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         type: string
                                       type: array
                                     function:
-                                      description: Mask function.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           maskFunctionHash:
-                                            description: Hash mask function.
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
                                             items:
                                               properties:
                                                 userDefinedSalt:
-                                                  description: This string will be
-                                                    used in the HMAC(sha256, salt)
-                                                    function applied to the column
-                                                    data.
+                                                  description: (String)
                                                   type: string
                                               type: object
                                             type: array
                                         type: object
                                       type: array
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1175,39 +1122,38 @@ spec:
                                   type: object
                                 type: array
                               renameTables:
-                                description: Set rules for renaming tables by specifying
-                                  the current names of the tables in the source and
-                                  new names for these tables in the target.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     renameTables:
-                                      description: Set rules for renaming tables by
-                                        specifying the current names of the tables
-                                        in the source and new names for these tables
-                                        in the target.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           newName:
-                                            description: Specify the new names for
-                                              this table in the target.
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
                                             items:
                                               properties:
                                                 name:
-                                                  description: Name of the transfer.
+                                                  description: (String)
                                                   type: string
                                                 nameSpace:
+                                                  description: (String)
                                                   type: string
                                               type: object
                                             type: array
                                           originalName:
-                                            description: Specify the current names
-                                              of the table in the source.
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
                                             items:
                                               properties:
                                                 name:
-                                                  description: Name of the transfer.
+                                                  description: (String)
                                                   type: string
                                                 nameSpace:
+                                                  description: (String)
                                                   type: string
                                               type: object
                                             type: array
@@ -1216,28 +1162,27 @@ spec:
                                   type: object
                                 type: array
                               replacePrimaryKey:
-                                description: Override primary keys.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     keys:
-                                      description: List of columns to be used as primary
-                                        keys.
+                                      description: (List of String)
                                       items:
                                         type: string
                                       type: array
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1246,47 +1191,42 @@ spec:
                                   type: object
                                 type: array
                               sharderTransformer:
-                                description: Set the number of shards for particular
-                                  tables and a list of columns whose values will be
-                                  used for calculating a hash to determine a shard.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeColumns:
-                                            description: List of columns that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
-                                            description: List of columns that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     shardsCount:
-                                      description: Number of shards.
+                                      description: (Number)
                                       type: number
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1295,35 +1235,31 @@ spec:
                                   type: object
                                 type: array
                               tableSplitterTransformer:
-                                description: Splits the X table into multiple tables
-                                  (X_1, X_2, ..., X_n) based on data.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         type: string
                                       type: array
                                     splitter:
-                                      description: Specify the split string to be
-                                        used for merging components in a new table
-                                        name.
+                                      description: (String)
                                       type: string
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1336,8 +1272,7 @@ spec:
                       type: object
                     type: array
                   type:
-                    description: Type of the transfer. One of "SNAPSHOT_ONLY", "INCREMENT_ONLY",
-                      "SNAPSHOT_AND_INCREMENT".
+                    description: (String)
                     type: string
                 type: object
               managementPolicies:
@@ -1513,51 +1448,48 @@ spec:
               atProvider:
                 properties:
                   description:
-                    description: Arbitrary description text for the transfer.
+                    description: (String)
                     type: string
                   folderId:
-                    description: ID of the folder to create the transfer in. If it
-                      is not provided, the default provider folder is used.
+                    description: (String)
                     type: string
                   id:
-                    description: (Computed) Identifier of a new Data Transfer transfer.
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Data
-                      Transfer transfer.
+                    description: (Map of String)
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the transfer.
+                    description: (String)
                     type: string
                   onCreateActivateMode:
-                    description: |-
-                      Activation action on create a new incremental transfer.
-                      It is not part of the transfer parameter and is used only on create.
-                      One of "sync_activate", "async_activate", "dont_activate". The default is "sync_activate".
+                    description: (String)
                     type: string
                   runtime:
-                    description: Runtime parameters for the transfer.
+                    description: '(Block List, Max: 1) (see below for nested schema)'
                     items:
                       properties:
                         ycRuntime:
-                          description: YC Runtime parameters for the transfer.
+                          description: '(Block List, Max: 1) (see below for nested
+                            schema)'
                           items:
                             properties:
                               jobCount:
-                                description: Number of workers in parallel replication.
+                                description: (Number)
                                 type: number
                               uploadShardParams:
-                                description: Parallel snapshot parameters.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     jobCount:
-                                      description: Number of workers.
+                                      description: (Number)
                                       type: number
                                     processCount:
-                                      description: Number of threads.
+                                      description: (Number)
                                       type: number
                                   type: object
                                 type: array
@@ -1566,57 +1498,53 @@ spec:
                       type: object
                     type: array
                   sourceId:
-                    description: ID of the source endpoint for the transfer.
+                    description: (String)
                     type: string
                   targetId:
-                    description: ID of the target endpoint for the transfer.
+                    description: (String)
                     type: string
                   transformation:
-                    description: Transformation for the transfer.
+                    description: '(Block List, Max: 1) (see below for nested schema)'
                     items:
                       properties:
                         transformers:
-                          description: A list of transformers. You can specify exactly
-                            1 transformer in each element of list.
+                          description: (Block List) (see below for nested schema)
                           items:
                             properties:
                               convertToString:
-                                description: Convert column values to strings.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeColumns:
-                                            description: List of columns that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
-                                            description: List of columns that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1625,42 +1553,39 @@ spec:
                                   type: object
                                 type: array
                               filterColumns:
-                                description: Set up a list of table columns to transfer.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeColumns:
-                                            description: List of columns that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
-                                            description: List of columns that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1669,32 +1594,25 @@ spec:
                                   type: object
                                 type: array
                               filterRows:
-                                description: This filter only applies to transfers
-                                  with queues (Apache Kafka®) as a data source. When
-                                  running a transfer, only the strings meeting the
-                                  specified criteria remain in a changefeed.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     filter:
-                                      description: 'Filtering criterion. This can
-                                        be comparison operators for numeric, string,
-                                        and Boolean values, comparison to NULL, and
-                                        checking whether a substring is part of a
-                                        string. Details here: https://cloud.yandex.com/en/docs/data-transfer/concepts/data-transformation#append-only-sources'
+                                      description: (String)
                                       type: string
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1703,48 +1621,45 @@ spec:
                                   type: object
                                 type: array
                               maskField:
-                                description: Mask field transformer allows you to
-                                  hash data.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         type: string
                                       type: array
                                     function:
-                                      description: Mask function.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           maskFunctionHash:
-                                            description: Hash mask function.
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
                                             items:
                                               properties:
                                                 userDefinedSalt:
-                                                  description: This string will be
-                                                    used in the HMAC(sha256, salt)
-                                                    function applied to the column
-                                                    data.
+                                                  description: (String)
                                                   type: string
                                               type: object
                                             type: array
                                         type: object
                                       type: array
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1753,39 +1668,38 @@ spec:
                                   type: object
                                 type: array
                               renameTables:
-                                description: Set rules for renaming tables by specifying
-                                  the current names of the tables in the source and
-                                  new names for these tables in the target.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     renameTables:
-                                      description: Set rules for renaming tables by
-                                        specifying the current names of the tables
-                                        in the source and new names for these tables
-                                        in the target.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           newName:
-                                            description: Specify the new names for
-                                              this table in the target.
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
                                             items:
                                               properties:
                                                 name:
-                                                  description: Name of the transfer.
+                                                  description: (String)
                                                   type: string
                                                 nameSpace:
+                                                  description: (String)
                                                   type: string
                                               type: object
                                             type: array
                                           originalName:
-                                            description: Specify the current names
-                                              of the table in the source.
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
                                             items:
                                               properties:
                                                 name:
-                                                  description: Name of the transfer.
+                                                  description: (String)
                                                   type: string
                                                 nameSpace:
+                                                  description: (String)
                                                   type: string
                                               type: object
                                             type: array
@@ -1794,28 +1708,27 @@ spec:
                                   type: object
                                 type: array
                               replacePrimaryKey:
-                                description: Override primary keys.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     keys:
-                                      description: List of columns to be used as primary
-                                        keys.
+                                      description: (List of String)
                                       items:
                                         type: string
                                       type: array
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1824,47 +1737,42 @@ spec:
                                   type: object
                                 type: array
                               sharderTransformer:
-                                description: Set the number of shards for particular
-                                  tables and a list of columns whose values will be
-                                  used for calculating a hash to determine a shard.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeColumns:
-                                            description: List of columns that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeColumns:
-                                            description: List of columns that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                         type: object
                                       type: array
                                     shardsCount:
-                                      description: Number of shards.
+                                      description: (Number)
                                       type: number
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1873,35 +1781,31 @@ spec:
                                   type: object
                                 type: array
                               tableSplitterTransformer:
-                                description: Splits the X table into multiple tables
-                                  (X_1, X_2, ..., X_n) based on data.
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     columns:
-                                      description: List of strings that specify the
-                                        name of the column for data masking (a regular
-                                        expression).
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         type: string
                                       type: array
                                     splitter:
-                                      description: Specify the split string to be
-                                        used for merging components in a new table
-                                        name.
+                                      description: (String)
                                       type: string
                                     tables:
-                                      description: Table filter.
+                                      description: '(Block List, Max: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           excludeTables:
-                                            description: List of tables that will
-                                              be excluded to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
                                           includeTables:
-                                            description: List of tables that will
-                                              be included to transfer.
+                                            description: (List of String)
                                             items:
                                               type: string
                                             type: array
@@ -1914,12 +1818,10 @@ spec:
                       type: object
                     type: array
                   type:
-                    description: Type of the transfer. One of "SNAPSHOT_ONLY", "INCREMENT_ONLY",
-                      "SNAPSHOT_AND_INCREMENT".
+                    description: (String)
                     type: string
                   warning:
-                    description: (Computed) Error description if transfer has any
-                      errors.
+                    description: (String)
                     type: string
                 type: object
               conditions:

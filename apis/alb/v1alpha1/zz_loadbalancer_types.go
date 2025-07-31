@@ -87,8 +87,7 @@ type AllocationPolicyParameters struct {
 
 type DefaultHandlerInitParameters struct {
 
-	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
-	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
 	// +listType=set
 	CertificateIds []*string `json:"certificateIds,omitempty" tf:"certificate_ids,omitempty"`
 
@@ -101,8 +100,7 @@ type DefaultHandlerInitParameters struct {
 
 type DefaultHandlerObservation struct {
 
-	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
-	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
 	// +listType=set
 	CertificateIds []*string `json:"certificateIds,omitempty" tf:"certificate_ids,omitempty"`
 
@@ -115,8 +113,7 @@ type DefaultHandlerObservation struct {
 
 type DefaultHandlerParameters struct {
 
-	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
-	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	CertificateIds []*string `json:"certificateIds" tf:"certificate_ids,omitempty"`
@@ -963,8 +960,7 @@ type RedirectsParameters struct {
 
 type SniHandlerHandlerInitParameters struct {
 
-	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
-	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
 	// +listType=set
 	CertificateIds []*string `json:"certificateIds,omitempty" tf:"certificate_ids,omitempty"`
 
@@ -977,8 +973,7 @@ type SniHandlerHandlerInitParameters struct {
 
 type SniHandlerHandlerObservation struct {
 
-	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
-	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
 	// +listType=set
 	CertificateIds []*string `json:"certificateIds,omitempty" tf:"certificate_ids,omitempty"`
 
@@ -991,8 +986,7 @@ type SniHandlerHandlerObservation struct {
 
 type SniHandlerHandlerParameters struct {
 
-	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated
-	// with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+	// Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	CertificateIds []*string `json:"certificateIds" tf:"certificate_ids,omitempty"`

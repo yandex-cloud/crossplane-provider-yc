@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: objects.storage.yandex-cloud.jet.crossplane.io
 spec:
   group: storage.yandex-cloud.jet.crossplane.io
@@ -74,8 +74,10 @@ spec:
               forProvider:
                 properties:
                   accessKey:
-                    description: The access key to use when applying changes. If omitted,
-                      storage_access_key specified in config is used.
+                    description: The access key to use when applying changes. This
+                      value can also be provided as storage_access_key specified in
+                      provider config (explicitly or within shared_credentials_file)
+                      is used.
                     type: string
                   accessKeyRef:
                     description: Reference to a ServiceAccountStaticAccessKey in iam
@@ -269,8 +271,10 @@ spec:
                       on a bucket.
                     type: string
                   secretKeySecretRef:
-                    description: The secret key to use when applying changes. If omitted,
-                      storage_secret_key specified in config is used.
+                    description: The secret key to use when applying changes. This
+                      value can also be provided as storage_secret_key specified in
+                      provider config (explicitly or within shared_credentials_file)
+                      is used.
                     properties:
                       key:
                         description: The key to select.
@@ -316,8 +320,10 @@ spec:
                   autoscaler.
                 properties:
                   accessKey:
-                    description: The access key to use when applying changes. If omitted,
-                      storage_access_key specified in config is used.
+                    description: The access key to use when applying changes. This
+                      value can also be provided as storage_access_key specified in
+                      provider config (explicitly or within shared_credentials_file)
+                      is used.
                     type: string
                   accessKeyRef:
                     description: Reference to a ServiceAccountStaticAccessKey in iam
@@ -510,6 +516,26 @@ spec:
                       object_lock_mode. Requires object_lock_configuration to be enabled
                       on a bucket.
                     type: string
+                  secretKeySecretRef:
+                    description: The secret key to use when applying changes. This
+                      value can also be provided as storage_secret_key specified in
+                      provider config (explicitly or within shared_credentials_file)
+                      is used.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   source:
                     description: The path to a file that will be read and uploaded
                       as raw bytes for the object content.
@@ -704,8 +730,10 @@ spec:
               atProvider:
                 properties:
                   accessKey:
-                    description: The access key to use when applying changes. If omitted,
-                      storage_access_key specified in config is used.
+                    description: The access key to use when applying changes. This
+                      value can also be provided as storage_access_key specified in
+                      provider config (explicitly or within shared_credentials_file)
+                      is used.
                     type: string
                   acl:
                     description: The predefined ACL to apply. Defaults to private.

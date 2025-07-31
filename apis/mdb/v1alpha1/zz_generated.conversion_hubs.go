@@ -57,9 +57,6 @@ func (tr *MySQLDatabase) Hub() {}
 func (tr *MySQLUser) Hub() {}
 
 // Hub marks this type as a conversion hub.
-func (tr *OpensearchCluster) Hub() {}
-
-// Hub marks this type as a conversion hub.
 func (tr *PostgresqlCluster) Hub() {}
 
 // Hub marks this type as a conversion hub.

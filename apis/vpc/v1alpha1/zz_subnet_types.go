@@ -71,12 +71,10 @@ type SubnetInitParameters struct {
 	// Options for DHCP client. The structure is documented below.
 	DHCPOptions []DHCPOptionsInitParameters `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
 
-	// An optional description of the subnet. Provide this property when
-	// you create the resource.
+	// An optional description of the subnet. Provide this property when you create the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs.
-	// If omitted, the provider folder is used.
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -95,8 +93,7 @@ type SubnetInitParameters struct {
 	// Name of the subnet. Provided by the client when the subnet is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the network this subnet belongs to.
-	// Only networks that are in the distributed mode can have subnets.
+	// ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
 	// +crossplane:generate:reference:type=Network
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
@@ -108,14 +105,10 @@ type SubnetInitParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// The ID of the route table to assign to this subnet. Assigned route table should
-	// belong to the same network as this subnet.
+	// The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
 
-	// A list of blocks of internal IPv4 addresses that are owned by this subnet.
-	// Provide this property when you create the subnet. For example, 10.0.0.0/22 or 192.168.0.0/16.
-	// Blocks of addresses must be unique and non-overlapping within a network.
-	// Minimum subnet size is /28, and maximum subnet size is /16. Only IPv4 is supported.
+	// A list of blocks of internal IPv4 addresses that are owned by this subnet. Provide this property when you create the subnet. For example, 10.0.0.0/22 or 192.168.0.0/16. Blocks of addresses must be unique and non-overlapping within a network. Minimum subnet size is /28, and maximum subnet size is /16. Only IPv4 is supported.
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
 	// Name of the Yandex.Cloud zone for this subnet.
@@ -128,12 +121,10 @@ type SubnetObservation struct {
 	// Options for DHCP client. The structure is documented below.
 	DHCPOptions []DHCPOptionsObservation `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
 
-	// An optional description of the subnet. Provide this property when
-	// you create the resource.
+	// An optional description of the subnet. Provide this property when you create the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs.
-	// If omitted, the provider folder is used.
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -145,18 +136,13 @@ type SubnetObservation struct {
 	// Name of the subnet. Provided by the client when the subnet is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the network this subnet belongs to.
-	// Only networks that are in the distributed mode can have subnets.
+	// ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// The ID of the route table to assign to this subnet. Assigned route table should
-	// belong to the same network as this subnet.
+	// The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
 
-	// A list of blocks of internal IPv4 addresses that are owned by this subnet.
-	// Provide this property when you create the subnet. For example, 10.0.0.0/22 or 192.168.0.0/16.
-	// Blocks of addresses must be unique and non-overlapping within a network.
-	// Minimum subnet size is /28, and maximum subnet size is /16. Only IPv4 is supported.
+	// A list of blocks of internal IPv4 addresses that are owned by this subnet. Provide this property when you create the subnet. For example, 10.0.0.0/22 or 192.168.0.0/16. Blocks of addresses must be unique and non-overlapping within a network. Minimum subnet size is /28, and maximum subnet size is /16. Only IPv4 is supported.
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
 	// An optional list of blocks of IPv6 addresses that are owned by this subnet.
@@ -172,13 +158,11 @@ type SubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	DHCPOptions []DHCPOptionsParameters `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
 
-	// An optional description of the subnet. Provide this property when
-	// you create the resource.
+	// An optional description of the subnet. Provide this property when you create the resource.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs.
-	// If omitted, the provider folder is used.
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -200,8 +184,7 @@ type SubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the network this subnet belongs to.
-	// Only networks that are in the distributed mode can have subnets.
+	// ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
 	// +crossplane:generate:reference:type=Network
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -214,15 +197,11 @@ type SubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// The ID of the route table to assign to this subnet. Assigned route table should
-	// belong to the same network as this subnet.
+	// The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
 	// +kubebuilder:validation:Optional
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
 
-	// A list of blocks of internal IPv4 addresses that are owned by this subnet.
-	// Provide this property when you create the subnet. For example, 10.0.0.0/22 or 192.168.0.0/16.
-	// Blocks of addresses must be unique and non-overlapping within a network.
-	// Minimum subnet size is /28, and maximum subnet size is /16. Only IPv4 is supported.
+	// A list of blocks of internal IPv4 addresses that are owned by this subnet. Provide this property when you create the subnet. For example, 10.0.0.0/22 or 192.168.0.0/16. Blocks of addresses must be unique and non-overlapping within a network. Minimum subnet size is /28, and maximum subnet size is /16. Only IPv4 is supported.
 	// +kubebuilder:validation:Optional
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 

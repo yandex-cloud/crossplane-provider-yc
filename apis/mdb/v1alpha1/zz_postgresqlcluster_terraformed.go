@@ -35,7 +35,7 @@ func (mg *PostgresqlCluster) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this PostgresqlCluster
 func (tr *PostgresqlCluster) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"user[*].password": "spec.forProvider.user[*].passwordSecretRef"}
+	return map[string]string{"user[*].password": "user[*].passwordSecretRef"}
 }
 
 // GetObservation of this PostgresqlCluster

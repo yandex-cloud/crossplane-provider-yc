@@ -35,7 +35,7 @@ func (mg *PostgresqlUser) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this PostgresqlUser
 func (tr *PostgresqlUser) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"password": "spec.forProvider.passwordSecretRef"}
+	return map[string]string{"password": "passwordSecretRef"}
 }
 
 // GetObservation of this PostgresqlUser

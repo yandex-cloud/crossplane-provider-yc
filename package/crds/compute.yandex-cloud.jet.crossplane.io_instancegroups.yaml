@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: instancegroups.compute.yandex-cloud.jet.crossplane.io
 spec:
   group: compute.yandex-cloud.jet.crossplane.io
@@ -147,26 +147,28 @@ spec:
                             deleted at the same time.
                           type: number
                         maxExpansion:
-                          description: |-
-                            The maximum number of instances that can be temporarily allocated above the group's target size
-                            during the update process.
+                          description: The maximum number of instances that can be
+                            temporarily allocated above the group's target size during
+                            the update process.
                           type: number
                         maxUnavailable:
-                          description: |-
-                            The maximum number of running instances that can be taken offline (stopped or deleted) at the same time
-                            during the update process.
+                          description: The maximum number of running instances that
+                            can be taken offline (stopped or deleted) at the same
+                            time during the update process.
                           type: number
                         startupDuration:
-                          description: |-
-                            The amount of time in seconds to allow for an instance to start.
-                            Instance will be considered up and running (and start receiving traffic) only after the startup_duration
+                          description: The amount of time in seconds to allow for
+                            an instance to start. Instance will be considered up and
+                            running (and start receiving traffic) only after the startup_duration
                             has elapsed and all health checks are passed.
                           type: number
                         strategy:
-                          description: |-
-                            Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups
-                            can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead,
-                            it will wait until the instance stops itself or becomes unhealthy.
+                          description: Affects the lifecycle of the instance during
+                            deployment. If set to proactive (default), Instance Groups
+                            can forcefully stop a running instance. If opportunistic,
+                            Instance Groups does not stop a running instance. Instead,
+                            it will wait until the instance stops itself or becomes
+                            unhealthy.
                           type: string
                       type: object
                     type: array
@@ -585,7 +587,7 @@ spec:
                           items:
                             properties:
                               dnsRecord:
-                                description: List of dns records.  The structure is
+                                description: List of dns records. The structure is
                                   documented below.
                                 items:
                                   properties:
@@ -619,7 +621,7 @@ spec:
                                 description: Manual set static IPv6 address.
                                 type: string
                               ipv6DnsRecord:
-                                description: List of ipv6 dns records.  The structure
+                                description: List of ipv6 dns records. The structure
                                   is documented below.
                                 items:
                                   properties:
@@ -644,7 +646,7 @@ spec:
                                 description: Flag for using NAT.
                                 type: boolean
                               natDnsRecord:
-                                description: List of nat dns records.  The structure
+                                description: List of nat dns records. The structure
                                   is documented below.
                                 items:
                                   properties:
@@ -1235,6 +1237,10 @@ spec:
                             The structure is documented below.
                           items:
                             properties:
+                              autoScaleType:
+                                description: . Autoscale type, can be ZONAL or REGIONAL.
+                                  By default ZONAL type is used.
+                                type: string
                               cpuUtilizationTarget:
                                 description: Target CPU load level.
                                 type: number
@@ -1261,12 +1267,16 @@ spec:
                                       description: Metric type, GAUGE or COUNTER.
                                       type: string
                                     ruleType:
-                                      description: |-
-                                        Rule type: UTILIZATION - This type means that the metric applies to one instance.
-                                        First, Instance Groups calculates the average metric value for each instance,
-                                        then averages the values for instances in one availability zone.
-                                        This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone.
-                                        This type of metric must have the zone_id label.
+                                      description: 'Rule type: UTILIZATION - This
+                                        type means that the metric applies to one
+                                        instance. First, Instance Groups calculates
+                                        the average metric value for each instance,
+                                        then averages the values for instances in
+                                        one availability zone. This type of metric
+                                        must have the instance_id label. WORKLOAD
+                                        - This type means that the metric applies
+                                        to instances in one availability zone. This
+                                        type of metric must have the zone_id label.'
                                       type: string
                                     service:
                                       description: Service of custom metric in Yandex
@@ -1286,25 +1296,28 @@ spec:
                                   in the group.
                                 type: number
                               measurementDuration:
-                                description: |-
-                                  The amount of time, in seconds, that metrics are averaged for.
-                                  If the average value at the end of the interval is higher than the cpu_utilization_target,
-                                  the instance group will increase the number of virtual machines in the group.
+                                description: The amount of time, in seconds, that
+                                  metrics are averaged for. If the average value at
+                                  the end of the interval is higher than the cpu_utilization_target,
+                                  the instance group will increase the number of virtual
+                                  machines in the group.
                                 type: number
                               minZoneSize:
                                 description: The minimum number of virtual machines
                                   in a single availability zone.
                                 type: number
                               stabilizationDuration:
-                                description: |-
-                                  The minimum time interval, in seconds, to monitor the load before
-                                  an instance group can reduce the number of virtual machines in the group. During this time, the group
-                                  will not decrease even if the average load falls below the value of cpu_utilization_target.
+                                description: The minimum time interval, in seconds,
+                                  to monitor the load before an instance group can
+                                  reduce the number of virtual machines in the group.
+                                  During this time, the group will not decrease even
+                                  if the average load falls below the value of cpu_utilization_target.
                                 type: number
                               warmupDuration:
-                                description: |-
-                                  The warm-up time of the virtual machine, in seconds. During this time,
-                                  traffic is fed to the virtual machine, but load metrics are not taken into account.
+                                description: The warm-up time of the virtual machine,
+                                  in seconds. During this time, traffic is fed to
+                                  the virtual machine, but load metrics are not taken
+                                  into account.
                                 type: number
                             type: object
                           type: array
@@ -1324,6 +1337,10 @@ spec:
                             is documented below.
                           items:
                             properties:
+                              autoScaleType:
+                                description: . Autoscale type, can be ZONAL or REGIONAL.
+                                  By default ZONAL type is used.
+                                type: string
                               cpuUtilizationTarget:
                                 description: Target CPU load level.
                                 type: number
@@ -1350,12 +1367,16 @@ spec:
                                       description: Metric type, GAUGE or COUNTER.
                                       type: string
                                     ruleType:
-                                      description: |-
-                                        Rule type: UTILIZATION - This type means that the metric applies to one instance.
-                                        First, Instance Groups calculates the average metric value for each instance,
-                                        then averages the values for instances in one availability zone.
-                                        This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone.
-                                        This type of metric must have the zone_id label.
+                                      description: 'Rule type: UTILIZATION - This
+                                        type means that the metric applies to one
+                                        instance. First, Instance Groups calculates
+                                        the average metric value for each instance,
+                                        then averages the values for instances in
+                                        one availability zone. This type of metric
+                                        must have the instance_id label. WORKLOAD
+                                        - This type means that the metric applies
+                                        to instances in one availability zone. This
+                                        type of metric must have the zone_id label.'
                                       type: string
                                     service:
                                       description: Service of custom metric in Yandex
@@ -1375,25 +1396,28 @@ spec:
                                   in the group.
                                 type: number
                               measurementDuration:
-                                description: |-
-                                  The amount of time, in seconds, that metrics are averaged for.
-                                  If the average value at the end of the interval is higher than the cpu_utilization_target,
-                                  the instance group will increase the number of virtual machines in the group.
+                                description: The amount of time, in seconds, that
+                                  metrics are averaged for. If the average value at
+                                  the end of the interval is higher than the cpu_utilization_target,
+                                  the instance group will increase the number of virtual
+                                  machines in the group.
                                 type: number
                               minZoneSize:
                                 description: The minimum number of virtual machines
                                   in a single availability zone.
                                 type: number
                               stabilizationDuration:
-                                description: |-
-                                  The minimum time interval, in seconds, to monitor the load before
-                                  an instance group can reduce the number of virtual machines in the group. During this time, the group
-                                  will not decrease even if the average load falls below the value of cpu_utilization_target.
+                                description: The minimum time interval, in seconds,
+                                  to monitor the load before an instance group can
+                                  reduce the number of virtual machines in the group.
+                                  During this time, the group will not decrease even
+                                  if the average load falls below the value of cpu_utilization_target.
                                 type: number
                               warmupDuration:
-                                description: |-
-                                  The warm-up time of the virtual machine, in seconds. During this time,
-                                  traffic is fed to the virtual machine, but load metrics are not taken into account.
+                                description: The warm-up time of the virtual machine,
+                                  in seconds. During this time, traffic is fed to
+                                  the virtual machine, but load metrics are not taken
+                                  into account.
                                 type: number
                             type: object
                           type: array
@@ -1482,8 +1506,8 @@ spec:
                   variables:
                     additionalProperties:
                       type: string
-                    description: A set of key/value  variables pairs to assign to
-                      the instance group.
+                    description: A set of key/value variables pairs to assign to the
+                      instance group.
                     type: object
                     x-kubernetes-map-type: granular
                 type: object
@@ -1574,26 +1598,28 @@ spec:
                             deleted at the same time.
                           type: number
                         maxExpansion:
-                          description: |-
-                            The maximum number of instances that can be temporarily allocated above the group's target size
-                            during the update process.
+                          description: The maximum number of instances that can be
+                            temporarily allocated above the group's target size during
+                            the update process.
                           type: number
                         maxUnavailable:
-                          description: |-
-                            The maximum number of running instances that can be taken offline (stopped or deleted) at the same time
-                            during the update process.
+                          description: The maximum number of running instances that
+                            can be taken offline (stopped or deleted) at the same
+                            time during the update process.
                           type: number
                         startupDuration:
-                          description: |-
-                            The amount of time in seconds to allow for an instance to start.
-                            Instance will be considered up and running (and start receiving traffic) only after the startup_duration
+                          description: The amount of time in seconds to allow for
+                            an instance to start. Instance will be considered up and
+                            running (and start receiving traffic) only after the startup_duration
                             has elapsed and all health checks are passed.
                           type: number
                         strategy:
-                          description: |-
-                            Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups
-                            can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead,
-                            it will wait until the instance stops itself or becomes unhealthy.
+                          description: Affects the lifecycle of the instance during
+                            deployment. If set to proactive (default), Instance Groups
+                            can forcefully stop a running instance. If opportunistic,
+                            Instance Groups does not stop a running instance. Instead,
+                            it will wait until the instance stops itself or becomes
+                            unhealthy.
                           type: string
                       type: object
                     type: array
@@ -2012,7 +2038,7 @@ spec:
                           items:
                             properties:
                               dnsRecord:
-                                description: List of dns records.  The structure is
+                                description: List of dns records. The structure is
                                   documented below.
                                 items:
                                   properties:
@@ -2046,7 +2072,7 @@ spec:
                                 description: Manual set static IPv6 address.
                                 type: string
                               ipv6DnsRecord:
-                                description: List of ipv6 dns records.  The structure
+                                description: List of ipv6 dns records. The structure
                                   is documented below.
                                 items:
                                   properties:
@@ -2071,7 +2097,7 @@ spec:
                                 description: Flag for using NAT.
                                 type: boolean
                               natDnsRecord:
-                                description: List of nat dns records.  The structure
+                                description: List of nat dns records. The structure
                                   is documented below.
                                 items:
                                   properties:
@@ -2662,6 +2688,10 @@ spec:
                             The structure is documented below.
                           items:
                             properties:
+                              autoScaleType:
+                                description: . Autoscale type, can be ZONAL or REGIONAL.
+                                  By default ZONAL type is used.
+                                type: string
                               cpuUtilizationTarget:
                                 description: Target CPU load level.
                                 type: number
@@ -2688,12 +2718,16 @@ spec:
                                       description: Metric type, GAUGE or COUNTER.
                                       type: string
                                     ruleType:
-                                      description: |-
-                                        Rule type: UTILIZATION - This type means that the metric applies to one instance.
-                                        First, Instance Groups calculates the average metric value for each instance,
-                                        then averages the values for instances in one availability zone.
-                                        This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone.
-                                        This type of metric must have the zone_id label.
+                                      description: 'Rule type: UTILIZATION - This
+                                        type means that the metric applies to one
+                                        instance. First, Instance Groups calculates
+                                        the average metric value for each instance,
+                                        then averages the values for instances in
+                                        one availability zone. This type of metric
+                                        must have the instance_id label. WORKLOAD
+                                        - This type means that the metric applies
+                                        to instances in one availability zone. This
+                                        type of metric must have the zone_id label.'
                                       type: string
                                     service:
                                       description: Service of custom metric in Yandex
@@ -2713,25 +2747,28 @@ spec:
                                   in the group.
                                 type: number
                               measurementDuration:
-                                description: |-
-                                  The amount of time, in seconds, that metrics are averaged for.
-                                  If the average value at the end of the interval is higher than the cpu_utilization_target,
-                                  the instance group will increase the number of virtual machines in the group.
+                                description: The amount of time, in seconds, that
+                                  metrics are averaged for. If the average value at
+                                  the end of the interval is higher than the cpu_utilization_target,
+                                  the instance group will increase the number of virtual
+                                  machines in the group.
                                 type: number
                               minZoneSize:
                                 description: The minimum number of virtual machines
                                   in a single availability zone.
                                 type: number
                               stabilizationDuration:
-                                description: |-
-                                  The minimum time interval, in seconds, to monitor the load before
-                                  an instance group can reduce the number of virtual machines in the group. During this time, the group
-                                  will not decrease even if the average load falls below the value of cpu_utilization_target.
+                                description: The minimum time interval, in seconds,
+                                  to monitor the load before an instance group can
+                                  reduce the number of virtual machines in the group.
+                                  During this time, the group will not decrease even
+                                  if the average load falls below the value of cpu_utilization_target.
                                 type: number
                               warmupDuration:
-                                description: |-
-                                  The warm-up time of the virtual machine, in seconds. During this time,
-                                  traffic is fed to the virtual machine, but load metrics are not taken into account.
+                                description: The warm-up time of the virtual machine,
+                                  in seconds. During this time, traffic is fed to
+                                  the virtual machine, but load metrics are not taken
+                                  into account.
                                 type: number
                             type: object
                           type: array
@@ -2751,6 +2788,10 @@ spec:
                             is documented below.
                           items:
                             properties:
+                              autoScaleType:
+                                description: . Autoscale type, can be ZONAL or REGIONAL.
+                                  By default ZONAL type is used.
+                                type: string
                               cpuUtilizationTarget:
                                 description: Target CPU load level.
                                 type: number
@@ -2777,12 +2818,16 @@ spec:
                                       description: Metric type, GAUGE or COUNTER.
                                       type: string
                                     ruleType:
-                                      description: |-
-                                        Rule type: UTILIZATION - This type means that the metric applies to one instance.
-                                        First, Instance Groups calculates the average metric value for each instance,
-                                        then averages the values for instances in one availability zone.
-                                        This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone.
-                                        This type of metric must have the zone_id label.
+                                      description: 'Rule type: UTILIZATION - This
+                                        type means that the metric applies to one
+                                        instance. First, Instance Groups calculates
+                                        the average metric value for each instance,
+                                        then averages the values for instances in
+                                        one availability zone. This type of metric
+                                        must have the instance_id label. WORKLOAD
+                                        - This type means that the metric applies
+                                        to instances in one availability zone. This
+                                        type of metric must have the zone_id label.'
                                       type: string
                                     service:
                                       description: Service of custom metric in Yandex
@@ -2802,25 +2847,28 @@ spec:
                                   in the group.
                                 type: number
                               measurementDuration:
-                                description: |-
-                                  The amount of time, in seconds, that metrics are averaged for.
-                                  If the average value at the end of the interval is higher than the cpu_utilization_target,
-                                  the instance group will increase the number of virtual machines in the group.
+                                description: The amount of time, in seconds, that
+                                  metrics are averaged for. If the average value at
+                                  the end of the interval is higher than the cpu_utilization_target,
+                                  the instance group will increase the number of virtual
+                                  machines in the group.
                                 type: number
                               minZoneSize:
                                 description: The minimum number of virtual machines
                                   in a single availability zone.
                                 type: number
                               stabilizationDuration:
-                                description: |-
-                                  The minimum time interval, in seconds, to monitor the load before
-                                  an instance group can reduce the number of virtual machines in the group. During this time, the group
-                                  will not decrease even if the average load falls below the value of cpu_utilization_target.
+                                description: The minimum time interval, in seconds,
+                                  to monitor the load before an instance group can
+                                  reduce the number of virtual machines in the group.
+                                  During this time, the group will not decrease even
+                                  if the average load falls below the value of cpu_utilization_target.
                                 type: number
                               warmupDuration:
-                                description: |-
-                                  The warm-up time of the virtual machine, in seconds. During this time,
-                                  traffic is fed to the virtual machine, but load metrics are not taken into account.
+                                description: The warm-up time of the virtual machine,
+                                  in seconds. During this time, traffic is fed to
+                                  the virtual machine, but load metrics are not taken
+                                  into account.
                                 type: number
                             type: object
                           type: array
@@ -2909,8 +2957,8 @@ spec:
                   variables:
                     additionalProperties:
                       type: string
-                    description: A set of key/value  variables pairs to assign to
-                      the instance group.
+                    description: A set of key/value variables pairs to assign to the
+                      instance group.
                     type: object
                     x-kubernetes-map-type: granular
                 type: object
@@ -3186,26 +3234,28 @@ spec:
                             deleted at the same time.
                           type: number
                         maxExpansion:
-                          description: |-
-                            The maximum number of instances that can be temporarily allocated above the group's target size
-                            during the update process.
+                          description: The maximum number of instances that can be
+                            temporarily allocated above the group's target size during
+                            the update process.
                           type: number
                         maxUnavailable:
-                          description: |-
-                            The maximum number of running instances that can be taken offline (stopped or deleted) at the same time
-                            during the update process.
+                          description: The maximum number of running instances that
+                            can be taken offline (stopped or deleted) at the same
+                            time during the update process.
                           type: number
                         startupDuration:
-                          description: |-
-                            The amount of time in seconds to allow for an instance to start.
-                            Instance will be considered up and running (and start receiving traffic) only after the startup_duration
+                          description: The amount of time in seconds to allow for
+                            an instance to start. Instance will be considered up and
+                            running (and start receiving traffic) only after the startup_duration
                             has elapsed and all health checks are passed.
                           type: number
                         strategy:
-                          description: |-
-                            Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups
-                            can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead,
-                            it will wait until the instance stops itself or becomes unhealthy.
+                          description: Affects the lifecycle of the instance during
+                            deployment. If set to proactive (default), Instance Groups
+                            can forcefully stop a running instance. If opportunistic,
+                            Instance Groups does not stop a running instance. Instead,
+                            it will wait until the instance stops itself or becomes
+                            unhealthy.
                           type: string
                       type: object
                     type: array
@@ -3399,7 +3449,7 @@ spec:
                           items:
                             properties:
                               dnsRecord:
-                                description: List of dns records.  The structure is
+                                description: List of dns records. The structure is
                                   documented below.
                                 items:
                                   properties:
@@ -3433,7 +3483,7 @@ spec:
                                 description: Manual set static IPv6 address.
                                 type: string
                               ipv6DnsRecord:
-                                description: List of ipv6 dns records.  The structure
+                                description: List of ipv6 dns records. The structure
                                   is documented below.
                                 items:
                                   properties:
@@ -3458,7 +3508,7 @@ spec:
                                 description: Flag for using NAT.
                                 type: boolean
                               natDnsRecord:
-                                description: List of nat dns records.  The structure
+                                description: List of nat dns records. The structure
                                   is documented below.
                                 items:
                                   properties:
@@ -3741,6 +3791,10 @@ spec:
                             The structure is documented below.
                           items:
                             properties:
+                              autoScaleType:
+                                description: . Autoscale type, can be ZONAL or REGIONAL.
+                                  By default ZONAL type is used.
+                                type: string
                               cpuUtilizationTarget:
                                 description: Target CPU load level.
                                 type: number
@@ -3767,12 +3821,16 @@ spec:
                                       description: Metric type, GAUGE or COUNTER.
                                       type: string
                                     ruleType:
-                                      description: |-
-                                        Rule type: UTILIZATION - This type means that the metric applies to one instance.
-                                        First, Instance Groups calculates the average metric value for each instance,
-                                        then averages the values for instances in one availability zone.
-                                        This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone.
-                                        This type of metric must have the zone_id label.
+                                      description: 'Rule type: UTILIZATION - This
+                                        type means that the metric applies to one
+                                        instance. First, Instance Groups calculates
+                                        the average metric value for each instance,
+                                        then averages the values for instances in
+                                        one availability zone. This type of metric
+                                        must have the instance_id label. WORKLOAD
+                                        - This type means that the metric applies
+                                        to instances in one availability zone. This
+                                        type of metric must have the zone_id label.'
                                       type: string
                                     service:
                                       description: Service of custom metric in Yandex
@@ -3792,25 +3850,28 @@ spec:
                                   in the group.
                                 type: number
                               measurementDuration:
-                                description: |-
-                                  The amount of time, in seconds, that metrics are averaged for.
-                                  If the average value at the end of the interval is higher than the cpu_utilization_target,
-                                  the instance group will increase the number of virtual machines in the group.
+                                description: The amount of time, in seconds, that
+                                  metrics are averaged for. If the average value at
+                                  the end of the interval is higher than the cpu_utilization_target,
+                                  the instance group will increase the number of virtual
+                                  machines in the group.
                                 type: number
                               minZoneSize:
                                 description: The minimum number of virtual machines
                                   in a single availability zone.
                                 type: number
                               stabilizationDuration:
-                                description: |-
-                                  The minimum time interval, in seconds, to monitor the load before
-                                  an instance group can reduce the number of virtual machines in the group. During this time, the group
-                                  will not decrease even if the average load falls below the value of cpu_utilization_target.
+                                description: The minimum time interval, in seconds,
+                                  to monitor the load before an instance group can
+                                  reduce the number of virtual machines in the group.
+                                  During this time, the group will not decrease even
+                                  if the average load falls below the value of cpu_utilization_target.
                                 type: number
                               warmupDuration:
-                                description: |-
-                                  The warm-up time of the virtual machine, in seconds. During this time,
-                                  traffic is fed to the virtual machine, but load metrics are not taken into account.
+                                description: The warm-up time of the virtual machine,
+                                  in seconds. During this time, traffic is fed to
+                                  the virtual machine, but load metrics are not taken
+                                  into account.
                                 type: number
                             type: object
                           type: array
@@ -3830,6 +3891,10 @@ spec:
                             is documented below.
                           items:
                             properties:
+                              autoScaleType:
+                                description: . Autoscale type, can be ZONAL or REGIONAL.
+                                  By default ZONAL type is used.
+                                type: string
                               cpuUtilizationTarget:
                                 description: Target CPU load level.
                                 type: number
@@ -3856,12 +3921,16 @@ spec:
                                       description: Metric type, GAUGE or COUNTER.
                                       type: string
                                     ruleType:
-                                      description: |-
-                                        Rule type: UTILIZATION - This type means that the metric applies to one instance.
-                                        First, Instance Groups calculates the average metric value for each instance,
-                                        then averages the values for instances in one availability zone.
-                                        This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone.
-                                        This type of metric must have the zone_id label.
+                                      description: 'Rule type: UTILIZATION - This
+                                        type means that the metric applies to one
+                                        instance. First, Instance Groups calculates
+                                        the average metric value for each instance,
+                                        then averages the values for instances in
+                                        one availability zone. This type of metric
+                                        must have the instance_id label. WORKLOAD
+                                        - This type means that the metric applies
+                                        to instances in one availability zone. This
+                                        type of metric must have the zone_id label.'
                                       type: string
                                     service:
                                       description: Service of custom metric in Yandex
@@ -3881,25 +3950,28 @@ spec:
                                   in the group.
                                 type: number
                               measurementDuration:
-                                description: |-
-                                  The amount of time, in seconds, that metrics are averaged for.
-                                  If the average value at the end of the interval is higher than the cpu_utilization_target,
-                                  the instance group will increase the number of virtual machines in the group.
+                                description: The amount of time, in seconds, that
+                                  metrics are averaged for. If the average value at
+                                  the end of the interval is higher than the cpu_utilization_target,
+                                  the instance group will increase the number of virtual
+                                  machines in the group.
                                 type: number
                               minZoneSize:
                                 description: The minimum number of virtual machines
                                   in a single availability zone.
                                 type: number
                               stabilizationDuration:
-                                description: |-
-                                  The minimum time interval, in seconds, to monitor the load before
-                                  an instance group can reduce the number of virtual machines in the group. During this time, the group
-                                  will not decrease even if the average load falls below the value of cpu_utilization_target.
+                                description: The minimum time interval, in seconds,
+                                  to monitor the load before an instance group can
+                                  reduce the number of virtual machines in the group.
+                                  During this time, the group will not decrease even
+                                  if the average load falls below the value of cpu_utilization_target.
                                 type: number
                               warmupDuration:
-                                description: |-
-                                  The warm-up time of the virtual machine, in seconds. During this time,
-                                  traffic is fed to the virtual machine, but load metrics are not taken into account.
+                                description: The warm-up time of the virtual machine,
+                                  in seconds. During this time, traffic is fed to
+                                  the virtual machine, but load metrics are not taken
+                                  into account.
                                 type: number
                             type: object
                           type: array
@@ -3915,8 +3987,8 @@ spec:
                   variables:
                     additionalProperties:
                       type: string
-                    description: A set of key/value  variables pairs to assign to
-                      the instance group.
+                    description: A set of key/value variables pairs to assign to the
+                      instance group.
                     type: object
                     x-kubernetes-map-type: granular
                 type: object

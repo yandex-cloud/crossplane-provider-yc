@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: instances.compute.yandex-cloud.jet.crossplane.io
 spec:
   group: compute.yandex-cloud.jet.crossplane.io
@@ -86,18 +86,16 @@ spec:
                     items:
                       properties:
                         autoDelete:
-                          description: |-
-                            Defines whether the disk will be auto-deleted when the instance
-                            is deleted. The default value is True.
+                          description: Defines whether the disk will be auto-deleted
+                            when the instance is deleted. The default value is True.
                           type: boolean
                         deviceName:
                           description: Name that can be used to access an attached
                             disk.
                           type: string
                         diskId:
-                          description: |-
-                            The ID of the existing disk (such as those managed by
-                            yandex_compute_disk) to attach as a boot disk.
+                          description: The ID of the existing disk (such as those
+                            managed by yandex_compute_disk) to attach as a boot disk.
                           type: string
                         diskIdRef:
                           description: Reference to a Disk in compute to populate
@@ -176,9 +174,9 @@ spec:
                               type: object
                           type: object
                         initializeParams:
-                          description: |-
-                            Parameters for a new disk that will be created
-                            alongside the new instance. Either initialize_params or disk_id must be set. The structure is documented below.
+                          description: Parameters for a new disk that will be created
+                            alongside the new instance. Either initialize_params or
+                            disk_id must be set. The structure is documented below.
                           items:
                             properties:
                               blockSize:
@@ -304,16 +302,15 @@ spec:
                               type: object
                           type: object
                         mode:
-                          description: |-
-                            Mode of access to the filesystem that should be attached. By default, filesystem is attached
-                            in READ_WRITE mode.
+                          description: Mode of access to the filesystem that should
+                            be attached. By default, filesystem is attached in READ_WRITE
+                            mode.
                           type: string
                       type: object
                     type: array
                   folderId:
-                    description: |-
-                      The ID of the folder that the resource belongs to. If it
-                      is not provided, the default provider folder is used.
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -396,10 +393,10 @@ spec:
                       The GPU cluster must exist in the same zone as the instance.
                     type: string
                   hostname:
-                    description: |-
-                      Host name for the instance. This field is used to generate the instance fqdn value.
-                      The host name must be unique within the network and region. If not specified, the host name will be equal
-                      to id of the instance and fqdn will be <id>.auto.internal.
+                    description: Host name for the instance. This field is used to
+                      generate the instance fqdn value. The host name must be unique
+                      within the network and region. If not specified, the host name
+                      will be equal to id of the instance and fqdn will be <id>.auto.internal.
                       Otherwise FQDN will be <hostname>.<region_id>.internal.
                     type: string
                   labels:
@@ -429,9 +426,8 @@ spec:
                   metadata:
                     additionalProperties:
                       type: string
-                    description: |-
-                      Metadata key/value pairs to make available from
-                      within the instance.
+                    description: Metadata key/value pairs to make available from within
+                      the instance.
                     type: object
                     x-kubernetes-map-type: granular
                   metadataOptions:
@@ -457,9 +453,8 @@ spec:
                       Values: standard, software_accelerated'
                     type: string
                   networkInterface:
-                    description: |-
-                      Networks to attach to the instance. This can
-                      be specified multiple times. The structure is documented below.
+                    description: Networks to attach to the instance. This can be specified
+                      multiple times. The structure is documented below.
                     items:
                       properties:
                         dnsRecord:
@@ -485,23 +480,23 @@ spec:
                             type: object
                           type: array
                         index:
-                          description: |-
-                            Index of network interface, will be calculated automatically for instance create or update operations
+                          description: Index of network interface, will be calculated
+                            automatically for instance create or update operations
                             if not specified. Required for attach/detach operations.
                           type: number
                         ipAddress:
-                          description: |-
-                            The private IP address to assign to the instance. If
-                            empty, the address will be automatically assigned from the specified subnet.
+                          description: The private IP address to assign to the instance.
+                            If empty, the address will be automatically assigned from
+                            the specified subnet.
                           type: string
                         ipv4:
                           description: Allocate an IPv4 address for the interface.
                             The default value is true.
                           type: boolean
                         ipv6:
-                          description: |-
-                            If true, allocate an IPv6 address for the interface.
-                            The address will be automatically assigned from the specified subnet.
+                          description: If true, allocate an IPv6 address for the interface.
+                            The address will be automatically assigned from the specified
+                            subnet.
                           type: boolean
                         ipv6Address:
                           description: The private IPv6 address to assign to the instance.
@@ -645,10 +640,9 @@ spec:
                               type: object
                           type: object
                         subnetId:
-                          description: |-
-                            ID of the subnet to attach this
-                            interface to. The subnet must exist in the same zone where this instance will be
-                            created.
+                          description: ID of the subnet to attach this interface to.
+                            The subnet must exist in the same zone where this instance
+                            will be created.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -871,20 +865,18 @@ spec:
                       type: object
                     type: array
                   secondaryDisk:
-                    description: |-
-                      A set of disks to attach to the instance. The structure is documented below.
-                      Note: The allow_stopping_for_update property must be set to true in order to update this structure.
+                    description: 'A set of disks to attach to the instance. The structure
+                      is documented below. Note: The allow_stopping_for_update property
+                      must be set to true in order to update this structure.'
                     items:
                       properties:
                         autoDelete:
-                          description: |-
-                            Whether the disk is auto-deleted when the instance
+                          description: Whether the disk is auto-deleted when the instance
                             is deleted. The default value is false.
                           type: boolean
                         deviceName:
-                          description: |-
-                            Name that can be used to access an attached disk
-                            under /dev/disk/by-id/.
+                          description: Name that can be used to access an attached
+                            disk under /dev/disk/by-id/.
                           type: string
                         diskId:
                           description: ID of the disk that is attached to the instance.
@@ -1051,9 +1043,9 @@ spec:
                         type: object
                     type: object
                   zone:
-                    description: |-
-                      The availability zone where the virtual machine will be created. If it is not provided,
-                      the default provider folder is used.
+                    description: The availability zone where the virtual machine will
+                      be created. If it is not provided, the default provider folder
+                      is used.
                     type: string
                 type: object
               initProvider:
@@ -1082,18 +1074,16 @@ spec:
                     items:
                       properties:
                         autoDelete:
-                          description: |-
-                            Defines whether the disk will be auto-deleted when the instance
-                            is deleted. The default value is True.
+                          description: Defines whether the disk will be auto-deleted
+                            when the instance is deleted. The default value is True.
                           type: boolean
                         deviceName:
                           description: Name that can be used to access an attached
                             disk.
                           type: string
                         diskId:
-                          description: |-
-                            The ID of the existing disk (such as those managed by
-                            yandex_compute_disk) to attach as a boot disk.
+                          description: The ID of the existing disk (such as those
+                            managed by yandex_compute_disk) to attach as a boot disk.
                           type: string
                         diskIdRef:
                           description: Reference to a Disk in compute to populate
@@ -1172,9 +1162,9 @@ spec:
                               type: object
                           type: object
                         initializeParams:
-                          description: |-
-                            Parameters for a new disk that will be created
-                            alongside the new instance. Either initialize_params or disk_id must be set. The structure is documented below.
+                          description: Parameters for a new disk that will be created
+                            alongside the new instance. Either initialize_params or
+                            disk_id must be set. The structure is documented below.
                           items:
                             properties:
                               blockSize:
@@ -1300,16 +1290,15 @@ spec:
                               type: object
                           type: object
                         mode:
-                          description: |-
-                            Mode of access to the filesystem that should be attached. By default, filesystem is attached
-                            in READ_WRITE mode.
+                          description: Mode of access to the filesystem that should
+                            be attached. By default, filesystem is attached in READ_WRITE
+                            mode.
                           type: string
                       type: object
                     type: array
                   folderId:
-                    description: |-
-                      The ID of the folder that the resource belongs to. If it
-                      is not provided, the default provider folder is used.
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -1392,10 +1381,10 @@ spec:
                       The GPU cluster must exist in the same zone as the instance.
                     type: string
                   hostname:
-                    description: |-
-                      Host name for the instance. This field is used to generate the instance fqdn value.
-                      The host name must be unique within the network and region. If not specified, the host name will be equal
-                      to id of the instance and fqdn will be <id>.auto.internal.
+                    description: Host name for the instance. This field is used to
+                      generate the instance fqdn value. The host name must be unique
+                      within the network and region. If not specified, the host name
+                      will be equal to id of the instance and fqdn will be <id>.auto.internal.
                       Otherwise FQDN will be <hostname>.<region_id>.internal.
                     type: string
                   labels:
@@ -1425,9 +1414,8 @@ spec:
                   metadata:
                     additionalProperties:
                       type: string
-                    description: |-
-                      Metadata key/value pairs to make available from
-                      within the instance.
+                    description: Metadata key/value pairs to make available from within
+                      the instance.
                     type: object
                     x-kubernetes-map-type: granular
                   metadataOptions:
@@ -1453,9 +1441,8 @@ spec:
                       Values: standard, software_accelerated'
                     type: string
                   networkInterface:
-                    description: |-
-                      Networks to attach to the instance. This can
-                      be specified multiple times. The structure is documented below.
+                    description: Networks to attach to the instance. This can be specified
+                      multiple times. The structure is documented below.
                     items:
                       properties:
                         dnsRecord:
@@ -1481,23 +1468,23 @@ spec:
                             type: object
                           type: array
                         index:
-                          description: |-
-                            Index of network interface, will be calculated automatically for instance create or update operations
+                          description: Index of network interface, will be calculated
+                            automatically for instance create or update operations
                             if not specified. Required for attach/detach operations.
                           type: number
                         ipAddress:
-                          description: |-
-                            The private IP address to assign to the instance. If
-                            empty, the address will be automatically assigned from the specified subnet.
+                          description: The private IP address to assign to the instance.
+                            If empty, the address will be automatically assigned from
+                            the specified subnet.
                           type: string
                         ipv4:
                           description: Allocate an IPv4 address for the interface.
                             The default value is true.
                           type: boolean
                         ipv6:
-                          description: |-
-                            If true, allocate an IPv6 address for the interface.
-                            The address will be automatically assigned from the specified subnet.
+                          description: If true, allocate an IPv6 address for the interface.
+                            The address will be automatically assigned from the specified
+                            subnet.
                           type: boolean
                         ipv6Address:
                           description: The private IPv6 address to assign to the instance.
@@ -1641,10 +1628,9 @@ spec:
                               type: object
                           type: object
                         subnetId:
-                          description: |-
-                            ID of the subnet to attach this
-                            interface to. The subnet must exist in the same zone where this instance will be
-                            created.
+                          description: ID of the subnet to attach this interface to.
+                            The subnet must exist in the same zone where this instance
+                            will be created.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -1867,20 +1853,18 @@ spec:
                       type: object
                     type: array
                   secondaryDisk:
-                    description: |-
-                      A set of disks to attach to the instance. The structure is documented below.
-                      Note: The allow_stopping_for_update property must be set to true in order to update this structure.
+                    description: 'A set of disks to attach to the instance. The structure
+                      is documented below. Note: The allow_stopping_for_update property
+                      must be set to true in order to update this structure.'
                     items:
                       properties:
                         autoDelete:
-                          description: |-
-                            Whether the disk is auto-deleted when the instance
+                          description: Whether the disk is auto-deleted when the instance
                             is deleted. The default value is false.
                           type: boolean
                         deviceName:
-                          description: |-
-                            Name that can be used to access an attached disk
-                            under /dev/disk/by-id/.
+                          description: Name that can be used to access an attached
+                            disk under /dev/disk/by-id/.
                           type: string
                         diskId:
                           description: ID of the disk that is attached to the instance.
@@ -2047,9 +2031,9 @@ spec:
                         type: object
                     type: object
                   zone:
-                    description: |-
-                      The availability zone where the virtual machine will be created. If it is not provided,
-                      the default provider folder is used.
+                    description: The availability zone where the virtual machine will
+                      be created. If it is not provided, the default provider folder
+                      is used.
                     type: string
                 type: object
               managementPolicies:
@@ -2250,23 +2234,21 @@ spec:
                     items:
                       properties:
                         autoDelete:
-                          description: |-
-                            Defines whether the disk will be auto-deleted when the instance
-                            is deleted. The default value is True.
+                          description: Defines whether the disk will be auto-deleted
+                            when the instance is deleted. The default value is True.
                           type: boolean
                         deviceName:
                           description: Name that can be used to access an attached
                             disk.
                           type: string
                         diskId:
-                          description: |-
-                            The ID of the existing disk (such as those managed by
-                            yandex_compute_disk) to attach as a boot disk.
+                          description: The ID of the existing disk (such as those
+                            managed by yandex_compute_disk) to attach as a boot disk.
                           type: string
                         initializeParams:
-                          description: |-
-                            Parameters for a new disk that will be created
-                            alongside the new instance. Either initialize_params or disk_id must be set. The structure is documented below.
+                          description: Parameters for a new disk that will be created
+                            alongside the new instance. Either initialize_params or
+                            disk_id must be set. The structure is documented below.
                           items:
                             properties:
                               blockSize:
@@ -2319,16 +2301,15 @@ spec:
                           description: ID of the filesystem that should be attached.
                           type: string
                         mode:
-                          description: |-
-                            Mode of access to the filesystem that should be attached. By default, filesystem is attached
-                            in READ_WRITE mode.
+                          description: Mode of access to the filesystem that should
+                            be attached. By default, filesystem is attached in READ_WRITE
+                            mode.
                           type: string
                       type: object
                     type: array
                   folderId:
-                    description: |-
-                      The ID of the folder that the resource belongs to. If it
-                      is not provided, the default provider folder is used.
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
                     type: string
                   fqdn:
                     description: The fully qualified DNS name of this instance.
@@ -2337,11 +2318,27 @@ spec:
                     description: ID of the GPU cluster to attach this instance to.
                       The GPU cluster must exist in the same zone as the instance.
                     type: string
+                  hardwareGeneration:
+                    items:
+                      properties:
+                        generation2Features:
+                          items:
+                            type: object
+                          type: array
+                        legacyFeatures:
+                          items:
+                            properties:
+                              pciTopology:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
                   hostname:
-                    description: |-
-                      Host name for the instance. This field is used to generate the instance fqdn value.
-                      The host name must be unique within the network and region. If not specified, the host name will be equal
-                      to id of the instance and fqdn will be <id>.auto.internal.
+                    description: Host name for the instance. This field is used to
+                      generate the instance fqdn value. The host name must be unique
+                      within the network and region. If not specified, the host name
+                      will be equal to id of the instance and fqdn will be <id>.auto.internal.
                       Otherwise FQDN will be <hostname>.<region_id>.internal.
                     type: string
                   id:
@@ -2376,9 +2373,8 @@ spec:
                   metadata:
                     additionalProperties:
                       type: string
-                    description: |-
-                      Metadata key/value pairs to make available from
-                      within the instance.
+                    description: Metadata key/value pairs to make available from within
+                      the instance.
                     type: object
                     x-kubernetes-map-type: granular
                   metadataOptions:
@@ -2404,9 +2400,8 @@ spec:
                       Values: standard, software_accelerated'
                     type: string
                   networkInterface:
-                    description: |-
-                      Networks to attach to the instance. This can
-                      be specified multiple times. The structure is documented below.
+                    description: Networks to attach to the instance. This can be specified
+                      multiple times. The structure is documented below.
                     items:
                       properties:
                         dnsRecord:
@@ -2432,23 +2427,23 @@ spec:
                             type: object
                           type: array
                         index:
-                          description: |-
-                            Index of network interface, will be calculated automatically for instance create or update operations
+                          description: Index of network interface, will be calculated
+                            automatically for instance create or update operations
                             if not specified. Required for attach/detach operations.
                           type: number
                         ipAddress:
-                          description: |-
-                            The private IP address to assign to the instance. If
-                            empty, the address will be automatically assigned from the specified subnet.
+                          description: The private IP address to assign to the instance.
+                            If empty, the address will be automatically assigned from
+                            the specified subnet.
                           type: string
                         ipv4:
                           description: Allocate an IPv4 address for the interface.
                             The default value is true.
                           type: boolean
                         ipv6:
-                          description: |-
-                            If true, allocate an IPv6 address for the interface.
-                            The address will be automatically assigned from the specified subnet.
+                          description: If true, allocate an IPv6 address for the interface.
+                            The address will be automatically assigned from the specified
+                            subnet.
                           type: boolean
                         ipv6Address:
                           description: The private IPv6 address to assign to the instance.
@@ -2517,10 +2512,9 @@ spec:
                           type: array
                           x-kubernetes-list-type: set
                         subnetId:
-                          description: |-
-                            ID of the subnet to attach this
-                            interface to. The subnet must exist in the same zone where this instance will be
-                            created.
+                          description: ID of the subnet to attach this interface to.
+                            The subnet must exist in the same zone where this instance
+                            will be created.
                           type: string
                       type: object
                     type: array
@@ -2593,20 +2587,18 @@ spec:
                       type: object
                     type: array
                   secondaryDisk:
-                    description: |-
-                      A set of disks to attach to the instance. The structure is documented below.
-                      Note: The allow_stopping_for_update property must be set to true in order to update this structure.
+                    description: 'A set of disks to attach to the instance. The structure
+                      is documented below. Note: The allow_stopping_for_update property
+                      must be set to true in order to update this structure.'
                     items:
                       properties:
                         autoDelete:
-                          description: |-
-                            Whether the disk is auto-deleted when the instance
+                          description: Whether the disk is auto-deleted when the instance
                             is deleted. The default value is false.
                           type: boolean
                         deviceName:
-                          description: |-
-                            Name that can be used to access an attached disk
-                            under /dev/disk/by-id/.
+                          description: Name that can be used to access an attached
+                            disk under /dev/disk/by-id/.
                           type: string
                         diskId:
                           description: ID of the disk that is attached to the instance.
@@ -2624,9 +2616,9 @@ spec:
                     description: The status of this instance.
                     type: string
                   zone:
-                    description: |-
-                      The availability zone where the virtual machine will be created. If it is not provided,
-                      the default provider folder is used.
+                    description: The availability zone where the virtual machine will
+                      be created. If it is not provided, the default provider folder
+                      is used.
                     type: string
                 type: object
               conditions:

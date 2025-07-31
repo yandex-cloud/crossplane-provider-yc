@@ -5,7 +5,7 @@ helm_chart:
 
 # Required parameters.
 requirements:
-  k8s_version: ">=1.14.0-0"
+  k8s_version: ">=1.16.0-0"
 
 images:
   - name_with_registry: image.repository

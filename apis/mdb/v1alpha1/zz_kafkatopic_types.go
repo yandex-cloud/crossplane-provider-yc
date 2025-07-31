@@ -104,9 +104,7 @@ type KafkaTopicParameters_2 struct {
 
 type KafkaTopicTopicConfigInitParameters struct {
 
-	// Kafka topic settings. For more information, see
-	// the official documentation
-	// and the Kafka documentation.
+	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
@@ -136,9 +134,7 @@ type KafkaTopicTopicConfigInitParameters struct {
 
 type KafkaTopicTopicConfigObservation struct {
 
-	// Kafka topic settings. For more information, see
-	// the official documentation
-	// and the Kafka documentation.
+	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
@@ -168,9 +164,7 @@ type KafkaTopicTopicConfigObservation struct {
 
 type KafkaTopicTopicConfigParameters struct {
 
-	// Kafka topic settings. For more information, see
-	// the official documentation
-	// and the Kafka documentation.
+	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
 	// +kubebuilder:validation:Optional
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 

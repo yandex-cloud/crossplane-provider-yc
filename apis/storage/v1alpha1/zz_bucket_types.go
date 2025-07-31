@@ -138,12 +138,10 @@ type ApplyServerSideEncryptionByDefaultParameters struct {
 
 type BucketInitParameters struct {
 
-	// The predefined ACL to apply.
-	// Defaults to private. Conflicts with grant.
+	// The predefined ACL to apply. Defaults to private. Conflicts with grant.
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
-	// The access key to use when applying changes. If omitted, storage_access_key specified in
-	// provider config (explicitly or within shared_credentials_file) is used.
+	// The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/storage.ExtractAccessKey()
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
@@ -156,24 +154,19 @@ type BucketInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AccessKeySelector *v1.Selector `json:"accessKeySelector,omitempty" tf:"-"`
 
-	// Provides various access to objects.
-	// See bucket availability
-	// for more infomation.
+	// Provides various access to objects. See bucket availability for more infomation.
 	AnonymousAccessFlags []AnonymousAccessFlagsInitParameters `json:"anonymousAccessFlags,omitempty" tf:"anonymous_access_flags,omitempty"`
 
 	// The name of the bucket.
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
-	// Creates a unique bucket name beginning with the specified prefix.
-	// Conflicts with bucket.
+	// Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
 	BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
 
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	CorsRule []CorsRuleInitParameters `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
 
-	// Storage class which is used for storing objects by default.
-	// Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD".
-	// See storage class for more inforamtion.
+	// Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD". See storage class for more inforamtion.
 	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
 
 	// Allow to create bucket in different folder.
@@ -211,6 +204,9 @@ type BucketInitParameters struct {
 
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
+	// The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
+	SecretKeySecretRef *v1.SecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
+
 	// A configuration of server-side encryption for the bucket (documented below)
 	ServerSideEncryptionConfiguration []ServerSideEncryptionConfigurationInitParameters `json:"serverSideEncryptionConfiguration,omitempty" tf:"server_side_encryption_configuration,omitempty"`
 
@@ -232,17 +228,13 @@ type BucketInitParameters struct {
 
 type BucketObservation struct {
 
-	// The predefined ACL to apply.
-	// Defaults to private. Conflicts with grant.
+	// The predefined ACL to apply. Defaults to private. Conflicts with grant.
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
-	// The access key to use when applying changes. If omitted, storage_access_key specified in
-	// provider config (explicitly or within shared_credentials_file) is used.
+	// The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
 
-	// Provides various access to objects.
-	// See bucket availability
-	// for more infomation.
+	// Provides various access to objects. See bucket availability for more infomation.
 	AnonymousAccessFlags []AnonymousAccessFlagsObservation `json:"anonymousAccessFlags,omitempty" tf:"anonymous_access_flags,omitempty"`
 
 	// The name of the bucket.
@@ -251,16 +243,13 @@ type BucketObservation struct {
 	// The bucket domain name.
 	BucketDomainName *string `json:"bucketDomainName,omitempty" tf:"bucket_domain_name,omitempty"`
 
-	// Creates a unique bucket name beginning with the specified prefix.
-	// Conflicts with bucket.
+	// Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
 	BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
 
 	// A rule of Cross-Origin Resource Sharing (documented below).
 	CorsRule []CorsRuleObservation `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
 
-	// Storage class which is used for storing objects by default.
-	// Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD".
-	// See storage class for more inforamtion.
+	// Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD". See storage class for more inforamtion.
 	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
 
 	// Allow to create bucket in different folder.
@@ -313,13 +302,11 @@ type BucketObservation struct {
 
 type BucketParameters struct {
 
-	// The predefined ACL to apply.
-	// Defaults to private. Conflicts with grant.
+	// The predefined ACL to apply. Defaults to private. Conflicts with grant.
 	// +kubebuilder:validation:Optional
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
-	// The access key to use when applying changes. If omitted, storage_access_key specified in
-	// provider config (explicitly or within shared_credentials_file) is used.
+	// The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccountStaticAccessKey
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/storage.ExtractAccessKey()
 	// +kubebuilder:validation:Optional
@@ -333,9 +320,7 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	AccessKeySelector *v1.Selector `json:"accessKeySelector,omitempty" tf:"-"`
 
-	// Provides various access to objects.
-	// See bucket availability
-	// for more infomation.
+	// Provides various access to objects. See bucket availability for more infomation.
 	// +kubebuilder:validation:Optional
 	AnonymousAccessFlags []AnonymousAccessFlagsParameters `json:"anonymousAccessFlags,omitempty" tf:"anonymous_access_flags,omitempty"`
 
@@ -343,8 +328,7 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
-	// Creates a unique bucket name beginning with the specified prefix.
-	// Conflicts with bucket.
+	// Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
 	// +kubebuilder:validation:Optional
 	BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
 
@@ -352,9 +336,7 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	CorsRule []CorsRuleParameters `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
 
-	// Storage class which is used for storing objects by default.
-	// Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD".
-	// See storage class for more inforamtion.
+	// Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD". See storage class for more inforamtion.
 	// +kubebuilder:validation:Optional
 	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
 
@@ -402,8 +384,7 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
-	// The secret key to use when applying changes. If omitted, storage_secret_key specified in
-	// provider config (explicitly or within shared_credentials_file) is used.
+	// The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	// +kubebuilder:validation:Optional
 	SecretKeySecretRef *v1.SecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
 
@@ -571,7 +552,7 @@ type ExpirationParameters struct {
 
 type FilterInitParameters struct {
 
-	// operator applied to one or more filter parameters. It should be used when both prefix and tags are used. It supports the following parameters:
+	// operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used. It supports the following parameters:
 	And []AndInitParameters `json:"and,omitempty" tf:"and,omitempty"`
 
 	ObjectSizeGreaterThan *int64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
@@ -586,7 +567,7 @@ type FilterInitParameters struct {
 
 type FilterObservation struct {
 
-	// operator applied to one or more filter parameters. It should be used when both prefix and tags are used. It supports the following parameters:
+	// operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used. It supports the following parameters:
 	And []AndObservation `json:"and,omitempty" tf:"and,omitempty"`
 
 	ObjectSizeGreaterThan *int64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
@@ -601,7 +582,7 @@ type FilterObservation struct {
 
 type FilterParameters struct {
 
-	// operator applied to one or more filter parameters. It should be used when both prefix and tags are used. It supports the following parameters:
+	// operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used. It supports the following parameters:
 	// +kubebuilder:validation:Optional
 	And []AndParameters `json:"and,omitempty" tf:"and,omitempty"`
 

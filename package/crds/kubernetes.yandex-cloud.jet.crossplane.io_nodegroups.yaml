@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: nodegroups.kubernetes.yandex-cloud.jet.crossplane.io
 spec:
   group: kubernetes.yandex-cloud.jet.crossplane.io
@@ -348,8 +348,7 @@ spec:
                           x-kubernetes-map-type: granular
                         name:
                           description: |-
-                            Name template of the instance.
-                            In order to be unique it must contain at least one of instance unique placeholders:
+                            Name template of the instance. In order to be unique it must contain at least one of instance unique placeholders:
                             {instance.short_id}
                             {instance.index}
                             combination of {instance.zone_id} and {instance.index_in_zone}
@@ -653,11 +652,12 @@ spec:
                     type: object
                     x-kubernetes-map-type: granular
                   maintenancePolicy:
-                    description: |-
-                      (Computed) Maintenance policy for this Kubernetes node group.
-                      If policy is omitted, automatic revision upgrades are enabled and could happen at any time.
-                      Revision upgrades are performed only within the same minor version, e.g. 1.13.
-                      Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+                    description: (Computed) Maintenance policy for this Kubernetes
+                      node group. If policy is omitted, automatic revision upgrades
+                      are enabled and could happen at any time. Revision upgrades
+                      are performed only within the same minor version, e.g. 1.13.
+                      Minor version upgrades (e.g. 1.13->1.14) should be performed
+                      manually. The structure is documented below.
                     items:
                       properties:
                         autoRepair:
@@ -1031,8 +1031,7 @@ spec:
                           x-kubernetes-map-type: granular
                         name:
                           description: |-
-                            Name template of the instance.
-                            In order to be unique it must contain at least one of instance unique placeholders:
+                            Name template of the instance. In order to be unique it must contain at least one of instance unique placeholders:
                             {instance.short_id}
                             {instance.index}
                             combination of {instance.zone_id} and {instance.index_in_zone}
@@ -1336,11 +1335,12 @@ spec:
                     type: object
                     x-kubernetes-map-type: granular
                   maintenancePolicy:
-                    description: |-
-                      (Computed) Maintenance policy for this Kubernetes node group.
-                      If policy is omitted, automatic revision upgrades are enabled and could happen at any time.
-                      Revision upgrades are performed only within the same minor version, e.g. 1.13.
-                      Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+                    description: (Computed) Maintenance policy for this Kubernetes
+                      node group. If policy is omitted, automatic revision upgrades
+                      are enabled and could happen at any time. Revision upgrades
+                      are performed only within the same minor version, e.g. 1.13.
+                      Minor version upgrades (e.g. 1.13->1.14) should be performed
+                      manually. The structure is documented below.
                     items:
                       properties:
                         autoRepair:
@@ -1741,8 +1741,7 @@ spec:
                           x-kubernetes-map-type: granular
                         name:
                           description: |-
-                            Name template of the instance.
-                            In order to be unique it must contain at least one of instance unique placeholders:
+                            Name template of the instance. In order to be unique it must contain at least one of instance unique placeholders:
                             {instance.short_id}
                             {instance.index}
                             combination of {instance.zone_id} and {instance.index_in_zone}
@@ -1888,11 +1887,12 @@ spec:
                     type: object
                     x-kubernetes-map-type: granular
                   maintenancePolicy:
-                    description: |-
-                      (Computed) Maintenance policy for this Kubernetes node group.
-                      If policy is omitted, automatic revision upgrades are enabled and could happen at any time.
-                      Revision upgrades are performed only within the same minor version, e.g. 1.13.
-                      Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+                    description: (Computed) Maintenance policy for this Kubernetes
+                      node group. If policy is omitted, automatic revision upgrades
+                      are enabled and could happen at any time. Revision upgrades
+                      are performed only within the same minor version, e.g. 1.13.
+                      Minor version upgrades (e.g. 1.13->1.14) should be performed
+                      manually. The structure is documented below.
                     items:
                       properties:
                         autoRepair:
@@ -1990,21 +1990,21 @@ spec:
                             1.15).
                           type: string
                         newRevisionAvailable:
-                          description: |-
-                            True/false flag.
-                            Newer revisions may include Kubernetes patches (e.g 1.15.1 -> 1.15.2) as well
-                            as some internal component updates - new features or bug fixes in yandex-specific
-                            components either on the master or nodes.
+                          description: True/false flag. Newer revisions may include
+                            Kubernetes patches (e.g 1.15.1 -> 1.15.2) as well as some
+                            internal component updates - new features or bug fixes
+                            in yandex-specific components either on the master or
+                            nodes.
                           type: boolean
                         newRevisionSummary:
-                          description: |-
-                            Human readable description of the changes to be applied
-                            when updating to the latest revision. Empty if new_revision_available is false.
+                          description: Human readable description of the changes to
+                            be applied when updating to the latest revision. Empty
+                            if new_revision_available is false.
                           type: string
                         versionDeprecated:
-                          description: |-
-                            True/false flag. The current version is on the deprecation schedule,
-                            component (master or node group) should be upgraded.
+                          description: True/false flag. The current version is on
+                            the deprecation schedule, component (master or node group)
+                            should be upgraded.
                           type: boolean
                       type: object
                     type: array

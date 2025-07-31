@@ -71,8 +71,7 @@ type DirectResponseActionInitParameters struct {
 	// Response body text.
 	Body *string `json:"body,omitempty" tf:"body,omitempty"`
 
-	// The status of the response. Supported values are: ok, invalid_argumet, not_found,
-	// permission_denied, unauthenticated, unimplemented, internal, unavailable.
+	// The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	Status *float64 `json:"status,omitempty" tf:"status,omitempty"`
 }
 
@@ -81,8 +80,7 @@ type DirectResponseActionObservation struct {
 	// Response body text.
 	Body *string `json:"body,omitempty" tf:"body,omitempty"`
 
-	// The status of the response. Supported values are: ok, invalid_argumet, not_found,
-	// permission_denied, unauthenticated, unimplemented, internal, unavailable.
+	// The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	Status *float64 `json:"status,omitempty" tf:"status,omitempty"`
 }
 
@@ -92,8 +90,7 @@ type DirectResponseActionParameters struct {
 	// +kubebuilder:validation:Optional
 	Body *string `json:"body,omitempty" tf:"body,omitempty"`
 
-	// The status of the response. Supported values are: ok, invalid_argumet, not_found,
-	// permission_denied, unauthenticated, unimplemented, internal, unavailable.
+	// The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	// +kubebuilder:validation:Optional
 	Status *float64 `json:"status,omitempty" tf:"status,omitempty"`
 }
@@ -176,14 +173,10 @@ type GRPCRouteActionInitParameters struct {
 	// Host rewrite specifier.
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
-	// Specifies the idle timeout (time without any data transfer for the active request) for the
-	// route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to
-	// something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no
-	// per-route idle timeout.
+	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
-	// Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is
-	// 60 seconds.
+	// Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is 60 seconds.
 	MaxTimeout *string `json:"maxTimeout,omitempty" tf:"max_timeout,omitempty"`
 }
 
@@ -198,14 +191,10 @@ type GRPCRouteActionObservation struct {
 	// Host rewrite specifier.
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
-	// Specifies the idle timeout (time without any data transfer for the active request) for the
-	// route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to
-	// something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no
-	// per-route idle timeout.
+	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
-	// Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is
-	// 60 seconds.
+	// Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is 60 seconds.
 	MaxTimeout *string `json:"maxTimeout,omitempty" tf:"max_timeout,omitempty"`
 }
 
@@ -232,15 +221,11 @@ type GRPCRouteActionParameters struct {
 	// +kubebuilder:validation:Optional
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
-	// Specifies the idle timeout (time without any data transfer for the active request) for the
-	// route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to
-	// something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no
-	// per-route idle timeout.
+	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	// +kubebuilder:validation:Optional
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
-	// Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is
-	// 60 seconds.
+	// Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is 60 seconds.
 	// +kubebuilder:validation:Optional
 	MaxTimeout *string `json:"maxTimeout,omitempty" tf:"max_timeout,omitempty"`
 }
@@ -286,22 +271,19 @@ type GRPCRouteParameters struct {
 
 type GRPCStatusResponseActionInitParameters struct {
 
-	// The status of the response. Supported values are: ok, invalid_argumet, not_found,
-	// permission_denied, unauthenticated, unimplemented, internal, unavailable.
+	// The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type GRPCStatusResponseActionObservation struct {
 
-	// The status of the response. Supported values are: ok, invalid_argumet, not_found,
-	// permission_denied, unauthenticated, unimplemented, internal, unavailable.
+	// The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type GRPCStatusResponseActionParameters struct {
 
-	// The status of the response. Supported values are: ok, invalid_argumet, not_found,
-	// permission_denied, unauthenticated, unimplemented, internal, unavailable.
+	// The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	// +kubebuilder:validation:Optional
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
@@ -358,21 +340,16 @@ type HTTPRouteActionInitParameters struct {
 	// Host rewrite specifier.
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
-	// Specifies the idle timeout (time without any data transfer for the active request) for the
-	// route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to
-	// something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no
-	// per-route idle timeout.
+	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
 	// If not empty, matched path prefix will be replaced by this value.
 	PrefixRewrite *string `json:"prefixRewrite,omitempty" tf:"prefix_rewrite,omitempty"`
 
-	// Specifies the request timeout (overall time request processing is allowed to take) for the
-	// route. If not set, default is 60 seconds.
+	// Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
 	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// List of upgrade types. Only specified upgrade types will be allowed. For example,
-	// "websocket".
+	// List of upgrade types. Only specified upgrade types will be allowed. For example, "websocket".
 	// +listType=set
 	UpgradeTypes []*string `json:"upgradeTypes,omitempty" tf:"upgrade_types,omitempty"`
 }
@@ -388,21 +365,16 @@ type HTTPRouteActionObservation struct {
 	// Host rewrite specifier.
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
-	// Specifies the idle timeout (time without any data transfer for the active request) for the
-	// route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to
-	// something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no
-	// per-route idle timeout.
+	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
 	// If not empty, matched path prefix will be replaced by this value.
 	PrefixRewrite *string `json:"prefixRewrite,omitempty" tf:"prefix_rewrite,omitempty"`
 
-	// Specifies the request timeout (overall time request processing is allowed to take) for the
-	// route. If not set, default is 60 seconds.
+	// Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
 	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// List of upgrade types. Only specified upgrade types will be allowed. For example,
-	// "websocket".
+	// List of upgrade types. Only specified upgrade types will be allowed. For example, "websocket".
 	// +listType=set
 	UpgradeTypes []*string `json:"upgradeTypes,omitempty" tf:"upgrade_types,omitempty"`
 }
@@ -430,10 +402,7 @@ type HTTPRouteActionParameters struct {
 	// +kubebuilder:validation:Optional
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
-	// Specifies the idle timeout (time without any data transfer for the active request) for the
-	// route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to
-	// something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no
-	// per-route idle timeout.
+	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	// +kubebuilder:validation:Optional
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
@@ -441,13 +410,11 @@ type HTTPRouteActionParameters struct {
 	// +kubebuilder:validation:Optional
 	PrefixRewrite *string `json:"prefixRewrite,omitempty" tf:"prefix_rewrite,omitempty"`
 
-	// Specifies the request timeout (overall time request processing is allowed to take) for the
-	// route. If not set, default is 60 seconds.
+	// Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
 	// +kubebuilder:validation:Optional
 	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// List of upgrade types. Only specified upgrade types will be allowed. For example,
-	// "websocket".
+	// List of upgrade types. Only specified upgrade types will be allowed. For example, "websocket".
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	UpgradeTypes []*string `json:"upgradeTypes,omitempty" tf:"upgrade_types,omitempty"`
@@ -552,8 +519,7 @@ type ModifyRequestHeadersInitParameters struct {
 	// If set, remove the header.
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
-	// New value for a header. Header values support the following
-	// formatters.
+	// New value for a header. Header values support the following formatters.
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
 
@@ -568,8 +534,7 @@ type ModifyRequestHeadersObservation struct {
 	// If set, remove the header.
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
-	// New value for a header. Header values support the following
-	// formatters.
+	// New value for a header. Header values support the following formatters.
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
 
@@ -587,8 +552,7 @@ type ModifyRequestHeadersParameters struct {
 	// +kubebuilder:validation:Optional
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
-	// New value for a header. Header values support the following
-	// formatters.
+	// New value for a header. Header values support the following formatters.
 	// +kubebuilder:validation:Optional
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
@@ -604,8 +568,7 @@ type ModifyResponseHeadersInitParameters struct {
 	// If set, remove the header.
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
-	// New value for a header. Header values support the following
-	// formatters.
+	// New value for a header. Header values support the following formatters.
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
 
@@ -620,8 +583,7 @@ type ModifyResponseHeadersObservation struct {
 	// If set, remove the header.
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
-	// New value for a header. Header values support the following
-	// formatters.
+	// New value for a header. Header values support the following formatters.
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
 
@@ -639,8 +601,7 @@ type ModifyResponseHeadersParameters struct {
 	// +kubebuilder:validation:Optional
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
-	// New value for a header. Header values support the following
-	// formatters.
+	// New value for a header. Header values support the following formatters.
 	// +kubebuilder:validation:Optional
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
@@ -818,16 +779,13 @@ type RedirectActionInitParameters struct {
 	// Replaces port.
 	ReplacePort *float64 `json:"replacePort,omitempty" tf:"replace_port,omitempty"`
 
-	// Replace only matched prefix. Example: match:{ prefix_match: "/some" }
-	// redirect: { replace_prefix: "/other" }  will redirect "/something" to "/otherthing".
+	// Replace only matched prefix. Example: match:{ prefix_match: "/some" }  redirect: { replace_prefix: "/other" }  will redirect "/something" to "/otherthing".
 	ReplacePrefix *string `json:"replacePrefix,omitempty" tf:"replace_prefix,omitempty"`
 
-	// Replaces scheme. If the original scheme is http or https, will also remove the
-	// 80 or 443 port, if present.
+	// Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
 	ReplaceScheme *string `json:"replaceScheme,omitempty" tf:"replace_scheme,omitempty"`
 
-	// The HTTP status code to use in the redirect response. Supported values are:
-	// moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
+	// The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
 	ResponseCode *string `json:"responseCode,omitempty" tf:"response_code,omitempty"`
 }
 
@@ -843,16 +801,13 @@ type RedirectActionObservation struct {
 	// Replaces port.
 	ReplacePort *float64 `json:"replacePort,omitempty" tf:"replace_port,omitempty"`
 
-	// Replace only matched prefix. Example: match:{ prefix_match: "/some" }
-	// redirect: { replace_prefix: "/other" }  will redirect "/something" to "/otherthing".
+	// Replace only matched prefix. Example: match:{ prefix_match: "/some" }  redirect: { replace_prefix: "/other" }  will redirect "/something" to "/otherthing".
 	ReplacePrefix *string `json:"replacePrefix,omitempty" tf:"replace_prefix,omitempty"`
 
-	// Replaces scheme. If the original scheme is http or https, will also remove the
-	// 80 or 443 port, if present.
+	// Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
 	ReplaceScheme *string `json:"replaceScheme,omitempty" tf:"replace_scheme,omitempty"`
 
-	// The HTTP status code to use in the redirect response. Supported values are:
-	// moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
+	// The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
 	ResponseCode *string `json:"responseCode,omitempty" tf:"response_code,omitempty"`
 }
 
@@ -873,18 +828,15 @@ type RedirectActionParameters struct {
 	// +kubebuilder:validation:Optional
 	ReplacePort *float64 `json:"replacePort,omitempty" tf:"replace_port,omitempty"`
 
-	// Replace only matched prefix. Example: match:{ prefix_match: "/some" }
-	// redirect: { replace_prefix: "/other" }  will redirect "/something" to "/otherthing".
+	// Replace only matched prefix. Example: match:{ prefix_match: "/some" }  redirect: { replace_prefix: "/other" }  will redirect "/something" to "/otherthing".
 	// +kubebuilder:validation:Optional
 	ReplacePrefix *string `json:"replacePrefix,omitempty" tf:"replace_prefix,omitempty"`
 
-	// Replaces scheme. If the original scheme is http or https, will also remove the
-	// 80 or 443 port, if present.
+	// Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
 	// +kubebuilder:validation:Optional
 	ReplaceScheme *string `json:"replaceScheme,omitempty" tf:"replace_scheme,omitempty"`
 
-	// The HTTP status code to use in the redirect response. Supported values are:
-	// moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
+	// The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
 	// +kubebuilder:validation:Optional
 	ResponseCode *string `json:"responseCode,omitempty" tf:"response_code,omitempty"`
 }
@@ -1004,8 +956,7 @@ type RouteRouteOptionsParameters struct {
 
 type VirtualHostInitParameters struct {
 
-	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard
-	// hosts are supported in the form of '.foo.com' or '-bar.foo.com'. If not specified, all domains will be matched.
+	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard hosts are supported in the form of '.foo.com' or '-bar.foo.com'. If not specified, all domains will be matched.
 	// +listType=set
 	Authority []*string `json:"authority,omitempty" tf:"authority,omitempty"`
 
@@ -1021,19 +972,16 @@ type VirtualHostInitParameters struct {
 	// +kubebuilder:validation:Optional
 	HTTPRouterIDSelector *v1.Selector `json:"httpRouterIdSelector,omitempty" tf:"-"`
 
-	// Apply the following modifications to the request
-	// headers. The structure is documented below.
+	// Apply the following modifications to the request headers. The structure is documented below.
 	ModifyRequestHeaders []ModifyRequestHeadersInitParameters `json:"modifyRequestHeaders,omitempty" tf:"modify_request_headers,omitempty"`
 
-	// Apply the following modifications to the response
-	// headers. The structure is documented below.
+	// Apply the following modifications to the response headers. The structure is documented below.
 	ModifyResponseHeaders []ModifyResponseHeadersInitParameters `json:"modifyResponseHeaders,omitempty" tf:"modify_response_headers,omitempty"`
 
 	// Name of the virtual host. Provided by the client when the virtual host is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// A Route resource. Routes are matched in-order. Be careful when adding them to the end. For instance, having
-	// http '/' match first makes all other routes unused. The structure is documented below.
+	// A Route resource. Routes are matched in-order. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused. The structure is documented below.
 	Route []RouteInitParameters `json:"route,omitempty" tf:"route,omitempty"`
 
 	// Route options for the virtual host. The structure is documented below.
@@ -1042,8 +990,7 @@ type VirtualHostInitParameters struct {
 
 type VirtualHostObservation struct {
 
-	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard
-	// hosts are supported in the form of '.foo.com' or '-bar.foo.com'. If not specified, all domains will be matched.
+	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard hosts are supported in the form of '.foo.com' or '-bar.foo.com'. If not specified, all domains will be matched.
 	// +listType=set
 	Authority []*string `json:"authority,omitempty" tf:"authority,omitempty"`
 
@@ -1053,19 +1000,16 @@ type VirtualHostObservation struct {
 	// The ID of the virtual host.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Apply the following modifications to the request
-	// headers. The structure is documented below.
+	// Apply the following modifications to the request headers. The structure is documented below.
 	ModifyRequestHeaders []ModifyRequestHeadersObservation `json:"modifyRequestHeaders,omitempty" tf:"modify_request_headers,omitempty"`
 
-	// Apply the following modifications to the response
-	// headers. The structure is documented below.
+	// Apply the following modifications to the response headers. The structure is documented below.
 	ModifyResponseHeaders []ModifyResponseHeadersObservation `json:"modifyResponseHeaders,omitempty" tf:"modify_response_headers,omitempty"`
 
 	// Name of the virtual host. Provided by the client when the virtual host is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// A Route resource. Routes are matched in-order. Be careful when adding them to the end. For instance, having
-	// http '/' match first makes all other routes unused. The structure is documented below.
+	// A Route resource. Routes are matched in-order. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused. The structure is documented below.
 	Route []RouteObservation `json:"route,omitempty" tf:"route,omitempty"`
 
 	// Route options for the virtual host. The structure is documented below.
@@ -1074,8 +1018,7 @@ type VirtualHostObservation struct {
 
 type VirtualHostParameters struct {
 
-	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard
-	// hosts are supported in the form of '.foo.com' or '-bar.foo.com'. If not specified, all domains will be matched.
+	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard hosts are supported in the form of '.foo.com' or '-bar.foo.com'. If not specified, all domains will be matched.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Authority []*string `json:"authority,omitempty" tf:"authority,omitempty"`
@@ -1093,13 +1036,11 @@ type VirtualHostParameters struct {
 	// +kubebuilder:validation:Optional
 	HTTPRouterIDSelector *v1.Selector `json:"httpRouterIdSelector,omitempty" tf:"-"`
 
-	// Apply the following modifications to the request
-	// headers. The structure is documented below.
+	// Apply the following modifications to the request headers. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ModifyRequestHeaders []ModifyRequestHeadersParameters `json:"modifyRequestHeaders,omitempty" tf:"modify_request_headers,omitempty"`
 
-	// Apply the following modifications to the response
-	// headers. The structure is documented below.
+	// Apply the following modifications to the response headers. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	ModifyResponseHeaders []ModifyResponseHeadersParameters `json:"modifyResponseHeaders,omitempty" tf:"modify_response_headers,omitempty"`
 
@@ -1107,8 +1048,7 @@ type VirtualHostParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// A Route resource. Routes are matched in-order. Be careful when adding them to the end. For instance, having
-	// http '/' match first makes all other routes unused. The structure is documented below.
+	// A Route resource. Routes are matched in-order. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Route []RouteParameters `json:"route,omitempty" tf:"route,omitempty"`
 

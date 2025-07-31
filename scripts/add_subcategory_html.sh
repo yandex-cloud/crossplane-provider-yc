@@ -1,7 +1,14 @@
 #!/bin/sh
 
 echo $pwd
-cd .work/terraform-provider-yandex/website/docs/r
+
+DIRECTORY=".work/terraform-provider-yandex/docs/resources"
+
+if [ ! -d "$DIRECTORY" ]; then
+  exit 2
+fi
+
+cd $DIRECTORY
 for file in $(ls ".")
 do
     numRows=$(cat $file | grep 'subcategory' | wc|awk '{ print $1 }')

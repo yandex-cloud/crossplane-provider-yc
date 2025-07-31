@@ -38,9 +38,7 @@ type CiliumParameters struct {
 
 type ClusterInitParameters struct {
 
-	// CIDR block. IP range for allocating pod addresses.
-	// It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be
-	// set up for this CIDR blocks in node subnets.
+	// CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
 	ClusterIPv4Range *string `json:"clusterIpv4Range,omitempty" tf:"cluster_ipv4_range,omitempty"`
 
 	// Identical to cluster_ipv4_range but for IPv6 protocol.
@@ -49,8 +47,7 @@ type ClusterInitParameters struct {
 	// A description of the Kubernetes cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder that the Kubernetes cluster belongs to.
-	// If it is not provided, the default provider folder is used.
+	// The ID of the folder that the Kubernetes cluster belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -96,8 +93,7 @@ type ClusterInitParameters struct {
 	// Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
 	NodeIPv4CidrMaskSize *float64 `json:"nodeIpv4CidrMaskSize,omitempty" tf:"node_ipv4_cidr_mask_size,omitempty"`
 
-	// Service account to be used by the worker nodes of the Kubernetes cluster
-	// to access Container Registry or to push node logs and metrics.
+	// Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	NodeServiceAccountID *string `json:"nodeServiceAccountId,omitempty" tf:"node_service_account_id,omitempty"`
 
@@ -112,9 +108,7 @@ type ClusterInitParameters struct {
 	// Cluster release channel.
 	ReleaseChannel *string `json:"releaseChannel,omitempty" tf:"release_channel,omitempty"`
 
-	// Service account to be used for provisioning Compute Cloud and VPC resources
-	// for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes
-	// cluster will be located and on the folder where selected network resides.
+	// Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
@@ -126,9 +120,7 @@ type ClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
-	// CIDR block. IP range Kubernetes service Kubernetes cluster
-	// IP addresses will be allocated from. It should not overlap with any subnet in the network
-	// the Kubernetes cluster located in.
+	// CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
 	ServiceIPv4Range *string `json:"serviceIpv4Range,omitempty" tf:"service_ipv4_range,omitempty"`
 
 	// Identical to service_ipv4_range but for IPv6 protocol.
@@ -137,9 +129,7 @@ type ClusterInitParameters struct {
 
 type ClusterObservation struct {
 
-	// CIDR block. IP range for allocating pod addresses.
-	// It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be
-	// set up for this CIDR blocks in node subnets.
+	// CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
 	ClusterIPv4Range *string `json:"clusterIpv4Range,omitempty" tf:"cluster_ipv4_range,omitempty"`
 
 	// Identical to cluster_ipv4_range but for IPv6 protocol.
@@ -151,8 +141,7 @@ type ClusterObservation struct {
 	// A description of the Kubernetes cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder that the Kubernetes cluster belongs to.
-	// If it is not provided, the default provider folder is used.
+	// The ID of the folder that the Kubernetes cluster belongs to. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// (Computed) Health of the Kubernetes cluster.
@@ -189,21 +178,16 @@ type ClusterObservation struct {
 	// Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
 	NodeIPv4CidrMaskSize *float64 `json:"nodeIpv4CidrMaskSize,omitempty" tf:"node_ipv4_cidr_mask_size,omitempty"`
 
-	// Service account to be used by the worker nodes of the Kubernetes cluster
-	// to access Container Registry or to push node logs and metrics.
+	// Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
 	NodeServiceAccountID *string `json:"nodeServiceAccountId,omitempty" tf:"node_service_account_id,omitempty"`
 
 	// Cluster release channel.
 	ReleaseChannel *string `json:"releaseChannel,omitempty" tf:"release_channel,omitempty"`
 
-	// Service account to be used for provisioning Compute Cloud and VPC resources
-	// for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes
-	// cluster will be located and on the folder where selected network resides.
+	// Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
-	// CIDR block. IP range Kubernetes service Kubernetes cluster
-	// IP addresses will be allocated from. It should not overlap with any subnet in the network
-	// the Kubernetes cluster located in.
+	// CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
 	ServiceIPv4Range *string `json:"serviceIpv4Range,omitempty" tf:"service_ipv4_range,omitempty"`
 
 	// Identical to service_ipv4_range but for IPv6 protocol.
@@ -215,9 +199,7 @@ type ClusterObservation struct {
 
 type ClusterParameters struct {
 
-	// CIDR block. IP range for allocating pod addresses.
-	// It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be
-	// set up for this CIDR blocks in node subnets.
+	// CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
 	// +kubebuilder:validation:Optional
 	ClusterIPv4Range *string `json:"clusterIpv4Range,omitempty" tf:"cluster_ipv4_range,omitempty"`
 
@@ -229,8 +211,7 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder that the Kubernetes cluster belongs to.
-	// If it is not provided, the default provider folder is used.
+	// The ID of the folder that the Kubernetes cluster belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -285,8 +266,7 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	NodeIPv4CidrMaskSize *float64 `json:"nodeIpv4CidrMaskSize,omitempty" tf:"node_ipv4_cidr_mask_size,omitempty"`
 
-	// Service account to be used by the worker nodes of the Kubernetes cluster
-	// to access Container Registry or to push node logs and metrics.
+	// Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
 	NodeServiceAccountID *string `json:"nodeServiceAccountId,omitempty" tf:"node_service_account_id,omitempty"`
@@ -303,9 +283,7 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ReleaseChannel *string `json:"releaseChannel,omitempty" tf:"release_channel,omitempty"`
 
-	// Service account to be used for provisioning Compute Cloud and VPC resources
-	// for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes
-	// cluster will be located and on the folder where selected network resides.
+	// Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
@@ -318,9 +296,7 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
-	// CIDR block. IP range Kubernetes service Kubernetes cluster
-	// IP addresses will be allocated from. It should not overlap with any subnet in the network
-	// the Kubernetes cluster located in.
+	// CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
 	// +kubebuilder:validation:Optional
 	ServiceIPv4Range *string `json:"serviceIpv4Range,omitempty" tf:"service_ipv4_range,omitempty"`
 
@@ -418,9 +394,7 @@ type MaintenancePolicyInitParameters struct {
 	// Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
 	AutoUpgrade *bool `json:"autoUpgrade,omitempty" tf:"auto_upgrade,omitempty"`
 
-	// (Computed) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time.
-	// To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration.
-	// Please see zonal_cluster_resource_name config example.
+	// (Computed) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
 	MaintenanceWindow []MaintenanceWindowInitParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 }
 
@@ -429,9 +403,7 @@ type MaintenancePolicyObservation struct {
 	// Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
 	AutoUpgrade *bool `json:"autoUpgrade,omitempty" tf:"auto_upgrade,omitempty"`
 
-	// (Computed) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time.
-	// To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration.
-	// Please see zonal_cluster_resource_name config example.
+	// (Computed) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
 	MaintenanceWindow []MaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 }
 
@@ -441,9 +413,7 @@ type MaintenancePolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoUpgrade *bool `json:"autoUpgrade" tf:"auto_upgrade,omitempty"`
 
-	// (Computed) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time.
-	// To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration.
-	// Please see zonal_cluster_resource_name config example.
+	// (Computed) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
 	// +kubebuilder:validation:Optional
 	MaintenanceWindow []MaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 }
@@ -481,16 +451,10 @@ type MasterInitParameters struct {
 
 	ExternalV6Address *string `json:"externalV6Address,omitempty" tf:"external_v6_address,omitempty"`
 
-	// (Computed) Maintenance policy for Kubernetes master.
-	// If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time.
-	// Revision upgrades are performed only within the same minor version, e.g. 1.13.
-	// Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+	// (Computed) Maintenance policy for Kubernetes master. If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.13. Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
 	MaintenancePolicy []MaintenancePolicyInitParameters `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
-	// Cluster master's instances locations array (zone and subnet).
-	// Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location.
-	// Can be updated inplace. When creating regional cluster (three master instances), its region will be evaluated automatically by backend.
-	// The structure is documented below.
+	// Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated inplace. When creating regional cluster (three master instances), its region will be evaluated automatically by backend. The structure is documented below.
 	MasterLocation []MasterLocationInitParameters `json:"masterLocation,omitempty" tf:"master_location,omitempty"`
 
 	// Master Logging options. The structure is documented below.
@@ -653,16 +617,10 @@ type MasterObservation struct {
 	// (Computed) Internal endpoint that can be used to connect to the master from cloud networks.
 	InternalV4Endpoint *string `json:"internalV4Endpoint,omitempty" tf:"internal_v4_endpoint,omitempty"`
 
-	// (Computed) Maintenance policy for Kubernetes master.
-	// If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time.
-	// Revision upgrades are performed only within the same minor version, e.g. 1.13.
-	// Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+	// (Computed) Maintenance policy for Kubernetes master. If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.13. Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
 	MaintenancePolicy []MaintenancePolicyObservation `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
-	// Cluster master's instances locations array (zone and subnet).
-	// Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location.
-	// Can be updated inplace. When creating regional cluster (three master instances), its region will be evaluated automatically by backend.
-	// The structure is documented below.
+	// Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated inplace. When creating regional cluster (three master instances), its region will be evaluated automatically by backend. The structure is documented below.
 	MasterLocation []MasterLocationObservation `json:"masterLocation,omitempty" tf:"master_location,omitempty"`
 
 	// Master Logging options. The structure is documented below.
@@ -696,17 +654,11 @@ type MasterParameters struct {
 	// +kubebuilder:validation:Optional
 	ExternalV6Address *string `json:"externalV6Address,omitempty" tf:"external_v6_address,omitempty"`
 
-	// (Computed) Maintenance policy for Kubernetes master.
-	// If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time.
-	// Revision upgrades are performed only within the same minor version, e.g. 1.13.
-	// Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
+	// (Computed) Maintenance policy for Kubernetes master. If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.13. Minor version upgrades (e.g. 1.13->1.14) should be performed manually. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	MaintenancePolicy []MaintenancePolicyParameters `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
-	// Cluster master's instances locations array (zone and subnet).
-	// Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location.
-	// Can be updated inplace. When creating regional cluster (three master instances), its region will be evaluated automatically by backend.
-	// The structure is documented below.
+	// Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated inplace. When creating regional cluster (three master instances), its region will be evaluated automatically by backend. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	MasterLocation []MasterLocationParameters `json:"masterLocation,omitempty" tf:"master_location,omitempty"`
 
@@ -801,18 +753,13 @@ type VersionInfoObservation struct {
 	// Current Kubernetes version, major.minor (e.g. 1.15).
 	CurrentVersion *string `json:"currentVersion,omitempty" tf:"current_version,omitempty"`
 
-	// Boolean flag.
-	// Newer revisions may include Kubernetes patches (e.g 1.15.1 -> 1.15.2) as well
-	// as some internal component updates - new features or bug fixes in yandex-specific
-	// components either on the master or nodes.
+	// Boolean flag. Newer revisions may include Kubernetes patches (e.g 1.15.1 -> 1.15.2) as well as some internal component updates - new features or bug fixes in yandex-specific components either on the master or nodes.
 	NewRevisionAvailable *bool `json:"newRevisionAvailable,omitempty" tf:"new_revision_available,omitempty"`
 
-	// Human readable description of the changes to be applied
-	// when updating to the latest revision. Empty if new_revision_available is false.
+	// Human readable description of the changes to be applied when updating to the latest revision. Empty if new_revision_available is false.
 	NewRevisionSummary *string `json:"newRevisionSummary,omitempty" tf:"new_revision_summary,omitempty"`
 
-	// Boolean flag. The current version is on the deprecation schedule,
-	// component (master or node group) should be upgraded.
+	// Boolean flag. The current version is on the deprecation schedule, component (master or node group) should be upgraded.
 	VersionDeprecated *bool `json:"versionDeprecated,omitempty" tf:"version_deprecated,omitempty"`
 }
 

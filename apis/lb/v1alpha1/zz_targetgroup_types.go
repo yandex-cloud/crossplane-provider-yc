@@ -29,12 +29,10 @@ import (
 
 type TargetGroupInitParameters struct {
 
-	// An optional description of the target group. Provide this property when
-	// you create the resource.
+	// An optional description of the target group. Provide this property when you create the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs.
-	// If omitted, the provider folder is used.
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -53,8 +51,7 @@ type TargetGroupInitParameters struct {
 	// Name of the target group. Provided by the client when the target group is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the availability zone where the target group resides.
-	// If omitted, default region is being used.
+	// ID of the availability zone where the target group resides. If omitted, default region is being used.
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
 	// A Target resource. The structure is documented below.
@@ -66,12 +63,10 @@ type TargetGroupObservation struct {
 	// The target group creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// An optional description of the target group. Provide this property when
-	// you create the resource.
+	// An optional description of the target group. Provide this property when you create the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs.
-	// If omitted, the provider folder is used.
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// The ID of the target group.
@@ -84,8 +79,7 @@ type TargetGroupObservation struct {
 	// Name of the target group. Provided by the client when the target group is created.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the availability zone where the target group resides.
-	// If omitted, default region is being used.
+	// ID of the availability zone where the target group resides. If omitted, default region is being used.
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
 	// A Target resource. The structure is documented below.
@@ -94,13 +88,11 @@ type TargetGroupObservation struct {
 
 type TargetGroupParameters struct {
 
-	// An optional description of the target group. Provide this property when
-	// you create the resource.
+	// An optional description of the target group. Provide this property when you create the resource.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs.
-	// If omitted, the provider folder is used.
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -122,8 +114,7 @@ type TargetGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the availability zone where the target group resides.
-	// If omitted, default region is being used.
+	// ID of the availability zone where the target group resides. If omitted, default region is being used.
 	// +kubebuilder:validation:Optional
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
@@ -147,8 +138,7 @@ type TargetInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AddressSelector *v1.Selector `json:"addressSelector,omitempty" tf:"-"`
 
-	// ID of the subnet that targets are connected to.
-	// All targets in the target group must be connected to the same subnet within a single availability zone.
+	// ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -166,8 +156,7 @@ type TargetObservation struct {
 	// IP address of the target.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// ID of the subnet that targets are connected to.
-	// All targets in the target group must be connected to the same subnet within a single availability zone.
+	// ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
@@ -187,8 +176,7 @@ type TargetParameters struct {
 	// +kubebuilder:validation:Optional
 	AddressSelector *v1.Selector `json:"addressSelector,omitempty" tf:"-"`
 
-	// ID of the subnet that targets are connected to.
-	// All targets in the target group must be connected to the same subnet within a single availability zone.
+	// ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`

@@ -129,6 +129,9 @@ type ApplicationLoadBalancerParameters struct {
 
 type AutoScaleInitParameters struct {
 
+	// . Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	AutoScaleType *string `json:"autoScaleType,omitempty" tf:"auto_scale_type,omitempty"`
+
 	// Target CPU load level.
 	CPUUtilizationTarget *float64 `json:"cpuUtilizationTarget,omitempty" tf:"cpu_utilization_target,omitempty"`
 
@@ -141,25 +144,23 @@ type AutoScaleInitParameters struct {
 	// The maximum number of virtual machines in the group.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// The amount of time, in seconds, that metrics are averaged for.
-	// If the average value at the end of the interval is higher than the cpu_utilization_target,
-	// the instance group will increase the number of virtual machines in the group.
+	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
 	MeasurementDuration *float64 `json:"measurementDuration,omitempty" tf:"measurement_duration,omitempty"`
 
 	// The minimum number of virtual machines in a single availability zone.
 	MinZoneSize *float64 `json:"minZoneSize,omitempty" tf:"min_zone_size,omitempty"`
 
-	// The minimum time interval, in seconds, to monitor the load before
-	// an instance group can reduce the number of virtual machines in the group. During this time, the group
-	// will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
 	StabilizationDuration *float64 `json:"stabilizationDuration,omitempty" tf:"stabilization_duration,omitempty"`
 
-	// The warm-up time of the virtual machine, in seconds. During this time,
-	// traffic is fed to the virtual machine, but load metrics are not taken into account.
+	// The warm-up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	WarmupDuration *float64 `json:"warmupDuration,omitempty" tf:"warmup_duration,omitempty"`
 }
 
 type AutoScaleObservation struct {
+
+	// . Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	AutoScaleType *string `json:"autoScaleType,omitempty" tf:"auto_scale_type,omitempty"`
 
 	// Target CPU load level.
 	CPUUtilizationTarget *float64 `json:"cpuUtilizationTarget,omitempty" tf:"cpu_utilization_target,omitempty"`
@@ -173,25 +174,24 @@ type AutoScaleObservation struct {
 	// The maximum number of virtual machines in the group.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// The amount of time, in seconds, that metrics are averaged for.
-	// If the average value at the end of the interval is higher than the cpu_utilization_target,
-	// the instance group will increase the number of virtual machines in the group.
+	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
 	MeasurementDuration *float64 `json:"measurementDuration,omitempty" tf:"measurement_duration,omitempty"`
 
 	// The minimum number of virtual machines in a single availability zone.
 	MinZoneSize *float64 `json:"minZoneSize,omitempty" tf:"min_zone_size,omitempty"`
 
-	// The minimum time interval, in seconds, to monitor the load before
-	// an instance group can reduce the number of virtual machines in the group. During this time, the group
-	// will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
 	StabilizationDuration *float64 `json:"stabilizationDuration,omitempty" tf:"stabilization_duration,omitempty"`
 
-	// The warm-up time of the virtual machine, in seconds. During this time,
-	// traffic is fed to the virtual machine, but load metrics are not taken into account.
+	// The warm-up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	WarmupDuration *float64 `json:"warmupDuration,omitempty" tf:"warmup_duration,omitempty"`
 }
 
 type AutoScaleParameters struct {
+
+	// . Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// +kubebuilder:validation:Optional
+	AutoScaleType *string `json:"autoScaleType,omitempty" tf:"auto_scale_type,omitempty"`
 
 	// Target CPU load level.
 	// +kubebuilder:validation:Optional
@@ -209,9 +209,7 @@ type AutoScaleParameters struct {
 	// +kubebuilder:validation:Optional
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// The amount of time, in seconds, that metrics are averaged for.
-	// If the average value at the end of the interval is higher than the cpu_utilization_target,
-	// the instance group will increase the number of virtual machines in the group.
+	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
 	// +kubebuilder:validation:Optional
 	MeasurementDuration *float64 `json:"measurementDuration" tf:"measurement_duration,omitempty"`
 
@@ -219,14 +217,11 @@ type AutoScaleParameters struct {
 	// +kubebuilder:validation:Optional
 	MinZoneSize *float64 `json:"minZoneSize,omitempty" tf:"min_zone_size,omitempty"`
 
-	// The minimum time interval, in seconds, to monitor the load before
-	// an instance group can reduce the number of virtual machines in the group. During this time, the group
-	// will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
 	// +kubebuilder:validation:Optional
 	StabilizationDuration *float64 `json:"stabilizationDuration,omitempty" tf:"stabilization_duration,omitempty"`
 
-	// The warm-up time of the virtual machine, in seconds. During this time,
-	// traffic is fed to the virtual machine, but load metrics are not taken into account.
+	// The warm-up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	// +kubebuilder:validation:Optional
 	WarmupDuration *float64 `json:"warmupDuration,omitempty" tf:"warmup_duration,omitempty"`
 }
@@ -305,11 +300,7 @@ type CustomRuleInitParameters struct {
 	// Metric type, GAUGE or COUNTER.
 	MetricType *string `json:"metricType,omitempty" tf:"metric_type,omitempty"`
 
-	// Rule type: UTILIZATION - This type means that the metric applies to one instance.
-	// First, Instance Groups calculates the average metric value for each instance,
-	// then averages the values for instances in one availability zone.
-	// This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone.
-	// This type of metric must have the zone_id label.
+	// Rule type: UTILIZATION - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone. This type of metric must have the zone_id label.
 	RuleType *string `json:"ruleType,omitempty" tf:"rule_type,omitempty"`
 
 	// Service of custom metric in Yandex Monitoring that should be used for scaling.
@@ -334,11 +325,7 @@ type CustomRuleObservation struct {
 	// Metric type, GAUGE or COUNTER.
 	MetricType *string `json:"metricType,omitempty" tf:"metric_type,omitempty"`
 
-	// Rule type: UTILIZATION - This type means that the metric applies to one instance.
-	// First, Instance Groups calculates the average metric value for each instance,
-	// then averages the values for instances in one availability zone.
-	// This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone.
-	// This type of metric must have the zone_id label.
+	// Rule type: UTILIZATION - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone. This type of metric must have the zone_id label.
 	RuleType *string `json:"ruleType,omitempty" tf:"rule_type,omitempty"`
 
 	// Service of custom metric in Yandex Monitoring that should be used for scaling.
@@ -367,11 +354,7 @@ type CustomRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	MetricType *string `json:"metricType" tf:"metric_type,omitempty"`
 
-	// Rule type: UTILIZATION - This type means that the metric applies to one instance.
-	// First, Instance Groups calculates the average metric value for each instance,
-	// then averages the values for instances in one availability zone.
-	// This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone.
-	// This type of metric must have the zone_id label.
+	// Rule type: UTILIZATION - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone. This type of metric must have the zone_id label.
 	// +kubebuilder:validation:Optional
 	RuleType *string `json:"ruleType" tf:"rule_type,omitempty"`
 
@@ -392,22 +375,16 @@ type DeployPolicyInitParameters struct {
 	// The maximum number of instances that can be deleted at the same time.
 	MaxDeleting *float64 `json:"maxDeleting,omitempty" tf:"max_deleting,omitempty"`
 
-	// The maximum number of instances that can be temporarily allocated above the group's target size
-	// during the update process.
+	// The maximum number of instances that can be temporarily allocated above the group's target size during the update process.
 	MaxExpansion *float64 `json:"maxExpansion,omitempty" tf:"max_expansion,omitempty"`
 
-	// The maximum number of running instances that can be taken offline (stopped or deleted) at the same time
-	// during the update process.
+	// The maximum number of running instances that can be taken offline (stopped or deleted) at the same time during the update process.
 	MaxUnavailable *float64 `json:"maxUnavailable,omitempty" tf:"max_unavailable,omitempty"`
 
-	// The amount of time in seconds to allow for an instance to start.
-	// Instance will be considered up and running (and start receiving traffic) only after the startup_duration
-	// has elapsed and all health checks are passed.
+	// The amount of time in seconds to allow for an instance to start. Instance will be considered up and running (and start receiving traffic) only after the startup_duration has elapsed and all health checks are passed.
 	StartupDuration *float64 `json:"startupDuration,omitempty" tf:"startup_duration,omitempty"`
 
-	// Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups
-	// can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead,
-	// it will wait until the instance stops itself or becomes unhealthy.
+	// Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead, it will wait until the instance stops itself or becomes unhealthy.
 	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
 }
 
@@ -419,22 +396,16 @@ type DeployPolicyObservation struct {
 	// The maximum number of instances that can be deleted at the same time.
 	MaxDeleting *float64 `json:"maxDeleting,omitempty" tf:"max_deleting,omitempty"`
 
-	// The maximum number of instances that can be temporarily allocated above the group's target size
-	// during the update process.
+	// The maximum number of instances that can be temporarily allocated above the group's target size during the update process.
 	MaxExpansion *float64 `json:"maxExpansion,omitempty" tf:"max_expansion,omitempty"`
 
-	// The maximum number of running instances that can be taken offline (stopped or deleted) at the same time
-	// during the update process.
+	// The maximum number of running instances that can be taken offline (stopped or deleted) at the same time during the update process.
 	MaxUnavailable *float64 `json:"maxUnavailable,omitempty" tf:"max_unavailable,omitempty"`
 
-	// The amount of time in seconds to allow for an instance to start.
-	// Instance will be considered up and running (and start receiving traffic) only after the startup_duration
-	// has elapsed and all health checks are passed.
+	// The amount of time in seconds to allow for an instance to start. Instance will be considered up and running (and start receiving traffic) only after the startup_duration has elapsed and all health checks are passed.
 	StartupDuration *float64 `json:"startupDuration,omitempty" tf:"startup_duration,omitempty"`
 
-	// Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups
-	// can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead,
-	// it will wait until the instance stops itself or becomes unhealthy.
+	// Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead, it will wait until the instance stops itself or becomes unhealthy.
 	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
 }
 
@@ -448,25 +419,19 @@ type DeployPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	MaxDeleting *float64 `json:"maxDeleting,omitempty" tf:"max_deleting,omitempty"`
 
-	// The maximum number of instances that can be temporarily allocated above the group's target size
-	// during the update process.
+	// The maximum number of instances that can be temporarily allocated above the group's target size during the update process.
 	// +kubebuilder:validation:Optional
 	MaxExpansion *float64 `json:"maxExpansion" tf:"max_expansion,omitempty"`
 
-	// The maximum number of running instances that can be taken offline (stopped or deleted) at the same time
-	// during the update process.
+	// The maximum number of running instances that can be taken offline (stopped or deleted) at the same time during the update process.
 	// +kubebuilder:validation:Optional
 	MaxUnavailable *float64 `json:"maxUnavailable" tf:"max_unavailable,omitempty"`
 
-	// The amount of time in seconds to allow for an instance to start.
-	// Instance will be considered up and running (and start receiving traffic) only after the startup_duration
-	// has elapsed and all health checks are passed.
+	// The amount of time in seconds to allow for an instance to start. Instance will be considered up and running (and start receiving traffic) only after the startup_duration has elapsed and all health checks are passed.
 	// +kubebuilder:validation:Optional
 	StartupDuration *float64 `json:"startupDuration,omitempty" tf:"startup_duration,omitempty"`
 
-	// Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups
-	// can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead,
-	// it will wait until the instance stops itself or becomes unhealthy.
+	// Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead, it will wait until the instance stops itself or becomes unhealthy.
 	// +kubebuilder:validation:Optional
 	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
 }
@@ -651,7 +616,7 @@ type InstanceGroupInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
-	// A set of key/value  variables pairs to assign to the instance group.
+	// A set of key/value variables pairs to assign to the instance group.
 	// +mapType=granular
 	Variables map[string]*string `json:"variables,omitempty" tf:"variables,omitempty"`
 }
@@ -712,7 +677,7 @@ type InstanceGroupObservation struct {
 	// The status of the instance.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// A set of key/value  variables pairs to assign to the instance group.
+	// A set of key/value variables pairs to assign to the instance group.
 	// +mapType=granular
 	Variables map[string]*string `json:"variables,omitempty" tf:"variables,omitempty"`
 }
@@ -794,7 +759,7 @@ type InstanceGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
-	// A set of key/value  variables pairs to assign to the instance group.
+	// A set of key/value variables pairs to assign to the instance group.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Variables map[string]*string `json:"variables,omitempty" tf:"variables,omitempty"`
@@ -1071,7 +1036,7 @@ type InstanceTemplateMetadataOptionsParameters struct {
 
 type InstanceTemplateNetworkInterfaceInitParameters struct {
 
-	// List of dns records.  The structure is documented below.
+	// List of dns records. The structure is documented below.
 	DNSRecord []NetworkInterfaceDNSRecordInitParameters `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
 	// Manual set static IP address.
@@ -1085,13 +1050,13 @@ type InstanceTemplateNetworkInterfaceInitParameters struct {
 	// Manual set static IPv6 address.
 	IPv6Address *string `json:"ipv6Address,omitempty" tf:"ipv6_address,omitempty"`
 
-	// List of ipv6 dns records.  The structure is documented below.
+	// List of ipv6 dns records. The structure is documented below.
 	IPv6DNSRecord []NetworkInterfaceIPv6DNSRecordInitParameters `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
 
 	// Flag for using NAT.
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
-	// List of nat dns records.  The structure is documented below.
+	// List of nat dns records. The structure is documented below.
 	NATDNSRecord []NetworkInterfaceNATDNSRecordInitParameters `json:"natDnsRecord,omitempty" tf:"nat_dns_record,omitempty"`
 
 	// A public address that can be used to access the internet over NAT. Use variables to set.
@@ -1138,7 +1103,7 @@ type InstanceTemplateNetworkInterfaceInitParameters struct {
 
 type InstanceTemplateNetworkInterfaceObservation struct {
 
-	// List of dns records.  The structure is documented below.
+	// List of dns records. The structure is documented below.
 	DNSRecord []NetworkInterfaceDNSRecordObservation `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
 	// Manual set static IP address.
@@ -1152,13 +1117,13 @@ type InstanceTemplateNetworkInterfaceObservation struct {
 	// Manual set static IPv6 address.
 	IPv6Address *string `json:"ipv6Address,omitempty" tf:"ipv6_address,omitempty"`
 
-	// List of ipv6 dns records.  The structure is documented below.
+	// List of ipv6 dns records. The structure is documented below.
 	IPv6DNSRecord []NetworkInterfaceIPv6DNSRecordObservation `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
 
 	// Flag for using NAT.
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
-	// List of nat dns records.  The structure is documented below.
+	// List of nat dns records. The structure is documented below.
 	NATDNSRecord []NetworkInterfaceNATDNSRecordObservation `json:"natDnsRecord,omitempty" tf:"nat_dns_record,omitempty"`
 
 	// A public address that can be used to access the internet over NAT. Use variables to set.
@@ -1178,7 +1143,7 @@ type InstanceTemplateNetworkInterfaceObservation struct {
 
 type InstanceTemplateNetworkInterfaceParameters struct {
 
-	// List of dns records.  The structure is documented below.
+	// List of dns records. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	DNSRecord []NetworkInterfaceDNSRecordParameters `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
@@ -1197,7 +1162,7 @@ type InstanceTemplateNetworkInterfaceParameters struct {
 	// +kubebuilder:validation:Optional
 	IPv6Address *string `json:"ipv6Address,omitempty" tf:"ipv6_address,omitempty"`
 
-	// List of ipv6 dns records.  The structure is documented below.
+	// List of ipv6 dns records. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	IPv6DNSRecord []NetworkInterfaceIPv6DNSRecordParameters `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
 
@@ -1205,7 +1170,7 @@ type InstanceTemplateNetworkInterfaceParameters struct {
 	// +kubebuilder:validation:Optional
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
-	// List of nat dns records.  The structure is documented below.
+	// List of nat dns records. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	NATDNSRecord []NetworkInterfaceNATDNSRecordParameters `json:"natDnsRecord,omitempty" tf:"nat_dns_record,omitempty"`
 
@@ -2030,11 +1995,7 @@ type TestAutoScaleCustomRuleInitParameters struct {
 	// Metric type, GAUGE or COUNTER.
 	MetricType *string `json:"metricType,omitempty" tf:"metric_type,omitempty"`
 
-	// Rule type: UTILIZATION - This type means that the metric applies to one instance.
-	// First, Instance Groups calculates the average metric value for each instance,
-	// then averages the values for instances in one availability zone.
-	// This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone.
-	// This type of metric must have the zone_id label.
+	// Rule type: UTILIZATION - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone. This type of metric must have the zone_id label.
 	RuleType *string `json:"ruleType,omitempty" tf:"rule_type,omitempty"`
 
 	// Service of custom metric in Yandex Monitoring that should be used for scaling.
@@ -2059,11 +2020,7 @@ type TestAutoScaleCustomRuleObservation struct {
 	// Metric type, GAUGE or COUNTER.
 	MetricType *string `json:"metricType,omitempty" tf:"metric_type,omitempty"`
 
-	// Rule type: UTILIZATION - This type means that the metric applies to one instance.
-	// First, Instance Groups calculates the average metric value for each instance,
-	// then averages the values for instances in one availability zone.
-	// This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone.
-	// This type of metric must have the zone_id label.
+	// Rule type: UTILIZATION - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone. This type of metric must have the zone_id label.
 	RuleType *string `json:"ruleType,omitempty" tf:"rule_type,omitempty"`
 
 	// Service of custom metric in Yandex Monitoring that should be used for scaling.
@@ -2092,11 +2049,7 @@ type TestAutoScaleCustomRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	MetricType *string `json:"metricType" tf:"metric_type,omitempty"`
 
-	// Rule type: UTILIZATION - This type means that the metric applies to one instance.
-	// First, Instance Groups calculates the average metric value for each instance,
-	// then averages the values for instances in one availability zone.
-	// This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone.
-	// This type of metric must have the zone_id label.
+	// Rule type: UTILIZATION - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone. This type of metric must have the zone_id label.
 	// +kubebuilder:validation:Optional
 	RuleType *string `json:"ruleType" tf:"rule_type,omitempty"`
 
@@ -2111,6 +2064,9 @@ type TestAutoScaleCustomRuleParameters struct {
 
 type TestAutoScaleInitParameters struct {
 
+	// . Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	AutoScaleType *string `json:"autoScaleType,omitempty" tf:"auto_scale_type,omitempty"`
+
 	// Target CPU load level.
 	CPUUtilizationTarget *float64 `json:"cpuUtilizationTarget,omitempty" tf:"cpu_utilization_target,omitempty"`
 
@@ -2123,25 +2079,23 @@ type TestAutoScaleInitParameters struct {
 	// The maximum number of virtual machines in the group.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// The amount of time, in seconds, that metrics are averaged for.
-	// If the average value at the end of the interval is higher than the cpu_utilization_target,
-	// the instance group will increase the number of virtual machines in the group.
+	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
 	MeasurementDuration *float64 `json:"measurementDuration,omitempty" tf:"measurement_duration,omitempty"`
 
 	// The minimum number of virtual machines in a single availability zone.
 	MinZoneSize *float64 `json:"minZoneSize,omitempty" tf:"min_zone_size,omitempty"`
 
-	// The minimum time interval, in seconds, to monitor the load before
-	// an instance group can reduce the number of virtual machines in the group. During this time, the group
-	// will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
 	StabilizationDuration *float64 `json:"stabilizationDuration,omitempty" tf:"stabilization_duration,omitempty"`
 
-	// The warm-up time of the virtual machine, in seconds. During this time,
-	// traffic is fed to the virtual machine, but load metrics are not taken into account.
+	// The warm-up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	WarmupDuration *float64 `json:"warmupDuration,omitempty" tf:"warmup_duration,omitempty"`
 }
 
 type TestAutoScaleObservation struct {
+
+	// . Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	AutoScaleType *string `json:"autoScaleType,omitempty" tf:"auto_scale_type,omitempty"`
 
 	// Target CPU load level.
 	CPUUtilizationTarget *float64 `json:"cpuUtilizationTarget,omitempty" tf:"cpu_utilization_target,omitempty"`
@@ -2155,25 +2109,24 @@ type TestAutoScaleObservation struct {
 	// The maximum number of virtual machines in the group.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// The amount of time, in seconds, that metrics are averaged for.
-	// If the average value at the end of the interval is higher than the cpu_utilization_target,
-	// the instance group will increase the number of virtual machines in the group.
+	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
 	MeasurementDuration *float64 `json:"measurementDuration,omitempty" tf:"measurement_duration,omitempty"`
 
 	// The minimum number of virtual machines in a single availability zone.
 	MinZoneSize *float64 `json:"minZoneSize,omitempty" tf:"min_zone_size,omitempty"`
 
-	// The minimum time interval, in seconds, to monitor the load before
-	// an instance group can reduce the number of virtual machines in the group. During this time, the group
-	// will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
 	StabilizationDuration *float64 `json:"stabilizationDuration,omitempty" tf:"stabilization_duration,omitempty"`
 
-	// The warm-up time of the virtual machine, in seconds. During this time,
-	// traffic is fed to the virtual machine, but load metrics are not taken into account.
+	// The warm-up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	WarmupDuration *float64 `json:"warmupDuration,omitempty" tf:"warmup_duration,omitempty"`
 }
 
 type TestAutoScaleParameters struct {
+
+	// . Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// +kubebuilder:validation:Optional
+	AutoScaleType *string `json:"autoScaleType,omitempty" tf:"auto_scale_type,omitempty"`
 
 	// Target CPU load level.
 	// +kubebuilder:validation:Optional
@@ -2191,9 +2144,7 @@ type TestAutoScaleParameters struct {
 	// +kubebuilder:validation:Optional
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// The amount of time, in seconds, that metrics are averaged for.
-	// If the average value at the end of the interval is higher than the cpu_utilization_target,
-	// the instance group will increase the number of virtual machines in the group.
+	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
 	// +kubebuilder:validation:Optional
 	MeasurementDuration *float64 `json:"measurementDuration" tf:"measurement_duration,omitempty"`
 
@@ -2201,14 +2152,11 @@ type TestAutoScaleParameters struct {
 	// +kubebuilder:validation:Optional
 	MinZoneSize *float64 `json:"minZoneSize,omitempty" tf:"min_zone_size,omitempty"`
 
-	// The minimum time interval, in seconds, to monitor the load before
-	// an instance group can reduce the number of virtual machines in the group. During this time, the group
-	// will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
 	// +kubebuilder:validation:Optional
 	StabilizationDuration *float64 `json:"stabilizationDuration,omitempty" tf:"stabilization_duration,omitempty"`
 
-	// The warm-up time of the virtual machine, in seconds. During this time,
-	// traffic is fed to the virtual machine, but load metrics are not taken into account.
+	// The warm-up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	// +kubebuilder:validation:Optional
 	WarmupDuration *float64 `json:"warmupDuration,omitempty" tf:"warmup_duration,omitempty"`
 }

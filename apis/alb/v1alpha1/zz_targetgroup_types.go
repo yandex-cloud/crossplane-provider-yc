@@ -29,12 +29,10 @@ import (
 
 type TargetGroupInitParameters struct {
 
-	// An optional description of the target group. Provide this property when
-	// you create the resource.
+	// An optional description of the target group. Provide this property when you create the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs.
-	// If omitted, the provider folder is used.
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -62,12 +60,10 @@ type TargetGroupObservation struct {
 	// The target group creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// An optional description of the target group. Provide this property when
-	// you create the resource.
+	// An optional description of the target group. Provide this property when you create the resource.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs.
-	// If omitted, the provider folder is used.
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// The ID of the target group.
@@ -86,13 +82,11 @@ type TargetGroupObservation struct {
 
 type TargetGroupParameters struct {
 
-	// An optional description of the target group. Provide this property when
-	// you create the resource.
+	// An optional description of the target group. Provide this property when you create the resource.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs.
-	// If omitted, the provider folder is used.
+	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -126,8 +120,7 @@ type TargetInitParameters struct {
 
 	PrivateIPv4Address *bool `json:"privateIpv4Address,omitempty" tf:"private_ipv4_address,omitempty"`
 
-	// ID of the subnet that targets are connected to.
-	// All targets in the target group must be connected to the same subnet within a single availability zone.
+	// ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -147,8 +140,7 @@ type TargetObservation struct {
 
 	PrivateIPv4Address *bool `json:"privateIpv4Address,omitempty" tf:"private_ipv4_address,omitempty"`
 
-	// ID of the subnet that targets are connected to.
-	// All targets in the target group must be connected to the same subnet within a single availability zone.
+	// ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
@@ -161,8 +153,7 @@ type TargetParameters struct {
 	// +kubebuilder:validation:Optional
 	PrivateIPv4Address *bool `json:"privateIpv4Address,omitempty" tf:"private_ipv4_address,omitempty"`
 
-	// ID of the subnet that targets are connected to.
-	// All targets in the target group must be connected to the same subnet within a single availability zone.
+	// ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`

@@ -51,7 +51,7 @@ type DiskPlacementGroupInitParameters struct {
 	// The name of the Disk Placement Group.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the zone where the Disk Placement Group resides.
+	// ID of the zone where the Disk Placement Group resides. Default is ru-central1-b
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
@@ -76,7 +76,7 @@ type DiskPlacementGroupObservation struct {
 	// Status of the Disk Placement Group.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// ID of the zone where the Disk Placement Group resides.
+	// ID of the zone where the Disk Placement Group resides. Default is ru-central1-b
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
@@ -108,7 +108,7 @@ type DiskPlacementGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the zone where the Disk Placement Group resides.
+	// ID of the zone where the Disk Placement Group resides. Default is ru-central1-b
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }

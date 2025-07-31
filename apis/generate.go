@@ -31,7 +31,7 @@ limitations under the License.
 //go:generate rm -rf ../examples-generated
 
 // Generate documentation from Terraform docs.
-//go:generate go run github.com/crossplane/upjet/cmd/scraper -n ${TERRAFORM_PROVIDER_SOURCE} -r ../.work/terraform-provider-yandex/website/docs/r -o ../config/provider-metadata.yaml
+//go:generate go run github.com/crossplane/upjet/cmd/scraper -n ${TERRAFORM_PROVIDER_SOURCE} -r ../.work/terraform-provider-yandex/docs/resources -o ../config/provider-metadata.yaml
 
 // Run Upjet generator
 //go:generate go run ../cmd/generator/main.go ..

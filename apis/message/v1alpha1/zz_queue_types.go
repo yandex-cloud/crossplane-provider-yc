@@ -69,9 +69,11 @@ type QueueInitParameters struct {
 	// Message redrive policy in Dead Letter Queue. The source queue and DLQ must be the same type: for FIFO queues, the DLQ must also be a FIFO queue. For more information about redrive policy see documentation. Also you can use example in this page.
 	RedrivePolicy *string `json:"redrivePolicy,omitempty" tf:"redrive_policy,omitempty"`
 
-	// ID of the region where the message queue is located at.
-	// The default is 'ru-central1'.
+	// ID of the region where the message queue is located at. The default is 'ru-central1'.
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
+
+	// The secret key to use when applying changes. If omitted, ymq_secret_key specified in provider config is used. For more information see documentation.
+	SecretKeySecretRef *v1.SecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
 
 	// Visibility timeout for messages in a queue, specified in seconds. Valid values: from 0 to 43200 seconds (12 hours). Default: 30.
 	VisibilityTimeoutSeconds *float64 `json:"visibilityTimeoutSeconds,omitempty" tf:"visibility_timeout_seconds,omitempty"`
@@ -115,8 +117,7 @@ type QueueObservation struct {
 	// Message redrive policy in Dead Letter Queue. The source queue and DLQ must be the same type: for FIFO queues, the DLQ must also be a FIFO queue. For more information about redrive policy see documentation. Also you can use example in this page.
 	RedrivePolicy *string `json:"redrivePolicy,omitempty" tf:"redrive_policy,omitempty"`
 
-	// ID of the region where the message queue is located at.
-	// The default is 'ru-central1'.
+	// ID of the region where the message queue is located at. The default is 'ru-central1'.
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
 	// Visibility timeout for messages in a queue, specified in seconds. Valid values: from 0 to 43200 seconds (12 hours). Default: 30.
@@ -175,8 +176,7 @@ type QueueParameters struct {
 	// +kubebuilder:validation:Optional
 	RedrivePolicy *string `json:"redrivePolicy,omitempty" tf:"redrive_policy,omitempty"`
 
-	// ID of the region where the message queue is located at.
-	// The default is 'ru-central1'.
+	// ID of the region where the message queue is located at. The default is 'ru-central1'.
 	// +kubebuilder:validation:Optional
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 

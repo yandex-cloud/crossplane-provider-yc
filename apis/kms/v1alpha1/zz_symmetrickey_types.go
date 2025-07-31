@@ -29,8 +29,7 @@ import (
 
 type SymmetricKeyInitParameters struct {
 
-	// Encryption algorithm to be used with a new key version,
-	// generated with the next rotation. The default value is AES_128.
+	// Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is AES_128.
 	DefaultAlgorithm *string `json:"defaultAlgorithm,omitempty" tf:"default_algorithm,omitempty"`
 
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
@@ -38,8 +37,7 @@ type SymmetricKeyInitParameters struct {
 	// An optional description of the key.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -67,8 +65,7 @@ type SymmetricKeyObservation struct {
 	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Encryption algorithm to be used with a new key version,
-	// generated with the next rotation. The default value is AES_128.
+	// Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is AES_128.
 	DefaultAlgorithm *string `json:"defaultAlgorithm,omitempty" tf:"default_algorithm,omitempty"`
 
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
@@ -76,8 +73,7 @@ type SymmetricKeyObservation struct {
 	// An optional description of the key.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -101,8 +97,7 @@ type SymmetricKeyObservation struct {
 
 type SymmetricKeyParameters struct {
 
-	// Encryption algorithm to be used with a new key version,
-	// generated with the next rotation. The default value is AES_128.
+	// Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is AES_128.
 	// +kubebuilder:validation:Optional
 	DefaultAlgorithm *string `json:"defaultAlgorithm,omitempty" tf:"default_algorithm,omitempty"`
 
@@ -113,8 +108,7 @@ type SymmetricKeyParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`

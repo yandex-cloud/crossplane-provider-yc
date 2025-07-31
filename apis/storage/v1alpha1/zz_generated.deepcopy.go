@@ -474,6 +474,11 @@ func (in *BucketInitParameters) DeepCopyInto(out *BucketInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.SecretKeySecretRef != nil {
+		in, out := &in.SecretKeySecretRef, &out.SecretKeySecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
 	if in.ServerSideEncryptionConfiguration != nil {
 		in, out := &in.ServerSideEncryptionConfiguration, &out.ServerSideEncryptionConfiguration
 		*out = make([]ServerSideEncryptionConfigurationInitParameters, len(*in))
@@ -2172,6 +2177,11 @@ func (in *ObjectInitParameters) DeepCopyInto(out *ObjectInitParameters) {
 	if in.ObjectLockRetainUntilDate != nil {
 		in, out := &in.ObjectLockRetainUntilDate, &out.ObjectLockRetainUntilDate
 		*out = new(string)
+		**out = **in
+	}
+	if in.SecretKeySecretRef != nil {
+		in, out := &in.SecretKeySecretRef, &out.SecretKeySecretRef
+		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
 	if in.Source != nil {

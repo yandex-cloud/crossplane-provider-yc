@@ -461,7 +461,7 @@ type HTTPBackendLoadBalancingConfigInitParameters struct {
 	// Load balancing mode for the backend. Possible values: "ROUND_ROBIN", "RANDOM", "LEAST_REQUEST", "MAGLEV_HASH".
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
+	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
 	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
 
 	// If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
@@ -476,7 +476,7 @@ type HTTPBackendLoadBalancingConfigObservation struct {
 	// Load balancing mode for the backend. Possible values: "ROUND_ROBIN", "RANDOM", "LEAST_REQUEST", "MAGLEV_HASH".
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
+	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
 	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
 
 	// If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
@@ -493,7 +493,7 @@ type HTTPBackendLoadBalancingConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
+	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
 	// +kubebuilder:validation:Optional
 	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
 
@@ -827,7 +827,7 @@ type HealthcheckStreamHealthcheckInitParameters struct {
 	// Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
 	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
 
-	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
+	// Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
 
@@ -836,7 +836,7 @@ type HealthcheckStreamHealthcheckObservation struct {
 	// Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
 	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
 
-	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
+	// Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
 
@@ -846,7 +846,7 @@ type HealthcheckStreamHealthcheckParameters struct {
 	// +kubebuilder:validation:Optional
 	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
 
-	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
+	// Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
 	// +kubebuilder:validation:Optional
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
@@ -859,7 +859,7 @@ type LoadBalancingConfigInitParameters struct {
 	// Load balancing mode for the backend. Possible values: "ROUND_ROBIN", "RANDOM", "LEAST_REQUEST", "MAGLEV_HASH".
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
+	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
 	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
 
 	// If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
@@ -874,7 +874,7 @@ type LoadBalancingConfigObservation struct {
 	// Load balancing mode for the backend. Possible values: "ROUND_ROBIN", "RANDOM", "LEAST_REQUEST", "MAGLEV_HASH".
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
+	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
 	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
 
 	// If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
@@ -891,7 +891,7 @@ type LoadBalancingConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
+	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
 	// +kubebuilder:validation:Optional
 	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
 
@@ -1110,7 +1110,7 @@ type StreamBackendHealthcheckStreamHealthcheckInitParameters struct {
 	// Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
 	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
 
-	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
+	// Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
 
@@ -1119,7 +1119,7 @@ type StreamBackendHealthcheckStreamHealthcheckObservation struct {
 	// Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
 	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
 
-	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
+	// Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
 
@@ -1129,7 +1129,7 @@ type StreamBackendHealthcheckStreamHealthcheckParameters struct {
 	// +kubebuilder:validation:Optional
 	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
 
-	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
+	// Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
 	// +kubebuilder:validation:Optional
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
@@ -1176,7 +1176,7 @@ type StreamBackendLoadBalancingConfigInitParameters struct {
 	// Load balancing mode for the backend. Possible values: "ROUND_ROBIN", "RANDOM", "LEAST_REQUEST", "MAGLEV_HASH".
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
+	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
 	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
 
 	// If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
@@ -1191,7 +1191,7 @@ type StreamBackendLoadBalancingConfigObservation struct {
 	// Load balancing mode for the backend. Possible values: "ROUND_ROBIN", "RANDOM", "LEAST_REQUEST", "MAGLEV_HASH".
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
+	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
 	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
 
 	// If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
@@ -1208,7 +1208,7 @@ type StreamBackendLoadBalancingConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading  when everything is bad. Zero means no panic threshold.
+	// If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
 	// +kubebuilder:validation:Optional
 	PanicThreshold *float64 `json:"panicThreshold,omitempty" tf:"panic_threshold,omitempty"`
 
@@ -1345,7 +1345,7 @@ type StreamHealthcheckInitParameters struct {
 	// Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
 	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
 
-	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
+	// Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
 
@@ -1354,7 +1354,7 @@ type StreamHealthcheckObservation struct {
 	// Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
 	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
 
-	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
+	// Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }
 
@@ -1364,7 +1364,7 @@ type StreamHealthcheckParameters struct {
 	// +kubebuilder:validation:Optional
 	Receive *string `json:"receive,omitempty" tf:"receive,omitempty"`
 
-	// Message sent to targets during TCP data transfer.  If not specified, no data is sent to the target.
+	// Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
 	// +kubebuilder:validation:Optional
 	Send *string `json:"send,omitempty" tf:"send,omitempty"`
 }

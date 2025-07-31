@@ -130,6 +130,12 @@ type ClickhouseClusterInitParameters struct {
 	// Access policy to the ClickHouse cluster. The structure is documented below.
 	Access []AccessInitParameters `json:"access,omitempty" tf:"access,omitempty"`
 
+	// A password used to authorize as user admin when sql_user_management enabled.
+	AdminPasswordSecretRef *v1.SecretKeySelector `json:"adminPasswordSecretRef,omitempty" tf:"-"`
+
+	// The period in days during which backups are stored.
+	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
+
 	// Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	BackupWindowStart []BackupWindowStartInitParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
@@ -147,7 +153,7 @@ type ClickhouseClusterInitParameters struct {
 	// A database of the ClickHouse cluster. The structure is documented below.
 	Database []DatabaseInitParameters `json:"database,omitempty" tf:"database,omitempty"`
 
-	// Inhibits deletion of the cluster.  Can be either true or false.
+	// Inhibits deletion of the cluster. Can be either true or false.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// Description of the ClickHouse cluster.
@@ -159,8 +165,7 @@ type ClickhouseClusterInitParameters struct {
 	// Deployment environment of the ClickHouse cluster. Can be either PRESTABLE or PRODUCTION.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -244,6 +249,9 @@ type ClickhouseClusterObservation struct {
 	// Access policy to the ClickHouse cluster. The structure is documented below.
 	Access []AccessObservation `json:"access,omitempty" tf:"access,omitempty"`
 
+	// The period in days during which backups are stored.
+	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
+
 	// Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	BackupWindowStart []BackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
@@ -264,7 +272,7 @@ type ClickhouseClusterObservation struct {
 	// A database of the ClickHouse cluster. The structure is documented below.
 	Database []DatabaseObservation `json:"database,omitempty" tf:"database,omitempty"`
 
-	// Inhibits deletion of the cluster.  Can be either true or false.
+	// Inhibits deletion of the cluster. Can be either true or false.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// Description of the ClickHouse cluster.
@@ -276,15 +284,13 @@ type ClickhouseClusterObservation struct {
 	// Deployment environment of the ClickHouse cluster. Can be either PRESTABLE or PRODUCTION.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// A set of protobuf or capnproto format schemas. The structure is documented below.
 	FormatSchema []FormatSchemaObservation `json:"formatSchema,omitempty" tf:"format_schema,omitempty"`
 
-	// Aggregated health of the cluster. Can be ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN.
-	// For more information see health field of JSON representation in the official documentation.
+	// Aggregated health of the cluster. Can be ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
 	// A host of the ClickHouse cluster. The structure is documented below.
@@ -325,8 +331,7 @@ type ClickhouseClusterObservation struct {
 	// A group of clickhouse shards. The structure is documented below.
 	ShardGroup []ShardGroupObservation `json:"shardGroup,omitempty" tf:"shard_group,omitempty"`
 
-	// Status of the cluster. Can be CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
-	// For more information see status field of JSON representation in the official documentation.
+	// Status of the cluster. Can be CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
 	// A user of the ClickHouse cluster. The structure is documented below.
@@ -348,6 +353,10 @@ type ClickhouseClusterParameters struct {
 	// A password used to authorize as user admin when sql_user_management enabled.
 	// +kubebuilder:validation:Optional
 	AdminPasswordSecretRef *v1.SecretKeySelector `json:"adminPasswordSecretRef,omitempty" tf:"-"`
+
+	// The period in days during which backups are stored.
+	// +kubebuilder:validation:Optional
+	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
 
 	// Time to start the daily backup, in the UTC timezone. The structure is documented below.
 	// +kubebuilder:validation:Optional
@@ -372,7 +381,7 @@ type ClickhouseClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Database []DatabaseParameters `json:"database,omitempty" tf:"database,omitempty"`
 
-	// Inhibits deletion of the cluster.  Can be either true or false.
+	// Inhibits deletion of the cluster. Can be either true or false.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
@@ -388,8 +397,7 @@ type ClickhouseClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it
-	// is not provided, the default provider folder is used.
+	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -623,11 +631,31 @@ type CompressionParameters struct {
 }
 
 type ConfigInitParameters struct {
+	AsynchronousInsertLogEnabled *bool `json:"asynchronousInsertLogEnabled,omitempty" tf:"asynchronous_insert_log_enabled,omitempty"`
+
+	AsynchronousInsertLogRetentionSize *float64 `json:"asynchronousInsertLogRetentionSize,omitempty" tf:"asynchronous_insert_log_retention_size,omitempty"`
+
+	AsynchronousInsertLogRetentionTime *float64 `json:"asynchronousInsertLogRetentionTime,omitempty" tf:"asynchronous_insert_log_retention_time,omitempty"`
+
+	AsynchronousMetricLogEnabled *bool `json:"asynchronousMetricLogEnabled,omitempty" tf:"asynchronous_metric_log_enabled,omitempty"`
+
+	AsynchronousMetricLogRetentionSize *float64 `json:"asynchronousMetricLogRetentionSize,omitempty" tf:"asynchronous_metric_log_retention_size,omitempty"`
+
+	AsynchronousMetricLogRetentionTime *float64 `json:"asynchronousMetricLogRetentionTime,omitempty" tf:"asynchronous_metric_log_retention_time,omitempty"`
+
+	BackgroundBufferFlushSchedulePoolSize *float64 `json:"backgroundBufferFlushSchedulePoolSize,omitempty" tf:"background_buffer_flush_schedule_pool_size,omitempty"`
+
+	BackgroundCommonPoolSize *float64 `json:"backgroundCommonPoolSize,omitempty" tf:"background_common_pool_size,omitempty"`
+
+	BackgroundDistributedSchedulePoolSize *float64 `json:"backgroundDistributedSchedulePoolSize,omitempty" tf:"background_distributed_schedule_pool_size,omitempty"`
+
 	BackgroundFetchesPoolSize *float64 `json:"backgroundFetchesPoolSize,omitempty" tf:"background_fetches_pool_size,omitempty"`
 
 	BackgroundMergesMutationsConcurrencyRatio *float64 `json:"backgroundMergesMutationsConcurrencyRatio,omitempty" tf:"background_merges_mutations_concurrency_ratio,omitempty"`
 
 	BackgroundMessageBrokerSchedulePoolSize *float64 `json:"backgroundMessageBrokerSchedulePoolSize,omitempty" tf:"background_message_broker_schedule_pool_size,omitempty"`
+
+	BackgroundMovePoolSize *float64 `json:"backgroundMovePoolSize,omitempty" tf:"background_move_pool_size,omitempty"`
 
 	BackgroundPoolSize *float64 `json:"backgroundPoolSize,omitempty" tf:"background_pool_size,omitempty"`
 
@@ -638,6 +666,8 @@ type ConfigInitParameters struct {
 
 	// A database of the ClickHouse cluster. The structure is documented below.
 	DefaultDatabase *string `json:"defaultDatabase,omitempty" tf:"default_database,omitempty"`
+
+	DictionariesLazyLoad *bool `json:"dictionariesLazyLoad,omitempty" tf:"dictionaries_lazy_load,omitempty"`
 
 	GeobaseEnabled *bool `json:"geobaseEnabled,omitempty" tf:"geobase_enabled,omitempty"`
 
@@ -654,8 +684,7 @@ type ConfigInitParameters struct {
 
 	KeepAliveTimeout *float64 `json:"keepAliveTimeout,omitempty" tf:"keep_alive_timeout,omitempty"`
 
-	// ClickHouse server parameters. For more information, see
-	// the official documentation.
+	// ClickHouse server parameters. For more information, see the official documentation.
 	LogLevel *string `json:"logLevel,omitempty" tf:"log_level,omitempty"`
 
 	MarkCacheSize *float64 `json:"markCacheSize,omitempty" tf:"mark_cache_size,omitempty"`
@@ -677,13 +706,25 @@ type ConfigInitParameters struct {
 
 	MetricLogRetentionTime *float64 `json:"metricLogRetentionTime,omitempty" tf:"metric_log_retention_time,omitempty"`
 
+	OpentelemetrySpanLogEnabled *bool `json:"opentelemetrySpanLogEnabled,omitempty" tf:"opentelemetry_span_log_enabled,omitempty"`
+
+	OpentelemetrySpanLogRetentionSize *float64 `json:"opentelemetrySpanLogRetentionSize,omitempty" tf:"opentelemetry_span_log_retention_size,omitempty"`
+
+	OpentelemetrySpanLogRetentionTime *float64 `json:"opentelemetrySpanLogRetentionTime,omitempty" tf:"opentelemetry_span_log_retention_time,omitempty"`
+
 	PartLogRetentionSize *float64 `json:"partLogRetentionSize,omitempty" tf:"part_log_retention_size,omitempty"`
 
 	PartLogRetentionTime *float64 `json:"partLogRetentionTime,omitempty" tf:"part_log_retention_time,omitempty"`
 
+	// Query cache configuration. The structure is documented below.
+	QueryCache []QueryCacheInitParameters `json:"queryCache,omitempty" tf:"query_cache,omitempty"`
+
 	QueryLogRetentionSize *float64 `json:"queryLogRetentionSize,omitempty" tf:"query_log_retention_size,omitempty"`
 
 	QueryLogRetentionTime *float64 `json:"queryLogRetentionTime,omitempty" tf:"query_log_retention_time,omitempty"`
+
+	// Query masking rules configuration. The structure is documented below.
+	QueryMaskingRules []QueryMaskingRulesInitParameters `json:"queryMaskingRules,omitempty" tf:"query_masking_rules,omitempty"`
 
 	QueryThreadLogEnabled *bool `json:"queryThreadLogEnabled,omitempty" tf:"query_thread_log_enabled,omitempty"`
 
@@ -691,8 +732,20 @@ type ConfigInitParameters struct {
 
 	QueryThreadLogRetentionTime *float64 `json:"queryThreadLogRetentionTime,omitempty" tf:"query_thread_log_retention_time,omitempty"`
 
+	QueryViewsLogEnabled *bool `json:"queryViewsLogEnabled,omitempty" tf:"query_views_log_enabled,omitempty"`
+
+	QueryViewsLogRetentionSize *float64 `json:"queryViewsLogRetentionSize,omitempty" tf:"query_views_log_retention_size,omitempty"`
+
+	QueryViewsLogRetentionTime *float64 `json:"queryViewsLogRetentionTime,omitempty" tf:"query_views_log_retention_time,omitempty"`
+
 	// RabbitMQ connection configuration. The structure is documented below.
 	Rabbitmq []RabbitmqInitParameters `json:"rabbitmq,omitempty" tf:"rabbitmq,omitempty"`
+
+	SessionLogEnabled *bool `json:"sessionLogEnabled,omitempty" tf:"session_log_enabled,omitempty"`
+
+	SessionLogRetentionSize *float64 `json:"sessionLogRetentionSize,omitempty" tf:"session_log_retention_size,omitempty"`
+
+	SessionLogRetentionTime *float64 `json:"sessionLogRetentionTime,omitempty" tf:"session_log_retention_time,omitempty"`
 
 	TextLogEnabled *bool `json:"textLogEnabled,omitempty" tf:"text_log_enabled,omitempty"`
 
@@ -713,14 +766,40 @@ type ConfigInitParameters struct {
 	TraceLogRetentionTime *float64 `json:"traceLogRetentionTime,omitempty" tf:"trace_log_retention_time,omitempty"`
 
 	UncompressedCacheSize *float64 `json:"uncompressedCacheSize,omitempty" tf:"uncompressed_cache_size,omitempty"`
+
+	ZookeeperLogEnabled *bool `json:"zookeeperLogEnabled,omitempty" tf:"zookeeper_log_enabled,omitempty"`
+
+	ZookeeperLogRetentionSize *float64 `json:"zookeeperLogRetentionSize,omitempty" tf:"zookeeper_log_retention_size,omitempty"`
+
+	ZookeeperLogRetentionTime *float64 `json:"zookeeperLogRetentionTime,omitempty" tf:"zookeeper_log_retention_time,omitempty"`
 }
 
 type ConfigObservation struct {
+	AsynchronousInsertLogEnabled *bool `json:"asynchronousInsertLogEnabled,omitempty" tf:"asynchronous_insert_log_enabled,omitempty"`
+
+	AsynchronousInsertLogRetentionSize *float64 `json:"asynchronousInsertLogRetentionSize,omitempty" tf:"asynchronous_insert_log_retention_size,omitempty"`
+
+	AsynchronousInsertLogRetentionTime *float64 `json:"asynchronousInsertLogRetentionTime,omitempty" tf:"asynchronous_insert_log_retention_time,omitempty"`
+
+	AsynchronousMetricLogEnabled *bool `json:"asynchronousMetricLogEnabled,omitempty" tf:"asynchronous_metric_log_enabled,omitempty"`
+
+	AsynchronousMetricLogRetentionSize *float64 `json:"asynchronousMetricLogRetentionSize,omitempty" tf:"asynchronous_metric_log_retention_size,omitempty"`
+
+	AsynchronousMetricLogRetentionTime *float64 `json:"asynchronousMetricLogRetentionTime,omitempty" tf:"asynchronous_metric_log_retention_time,omitempty"`
+
+	BackgroundBufferFlushSchedulePoolSize *float64 `json:"backgroundBufferFlushSchedulePoolSize,omitempty" tf:"background_buffer_flush_schedule_pool_size,omitempty"`
+
+	BackgroundCommonPoolSize *float64 `json:"backgroundCommonPoolSize,omitempty" tf:"background_common_pool_size,omitempty"`
+
+	BackgroundDistributedSchedulePoolSize *float64 `json:"backgroundDistributedSchedulePoolSize,omitempty" tf:"background_distributed_schedule_pool_size,omitempty"`
+
 	BackgroundFetchesPoolSize *float64 `json:"backgroundFetchesPoolSize,omitempty" tf:"background_fetches_pool_size,omitempty"`
 
 	BackgroundMergesMutationsConcurrencyRatio *float64 `json:"backgroundMergesMutationsConcurrencyRatio,omitempty" tf:"background_merges_mutations_concurrency_ratio,omitempty"`
 
 	BackgroundMessageBrokerSchedulePoolSize *float64 `json:"backgroundMessageBrokerSchedulePoolSize,omitempty" tf:"background_message_broker_schedule_pool_size,omitempty"`
+
+	BackgroundMovePoolSize *float64 `json:"backgroundMovePoolSize,omitempty" tf:"background_move_pool_size,omitempty"`
 
 	BackgroundPoolSize *float64 `json:"backgroundPoolSize,omitempty" tf:"background_pool_size,omitempty"`
 
@@ -731,6 +810,8 @@ type ConfigObservation struct {
 
 	// A database of the ClickHouse cluster. The structure is documented below.
 	DefaultDatabase *string `json:"defaultDatabase,omitempty" tf:"default_database,omitempty"`
+
+	DictionariesLazyLoad *bool `json:"dictionariesLazyLoad,omitempty" tf:"dictionaries_lazy_load,omitempty"`
 
 	GeobaseEnabled *bool `json:"geobaseEnabled,omitempty" tf:"geobase_enabled,omitempty"`
 
@@ -747,8 +828,7 @@ type ConfigObservation struct {
 
 	KeepAliveTimeout *float64 `json:"keepAliveTimeout,omitempty" tf:"keep_alive_timeout,omitempty"`
 
-	// ClickHouse server parameters. For more information, see
-	// the official documentation.
+	// ClickHouse server parameters. For more information, see the official documentation.
 	LogLevel *string `json:"logLevel,omitempty" tf:"log_level,omitempty"`
 
 	MarkCacheSize *float64 `json:"markCacheSize,omitempty" tf:"mark_cache_size,omitempty"`
@@ -770,13 +850,25 @@ type ConfigObservation struct {
 
 	MetricLogRetentionTime *float64 `json:"metricLogRetentionTime,omitempty" tf:"metric_log_retention_time,omitempty"`
 
+	OpentelemetrySpanLogEnabled *bool `json:"opentelemetrySpanLogEnabled,omitempty" tf:"opentelemetry_span_log_enabled,omitempty"`
+
+	OpentelemetrySpanLogRetentionSize *float64 `json:"opentelemetrySpanLogRetentionSize,omitempty" tf:"opentelemetry_span_log_retention_size,omitempty"`
+
+	OpentelemetrySpanLogRetentionTime *float64 `json:"opentelemetrySpanLogRetentionTime,omitempty" tf:"opentelemetry_span_log_retention_time,omitempty"`
+
 	PartLogRetentionSize *float64 `json:"partLogRetentionSize,omitempty" tf:"part_log_retention_size,omitempty"`
 
 	PartLogRetentionTime *float64 `json:"partLogRetentionTime,omitempty" tf:"part_log_retention_time,omitempty"`
 
+	// Query cache configuration. The structure is documented below.
+	QueryCache []QueryCacheObservation `json:"queryCache,omitempty" tf:"query_cache,omitempty"`
+
 	QueryLogRetentionSize *float64 `json:"queryLogRetentionSize,omitempty" tf:"query_log_retention_size,omitempty"`
 
 	QueryLogRetentionTime *float64 `json:"queryLogRetentionTime,omitempty" tf:"query_log_retention_time,omitempty"`
+
+	// Query masking rules configuration. The structure is documented below.
+	QueryMaskingRules []QueryMaskingRulesObservation `json:"queryMaskingRules,omitempty" tf:"query_masking_rules,omitempty"`
 
 	QueryThreadLogEnabled *bool `json:"queryThreadLogEnabled,omitempty" tf:"query_thread_log_enabled,omitempty"`
 
@@ -784,8 +876,20 @@ type ConfigObservation struct {
 
 	QueryThreadLogRetentionTime *float64 `json:"queryThreadLogRetentionTime,omitempty" tf:"query_thread_log_retention_time,omitempty"`
 
+	QueryViewsLogEnabled *bool `json:"queryViewsLogEnabled,omitempty" tf:"query_views_log_enabled,omitempty"`
+
+	QueryViewsLogRetentionSize *float64 `json:"queryViewsLogRetentionSize,omitempty" tf:"query_views_log_retention_size,omitempty"`
+
+	QueryViewsLogRetentionTime *float64 `json:"queryViewsLogRetentionTime,omitempty" tf:"query_views_log_retention_time,omitempty"`
+
 	// RabbitMQ connection configuration. The structure is documented below.
 	Rabbitmq []RabbitmqObservation `json:"rabbitmq,omitempty" tf:"rabbitmq,omitempty"`
+
+	SessionLogEnabled *bool `json:"sessionLogEnabled,omitempty" tf:"session_log_enabled,omitempty"`
+
+	SessionLogRetentionSize *float64 `json:"sessionLogRetentionSize,omitempty" tf:"session_log_retention_size,omitempty"`
+
+	SessionLogRetentionTime *float64 `json:"sessionLogRetentionTime,omitempty" tf:"session_log_retention_time,omitempty"`
 
 	TextLogEnabled *bool `json:"textLogEnabled,omitempty" tf:"text_log_enabled,omitempty"`
 
@@ -806,9 +910,42 @@ type ConfigObservation struct {
 	TraceLogRetentionTime *float64 `json:"traceLogRetentionTime,omitempty" tf:"trace_log_retention_time,omitempty"`
 
 	UncompressedCacheSize *float64 `json:"uncompressedCacheSize,omitempty" tf:"uncompressed_cache_size,omitempty"`
+
+	ZookeeperLogEnabled *bool `json:"zookeeperLogEnabled,omitempty" tf:"zookeeper_log_enabled,omitempty"`
+
+	ZookeeperLogRetentionSize *float64 `json:"zookeeperLogRetentionSize,omitempty" tf:"zookeeper_log_retention_size,omitempty"`
+
+	ZookeeperLogRetentionTime *float64 `json:"zookeeperLogRetentionTime,omitempty" tf:"zookeeper_log_retention_time,omitempty"`
 }
 
 type ConfigParameters struct {
+
+	// +kubebuilder:validation:Optional
+	AsynchronousInsertLogEnabled *bool `json:"asynchronousInsertLogEnabled,omitempty" tf:"asynchronous_insert_log_enabled,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	AsynchronousInsertLogRetentionSize *float64 `json:"asynchronousInsertLogRetentionSize,omitempty" tf:"asynchronous_insert_log_retention_size,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	AsynchronousInsertLogRetentionTime *float64 `json:"asynchronousInsertLogRetentionTime,omitempty" tf:"asynchronous_insert_log_retention_time,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	AsynchronousMetricLogEnabled *bool `json:"asynchronousMetricLogEnabled,omitempty" tf:"asynchronous_metric_log_enabled,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	AsynchronousMetricLogRetentionSize *float64 `json:"asynchronousMetricLogRetentionSize,omitempty" tf:"asynchronous_metric_log_retention_size,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	AsynchronousMetricLogRetentionTime *float64 `json:"asynchronousMetricLogRetentionTime,omitempty" tf:"asynchronous_metric_log_retention_time,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	BackgroundBufferFlushSchedulePoolSize *float64 `json:"backgroundBufferFlushSchedulePoolSize,omitempty" tf:"background_buffer_flush_schedule_pool_size,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	BackgroundCommonPoolSize *float64 `json:"backgroundCommonPoolSize,omitempty" tf:"background_common_pool_size,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	BackgroundDistributedSchedulePoolSize *float64 `json:"backgroundDistributedSchedulePoolSize,omitempty" tf:"background_distributed_schedule_pool_size,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	BackgroundFetchesPoolSize *float64 `json:"backgroundFetchesPoolSize,omitempty" tf:"background_fetches_pool_size,omitempty"`
@@ -818,6 +955,9 @@ type ConfigParameters struct {
 
 	// +kubebuilder:validation:Optional
 	BackgroundMessageBrokerSchedulePoolSize *float64 `json:"backgroundMessageBrokerSchedulePoolSize,omitempty" tf:"background_message_broker_schedule_pool_size,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	BackgroundMovePoolSize *float64 `json:"backgroundMovePoolSize,omitempty" tf:"background_move_pool_size,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	BackgroundPoolSize *float64 `json:"backgroundPoolSize,omitempty" tf:"background_pool_size,omitempty"`
@@ -832,6 +972,9 @@ type ConfigParameters struct {
 	// A database of the ClickHouse cluster. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	DefaultDatabase *string `json:"defaultDatabase,omitempty" tf:"default_database,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	DictionariesLazyLoad *bool `json:"dictionariesLazyLoad,omitempty" tf:"dictionaries_lazy_load,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	GeobaseEnabled *bool `json:"geobaseEnabled,omitempty" tf:"geobase_enabled,omitempty"`
@@ -854,8 +997,7 @@ type ConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	KeepAliveTimeout *float64 `json:"keepAliveTimeout,omitempty" tf:"keep_alive_timeout,omitempty"`
 
-	// ClickHouse server parameters. For more information, see
-	// the official documentation.
+	// ClickHouse server parameters. For more information, see the official documentation.
 	// +kubebuilder:validation:Optional
 	LogLevel *string `json:"logLevel,omitempty" tf:"log_level,omitempty"`
 
@@ -888,16 +1030,33 @@ type ConfigParameters struct {
 	MetricLogRetentionTime *float64 `json:"metricLogRetentionTime,omitempty" tf:"metric_log_retention_time,omitempty"`
 
 	// +kubebuilder:validation:Optional
+	OpentelemetrySpanLogEnabled *bool `json:"opentelemetrySpanLogEnabled,omitempty" tf:"opentelemetry_span_log_enabled,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	OpentelemetrySpanLogRetentionSize *float64 `json:"opentelemetrySpanLogRetentionSize,omitempty" tf:"opentelemetry_span_log_retention_size,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	OpentelemetrySpanLogRetentionTime *float64 `json:"opentelemetrySpanLogRetentionTime,omitempty" tf:"opentelemetry_span_log_retention_time,omitempty"`
+
+	// +kubebuilder:validation:Optional
 	PartLogRetentionSize *float64 `json:"partLogRetentionSize,omitempty" tf:"part_log_retention_size,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	PartLogRetentionTime *float64 `json:"partLogRetentionTime,omitempty" tf:"part_log_retention_time,omitempty"`
+
+	// Query cache configuration. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	QueryCache []QueryCacheParameters `json:"queryCache,omitempty" tf:"query_cache,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	QueryLogRetentionSize *float64 `json:"queryLogRetentionSize,omitempty" tf:"query_log_retention_size,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	QueryLogRetentionTime *float64 `json:"queryLogRetentionTime,omitempty" tf:"query_log_retention_time,omitempty"`
+
+	// Query masking rules configuration. The structure is documented below.
+	// +kubebuilder:validation:Optional
+	QueryMaskingRules []QueryMaskingRulesParameters `json:"queryMaskingRules,omitempty" tf:"query_masking_rules,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	QueryThreadLogEnabled *bool `json:"queryThreadLogEnabled,omitempty" tf:"query_thread_log_enabled,omitempty"`
@@ -908,9 +1067,27 @@ type ConfigParameters struct {
 	// +kubebuilder:validation:Optional
 	QueryThreadLogRetentionTime *float64 `json:"queryThreadLogRetentionTime,omitempty" tf:"query_thread_log_retention_time,omitempty"`
 
+	// +kubebuilder:validation:Optional
+	QueryViewsLogEnabled *bool `json:"queryViewsLogEnabled,omitempty" tf:"query_views_log_enabled,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	QueryViewsLogRetentionSize *float64 `json:"queryViewsLogRetentionSize,omitempty" tf:"query_views_log_retention_size,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	QueryViewsLogRetentionTime *float64 `json:"queryViewsLogRetentionTime,omitempty" tf:"query_views_log_retention_time,omitempty"`
+
 	// RabbitMQ connection configuration. The structure is documented below.
 	// +kubebuilder:validation:Optional
 	Rabbitmq []RabbitmqParameters `json:"rabbitmq,omitempty" tf:"rabbitmq,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SessionLogEnabled *bool `json:"sessionLogEnabled,omitempty" tf:"session_log_enabled,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SessionLogRetentionSize *float64 `json:"sessionLogRetentionSize,omitempty" tf:"session_log_retention_size,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SessionLogRetentionTime *float64 `json:"sessionLogRetentionTime,omitempty" tf:"session_log_retention_time,omitempty"`
 
 	// +kubebuilder:validation:Optional
 	TextLogEnabled *bool `json:"textLogEnabled,omitempty" tf:"text_log_enabled,omitempty"`
@@ -941,6 +1118,15 @@ type ConfigParameters struct {
 
 	// +kubebuilder:validation:Optional
 	UncompressedCacheSize *float64 `json:"uncompressedCacheSize,omitempty" tf:"uncompressed_cache_size,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ZookeeperLogEnabled *bool `json:"zookeeperLogEnabled,omitempty" tf:"zookeeper_log_enabled,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ZookeeperLogRetentionSize *float64 `json:"zookeeperLogRetentionSize,omitempty" tf:"zookeeper_log_retention_size,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	ZookeeperLogRetentionTime *float64 `json:"zookeeperLogRetentionTime,omitempty" tf:"zookeeper_log_retention_time,omitempty"`
 }
 
 type DatabaseInitParameters struct {
@@ -1006,8 +1192,20 @@ type GraphiteRollupInitParameters struct {
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The name of the column storing the metric name (Graphite sensor). Default value: Path.
+	PathColumnName *string `json:"pathColumnName,omitempty" tf:"path_column_name,omitempty"`
+
 	// Set of thinning rules.
 	Pattern []PatternInitParameters `json:"pattern,omitempty" tf:"pattern,omitempty"`
+
+	// The name of the column storing the time of measuring the metric. Default value: Time.
+	TimeColumnName *string `json:"timeColumnName,omitempty" tf:"time_column_name,omitempty"`
+
+	// The name of the column storing the value of the metric at the time set in time_column_name. Default value: Value.
+	ValueColumnName *string `json:"valueColumnName,omitempty" tf:"value_column_name,omitempty"`
+
+	// The name of the column storing the version of the metric. Default value: Timestamp.
+	VersionColumnName *string `json:"versionColumnName,omitempty" tf:"version_column_name,omitempty"`
 }
 
 type GraphiteRollupObservation struct {
@@ -1015,8 +1213,20 @@ type GraphiteRollupObservation struct {
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The name of the column storing the metric name (Graphite sensor). Default value: Path.
+	PathColumnName *string `json:"pathColumnName,omitempty" tf:"path_column_name,omitempty"`
+
 	// Set of thinning rules.
 	Pattern []PatternObservation `json:"pattern,omitempty" tf:"pattern,omitempty"`
+
+	// The name of the column storing the time of measuring the metric. Default value: Time.
+	TimeColumnName *string `json:"timeColumnName,omitempty" tf:"time_column_name,omitempty"`
+
+	// The name of the column storing the value of the metric at the time set in time_column_name. Default value: Value.
+	ValueColumnName *string `json:"valueColumnName,omitempty" tf:"value_column_name,omitempty"`
+
+	// The name of the column storing the version of the metric. Default value: Timestamp.
+	VersionColumnName *string `json:"versionColumnName,omitempty" tf:"version_column_name,omitempty"`
 }
 
 type GraphiteRollupParameters struct {
@@ -1025,9 +1235,25 @@ type GraphiteRollupParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// The name of the column storing the metric name (Graphite sensor). Default value: Path.
+	// +kubebuilder:validation:Optional
+	PathColumnName *string `json:"pathColumnName,omitempty" tf:"path_column_name,omitempty"`
+
 	// Set of thinning rules.
 	// +kubebuilder:validation:Optional
 	Pattern []PatternParameters `json:"pattern,omitempty" tf:"pattern,omitempty"`
+
+	// The name of the column storing the time of measuring the metric. Default value: Time.
+	// +kubebuilder:validation:Optional
+	TimeColumnName *string `json:"timeColumnName,omitempty" tf:"time_column_name,omitempty"`
+
+	// The name of the column storing the value of the metric at the time set in time_column_name. Default value: Value.
+	// +kubebuilder:validation:Optional
+	ValueColumnName *string `json:"valueColumnName,omitempty" tf:"value_column_name,omitempty"`
+
+	// The name of the column storing the version of the metric. Default value: Timestamp.
+	// +kubebuilder:validation:Optional
+	VersionColumnName *string `json:"versionColumnName,omitempty" tf:"version_column_name,omitempty"`
 }
 
 type HostInitParameters struct {
@@ -1053,8 +1279,7 @@ type HostInitParameters struct {
 	// The type of the host to be deployed. Can be either CLICKHOUSE or ZOOKEEPER.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// The availability zone where the ClickHouse host will be created.
-	// For more information see the official documentation.
+	// The availability zone where the ClickHouse host will be created. For more information see the official documentation.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
@@ -1075,8 +1300,7 @@ type HostObservation struct {
 	// The type of the host to be deployed. Can be either CLICKHOUSE or ZOOKEEPER.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// The availability zone where the ClickHouse host will be created.
-	// For more information see the official documentation.
+	// The availability zone where the ClickHouse host will be created. For more information see the official documentation.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
@@ -1107,13 +1331,18 @@ type HostParameters struct {
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
-	// The availability zone where the ClickHouse host will be created.
-	// For more information see the official documentation.
+	// The availability zone where the ClickHouse host will be created. For more information see the official documentation.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone" tf:"zone,omitempty"`
 }
 
 type KafkaInitParameters struct {
+
+	// Action to take when there is no initial offset in offset store or the desired offset is out of range: 'smallest','earliest' - automatically reset the offset to the smallest offset, 'largest','latest' - automatically reset the offset to the largest offset, 'error' - trigger an error (ERR__AUTO_OFFSET_RESET) which is retrieved by consuming messages and checking 'message->err'.
+	AutoOffsetReset *string `json:"autoOffsetReset,omitempty" tf:"auto_offset_reset,omitempty"`
+
+	// A comma-separated list of debug contexts to enable.
+	Debug *string `json:"debug,omitempty" tf:"debug,omitempty"`
 
 	// enable verification of SSL certificates.
 	EnableSSLCertificateVerification *bool `json:"enableSslCertificateVerification,omitempty" tf:"enable_ssl_certificate_verification,omitempty"`
@@ -1123,6 +1352,9 @@ type KafkaInitParameters struct {
 
 	// SASL mechanism used in kafka authentication.
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
+
+	// User password on kafka server.
+	SaslPasswordSecretRef *v1.SecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
 
 	// Username on kafka server.
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
@@ -1135,6 +1367,12 @@ type KafkaInitParameters struct {
 }
 
 type KafkaObservation struct {
+
+	// Action to take when there is no initial offset in offset store or the desired offset is out of range: 'smallest','earliest' - automatically reset the offset to the smallest offset, 'largest','latest' - automatically reset the offset to the largest offset, 'error' - trigger an error (ERR__AUTO_OFFSET_RESET) which is retrieved by consuming messages and checking 'message->err'.
+	AutoOffsetReset *string `json:"autoOffsetReset,omitempty" tf:"auto_offset_reset,omitempty"`
+
+	// A comma-separated list of debug contexts to enable.
+	Debug *string `json:"debug,omitempty" tf:"debug,omitempty"`
 
 	// enable verification of SSL certificates.
 	EnableSSLCertificateVerification *bool `json:"enableSslCertificateVerification,omitempty" tf:"enable_ssl_certificate_verification,omitempty"`
@@ -1156,6 +1394,14 @@ type KafkaObservation struct {
 }
 
 type KafkaParameters struct {
+
+	// Action to take when there is no initial offset in offset store or the desired offset is out of range: 'smallest','earliest' - automatically reset the offset to the smallest offset, 'largest','latest' - automatically reset the offset to the largest offset, 'error' - trigger an error (ERR__AUTO_OFFSET_RESET) which is retrieved by consuming messages and checking 'message->err'.
+	// +kubebuilder:validation:Optional
+	AutoOffsetReset *string `json:"autoOffsetReset,omitempty" tf:"auto_offset_reset,omitempty"`
+
+	// A comma-separated list of debug contexts to enable.
+	// +kubebuilder:validation:Optional
+	Debug *string `json:"debug,omitempty" tf:"debug,omitempty"`
 
 	// enable verification of SSL certificates.
 	// +kubebuilder:validation:Optional
@@ -1295,14 +1541,35 @@ type MaintenanceWindowParameters struct {
 
 type MergeTreeInitParameters struct {
 
+	// When this setting has a value greater than zero only a single replica starts the merge immediately if merged part on shared storage and allow_remote_fs_zero_copy_replication is enabled.
+	AllowRemoteFsZeroCopyReplication *bool `json:"allowRemoteFsZeroCopyReplication,omitempty" tf:"allow_remote_fs_zero_copy_replication,omitempty"`
+
+	// Enables the check at table creation, that the data type of a column for sampling or sampling expression is correct. The data type must be one of unsigned integer types: UInt8, UInt16, UInt32, UInt64. Default value: true.
+	CheckSampleColumnIsCorrect *bool `json:"checkSampleColumnIsCorrect,omitempty" tf:"check_sample_column_is_correct,omitempty"`
+
 	// Minimum period to clean old queue logs, blocks hashes and parts.
 	CleanupDelayPeriod *float64 `json:"cleanupDelayPeriod,omitempty" tf:"cleanup_delay_period,omitempty"`
+
+	// If the number of inactive parts in a single partition in the table at least that many the inactive_parts_to_delay_insert value, an INSERT artificially slows down. It is useful when a server fails to clean up parts quickly enough.
+	InactivePartsToDelayInsert *float64 `json:"inactivePartsToDelayInsert,omitempty" tf:"inactive_parts_to_delay_insert,omitempty"`
+
+	// If the number of inactive parts in a single partition more than the inactive_parts_to_throw_insert value, INSERT is interrupted with the "Too many inactive parts (N). Parts cleaning are processing significantly slower than inserts" exception.
+	InactivePartsToThrowInsert *float64 `json:"inactivePartsToThrowInsert,omitempty" tf:"inactive_parts_to_throw_insert,omitempty"`
 
 	// The too many parts check according to parts_to_delay_insert and parts_to_throw_insert will be active only if the average part size (in the relevant partition) is not larger than the specified threshold. If it is larger than the specified threshold, the INSERTs will be neither delayed or rejected. This allows to have hundreds of terabytes in a single table on a single server if the parts are successfully merged to larger parts. This does not affect the thresholds on inactive parts or total parts.
 	MaxAvgPartSizeForTooManyParts *float64 `json:"maxAvgPartSizeForTooManyParts,omitempty" tf:"max_avg_part_size_for_too_many_parts,omitempty"`
 
+	// The maximum total parts size (in bytes) to be merged into one part, if there are enough resources available. max_bytes_to_merge_at_max_space_in_pool -- roughly corresponds to the maximum possible part size created by an automatic background merge.
+	MaxBytesToMergeAtMaxSpaceInPool *float64 `json:"maxBytesToMergeAtMaxSpaceInPool,omitempty" tf:"max_bytes_to_merge_at_max_space_in_pool,omitempty"`
+
 	// Max bytes to merge at min space in pool: Maximum total size of a data part to merge when the number of free threads in the background pool is minimum.
 	MaxBytesToMergeAtMinSpaceInPool *float64 `json:"maxBytesToMergeAtMinSpaceInPool,omitempty" tf:"max_bytes_to_merge_at_min_space_in_pool,omitempty"`
+
+	// Maximum period to clean old queue logs, blocks hashes and parts. Default value: 300 seconds.
+	MaxCleanupDelayPeriod *float64 `json:"maxCleanupDelayPeriod,omitempty" tf:"max_cleanup_delay_period,omitempty"`
+
+	// Maximum sleep time for merge selecting, a lower setting will trigger selecting tasks in background_schedule_pool frequently which result in large amount of requests to zookeeper in large-scale clusters. Default value: 60000 milliseconds (60 seconds).
+	MaxMergeSelectingSleepMs *float64 `json:"maxMergeSelectingSleepMs,omitempty" tf:"max_merge_selecting_sleep_ms,omitempty"`
 
 	// When there is more than specified number of merges with TTL entries in pool, do not assign new merge with TTL.
 	MaxNumberOfMergesWithTTLInPool *float64 `json:"maxNumberOfMergesWithTtlInPool,omitempty" tf:"max_number_of_merges_with_ttl_in_pool,omitempty"`
@@ -1312,6 +1579,9 @@ type MergeTreeInitParameters struct {
 
 	// Max replicated merges in queue: Maximum number of merge tasks that can be in the ReplicatedMergeTree queue at the same time.
 	MaxReplicatedMergesInQueue *float64 `json:"maxReplicatedMergesInQueue,omitempty" tf:"max_replicated_merges_in_queue,omitempty"`
+
+	// The number of rows that are read from the merged parts into memory. Default value: 8192.
+	MergeMaxBlockSize *float64 `json:"mergeMaxBlockSize,omitempty" tf:"merge_max_block_size,omitempty"`
 
 	// Sleep time for merge selecting when no part is selected. A lower setting triggers selecting tasks in background_schedule_pool frequently, which results in a large number of requests to ClickHouse Keeper in large-scale clusters.
 	MergeSelectingSleepMs *float64 `json:"mergeSelectingSleepMs,omitempty" tf:"merge_selecting_sleep_ms,omitempty"`
@@ -1334,6 +1604,9 @@ type MergeTreeInitParameters struct {
 	// Minimum number of rows in a data part that can be stored in Wide format. You can set one, both or none of these settings.
 	MinRowsForWidePart *float64 `json:"minRowsForWidePart,omitempty" tf:"min_rows_for_wide_part,omitempty"`
 
+	// When there is less than specified number of free entries in pool, do not execute part mutations. This is to leave free threads for regular merges and avoid "Too many parts". Default value: 20.
+	NumberOfFreeEntriesInPoolToExecuteMutation *float64 `json:"numberOfFreeEntriesInPoolToExecuteMutation,omitempty" tf:"number_of_free_entries_in_pool_to_execute_mutation,omitempty"`
+
 	// Number of free entries in pool to lower max size of merge: Threshold value of free entries in the pool. If the number of entries in the pool falls below this value, ClickHouse reduces the maximum size of a data part to merge. This helps handle small merges faster, rather than filling the pool with lengthy merges.
 	NumberOfFreeEntriesInPoolToLowerMaxSizeOfMerge *float64 `json:"numberOfFreeEntriesInPoolToLowerMaxSizeOfMerge,omitempty" tf:"number_of_free_entries_in_pool_to_lower_max_size_of_merge,omitempty"`
 
@@ -1349,20 +1622,41 @@ type MergeTreeInitParameters struct {
 	// Replicated deduplication window seconds: Time during which ZooKeeper stores the hash blocks (the old ones wil be deleted).
 	ReplicatedDeduplicationWindowSeconds *float64 `json:"replicatedDeduplicationWindowSeconds,omitempty" tf:"replicated_deduplication_window_seconds,omitempty"`
 
-	// Enables or disables complete dropping of data parts where all rows are expired in MergeTree tables.
+	// Enables zero-copy replication when a replica is located on a remote filesystem.
 	TTLOnlyDropParts *bool `json:"ttlOnlyDropParts,omitempty" tf:"ttl_only_drop_parts,omitempty"`
 }
 
 type MergeTreeObservation struct {
 
+	// When this setting has a value greater than zero only a single replica starts the merge immediately if merged part on shared storage and allow_remote_fs_zero_copy_replication is enabled.
+	AllowRemoteFsZeroCopyReplication *bool `json:"allowRemoteFsZeroCopyReplication,omitempty" tf:"allow_remote_fs_zero_copy_replication,omitempty"`
+
+	// Enables the check at table creation, that the data type of a column for sampling or sampling expression is correct. The data type must be one of unsigned integer types: UInt8, UInt16, UInt32, UInt64. Default value: true.
+	CheckSampleColumnIsCorrect *bool `json:"checkSampleColumnIsCorrect,omitempty" tf:"check_sample_column_is_correct,omitempty"`
+
 	// Minimum period to clean old queue logs, blocks hashes and parts.
 	CleanupDelayPeriod *float64 `json:"cleanupDelayPeriod,omitempty" tf:"cleanup_delay_period,omitempty"`
+
+	// If the number of inactive parts in a single partition in the table at least that many the inactive_parts_to_delay_insert value, an INSERT artificially slows down. It is useful when a server fails to clean up parts quickly enough.
+	InactivePartsToDelayInsert *float64 `json:"inactivePartsToDelayInsert,omitempty" tf:"inactive_parts_to_delay_insert,omitempty"`
+
+	// If the number of inactive parts in a single partition more than the inactive_parts_to_throw_insert value, INSERT is interrupted with the "Too many inactive parts (N). Parts cleaning are processing significantly slower than inserts" exception.
+	InactivePartsToThrowInsert *float64 `json:"inactivePartsToThrowInsert,omitempty" tf:"inactive_parts_to_throw_insert,omitempty"`
 
 	// The too many parts check according to parts_to_delay_insert and parts_to_throw_insert will be active only if the average part size (in the relevant partition) is not larger than the specified threshold. If it is larger than the specified threshold, the INSERTs will be neither delayed or rejected. This allows to have hundreds of terabytes in a single table on a single server if the parts are successfully merged to larger parts. This does not affect the thresholds on inactive parts or total parts.
 	MaxAvgPartSizeForTooManyParts *float64 `json:"maxAvgPartSizeForTooManyParts,omitempty" tf:"max_avg_part_size_for_too_many_parts,omitempty"`
 
+	// The maximum total parts size (in bytes) to be merged into one part, if there are enough resources available. max_bytes_to_merge_at_max_space_in_pool -- roughly corresponds to the maximum possible part size created by an automatic background merge.
+	MaxBytesToMergeAtMaxSpaceInPool *float64 `json:"maxBytesToMergeAtMaxSpaceInPool,omitempty" tf:"max_bytes_to_merge_at_max_space_in_pool,omitempty"`
+
 	// Max bytes to merge at min space in pool: Maximum total size of a data part to merge when the number of free threads in the background pool is minimum.
 	MaxBytesToMergeAtMinSpaceInPool *float64 `json:"maxBytesToMergeAtMinSpaceInPool,omitempty" tf:"max_bytes_to_merge_at_min_space_in_pool,omitempty"`
+
+	// Maximum period to clean old queue logs, blocks hashes and parts. Default value: 300 seconds.
+	MaxCleanupDelayPeriod *float64 `json:"maxCleanupDelayPeriod,omitempty" tf:"max_cleanup_delay_period,omitempty"`
+
+	// Maximum sleep time for merge selecting, a lower setting will trigger selecting tasks in background_schedule_pool frequently which result in large amount of requests to zookeeper in large-scale clusters. Default value: 60000 milliseconds (60 seconds).
+	MaxMergeSelectingSleepMs *float64 `json:"maxMergeSelectingSleepMs,omitempty" tf:"max_merge_selecting_sleep_ms,omitempty"`
 
 	// When there is more than specified number of merges with TTL entries in pool, do not assign new merge with TTL.
 	MaxNumberOfMergesWithTTLInPool *float64 `json:"maxNumberOfMergesWithTtlInPool,omitempty" tf:"max_number_of_merges_with_ttl_in_pool,omitempty"`
@@ -1372,6 +1666,9 @@ type MergeTreeObservation struct {
 
 	// Max replicated merges in queue: Maximum number of merge tasks that can be in the ReplicatedMergeTree queue at the same time.
 	MaxReplicatedMergesInQueue *float64 `json:"maxReplicatedMergesInQueue,omitempty" tf:"max_replicated_merges_in_queue,omitempty"`
+
+	// The number of rows that are read from the merged parts into memory. Default value: 8192.
+	MergeMaxBlockSize *float64 `json:"mergeMaxBlockSize,omitempty" tf:"merge_max_block_size,omitempty"`
 
 	// Sleep time for merge selecting when no part is selected. A lower setting triggers selecting tasks in background_schedule_pool frequently, which results in a large number of requests to ClickHouse Keeper in large-scale clusters.
 	MergeSelectingSleepMs *float64 `json:"mergeSelectingSleepMs,omitempty" tf:"merge_selecting_sleep_ms,omitempty"`
@@ -1394,6 +1691,9 @@ type MergeTreeObservation struct {
 	// Minimum number of rows in a data part that can be stored in Wide format. You can set one, both or none of these settings.
 	MinRowsForWidePart *float64 `json:"minRowsForWidePart,omitempty" tf:"min_rows_for_wide_part,omitempty"`
 
+	// When there is less than specified number of free entries in pool, do not execute part mutations. This is to leave free threads for regular merges and avoid "Too many parts". Default value: 20.
+	NumberOfFreeEntriesInPoolToExecuteMutation *float64 `json:"numberOfFreeEntriesInPoolToExecuteMutation,omitempty" tf:"number_of_free_entries_in_pool_to_execute_mutation,omitempty"`
+
 	// Number of free entries in pool to lower max size of merge: Threshold value of free entries in the pool. If the number of entries in the pool falls below this value, ClickHouse reduces the maximum size of a data part to merge. This helps handle small merges faster, rather than filling the pool with lengthy merges.
 	NumberOfFreeEntriesInPoolToLowerMaxSizeOfMerge *float64 `json:"numberOfFreeEntriesInPoolToLowerMaxSizeOfMerge,omitempty" tf:"number_of_free_entries_in_pool_to_lower_max_size_of_merge,omitempty"`
 
@@ -1409,23 +1709,51 @@ type MergeTreeObservation struct {
 	// Replicated deduplication window seconds: Time during which ZooKeeper stores the hash blocks (the old ones wil be deleted).
 	ReplicatedDeduplicationWindowSeconds *float64 `json:"replicatedDeduplicationWindowSeconds,omitempty" tf:"replicated_deduplication_window_seconds,omitempty"`
 
-	// Enables or disables complete dropping of data parts where all rows are expired in MergeTree tables.
+	// Enables zero-copy replication when a replica is located on a remote filesystem.
 	TTLOnlyDropParts *bool `json:"ttlOnlyDropParts,omitempty" tf:"ttl_only_drop_parts,omitempty"`
 }
 
 type MergeTreeParameters struct {
 
+	// When this setting has a value greater than zero only a single replica starts the merge immediately if merged part on shared storage and allow_remote_fs_zero_copy_replication is enabled.
+	// +kubebuilder:validation:Optional
+	AllowRemoteFsZeroCopyReplication *bool `json:"allowRemoteFsZeroCopyReplication,omitempty" tf:"allow_remote_fs_zero_copy_replication,omitempty"`
+
+	// Enables the check at table creation, that the data type of a column for sampling or sampling expression is correct. The data type must be one of unsigned integer types: UInt8, UInt16, UInt32, UInt64. Default value: true.
+	// +kubebuilder:validation:Optional
+	CheckSampleColumnIsCorrect *bool `json:"checkSampleColumnIsCorrect,omitempty" tf:"check_sample_column_is_correct,omitempty"`
+
 	// Minimum period to clean old queue logs, blocks hashes and parts.
 	// +kubebuilder:validation:Optional
 	CleanupDelayPeriod *float64 `json:"cleanupDelayPeriod,omitempty" tf:"cleanup_delay_period,omitempty"`
+
+	// If the number of inactive parts in a single partition in the table at least that many the inactive_parts_to_delay_insert value, an INSERT artificially slows down. It is useful when a server fails to clean up parts quickly enough.
+	// +kubebuilder:validation:Optional
+	InactivePartsToDelayInsert *float64 `json:"inactivePartsToDelayInsert,omitempty" tf:"inactive_parts_to_delay_insert,omitempty"`
+
+	// If the number of inactive parts in a single partition more than the inactive_parts_to_throw_insert value, INSERT is interrupted with the "Too many inactive parts (N). Parts cleaning are processing significantly slower than inserts" exception.
+	// +kubebuilder:validation:Optional
+	InactivePartsToThrowInsert *float64 `json:"inactivePartsToThrowInsert,omitempty" tf:"inactive_parts_to_throw_insert,omitempty"`
 
 	// The too many parts check according to parts_to_delay_insert and parts_to_throw_insert will be active only if the average part size (in the relevant partition) is not larger than the specified threshold. If it is larger than the specified threshold, the INSERTs will be neither delayed or rejected. This allows to have hundreds of terabytes in a single table on a single server if the parts are successfully merged to larger parts. This does not affect the thresholds on inactive parts or total parts.
 	// +kubebuilder:validation:Optional
 	MaxAvgPartSizeForTooManyParts *float64 `json:"maxAvgPartSizeForTooManyParts,omitempty" tf:"max_avg_part_size_for_too_many_parts,omitempty"`
 
+	// The maximum total parts size (in bytes) to be merged into one part, if there are enough resources available. max_bytes_to_merge_at_max_space_in_pool -- roughly corresponds to the maximum possible part size created by an automatic background merge.
+	// +kubebuilder:validation:Optional
+	MaxBytesToMergeAtMaxSpaceInPool *float64 `json:"maxBytesToMergeAtMaxSpaceInPool,omitempty" tf:"max_bytes_to_merge_at_max_space_in_pool,omitempty"`
+
 	// Max bytes to merge at min space in pool: Maximum total size of a data part to merge when the number of free threads in the background pool is minimum.
 	// +kubebuilder:validation:Optional
 	MaxBytesToMergeAtMinSpaceInPool *float64 `json:"maxBytesToMergeAtMinSpaceInPool,omitempty" tf:"max_bytes_to_merge_at_min_space_in_pool,omitempty"`
+
+	// Maximum period to clean old queue logs, blocks hashes and parts. Default value: 300 seconds.
+	// +kubebuilder:validation:Optional
+	MaxCleanupDelayPeriod *float64 `json:"maxCleanupDelayPeriod,omitempty" tf:"max_cleanup_delay_period,omitempty"`
+
+	// Maximum sleep time for merge selecting, a lower setting will trigger selecting tasks in background_schedule_pool frequently which result in large amount of requests to zookeeper in large-scale clusters. Default value: 60000 milliseconds (60 seconds).
+	// +kubebuilder:validation:Optional
+	MaxMergeSelectingSleepMs *float64 `json:"maxMergeSelectingSleepMs,omitempty" tf:"max_merge_selecting_sleep_ms,omitempty"`
 
 	// When there is more than specified number of merges with TTL entries in pool, do not assign new merge with TTL.
 	// +kubebuilder:validation:Optional
@@ -1438,6 +1766,10 @@ type MergeTreeParameters struct {
 	// Max replicated merges in queue: Maximum number of merge tasks that can be in the ReplicatedMergeTree queue at the same time.
 	// +kubebuilder:validation:Optional
 	MaxReplicatedMergesInQueue *float64 `json:"maxReplicatedMergesInQueue,omitempty" tf:"max_replicated_merges_in_queue,omitempty"`
+
+	// The number of rows that are read from the merged parts into memory. Default value: 8192.
+	// +kubebuilder:validation:Optional
+	MergeMaxBlockSize *float64 `json:"mergeMaxBlockSize,omitempty" tf:"merge_max_block_size,omitempty"`
 
 	// Sleep time for merge selecting when no part is selected. A lower setting triggers selecting tasks in background_schedule_pool frequently, which results in a large number of requests to ClickHouse Keeper in large-scale clusters.
 	// +kubebuilder:validation:Optional
@@ -1467,6 +1799,10 @@ type MergeTreeParameters struct {
 	// +kubebuilder:validation:Optional
 	MinRowsForWidePart *float64 `json:"minRowsForWidePart,omitempty" tf:"min_rows_for_wide_part,omitempty"`
 
+	// When there is less than specified number of free entries in pool, do not execute part mutations. This is to leave free threads for regular merges and avoid "Too many parts". Default value: 20.
+	// +kubebuilder:validation:Optional
+	NumberOfFreeEntriesInPoolToExecuteMutation *float64 `json:"numberOfFreeEntriesInPoolToExecuteMutation,omitempty" tf:"number_of_free_entries_in_pool_to_execute_mutation,omitempty"`
+
 	// Number of free entries in pool to lower max size of merge: Threshold value of free entries in the pool. If the number of entries in the pool falls below this value, ClickHouse reduces the maximum size of a data part to merge. This helps handle small merges faster, rather than filling the pool with lengthy merges.
 	// +kubebuilder:validation:Optional
 	NumberOfFreeEntriesInPoolToLowerMaxSizeOfMerge *float64 `json:"numberOfFreeEntriesInPoolToLowerMaxSizeOfMerge,omitempty" tf:"number_of_free_entries_in_pool_to_lower_max_size_of_merge,omitempty"`
@@ -1487,7 +1823,7 @@ type MergeTreeParameters struct {
 	// +kubebuilder:validation:Optional
 	ReplicatedDeduplicationWindowSeconds *float64 `json:"replicatedDeduplicationWindowSeconds,omitempty" tf:"replicated_deduplication_window_seconds,omitempty"`
 
-	// Enables or disables complete dropping of data parts where all rows are expired in MergeTree tables.
+	// Enables zero-copy replication when a replica is located on a remote filesystem.
 	// +kubebuilder:validation:Optional
 	TTLOnlyDropParts *bool `json:"ttlOnlyDropParts,omitempty" tf:"ttl_only_drop_parts,omitempty"`
 }
@@ -1548,6 +1884,94 @@ type PermissionParameters struct {
 	// The name of the database that the permission grants access to.
 	// +kubebuilder:validation:Optional
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
+}
+
+type QueryCacheInitParameters struct {
+
+	// The maximum number of SELECT query results stored in the cache. Default value: 1024.
+	MaxEntries *float64 `json:"maxEntries,omitempty" tf:"max_entries,omitempty"`
+
+	// The maximum size in bytes SELECT query results may have to be saved in the cache. Default value: 1048576 (1 MiB).
+	MaxEntrySizeInBytes *float64 `json:"maxEntrySizeInBytes,omitempty" tf:"max_entry_size_in_bytes,omitempty"`
+
+	// The maximum number of rows SELECT query results may have to be saved in the cache. Default value: 30000000 (30 mil).
+	MaxEntrySizeInRows *float64 `json:"maxEntrySizeInRows,omitempty" tf:"max_entry_size_in_rows,omitempty"`
+
+	// The maximum cache size in bytes. 0 means the query cache is disabled. Default value: 1073741824 (1 GiB).
+	MaxSizeInBytes *float64 `json:"maxSizeInBytes,omitempty" tf:"max_size_in_bytes,omitempty"`
+}
+
+type QueryCacheObservation struct {
+
+	// The maximum number of SELECT query results stored in the cache. Default value: 1024.
+	MaxEntries *float64 `json:"maxEntries,omitempty" tf:"max_entries,omitempty"`
+
+	// The maximum size in bytes SELECT query results may have to be saved in the cache. Default value: 1048576 (1 MiB).
+	MaxEntrySizeInBytes *float64 `json:"maxEntrySizeInBytes,omitempty" tf:"max_entry_size_in_bytes,omitempty"`
+
+	// The maximum number of rows SELECT query results may have to be saved in the cache. Default value: 30000000 (30 mil).
+	MaxEntrySizeInRows *float64 `json:"maxEntrySizeInRows,omitempty" tf:"max_entry_size_in_rows,omitempty"`
+
+	// The maximum cache size in bytes. 0 means the query cache is disabled. Default value: 1073741824 (1 GiB).
+	MaxSizeInBytes *float64 `json:"maxSizeInBytes,omitempty" tf:"max_size_in_bytes,omitempty"`
+}
+
+type QueryCacheParameters struct {
+
+	// The maximum number of SELECT query results stored in the cache. Default value: 1024.
+	// +kubebuilder:validation:Optional
+	MaxEntries *float64 `json:"maxEntries,omitempty" tf:"max_entries,omitempty"`
+
+	// The maximum size in bytes SELECT query results may have to be saved in the cache. Default value: 1048576 (1 MiB).
+	// +kubebuilder:validation:Optional
+	MaxEntrySizeInBytes *float64 `json:"maxEntrySizeInBytes,omitempty" tf:"max_entry_size_in_bytes,omitempty"`
+
+	// The maximum number of rows SELECT query results may have to be saved in the cache. Default value: 30000000 (30 mil).
+	// +kubebuilder:validation:Optional
+	MaxEntrySizeInRows *float64 `json:"maxEntrySizeInRows,omitempty" tf:"max_entry_size_in_rows,omitempty"`
+
+	// The maximum cache size in bytes. 0 means the query cache is disabled. Default value: 1073741824 (1 GiB).
+	// +kubebuilder:validation:Optional
+	MaxSizeInBytes *float64 `json:"maxSizeInBytes,omitempty" tf:"max_size_in_bytes,omitempty"`
+}
+
+type QueryMaskingRulesInitParameters struct {
+
+	// The name of the user.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Regular expression that the metric name must match.
+	Regexp *string `json:"regexp,omitempty" tf:"regexp,omitempty"`
+
+	// Substitution string for sensitive data. Default value: six asterisks.
+	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
+}
+
+type QueryMaskingRulesObservation struct {
+
+	// The name of the user.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Regular expression that the metric name must match.
+	Regexp *string `json:"regexp,omitempty" tf:"regexp,omitempty"`
+
+	// Substitution string for sensitive data. Default value: six asterisks.
+	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
+}
+
+type QueryMaskingRulesParameters struct {
+
+	// The name of the user.
+	// +kubebuilder:validation:Optional
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// Regular expression that the metric name must match.
+	// +kubebuilder:validation:Optional
+	Regexp *string `json:"regexp" tf:"regexp,omitempty"`
+
+	// Substitution string for sensitive data. Default value: six asterisks.
+	// +kubebuilder:validation:Optional
+	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
 
 type QuotaInitParameters struct {
@@ -1621,6 +2045,9 @@ type QuotaParameters struct {
 
 type RabbitmqInitParameters struct {
 
+	// The password of the user.
+	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+
 	// RabbitMQ username.
 	Username *string `json:"username,omitempty" tf:"username,omitempty"`
 
@@ -1657,8 +2084,7 @@ type ResourcesInitParameters struct {
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
@@ -1669,8 +2095,7 @@ type ResourcesObservation struct {
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
@@ -1682,8 +2107,7 @@ type ResourcesParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	// +kubebuilder:validation:Optional
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
@@ -1722,6 +2146,12 @@ type RetentionParameters struct {
 
 type SettingsInitParameters struct {
 
+	// Action to take when there is no initial offset in offset store or the desired offset is out of range: 'smallest','earliest' - automatically reset the offset to the smallest offset, 'largest','latest' - automatically reset the offset to the largest offset, 'error' - trigger an error (ERR__AUTO_OFFSET_RESET) which is retrieved by consuming messages and checking 'message->err'.
+	AutoOffsetReset *string `json:"autoOffsetReset,omitempty" tf:"auto_offset_reset,omitempty"`
+
+	// A comma-separated list of debug contexts to enable.
+	Debug *string `json:"debug,omitempty" tf:"debug,omitempty"`
+
 	// enable verification of SSL certificates.
 	EnableSSLCertificateVerification *bool `json:"enableSslCertificateVerification,omitempty" tf:"enable_ssl_certificate_verification,omitempty"`
 
@@ -1730,6 +2160,9 @@ type SettingsInitParameters struct {
 
 	// SASL mechanism used in kafka authentication.
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
+
+	// User password on kafka server.
+	SaslPasswordSecretRef *v1.SecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
 
 	// Username on kafka server.
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
@@ -1742,6 +2175,12 @@ type SettingsInitParameters struct {
 }
 
 type SettingsObservation struct {
+
+	// Action to take when there is no initial offset in offset store or the desired offset is out of range: 'smallest','earliest' - automatically reset the offset to the smallest offset, 'largest','latest' - automatically reset the offset to the largest offset, 'error' - trigger an error (ERR__AUTO_OFFSET_RESET) which is retrieved by consuming messages and checking 'message->err'.
+	AutoOffsetReset *string `json:"autoOffsetReset,omitempty" tf:"auto_offset_reset,omitempty"`
+
+	// A comma-separated list of debug contexts to enable.
+	Debug *string `json:"debug,omitempty" tf:"debug,omitempty"`
 
 	// enable verification of SSL certificates.
 	EnableSSLCertificateVerification *bool `json:"enableSslCertificateVerification,omitempty" tf:"enable_ssl_certificate_verification,omitempty"`
@@ -1763,6 +2202,14 @@ type SettingsObservation struct {
 }
 
 type SettingsParameters struct {
+
+	// Action to take when there is no initial offset in offset store or the desired offset is out of range: 'smallest','earliest' - automatically reset the offset to the smallest offset, 'largest','latest' - automatically reset the offset to the largest offset, 'error' - trigger an error (ERR__AUTO_OFFSET_RESET) which is retrieved by consuming messages and checking 'message->err'.
+	// +kubebuilder:validation:Optional
+	AutoOffsetReset *string `json:"autoOffsetReset,omitempty" tf:"auto_offset_reset,omitempty"`
+
+	// A comma-separated list of debug contexts to enable.
+	// +kubebuilder:validation:Optional
+	Debug *string `json:"debug,omitempty" tf:"debug,omitempty"`
 
 	// enable verification of SSL certificates.
 	// +kubebuilder:validation:Optional
@@ -1876,8 +2323,7 @@ type ShardResourcesInitParameters struct {
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
@@ -1888,8 +2334,7 @@ type ShardResourcesObservation struct {
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
@@ -1901,8 +2346,7 @@ type ShardResourcesParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	// +kubebuilder:validation:Optional
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
@@ -1914,6 +2358,9 @@ type UserInitParameters struct {
 
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The password of the user.
+	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// Set of permissions granted to the user. The structure is documented below.
 	Permission []PermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
@@ -1947,7 +2394,7 @@ type UserParameters struct {
 	Name *string `json:"name" tf:"name,omitempty"`
 
 	// The password of the user.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
 	// Set of permissions granted to the user. The structure is documented below.
@@ -1977,6 +2424,9 @@ type UserSettingsInitParameters struct {
 	// Allows specifying LowCardinality modifier for types of small fixed size (8 or less) in CREATE TABLE statements. Enabling this may increase merge times and memory consumption.
 	AllowSuspiciousLowCardinalityTypes *bool `json:"allowSuspiciousLowCardinalityTypes,omitempty" tf:"allow_suspicious_low_cardinality_types,omitempty"`
 
+	// enables legacy ClickHouse server behaviour in ANY INNER|LEFT JOIN operations.
+	AnyJoinDistinctRightTableKeys *bool `json:"anyJoinDistinctRightTableKeys,omitempty" tf:"any_join_distinct_right_table_keys,omitempty"`
+
 	// Enables asynchronous inserts. Disabled by default.
 	AsyncInsert *bool `json:"asyncInsert,omitempty" tf:"async_insert,omitempty"`
 
@@ -1992,8 +2442,7 @@ type UserSettingsInitParameters struct {
 	// The maximum number of threads for background data parsing and insertion. If the parameter is set to 0, asynchronous insertions are disabled. Default value: 16.
 	AsyncInsertThreads *float64 `json:"asyncInsertThreads,omitempty" tf:"async_insert_threads,omitempty"`
 
-	// Cancels HTTP read-only queries (e.g. SELECT) when a client closes the connection without waiting for the response.
-	// Default value: false.
+	// Cancels HTTP read-only queries (e.g. SELECT) when a client closes the connection without waiting for the response. Default value: false.
 	CancelHTTPReadonlyQueriesOnClientClose *bool `json:"cancelHttpReadonlyQueriesOnClientClose,omitempty" tf:"cancel_http_readonly_queries_on_client_close,omitempty"`
 
 	// Enable compilation of queries.
@@ -2010,6 +2459,15 @@ type UserSettingsInitParameters struct {
 
 	// Specifies which of the uniq* functions should be used to perform the COUNT(DISTINCT …) construction.
 	CountDistinctImplementation *string `json:"countDistinctImplementation,omitempty" tf:"count_distinct_implementation,omitempty"`
+
+	// Allows choosing a parser of the text representation of date and time, one of: best_effort, basic, best_effort_us. Default value: basic. Cloud default value: best_effort.
+	DateTimeInputFormat *string `json:"dateTimeInputFormat,omitempty" tf:"date_time_input_format,omitempty"`
+
+	// Allows choosing different output formats of the text representation of date and time, one of: simple, iso, unix_timestamp. Default value: simple.
+	DateTimeOutputFormat *string `json:"dateTimeOutputFormat,omitempty" tf:"date_time_output_format,omitempty"`
+
+	// Enables or disables the deduplication check for materialized views that receive data from Replicated* tables.
+	DeduplicateBlocksInDependentMaterializedViews *bool `json:"deduplicateBlocksInDependentMaterializedViews,omitempty" tf:"deduplicate_blocks_in_dependent_materialized_views,omitempty"`
 
 	// Sets behaviour on overflow when using DISTINCT. Possible values:
 	DistinctOverflowMode *string `json:"distinctOverflowMode,omitempty" tf:"distinct_overflow_mode,omitempty"`
@@ -2041,6 +2499,12 @@ type UserSettingsInitParameters struct {
 	// Disables query execution if indexing by the primary key is not possible.
 	ForcePrimaryKey *bool `json:"forcePrimaryKey,omitempty" tf:"force_primary_key,omitempty"`
 
+	// Regular expression (for Regexp format).
+	FormatRegexp *string `json:"formatRegexp,omitempty" tf:"format_regexp,omitempty"`
+
+	// Skip lines unmatched by regular expression.
+	FormatRegexpSkipUnmatched *bool `json:"formatRegexpSkipUnmatched,omitempty" tf:"format_regexp_skip_unmatched,omitempty"`
+
 	// Sets behaviour on overflow while GROUP BY operation. Possible values:
 	GroupByOverflowMode *string `json:"groupByOverflowMode,omitempty" tf:"group_by_overflow_mode,omitempty"`
 
@@ -2062,17 +2526,29 @@ type UserSettingsInitParameters struct {
 	// Timeout for HTTP connection in milliseconds.
 	HTTPSendTimeout *float64 `json:"httpSendTimeout,omitempty" tf:"http_send_timeout,omitempty"`
 
+	// Connection timeout for establishing connection with replica for Hedged requests. Default value: 50 milliseconds.
+	HedgedConnectionTimeoutMs *float64 `json:"hedgedConnectionTimeoutMs,omitempty" tf:"hedged_connection_timeout_ms,omitempty"`
+
+	// Timeout to close idle TCP connections after specified number of seconds. Default value: 3600 seconds.
+	IdleConnectionTimeout *float64 `json:"idleConnectionTimeout,omitempty" tf:"idle_connection_timeout,omitempty"`
+
 	// When performing INSERT queries, replace omitted input column values with default values of the respective columns.
 	InputFormatDefaultsForOmittedFields *bool `json:"inputFormatDefaultsForOmittedFields,omitempty" tf:"input_format_defaults_for_omitted_fields,omitempty"`
 
 	// Enables or disables the insertion of JSON data with nested objects.
 	InputFormatImportNestedJSON *bool `json:"inputFormatImportNestedJson,omitempty" tf:"input_format_import_nested_json,omitempty"`
 
+	// Enables or disables the initialization of NULL fields with default values, if data type of these fields is not nullable.
+	InputFormatNullAsDefault *bool `json:"inputFormatNullAsDefault,omitempty" tf:"input_format_null_as_default,omitempty"`
+
 	// Enables or disables order-preserving parallel parsing of data formats. Supported only for TSV, TKSV, CSV and JSONEachRow formats.
 	InputFormatParallelParsing *bool `json:"inputFormatParallelParsing,omitempty" tf:"input_format_parallel_parsing,omitempty"`
 
 	// Enables or disables the full SQL parser if the fast stream parser can’t parse the data.
 	InputFormatValuesInterpretExpressions *bool `json:"inputFormatValuesInterpretExpressions,omitempty" tf:"input_format_values_interpret_expressions,omitempty"`
+
+	// Enables or disables checking the column order when inserting data.
+	InputFormatWithNamesUseHeader *bool `json:"inputFormatWithNamesUseHeader,omitempty" tf:"input_format_with_names_use_header,omitempty"`
 
 	// The setting sets the maximum number of retries for ClickHouse Keeper (or ZooKeeper) requests during insert into replicated MergeTree. Only Keeper requests which failed due to network error, Keeper session timeout, or request timeout are considered for retries.
 	InsertKeeperMaxRetries *float64 `json:"insertKeeperMaxRetries,omitempty" tf:"insert_keeper_max_retries,omitempty"`
@@ -2083,8 +2559,14 @@ type UserSettingsInitParameters struct {
 	// Enables the quorum writes.
 	InsertQuorum *float64 `json:"insertQuorum,omitempty" tf:"insert_quorum,omitempty"`
 
+	// Enables or disables parallelism for quorum INSERT queries.
+	InsertQuorumParallel *bool `json:"insertQuorumParallel,omitempty" tf:"insert_quorum_parallel,omitempty"`
+
 	// Write to a quorum timeout in milliseconds.
 	InsertQuorumTimeout *float64 `json:"insertQuorumTimeout,omitempty" tf:"insert_quorum_timeout,omitempty"`
+
+	// Specifies which JOIN algorithm is used. Possible values:
+	JoinAlgorithm []*string `json:"joinAlgorithm,omitempty" tf:"join_algorithm,omitempty"`
 
 	// Sets behaviour on overflow in JOIN. Possible values:
 	JoinOverflowMode *string `json:"joinOverflowMode,omitempty" tf:"join_overflow_mode,omitempty"`
@@ -2095,8 +2577,14 @@ type UserSettingsInitParameters struct {
 	// Require aliases for subselects and table functions in FROM that more than one table is present.
 	JoinedSubqueryRequiresAlias *bool `json:"joinedSubqueryRequiresAlias,omitempty" tf:"joined_subquery_requires_alias,omitempty"`
 
+	// Specifies the algorithm of replicas selection that is used for distributed query processing, one of: random, nearest_hostname, in_order, first_or_random, round_robin. Default value: random.
+	LoadBalancing *string `json:"loadBalancing,omitempty" tf:"load_balancing,omitempty"`
+
 	// Method of reading data from local filesystem. Possible values:
 	LocalFilesystemReadMethod *string `json:"localFilesystemReadMethod,omitempty" tf:"local_filesystem_read_method,omitempty"`
+
+	// Setting up query threads logging. Query threads log into the system.query_thread_log table. This setting has effect only when log_queries is true. Queries’ threads run by ClickHouse with this setup are logged according to the rules in the query_thread_log server configuration parameter. Default value: true.
+	LogQueryThreads *bool `json:"logQueryThreads,omitempty" tf:"log_query_threads,omitempty"`
 
 	// Allows or restricts using the LowCardinality data type with the Native format.
 	LowCardinalityAllowInNativeFormat *bool `json:"lowCardinalityAllowInNativeFormat,omitempty" tf:"low_cardinality_allow_in_native_format,omitempty"`
@@ -2154,6 +2642,9 @@ type UserSettingsInitParameters struct {
 
 	// The size of blocks (in a count of rows) to form for insertion into a table.
 	MaxInsertBlockSize *float64 `json:"maxInsertBlockSize,omitempty" tf:"max_insert_block_size,omitempty"`
+
+	// The maximum number of threads to execute the INSERT SELECT query. Default value: 0.
+	MaxInsertThreads *float64 `json:"maxInsertThreads,omitempty" tf:"max_insert_threads,omitempty"`
 
 	// Limits the maximum memory usage (in bytes) for processing queries on a single server.
 	MaxMemoryUsage *float64 `json:"maxMemoryUsage,omitempty" tf:"max_memory_usage,omitempty"`
@@ -2230,7 +2721,7 @@ type UserSettingsInitParameters struct {
 	// Collect random allocations and deallocations and write them into system.trace_log with 'MemorySample' trace_type. The probability is for every alloc/free regardless to the size of the allocation. Possible values: from 0 to 1. Default: 0.
 	MemoryProfilerSampleProbability *float64 `json:"memoryProfilerSampleProbability,omitempty" tf:"memory_profiler_sample_probability,omitempty"`
 
-	// Memory profiler step (in bytes).  If the next query step requires more memory than this parameter specifies, the memory profiler collects the allocating stack trace. Values lower than a few megabytes slow down query processing. Default value: 4194304 (4 MB). Zero means disabled memory profiler.
+	// Memory profiler step (in bytes). If the next query step requires more memory than this parameter specifies, the memory profiler collects the allocating stack trace. Values lower than a few megabytes slow down query processing. Default value: 4194304 (4 MB). Zero means disabled memory profiler.
 	MemoryProfilerStep *float64 `json:"memoryProfilerStep,omitempty" tf:"memory_profiler_step,omitempty"`
 
 	// Maximum time thread will wait for memory to be freed in the case of memory overcommit on a user level. If the timeout is reached and memory is not freed, an exception is thrown.
@@ -2275,6 +2766,9 @@ type UserSettingsInitParameters struct {
 	// Enables +nan, -nan, +inf, -inf outputs in JSON output format.
 	OutputFormatJSONQuoteDenormals *bool `json:"outputFormatJsonQuoteDenormals,omitempty" tf:"output_format_json_quote_denormals,omitempty"`
 
+	// Enables/disables preferable using the localhost replica when processing distributed queries. Default value: true.
+	PreferLocalhostReplica *bool `json:"preferLocalhostReplica,omitempty" tf:"prefer_localhost_replica,omitempty"`
+
 	// Query priority.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
@@ -2317,8 +2811,7 @@ type UserSettingsInitParameters struct {
 	// Sets behaviour on overflow while sort. Possible values:
 	SortOverflowMode *string `json:"sortOverflowMode,omitempty" tf:"sort_overflow_mode,omitempty"`
 
-	// Timeout (in seconds) between checks of execution speed. It is checked that execution speed is not less that specified in min_execution_speed parameter.
-	// Must be at least 1000.
+	// Timeout (in seconds) between checks of execution speed. It is checked that execution speed is not less that specified in min_execution_speed parameter. Must be at least 1000.
 	TimeoutBeforeCheckingExecutionSpeed *float64 `json:"timeoutBeforeCheckingExecutionSpeed,omitempty" tf:"timeout_before_checking_execution_speed,omitempty"`
 
 	// Sets behaviour on overflow. Possible values:
@@ -2329,6 +2822,9 @@ type UserSettingsInitParameters struct {
 
 	// Enables equality of NULL values for IN operator.
 	TransformNullIn *bool `json:"transformNullIn,omitempty" tf:"transform_null_in,omitempty"`
+
+	// Enables hedged requests logic for remote queries. It allows to establish many connections with different replicas for query. New connection is enabled in case existent connection(s) with replica(s) were not established within hedged_connection_timeout or no data was received within receive_data_timeout. Query uses the first connection which send non empty progress packet (or data packet, if allow_changing_replica_until_first_data_packet); other connections are cancelled. Queries with max_parallel_replicas > 1 are supported. Default value: true.
+	UseHedgedRequests *bool `json:"useHedgedRequests,omitempty" tf:"use_hedged_requests,omitempty"`
 
 	// Whether to use a cache of uncompressed blocks.
 	UseUncompressedCache *bool `json:"useUncompressedCache,omitempty" tf:"use_uncompressed_cache,omitempty"`
@@ -2354,6 +2850,9 @@ type UserSettingsObservation struct {
 	// Allows specifying LowCardinality modifier for types of small fixed size (8 or less) in CREATE TABLE statements. Enabling this may increase merge times and memory consumption.
 	AllowSuspiciousLowCardinalityTypes *bool `json:"allowSuspiciousLowCardinalityTypes,omitempty" tf:"allow_suspicious_low_cardinality_types,omitempty"`
 
+	// enables legacy ClickHouse server behaviour in ANY INNER|LEFT JOIN operations.
+	AnyJoinDistinctRightTableKeys *bool `json:"anyJoinDistinctRightTableKeys,omitempty" tf:"any_join_distinct_right_table_keys,omitempty"`
+
 	// Enables asynchronous inserts. Disabled by default.
 	AsyncInsert *bool `json:"asyncInsert,omitempty" tf:"async_insert,omitempty"`
 
@@ -2369,8 +2868,7 @@ type UserSettingsObservation struct {
 	// The maximum number of threads for background data parsing and insertion. If the parameter is set to 0, asynchronous insertions are disabled. Default value: 16.
 	AsyncInsertThreads *float64 `json:"asyncInsertThreads,omitempty" tf:"async_insert_threads,omitempty"`
 
-	// Cancels HTTP read-only queries (e.g. SELECT) when a client closes the connection without waiting for the response.
-	// Default value: false.
+	// Cancels HTTP read-only queries (e.g. SELECT) when a client closes the connection without waiting for the response. Default value: false.
 	CancelHTTPReadonlyQueriesOnClientClose *bool `json:"cancelHttpReadonlyQueriesOnClientClose,omitempty" tf:"cancel_http_readonly_queries_on_client_close,omitempty"`
 
 	// Enable compilation of queries.
@@ -2387,6 +2885,15 @@ type UserSettingsObservation struct {
 
 	// Specifies which of the uniq* functions should be used to perform the COUNT(DISTINCT …) construction.
 	CountDistinctImplementation *string `json:"countDistinctImplementation,omitempty" tf:"count_distinct_implementation,omitempty"`
+
+	// Allows choosing a parser of the text representation of date and time, one of: best_effort, basic, best_effort_us. Default value: basic. Cloud default value: best_effort.
+	DateTimeInputFormat *string `json:"dateTimeInputFormat,omitempty" tf:"date_time_input_format,omitempty"`
+
+	// Allows choosing different output formats of the text representation of date and time, one of: simple, iso, unix_timestamp. Default value: simple.
+	DateTimeOutputFormat *string `json:"dateTimeOutputFormat,omitempty" tf:"date_time_output_format,omitempty"`
+
+	// Enables or disables the deduplication check for materialized views that receive data from Replicated* tables.
+	DeduplicateBlocksInDependentMaterializedViews *bool `json:"deduplicateBlocksInDependentMaterializedViews,omitempty" tf:"deduplicate_blocks_in_dependent_materialized_views,omitempty"`
 
 	// Sets behaviour on overflow when using DISTINCT. Possible values:
 	DistinctOverflowMode *string `json:"distinctOverflowMode,omitempty" tf:"distinct_overflow_mode,omitempty"`
@@ -2418,6 +2925,12 @@ type UserSettingsObservation struct {
 	// Disables query execution if indexing by the primary key is not possible.
 	ForcePrimaryKey *bool `json:"forcePrimaryKey,omitempty" tf:"force_primary_key,omitempty"`
 
+	// Regular expression (for Regexp format).
+	FormatRegexp *string `json:"formatRegexp,omitempty" tf:"format_regexp,omitempty"`
+
+	// Skip lines unmatched by regular expression.
+	FormatRegexpSkipUnmatched *bool `json:"formatRegexpSkipUnmatched,omitempty" tf:"format_regexp_skip_unmatched,omitempty"`
+
 	// Sets behaviour on overflow while GROUP BY operation. Possible values:
 	GroupByOverflowMode *string `json:"groupByOverflowMode,omitempty" tf:"group_by_overflow_mode,omitempty"`
 
@@ -2439,17 +2952,29 @@ type UserSettingsObservation struct {
 	// Timeout for HTTP connection in milliseconds.
 	HTTPSendTimeout *float64 `json:"httpSendTimeout,omitempty" tf:"http_send_timeout,omitempty"`
 
+	// Connection timeout for establishing connection with replica for Hedged requests. Default value: 50 milliseconds.
+	HedgedConnectionTimeoutMs *float64 `json:"hedgedConnectionTimeoutMs,omitempty" tf:"hedged_connection_timeout_ms,omitempty"`
+
+	// Timeout to close idle TCP connections after specified number of seconds. Default value: 3600 seconds.
+	IdleConnectionTimeout *float64 `json:"idleConnectionTimeout,omitempty" tf:"idle_connection_timeout,omitempty"`
+
 	// When performing INSERT queries, replace omitted input column values with default values of the respective columns.
 	InputFormatDefaultsForOmittedFields *bool `json:"inputFormatDefaultsForOmittedFields,omitempty" tf:"input_format_defaults_for_omitted_fields,omitempty"`
 
 	// Enables or disables the insertion of JSON data with nested objects.
 	InputFormatImportNestedJSON *bool `json:"inputFormatImportNestedJson,omitempty" tf:"input_format_import_nested_json,omitempty"`
 
+	// Enables or disables the initialization of NULL fields with default values, if data type of these fields is not nullable.
+	InputFormatNullAsDefault *bool `json:"inputFormatNullAsDefault,omitempty" tf:"input_format_null_as_default,omitempty"`
+
 	// Enables or disables order-preserving parallel parsing of data formats. Supported only for TSV, TKSV, CSV and JSONEachRow formats.
 	InputFormatParallelParsing *bool `json:"inputFormatParallelParsing,omitempty" tf:"input_format_parallel_parsing,omitempty"`
 
 	// Enables or disables the full SQL parser if the fast stream parser can’t parse the data.
 	InputFormatValuesInterpretExpressions *bool `json:"inputFormatValuesInterpretExpressions,omitempty" tf:"input_format_values_interpret_expressions,omitempty"`
+
+	// Enables or disables checking the column order when inserting data.
+	InputFormatWithNamesUseHeader *bool `json:"inputFormatWithNamesUseHeader,omitempty" tf:"input_format_with_names_use_header,omitempty"`
 
 	// The setting sets the maximum number of retries for ClickHouse Keeper (or ZooKeeper) requests during insert into replicated MergeTree. Only Keeper requests which failed due to network error, Keeper session timeout, or request timeout are considered for retries.
 	InsertKeeperMaxRetries *float64 `json:"insertKeeperMaxRetries,omitempty" tf:"insert_keeper_max_retries,omitempty"`
@@ -2460,8 +2985,14 @@ type UserSettingsObservation struct {
 	// Enables the quorum writes.
 	InsertQuorum *float64 `json:"insertQuorum,omitempty" tf:"insert_quorum,omitempty"`
 
+	// Enables or disables parallelism for quorum INSERT queries.
+	InsertQuorumParallel *bool `json:"insertQuorumParallel,omitempty" tf:"insert_quorum_parallel,omitempty"`
+
 	// Write to a quorum timeout in milliseconds.
 	InsertQuorumTimeout *float64 `json:"insertQuorumTimeout,omitempty" tf:"insert_quorum_timeout,omitempty"`
+
+	// Specifies which JOIN algorithm is used. Possible values:
+	JoinAlgorithm []*string `json:"joinAlgorithm,omitempty" tf:"join_algorithm,omitempty"`
 
 	// Sets behaviour on overflow in JOIN. Possible values:
 	JoinOverflowMode *string `json:"joinOverflowMode,omitempty" tf:"join_overflow_mode,omitempty"`
@@ -2472,8 +3003,14 @@ type UserSettingsObservation struct {
 	// Require aliases for subselects and table functions in FROM that more than one table is present.
 	JoinedSubqueryRequiresAlias *bool `json:"joinedSubqueryRequiresAlias,omitempty" tf:"joined_subquery_requires_alias,omitempty"`
 
+	// Specifies the algorithm of replicas selection that is used for distributed query processing, one of: random, nearest_hostname, in_order, first_or_random, round_robin. Default value: random.
+	LoadBalancing *string `json:"loadBalancing,omitempty" tf:"load_balancing,omitempty"`
+
 	// Method of reading data from local filesystem. Possible values:
 	LocalFilesystemReadMethod *string `json:"localFilesystemReadMethod,omitempty" tf:"local_filesystem_read_method,omitempty"`
+
+	// Setting up query threads logging. Query threads log into the system.query_thread_log table. This setting has effect only when log_queries is true. Queries’ threads run by ClickHouse with this setup are logged according to the rules in the query_thread_log server configuration parameter. Default value: true.
+	LogQueryThreads *bool `json:"logQueryThreads,omitempty" tf:"log_query_threads,omitempty"`
 
 	// Allows or restricts using the LowCardinality data type with the Native format.
 	LowCardinalityAllowInNativeFormat *bool `json:"lowCardinalityAllowInNativeFormat,omitempty" tf:"low_cardinality_allow_in_native_format,omitempty"`
@@ -2531,6 +3068,9 @@ type UserSettingsObservation struct {
 
 	// The size of blocks (in a count of rows) to form for insertion into a table.
 	MaxInsertBlockSize *float64 `json:"maxInsertBlockSize,omitempty" tf:"max_insert_block_size,omitempty"`
+
+	// The maximum number of threads to execute the INSERT SELECT query. Default value: 0.
+	MaxInsertThreads *float64 `json:"maxInsertThreads,omitempty" tf:"max_insert_threads,omitempty"`
 
 	// Limits the maximum memory usage (in bytes) for processing queries on a single server.
 	MaxMemoryUsage *float64 `json:"maxMemoryUsage,omitempty" tf:"max_memory_usage,omitempty"`
@@ -2607,7 +3147,7 @@ type UserSettingsObservation struct {
 	// Collect random allocations and deallocations and write them into system.trace_log with 'MemorySample' trace_type. The probability is for every alloc/free regardless to the size of the allocation. Possible values: from 0 to 1. Default: 0.
 	MemoryProfilerSampleProbability *float64 `json:"memoryProfilerSampleProbability,omitempty" tf:"memory_profiler_sample_probability,omitempty"`
 
-	// Memory profiler step (in bytes).  If the next query step requires more memory than this parameter specifies, the memory profiler collects the allocating stack trace. Values lower than a few megabytes slow down query processing. Default value: 4194304 (4 MB). Zero means disabled memory profiler.
+	// Memory profiler step (in bytes). If the next query step requires more memory than this parameter specifies, the memory profiler collects the allocating stack trace. Values lower than a few megabytes slow down query processing. Default value: 4194304 (4 MB). Zero means disabled memory profiler.
 	MemoryProfilerStep *float64 `json:"memoryProfilerStep,omitempty" tf:"memory_profiler_step,omitempty"`
 
 	// Maximum time thread will wait for memory to be freed in the case of memory overcommit on a user level. If the timeout is reached and memory is not freed, an exception is thrown.
@@ -2652,6 +3192,9 @@ type UserSettingsObservation struct {
 	// Enables +nan, -nan, +inf, -inf outputs in JSON output format.
 	OutputFormatJSONQuoteDenormals *bool `json:"outputFormatJsonQuoteDenormals,omitempty" tf:"output_format_json_quote_denormals,omitempty"`
 
+	// Enables/disables preferable using the localhost replica when processing distributed queries. Default value: true.
+	PreferLocalhostReplica *bool `json:"preferLocalhostReplica,omitempty" tf:"prefer_localhost_replica,omitempty"`
+
 	// Query priority.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
@@ -2694,8 +3237,7 @@ type UserSettingsObservation struct {
 	// Sets behaviour on overflow while sort. Possible values:
 	SortOverflowMode *string `json:"sortOverflowMode,omitempty" tf:"sort_overflow_mode,omitempty"`
 
-	// Timeout (in seconds) between checks of execution speed. It is checked that execution speed is not less that specified in min_execution_speed parameter.
-	// Must be at least 1000.
+	// Timeout (in seconds) between checks of execution speed. It is checked that execution speed is not less that specified in min_execution_speed parameter. Must be at least 1000.
 	TimeoutBeforeCheckingExecutionSpeed *float64 `json:"timeoutBeforeCheckingExecutionSpeed,omitempty" tf:"timeout_before_checking_execution_speed,omitempty"`
 
 	// Sets behaviour on overflow. Possible values:
@@ -2706,6 +3248,9 @@ type UserSettingsObservation struct {
 
 	// Enables equality of NULL values for IN operator.
 	TransformNullIn *bool `json:"transformNullIn,omitempty" tf:"transform_null_in,omitempty"`
+
+	// Enables hedged requests logic for remote queries. It allows to establish many connections with different replicas for query. New connection is enabled in case existent connection(s) with replica(s) were not established within hedged_connection_timeout or no data was received within receive_data_timeout. Query uses the first connection which send non empty progress packet (or data packet, if allow_changing_replica_until_first_data_packet); other connections are cancelled. Queries with max_parallel_replicas > 1 are supported. Default value: true.
+	UseHedgedRequests *bool `json:"useHedgedRequests,omitempty" tf:"use_hedged_requests,omitempty"`
 
 	// Whether to use a cache of uncompressed blocks.
 	UseUncompressedCache *bool `json:"useUncompressedCache,omitempty" tf:"use_uncompressed_cache,omitempty"`
@@ -2735,6 +3280,10 @@ type UserSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	AllowSuspiciousLowCardinalityTypes *bool `json:"allowSuspiciousLowCardinalityTypes,omitempty" tf:"allow_suspicious_low_cardinality_types,omitempty"`
 
+	// enables legacy ClickHouse server behaviour in ANY INNER|LEFT JOIN operations.
+	// +kubebuilder:validation:Optional
+	AnyJoinDistinctRightTableKeys *bool `json:"anyJoinDistinctRightTableKeys,omitempty" tf:"any_join_distinct_right_table_keys,omitempty"`
+
 	// Enables asynchronous inserts. Disabled by default.
 	// +kubebuilder:validation:Optional
 	AsyncInsert *bool `json:"asyncInsert,omitempty" tf:"async_insert,omitempty"`
@@ -2755,8 +3304,7 @@ type UserSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	AsyncInsertThreads *float64 `json:"asyncInsertThreads,omitempty" tf:"async_insert_threads,omitempty"`
 
-	// Cancels HTTP read-only queries (e.g. SELECT) when a client closes the connection without waiting for the response.
-	// Default value: false.
+	// Cancels HTTP read-only queries (e.g. SELECT) when a client closes the connection without waiting for the response. Default value: false.
 	// +kubebuilder:validation:Optional
 	CancelHTTPReadonlyQueriesOnClientClose *bool `json:"cancelHttpReadonlyQueriesOnClientClose,omitempty" tf:"cancel_http_readonly_queries_on_client_close,omitempty"`
 
@@ -2779,6 +3327,18 @@ type UserSettingsParameters struct {
 	// Specifies which of the uniq* functions should be used to perform the COUNT(DISTINCT …) construction.
 	// +kubebuilder:validation:Optional
 	CountDistinctImplementation *string `json:"countDistinctImplementation,omitempty" tf:"count_distinct_implementation,omitempty"`
+
+	// Allows choosing a parser of the text representation of date and time, one of: best_effort, basic, best_effort_us. Default value: basic. Cloud default value: best_effort.
+	// +kubebuilder:validation:Optional
+	DateTimeInputFormat *string `json:"dateTimeInputFormat,omitempty" tf:"date_time_input_format,omitempty"`
+
+	// Allows choosing different output formats of the text representation of date and time, one of: simple, iso, unix_timestamp. Default value: simple.
+	// +kubebuilder:validation:Optional
+	DateTimeOutputFormat *string `json:"dateTimeOutputFormat,omitempty" tf:"date_time_output_format,omitempty"`
+
+	// Enables or disables the deduplication check for materialized views that receive data from Replicated* tables.
+	// +kubebuilder:validation:Optional
+	DeduplicateBlocksInDependentMaterializedViews *bool `json:"deduplicateBlocksInDependentMaterializedViews,omitempty" tf:"deduplicate_blocks_in_dependent_materialized_views,omitempty"`
 
 	// Sets behaviour on overflow when using DISTINCT. Possible values:
 	// +kubebuilder:validation:Optional
@@ -2820,6 +3380,14 @@ type UserSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	ForcePrimaryKey *bool `json:"forcePrimaryKey,omitempty" tf:"force_primary_key,omitempty"`
 
+	// Regular expression (for Regexp format).
+	// +kubebuilder:validation:Optional
+	FormatRegexp *string `json:"formatRegexp,omitempty" tf:"format_regexp,omitempty"`
+
+	// Skip lines unmatched by regular expression.
+	// +kubebuilder:validation:Optional
+	FormatRegexpSkipUnmatched *bool `json:"formatRegexpSkipUnmatched,omitempty" tf:"format_regexp_skip_unmatched,omitempty"`
+
 	// Sets behaviour on overflow while GROUP BY operation. Possible values:
 	// +kubebuilder:validation:Optional
 	GroupByOverflowMode *string `json:"groupByOverflowMode,omitempty" tf:"group_by_overflow_mode,omitempty"`
@@ -2848,6 +3416,14 @@ type UserSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	HTTPSendTimeout *float64 `json:"httpSendTimeout,omitempty" tf:"http_send_timeout,omitempty"`
 
+	// Connection timeout for establishing connection with replica for Hedged requests. Default value: 50 milliseconds.
+	// +kubebuilder:validation:Optional
+	HedgedConnectionTimeoutMs *float64 `json:"hedgedConnectionTimeoutMs,omitempty" tf:"hedged_connection_timeout_ms,omitempty"`
+
+	// Timeout to close idle TCP connections after specified number of seconds. Default value: 3600 seconds.
+	// +kubebuilder:validation:Optional
+	IdleConnectionTimeout *float64 `json:"idleConnectionTimeout,omitempty" tf:"idle_connection_timeout,omitempty"`
+
 	// When performing INSERT queries, replace omitted input column values with default values of the respective columns.
 	// +kubebuilder:validation:Optional
 	InputFormatDefaultsForOmittedFields *bool `json:"inputFormatDefaultsForOmittedFields,omitempty" tf:"input_format_defaults_for_omitted_fields,omitempty"`
@@ -2856,6 +3432,10 @@ type UserSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	InputFormatImportNestedJSON *bool `json:"inputFormatImportNestedJson,omitempty" tf:"input_format_import_nested_json,omitempty"`
 
+	// Enables or disables the initialization of NULL fields with default values, if data type of these fields is not nullable.
+	// +kubebuilder:validation:Optional
+	InputFormatNullAsDefault *bool `json:"inputFormatNullAsDefault,omitempty" tf:"input_format_null_as_default,omitempty"`
+
 	// Enables or disables order-preserving parallel parsing of data formats. Supported only for TSV, TKSV, CSV and JSONEachRow formats.
 	// +kubebuilder:validation:Optional
 	InputFormatParallelParsing *bool `json:"inputFormatParallelParsing,omitempty" tf:"input_format_parallel_parsing,omitempty"`
@@ -2863,6 +3443,10 @@ type UserSettingsParameters struct {
 	// Enables or disables the full SQL parser if the fast stream parser can’t parse the data.
 	// +kubebuilder:validation:Optional
 	InputFormatValuesInterpretExpressions *bool `json:"inputFormatValuesInterpretExpressions,omitempty" tf:"input_format_values_interpret_expressions,omitempty"`
+
+	// Enables or disables checking the column order when inserting data.
+	// +kubebuilder:validation:Optional
+	InputFormatWithNamesUseHeader *bool `json:"inputFormatWithNamesUseHeader,omitempty" tf:"input_format_with_names_use_header,omitempty"`
 
 	// The setting sets the maximum number of retries for ClickHouse Keeper (or ZooKeeper) requests during insert into replicated MergeTree. Only Keeper requests which failed due to network error, Keeper session timeout, or request timeout are considered for retries.
 	// +kubebuilder:validation:Optional
@@ -2876,9 +3460,17 @@ type UserSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	InsertQuorum *float64 `json:"insertQuorum,omitempty" tf:"insert_quorum,omitempty"`
 
+	// Enables or disables parallelism for quorum INSERT queries.
+	// +kubebuilder:validation:Optional
+	InsertQuorumParallel *bool `json:"insertQuorumParallel,omitempty" tf:"insert_quorum_parallel,omitempty"`
+
 	// Write to a quorum timeout in milliseconds.
 	// +kubebuilder:validation:Optional
 	InsertQuorumTimeout *float64 `json:"insertQuorumTimeout,omitempty" tf:"insert_quorum_timeout,omitempty"`
+
+	// Specifies which JOIN algorithm is used. Possible values:
+	// +kubebuilder:validation:Optional
+	JoinAlgorithm []*string `json:"joinAlgorithm,omitempty" tf:"join_algorithm,omitempty"`
 
 	// Sets behaviour on overflow in JOIN. Possible values:
 	// +kubebuilder:validation:Optional
@@ -2892,9 +3484,17 @@ type UserSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	JoinedSubqueryRequiresAlias *bool `json:"joinedSubqueryRequiresAlias,omitempty" tf:"joined_subquery_requires_alias,omitempty"`
 
+	// Specifies the algorithm of replicas selection that is used for distributed query processing, one of: random, nearest_hostname, in_order, first_or_random, round_robin. Default value: random.
+	// +kubebuilder:validation:Optional
+	LoadBalancing *string `json:"loadBalancing,omitempty" tf:"load_balancing,omitempty"`
+
 	// Method of reading data from local filesystem. Possible values:
 	// +kubebuilder:validation:Optional
 	LocalFilesystemReadMethod *string `json:"localFilesystemReadMethod,omitempty" tf:"local_filesystem_read_method,omitempty"`
+
+	// Setting up query threads logging. Query threads log into the system.query_thread_log table. This setting has effect only when log_queries is true. Queries’ threads run by ClickHouse with this setup are logged according to the rules in the query_thread_log server configuration parameter. Default value: true.
+	// +kubebuilder:validation:Optional
+	LogQueryThreads *bool `json:"logQueryThreads,omitempty" tf:"log_query_threads,omitempty"`
 
 	// Allows or restricts using the LowCardinality data type with the Native format.
 	// +kubebuilder:validation:Optional
@@ -2971,6 +3571,10 @@ type UserSettingsParameters struct {
 	// The size of blocks (in a count of rows) to form for insertion into a table.
 	// +kubebuilder:validation:Optional
 	MaxInsertBlockSize *float64 `json:"maxInsertBlockSize,omitempty" tf:"max_insert_block_size,omitempty"`
+
+	// The maximum number of threads to execute the INSERT SELECT query. Default value: 0.
+	// +kubebuilder:validation:Optional
+	MaxInsertThreads *float64 `json:"maxInsertThreads,omitempty" tf:"max_insert_threads,omitempty"`
 
 	// Limits the maximum memory usage (in bytes) for processing queries on a single server.
 	// +kubebuilder:validation:Optional
@@ -3072,7 +3676,7 @@ type UserSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	MemoryProfilerSampleProbability *float64 `json:"memoryProfilerSampleProbability,omitempty" tf:"memory_profiler_sample_probability,omitempty"`
 
-	// Memory profiler step (in bytes).  If the next query step requires more memory than this parameter specifies, the memory profiler collects the allocating stack trace. Values lower than a few megabytes slow down query processing. Default value: 4194304 (4 MB). Zero means disabled memory profiler.
+	// Memory profiler step (in bytes). If the next query step requires more memory than this parameter specifies, the memory profiler collects the allocating stack trace. Values lower than a few megabytes slow down query processing. Default value: 4194304 (4 MB). Zero means disabled memory profiler.
 	// +kubebuilder:validation:Optional
 	MemoryProfilerStep *float64 `json:"memoryProfilerStep,omitempty" tf:"memory_profiler_step,omitempty"`
 
@@ -3132,6 +3736,10 @@ type UserSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	OutputFormatJSONQuoteDenormals *bool `json:"outputFormatJsonQuoteDenormals,omitempty" tf:"output_format_json_quote_denormals,omitempty"`
 
+	// Enables/disables preferable using the localhost replica when processing distributed queries. Default value: true.
+	// +kubebuilder:validation:Optional
+	PreferLocalhostReplica *bool `json:"preferLocalhostReplica,omitempty" tf:"prefer_localhost_replica,omitempty"`
+
 	// Query priority.
 	// +kubebuilder:validation:Optional
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
@@ -3188,8 +3796,7 @@ type UserSettingsParameters struct {
 	// +kubebuilder:validation:Optional
 	SortOverflowMode *string `json:"sortOverflowMode,omitempty" tf:"sort_overflow_mode,omitempty"`
 
-	// Timeout (in seconds) between checks of execution speed. It is checked that execution speed is not less that specified in min_execution_speed parameter.
-	// Must be at least 1000.
+	// Timeout (in seconds) between checks of execution speed. It is checked that execution speed is not less that specified in min_execution_speed parameter. Must be at least 1000.
 	// +kubebuilder:validation:Optional
 	TimeoutBeforeCheckingExecutionSpeed *float64 `json:"timeoutBeforeCheckingExecutionSpeed,omitempty" tf:"timeout_before_checking_execution_speed,omitempty"`
 
@@ -3204,6 +3811,10 @@ type UserSettingsParameters struct {
 	// Enables equality of NULL values for IN operator.
 	// +kubebuilder:validation:Optional
 	TransformNullIn *bool `json:"transformNullIn,omitempty" tf:"transform_null_in,omitempty"`
+
+	// Enables hedged requests logic for remote queries. It allows to establish many connections with different replicas for query. New connection is enabled in case existent connection(s) with replica(s) were not established within hedged_connection_timeout or no data was received within receive_data_timeout. Query uses the first connection which send non empty progress packet (or data packet, if allow_changing_replica_until_first_data_packet); other connections are cancelled. Queries with max_parallel_replicas > 1 are supported. Default value: true.
+	// +kubebuilder:validation:Optional
+	UseHedgedRequests *bool `json:"useHedgedRequests,omitempty" tf:"use_hedged_requests,omitempty"`
 
 	// Whether to use a cache of uncompressed blocks.
 	// +kubebuilder:validation:Optional
@@ -3242,8 +3853,7 @@ type ZookeeperResourcesInitParameters struct {
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
@@ -3254,8 +3864,7 @@ type ZookeeperResourcesObservation struct {
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
@@ -3267,8 +3876,7 @@ type ZookeeperResourcesParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts.
-	// For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
 	// +kubebuilder:validation:Optional
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 

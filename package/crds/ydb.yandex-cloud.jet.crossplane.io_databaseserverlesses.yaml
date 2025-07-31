@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: databaseserverlesses.ydb.yandex-cloud.jet.crossplane.io
 spec:
   group: ydb.yandex-cloud.jet.crossplane.io
@@ -82,9 +82,9 @@ spec:
                       cluster.
                     type: string
                   folderId:
-                    description: |-
-                      ID of the folder that the Yandex Database serverless cluster belongs to.
-                      It will be deduced from provider configuration if not set explicitly.
+                    description: ID of the folder that the Yandex Database serverless
+                      cluster belongs to. It will be deduced from provider configuration
+                      if not set explicitly.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -213,9 +213,9 @@ spec:
                       cluster.
                     type: string
                   folderId:
-                    description: |-
-                      ID of the folder that the Yandex Database serverless cluster belongs to.
-                      It will be deduced from provider configuration if not set explicitly.
+                    description: ID of the folder that the Yandex Database serverless
+                      cluster belongs to. It will be deduced from provider configuration
+                      if not set explicitly.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -503,9 +503,8 @@ spec:
                     description: The Yandex Database serverless cluster creation timestamp.
                     type: string
                   databasePath:
-                    description: |-
-                      Full database path of the Yandex Database serverless cluster.
-                      Useful for SDK configuration.
+                    description: Full database path of the Yandex Database serverless
+                      cluster. Useful for SDK configuration.
                     type: string
                   deletionProtection:
                     description: Inhibits deletion of the database. Can be either
@@ -520,9 +519,9 @@ spec:
                       cluster.
                     type: string
                   folderId:
-                    description: |-
-                      ID of the folder that the Yandex Database serverless cluster belongs to.
-                      It will be deduced from provider configuration if not set explicitly.
+                    description: ID of the folder that the Yandex Database serverless
+                      cluster belongs to. It will be deduced from provider configuration
+                      if not set explicitly.
                     type: string
                   id:
                     description: ID of the Yandex Database serverless cluster.
@@ -559,13 +558,11 @@ spec:
                     description: Status of the Yandex Database serverless cluster.
                     type: string
                   tlsEnabled:
-                    description: |-
-                      Whether TLS is enabled for the Yandex Database serverless cluster.
-                      Useful for SDK configuration.
+                    description: Whether TLS is enabled for the Yandex Database serverless
+                      cluster. Useful for SDK configuration.
                     type: boolean
                   ydbApiEndpoint:
-                    description: |-
-                      API endpoint of the Yandex Database serverless cluster.
+                    description: API endpoint of the Yandex Database serverless cluster.
                       Useful for SDK configuration.
                     type: string
                   ydbFullEndpoint:

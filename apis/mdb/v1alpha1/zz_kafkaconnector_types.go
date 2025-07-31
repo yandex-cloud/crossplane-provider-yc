@@ -133,6 +133,9 @@ type ExternalClusterInitParameters struct {
 	// Type of SASL authentification mechanism to use
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
 
+	// Password to use in SASL authentification mechanism
+	SaslPasswordSecretRef *v1.SecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
+
 	// Username to use in SASL authentification mechanism
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
 
@@ -188,6 +191,9 @@ type ExternalS3InitParameters struct {
 
 	// region of s3-compatible storage. Available region list.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Secret key of aws-compatible static key.
+	SecretAccessKeySecretRef *v1.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
 }
 
 type ExternalS3Observation struct {
@@ -384,6 +390,9 @@ type TargetClusterExternalClusterInitParameters struct {
 
 	// Type of SASL authentification mechanism to use
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
+
+	// Password to use in SASL authentification mechanism
+	SaslPasswordSecretRef *v1.SecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
 
 	// Username to use in SASL authentification mechanism
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`

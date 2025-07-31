@@ -35,7 +35,7 @@ func (mg *MySQLUser) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this MySQLUser
 func (tr *MySQLUser) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"password": "spec.forProvider.passwordSecretRef"}
+	return map[string]string{"password": "passwordSecretRef"}
 }
 
 // GetObservation of this MySQLUser

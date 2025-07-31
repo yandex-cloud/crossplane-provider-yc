@@ -84,6 +84,9 @@ type DataNodeResourcesParameters struct {
 
 type ElasticsearchClusterConfigInitParameters struct {
 
+	// Password for admin user of Elasticsearch.
+	AdminPasswordSecretRef v1.SecretKeySelector `json:"adminPasswordSecretRef" tf:"-"`
+
 	// Configuration for Elasticsearch data nodes subcluster. The structure is documented below.
 	DataNode []DataNodeInitParameters `json:"dataNode,omitempty" tf:"data_node,omitempty"`
 
@@ -123,7 +126,7 @@ type ElasticsearchClusterConfigObservation struct {
 type ElasticsearchClusterConfigParameters struct {
 
 	// Password for admin user of Elasticsearch.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	AdminPasswordSecretRef v1.SecretKeySelector `json:"adminPasswordSecretRef" tf:"-"`
 
 	// Configuration for Elasticsearch data nodes subcluster. The structure is documented below.
@@ -156,8 +159,7 @@ type ElasticsearchClusterHostInitParameters struct {
 	// User defined host name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The ID of the subnet, to which the host belongs. The subnet must
-	// be a part of the network to which the cluster belongs.
+	// The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -172,8 +174,7 @@ type ElasticsearchClusterHostInitParameters struct {
 	// The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// The availability zone where the Elasticsearch host will be created.
-	// For more information see the official documentation.
+	// The availability zone where the Elasticsearch host will be created. For more information see the official documentation.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
@@ -188,15 +189,13 @@ type ElasticsearchClusterHostObservation struct {
 	// User defined host name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The ID of the subnet, to which the host belongs. The subnet must
-	// be a part of the network to which the cluster belongs.
+	// The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
 	// The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// The availability zone where the Elasticsearch host will be created.
-	// For more information see the official documentation.
+	// The availability zone where the Elasticsearch host will be created. For more information see the official documentation.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
@@ -210,8 +209,7 @@ type ElasticsearchClusterHostParameters struct {
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// The ID of the subnet, to which the host belongs. The subnet must
-	// be a part of the network to which the cluster belongs.
+	// The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -228,8 +226,7 @@ type ElasticsearchClusterHostParameters struct {
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
-	// The availability zone where the Elasticsearch host will be created.
-	// For more information see the official documentation.
+	// The availability zone where the Elasticsearch host will be created. For more information see the official documentation.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone" tf:"zone,omitempty"`
 }
@@ -239,7 +236,7 @@ type ElasticsearchClusterInitParameters struct {
 	// Configuration of the Elasticsearch cluster. The structure is documented below.
 	Config []ElasticsearchClusterConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
 
-	// Inhibits deletion of the cluster.  Can be either true or false.
+	// Inhibits deletion of the cluster. Can be either true or false.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// Description of the Elasticsearch cluster.
@@ -357,7 +354,7 @@ type ElasticsearchClusterObservation struct {
 	// Creation timestamp of the key.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Inhibits deletion of the cluster.  Can be either true or false.
+	// Inhibits deletion of the cluster. Can be either true or false.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
 	// Description of the Elasticsearch cluster.
@@ -369,8 +366,7 @@ type ElasticsearchClusterObservation struct {
 	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN.
-	// For more information see health field of JSON representation in the official documentation.
+	// Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
 	// A host of the Elasticsearch cluster. The structure is documented below.
@@ -397,8 +393,7 @@ type ElasticsearchClusterObservation struct {
 	// ID of the service account authorized for this cluster.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
-	// Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
-	// For more information see status field of JSON representation in the official documentation.
+	// Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
@@ -408,7 +403,7 @@ type ElasticsearchClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	Config []ElasticsearchClusterConfigParameters `json:"config,omitempty" tf:"config,omitempty"`
 
-	// Inhibits deletion of the cluster.  Can be either true or false.
+	// Inhibits deletion of the cluster. Can be either true or false.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 

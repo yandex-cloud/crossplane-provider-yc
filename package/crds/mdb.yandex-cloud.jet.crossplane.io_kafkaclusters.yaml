@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: kafkaclusters.mdb.yandex-cloud.jet.crossplane.io
 spec:
   group: mdb.yandex-cloud.jet.crossplane.io
@@ -97,6 +97,32 @@ spec:
                             default is 1.
                           format: int64
                           type: integer
+                        diskSizeAutoscaling:
+                          description: Disk autoscaling settings of the Kafka cluster.
+                            The structure is documented below.
+                          items:
+                            properties:
+                              diskSizeLimit:
+                                description: Maximum possible size of disk in bytes.
+                                format: int64
+                                type: integer
+                              emergencyUsageThreshold:
+                                description: Percent of disk utilization. Disk will
+                                  autoscale immediately, if this threshold reached.
+                                  Value is between 0 and 100. Default value is 0 (autoscaling
+                                  disabled). Must be not less then 'planned_usage_threshold'
+                                  value.
+                                format: int64
+                                type: integer
+                              plannedUsageThreshold:
+                                description: Percent of disk utilization. During maintenance
+                                  disk will autoscale, if this threshold reached.
+                                  Value is between 0 and 100. Default value is 0 (autoscaling
+                                  disabled).
+                                format: int64
+                                type: integer
+                            type: object
+                          type: array
                         kafka:
                           description: Configuration of the Kafka subcluster. The
                             structure is documented below.
@@ -110,9 +136,8 @@ spec:
                                     autoCreateTopicsEnable:
                                       type: boolean
                                     compressionType:
-                                      description: |-
-                                        Kafka topic settings. For more information, see
-                                        the official documentation
+                                      description: Kafka topic settings. For more
+                                        information, see the official documentation
                                         and the Kafka documentation.
                                       type: string
                                     defaultReplicationFactor:
@@ -170,9 +195,9 @@ spec:
                                       format: int64
                                       type: integer
                                     diskTypeId:
-                                      description: |-
-                                        Type of the storage of ZooKeeper hosts.
-                                        For more information see the official documentation.
+                                      description: Type of the storage of ZooKeeper
+                                        hosts. For more information see the official
+                                        documentation.
                                       type: string
                                     resourcePresetId:
                                       type: string
@@ -210,9 +235,9 @@ spec:
                                       format: int64
                                       type: integer
                                     diskTypeId:
-                                      description: |-
-                                        Type of the storage of ZooKeeper hosts.
-                                        For more information see the official documentation.
+                                      description: Type of the storage of ZooKeeper
+                                        hosts. For more information see the official
+                                        documentation.
                                       type: string
                                     resourcePresetId:
                                       type: string
@@ -223,16 +248,15 @@ spec:
                       type: object
                     type: array
                   deletionProtection:
-                    description: Inhibits deletion of the cluster.  Can be either
-                      true or false.
+                    description: Inhibits deletion of the cluster. Can be either true
+                      or false.
                     type: boolean
                   description:
                     description: Description of the Kafka cluster.
                     type: string
                   environment:
-                    description: |-
-                      Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION.
-                      The default is PRODUCTION.
+                    description: Deployment environment of the Kafka cluster. Can
+                      be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
                     type: string
                   folderId:
                     description: The ID of the folder that the resource belongs to.
@@ -622,10 +646,672 @@ spec:
                               cleanupPolicy:
                                 type: string
                               compressionType:
-                                description: |-
-                                  Kafka topic settings. For more information, see
-                                  the official documentation
-                                  and the Kafka documentation.
+                                description: Kafka topic settings. For more information,
+                                  see the official documentation and the Kafka documentation.
+                                type: string
+                              deleteRetentionMs:
+                                type: string
+                              fileDeleteDelayMs:
+                                type: string
+                              flushMessages:
+                                type: string
+                              flushMs:
+                                type: string
+                              maxMessageBytes:
+                                type: string
+                              minCompactionLagMs:
+                                type: string
+                              minInsyncReplicas:
+                                type: string
+                              preallocate:
+                                type: boolean
+                              retentionBytes:
+                                type: string
+                              retentionMs:
+                                type: string
+                              segmentBytes:
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  user:
+                    description: (Deprecated) To manage users, please switch to using
+                      a separate resource type yandex_mdb_kafka_user.
+                    items:
+                      properties:
+                        name:
+                          description: The name of the user.
+                          type: string
+                        passwordSecretRef:
+                          description: The password of the user.
+                          properties:
+                            key:
+                              description: The key to select.
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                            namespace:
+                              description: Namespace of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          - namespace
+                          type: object
+                        permission:
+                          description: Set of permissions granted to the user. The
+                            structure is documented below.
+                          items:
+                            properties:
+                              allowHosts:
+                                description: Set of hosts, to which this permission
+                                  grants access to.
+                                items:
+                                  type: string
+                                type: array
+                                x-kubernetes-list-type: set
+                              role:
+                                description: The role type to grant to the topic.
+                                type: string
+                              topicName:
+                                description: The name of the topic that the permission
+                                  grants access to.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  config:
+                    description: Configuration of the Kafka cluster. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        access:
+                          description: Access policy to the Kafka cluster. The structure
+                            is documented below.
+                          items:
+                            properties:
+                              dataTransfer:
+                                description: Allow access for DataTransfer
+                                type: boolean
+                            type: object
+                          type: array
+                        assignPublicIp:
+                          description: Determines whether each broker will be assigned
+                            a public IP address. The default is false.
+                          type: boolean
+                        brokersCount:
+                          description: Count of brokers per availability zone. The
+                            default is 1.
+                          format: int64
+                          type: integer
+                        diskSizeAutoscaling:
+                          description: Disk autoscaling settings of the Kafka cluster.
+                            The structure is documented below.
+                          items:
+                            properties:
+                              diskSizeLimit:
+                                description: Maximum possible size of disk in bytes.
+                                format: int64
+                                type: integer
+                              emergencyUsageThreshold:
+                                description: Percent of disk utilization. Disk will
+                                  autoscale immediately, if this threshold reached.
+                                  Value is between 0 and 100. Default value is 0 (autoscaling
+                                  disabled). Must be not less then 'planned_usage_threshold'
+                                  value.
+                                format: int64
+                                type: integer
+                              plannedUsageThreshold:
+                                description: Percent of disk utilization. During maintenance
+                                  disk will autoscale, if this threshold reached.
+                                  Value is between 0 and 100. Default value is 0 (autoscaling
+                                  disabled).
+                                format: int64
+                                type: integer
+                            type: object
+                          type: array
+                        kafka:
+                          description: Configuration of the Kafka subcluster. The
+                            structure is documented below.
+                          items:
+                            properties:
+                              kafkaConfig:
+                                description: User-defined settings for the Kafka cluster.
+                                  The structure is documented below.
+                                items:
+                                  properties:
+                                    autoCreateTopicsEnable:
+                                      type: boolean
+                                    compressionType:
+                                      description: Kafka topic settings. For more
+                                        information, see the official documentation
+                                        and the Kafka documentation.
+                                      type: string
+                                    defaultReplicationFactor:
+                                      type: string
+                                    logFlushIntervalMessages:
+                                      type: string
+                                    logFlushIntervalMs:
+                                      type: string
+                                    logFlushSchedulerIntervalMs:
+                                      type: string
+                                    logPreallocate:
+                                      type: boolean
+                                    logRetentionBytes:
+                                      type: string
+                                    logRetentionHours:
+                                      type: string
+                                    logRetentionMinutes:
+                                      type: string
+                                    logRetentionMs:
+                                      type: string
+                                    logSegmentBytes:
+                                      type: string
+                                    messageMaxBytes:
+                                      type: string
+                                    numPartitions:
+                                      type: string
+                                    offsetsRetentionMinutes:
+                                      type: string
+                                    replicaFetchMaxBytes:
+                                      type: string
+                                    saslEnabledMechanisms:
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    socketReceiveBufferBytes:
+                                      type: string
+                                    socketSendBufferBytes:
+                                      type: string
+                                    sslCipherSuites:
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                  type: object
+                                type: array
+                              resources:
+                                description: Resources allocated to hosts of the ZooKeeper
+                                  subcluster. The structure is documented below.
+                                items:
+                                  properties:
+                                    diskSize:
+                                      description: Volume of the storage available
+                                        to a ZooKeeper host, in gigabytes.
+                                      format: int64
+                                      type: integer
+                                    diskTypeId:
+                                      description: Type of the storage of ZooKeeper
+                                        hosts. For more information see the official
+                                        documentation.
+                                      type: string
+                                    resourcePresetId:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        schemaRegistry:
+                          description: Enables managed schema registry on cluster.
+                            The default is false.
+                          type: boolean
+                        unmanagedTopics:
+                          type: boolean
+                        version:
+                          description: Version of the Kafka server software.
+                          type: string
+                        zones:
+                          description: List of availability zones.
+                          items:
+                            type: string
+                          type: array
+                        zookeeper:
+                          description: Configuration of the ZooKeeper subcluster.
+                            The structure is documented below.
+                          items:
+                            properties:
+                              resources:
+                                description: Resources allocated to hosts of the ZooKeeper
+                                  subcluster. The structure is documented below.
+                                items:
+                                  properties:
+                                    diskSize:
+                                      description: Volume of the storage available
+                                        to a ZooKeeper host, in gigabytes.
+                                      format: int64
+                                      type: integer
+                                    diskTypeId:
+                                      description: Type of the storage of ZooKeeper
+                                        hosts. For more information see the official
+                                        documentation.
+                                      type: string
+                                    resourcePresetId:
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: Inhibits deletion of the cluster. Can be either true
+                      or false.
+                    type: boolean
+                  description:
+                    description: Description of the Kafka cluster.
+                    type: string
+                  environment:
+                    description: Deployment environment of the Kafka cluster. Can
+                      be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
+                    type: string
+                  folderId:
+                    description: The ID of the folder that the resource belongs to.
+                      If it is not provided, the default provider folder is used.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  hostGroupIds:
+                    description: A list of IDs of the host groups to place VMs of
+                      the cluster on.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: A set of key/value label pairs to assign to the Kafka
+                      cluster.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  maintenanceWindow:
+                    description: Maintenance policy of the Kafka cluster. The structure
+                      is documented below.
+                    items:
+                      properties:
+                        day:
+                          description: 'Day of the week (in DDD format). Allowed values:
+                            "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"'
+                          type: string
+                        hour:
+                          description: Hour of the day in UTC (in HH format). Allowed
+                            value is between 1 and 24.
+                          format: int64
+                          type: integer
+                        type:
+                          description: Type of maintenance window. Can be either ANYTIME
+                            or WEEKLY. A day and hour of window need to be specified
+                            with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: Name of the Kafka cluster. Provided by the client
+                      when the cluster is created.
+                    type: string
+                  networkId:
+                    description: ID of the network, to which the Kafka cluster belongs.
+                    type: string
+                  networkIdRef:
+                    description: Reference to a Network in vpc to populate networkId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: Selector for a Network in vpc to populate networkId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  securityGroupIds:
+                    description: Security group ids, to which the Kafka cluster belongs.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  securityGroupIdsRefs:
+                    description: References to SecurityGroup in vpc to populate securityGroupIds.
+                    items:
+                      description: A Reference to a named object.
+                      properties:
+                        name:
+                          description: Name of the referenced object.
+                          type: string
+                        policy:
+                          description: Policies for referencing.
+                          properties:
+                            resolution:
+                              default: Required
+                              description: |-
+                                Resolution specifies whether resolution of this reference is required.
+                                The default is 'Required', which means the reconcile will fail if the
+                                reference cannot be resolved. 'Optional' means this reference will be
+                                a no-op if it cannot be resolved.
+                              enum:
+                              - Required
+                              - Optional
+                              type: string
+                            resolve:
+                              description: |-
+                                Resolve specifies when this reference should be resolved. The default
+                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                the corresponding field is not present. Use 'Always' to resolve the
+                                reference on every reconcile.
+                              enum:
+                              - Always
+                              - IfNotPresent
+                              type: string
+                          type: object
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  securityGroupIdsSelector:
+                    description: Selector for a list of SecurityGroup in vpc to populate
+                      securityGroupIds.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  subnetIds:
+                    description: IDs of the subnets, to which the Kafka cluster belongs.
+                    items:
+                      type: string
+                    type: array
+                  subnetIdsRefs:
+                    description: References to Subnet in vpc to populate subnetIds.
+                    items:
+                      description: A Reference to a named object.
+                      properties:
+                        name:
+                          description: Name of the referenced object.
+                          type: string
+                        policy:
+                          description: Policies for referencing.
+                          properties:
+                            resolution:
+                              default: Required
+                              description: |-
+                                Resolution specifies whether resolution of this reference is required.
+                                The default is 'Required', which means the reconcile will fail if the
+                                reference cannot be resolved. 'Optional' means this reference will be
+                                a no-op if it cannot be resolved.
+                              enum:
+                              - Required
+                              - Optional
+                              type: string
+                            resolve:
+                              description: |-
+                                Resolve specifies when this reference should be resolved. The default
+                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                the corresponding field is not present. Use 'Always' to resolve the
+                                reference on every reconcile.
+                              enum:
+                              - Always
+                              - IfNotPresent
+                              type: string
+                          type: object
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  subnetIdsSelector:
+                    description: Selector for a list of Subnet in vpc to populate
+                      subnetIds.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  topic:
+                    description: (Deprecated) To manage topics, please switch to using
+                      a separate resource type yandex_mdb_kafka_topic.
+                    items:
+                      properties:
+                        name:
+                          description: The name of the topic.
+                          type: string
+                        partitions:
+                          description: The number of the topic's partitions.
+                          format: int64
+                          type: integer
+                        replicationFactor:
+                          description: Amount of data copies (replicas) for the topic
+                            in the cluster.
+                          format: int64
+                          type: integer
+                        topicConfig:
+                          description: User-defined settings for the topic. The structure
+                            is documented below.
+                          items:
+                            properties:
+                              cleanupPolicy:
+                                type: string
+                              compressionType:
+                                description: Kafka topic settings. For more information,
+                                  see the official documentation and the Kafka documentation.
                                 type: string
                               deleteRetentionMs:
                                 type: string
@@ -701,631 +1387,6 @@ spec:
                           type: array
                       required:
                       - passwordSecretRef
-                      type: object
-                    type: array
-                type: object
-              initProvider:
-                description: |-
-                  THIS IS A BETA FIELD. It will be honored
-                  unless the Management Policies feature flag is disabled.
-                  InitProvider holds the same fields as ForProvider, with the exception
-                  of Identifier and other resource reference fields. The fields that are
-                  in InitProvider are merged into ForProvider when the resource is created.
-                  The same fields are also added to the terraform ignore_changes hook, to
-                  avoid updating them after creation. This is useful for fields that are
-                  required on creation, but we do not desire to update them after creation,
-                  for example because of an external controller is managing them, like an
-                  autoscaler.
-                properties:
-                  config:
-                    description: Configuration of the Kafka cluster. The structure
-                      is documented below.
-                    items:
-                      properties:
-                        access:
-                          description: Access policy to the Kafka cluster. The structure
-                            is documented below.
-                          items:
-                            properties:
-                              dataTransfer:
-                                description: Allow access for DataTransfer
-                                type: boolean
-                            type: object
-                          type: array
-                        assignPublicIp:
-                          description: Determines whether each broker will be assigned
-                            a public IP address. The default is false.
-                          type: boolean
-                        brokersCount:
-                          description: Count of brokers per availability zone. The
-                            default is 1.
-                          format: int64
-                          type: integer
-                        kafka:
-                          description: Configuration of the Kafka subcluster. The
-                            structure is documented below.
-                          items:
-                            properties:
-                              kafkaConfig:
-                                description: User-defined settings for the Kafka cluster.
-                                  The structure is documented below.
-                                items:
-                                  properties:
-                                    autoCreateTopicsEnable:
-                                      type: boolean
-                                    compressionType:
-                                      description: |-
-                                        Kafka topic settings. For more information, see
-                                        the official documentation
-                                        and the Kafka documentation.
-                                      type: string
-                                    defaultReplicationFactor:
-                                      type: string
-                                    logFlushIntervalMessages:
-                                      type: string
-                                    logFlushIntervalMs:
-                                      type: string
-                                    logFlushSchedulerIntervalMs:
-                                      type: string
-                                    logPreallocate:
-                                      type: boolean
-                                    logRetentionBytes:
-                                      type: string
-                                    logRetentionHours:
-                                      type: string
-                                    logRetentionMinutes:
-                                      type: string
-                                    logRetentionMs:
-                                      type: string
-                                    logSegmentBytes:
-                                      type: string
-                                    messageMaxBytes:
-                                      type: string
-                                    numPartitions:
-                                      type: string
-                                    offsetsRetentionMinutes:
-                                      type: string
-                                    replicaFetchMaxBytes:
-                                      type: string
-                                    saslEnabledMechanisms:
-                                      items:
-                                        type: string
-                                      type: array
-                                      x-kubernetes-list-type: set
-                                    socketReceiveBufferBytes:
-                                      type: string
-                                    socketSendBufferBytes:
-                                      type: string
-                                    sslCipherSuites:
-                                      items:
-                                        type: string
-                                      type: array
-                                      x-kubernetes-list-type: set
-                                  type: object
-                                type: array
-                              resources:
-                                description: Resources allocated to hosts of the ZooKeeper
-                                  subcluster. The structure is documented below.
-                                items:
-                                  properties:
-                                    diskSize:
-                                      description: Volume of the storage available
-                                        to a ZooKeeper host, in gigabytes.
-                                      format: int64
-                                      type: integer
-                                    diskTypeId:
-                                      description: |-
-                                        Type of the storage of ZooKeeper hosts.
-                                        For more information see the official documentation.
-                                      type: string
-                                    resourcePresetId:
-                                      type: string
-                                  type: object
-                                type: array
-                            type: object
-                          type: array
-                        schemaRegistry:
-                          description: Enables managed schema registry on cluster.
-                            The default is false.
-                          type: boolean
-                        unmanagedTopics:
-                          type: boolean
-                        version:
-                          description: Version of the Kafka server software.
-                          type: string
-                        zones:
-                          description: List of availability zones.
-                          items:
-                            type: string
-                          type: array
-                        zookeeper:
-                          description: Configuration of the ZooKeeper subcluster.
-                            The structure is documented below.
-                          items:
-                            properties:
-                              resources:
-                                description: Resources allocated to hosts of the ZooKeeper
-                                  subcluster. The structure is documented below.
-                                items:
-                                  properties:
-                                    diskSize:
-                                      description: Volume of the storage available
-                                        to a ZooKeeper host, in gigabytes.
-                                      format: int64
-                                      type: integer
-                                    diskTypeId:
-                                      description: |-
-                                        Type of the storage of ZooKeeper hosts.
-                                        For more information see the official documentation.
-                                      type: string
-                                    resourcePresetId:
-                                      type: string
-                                  type: object
-                                type: array
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  deletionProtection:
-                    description: Inhibits deletion of the cluster.  Can be either
-                      true or false.
-                    type: boolean
-                  description:
-                    description: Description of the Kafka cluster.
-                    type: string
-                  environment:
-                    description: |-
-                      Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION.
-                      The default is PRODUCTION.
-                    type: string
-                  folderId:
-                    description: The ID of the folder that the resource belongs to.
-                      If it is not provided, the default provider folder is used.
-                    type: string
-                  folderIdRef:
-                    description: Reference to a Folder in resourcemanager to populate
-                      folderId.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                      policy:
-                        description: Policies for referencing.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: |-
-                              Resolution specifies whether resolution of this reference is required.
-                              The default is 'Required', which means the reconcile will fail if the
-                              reference cannot be resolved. 'Optional' means this reference will be
-                              a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: |-
-                              Resolve specifies when this reference should be resolved. The default
-                              is 'IfNotPresent', which will attempt to resolve the reference only when
-                              the corresponding field is not present. Use 'Always' to resolve the
-                              reference on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    required:
-                    - name
-                    type: object
-                  folderIdSelector:
-                    description: Selector for a Folder in resourcemanager to populate
-                      folderId.
-                    properties:
-                      matchControllerRef:
-                        description: |-
-                          MatchControllerRef ensures an object with the same controller reference
-                          as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                      policy:
-                        description: Policies for selection.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: |-
-                              Resolution specifies whether resolution of this reference is required.
-                              The default is 'Required', which means the reconcile will fail if the
-                              reference cannot be resolved. 'Optional' means this reference will be
-                              a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: |-
-                              Resolve specifies when this reference should be resolved. The default
-                              is 'IfNotPresent', which will attempt to resolve the reference only when
-                              the corresponding field is not present. Use 'Always' to resolve the
-                              reference on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    type: object
-                  hostGroupIds:
-                    description: A list of IDs of the host groups to place VMs of
-                      the cluster on.
-                    items:
-                      type: string
-                    type: array
-                    x-kubernetes-list-type: set
-                  labels:
-                    additionalProperties:
-                      type: string
-                    description: A set of key/value label pairs to assign to the Kafka
-                      cluster.
-                    type: object
-                    x-kubernetes-map-type: granular
-                  maintenanceWindow:
-                    description: Maintenance policy of the Kafka cluster. The structure
-                      is documented below.
-                    items:
-                      properties:
-                        day:
-                          description: 'Day of the week (in DDD format). Allowed values:
-                            "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"'
-                          type: string
-                        hour:
-                          description: Hour of the day in UTC (in HH format). Allowed
-                            value is between 1 and 24.
-                          format: int64
-                          type: integer
-                        type:
-                          description: Type of maintenance window. Can be either ANYTIME
-                            or WEEKLY. A day and hour of window need to be specified
-                            with weekly window.
-                          type: string
-                      type: object
-                    type: array
-                  name:
-                    description: Name of the Kafka cluster. Provided by the client
-                      when the cluster is created.
-                    type: string
-                  networkId:
-                    description: ID of the network, to which the Kafka cluster belongs.
-                    type: string
-                  networkIdRef:
-                    description: Reference to a Network in vpc to populate networkId.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                      policy:
-                        description: Policies for referencing.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: |-
-                              Resolution specifies whether resolution of this reference is required.
-                              The default is 'Required', which means the reconcile will fail if the
-                              reference cannot be resolved. 'Optional' means this reference will be
-                              a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: |-
-                              Resolve specifies when this reference should be resolved. The default
-                              is 'IfNotPresent', which will attempt to resolve the reference only when
-                              the corresponding field is not present. Use 'Always' to resolve the
-                              reference on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    required:
-                    - name
-                    type: object
-                  networkIdSelector:
-                    description: Selector for a Network in vpc to populate networkId.
-                    properties:
-                      matchControllerRef:
-                        description: |-
-                          MatchControllerRef ensures an object with the same controller reference
-                          as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                      policy:
-                        description: Policies for selection.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: |-
-                              Resolution specifies whether resolution of this reference is required.
-                              The default is 'Required', which means the reconcile will fail if the
-                              reference cannot be resolved. 'Optional' means this reference will be
-                              a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: |-
-                              Resolve specifies when this reference should be resolved. The default
-                              is 'IfNotPresent', which will attempt to resolve the reference only when
-                              the corresponding field is not present. Use 'Always' to resolve the
-                              reference on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    type: object
-                  securityGroupIds:
-                    description: Security group ids, to which the Kafka cluster belongs.
-                    items:
-                      type: string
-                    type: array
-                    x-kubernetes-list-type: set
-                  securityGroupIdsRefs:
-                    description: References to SecurityGroup in vpc to populate securityGroupIds.
-                    items:
-                      description: A Reference to a named object.
-                      properties:
-                        name:
-                          description: Name of the referenced object.
-                          type: string
-                        policy:
-                          description: Policies for referencing.
-                          properties:
-                            resolution:
-                              default: Required
-                              description: |-
-                                Resolution specifies whether resolution of this reference is required.
-                                The default is 'Required', which means the reconcile will fail if the
-                                reference cannot be resolved. 'Optional' means this reference will be
-                                a no-op if it cannot be resolved.
-                              enum:
-                              - Required
-                              - Optional
-                              type: string
-                            resolve:
-                              description: |-
-                                Resolve specifies when this reference should be resolved. The default
-                                is 'IfNotPresent', which will attempt to resolve the reference only when
-                                the corresponding field is not present. Use 'Always' to resolve the
-                                reference on every reconcile.
-                              enum:
-                              - Always
-                              - IfNotPresent
-                              type: string
-                          type: object
-                      required:
-                      - name
-                      type: object
-                    type: array
-                  securityGroupIdsSelector:
-                    description: Selector for a list of SecurityGroup in vpc to populate
-                      securityGroupIds.
-                    properties:
-                      matchControllerRef:
-                        description: |-
-                          MatchControllerRef ensures an object with the same controller reference
-                          as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                      policy:
-                        description: Policies for selection.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: |-
-                              Resolution specifies whether resolution of this reference is required.
-                              The default is 'Required', which means the reconcile will fail if the
-                              reference cannot be resolved. 'Optional' means this reference will be
-                              a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: |-
-                              Resolve specifies when this reference should be resolved. The default
-                              is 'IfNotPresent', which will attempt to resolve the reference only when
-                              the corresponding field is not present. Use 'Always' to resolve the
-                              reference on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    type: object
-                  subnetIds:
-                    description: IDs of the subnets, to which the Kafka cluster belongs.
-                    items:
-                      type: string
-                    type: array
-                  subnetIdsRefs:
-                    description: References to Subnet in vpc to populate subnetIds.
-                    items:
-                      description: A Reference to a named object.
-                      properties:
-                        name:
-                          description: Name of the referenced object.
-                          type: string
-                        policy:
-                          description: Policies for referencing.
-                          properties:
-                            resolution:
-                              default: Required
-                              description: |-
-                                Resolution specifies whether resolution of this reference is required.
-                                The default is 'Required', which means the reconcile will fail if the
-                                reference cannot be resolved. 'Optional' means this reference will be
-                                a no-op if it cannot be resolved.
-                              enum:
-                              - Required
-                              - Optional
-                              type: string
-                            resolve:
-                              description: |-
-                                Resolve specifies when this reference should be resolved. The default
-                                is 'IfNotPresent', which will attempt to resolve the reference only when
-                                the corresponding field is not present. Use 'Always' to resolve the
-                                reference on every reconcile.
-                              enum:
-                              - Always
-                              - IfNotPresent
-                              type: string
-                          type: object
-                      required:
-                      - name
-                      type: object
-                    type: array
-                  subnetIdsSelector:
-                    description: Selector for a list of Subnet in vpc to populate
-                      subnetIds.
-                    properties:
-                      matchControllerRef:
-                        description: |-
-                          MatchControllerRef ensures an object with the same controller reference
-                          as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                      policy:
-                        description: Policies for selection.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: |-
-                              Resolution specifies whether resolution of this reference is required.
-                              The default is 'Required', which means the reconcile will fail if the
-                              reference cannot be resolved. 'Optional' means this reference will be
-                              a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: |-
-                              Resolve specifies when this reference should be resolved. The default
-                              is 'IfNotPresent', which will attempt to resolve the reference only when
-                              the corresponding field is not present. Use 'Always' to resolve the
-                              reference on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    type: object
-                  topic:
-                    description: (Deprecated) To manage topics, please switch to using
-                      a separate resource type yandex_mdb_kafka_topic.
-                    items:
-                      properties:
-                        name:
-                          description: The name of the topic.
-                          type: string
-                        partitions:
-                          description: The number of the topic's partitions.
-                          format: int64
-                          type: integer
-                        replicationFactor:
-                          description: Amount of data copies (replicas) for the topic
-                            in the cluster.
-                          format: int64
-                          type: integer
-                        topicConfig:
-                          description: User-defined settings for the topic. The structure
-                            is documented below.
-                          items:
-                            properties:
-                              cleanupPolicy:
-                                type: string
-                              compressionType:
-                                description: |-
-                                  Kafka topic settings. For more information, see
-                                  the official documentation
-                                  and the Kafka documentation.
-                                type: string
-                              deleteRetentionMs:
-                                type: string
-                              fileDeleteDelayMs:
-                                type: string
-                              flushMessages:
-                                type: string
-                              flushMs:
-                                type: string
-                              maxMessageBytes:
-                                type: string
-                              minCompactionLagMs:
-                                type: string
-                              minInsyncReplicas:
-                                type: string
-                              preallocate:
-                                type: boolean
-                              retentionBytes:
-                                type: string
-                              retentionMs:
-                                type: string
-                              segmentBytes:
-                                type: string
-                            type: object
-                          type: array
-                      type: object
-                    type: array
-                  user:
-                    description: (Deprecated) To manage users, please switch to using
-                      a separate resource type yandex_mdb_kafka_user.
-                    items:
-                      properties:
-                        name:
-                          description: The name of the user.
-                          type: string
-                        permission:
-                          description: Set of permissions granted to the user. The
-                            structure is documented below.
-                          items:
-                            properties:
-                              allowHosts:
-                                description: Set of hosts, to which this permission
-                                  grants access to.
-                                items:
-                                  type: string
-                                type: array
-                                x-kubernetes-list-type: set
-                              role:
-                                description: The role type to grant to the topic.
-                                type: string
-                              topicName:
-                                description: The name of the topic that the permission
-                                  grants access to.
-                                type: string
-                            type: object
-                          type: array
                       type: object
                     type: array
                 type: object
@@ -1534,6 +1595,32 @@ spec:
                             default is 1.
                           format: int64
                           type: integer
+                        diskSizeAutoscaling:
+                          description: Disk autoscaling settings of the Kafka cluster.
+                            The structure is documented below.
+                          items:
+                            properties:
+                              diskSizeLimit:
+                                description: Maximum possible size of disk in bytes.
+                                format: int64
+                                type: integer
+                              emergencyUsageThreshold:
+                                description: Percent of disk utilization. Disk will
+                                  autoscale immediately, if this threshold reached.
+                                  Value is between 0 and 100. Default value is 0 (autoscaling
+                                  disabled). Must be not less then 'planned_usage_threshold'
+                                  value.
+                                format: int64
+                                type: integer
+                              plannedUsageThreshold:
+                                description: Percent of disk utilization. During maintenance
+                                  disk will autoscale, if this threshold reached.
+                                  Value is between 0 and 100. Default value is 0 (autoscaling
+                                  disabled).
+                                format: int64
+                                type: integer
+                            type: object
+                          type: array
                         kafka:
                           description: Configuration of the Kafka subcluster. The
                             structure is documented below.
@@ -1547,9 +1634,8 @@ spec:
                                     autoCreateTopicsEnable:
                                       type: boolean
                                     compressionType:
-                                      description: |-
-                                        Kafka topic settings. For more information, see
-                                        the official documentation
+                                      description: Kafka topic settings. For more
+                                        information, see the official documentation
                                         and the Kafka documentation.
                                       type: string
                                     defaultReplicationFactor:
@@ -1607,9 +1693,9 @@ spec:
                                       format: int64
                                       type: integer
                                     diskTypeId:
-                                      description: |-
-                                        Type of the storage of ZooKeeper hosts.
-                                        For more information see the official documentation.
+                                      description: Type of the storage of ZooKeeper
+                                        hosts. For more information see the official
+                                        documentation.
                                       type: string
                                     resourcePresetId:
                                       type: string
@@ -1647,9 +1733,9 @@ spec:
                                       format: int64
                                       type: integer
                                     diskTypeId:
-                                      description: |-
-                                        Type of the storage of ZooKeeper hosts.
-                                        For more information see the official documentation.
+                                      description: Type of the storage of ZooKeeper
+                                        hosts. For more information see the official
+                                        documentation.
                                       type: string
                                     resourcePresetId:
                                       type: string
@@ -1663,25 +1749,24 @@ spec:
                     description: Timestamp of cluster creation.
                     type: string
                   deletionProtection:
-                    description: Inhibits deletion of the cluster.  Can be either
-                      true or false.
+                    description: Inhibits deletion of the cluster. Can be either true
+                      or false.
                     type: boolean
                   description:
                     description: Description of the Kafka cluster.
                     type: string
                   environment:
-                    description: |-
-                      Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION.
-                      The default is PRODUCTION.
+                    description: Deployment environment of the Kafka cluster. Can
+                      be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
                     type: string
                   folderId:
                     description: The ID of the folder that the resource belongs to.
                       If it is not provided, the default provider folder is used.
                     type: string
                   health:
-                    description: |-
-                      Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN.
-                      For more information see health field of JSON representation in the official documentation.
+                    description: Aggregated health of the cluster. Can be either ALIVE,
+                      DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health
+                      field of JSON representation in the official documentation.
                     type: string
                   host:
                     description: A host of the Kafka cluster. The structure is documented
@@ -1761,9 +1846,10 @@ spec:
                     type: array
                     x-kubernetes-list-type: set
                   status:
-                    description: |-
-                      Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
-                      For more information see status field of JSON representation in the official documentation.
+                    description: Status of the cluster. Can be either CREATING, STARTING,
+                      RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
+                      For more information see status field of JSON representation
+                      in the official documentation.
                     type: string
                   subnetIds:
                     description: IDs of the subnets, to which the Kafka cluster belongs.
@@ -1795,10 +1881,8 @@ spec:
                               cleanupPolicy:
                                 type: string
                               compressionType:
-                                description: |-
-                                  Kafka topic settings. For more information, see
-                                  the official documentation
-                                  and the Kafka documentation.
+                                description: Kafka topic settings. For more information,
+                                  see the official documentation and the Kafka documentation.
                                 type: string
                               deleteRetentionMs:
                                 type: string

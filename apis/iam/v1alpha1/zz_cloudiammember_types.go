@@ -32,8 +32,7 @@ type CloudIAMMemberInitParameters struct {
 	// ID of the cloud to attach a policy to.
 	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
 
-	// The identity that will be granted the privilege that is specified in the role field.
-	// This field can have one of the following values:
+	// The identity that will be granted the privilege that is specified in the role field. This field can have one of the following values:
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
@@ -61,8 +60,7 @@ type CloudIAMMemberObservation struct {
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The identity that will be granted the privilege that is specified in the role field.
-	// This field can have one of the following values:
+	// The identity that will be granted the privilege that is specified in the role field. This field can have one of the following values:
 	Member *string `json:"member,omitempty" tf:"member,omitempty"`
 
 	// The role that should be assigned.
@@ -77,8 +75,7 @@ type CloudIAMMemberParameters struct {
 	// +kubebuilder:validation:Optional
 	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
 
-	// The identity that will be granted the privilege that is specified in the role field.
-	// This field can have one of the following values:
+	// The identity that will be granted the privilege that is specified in the role field. This field can have one of the following values:
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountRef

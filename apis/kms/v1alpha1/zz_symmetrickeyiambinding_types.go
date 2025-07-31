@@ -29,8 +29,7 @@ import (
 
 type SymmetricKeyIAMBindingInitParameters struct {
 
-	// Identities that will be granted the privilege in role.
-	// Each entry can have one of the following values:
+	// Identities that will be granted the privilege in role. Each entry can have one of the following values:
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
@@ -46,8 +45,7 @@ type SymmetricKeyIAMBindingInitParameters struct {
 type SymmetricKeyIAMBindingObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Identities that will be granted the privilege in role.
-	// Each entry can have one of the following values:
+	// Identities that will be granted the privilege in role. Each entry can have one of the following values:
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
@@ -62,8 +60,7 @@ type SymmetricKeyIAMBindingObservation struct {
 
 type SymmetricKeyIAMBindingParameters struct {
 
-	// Identities that will be granted the privilege in role.
-	// Each entry can have one of the following values:
+	// Identities that will be granted the privilege in role. Each entry can have one of the following values:
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`

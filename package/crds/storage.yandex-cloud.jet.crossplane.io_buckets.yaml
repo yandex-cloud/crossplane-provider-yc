@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: buckets.storage.yandex-cloud.jet.crossplane.io
 spec:
   group: storage.yandex-cloud.jet.crossplane.io
@@ -74,9 +74,10 @@ spec:
               forProvider:
                 properties:
                   accessKey:
-                    description: |-
-                      The access key to use when applying changes. If omitted, storage_access_key specified in
-                      provider config (explicitly or within shared_credentials_file) is used.
+                    description: The access key to use when applying changes. This
+                      value can also be provided as storage_access_key specified in
+                      provider config (explicitly or within shared_credentials_file)
+                      is used.
                     type: string
                   accessKeyRef:
                     description: Reference to a ServiceAccountStaticAccessKey in iam
@@ -155,14 +156,11 @@ spec:
                         type: object
                     type: object
                   acl:
-                    description: |-
-                      The predefined ACL to apply.
-                      Defaults to private. Conflicts with grant.
+                    description: The predefined ACL to apply. Defaults to private.
+                      Conflicts with grant.
                     type: string
                   anonymousAccessFlags:
-                    description: |-
-                      Provides various access to objects.
-                      See bucket availability
+                    description: Provides various access to objects. See bucket availability
                       for more infomation.
                     items:
                       properties:
@@ -181,9 +179,8 @@ spec:
                     description: The name of the bucket.
                     type: string
                   bucketPrefix:
-                    description: |-
-                      Creates a unique bucket name beginning with the specified prefix.
-                      Conflicts with bucket.
+                    description: Creates a unique bucket name beginning with the specified
+                      prefix. Conflicts with bucket.
                     type: string
                   corsRule:
                     description: A rule of Cross-Origin Resource Sharing (documented
@@ -219,10 +216,9 @@ spec:
                       type: object
                     type: array
                   defaultStorageClass:
-                    description: |-
-                      Storage class which is used for storing objects by default.
-                      Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD".
-                      See storage class for more inforamtion.
+                    description: 'Storage class which is used for storing objects
+                      by default. Available values are: "STANDARD", "COLD", "ICE".
+                      Default is "STANDARD". See storage class for more inforamtion.'
                     type: string
                   folderId:
                     description: Allow to create bucket in different folder.
@@ -468,8 +464,9 @@ spec:
                             properties:
                               and:
                                 description: 'operator applied to one or more filter
-                                  parameters. It should be used when both prefix and
-                                  tags are used. It supports the following parameters:'
+                                  parameters. It should be used when two or more of
+                                  the above parameters are used. It supports the following
+                                  parameters:'
                                 items:
                                   properties:
                                     objectSizeGreaterThan:
@@ -638,9 +635,10 @@ spec:
                   policy:
                     type: string
                   secretKeySecretRef:
-                    description: |-
-                      The secret key to use when applying changes. If omitted, storage_secret_key specified in
-                      provider config (explicitly or within shared_credentials_file) is used.
+                    description: The secret key to use when applying changes. This
+                      value can also be provided as storage_secret_key specified in
+                      provider config (explicitly or within shared_credentials_file)
+                      is used.
                     properties:
                       key:
                         description: The key to select.
@@ -750,9 +748,10 @@ spec:
                   autoscaler.
                 properties:
                   accessKey:
-                    description: |-
-                      The access key to use when applying changes. If omitted, storage_access_key specified in
-                      provider config (explicitly or within shared_credentials_file) is used.
+                    description: The access key to use when applying changes. This
+                      value can also be provided as storage_access_key specified in
+                      provider config (explicitly or within shared_credentials_file)
+                      is used.
                     type: string
                   accessKeyRef:
                     description: Reference to a ServiceAccountStaticAccessKey in iam
@@ -831,14 +830,11 @@ spec:
                         type: object
                     type: object
                   acl:
-                    description: |-
-                      The predefined ACL to apply.
-                      Defaults to private. Conflicts with grant.
+                    description: The predefined ACL to apply. Defaults to private.
+                      Conflicts with grant.
                     type: string
                   anonymousAccessFlags:
-                    description: |-
-                      Provides various access to objects.
-                      See bucket availability
+                    description: Provides various access to objects. See bucket availability
                       for more infomation.
                     items:
                       properties:
@@ -857,9 +853,8 @@ spec:
                     description: The name of the bucket.
                     type: string
                   bucketPrefix:
-                    description: |-
-                      Creates a unique bucket name beginning with the specified prefix.
-                      Conflicts with bucket.
+                    description: Creates a unique bucket name beginning with the specified
+                      prefix. Conflicts with bucket.
                     type: string
                   corsRule:
                     description: A rule of Cross-Origin Resource Sharing (documented
@@ -895,10 +890,9 @@ spec:
                       type: object
                     type: array
                   defaultStorageClass:
-                    description: |-
-                      Storage class which is used for storing objects by default.
-                      Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD".
-                      See storage class for more inforamtion.
+                    description: 'Storage class which is used for storing objects
+                      by default. Available values are: "STANDARD", "COLD", "ICE".
+                      Default is "STANDARD". See storage class for more inforamtion.'
                     type: string
                   folderId:
                     description: Allow to create bucket in different folder.
@@ -1144,8 +1138,9 @@ spec:
                             properties:
                               and:
                                 description: 'operator applied to one or more filter
-                                  parameters. It should be used when both prefix and
-                                  tags are used. It supports the following parameters:'
+                                  parameters. It should be used when two or more of
+                                  the above parameters are used. It supports the following
+                                  parameters:'
                                 items:
                                   properties:
                                     objectSizeGreaterThan:
@@ -1313,6 +1308,26 @@ spec:
                     type: array
                   policy:
                     type: string
+                  secretKeySecretRef:
+                    description: The secret key to use when applying changes. This
+                      value can also be provided as storage_secret_key specified in
+                      provider config (explicitly or within shared_credentials_file)
+                      is used.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   serverSideEncryptionConfiguration:
                     description: A configuration of server-side encryption for the
                       bucket (documented below)
@@ -1566,19 +1581,17 @@ spec:
               atProvider:
                 properties:
                   accessKey:
-                    description: |-
-                      The access key to use when applying changes. If omitted, storage_access_key specified in
-                      provider config (explicitly or within shared_credentials_file) is used.
+                    description: The access key to use when applying changes. This
+                      value can also be provided as storage_access_key specified in
+                      provider config (explicitly or within shared_credentials_file)
+                      is used.
                     type: string
                   acl:
-                    description: |-
-                      The predefined ACL to apply.
-                      Defaults to private. Conflicts with grant.
+                    description: The predefined ACL to apply. Defaults to private.
+                      Conflicts with grant.
                     type: string
                   anonymousAccessFlags:
-                    description: |-
-                      Provides various access to objects.
-                      See bucket availability
+                    description: Provides various access to objects. See bucket availability
                       for more infomation.
                     items:
                       properties:
@@ -1600,9 +1613,8 @@ spec:
                     description: The bucket domain name.
                     type: string
                   bucketPrefix:
-                    description: |-
-                      Creates a unique bucket name beginning with the specified prefix.
-                      Conflicts with bucket.
+                    description: Creates a unique bucket name beginning with the specified
+                      prefix. Conflicts with bucket.
                     type: string
                   corsRule:
                     description: A rule of Cross-Origin Resource Sharing (documented
@@ -1638,10 +1650,9 @@ spec:
                       type: object
                     type: array
                   defaultStorageClass:
-                    description: |-
-                      Storage class which is used for storing objects by default.
-                      Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD".
-                      See storage class for more inforamtion.
+                    description: 'Storage class which is used for storing objects
+                      by default. Available values are: "STANDARD", "COLD", "ICE".
+                      Default is "STANDARD". See storage class for more inforamtion.'
                     type: string
                   folderId:
                     description: Allow to create bucket in different folder.
@@ -1739,8 +1750,9 @@ spec:
                             properties:
                               and:
                                 description: 'operator applied to one or more filter
-                                  parameters. It should be used when both prefix and
-                                  tags are used. It supports the following parameters:'
+                                  parameters. It should be used when two or more of
+                                  the above parameters are used. It supports the following
+                                  parameters:'
                                 items:
                                   properties:
                                     objectSizeGreaterThan:

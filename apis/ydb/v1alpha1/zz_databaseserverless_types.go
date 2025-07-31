@@ -35,8 +35,7 @@ type DatabaseServerlessInitParameters struct {
 	// A description for the Yandex Database serverless cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// ID of the folder that the Yandex Database serverless cluster belongs to.
-	// It will be deduced from provider configuration if not set explicitly.
+	// ID of the folder that the Yandex Database serverless cluster belongs to. It will be deduced from provider configuration if not set explicitly.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -68,8 +67,7 @@ type DatabaseServerlessObservation struct {
 	// The Yandex Database serverless cluster creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Full database path of the Yandex Database serverless cluster.
-	// Useful for SDK configuration.
+	// Full database path of the Yandex Database serverless cluster. Useful for SDK configuration.
 	DatabasePath *string `json:"databasePath,omitempty" tf:"database_path,omitempty"`
 
 	// Inhibits deletion of the database. Can be either true or false
@@ -81,8 +79,7 @@ type DatabaseServerlessObservation struct {
 	// Document API endpoint of the Yandex Database serverless cluster.
 	DocumentAPIEndpoint *string `json:"documentApiEndpoint,omitempty" tf:"document_api_endpoint,omitempty"`
 
-	// ID of the folder that the Yandex Database serverless cluster belongs to.
-	// It will be deduced from provider configuration if not set explicitly.
+	// ID of the folder that the Yandex Database serverless cluster belongs to. It will be deduced from provider configuration if not set explicitly.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// ID of the Yandex Database serverless cluster.
@@ -105,12 +102,10 @@ type DatabaseServerlessObservation struct {
 	// Status of the Yandex Database serverless cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// Whether TLS is enabled for the Yandex Database serverless cluster.
-	// Useful for SDK configuration.
+	// Whether TLS is enabled for the Yandex Database serverless cluster. Useful for SDK configuration.
 	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 
-	// API endpoint of the Yandex Database serverless cluster.
-	// Useful for SDK configuration.
+	// API endpoint of the Yandex Database serverless cluster. Useful for SDK configuration.
 	YdbAPIEndpoint *string `json:"ydbApiEndpoint,omitempty" tf:"ydb_api_endpoint,omitempty"`
 
 	// Full endpoint of the Yandex Database serverless cluster.
@@ -127,8 +122,7 @@ type DatabaseServerlessParameters struct {
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// ID of the folder that the Yandex Database serverless cluster belongs to.
-	// It will be deduced from provider configuration if not set explicitly.
+	// ID of the folder that the Yandex Database serverless cluster belongs to. It will be deduced from provider configuration if not set explicitly.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`

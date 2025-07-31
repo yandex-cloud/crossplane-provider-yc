@@ -35,7 +35,7 @@ func (mg *Queue) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Queue
 func (tr *Queue) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"secret_key": "spec.forProvider.secretKeySecretRef"}
+	return map[string]string{"secret_key": "secretKeySecretRef"}
 }
 
 // GetObservation of this Queue

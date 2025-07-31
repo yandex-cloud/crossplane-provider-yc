@@ -35,7 +35,7 @@ func (mg *KafkaConnector) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this KafkaConnector
 func (tr *KafkaConnector) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"connector_config_mirrormaker[*].source_cluster[*].external_cluster[*].sasl_password": "spec.forProvider.connectorConfigMirrormaker[*].sourceCluster[*].externalCluster[*].saslPasswordSecretRef", "connector_config_mirrormaker[*].target_cluster[*].external_cluster[*].sasl_password": "spec.forProvider.connectorConfigMirrormaker[*].targetCluster[*].externalCluster[*].saslPasswordSecretRef", "connector_config_s3_sink[*].s3_connection[*].external_s3[*].secret_access_key": "spec.forProvider.connectorConfigS3Sink[*].s3Connection[*].externalS3[*].secretAccessKeySecretRef"}
+	return map[string]string{"connector_config_mirrormaker[*].source_cluster[*].external_cluster[*].sasl_password": "connectorConfigMirrormaker[*].sourceCluster[*].externalCluster[*].saslPasswordSecretRef", "connector_config_mirrormaker[*].target_cluster[*].external_cluster[*].sasl_password": "connectorConfigMirrormaker[*].targetCluster[*].externalCluster[*].saslPasswordSecretRef", "connector_config_s3_sink[*].s3_connection[*].external_s3[*].secret_access_key": "connectorConfigS3Sink[*].s3Connection[*].externalS3[*].secretAccessKeySecretRef"}
 }
 
 // GetObservation of this KafkaConnector
