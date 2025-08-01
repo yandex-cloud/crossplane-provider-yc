@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.11.0 - August 1, 2025
+### Added
+* labelling of the Yandex Cloud resources that support labels
+### Removed
+* support for Managed OpenSearch clusters
+  This is a BREAKING change; Managed OpenSearch clusters can no longer created, changed or removed via this provider. The existing clusters will not be affected.
+### Fixed
+* update Terraform Provider to version 0.130.0
+
 ## 0.10.0 - March 3, 2025
 ### Added
 * support for Clickhouse clusters

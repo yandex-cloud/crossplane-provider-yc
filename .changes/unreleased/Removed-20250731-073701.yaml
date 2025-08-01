@@ -1,5 +1,0 @@
-kind: Removed
-body: support for Managed OpenSearch clusters
-  
-  This is a BREAKING change; Managed OpenSearch clusters can no longer created, changed or removed via this provider. The existing clusters will not be affected.
-time: 2025-07-31T07:37:01.605036254+03:00
