@@ -51,6 +51,8 @@ ifeq ($(DEBUG),0)
 GO_LDFLAGS += -s -w
 endif
 
+GO_LDFLAGS += -X '$(PROJECT_REPO)/config/common.Version=$(VERSION)'
+
 # set GOOS and GOARCH
 GOOS := $(OS)
 GOARCH := $(ARCH)
