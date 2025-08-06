@@ -74,17 +74,19 @@ spec:
               forProvider:
                 properties:
                   deletionProtection:
-                    description: Inhibits deletion of the database. Can be either
-                      true or false
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: A description for the Yandex Database serverless
-                      cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: ID of the folder that the Yandex Database serverless
-                      cluster belongs to. It will be deduced from provider configuration
-                      if not set explicitly.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -165,30 +167,41 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Yandex
-                      Database serverless cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   locationId:
-                    description: Location ID for the Yandex Database serverless cluster.
+                    description: |-
+                      (String) Location ID for the Yandex Database serverless cluster.
+                      Location ID for the Yandex Database serverless cluster.
                     type: string
                   name:
-                    description: Name for the Yandex Database serverless cluster.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   serverlessDatabase:
+                    description: (Block Set) (see below for nested schema)
                     items:
                       properties:
                         enableThrottlingRcuLimit:
+                          description: (Boolean)
                           type: boolean
                         provisionedRcuLimit:
+                          description: (Number)
                           type: number
                         storageSizeLimit:
+                          description: (Number)
                           type: number
                         throttlingRcuLimit:
+                          description: (Number)
                           type: number
                       type: object
                     type: array
                   sleepAfter:
+                    description: (Number)
                     type: number
                 type: object
               initProvider:
@@ -205,17 +218,19 @@ spec:
                   autoscaler.
                 properties:
                   deletionProtection:
-                    description: Inhibits deletion of the database. Can be either
-                      true or false
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: A description for the Yandex Database serverless
-                      cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: ID of the folder that the Yandex Database serverless
-                      cluster belongs to. It will be deduced from provider configuration
-                      if not set explicitly.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -296,30 +311,41 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Yandex
-                      Database serverless cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   locationId:
-                    description: Location ID for the Yandex Database serverless cluster.
+                    description: |-
+                      (String) Location ID for the Yandex Database serverless cluster.
+                      Location ID for the Yandex Database serverless cluster.
                     type: string
                   name:
-                    description: Name for the Yandex Database serverless cluster.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   serverlessDatabase:
+                    description: (Block Set) (see below for nested schema)
                     items:
                       properties:
                         enableThrottlingRcuLimit:
+                          description: (Boolean)
                           type: boolean
                         provisionedRcuLimit:
+                          description: (Number)
                           type: number
                         storageSizeLimit:
+                          description: (Number)
                           type: number
                         throttlingRcuLimit:
+                          description: (Number)
                           type: number
                       type: object
                     type: array
                   sleepAfter:
+                    description: (Number)
                     type: number
                 type: object
               managementPolicies:
@@ -500,73 +526,96 @@ spec:
               atProvider:
                 properties:
                   createdAt:
-                    description: The Yandex Database serverless cluster creation timestamp.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   databasePath:
-                    description: Full database path of the Yandex Database serverless
-                      cluster. Useful for SDK configuration.
+                    description: |-
+                      (String) Full database path of the Yandex Database serverless cluster. Useful for SDK configuration.
+                      Full database path of the Yandex Database serverless cluster. Useful for SDK configuration.
                     type: string
                   deletionProtection:
-                    description: Inhibits deletion of the database. Can be either
-                      true or false
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: A description for the Yandex Database serverless
-                      cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   documentApiEndpoint:
-                    description: Document API endpoint of the Yandex Database serverless
-                      cluster.
+                    description: |-
+                      (String) Document API endpoint of the Yandex Database serverless cluster.
+                      Document API endpoint of the Yandex Database serverless cluster.
                     type: string
                   folderId:
-                    description: ID of the folder that the Yandex Database serverless
-                      cluster belongs to. It will be deduced from provider configuration
-                      if not set explicitly.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
-                    description: ID of the Yandex Database serverless cluster.
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Yandex
-                      Database serverless cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   locationId:
-                    description: Location ID for the Yandex Database serverless cluster.
+                    description: |-
+                      (String) Location ID for the Yandex Database serverless cluster.
+                      Location ID for the Yandex Database serverless cluster.
                     type: string
                   name:
-                    description: Name for the Yandex Database serverless cluster.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   serverlessDatabase:
+                    description: (Block Set) (see below for nested schema)
                     items:
                       properties:
                         enableThrottlingRcuLimit:
+                          description: (Boolean)
                           type: boolean
                         provisionedRcuLimit:
+                          description: (Number)
                           type: number
                         storageSizeLimit:
+                          description: (Number)
                           type: number
                         throttlingRcuLimit:
+                          description: (Number)
                           type: number
                       type: object
                     type: array
                   sleepAfter:
+                    description: (Number)
                     type: number
                   status:
-                    description: Status of the Yandex Database serverless cluster.
+                    description: |-
+                      (String) Status of the Yandex Database serverless cluster.
+                      Status of the Yandex Database serverless cluster.
                     type: string
                   tlsEnabled:
-                    description: Whether TLS is enabled for the Yandex Database serverless
-                      cluster. Useful for SDK configuration.
+                    description: |-
+                      (Boolean) Whether TLS is enabled for the Yandex Database serverless cluster. Useful for SDK configuration.
+                      Whether TLS is enabled for the Yandex Database serverless cluster. Useful for SDK configuration.
                     type: boolean
                   ydbApiEndpoint:
-                    description: API endpoint of the Yandex Database serverless cluster.
-                      Useful for SDK configuration.
+                    description: |-
+                      (String) API endpoint of the Yandex Database serverless cluster. Useful for SDK configuration.
+                      API endpoint of the Yandex Database serverless cluster. Useful for SDK configuration.
                     type: string
                   ydbFullEndpoint:
-                    description: Full endpoint of the Yandex Database serverless cluster.
+                    description: |-
+                      (String) Full endpoint of the Yandex Database serverless cluster.
+                      Full endpoint of the Yandex Database serverless cluster.
                     type: string
                 type: object
               conditions:

@@ -75,7 +75,9 @@ spec:
               forProvider:
                 properties:
                   folderId:
-                    description: ID of the folder to attach a policy to.
+                    description: |-
+                      (String) The ID of the folder to attach a policy to.
+                      The ID of the folder to attach a policy to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -154,12 +156,25 @@ spec:
                         type: object
                     type: object
                   member:
-                    description: 'The identity that will be granted the privilege
-                      that is specified in the role field. This field can have one
-                      of the following values:'
+                    description: |-
+                      (String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+                      An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
+                      * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
+                      * **serviceAccount:{service_account_id}**: A unique service account ID.
+                      * **federatedUser:{federated_user_id}**: A unique federated user ID.
+                      * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
+                      * **group:{group_id}**: A unique group ID.
+                      * **system:group:federation:{federation_id}:users**: All users in federation.
+                      * **system:group:organization:{organization_id}:users**: All users in organization.
+                      * **system:allAuthenticatedUsers**: All authenticated users.
+                      * **system:allUsers**: All users, including unauthenticated ones.
+
+                      ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
                     type: string
                   role:
-                    description: The role that should be assigned.
+                    description: |-
+                      (String) The role that should be applied. See roles catalog.
+                      The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
                     # WARNING: This will be deleted upon generation, see https://github.com/crossplane/upjet/issues/78 -
                     # WARNING: restore this manually!
                     x-kubernetes-validations:
@@ -241,6 +256,7 @@ spec:
                         type: object
                     type: object
                   sleepAfter:
+                    description: (Number)
                     type: number
                 type: object
               initProvider:
@@ -257,7 +273,9 @@ spec:
                   autoscaler.
                 properties:
                   folderId:
-                    description: ID of the folder to attach a policy to.
+                    description: |-
+                      (String) The ID of the folder to attach a policy to.
+                      The ID of the folder to attach a policy to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -336,12 +354,25 @@ spec:
                         type: object
                     type: object
                   member:
-                    description: 'The identity that will be granted the privilege
-                      that is specified in the role field. This field can have one
-                      of the following values:'
+                    description: |-
+                      (String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+                      An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
+                      * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
+                      * **serviceAccount:{service_account_id}**: A unique service account ID.
+                      * **federatedUser:{federated_user_id}**: A unique federated user ID.
+                      * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
+                      * **group:{group_id}**: A unique group ID.
+                      * **system:group:federation:{federation_id}:users**: All users in federation.
+                      * **system:group:organization:{organization_id}:users**: All users in organization.
+                      * **system:allAuthenticatedUsers**: All authenticated users.
+                      * **system:allUsers**: All users, including unauthenticated ones.
+
+                      ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
                     type: string
                   role:
-                    description: The role that should be assigned.
+                    description: |-
+                      (String) The role that should be applied. See roles catalog.
+                      The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
                     type: string
                   serviceAccountRef:
                     description: Reference to a ServiceAccount to populate member.
@@ -418,6 +449,7 @@ spec:
                         type: object
                     type: object
                   sleepAfter:
+                    description: (Number)
                     type: number
                 type: object
               managementPolicies:
@@ -598,19 +630,36 @@ spec:
               atProvider:
                 properties:
                   folderId:
-                    description: ID of the folder to attach a policy to.
+                    description: |-
+                      (String) The ID of the folder to attach a policy to.
+                      The ID of the folder to attach a policy to.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   member:
-                    description: 'The identity that will be granted the privilege
-                      that is specified in the role field. This field can have one
-                      of the following values:'
+                    description: |-
+                      (String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+                      An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
+                      * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
+                      * **serviceAccount:{service_account_id}**: A unique service account ID.
+                      * **federatedUser:{federated_user_id}**: A unique federated user ID.
+                      * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
+                      * **group:{group_id}**: A unique group ID.
+                      * **system:group:federation:{federation_id}:users**: All users in federation.
+                      * **system:group:organization:{organization_id}:users**: All users in organization.
+                      * **system:allAuthenticatedUsers**: All authenticated users.
+                      * **system:allUsers**: All users, including unauthenticated ones.
+
+                      ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
                     type: string
                   role:
-                    description: The role that should be assigned.
+                    description: |-
+                      (String) The role that should be applied. See roles catalog.
+                      The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
                     type: string
                   sleepAfter:
+                    description: (Number)
                     type: number
                 type: object
               conditions:

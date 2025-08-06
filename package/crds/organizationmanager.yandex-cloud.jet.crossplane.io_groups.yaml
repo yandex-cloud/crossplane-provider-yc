@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Group is the Schema for the Groups API. Allows management of
-          a single Group within an existing Yandex.Cloud Organization.
+          a single Group within an existing Yandex Cloud Organization.
         properties:
           apiVersion:
             description: |-
@@ -74,13 +74,19 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: The description of the Group.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   name:
-                    description: The name of the Group.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   organizationId:
-                    description: The organization to attach this Group to.
+                    description: |-
+                      (String) The organization to attach this Group to.
+                      The organization to attach this Group to.
                     type: string
                 type: object
               initProvider:
@@ -97,13 +103,19 @@ spec:
                   autoscaler.
                 properties:
                   description:
-                    description: The description of the Group.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   name:
-                    description: The name of the Group.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   organizationId:
-                    description: The organization to attach this Group to.
+                    description: |-
+                      (String) The organization to attach this Group to.
+                      The organization to attach this Group to.
                     type: string
                 type: object
               managementPolicies:
@@ -288,18 +300,27 @@ spec:
               atProvider:
                 properties:
                   createdAt:
-                    description: (Computed) The SAML Federation creation timestamp.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   description:
-                    description: The description of the Group.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   name:
-                    description: The name of the Group.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   organizationId:
-                    description: The organization to attach this Group to.
+                    description: |-
+                      (String) The organization to attach this Group to.
+                      The organization to attach this Group to.
                     type: string
                 type: object
               conditions:

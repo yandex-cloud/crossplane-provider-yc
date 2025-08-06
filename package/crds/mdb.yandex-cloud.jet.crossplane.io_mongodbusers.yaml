@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: MongodbUser is the Schema for the MongodbUsers API. Manages a
-          MongoDB user within Yandex.Cloud.
+          MongoDB User within Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -74,6 +74,9 @@ spec:
               forProvider:
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of the cluster to which user belongs to.
+                      The ID of the cluster to which user belongs to.
                     type: string
                   clusterIdRef:
                     description: Reference to a MongodbCluster to populate clusterId.
@@ -150,10 +153,14 @@ spec:
                         type: object
                     type: object
                   name:
-                    description: The name of the user.
+                    description: |-
+                      (String) The name of the user.
+                      The name of the user.
                     type: string
                   passwordSecretRef:
-                    description: The password of the user.
+                    description: |-
+                      (String, Sensitive) The password of the user.
+                      The password of the user.
                     properties:
                       key:
                         description: The key to select.
@@ -170,17 +177,20 @@ spec:
                     - namespace
                     type: object
                   permission:
-                    description: Set of permissions granted to the user. The structure
-                      is documented below.
+                    description: |-
+                      (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                      Set of permissions granted to the user.
                     items:
                       properties:
                         databaseName:
-                          description: The name of the database that the permission
-                            grants access to.
+                          description: |-
+                            (String) The name of the database that the permission grants access to.
+                            The name of the database that the permission grants access to.
                           type: string
                         roles:
-                          description: List of strings. The roles of the user in this
-                            database. For more information see the official documentation.
+                          description: |-
+                            (Set of String) The roles of the user in this database. For more information see the official documentation.
+                            The roles of the user in this database. For more information see [the official documentation](https://yandex.cloud/docs/managed-mongodb/concepts/users-and-roles).
                           items:
                             type: string
                           type: array
@@ -202,6 +212,9 @@ spec:
                   autoscaler.
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of the cluster to which user belongs to.
+                      The ID of the cluster to which user belongs to.
                     type: string
                   clusterIdRef:
                     description: Reference to a MongodbCluster to populate clusterId.
@@ -278,10 +291,14 @@ spec:
                         type: object
                     type: object
                   name:
-                    description: The name of the user.
+                    description: |-
+                      (String) The name of the user.
+                      The name of the user.
                     type: string
                   passwordSecretRef:
-                    description: The password of the user.
+                    description: |-
+                      (String, Sensitive) The password of the user.
+                      The password of the user.
                     properties:
                       key:
                         description: The key to select.
@@ -298,17 +315,20 @@ spec:
                     - namespace
                     type: object
                   permission:
-                    description: Set of permissions granted to the user. The structure
-                      is documented below.
+                    description: |-
+                      (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                      Set of permissions granted to the user.
                     items:
                       properties:
                         databaseName:
-                          description: The name of the database that the permission
-                            grants access to.
+                          description: |-
+                            (String) The name of the database that the permission grants access to.
+                            The name of the database that the permission grants access to.
                           type: string
                         roles:
-                          description: List of strings. The roles of the user in this
-                            database. For more information see the official documentation.
+                          description: |-
+                            (Set of String) The roles of the user in this database. For more information see the official documentation.
+                            The roles of the user in this database. For more information see [the official documentation](https://yandex.cloud/docs/managed-mongodb/concepts/users-and-roles).
                           items:
                             type: string
                           type: array
@@ -499,24 +519,33 @@ spec:
               atProvider:
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of the cluster to which user belongs to.
+                      The ID of the cluster to which user belongs to.
                     type: string
                   id:
+                    description: (String) The resource identifier.
                     type: string
                   name:
-                    description: The name of the user.
+                    description: |-
+                      (String) The name of the user.
+                      The name of the user.
                     type: string
                   permission:
-                    description: Set of permissions granted to the user. The structure
-                      is documented below.
+                    description: |-
+                      (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                      Set of permissions granted to the user.
                     items:
                       properties:
                         databaseName:
-                          description: The name of the database that the permission
-                            grants access to.
+                          description: |-
+                            (String) The name of the database that the permission grants access to.
+                            The name of the database that the permission grants access to.
                           type: string
                         roles:
-                          description: List of strings. The roles of the user in this
-                            database. For more information see the official documentation.
+                          description: |-
+                            (Set of String) The roles of the user in this database. For more information see the official documentation.
+                            The roles of the user in this database. For more information see [the official documentation](https://yandex.cloud/docs/managed-mongodb/concepts/users-and-roles).
                           items:
                             type: string
                           type: array

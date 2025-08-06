@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Zone is the Schema for the Zones API. Manages a DNS Zone within
-          Yandex.Cloud.
+          Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -75,18 +75,18 @@ spec:
                 properties:
                   deletionProtection:
                     description: |-
-                      (Boolean) Flag that protects the dns zone from accidental deletion.
-                      Flag that protects the dns zone from accidental deletion.
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
                     description: |-
-                      (String) Description of the DNS zone.
-                      Description of the DNS zone.
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
                     description: |-
-                      (String) ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
-                      ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -168,14 +168,14 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs to assign to the DNS zone.
-                      A set of key/value label pairs to assign to the DNS zone.
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) User assigned name of a specific resource. Must be unique within the folder.
-                      User assigned name of a specific resource. Must be unique within the folder.
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   privateNetworks:
                     description: |-
@@ -270,8 +270,8 @@ spec:
                     type: boolean
                   zone:
                     description: |-
-                      (String) The DNS name of this zone, e.g. "example.com.". Must ends with dot.
-                      The DNS name of this zone, e.g. "example.com.". Must ends with dot.
+                      (String) The DNS name of this zone, e.g. example.com.. Must ends with dot.
+                      The DNS name of this zone, e.g. `example.com.`. Must ends with dot.
                     type: string
                 type: object
               initProvider:
@@ -289,18 +289,18 @@ spec:
                 properties:
                   deletionProtection:
                     description: |-
-                      (Boolean) Flag that protects the dns zone from accidental deletion.
-                      Flag that protects the dns zone from accidental deletion.
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
                     description: |-
-                      (String) Description of the DNS zone.
-                      Description of the DNS zone.
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
                     description: |-
-                      (String) ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
-                      ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -382,14 +382,14 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs to assign to the DNS zone.
-                      A set of key/value label pairs to assign to the DNS zone.
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) User assigned name of a specific resource. Must be unique within the folder.
-                      User assigned name of a specific resource. Must be unique within the folder.
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   privateNetworks:
                     description: |-
@@ -484,8 +484,8 @@ spec:
                     type: boolean
                   zone:
                     description: |-
-                      (String) The DNS name of this zone, e.g. "example.com.". Must ends with dot.
-                      The DNS name of this zone, e.g. "example.com.". Must ends with dot.
+                      (String) The DNS name of this zone, e.g. example.com.. Must ends with dot.
+                      The DNS name of this zone, e.g. `example.com.`. Must ends with dot.
                     type: string
                 type: object
               managementPolicies:
@@ -667,23 +667,23 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The DNS zone creation timestamp.
-                      The DNS zone creation timestamp.
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   deletionProtection:
                     description: |-
-                      (Boolean) Flag that protects the dns zone from accidental deletion.
-                      Flag that protects the dns zone from accidental deletion.
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
                     description: |-
-                      (String) Description of the DNS zone.
-                      Description of the DNS zone.
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
                     description: |-
-                      (String) ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
-                      ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
                     description: (String) The ID of this resource.
@@ -692,14 +692,14 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs to assign to the DNS zone.
-                      A set of key/value label pairs to assign to the DNS zone.
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) User assigned name of a specific resource. Must be unique within the folder.
-                      User assigned name of a specific resource. Must be unique within the folder.
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   privateNetworks:
                     description: |-
@@ -716,8 +716,8 @@ spec:
                     type: boolean
                   zone:
                     description: |-
-                      (String) The DNS name of this zone, e.g. "example.com.". Must ends with dot.
-                      The DNS name of this zone, e.g. "example.com.". Must ends with dot.
+                      (String) The DNS name of this zone, e.g. example.com.. Must ends with dot.
+                      The DNS name of this zone, e.g. `example.com.`. Must ends with dot.
                     type: string
                 type: object
               conditions:

@@ -75,12 +75,14 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: An optional description of the target group. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: The ID of the folder to which the resource belongs.
-                      If omitted, the provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -161,24 +163,31 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this target group. A list of
-                      key/value pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the target group. Provided by the client
-                      when the target group is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   regionId:
-                    description: ID of the availability zone where the target group
-                      resides. If omitted, default region is being used.
+                    description: |-
+                      (String) ID of the availability zone where the target group resides. If omitted, default region is being used.
+                      ID of the availability zone where the target group resides. If omitted, default region is being used.
                     type: string
                   target:
-                    description: A Target resource. The structure is documented below.
+                    description: |-
+                      (Block Set) A Target resource. (see below for nested schema)
+                      A Target resource.
                     items:
                       properties:
                         address:
-                          description: IP address of the target.
+                          description: |-
+                            (String) IP address of the target.
+                            IP address of the target.
                           type: string
                         addressRef:
                           description: Reference to a Instance in compute to populate
@@ -257,9 +266,9 @@ spec:
                               type: object
                           type: object
                         subnetId:
-                          description: ID of the subnet that targets are connected
-                            to. All targets in the target group must be connected
-                            to the same subnet within a single availability zone.
+                          description: |-
+                            (String) ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
+                            ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -352,12 +361,14 @@ spec:
                   autoscaler.
                 properties:
                   description:
-                    description: An optional description of the target group. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: The ID of the folder to which the resource belongs.
-                      If omitted, the provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -438,24 +449,31 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this target group. A list of
-                      key/value pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the target group. Provided by the client
-                      when the target group is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   regionId:
-                    description: ID of the availability zone where the target group
-                      resides. If omitted, default region is being used.
+                    description: |-
+                      (String) ID of the availability zone where the target group resides. If omitted, default region is being used.
+                      ID of the availability zone where the target group resides. If omitted, default region is being used.
                     type: string
                   target:
-                    description: A Target resource. The structure is documented below.
+                    description: |-
+                      (Block Set) A Target resource. (see below for nested schema)
+                      A Target resource.
                     items:
                       properties:
                         address:
-                          description: IP address of the target.
+                          description: |-
+                            (String) IP address of the target.
+                            IP address of the target.
                           type: string
                         addressRef:
                           description: Reference to a Instance in compute to populate
@@ -534,9 +552,9 @@ spec:
                               type: object
                           type: object
                         subnetId:
-                          description: ID of the subnet that targets are connected
-                            to. All targets in the target group must be connected
-                            to the same subnet within a single availability zone.
+                          description: |-
+                            (String) ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
+                            ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -788,45 +806,56 @@ spec:
               atProvider:
                 properties:
                   createdAt:
-                    description: The target group creation timestamp.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   description:
-                    description: An optional description of the target group. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: The ID of the folder to which the resource belongs.
-                      If omitted, the provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
-                    description: The ID of the target group.
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this target group. A list of
-                      key/value pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the target group. Provided by the client
-                      when the target group is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   regionId:
-                    description: ID of the availability zone where the target group
-                      resides. If omitted, default region is being used.
+                    description: |-
+                      (String) ID of the availability zone where the target group resides. If omitted, default region is being used.
+                      ID of the availability zone where the target group resides. If omitted, default region is being used.
                     type: string
                   target:
-                    description: A Target resource. The structure is documented below.
+                    description: |-
+                      (Block Set) A Target resource. (see below for nested schema)
+                      A Target resource.
                     items:
                       properties:
                         address:
-                          description: IP address of the target.
+                          description: |-
+                            (String) IP address of the target.
+                            IP address of the target.
                           type: string
                         subnetId:
-                          description: ID of the subnet that targets are connected
-                            to. All targets in the target group must be connected
-                            to the same subnet within a single availability zone.
+                          description: |-
+                            (String) ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
+                            ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
                           type: string
                       type: object
                     type: array

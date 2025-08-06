@@ -78,6 +78,8 @@ func GetProvider() *tjconfig.Provider {
 		tjconfig.WithTerraformPluginFrameworkIncludeList([]string{
 			"yandex_mdb_mongodb_database$",
 			"yandex_mdb_mongodb_user$",
+
+			"yandex_vpc_security_group_rule$",
 		}),
 		tjconfig.WithIncludeList([]string{
 			"yandex_compute_disk$",
@@ -139,7 +141,6 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_vpc_network$",
 			"yandex_vpc_subnet$",
 			"yandex_vpc_security_group$",
-			"yandex_vpc_security_group_rule$",
 			"yandex_vpc_address$",
 
 			"yandex_cdn_resource$",

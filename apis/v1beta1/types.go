@@ -34,6 +34,9 @@ type ProviderCredentials struct {
 
 	// +kubebuilder:validation:Optional
 	Endpoint string `json:"endpoint,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	YQEndpoint string `json:"yq_endpoint,omitempty"`
 }
 
 // A ProviderConfigStatus reflects the observed state of a ProviderConfig.

@@ -29,6 +29,8 @@ import (
 
 type MongodbUserInitParameters struct {
 
+	// (String) The ID of the cluster to which user belongs to.
+	// The ID of the cluster to which user belongs to.
 	// +crossplane:generate:reference:type=MongodbCluster
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
@@ -40,30 +42,41 @@ type MongodbUserInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
+	// (String) The name of the user.
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String, Sensitive) The password of the user.
 	// The password of the user.
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
-	// Set of permissions granted to the user. The structure is documented below.
+	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// Set of permissions granted to the user.
 	Permission []MongodbUserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type MongodbUserObservation struct {
+
+	// (String) The ID of the cluster to which user belongs to.
+	// The ID of the cluster to which user belongs to.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
+	// (String) The resource identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (String) The name of the user.
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Set of permissions granted to the user. The structure is documented below.
+	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// Set of permissions granted to the user.
 	Permission []MongodbUserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type MongodbUserParameters struct {
 
+	// (String) The ID of the cluster to which user belongs to.
+	// The ID of the cluster to which user belongs to.
 	// +crossplane:generate:reference:type=MongodbCluster
 	// +kubebuilder:validation:Optional
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
@@ -76,46 +89,55 @@ type MongodbUserParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
+	// (String) The name of the user.
 	// The name of the user.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String, Sensitive) The password of the user.
 	// The password of the user.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
-	// Set of permissions granted to the user. The structure is documented below.
+	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// Set of permissions granted to the user.
 	// +kubebuilder:validation:Optional
 	Permission []MongodbUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type MongodbUserPermissionInitParameters struct {
 
+	// (String) The name of the database that the permission grants access to.
 	// The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 
-	// List of strings. The roles of the user in this database. For more information see the official documentation.
+	// (Set of String) The roles of the user in this database. For more information see the official documentation.
+	// The roles of the user in this database. For more information see [the official documentation](https://yandex.cloud/docs/managed-mongodb/concepts/users-and-roles).
 	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
 type MongodbUserPermissionObservation struct {
 
+	// (String) The name of the database that the permission grants access to.
 	// The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 
-	// List of strings. The roles of the user in this database. For more information see the official documentation.
+	// (Set of String) The roles of the user in this database. For more information see the official documentation.
+	// The roles of the user in this database. For more information see [the official documentation](https://yandex.cloud/docs/managed-mongodb/concepts/users-and-roles).
 	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
 type MongodbUserPermissionParameters struct {
 
+	// (String) The name of the database that the permission grants access to.
 	// The name of the database that the permission grants access to.
 	// +kubebuilder:validation:Optional
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 
-	// List of strings. The roles of the user in this database. For more information see the official documentation.
+	// (Set of String) The roles of the user in this database. For more information see the official documentation.
+	// The roles of the user in this database. For more information see [the official documentation](https://yandex.cloud/docs/managed-mongodb/concepts/users-and-roles).
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
@@ -148,7 +170,7 @@ type MongodbUserStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// MongodbUser is the Schema for the MongodbUsers API. Manages a MongoDB user within Yandex.Cloud.
+// MongodbUser is the Schema for the MongodbUsers API. Manages a MongoDB User within Yandex Cloud.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

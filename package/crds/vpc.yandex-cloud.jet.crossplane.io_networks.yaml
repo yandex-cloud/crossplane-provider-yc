@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Network is the Schema for the Networks API. Manages a network
-          within Yandex.Cloud.
+          within Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -74,12 +74,14 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: An optional description of this resource. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: ID of the folder that the resource belongs to. If
-                      it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -160,13 +162,15 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to apply to this network. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the network. Provided by the client when
-                      the network is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                 type: object
               initProvider:
@@ -183,12 +187,14 @@ spec:
                   autoscaler.
                 properties:
                   description:
-                    description: An optional description of this resource. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: ID of the folder that the resource belongs to. If
-                      it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -269,13 +275,15 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to apply to this network. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the network. Provided by the client when
-                      the network is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                 type: object
               managementPolicies:
@@ -451,33 +459,45 @@ spec:
               atProvider:
                 properties:
                   createdAt:
-                    description: Creation timestamp of the key.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   defaultSecurityGroupId:
-                    description: ID of default Security Group of this network.
+                    description: |-
+                      (String) ID of default Security Group of this network.
+                      ID of default Security Group of this network.
                     type: string
                   description:
-                    description: An optional description of this resource. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: ID of the folder that the resource belongs to. If
-                      it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to apply to this network. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the network. Provided by the client when
-                      the network is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   subnetIds:
+                    description: |-
+                      (List of String) The list of VPC subnets identifiers which resource is attached.
+                      The list of VPC subnets identifiers which resource is attached.
                     items:
                       type: string
                     type: array

@@ -29,48 +29,60 @@ import (
 
 type ConnectorConfigMirrormakerInitParameters struct {
 
-	// Replication factor for topics created in target cluster
+	// (Number) Replication factor for topics created in target cluster.
+	// Replication factor for topics created in target cluster.
 	ReplicationFactor *int64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
 
-	// Settings for source cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Settings for source cluster. (see below for nested schema)
+	// Settings for source cluster.
 	SourceCluster []SourceClusterInitParameters `json:"sourceCluster,omitempty" tf:"source_cluster,omitempty"`
 
-	// Settings for target cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Settings for target cluster. (see below for nested schema)
+	// Settings for target cluster.
 	TargetCluster []TargetClusterInitParameters `json:"targetCluster,omitempty" tf:"target_cluster,omitempty"`
 
+	// (String) The pattern for topic names to be replicated.
 	// The pattern for topic names to be replicated.
 	Topics *string `json:"topics,omitempty" tf:"topics,omitempty"`
 }
 
 type ConnectorConfigMirrormakerObservation struct {
 
-	// Replication factor for topics created in target cluster
+	// (Number) Replication factor for topics created in target cluster.
+	// Replication factor for topics created in target cluster.
 	ReplicationFactor *int64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
 
-	// Settings for source cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Settings for source cluster. (see below for nested schema)
+	// Settings for source cluster.
 	SourceCluster []SourceClusterObservation `json:"sourceCluster,omitempty" tf:"source_cluster,omitempty"`
 
-	// Settings for target cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Settings for target cluster. (see below for nested schema)
+	// Settings for target cluster.
 	TargetCluster []TargetClusterObservation `json:"targetCluster,omitempty" tf:"target_cluster,omitempty"`
 
+	// (String) The pattern for topic names to be replicated.
 	// The pattern for topic names to be replicated.
 	Topics *string `json:"topics,omitempty" tf:"topics,omitempty"`
 }
 
 type ConnectorConfigMirrormakerParameters struct {
 
-	// Replication factor for topics created in target cluster
+	// (Number) Replication factor for topics created in target cluster.
+	// Replication factor for topics created in target cluster.
 	// +kubebuilder:validation:Optional
 	ReplicationFactor *int64 `json:"replicationFactor" tf:"replication_factor,omitempty"`
 
-	// Settings for source cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Settings for source cluster. (see below for nested schema)
+	// Settings for source cluster.
 	// +kubebuilder:validation:Optional
 	SourceCluster []SourceClusterParameters `json:"sourceCluster" tf:"source_cluster,omitempty"`
 
-	// Settings for target cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Settings for target cluster. (see below for nested schema)
+	// Settings for target cluster.
 	// +kubebuilder:validation:Optional
 	TargetCluster []TargetClusterParameters `json:"targetCluster" tf:"target_cluster,omitempty"`
 
+	// (String) The pattern for topic names to be replicated.
 	// The pattern for topic names to be replicated.
 	// +kubebuilder:validation:Optional
 	Topics *string `json:"topics" tf:"topics,omitempty"`
@@ -78,48 +90,60 @@ type ConnectorConfigMirrormakerParameters struct {
 
 type ConnectorConfigS3SinkInitParameters struct {
 
-	// Сompression type for messages. Cannot be changed.
+	// (String) Compression type for messages. Cannot be changed.
+	// Compression type for messages. Cannot be changed.
 	FileCompressionType *string `json:"fileCompressionType,omitempty" tf:"file_compression_type,omitempty"`
 
+	// (Number) Max records per file.
 	// Max records per file.
 	FileMaxRecords *int64 `json:"fileMaxRecords,omitempty" tf:"file_max_records,omitempty"`
 
-	// Settings for connection to s3-compatible storage. The structure is documented below.
+	// compatible storage. (see below for nested schema)
+	// Settings for connection to s3-compatible storage.
 	S3Connection []S3ConnectionInitParameters `json:"s3Connection,omitempty" tf:"s3_connection,omitempty"`
 
+	// (String) The pattern for topic names to be replicated.
 	// The pattern for topic names to be copied to s3 bucket.
 	Topics *string `json:"topics,omitempty" tf:"topics,omitempty"`
 }
 
 type ConnectorConfigS3SinkObservation struct {
 
-	// Сompression type for messages. Cannot be changed.
+	// (String) Compression type for messages. Cannot be changed.
+	// Compression type for messages. Cannot be changed.
 	FileCompressionType *string `json:"fileCompressionType,omitempty" tf:"file_compression_type,omitempty"`
 
+	// (Number) Max records per file.
 	// Max records per file.
 	FileMaxRecords *int64 `json:"fileMaxRecords,omitempty" tf:"file_max_records,omitempty"`
 
-	// Settings for connection to s3-compatible storage. The structure is documented below.
+	// compatible storage. (see below for nested schema)
+	// Settings for connection to s3-compatible storage.
 	S3Connection []S3ConnectionObservation `json:"s3Connection,omitempty" tf:"s3_connection,omitempty"`
 
+	// (String) The pattern for topic names to be replicated.
 	// The pattern for topic names to be copied to s3 bucket.
 	Topics *string `json:"topics,omitempty" tf:"topics,omitempty"`
 }
 
 type ConnectorConfigS3SinkParameters struct {
 
-	// Сompression type for messages. Cannot be changed.
+	// (String) Compression type for messages. Cannot be changed.
+	// Compression type for messages. Cannot be changed.
 	// +kubebuilder:validation:Optional
 	FileCompressionType *string `json:"fileCompressionType" tf:"file_compression_type,omitempty"`
 
+	// (Number) Max records per file.
 	// Max records per file.
 	// +kubebuilder:validation:Optional
 	FileMaxRecords *int64 `json:"fileMaxRecords,omitempty" tf:"file_max_records,omitempty"`
 
-	// Settings for connection to s3-compatible storage. The structure is documented below.
+	// compatible storage. (see below for nested schema)
+	// Settings for connection to s3-compatible storage.
 	// +kubebuilder:validation:Optional
 	S3Connection []S3ConnectionParameters `json:"s3Connection" tf:"s3_connection,omitempty"`
 
+	// (String) The pattern for topic names to be replicated.
 	// The pattern for topic names to be copied to s3 bucket.
 	// +kubebuilder:validation:Optional
 	Topics *string `json:"topics" tf:"topics,omitempty"`
@@ -127,101 +151,126 @@ type ConnectorConfigS3SinkParameters struct {
 
 type ExternalClusterInitParameters struct {
 
-	// List of bootstrap servers to connect to cluster
+	// (String) List of bootstrap servers to connect to cluster.
+	// List of bootstrap servers to connect to cluster.
 	BootstrapServers *string `json:"bootstrapServers,omitempty" tf:"bootstrap_servers,omitempty"`
 
-	// Type of SASL authentification mechanism to use
+	// (String) Type of SASL authentification mechanism to use.
+	// Type of SASL authentification mechanism to use.
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
 
+	// (String, Sensitive) Password to use in SASL authentification mechanism
 	// Password to use in SASL authentification mechanism
 	SaslPasswordSecretRef *v1.SecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
 
-	// Username to use in SASL authentification mechanism
+	// (String) Username to use in SASL authentification mechanism.
+	// Username to use in SASL authentification mechanism.
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
 
-	// Security protocol to use
+	// (String) Security protocol to use.
+	// Security protocol to use.
 	SecurityProtocol *string `json:"securityProtocol,omitempty" tf:"security_protocol,omitempty"`
 }
 
 type ExternalClusterObservation struct {
 
-	// List of bootstrap servers to connect to cluster
+	// (String) List of bootstrap servers to connect to cluster.
+	// List of bootstrap servers to connect to cluster.
 	BootstrapServers *string `json:"bootstrapServers,omitempty" tf:"bootstrap_servers,omitempty"`
 
-	// Type of SASL authentification mechanism to use
+	// (String) Type of SASL authentification mechanism to use.
+	// Type of SASL authentification mechanism to use.
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
 
-	// Username to use in SASL authentification mechanism
+	// (String) Username to use in SASL authentification mechanism.
+	// Username to use in SASL authentification mechanism.
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
 
-	// Security protocol to use
+	// (String) Security protocol to use.
+	// Security protocol to use.
 	SecurityProtocol *string `json:"securityProtocol,omitempty" tf:"security_protocol,omitempty"`
 }
 
 type ExternalClusterParameters struct {
 
-	// List of bootstrap servers to connect to cluster
+	// (String) List of bootstrap servers to connect to cluster.
+	// List of bootstrap servers to connect to cluster.
 	// +kubebuilder:validation:Optional
 	BootstrapServers *string `json:"bootstrapServers" tf:"bootstrap_servers,omitempty"`
 
-	// Type of SASL authentification mechanism to use
+	// (String) Type of SASL authentification mechanism to use.
+	// Type of SASL authentification mechanism to use.
 	// +kubebuilder:validation:Optional
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
 
+	// (String, Sensitive) Password to use in SASL authentification mechanism
 	// Password to use in SASL authentification mechanism
 	// +kubebuilder:validation:Optional
 	SaslPasswordSecretRef *v1.SecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
 
-	// Username to use in SASL authentification mechanism
+	// (String) Username to use in SASL authentification mechanism.
+	// Username to use in SASL authentification mechanism.
 	// +kubebuilder:validation:Optional
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
 
-	// Security protocol to use
+	// (String) Security protocol to use.
+	// Security protocol to use.
 	// +kubebuilder:validation:Optional
 	SecurityProtocol *string `json:"securityProtocol,omitempty" tf:"security_protocol,omitempty"`
 }
 
 type ExternalS3InitParameters struct {
 
+	// compatible static key.
 	// ID of aws-compatible static key.
 	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
 
+	// compatible storage.
 	// URL of s3-compatible storage.
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// region of s3-compatible storage. Available region list.
+	// compatible storage. Available region list.
+	// Region of s3-compatible storage. [Available region list](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/regions/Regions.html).
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// compatible static key.
 	// Secret key of aws-compatible static key.
 	SecretAccessKeySecretRef *v1.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
 }
 
 type ExternalS3Observation struct {
 
+	// compatible static key.
 	// ID of aws-compatible static key.
 	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
 
+	// compatible storage.
 	// URL of s3-compatible storage.
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// region of s3-compatible storage. Available region list.
+	// compatible storage. Available region list.
+	// Region of s3-compatible storage. [Available region list](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/regions/Regions.html).
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
 
 type ExternalS3Parameters struct {
 
+	// compatible static key.
 	// ID of aws-compatible static key.
 	// +kubebuilder:validation:Optional
 	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
 
+	// compatible storage.
 	// URL of s3-compatible storage.
 	// +kubebuilder:validation:Optional
 	Endpoint *string `json:"endpoint" tf:"endpoint,omitempty"`
 
-	// region of s3-compatible storage. Available region list.
+	// compatible storage. Available region list.
+	// Region of s3-compatible storage. [Available region list](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/regions/Regions.html).
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
+	// compatible static key.
 	// Secret key of aws-compatible static key.
 	// +kubebuilder:validation:Optional
 	SecretAccessKeySecretRef *v1.SecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
@@ -229,6 +278,8 @@ type ExternalS3Parameters struct {
 
 type KafkaConnectorInitParameters struct {
 
+	// (String) The ID of the Kafka cluster.
+	// The ID of the Kafka cluster.
 	// +crossplane:generate:reference:type=KafkaCluster
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
@@ -240,47 +291,63 @@ type KafkaConnectorInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// Params for MirrorMaker2 connector. The structure is documented below.
+	// (Block List) Settings for MirrorMaker2 connector. (see below for nested schema)
+	// Settings for MirrorMaker2 connector.
 	ConnectorConfigMirrormaker []ConnectorConfigMirrormakerInitParameters `json:"connectorConfigMirrormaker,omitempty" tf:"connector_config_mirrormaker,omitempty"`
 
-	// Params for S3 Sink connector. The structure is documented below.
+	// (Block List) Settings for S3 Sink connector. (see below for nested schema)
+	// Settings for S3 Sink connector.
 	ConnectorConfigS3Sink []ConnectorConfigS3SinkInitParameters `json:"connectorConfigS3Sink,omitempty" tf:"connector_config_s3_sink,omitempty"`
 
-	// The name of the connector.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Map of String) Additional properties for connector.
 	// Additional properties for connector.
 	// +mapType=granular
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
-	// The number of the connector's parallel working tasks. Default is the number of brokers
+	// (Number) The number of the connector's parallel working tasks. Default is the number of brokers.
+	// The number of the connector's parallel working tasks. Default is the number of brokers.
 	TasksMax *int64 `json:"tasksMax,omitempty" tf:"tasks_max,omitempty"`
 }
 
 type KafkaConnectorObservation struct {
+
+	// (String) The ID of the Kafka cluster.
+	// The ID of the Kafka cluster.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
-	// Params for MirrorMaker2 connector. The structure is documented below.
+	// (Block List) Settings for MirrorMaker2 connector. (see below for nested schema)
+	// Settings for MirrorMaker2 connector.
 	ConnectorConfigMirrormaker []ConnectorConfigMirrormakerObservation `json:"connectorConfigMirrormaker,omitempty" tf:"connector_config_mirrormaker,omitempty"`
 
-	// Params for S3 Sink connector. The structure is documented below.
+	// (Block List) Settings for S3 Sink connector. (see below for nested schema)
+	// Settings for S3 Sink connector.
 	ConnectorConfigS3Sink []ConnectorConfigS3SinkObservation `json:"connectorConfigS3Sink,omitempty" tf:"connector_config_s3_sink,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The name of the connector.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Map of String) Additional properties for connector.
 	// Additional properties for connector.
 	// +mapType=granular
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
-	// The number of the connector's parallel working tasks. Default is the number of brokers
+	// (Number) The number of the connector's parallel working tasks. Default is the number of brokers.
+	// The number of the connector's parallel working tasks. Default is the number of brokers.
 	TasksMax *int64 `json:"tasksMax,omitempty" tf:"tasks_max,omitempty"`
 }
 
 type KafkaConnectorParameters struct {
 
+	// (String) The ID of the Kafka cluster.
+	// The ID of the Kafka cluster.
 	// +crossplane:generate:reference:type=KafkaCluster
 	// +kubebuilder:validation:Optional
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
@@ -293,187 +360,230 @@ type KafkaConnectorParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// Params for MirrorMaker2 connector. The structure is documented below.
+	// (Block List) Settings for MirrorMaker2 connector. (see below for nested schema)
+	// Settings for MirrorMaker2 connector.
 	// +kubebuilder:validation:Optional
 	ConnectorConfigMirrormaker []ConnectorConfigMirrormakerParameters `json:"connectorConfigMirrormaker,omitempty" tf:"connector_config_mirrormaker,omitempty"`
 
-	// Params for S3 Sink connector. The structure is documented below.
+	// (Block List) Settings for S3 Sink connector. (see below for nested schema)
+	// Settings for S3 Sink connector.
 	// +kubebuilder:validation:Optional
 	ConnectorConfigS3Sink []ConnectorConfigS3SinkParameters `json:"connectorConfigS3Sink,omitempty" tf:"connector_config_s3_sink,omitempty"`
 
-	// The name of the connector.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Map of String) Additional properties for connector.
 	// Additional properties for connector.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
-	// The number of the connector's parallel working tasks. Default is the number of brokers
+	// (Number) The number of the connector's parallel working tasks. Default is the number of brokers.
+	// The number of the connector's parallel working tasks. Default is the number of brokers.
 	// +kubebuilder:validation:Optional
 	TasksMax *int64 `json:"tasksMax,omitempty" tf:"tasks_max,omitempty"`
 }
 
 type S3ConnectionInitParameters struct {
 
+	// compatible storage.
 	// Name of the bucket in s3-compatible storage.
 	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
-	// Connection params for external s3-compatible storage. The structure is documented below.
+	// compatible storage. (see below for nested schema)
+	// Connection params for external s3-compatible storage.
 	ExternalS3 []ExternalS3InitParameters `json:"externalS3,omitempty" tf:"external_s3,omitempty"`
 }
 
 type S3ConnectionObservation struct {
 
+	// compatible storage.
 	// Name of the bucket in s3-compatible storage.
 	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
-	// Connection params for external s3-compatible storage. The structure is documented below.
+	// compatible storage. (see below for nested schema)
+	// Connection params for external s3-compatible storage.
 	ExternalS3 []ExternalS3Observation `json:"externalS3,omitempty" tf:"external_s3,omitempty"`
 }
 
 type S3ConnectionParameters struct {
 
+	// compatible storage.
 	// Name of the bucket in s3-compatible storage.
 	// +kubebuilder:validation:Optional
 	BucketName *string `json:"bucketName" tf:"bucket_name,omitempty"`
 
-	// Connection params for external s3-compatible storage. The structure is documented below.
+	// compatible storage. (see below for nested schema)
+	// Connection params for external s3-compatible storage.
 	// +kubebuilder:validation:Optional
 	ExternalS3 []ExternalS3Parameters `json:"externalS3" tf:"external_s3,omitempty"`
 }
 
 type SourceClusterInitParameters struct {
 
-	// Name of the cluster. Used also as a topic prefix
+	// (String) Name of the cluster. Used also as a topic prefix.
+	// Name of the cluster. Used also as a topic prefix.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// Connection params for external cluster
+	// (Block List) Connection settings for external cluster. (see below for nested schema)
+	// Connection settings for external cluster.
 	ExternalCluster []ExternalClusterInitParameters `json:"externalCluster,omitempty" tf:"external_cluster,omitempty"`
 
-	// Using this section in the cluster definition (source or target) means it's this cluster
+	// (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+	// Using this section in the cluster definition (source or target) means it's this cluster.
 	ThisCluster []ThisClusterInitParameters `json:"thisCluster,omitempty" tf:"this_cluster,omitempty"`
 }
 
 type SourceClusterObservation struct {
 
-	// Name of the cluster. Used also as a topic prefix
+	// (String) Name of the cluster. Used also as a topic prefix.
+	// Name of the cluster. Used also as a topic prefix.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// Connection params for external cluster
+	// (Block List) Connection settings for external cluster. (see below for nested schema)
+	// Connection settings for external cluster.
 	ExternalCluster []ExternalClusterObservation `json:"externalCluster,omitempty" tf:"external_cluster,omitempty"`
 
-	// Using this section in the cluster definition (source or target) means it's this cluster
+	// (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+	// Using this section in the cluster definition (source or target) means it's this cluster.
 	ThisCluster []ThisClusterParameters `json:"thisCluster,omitempty" tf:"this_cluster,omitempty"`
 }
 
 type SourceClusterParameters struct {
 
-	// Name of the cluster. Used also as a topic prefix
+	// (String) Name of the cluster. Used also as a topic prefix.
+	// Name of the cluster. Used also as a topic prefix.
 	// +kubebuilder:validation:Optional
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// Connection params for external cluster
+	// (Block List) Connection settings for external cluster. (see below for nested schema)
+	// Connection settings for external cluster.
 	// +kubebuilder:validation:Optional
 	ExternalCluster []ExternalClusterParameters `json:"externalCluster,omitempty" tf:"external_cluster,omitempty"`
 
-	// Using this section in the cluster definition (source or target) means it's this cluster
+	// (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+	// Using this section in the cluster definition (source or target) means it's this cluster.
 	// +kubebuilder:validation:Optional
 	ThisCluster []ThisClusterParameters `json:"thisCluster,omitempty" tf:"this_cluster,omitempty"`
 }
 
 type TargetClusterExternalClusterInitParameters struct {
 
-	// List of bootstrap servers to connect to cluster
+	// (String) List of bootstrap servers to connect to cluster.
+	// List of bootstrap servers to connect to cluster.
 	BootstrapServers *string `json:"bootstrapServers,omitempty" tf:"bootstrap_servers,omitempty"`
 
-	// Type of SASL authentification mechanism to use
+	// (String) Type of SASL authentification mechanism to use.
+	// Type of SASL authentification mechanism to use.
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
 
+	// (String, Sensitive) Password to use in SASL authentification mechanism
 	// Password to use in SASL authentification mechanism
 	SaslPasswordSecretRef *v1.SecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
 
-	// Username to use in SASL authentification mechanism
+	// (String) Username to use in SASL authentification mechanism.
+	// Username to use in SASL authentification mechanism.
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
 
-	// Security protocol to use
+	// (String) Security protocol to use.
+	// Security protocol to use.
 	SecurityProtocol *string `json:"securityProtocol,omitempty" tf:"security_protocol,omitempty"`
 }
 
 type TargetClusterExternalClusterObservation struct {
 
-	// List of bootstrap servers to connect to cluster
+	// (String) List of bootstrap servers to connect to cluster.
+	// List of bootstrap servers to connect to cluster.
 	BootstrapServers *string `json:"bootstrapServers,omitempty" tf:"bootstrap_servers,omitempty"`
 
-	// Type of SASL authentification mechanism to use
+	// (String) Type of SASL authentification mechanism to use.
+	// Type of SASL authentification mechanism to use.
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
 
-	// Username to use in SASL authentification mechanism
+	// (String) Username to use in SASL authentification mechanism.
+	// Username to use in SASL authentification mechanism.
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
 
-	// Security protocol to use
+	// (String) Security protocol to use.
+	// Security protocol to use.
 	SecurityProtocol *string `json:"securityProtocol,omitempty" tf:"security_protocol,omitempty"`
 }
 
 type TargetClusterExternalClusterParameters struct {
 
-	// List of bootstrap servers to connect to cluster
+	// (String) List of bootstrap servers to connect to cluster.
+	// List of bootstrap servers to connect to cluster.
 	// +kubebuilder:validation:Optional
 	BootstrapServers *string `json:"bootstrapServers" tf:"bootstrap_servers,omitempty"`
 
-	// Type of SASL authentification mechanism to use
+	// (String) Type of SASL authentification mechanism to use.
+	// Type of SASL authentification mechanism to use.
 	// +kubebuilder:validation:Optional
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
 
+	// (String, Sensitive) Password to use in SASL authentification mechanism
 	// Password to use in SASL authentification mechanism
 	// +kubebuilder:validation:Optional
 	SaslPasswordSecretRef *v1.SecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
 
-	// Username to use in SASL authentification mechanism
+	// (String) Username to use in SASL authentification mechanism.
+	// Username to use in SASL authentification mechanism.
 	// +kubebuilder:validation:Optional
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
 
-	// Security protocol to use
+	// (String) Security protocol to use.
+	// Security protocol to use.
 	// +kubebuilder:validation:Optional
 	SecurityProtocol *string `json:"securityProtocol,omitempty" tf:"security_protocol,omitempty"`
 }
 
 type TargetClusterInitParameters struct {
 
-	// Name of the cluster. Used also as a topic prefix
+	// (String) Name of the cluster. Used also as a topic prefix.
+	// Name of the cluster. Used also as a topic prefix.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// Connection params for external cluster
+	// (Block List) Connection settings for external cluster. (see below for nested schema)
+	// Connection settings for external cluster.
 	ExternalCluster []TargetClusterExternalClusterInitParameters `json:"externalCluster,omitempty" tf:"external_cluster,omitempty"`
 
-	// Using this section in the cluster definition (source or target) means it's this cluster
+	// (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+	// Using this section in the cluster definition (source or target) means it's this cluster.
 	ThisCluster []TargetClusterThisClusterInitParameters `json:"thisCluster,omitempty" tf:"this_cluster,omitempty"`
 }
 
 type TargetClusterObservation struct {
 
-	// Name of the cluster. Used also as a topic prefix
+	// (String) Name of the cluster. Used also as a topic prefix.
+	// Name of the cluster. Used also as a topic prefix.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// Connection params for external cluster
+	// (Block List) Connection settings for external cluster. (see below for nested schema)
+	// Connection settings for external cluster.
 	ExternalCluster []TargetClusterExternalClusterObservation `json:"externalCluster,omitempty" tf:"external_cluster,omitempty"`
 
-	// Using this section in the cluster definition (source or target) means it's this cluster
+	// (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+	// Using this section in the cluster definition (source or target) means it's this cluster.
 	ThisCluster []TargetClusterThisClusterParameters `json:"thisCluster,omitempty" tf:"this_cluster,omitempty"`
 }
 
 type TargetClusterParameters struct {
 
-	// Name of the cluster. Used also as a topic prefix
+	// (String) Name of the cluster. Used also as a topic prefix.
+	// Name of the cluster. Used also as a topic prefix.
 	// +kubebuilder:validation:Optional
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// Connection params for external cluster
+	// (Block List) Connection settings for external cluster. (see below for nested schema)
+	// Connection settings for external cluster.
 	// +kubebuilder:validation:Optional
 	ExternalCluster []TargetClusterExternalClusterParameters `json:"externalCluster,omitempty" tf:"external_cluster,omitempty"`
 
-	// Using this section in the cluster definition (source or target) means it's this cluster
+	// (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+	// Using this section in the cluster definition (source or target) means it's this cluster.
 	// +kubebuilder:validation:Optional
 	ThisCluster []TargetClusterThisClusterParameters `json:"thisCluster,omitempty" tf:"this_cluster,omitempty"`
 }
@@ -523,7 +633,7 @@ type KafkaConnectorStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// KafkaConnector is the Schema for the KafkaConnectors API. Manages a connectors of a Kafka cluster within Yandex.Cloud.
+// KafkaConnector is the Schema for the KafkaConnectors API. Manages a connectors of a Kafka cluster within Yandex Cloud.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

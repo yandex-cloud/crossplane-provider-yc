@@ -29,7 +29,8 @@ import (
 
 type RepositoryInitParameters struct {
 
-	// (String)
+	// (String) A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+	// A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
@@ -38,13 +39,15 @@ type RepositoryObservation struct {
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String)
+	// (String) A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+	// A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type RepositoryParameters struct {
 
-	// (String)
+	// (String) A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+	// A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
@@ -76,7 +79,7 @@ type RepositoryStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Repository is the Schema for the Repositorys API.
+// Repository is the Schema for the Repositorys API. Creates a new Container Repository.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

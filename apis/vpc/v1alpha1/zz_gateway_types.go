@@ -29,10 +29,12 @@ import (
 
 type GatewayInitParameters struct {
 
-	// An optional description of this resource. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -44,48 +46,60 @@ type GatewayInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Labels to apply to this VPC Gateway. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the VPC Gateway. Provided by the client when the VPC Gateway is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) Shared egress gateway configuration. Currently empty. (see below for nested schema)
 	// Shared egress gateway configuration. Currently empty.
 	SharedEgressGateway []SharedEgressGatewayInitParameters `json:"sharedEgressGateway,omitempty" tf:"shared_egress_gateway,omitempty"`
 }
 
 type GatewayObservation struct {
 
-	// Creation timestamp of the key.
+	// (String) The creation timestamp of the resource.
+	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// An optional description of this resource. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Labels to apply to this VPC Gateway. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the VPC Gateway. Provided by the client when the VPC Gateway is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) Shared egress gateway configuration. Currently empty. (see below for nested schema)
 	// Shared egress gateway configuration. Currently empty.
 	SharedEgressGateway []SharedEgressGatewayParameters `json:"sharedEgressGateway,omitempty" tf:"shared_egress_gateway,omitempty"`
 }
 
 type GatewayParameters struct {
 
-	// An optional description of this resource. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -98,15 +112,18 @@ type GatewayParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Labels to apply to this VPC Gateway. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the VPC Gateway. Provided by the client when the VPC Gateway is created.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) Shared egress gateway configuration. Currently empty. (see below for nested schema)
 	// Shared egress gateway configuration. Currently empty.
 	// +kubebuilder:validation:Optional
 	SharedEgressGateway []SharedEgressGatewayParameters `json:"sharedEgressGateway,omitempty" tf:"shared_egress_gateway,omitempty"`
@@ -148,7 +165,7 @@ type GatewayStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Gateway is the Schema for the Gateways API. Manages a gateway within Yandex.Cloud.
+// Gateway is the Schema for the Gateways API. Manages a gateway within Yandex Cloud.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

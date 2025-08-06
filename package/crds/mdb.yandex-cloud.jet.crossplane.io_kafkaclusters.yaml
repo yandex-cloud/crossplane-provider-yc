@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: KafkaCluster is the Schema for the KafkaClusters API. Manages
-          a Kafka cluster within Yandex.Cloud.
+          a Kafka cluster within Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -74,110 +74,175 @@ spec:
               forProvider:
                 properties:
                   config:
-                    description: Configuration of the Kafka cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the Kafka cluster. (see below for nested schema)
+                      Configuration of the Kafka cluster.
                     items:
                       properties:
                         access:
-                          description: Access policy to the Kafka cluster. The structure
-                            is documented below.
+                          description: |-
+                            (Block List, Max: 1) Access policy to the Kafka cluster. (see below for nested schema)
+                            Access policy to the Kafka cluster.
                           items:
                             properties:
                               dataTransfer:
-                                description: Allow access for DataTransfer
+                                description: |-
+                                  (Boolean) Allow access for DataTransfer.
+                                  Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
                                 type: boolean
                             type: object
                           type: array
                         assignPublicIp:
-                          description: Determines whether each broker will be assigned
-                            a public IP address. The default is false.
+                          description: |-
+                            (Boolean) Determines whether each broker will be assigned a public IP address. The default is false.
+                            Determines whether each broker will be assigned a public IP address. The default is `false`.
                           type: boolean
                         brokersCount:
-                          description: Count of brokers per availability zone. The
-                            default is 1.
+                          description: |-
+                            (Number) Count of brokers per availability zone. The default is 1.
+                            Count of brokers per availability zone. The default is `1`.
                           format: int64
                           type: integer
                         diskSizeAutoscaling:
-                          description: Disk autoscaling settings of the Kafka cluster.
-                            The structure is documented below.
+                          description: |-
+                            (Block List, Max: 1) Disk autoscaling settings of the Kafka cluster. (see below for nested schema)
+                            Disk autoscaling settings of the Kafka cluster.
                           items:
                             properties:
                               diskSizeLimit:
-                                description: Maximum possible size of disk in bytes.
+                                description: |-
+                                  (Number) Maximum possible size of disk in bytes.
+                                  Maximum possible size of disk in bytes.
                                 format: int64
                                 type: integer
                               emergencyUsageThreshold:
-                                description: Percent of disk utilization. Disk will
-                                  autoscale immediately, if this threshold reached.
-                                  Value is between 0 and 100. Default value is 0 (autoscaling
-                                  disabled). Must be not less then 'planned_usage_threshold'
-                                  value.
+                                description: |-
+                                  (Number) Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
+                                  Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
                                 format: int64
                                 type: integer
                               plannedUsageThreshold:
-                                description: Percent of disk utilization. During maintenance
-                                  disk will autoscale, if this threshold reached.
-                                  Value is between 0 and 100. Default value is 0 (autoscaling
-                                  disabled).
+                                description: |-
+                                  (Number) Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
+                                  Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
                                 format: int64
                                 type: integer
                             type: object
                           type: array
                         kafka:
-                          description: Configuration of the Kafka subcluster. The
-                            structure is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Configuration of the Kafka subcluster. (see below for nested schema)
+                            Configuration of the Kafka subcluster.
                           items:
                             properties:
                               kafkaConfig:
-                                description: User-defined settings for the Kafka cluster.
-                                  The structure is documented below.
+                                description: |-
+                                  defined settings for the Kafka cluster. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+                                  User-defined settings for the Kafka cluster. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/operations/cluster-update) and [the Kafka documentation](https://kafka.apache.org/documentation/#configuration).
                                 items:
                                   properties:
                                     autoCreateTopicsEnable:
+                                      description: |-
+                                        (Boolean) Enable auto creation of topic on the server.
+                                        Enable auto creation of topic on the server.
                                       type: boolean
                                     compressionType:
-                                      description: Kafka topic settings. For more
-                                        information, see the official documentation
-                                        and the Kafka documentation.
+                                      description: |-
+                                        (String) Compression type of kafka topics.
+                                        Compression type of kafka topics.
                                       type: string
                                     defaultReplicationFactor:
+                                      description: |-
+                                        1 as the replication factor.
+                                        The replication factor for automatically created topics, and for topics created with -1 as the replication factor.
                                       type: string
                                     logFlushIntervalMessages:
+                                      description: |-
+                                        (String) The number of messages accumulated on a log partition before messages are flushed to disk.
+                                        The number of messages accumulated on a log partition before messages are flushed to disk.
                                       type: string
                                     logFlushIntervalMs:
+                                      description: |-
+                                        (String) The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used.
+                                        The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used.
                                       type: string
                                     logFlushSchedulerIntervalMs:
+                                      description: |-
+                                        (String) The frequency in ms that the log flusher checks whether any log needs to be flushed to disk.
+                                        The frequency in ms that the log flusher checks whether any log needs to be flushed to disk.
                                       type: string
                                     logPreallocate:
+                                      description: |-
+                                        (Boolean, Deprecated) Should pre allocate file when create new segment?
+                                        Should pre allocate file when create new segment?
                                       type: boolean
                                     logRetentionBytes:
+                                      description: |-
+                                        (String) The maximum size of the log before deleting it.
+                                        The maximum size of the log before deleting it.
                                       type: string
                                     logRetentionHours:
+                                      description: |-
+                                        (String) The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property.
+                                        The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property.
                                       type: string
                                     logRetentionMinutes:
+                                      description: |-
+                                        (String) The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used.
+                                        The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used.
                                       type: string
                                     logRetentionMs:
+                                      description: |-
+                                        1, no time limit is applied.
+                                        The number of milliseconds to keep a log file before deleting it (in milliseconds), If not set, the value in log.retention.minutes is used. If set to -1, no time limit is applied.
                                       type: string
                                     logSegmentBytes:
+                                      description: |-
+                                        (String) The maximum size of a single log file.
+                                        The maximum size of a single log file.
                                       type: string
                                     messageMaxBytes:
+                                      description: |-
+                                        (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+                                        The largest record batch size allowed by Kafka (after compression if compression is enabled).
                                       type: string
                                     numPartitions:
+                                      description: |-
+                                        (String) The default number of log partitions per topic.
+                                        The default number of log partitions per topic.
                                       type: string
                                     offsetsRetentionMinutes:
+                                      description: |-
+                                        (String) For subscribed consumers, committed offset of a specific partition will be expired and discarded after this period of time.
+                                        For subscribed consumers, committed offset of a specific partition will be expired and discarded after this period of time.
                                       type: string
                                     replicaFetchMaxBytes:
+                                      description: |-
+                                        (String) The number of bytes of messages to attempt to fetch for each partition.
+                                        The number of bytes of messages to attempt to fetch for each partition.
                                       type: string
                                     saslEnabledMechanisms:
+                                      description: |-
+                                        (Set of String) The list of SASL mechanisms enabled in the Kafka server.
+                                        The list of SASL mechanisms enabled in the Kafka server.
                                       items:
                                         type: string
                                       type: array
                                       x-kubernetes-list-type: set
                                     socketReceiveBufferBytes:
+                                      description: |-
+                                        1, the OS default will be used.
+                                        The SO_RCVBUF buffer of the socket server sockets. If the value is -1, the OS default will be used.
                                       type: string
                                     socketSendBufferBytes:
+                                      description: |-
+                                        1, the OS default will be used.
+                                        The SO_SNDBUF buffer of the socket server sockets. If the value is -1, the OS default will be used.
                                       type: string
                                     sslCipherSuites:
+                                      description: |-
+                                        (Set of String) A list of cipher suites.
+                                        A list of cipher suites.
                                       items:
                                         type: string
                                       type: array
@@ -185,61 +250,136 @@ spec:
                                   type: object
                                 type: array
                               resources:
-                                description: Resources allocated to hosts of the ZooKeeper
-                                  subcluster. The structure is documented below.
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Kafka subcluster.
                                 items:
                                   properties:
                                     diskSize:
-                                      description: Volume of the storage available
-                                        to a ZooKeeper host, in gigabytes.
+                                      description: |-
+                                        (Number) Volume of the storage available to a Kafka host, in gigabytes.
+                                        Volume of the storage available to a Kafka host, in gigabytes.
                                       format: int64
                                       type: integer
                                     diskTypeId:
-                                      description: Type of the storage of ZooKeeper
-                                        hosts. For more information see the official
-                                        documentation.
+                                      description: |-
+                                        (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+                                        Type of the storage of Kafka hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
                                       type: string
                                     resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
+                        kafkaUi:
+                          description: |-
+                            (Block List, Max: 1) KAFKA UI settings of the Kafka cluster. (see below for nested schema)
+                            KAFKA UI settings of the Kafka cluster.
+                          items:
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean) Enables KAFKA UI on cluster. The default is false.
+                                  Enables KAFKA UI on cluster. The default is `false`.
+                                type: boolean
+                            type: object
+                          type: array
+                        kraft:
+                          description: |-
+                            controller subcluster. (see below for nested schema)
+                            Configuration of the KRaft-controller subcluster.
+                          items:
+                            properties:
+                              resources:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the KRaft-controller subcluster.
+                                items:
+                                  properties:
+                                    diskSize:
+                                      description: |-
+                                        (Number) Volume of the storage available to a Kafka host, in gigabytes.
+                                        Volume of the storage available to a KRaft-controller host, in gigabytes.
+                                      format: int64
+                                      type: integer
+                                    diskTypeId:
+                                      description: |-
+                                        (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+                                        Type of the storage of KRaft-controller hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
+                                      type: string
+                                    resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a KRaft-controller host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        restApi:
+                          description: |-
+                            (Block List, Max: 1) REST API settings of the Kafka cluster. (see below for nested schema)
+                            REST API settings of the Kafka cluster.
+                          items:
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean) Enables KAFKA UI on cluster. The default is false.
+                                  Enables REST API on cluster. The default is `false`.
+                                type: boolean
+                            type: object
+                          type: array
                         schemaRegistry:
-                          description: Enables managed schema registry on cluster.
-                            The default is false.
+                          description: |-
+                            (Boolean) Enables managed schema registry on cluster. The default is false.
+                            Enables managed schema registry on cluster. The default is `false`.
                           type: boolean
                         unmanagedTopics:
+                          description: (Boolean, Deprecated)
                           type: boolean
                         version:
-                          description: Version of the Kafka server software.
+                          description: |-
+                            (String) Version of the Kafka server software.
+                            Version of the Kafka server software.
                           type: string
                         zones:
-                          description: List of availability zones.
+                          description: |-
+                            (List of String) List of availability zones.
+                            List of availability zones.
                           items:
                             type: string
                           type: array
                         zookeeper:
-                          description: Configuration of the ZooKeeper subcluster.
-                            The structure is documented below.
+                          description: |-
+                            (Block List, Max: 1) Configuration of the ZooKeeper subcluster. (see below for nested schema)
+                            Configuration of the ZooKeeper subcluster.
                           items:
                             properties:
                               resources:
-                                description: Resources allocated to hosts of the ZooKeeper
-                                  subcluster. The structure is documented below.
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the ZooKeeper subcluster.
                                 items:
                                   properties:
                                     diskSize:
-                                      description: Volume of the storage available
-                                        to a ZooKeeper host, in gigabytes.
+                                      description: |-
+                                        (Number) Volume of the storage available to a Kafka host, in gigabytes.
+                                        Volume of the storage available to a ZooKeeper host, in gigabytes.
                                       format: int64
                                       type: integer
                                     diskTypeId:
-                                      description: Type of the storage of ZooKeeper
-                                        hosts. For more information see the official
-                                        documentation.
+                                      description: |-
+                                        (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+                                        Type of the storage of ZooKeeper hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
                                       type: string
                                     resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a ZooKeeper host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
                                       type: string
                                   type: object
                                 type: array
@@ -248,19 +388,24 @@ spec:
                       type: object
                     type: array
                   deletionProtection:
-                    description: Inhibits deletion of the cluster. Can be either true
-                      or false.
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: Description of the Kafka cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   environment:
-                    description: Deployment environment of the Kafka cluster. Can
-                      be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
+                    description: |-
+                      (String) Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
+                      Deployment environment of the Kafka cluster. Can be either `PRESTABLE` or `PRODUCTION`. The default is `PRODUCTION`.
                     type: string
                   folderId:
-                    description: The ID of the folder that the resource belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -339,8 +484,9 @@ spec:
                         type: object
                     type: object
                   hostGroupIds:
-                    description: A list of IDs of the host groups to place VMs of
-                      the cluster on.
+                    description: |-
+                      (Set of String) A list of IDs of the host groups to place VMs of the cluster on.
+                      A list of IDs of the host groups to place VMs of the cluster on.
                     items:
                       type: string
                     type: array
@@ -348,37 +494,44 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Kafka
-                      cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   maintenanceWindow:
-                    description: Maintenance policy of the Kafka cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Maintenance policy of the Kafka cluster. (see below for nested schema)
+                      Maintenance policy of the Kafka cluster.
                     items:
                       properties:
                         day:
-                          description: 'Day of the week (in DDD format). Allowed values:
-                            "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"'
+                          description: |-
+                            (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN.
+                            Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
                           type: string
                         hour:
-                          description: Hour of the day in UTC (in HH format). Allowed
-                            value is between 1 and 24.
+                          description: |-
+                            (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+                            Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
                           format: int64
                           type: integer
                         type:
-                          description: Type of maintenance window. Can be either ANYTIME
-                            or WEEKLY. A day and hour of window need to be specified
-                            with weekly window.
+                          description: |-
+                            (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
                           type: string
                       type: object
                     type: array
                   name:
-                    description: Name of the Kafka cluster. Provided by the client
-                      when the cluster is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network, to which the Kafka cluster belongs.
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -455,7 +608,9 @@ spec:
                         type: object
                     type: object
                   securityGroupIds:
-                    description: Security group ids, to which the Kafka cluster belongs.
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
                     items:
                       type: string
                     type: array
@@ -539,7 +694,9 @@ spec:
                         type: object
                     type: object
                   subnetIds:
-                    description: IDs of the subnets, to which the Kafka cluster belongs.
+                    description: |-
+                      (List of String) The list of VPC subnets identifiers which resource is attached.
+                      The list of VPC subnets identifiers which resource is attached.
                     items:
                       type: string
                     type: array
@@ -622,69 +779,118 @@ spec:
                         type: object
                     type: object
                   topic:
-                    description: (Deprecated) To manage topics, please switch to using
-                      a separate resource type yandex_mdb_kafka_topic.
+                    description: |-
+                      (Block List, Deprecated) To manage topics, please switch to using a separate resource type yandex_mdb_kafka_topic. (see below for nested schema)
+                      To manage topics, please switch to using a separate resource type `yandex_mdb_kafka_topic`.
                     items:
                       properties:
                         name:
-                          description: The name of the topic.
+                          description: |-
+                            (String) The resource name.
+                            The name of the topic.
                           type: string
                         partitions:
-                          description: The number of the topic's partitions.
+                          description: |-
+                            (Number) The number of the topic's partitions.
+                            The number of the topic's partitions.
                           format: int64
                           type: integer
                         replicationFactor:
-                          description: Amount of data copies (replicas) for the topic
-                            in the cluster.
+                          description: |-
+                            (Number) Amount of data copies (replicas) for the topic in the cluster.
+                            Amount of data copies (replicas) for the topic in the cluster.
                           format: int64
                           type: integer
                         topicConfig:
-                          description: User-defined settings for the topic. The structure
-                            is documented below.
+                          description: |-
+                            defined settings for the topic. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+                            User-defined settings for the topic. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/operations/cluster-topics#update-topic) and [the Kafka documentation](https://kafka.apache.org/documentation/#configuration).
                           items:
                             properties:
                               cleanupPolicy:
+                                description: |-
+                                  (String) Retention policy to use on log segments.
+                                  Retention policy to use on log segments.
                                 type: string
                               compressionType:
-                                description: Kafka topic settings. For more information,
-                                  see the official documentation and the Kafka documentation.
+                                description: |-
+                                  (String) Compression type of kafka topics.
+                                  Compression type of kafka topic.
                                 type: string
                               deleteRetentionMs:
+                                description: |-
+                                  (String) The amount of time to retain delete tombstone markers for log compacted topics.
+                                  The amount of time to retain delete tombstone markers for log compacted topics.
                                 type: string
                               fileDeleteDelayMs:
+                                description: |-
+                                  (String) The time to wait before deleting a file from the filesystem.
+                                  The time to wait before deleting a file from the filesystem.
                                 type: string
                               flushMessages:
+                                description: |-
+                                  (String) This setting allows specifying an interval at which we will force an fsync of data written to the log.
+                                  This setting allows specifying an interval at which we will force an fsync of data written to the log.
                                 type: string
                               flushMs:
+                                description: |-
+                                  (String) This setting allows specifying a time interval at which we will force an fsync of data written to the log.
+                                  This setting allows specifying a time interval at which we will force an fsync of data written to the log.
                                 type: string
                               maxMessageBytes:
+                                description: |-
+                                  (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+                                  The largest record batch size allowed by Kafka (after compression if compression is enabled).
                                 type: string
                               minCompactionLagMs:
+                                description: |-
+                                  (String) The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
+                                  The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
                                 type: string
                               minInsyncReplicas:
+                                description: |-
+                                  1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
+                                  When a producer sets acks to "all" (or "-1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
                                 type: string
                               preallocate:
+                                description: |-
+                                  (Boolean, Deprecated) True if we should preallocate the file on disk when creating a new log segment.
+                                  True if we should preallocate the file on disk when creating a new log segment.
                                 type: boolean
                               retentionBytes:
+                                description: |-
+                                  (String) This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
+                                  This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
                                 type: string
                               retentionMs:
+                                description: |-
+                                  (String) This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
+                                  This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
                                 type: string
                               segmentBytes:
+                                description: |-
+                                  (String) This configuration controls the segment file size for the log.
+                                  This configuration controls the segment file size for the log.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   user:
-                    description: (Deprecated) To manage users, please switch to using
-                      a separate resource type yandex_mdb_kafka_user.
+                    description: |-
+                      (Block Set, Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user. (see below for nested schema)
+                      To manage users, please switch to using a separate resource type `yandex_mdb_kafka_user`.
                     items:
                       properties:
                         name:
-                          description: The name of the user.
+                          description: |-
+                            (String) The resource name.
+                            The name of the user.
                           type: string
                         passwordSecretRef:
-                          description: The password of the user.
+                          description: |-
+                            (String, Sensitive) The password of the user.
+                            The password of the user.
                           properties:
                             key:
                               description: The key to select.
@@ -701,23 +907,28 @@ spec:
                           - namespace
                           type: object
                         permission:
-                          description: Set of permissions granted to the user. The
-                            structure is documented below.
+                          description: |-
+                            (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                            Set of permissions granted to the user.
                           items:
                             properties:
                               allowHosts:
-                                description: Set of hosts, to which this permission
-                                  grants access to.
+                                description: |-
+                                  addresses allowed as value of single host.
+                                  Set of hosts, to which this permission grants access to. Only ip-addresses allowed as value of single host.
                                 items:
                                   type: string
                                 type: array
                                 x-kubernetes-list-type: set
                               role:
-                                description: The role type to grant to the topic.
+                                description: |-
+                                  (String) The role type to grant to the topic.
+                                  The role type to grant to the topic.
                                 type: string
                               topicName:
-                                description: The name of the topic that the permission
-                                  grants access to.
+                                description: |-
+                                  (String) The name of the topic that the permission grants access to.
+                                  The name of the topic that the permission grants access to.
                                 type: string
                             type: object
                           type: array
@@ -738,110 +949,175 @@ spec:
                   autoscaler.
                 properties:
                   config:
-                    description: Configuration of the Kafka cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the Kafka cluster. (see below for nested schema)
+                      Configuration of the Kafka cluster.
                     items:
                       properties:
                         access:
-                          description: Access policy to the Kafka cluster. The structure
-                            is documented below.
+                          description: |-
+                            (Block List, Max: 1) Access policy to the Kafka cluster. (see below for nested schema)
+                            Access policy to the Kafka cluster.
                           items:
                             properties:
                               dataTransfer:
-                                description: Allow access for DataTransfer
+                                description: |-
+                                  (Boolean) Allow access for DataTransfer.
+                                  Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
                                 type: boolean
                             type: object
                           type: array
                         assignPublicIp:
-                          description: Determines whether each broker will be assigned
-                            a public IP address. The default is false.
+                          description: |-
+                            (Boolean) Determines whether each broker will be assigned a public IP address. The default is false.
+                            Determines whether each broker will be assigned a public IP address. The default is `false`.
                           type: boolean
                         brokersCount:
-                          description: Count of brokers per availability zone. The
-                            default is 1.
+                          description: |-
+                            (Number) Count of brokers per availability zone. The default is 1.
+                            Count of brokers per availability zone. The default is `1`.
                           format: int64
                           type: integer
                         diskSizeAutoscaling:
-                          description: Disk autoscaling settings of the Kafka cluster.
-                            The structure is documented below.
+                          description: |-
+                            (Block List, Max: 1) Disk autoscaling settings of the Kafka cluster. (see below for nested schema)
+                            Disk autoscaling settings of the Kafka cluster.
                           items:
                             properties:
                               diskSizeLimit:
-                                description: Maximum possible size of disk in bytes.
+                                description: |-
+                                  (Number) Maximum possible size of disk in bytes.
+                                  Maximum possible size of disk in bytes.
                                 format: int64
                                 type: integer
                               emergencyUsageThreshold:
-                                description: Percent of disk utilization. Disk will
-                                  autoscale immediately, if this threshold reached.
-                                  Value is between 0 and 100. Default value is 0 (autoscaling
-                                  disabled). Must be not less then 'planned_usage_threshold'
-                                  value.
+                                description: |-
+                                  (Number) Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
+                                  Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
                                 format: int64
                                 type: integer
                               plannedUsageThreshold:
-                                description: Percent of disk utilization. During maintenance
-                                  disk will autoscale, if this threshold reached.
-                                  Value is between 0 and 100. Default value is 0 (autoscaling
-                                  disabled).
+                                description: |-
+                                  (Number) Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
+                                  Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
                                 format: int64
                                 type: integer
                             type: object
                           type: array
                         kafka:
-                          description: Configuration of the Kafka subcluster. The
-                            structure is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Configuration of the Kafka subcluster. (see below for nested schema)
+                            Configuration of the Kafka subcluster.
                           items:
                             properties:
                               kafkaConfig:
-                                description: User-defined settings for the Kafka cluster.
-                                  The structure is documented below.
+                                description: |-
+                                  defined settings for the Kafka cluster. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+                                  User-defined settings for the Kafka cluster. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/operations/cluster-update) and [the Kafka documentation](https://kafka.apache.org/documentation/#configuration).
                                 items:
                                   properties:
                                     autoCreateTopicsEnable:
+                                      description: |-
+                                        (Boolean) Enable auto creation of topic on the server.
+                                        Enable auto creation of topic on the server.
                                       type: boolean
                                     compressionType:
-                                      description: Kafka topic settings. For more
-                                        information, see the official documentation
-                                        and the Kafka documentation.
+                                      description: |-
+                                        (String) Compression type of kafka topics.
+                                        Compression type of kafka topics.
                                       type: string
                                     defaultReplicationFactor:
+                                      description: |-
+                                        1 as the replication factor.
+                                        The replication factor for automatically created topics, and for topics created with -1 as the replication factor.
                                       type: string
                                     logFlushIntervalMessages:
+                                      description: |-
+                                        (String) The number of messages accumulated on a log partition before messages are flushed to disk.
+                                        The number of messages accumulated on a log partition before messages are flushed to disk.
                                       type: string
                                     logFlushIntervalMs:
+                                      description: |-
+                                        (String) The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used.
+                                        The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used.
                                       type: string
                                     logFlushSchedulerIntervalMs:
+                                      description: |-
+                                        (String) The frequency in ms that the log flusher checks whether any log needs to be flushed to disk.
+                                        The frequency in ms that the log flusher checks whether any log needs to be flushed to disk.
                                       type: string
                                     logPreallocate:
+                                      description: |-
+                                        (Boolean, Deprecated) Should pre allocate file when create new segment?
+                                        Should pre allocate file when create new segment?
                                       type: boolean
                                     logRetentionBytes:
+                                      description: |-
+                                        (String) The maximum size of the log before deleting it.
+                                        The maximum size of the log before deleting it.
                                       type: string
                                     logRetentionHours:
+                                      description: |-
+                                        (String) The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property.
+                                        The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property.
                                       type: string
                                     logRetentionMinutes:
+                                      description: |-
+                                        (String) The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used.
+                                        The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used.
                                       type: string
                                     logRetentionMs:
+                                      description: |-
+                                        1, no time limit is applied.
+                                        The number of milliseconds to keep a log file before deleting it (in milliseconds), If not set, the value in log.retention.minutes is used. If set to -1, no time limit is applied.
                                       type: string
                                     logSegmentBytes:
+                                      description: |-
+                                        (String) The maximum size of a single log file.
+                                        The maximum size of a single log file.
                                       type: string
                                     messageMaxBytes:
+                                      description: |-
+                                        (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+                                        The largest record batch size allowed by Kafka (after compression if compression is enabled).
                                       type: string
                                     numPartitions:
+                                      description: |-
+                                        (String) The default number of log partitions per topic.
+                                        The default number of log partitions per topic.
                                       type: string
                                     offsetsRetentionMinutes:
+                                      description: |-
+                                        (String) For subscribed consumers, committed offset of a specific partition will be expired and discarded after this period of time.
+                                        For subscribed consumers, committed offset of a specific partition will be expired and discarded after this period of time.
                                       type: string
                                     replicaFetchMaxBytes:
+                                      description: |-
+                                        (String) The number of bytes of messages to attempt to fetch for each partition.
+                                        The number of bytes of messages to attempt to fetch for each partition.
                                       type: string
                                     saslEnabledMechanisms:
+                                      description: |-
+                                        (Set of String) The list of SASL mechanisms enabled in the Kafka server.
+                                        The list of SASL mechanisms enabled in the Kafka server.
                                       items:
                                         type: string
                                       type: array
                                       x-kubernetes-list-type: set
                                     socketReceiveBufferBytes:
+                                      description: |-
+                                        1, the OS default will be used.
+                                        The SO_RCVBUF buffer of the socket server sockets. If the value is -1, the OS default will be used.
                                       type: string
                                     socketSendBufferBytes:
+                                      description: |-
+                                        1, the OS default will be used.
+                                        The SO_SNDBUF buffer of the socket server sockets. If the value is -1, the OS default will be used.
                                       type: string
                                     sslCipherSuites:
+                                      description: |-
+                                        (Set of String) A list of cipher suites.
+                                        A list of cipher suites.
                                       items:
                                         type: string
                                       type: array
@@ -849,61 +1125,136 @@ spec:
                                   type: object
                                 type: array
                               resources:
-                                description: Resources allocated to hosts of the ZooKeeper
-                                  subcluster. The structure is documented below.
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Kafka subcluster.
                                 items:
                                   properties:
                                     diskSize:
-                                      description: Volume of the storage available
-                                        to a ZooKeeper host, in gigabytes.
+                                      description: |-
+                                        (Number) Volume of the storage available to a Kafka host, in gigabytes.
+                                        Volume of the storage available to a Kafka host, in gigabytes.
                                       format: int64
                                       type: integer
                                     diskTypeId:
-                                      description: Type of the storage of ZooKeeper
-                                        hosts. For more information see the official
-                                        documentation.
+                                      description: |-
+                                        (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+                                        Type of the storage of Kafka hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
                                       type: string
                                     resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
+                        kafkaUi:
+                          description: |-
+                            (Block List, Max: 1) KAFKA UI settings of the Kafka cluster. (see below for nested schema)
+                            KAFKA UI settings of the Kafka cluster.
+                          items:
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean) Enables KAFKA UI on cluster. The default is false.
+                                  Enables KAFKA UI on cluster. The default is `false`.
+                                type: boolean
+                            type: object
+                          type: array
+                        kraft:
+                          description: |-
+                            controller subcluster. (see below for nested schema)
+                            Configuration of the KRaft-controller subcluster.
+                          items:
+                            properties:
+                              resources:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the KRaft-controller subcluster.
+                                items:
+                                  properties:
+                                    diskSize:
+                                      description: |-
+                                        (Number) Volume of the storage available to a Kafka host, in gigabytes.
+                                        Volume of the storage available to a KRaft-controller host, in gigabytes.
+                                      format: int64
+                                      type: integer
+                                    diskTypeId:
+                                      description: |-
+                                        (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+                                        Type of the storage of KRaft-controller hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
+                                      type: string
+                                    resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a KRaft-controller host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        restApi:
+                          description: |-
+                            (Block List, Max: 1) REST API settings of the Kafka cluster. (see below for nested schema)
+                            REST API settings of the Kafka cluster.
+                          items:
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean) Enables KAFKA UI on cluster. The default is false.
+                                  Enables REST API on cluster. The default is `false`.
+                                type: boolean
+                            type: object
+                          type: array
                         schemaRegistry:
-                          description: Enables managed schema registry on cluster.
-                            The default is false.
+                          description: |-
+                            (Boolean) Enables managed schema registry on cluster. The default is false.
+                            Enables managed schema registry on cluster. The default is `false`.
                           type: boolean
                         unmanagedTopics:
+                          description: (Boolean, Deprecated)
                           type: boolean
                         version:
-                          description: Version of the Kafka server software.
+                          description: |-
+                            (String) Version of the Kafka server software.
+                            Version of the Kafka server software.
                           type: string
                         zones:
-                          description: List of availability zones.
+                          description: |-
+                            (List of String) List of availability zones.
+                            List of availability zones.
                           items:
                             type: string
                           type: array
                         zookeeper:
-                          description: Configuration of the ZooKeeper subcluster.
-                            The structure is documented below.
+                          description: |-
+                            (Block List, Max: 1) Configuration of the ZooKeeper subcluster. (see below for nested schema)
+                            Configuration of the ZooKeeper subcluster.
                           items:
                             properties:
                               resources:
-                                description: Resources allocated to hosts of the ZooKeeper
-                                  subcluster. The structure is documented below.
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the ZooKeeper subcluster.
                                 items:
                                   properties:
                                     diskSize:
-                                      description: Volume of the storage available
-                                        to a ZooKeeper host, in gigabytes.
+                                      description: |-
+                                        (Number) Volume of the storage available to a Kafka host, in gigabytes.
+                                        Volume of the storage available to a ZooKeeper host, in gigabytes.
                                       format: int64
                                       type: integer
                                     diskTypeId:
-                                      description: Type of the storage of ZooKeeper
-                                        hosts. For more information see the official
-                                        documentation.
+                                      description: |-
+                                        (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+                                        Type of the storage of ZooKeeper hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
                                       type: string
                                     resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a ZooKeeper host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
                                       type: string
                                   type: object
                                 type: array
@@ -912,19 +1263,24 @@ spec:
                       type: object
                     type: array
                   deletionProtection:
-                    description: Inhibits deletion of the cluster. Can be either true
-                      or false.
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: Description of the Kafka cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   environment:
-                    description: Deployment environment of the Kafka cluster. Can
-                      be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
+                    description: |-
+                      (String) Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
+                      Deployment environment of the Kafka cluster. Can be either `PRESTABLE` or `PRODUCTION`. The default is `PRODUCTION`.
                     type: string
                   folderId:
-                    description: The ID of the folder that the resource belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -1003,8 +1359,9 @@ spec:
                         type: object
                     type: object
                   hostGroupIds:
-                    description: A list of IDs of the host groups to place VMs of
-                      the cluster on.
+                    description: |-
+                      (Set of String) A list of IDs of the host groups to place VMs of the cluster on.
+                      A list of IDs of the host groups to place VMs of the cluster on.
                     items:
                       type: string
                     type: array
@@ -1012,37 +1369,44 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Kafka
-                      cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   maintenanceWindow:
-                    description: Maintenance policy of the Kafka cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Maintenance policy of the Kafka cluster. (see below for nested schema)
+                      Maintenance policy of the Kafka cluster.
                     items:
                       properties:
                         day:
-                          description: 'Day of the week (in DDD format). Allowed values:
-                            "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"'
+                          description: |-
+                            (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN.
+                            Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
                           type: string
                         hour:
-                          description: Hour of the day in UTC (in HH format). Allowed
-                            value is between 1 and 24.
+                          description: |-
+                            (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+                            Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
                           format: int64
                           type: integer
                         type:
-                          description: Type of maintenance window. Can be either ANYTIME
-                            or WEEKLY. A day and hour of window need to be specified
-                            with weekly window.
+                          description: |-
+                            (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
                           type: string
                       type: object
                     type: array
                   name:
-                    description: Name of the Kafka cluster. Provided by the client
-                      when the cluster is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network, to which the Kafka cluster belongs.
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -1119,7 +1483,9 @@ spec:
                         type: object
                     type: object
                   securityGroupIds:
-                    description: Security group ids, to which the Kafka cluster belongs.
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
                     items:
                       type: string
                     type: array
@@ -1203,7 +1569,9 @@ spec:
                         type: object
                     type: object
                   subnetIds:
-                    description: IDs of the subnets, to which the Kafka cluster belongs.
+                    description: |-
+                      (List of String) The list of VPC subnets identifiers which resource is attached.
+                      The list of VPC subnets identifiers which resource is attached.
                     items:
                       type: string
                     type: array
@@ -1286,69 +1654,118 @@ spec:
                         type: object
                     type: object
                   topic:
-                    description: (Deprecated) To manage topics, please switch to using
-                      a separate resource type yandex_mdb_kafka_topic.
+                    description: |-
+                      (Block List, Deprecated) To manage topics, please switch to using a separate resource type yandex_mdb_kafka_topic. (see below for nested schema)
+                      To manage topics, please switch to using a separate resource type `yandex_mdb_kafka_topic`.
                     items:
                       properties:
                         name:
-                          description: The name of the topic.
+                          description: |-
+                            (String) The resource name.
+                            The name of the topic.
                           type: string
                         partitions:
-                          description: The number of the topic's partitions.
+                          description: |-
+                            (Number) The number of the topic's partitions.
+                            The number of the topic's partitions.
                           format: int64
                           type: integer
                         replicationFactor:
-                          description: Amount of data copies (replicas) for the topic
-                            in the cluster.
+                          description: |-
+                            (Number) Amount of data copies (replicas) for the topic in the cluster.
+                            Amount of data copies (replicas) for the topic in the cluster.
                           format: int64
                           type: integer
                         topicConfig:
-                          description: User-defined settings for the topic. The structure
-                            is documented below.
+                          description: |-
+                            defined settings for the topic. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+                            User-defined settings for the topic. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/operations/cluster-topics#update-topic) and [the Kafka documentation](https://kafka.apache.org/documentation/#configuration).
                           items:
                             properties:
                               cleanupPolicy:
+                                description: |-
+                                  (String) Retention policy to use on log segments.
+                                  Retention policy to use on log segments.
                                 type: string
                               compressionType:
-                                description: Kafka topic settings. For more information,
-                                  see the official documentation and the Kafka documentation.
+                                description: |-
+                                  (String) Compression type of kafka topics.
+                                  Compression type of kafka topic.
                                 type: string
                               deleteRetentionMs:
+                                description: |-
+                                  (String) The amount of time to retain delete tombstone markers for log compacted topics.
+                                  The amount of time to retain delete tombstone markers for log compacted topics.
                                 type: string
                               fileDeleteDelayMs:
+                                description: |-
+                                  (String) The time to wait before deleting a file from the filesystem.
+                                  The time to wait before deleting a file from the filesystem.
                                 type: string
                               flushMessages:
+                                description: |-
+                                  (String) This setting allows specifying an interval at which we will force an fsync of data written to the log.
+                                  This setting allows specifying an interval at which we will force an fsync of data written to the log.
                                 type: string
                               flushMs:
+                                description: |-
+                                  (String) This setting allows specifying a time interval at which we will force an fsync of data written to the log.
+                                  This setting allows specifying a time interval at which we will force an fsync of data written to the log.
                                 type: string
                               maxMessageBytes:
+                                description: |-
+                                  (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+                                  The largest record batch size allowed by Kafka (after compression if compression is enabled).
                                 type: string
                               minCompactionLagMs:
+                                description: |-
+                                  (String) The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
+                                  The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
                                 type: string
                               minInsyncReplicas:
+                                description: |-
+                                  1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
+                                  When a producer sets acks to "all" (or "-1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
                                 type: string
                               preallocate:
+                                description: |-
+                                  (Boolean, Deprecated) True if we should preallocate the file on disk when creating a new log segment.
+                                  True if we should preallocate the file on disk when creating a new log segment.
                                 type: boolean
                               retentionBytes:
+                                description: |-
+                                  (String) This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
+                                  This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
                                 type: string
                               retentionMs:
+                                description: |-
+                                  (String) This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
+                                  This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
                                 type: string
                               segmentBytes:
+                                description: |-
+                                  (String) This configuration controls the segment file size for the log.
+                                  This configuration controls the segment file size for the log.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   user:
-                    description: (Deprecated) To manage users, please switch to using
-                      a separate resource type yandex_mdb_kafka_user.
+                    description: |-
+                      (Block Set, Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user. (see below for nested schema)
+                      To manage users, please switch to using a separate resource type `yandex_mdb_kafka_user`.
                     items:
                       properties:
                         name:
-                          description: The name of the user.
+                          description: |-
+                            (String) The resource name.
+                            The name of the user.
                           type: string
                         passwordSecretRef:
-                          description: The password of the user.
+                          description: |-
+                            (String, Sensitive) The password of the user.
+                            The password of the user.
                           properties:
                             key:
                               description: The key to select.
@@ -1365,23 +1782,28 @@ spec:
                           - namespace
                           type: object
                         permission:
-                          description: Set of permissions granted to the user. The
-                            structure is documented below.
+                          description: |-
+                            (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                            Set of permissions granted to the user.
                           items:
                             properties:
                               allowHosts:
-                                description: Set of hosts, to which this permission
-                                  grants access to.
+                                description: |-
+                                  addresses allowed as value of single host.
+                                  Set of hosts, to which this permission grants access to. Only ip-addresses allowed as value of single host.
                                 items:
                                   type: string
                                 type: array
                                 x-kubernetes-list-type: set
                               role:
-                                description: The role type to grant to the topic.
+                                description: |-
+                                  (String) The role type to grant to the topic.
+                                  The role type to grant to the topic.
                                 type: string
                               topicName:
-                                description: The name of the topic that the permission
-                                  grants access to.
+                                description: |-
+                                  (String) The name of the topic that the permission grants access to.
+                                  The name of the topic that the permission grants access to.
                                 type: string
                             type: object
                           type: array
@@ -1572,110 +1994,175 @@ spec:
               atProvider:
                 properties:
                   config:
-                    description: Configuration of the Kafka cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the Kafka cluster. (see below for nested schema)
+                      Configuration of the Kafka cluster.
                     items:
                       properties:
                         access:
-                          description: Access policy to the Kafka cluster. The structure
-                            is documented below.
+                          description: |-
+                            (Block List, Max: 1) Access policy to the Kafka cluster. (see below for nested schema)
+                            Access policy to the Kafka cluster.
                           items:
                             properties:
                               dataTransfer:
-                                description: Allow access for DataTransfer
+                                description: |-
+                                  (Boolean) Allow access for DataTransfer.
+                                  Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
                                 type: boolean
                             type: object
                           type: array
                         assignPublicIp:
-                          description: Determines whether each broker will be assigned
-                            a public IP address. The default is false.
+                          description: |-
+                            (Boolean) Determines whether each broker will be assigned a public IP address. The default is false.
+                            Determines whether each broker will be assigned a public IP address. The default is `false`.
                           type: boolean
                         brokersCount:
-                          description: Count of brokers per availability zone. The
-                            default is 1.
+                          description: |-
+                            (Number) Count of brokers per availability zone. The default is 1.
+                            Count of brokers per availability zone. The default is `1`.
                           format: int64
                           type: integer
                         diskSizeAutoscaling:
-                          description: Disk autoscaling settings of the Kafka cluster.
-                            The structure is documented below.
+                          description: |-
+                            (Block List, Max: 1) Disk autoscaling settings of the Kafka cluster. (see below for nested schema)
+                            Disk autoscaling settings of the Kafka cluster.
                           items:
                             properties:
                               diskSizeLimit:
-                                description: Maximum possible size of disk in bytes.
+                                description: |-
+                                  (Number) Maximum possible size of disk in bytes.
+                                  Maximum possible size of disk in bytes.
                                 format: int64
                                 type: integer
                               emergencyUsageThreshold:
-                                description: Percent of disk utilization. Disk will
-                                  autoscale immediately, if this threshold reached.
-                                  Value is between 0 and 100. Default value is 0 (autoscaling
-                                  disabled). Must be not less then 'planned_usage_threshold'
-                                  value.
+                                description: |-
+                                  (Number) Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
+                                  Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
                                 format: int64
                                 type: integer
                               plannedUsageThreshold:
-                                description: Percent of disk utilization. During maintenance
-                                  disk will autoscale, if this threshold reached.
-                                  Value is between 0 and 100. Default value is 0 (autoscaling
-                                  disabled).
+                                description: |-
+                                  (Number) Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
+                                  Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
                                 format: int64
                                 type: integer
                             type: object
                           type: array
                         kafka:
-                          description: Configuration of the Kafka subcluster. The
-                            structure is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Configuration of the Kafka subcluster. (see below for nested schema)
+                            Configuration of the Kafka subcluster.
                           items:
                             properties:
                               kafkaConfig:
-                                description: User-defined settings for the Kafka cluster.
-                                  The structure is documented below.
+                                description: |-
+                                  defined settings for the Kafka cluster. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+                                  User-defined settings for the Kafka cluster. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/operations/cluster-update) and [the Kafka documentation](https://kafka.apache.org/documentation/#configuration).
                                 items:
                                   properties:
                                     autoCreateTopicsEnable:
+                                      description: |-
+                                        (Boolean) Enable auto creation of topic on the server.
+                                        Enable auto creation of topic on the server.
                                       type: boolean
                                     compressionType:
-                                      description: Kafka topic settings. For more
-                                        information, see the official documentation
-                                        and the Kafka documentation.
+                                      description: |-
+                                        (String) Compression type of kafka topics.
+                                        Compression type of kafka topics.
                                       type: string
                                     defaultReplicationFactor:
+                                      description: |-
+                                        1 as the replication factor.
+                                        The replication factor for automatically created topics, and for topics created with -1 as the replication factor.
                                       type: string
                                     logFlushIntervalMessages:
+                                      description: |-
+                                        (String) The number of messages accumulated on a log partition before messages are flushed to disk.
+                                        The number of messages accumulated on a log partition before messages are flushed to disk.
                                       type: string
                                     logFlushIntervalMs:
+                                      description: |-
+                                        (String) The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used.
+                                        The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used.
                                       type: string
                                     logFlushSchedulerIntervalMs:
+                                      description: |-
+                                        (String) The frequency in ms that the log flusher checks whether any log needs to be flushed to disk.
+                                        The frequency in ms that the log flusher checks whether any log needs to be flushed to disk.
                                       type: string
                                     logPreallocate:
+                                      description: |-
+                                        (Boolean, Deprecated) Should pre allocate file when create new segment?
+                                        Should pre allocate file when create new segment?
                                       type: boolean
                                     logRetentionBytes:
+                                      description: |-
+                                        (String) The maximum size of the log before deleting it.
+                                        The maximum size of the log before deleting it.
                                       type: string
                                     logRetentionHours:
+                                      description: |-
+                                        (String) The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property.
+                                        The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property.
                                       type: string
                                     logRetentionMinutes:
+                                      description: |-
+                                        (String) The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used.
+                                        The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used.
                                       type: string
                                     logRetentionMs:
+                                      description: |-
+                                        1, no time limit is applied.
+                                        The number of milliseconds to keep a log file before deleting it (in milliseconds), If not set, the value in log.retention.minutes is used. If set to -1, no time limit is applied.
                                       type: string
                                     logSegmentBytes:
+                                      description: |-
+                                        (String) The maximum size of a single log file.
+                                        The maximum size of a single log file.
                                       type: string
                                     messageMaxBytes:
+                                      description: |-
+                                        (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+                                        The largest record batch size allowed by Kafka (after compression if compression is enabled).
                                       type: string
                                     numPartitions:
+                                      description: |-
+                                        (String) The default number of log partitions per topic.
+                                        The default number of log partitions per topic.
                                       type: string
                                     offsetsRetentionMinutes:
+                                      description: |-
+                                        (String) For subscribed consumers, committed offset of a specific partition will be expired and discarded after this period of time.
+                                        For subscribed consumers, committed offset of a specific partition will be expired and discarded after this period of time.
                                       type: string
                                     replicaFetchMaxBytes:
+                                      description: |-
+                                        (String) The number of bytes of messages to attempt to fetch for each partition.
+                                        The number of bytes of messages to attempt to fetch for each partition.
                                       type: string
                                     saslEnabledMechanisms:
+                                      description: |-
+                                        (Set of String) The list of SASL mechanisms enabled in the Kafka server.
+                                        The list of SASL mechanisms enabled in the Kafka server.
                                       items:
                                         type: string
                                       type: array
                                       x-kubernetes-list-type: set
                                     socketReceiveBufferBytes:
+                                      description: |-
+                                        1, the OS default will be used.
+                                        The SO_RCVBUF buffer of the socket server sockets. If the value is -1, the OS default will be used.
                                       type: string
                                     socketSendBufferBytes:
+                                      description: |-
+                                        1, the OS default will be used.
+                                        The SO_SNDBUF buffer of the socket server sockets. If the value is -1, the OS default will be used.
                                       type: string
                                     sslCipherSuites:
+                                      description: |-
+                                        (Set of String) A list of cipher suites.
+                                        A list of cipher suites.
                                       items:
                                         type: string
                                       type: array
@@ -1683,61 +2170,136 @@ spec:
                                   type: object
                                 type: array
                               resources:
-                                description: Resources allocated to hosts of the ZooKeeper
-                                  subcluster. The structure is documented below.
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Kafka subcluster.
                                 items:
                                   properties:
                                     diskSize:
-                                      description: Volume of the storage available
-                                        to a ZooKeeper host, in gigabytes.
+                                      description: |-
+                                        (Number) Volume of the storage available to a Kafka host, in gigabytes.
+                                        Volume of the storage available to a Kafka host, in gigabytes.
                                       format: int64
                                       type: integer
                                     diskTypeId:
-                                      description: Type of the storage of ZooKeeper
-                                        hosts. For more information see the official
-                                        documentation.
+                                      description: |-
+                                        (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+                                        Type of the storage of Kafka hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
                                       type: string
                                     resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
+                        kafkaUi:
+                          description: |-
+                            (Block List, Max: 1) KAFKA UI settings of the Kafka cluster. (see below for nested schema)
+                            KAFKA UI settings of the Kafka cluster.
+                          items:
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean) Enables KAFKA UI on cluster. The default is false.
+                                  Enables KAFKA UI on cluster. The default is `false`.
+                                type: boolean
+                            type: object
+                          type: array
+                        kraft:
+                          description: |-
+                            controller subcluster. (see below for nested schema)
+                            Configuration of the KRaft-controller subcluster.
+                          items:
+                            properties:
+                              resources:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the KRaft-controller subcluster.
+                                items:
+                                  properties:
+                                    diskSize:
+                                      description: |-
+                                        (Number) Volume of the storage available to a Kafka host, in gigabytes.
+                                        Volume of the storage available to a KRaft-controller host, in gigabytes.
+                                      format: int64
+                                      type: integer
+                                    diskTypeId:
+                                      description: |-
+                                        (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+                                        Type of the storage of KRaft-controller hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
+                                      type: string
+                                    resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a KRaft-controller host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        restApi:
+                          description: |-
+                            (Block List, Max: 1) REST API settings of the Kafka cluster. (see below for nested schema)
+                            REST API settings of the Kafka cluster.
+                          items:
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean) Enables KAFKA UI on cluster. The default is false.
+                                  Enables REST API on cluster. The default is `false`.
+                                type: boolean
+                            type: object
+                          type: array
                         schemaRegistry:
-                          description: Enables managed schema registry on cluster.
-                            The default is false.
+                          description: |-
+                            (Boolean) Enables managed schema registry on cluster. The default is false.
+                            Enables managed schema registry on cluster. The default is `false`.
                           type: boolean
                         unmanagedTopics:
+                          description: (Boolean, Deprecated)
                           type: boolean
                         version:
-                          description: Version of the Kafka server software.
+                          description: |-
+                            (String) Version of the Kafka server software.
+                            Version of the Kafka server software.
                           type: string
                         zones:
-                          description: List of availability zones.
+                          description: |-
+                            (List of String) List of availability zones.
+                            List of availability zones.
                           items:
                             type: string
                           type: array
                         zookeeper:
-                          description: Configuration of the ZooKeeper subcluster.
-                            The structure is documented below.
+                          description: |-
+                            (Block List, Max: 1) Configuration of the ZooKeeper subcluster. (see below for nested schema)
+                            Configuration of the ZooKeeper subcluster.
                           items:
                             properties:
                               resources:
-                                description: Resources allocated to hosts of the ZooKeeper
-                                  subcluster. The structure is documented below.
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the ZooKeeper subcluster.
                                 items:
                                   properties:
                                     diskSize:
-                                      description: Volume of the storage available
-                                        to a ZooKeeper host, in gigabytes.
+                                      description: |-
+                                        (Number) Volume of the storage available to a Kafka host, in gigabytes.
+                                        Volume of the storage available to a ZooKeeper host, in gigabytes.
                                       format: int64
                                       type: integer
                                     diskTypeId:
-                                      description: Type of the storage of ZooKeeper
-                                        hosts. For more information see the official
-                                        documentation.
+                                      description: |-
+                                        (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+                                        Type of the storage of ZooKeeper hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
                                       type: string
                                     resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a ZooKeeper host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
                                       type: string
                                   type: object
                                 type: array
@@ -1746,196 +2308,278 @@ spec:
                       type: object
                     type: array
                   createdAt:
-                    description: Timestamp of cluster creation.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   deletionProtection:
-                    description: Inhibits deletion of the cluster. Can be either true
-                      or false.
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: Description of the Kafka cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   environment:
-                    description: Deployment environment of the Kafka cluster. Can
-                      be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
+                    description: |-
+                      (String) Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
+                      Deployment environment of the Kafka cluster. Can be either `PRESTABLE` or `PRODUCTION`. The default is `PRODUCTION`.
                     type: string
                   folderId:
-                    description: The ID of the folder that the resource belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   health:
-                    description: Aggregated health of the cluster. Can be either ALIVE,
-                      DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health
-                      field of JSON representation in the official documentation.
+                    description: |-
+                      (String) Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
+                      Aggregated health of the cluster. Can be either `ALIVE`, `DEGRADED`, `DEAD` or `HEALTH_UNKNOWN`. For more information see `health` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-kafka/api-ref/Cluster/).
                     type: string
                   host:
-                    description: A host of the Kafka cluster. The structure is documented
-                      below.
+                    description: |-
+                      (Set of Object) A host of the Kafka cluster. (see below for nested schema)
+                      A host of the Kafka cluster.
                     items:
                       properties:
                         assignPublicIp:
-                          description: The flag that defines whether a public IP address
-                            is assigned to the node.
+                          description: |-
+                            (Boolean) Determines whether each broker will be assigned a public IP address. The default is false.
+                            The flag that defines whether a public IP address is assigned to the node.
                           type: boolean
                         health:
-                          description: Health of the host.
+                          description: |-
+                            (String) Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
+                            Health of the host.
                           type: string
                         name:
-                          description: The fully qualified domain name of the host.
+                          description: |-
+                            (String) The resource name.
+                            The fully qualified domain name of the host.
                           type: string
                         role:
-                          description: Role of the host in the cluster.
+                          description: |-
+                            (String) The role type to grant to the topic.
+                            Role of the host in the cluster.
                           type: string
                         subnetId:
-                          description: The ID of the subnet, to which the host belongs.
+                          description: |-
+                            (String)
+                            The ID of the subnet, to which the host belongs.
                           type: string
                         zoneId:
-                          description: The availability zone where the Kafka host
-                            was created.
+                          description: |-
+                            (String)
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                           type: string
                       type: object
                     type: array
                   hostGroupIds:
-                    description: A list of IDs of the host groups to place VMs of
-                      the cluster on.
+                    description: |-
+                      (Set of String) A list of IDs of the host groups to place VMs of the cluster on.
+                      A list of IDs of the host groups to place VMs of the cluster on.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Kafka
-                      cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   maintenanceWindow:
-                    description: Maintenance policy of the Kafka cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Maintenance policy of the Kafka cluster. (see below for nested schema)
+                      Maintenance policy of the Kafka cluster.
                     items:
                       properties:
                         day:
-                          description: 'Day of the week (in DDD format). Allowed values:
-                            "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"'
+                          description: |-
+                            (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN.
+                            Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
                           type: string
                         hour:
-                          description: Hour of the day in UTC (in HH format). Allowed
-                            value is between 1 and 24.
+                          description: |-
+                            (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+                            Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
                           format: int64
                           type: integer
                         type:
-                          description: Type of maintenance window. Can be either ANYTIME
-                            or WEEKLY. A day and hour of window need to be specified
-                            with weekly window.
+                          description: |-
+                            (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
                           type: string
                       type: object
                     type: array
                   name:
-                    description: Name of the Kafka cluster. Provided by the client
-                      when the cluster is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network, to which the Kafka cluster belongs.
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   securityGroupIds:
-                    description: Security group ids, to which the Kafka cluster belongs.
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   status:
-                    description: Status of the cluster. Can be either CREATING, STARTING,
-                      RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
-                      For more information see status field of JSON representation
-                      in the official documentation.
+                    description: |-
+                      (String) Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
+                      Status of the cluster. Can be either `CREATING`, `STARTING`, `RUNNING`, `UPDATING`, `STOPPING`, `STOPPED`, `ERROR` or `STATUS_UNKNOWN`. For more information see `status` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-kafka/api-ref/Cluster/).
                     type: string
                   subnetIds:
-                    description: IDs of the subnets, to which the Kafka cluster belongs.
+                    description: |-
+                      (List of String) The list of VPC subnets identifiers which resource is attached.
+                      The list of VPC subnets identifiers which resource is attached.
                     items:
                       type: string
                     type: array
                   topic:
-                    description: (Deprecated) To manage topics, please switch to using
-                      a separate resource type yandex_mdb_kafka_topic.
+                    description: |-
+                      (Block List, Deprecated) To manage topics, please switch to using a separate resource type yandex_mdb_kafka_topic. (see below for nested schema)
+                      To manage topics, please switch to using a separate resource type `yandex_mdb_kafka_topic`.
                     items:
                       properties:
                         name:
-                          description: The name of the topic.
+                          description: |-
+                            (String) The resource name.
+                            The name of the topic.
                           type: string
                         partitions:
-                          description: The number of the topic's partitions.
+                          description: |-
+                            (Number) The number of the topic's partitions.
+                            The number of the topic's partitions.
                           format: int64
                           type: integer
                         replicationFactor:
-                          description: Amount of data copies (replicas) for the topic
-                            in the cluster.
+                          description: |-
+                            (Number) Amount of data copies (replicas) for the topic in the cluster.
+                            Amount of data copies (replicas) for the topic in the cluster.
                           format: int64
                           type: integer
                         topicConfig:
-                          description: User-defined settings for the topic. The structure
-                            is documented below.
+                          description: |-
+                            defined settings for the topic. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+                            User-defined settings for the topic. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/operations/cluster-topics#update-topic) and [the Kafka documentation](https://kafka.apache.org/documentation/#configuration).
                           items:
                             properties:
                               cleanupPolicy:
+                                description: |-
+                                  (String) Retention policy to use on log segments.
+                                  Retention policy to use on log segments.
                                 type: string
                               compressionType:
-                                description: Kafka topic settings. For more information,
-                                  see the official documentation and the Kafka documentation.
+                                description: |-
+                                  (String) Compression type of kafka topics.
+                                  Compression type of kafka topic.
                                 type: string
                               deleteRetentionMs:
+                                description: |-
+                                  (String) The amount of time to retain delete tombstone markers for log compacted topics.
+                                  The amount of time to retain delete tombstone markers for log compacted topics.
                                 type: string
                               fileDeleteDelayMs:
+                                description: |-
+                                  (String) The time to wait before deleting a file from the filesystem.
+                                  The time to wait before deleting a file from the filesystem.
                                 type: string
                               flushMessages:
+                                description: |-
+                                  (String) This setting allows specifying an interval at which we will force an fsync of data written to the log.
+                                  This setting allows specifying an interval at which we will force an fsync of data written to the log.
                                 type: string
                               flushMs:
+                                description: |-
+                                  (String) This setting allows specifying a time interval at which we will force an fsync of data written to the log.
+                                  This setting allows specifying a time interval at which we will force an fsync of data written to the log.
                                 type: string
                               maxMessageBytes:
+                                description: |-
+                                  (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+                                  The largest record batch size allowed by Kafka (after compression if compression is enabled).
                                 type: string
                               minCompactionLagMs:
+                                description: |-
+                                  (String) The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
+                                  The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
                                 type: string
                               minInsyncReplicas:
+                                description: |-
+                                  1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
+                                  When a producer sets acks to "all" (or "-1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
                                 type: string
                               preallocate:
+                                description: |-
+                                  (Boolean, Deprecated) True if we should preallocate the file on disk when creating a new log segment.
+                                  True if we should preallocate the file on disk when creating a new log segment.
                                 type: boolean
                               retentionBytes:
+                                description: |-
+                                  (String) This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
+                                  This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
                                 type: string
                               retentionMs:
+                                description: |-
+                                  (String) This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
+                                  This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
                                 type: string
                               segmentBytes:
+                                description: |-
+                                  (String) This configuration controls the segment file size for the log.
+                                  This configuration controls the segment file size for the log.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   user:
-                    description: (Deprecated) To manage users, please switch to using
-                      a separate resource type yandex_mdb_kafka_user.
+                    description: |-
+                      (Block Set, Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user. (see below for nested schema)
+                      To manage users, please switch to using a separate resource type `yandex_mdb_kafka_user`.
                     items:
                       properties:
                         name:
-                          description: The name of the user.
+                          description: |-
+                            (String) The resource name.
+                            The name of the user.
                           type: string
                         permission:
-                          description: Set of permissions granted to the user. The
-                            structure is documented below.
+                          description: |-
+                            (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                            Set of permissions granted to the user.
                           items:
                             properties:
                               allowHosts:
-                                description: Set of hosts, to which this permission
-                                  grants access to.
+                                description: |-
+                                  addresses allowed as value of single host.
+                                  Set of hosts, to which this permission grants access to. Only ip-addresses allowed as value of single host.
                                 items:
                                   type: string
                                 type: array
                                 x-kubernetes-list-type: set
                               role:
-                                description: The role type to grant to the topic.
+                                description: |-
+                                  (String) The role type to grant to the topic.
+                                  The role type to grant to the topic.
                                 type: string
                               topicName:
-                                description: The name of the topic that the permission
-                                  grants access to.
+                                description: |-
+                                  (String) The name of the topic that the permission grants access to.
+                                  The name of the topic that the permission grants access to.
                                 type: string
                             type: object
                           type: array

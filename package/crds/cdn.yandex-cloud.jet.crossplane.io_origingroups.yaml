@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: OriginGroup is the Schema for the OriginGroups API. Allows management
-          of a Yandex.Cloud CDN Origin Groups.
+          of a Yandex Cloud CDN Origin Groups.
         properties:
           apiVersion:
             description: |-
@@ -74,6 +74,9 @@ spec:
               forProvider:
                 properties:
                   folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -152,23 +155,37 @@ spec:
                         type: object
                     type: object
                   name:
-                    description: CDN Origin Group name used to define device.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   origin:
+                    description: |-
+                      (Block Set, Min: 1) A set of available origins, an origins group must contain at least one enabled origin with fields below. (see below for nested schema)
+                      A set of available origins, an origins group must contain at least one enabled origin with fields below.
                     items:
                       properties:
                         backup:
+                          description: |-
+                            (Boolean) Specifies whether the origin is used in its origin group as backup. A backup origin is used when one of active origins becomes unavailable.
+                            Specifies whether the origin is used in its origin group as backup. A backup origin is used when one of active origins becomes unavailable.
                           type: boolean
                         enabled:
+                          description: |-
+                            (Boolean) The origin is enabled and used as a source for the CDN. Default enabled.
+                            The origin is enabled and used as a source for the CDN. Default `enabled`.
                           type: boolean
                         source:
+                          description: |-
+                            (String) IP address or Domain name of your origin and the port.
+                            IP address or Domain name of your origin and the port.
                           type: string
                       type: object
                     type: array
                   useNext:
-                    description: If the option is active (has true value), in case
-                      the origin responds with 4XX or 5XX codes, use the next origin
-                      from the list.
+                    description: |-
+                      (Boolean) If the option is active (has true value), in case the origin responds with 4XX or 5XX codes, use the next origin from the list.
+                      If the option is active (has true value), in case the origin responds with 4XX or 5XX codes, use the next origin from the list.
                     type: boolean
                 type: object
               initProvider:
@@ -185,6 +202,9 @@ spec:
                   autoscaler.
                 properties:
                   folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -263,23 +283,37 @@ spec:
                         type: object
                     type: object
                   name:
-                    description: CDN Origin Group name used to define device.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   origin:
+                    description: |-
+                      (Block Set, Min: 1) A set of available origins, an origins group must contain at least one enabled origin with fields below. (see below for nested schema)
+                      A set of available origins, an origins group must contain at least one enabled origin with fields below.
                     items:
                       properties:
                         backup:
+                          description: |-
+                            (Boolean) Specifies whether the origin is used in its origin group as backup. A backup origin is used when one of active origins becomes unavailable.
+                            Specifies whether the origin is used in its origin group as backup. A backup origin is used when one of active origins becomes unavailable.
                           type: boolean
                         enabled:
+                          description: |-
+                            (Boolean) The origin is enabled and used as a source for the CDN. Default enabled.
+                            The origin is enabled and used as a source for the CDN. Default `enabled`.
                           type: boolean
                         source:
+                          description: |-
+                            (String) IP address or Domain name of your origin and the port.
+                            IP address or Domain name of your origin and the port.
                           type: string
                       type: object
                     type: array
                   useNext:
-                    description: If the option is active (has true value), in case
-                      the origin responds with 4XX or 5XX codes, use the next origin
-                      from the list.
+                    description: |-
+                      (Boolean) If the option is active (has true value), in case the origin responds with 4XX or 5XX codes, use the next origin from the list.
+                      If the option is active (has true value), in case the origin responds with 4XX or 5XX codes, use the next origin from the list.
                     type: boolean
                 type: object
               managementPolicies:
@@ -464,29 +498,48 @@ spec:
               atProvider:
                 properties:
                   folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   name:
-                    description: CDN Origin Group name used to define device.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   origin:
+                    description: |-
+                      (Block Set, Min: 1) A set of available origins, an origins group must contain at least one enabled origin with fields below. (see below for nested schema)
+                      A set of available origins, an origins group must contain at least one enabled origin with fields below.
                     items:
                       properties:
                         backup:
+                          description: |-
+                            (Boolean) Specifies whether the origin is used in its origin group as backup. A backup origin is used when one of active origins becomes unavailable.
+                            Specifies whether the origin is used in its origin group as backup. A backup origin is used when one of active origins becomes unavailable.
                           type: boolean
                         enabled:
+                          description: |-
+                            (Boolean) The origin is enabled and used as a source for the CDN. Default enabled.
+                            The origin is enabled and used as a source for the CDN. Default `enabled`.
                           type: boolean
                         originGroupId:
+                          description: (Number)
                           type: number
                         source:
+                          description: |-
+                            (String) IP address or Domain name of your origin and the port.
+                            IP address or Domain name of your origin and the port.
                           type: string
                       type: object
                     type: array
                   useNext:
-                    description: If the option is active (has true value), in case
-                      the origin responds with 4XX or 5XX codes, use the next origin
-                      from the list.
+                    description: |-
+                      (Boolean) If the option is active (has true value), in case the origin responds with 4XX or 5XX codes, use the next origin from the list.
+                      If the option is active (has true value), in case the origin responds with 4XX or 5XX codes, use the next origin from the list.
                     type: boolean
                 type: object
               conditions:

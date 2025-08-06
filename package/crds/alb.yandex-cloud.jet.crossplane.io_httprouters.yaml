@@ -74,12 +74,14 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: An optional description of the HTTP Router. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: The ID of the folder to which the resource belongs.
-                      If omitted, the provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -160,52 +162,82 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this HTTP Router. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the HTTP Router. Provided by the client when
-                      the HTTP Router is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   routeOptions:
+                    description: |-
+                      (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                      Route options for the virtual host.
                     items:
                       properties:
                         rbac:
+                          description: |-
+                            (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                            RBAC configuration.
                           items:
                             properties:
                               action:
+                                description: (String)
                                 type: string
                               principals:
+                                description: '(Block List, Min: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     andPrincipals:
+                                      description: '(Block List, Min: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           any:
+                                            description: (Boolean)
                                             type: boolean
                                           header:
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
                                             items:
                                               properties:
                                                 name:
-                                                  description: Name of the HTTP Router.
-                                                    Provided by the client when the
-                                                    HTTP Router is created.
+                                                  description: (String) The resource
+                                                    name.
                                                   type: string
                                                 value:
+                                                  description: |-
+                                                    (Block List, Max: 1) The path and fqmn blocks.
+                                                    The `path` and `fqmn` blocks.
+
+                                                    ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                                   items:
                                                     properties:
                                                       exact:
+                                                        description: |-
+                                                          (String) Match exactly.
+                                                          Match exactly.
                                                         type: string
                                                       prefix:
+                                                        description: |-
+                                                          (String) Match prefix.
+                                                          Match prefix.
                                                         type: string
                                                       regex:
+                                                        description: |-
+                                                          (String) Match regex.
+                                                          Match regex.
                                                         type: string
                                                     type: object
                                                   type: array
                                               type: object
                                             type: array
                                           remoteIp:
+                                            description: (String)
                                             type: string
                                         type: object
                                       type: array
@@ -214,7 +246,9 @@ spec:
                             type: object
                           type: array
                         securityProfileId:
-                          description: The ID of the HTTP Router.
+                          description: |-
+                            (String) SWS profile ID.
+                            SWS profile ID.
                           type: string
                       type: object
                     type: array
@@ -233,12 +267,14 @@ spec:
                   autoscaler.
                 properties:
                   description:
-                    description: An optional description of the HTTP Router. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: The ID of the folder to which the resource belongs.
-                      If omitted, the provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -319,52 +355,82 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this HTTP Router. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the HTTP Router. Provided by the client when
-                      the HTTP Router is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   routeOptions:
+                    description: |-
+                      (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                      Route options for the virtual host.
                     items:
                       properties:
                         rbac:
+                          description: |-
+                            (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                            RBAC configuration.
                           items:
                             properties:
                               action:
+                                description: (String)
                                 type: string
                               principals:
+                                description: '(Block List, Min: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     andPrincipals:
+                                      description: '(Block List, Min: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           any:
+                                            description: (Boolean)
                                             type: boolean
                                           header:
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
                                             items:
                                               properties:
                                                 name:
-                                                  description: Name of the HTTP Router.
-                                                    Provided by the client when the
-                                                    HTTP Router is created.
+                                                  description: (String) The resource
+                                                    name.
                                                   type: string
                                                 value:
+                                                  description: |-
+                                                    (Block List, Max: 1) The path and fqmn blocks.
+                                                    The `path` and `fqmn` blocks.
+
+                                                    ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                                   items:
                                                     properties:
                                                       exact:
+                                                        description: |-
+                                                          (String) Match exactly.
+                                                          Match exactly.
                                                         type: string
                                                       prefix:
+                                                        description: |-
+                                                          (String) Match prefix.
+                                                          Match prefix.
                                                         type: string
                                                       regex:
+                                                        description: |-
+                                                          (String) Match regex.
+                                                          Match regex.
                                                         type: string
                                                     type: object
                                                   type: array
                                               type: object
                                             type: array
                                           remoteIp:
+                                            description: (String)
                                             type: string
                                         type: object
                                       type: array
@@ -373,7 +439,9 @@ spec:
                             type: object
                           type: array
                         securityProfileId:
-                          description: The ID of the HTTP Router.
+                          description: |-
+                            (String) SWS profile ID.
+                            SWS profile ID.
                           type: string
                       type: object
                     type: array
@@ -551,68 +619,102 @@ spec:
               atProvider:
                 properties:
                   createdAt:
-                    description: The HTTP Router creation timestamp.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   description:
-                    description: An optional description of the HTTP Router. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: The ID of the folder to which the resource belongs.
-                      If omitted, the provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
-                    description: The ID of the HTTP Router.
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this HTTP Router. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the HTTP Router. Provided by the client when
-                      the HTTP Router is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   routeOptions:
+                    description: |-
+                      (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                      Route options for the virtual host.
                     items:
                       properties:
                         rbac:
+                          description: |-
+                            (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                            RBAC configuration.
                           items:
                             properties:
                               action:
+                                description: (String)
                                 type: string
                               principals:
+                                description: '(Block List, Min: 1) (see below for
+                                  nested schema)'
                                 items:
                                   properties:
                                     andPrincipals:
+                                      description: '(Block List, Min: 1) (see below
+                                        for nested schema)'
                                       items:
                                         properties:
                                           any:
+                                            description: (Boolean)
                                             type: boolean
                                           header:
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
                                             items:
                                               properties:
                                                 name:
-                                                  description: Name of the HTTP Router.
-                                                    Provided by the client when the
-                                                    HTTP Router is created.
+                                                  description: (String) The resource
+                                                    name.
                                                   type: string
                                                 value:
+                                                  description: |-
+                                                    (Block List, Max: 1) The path and fqmn blocks.
+                                                    The `path` and `fqmn` blocks.
+
+                                                    ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                                   items:
                                                     properties:
                                                       exact:
+                                                        description: |-
+                                                          (String) Match exactly.
+                                                          Match exactly.
                                                         type: string
                                                       prefix:
+                                                        description: |-
+                                                          (String) Match prefix.
+                                                          Match prefix.
                                                         type: string
                                                       regex:
+                                                        description: |-
+                                                          (String) Match regex.
+                                                          Match regex.
                                                         type: string
                                                     type: object
                                                   type: array
                                               type: object
                                             type: array
                                           remoteIp:
+                                            description: (String)
                                             type: string
                                         type: object
                                       type: array
@@ -621,7 +723,9 @@ spec:
                             type: object
                           type: array
                         securityProfileId:
-                          description: The ID of the HTTP Router.
+                          description: |-
+                            (String) SWS profile ID.
+                            SWS profile ID.
                           type: string
                       type: object
                     type: array

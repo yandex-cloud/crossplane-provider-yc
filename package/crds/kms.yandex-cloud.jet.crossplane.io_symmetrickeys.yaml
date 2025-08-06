@@ -74,17 +74,24 @@ spec:
               forProvider:
                 properties:
                   defaultAlgorithm:
-                    description: Encryption algorithm to be used with a new key version,
-                      generated with the next rotation. The default value is AES_128.
+                    description: |-
+                      (String) Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is AES_128.
+                      Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is `AES_128`.
                     type: string
                   deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: An optional description of the key.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: The ID of the folder that the resource belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -165,15 +172,20 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the key.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the key.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   rotationPeriod:
-                    description: Interval between automatic rotations. To disable
-                      automatic rotation, omit this parameter.
+                    description: |-
+                      (String) Interval between automatic rotations. To disable automatic rotation, omit this parameter.
+                      Interval between automatic rotations. To disable automatic rotation, omit this parameter.
                     type: string
                 type: object
               initProvider:
@@ -190,17 +202,24 @@ spec:
                   autoscaler.
                 properties:
                   defaultAlgorithm:
-                    description: Encryption algorithm to be used with a new key version,
-                      generated with the next rotation. The default value is AES_128.
+                    description: |-
+                      (String) Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is AES_128.
+                      Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is `AES_128`.
                     type: string
                   deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: An optional description of the key.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: The ID of the folder that the resource belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -281,15 +300,20 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the key.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the key.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   rotationPeriod:
-                    description: Interval between automatic rotations. To disable
-                      automatic rotation, omit this parameter.
+                    description: |-
+                      (String) Interval between automatic rotations. To disable automatic rotation, omit this parameter.
+                      Interval between automatic rotations. To disable automatic rotation, omit this parameter.
                     type: string
                 type: object
               managementPolicies:
@@ -465,41 +489,60 @@ spec:
               atProvider:
                 properties:
                   createdAt:
-                    description: Creation timestamp of the key.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   defaultAlgorithm:
-                    description: Encryption algorithm to be used with a new key version,
-                      generated with the next rotation. The default value is AES_128.
+                    description: |-
+                      (String) Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is AES_128.
+                      Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is `AES_128`.
                     type: string
                   deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: An optional description of the key.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: The ID of the folder that the resource belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the key.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the key.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   rotatedAt:
-                    description: Last rotation timestamp of the key.
+                    description: |-
+                      (String) Last rotation timestamp of the key.
+                      Last rotation timestamp of the key.
                     type: string
                   rotationPeriod:
-                    description: Interval between automatic rotations. To disable
-                      automatic rotation, omit this parameter.
+                    description: |-
+                      (String) Interval between automatic rotations. To disable automatic rotation, omit this parameter.
+                      Interval between automatic rotations. To disable automatic rotation, omit this parameter.
                     type: string
                   status:
-                    description: The status of the key.
+                    description: |-
+                      (String) The status of the key.
+                      The status of the key.
                     type: string
                 type: object
               conditions:

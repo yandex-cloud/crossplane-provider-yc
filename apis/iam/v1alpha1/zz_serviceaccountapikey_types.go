@@ -29,56 +29,66 @@ import (
 
 type OutputToLockboxInitParameters struct {
 
-	// Entry where to store the value of secret_key.
+	// (String) entry that will store the value of secret_key
 	// entry that will store the value of secret_key
 	EntryForSecretKey *string `json:"entryForSecretKey,omitempty" tf:"entry_for_secret_key,omitempty"`
 
+	// (String) ID of the Lockbox secret where to store the sensible values.
 	// ID of the Lockbox secret where to store the sensible values.
-	// secret where to add the version with the sensitive values
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
 }
 
 type OutputToLockboxObservation struct {
 
-	// Entry where to store the value of secret_key.
+	// (String) entry that will store the value of secret_key
 	// entry that will store the value of secret_key
 	EntryForSecretKey *string `json:"entryForSecretKey,omitempty" tf:"entry_for_secret_key,omitempty"`
 
+	// (String) ID of the Lockbox secret where to store the sensible values.
 	// ID of the Lockbox secret where to store the sensible values.
-	// secret where to add the version with the sensitive values
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
 }
 
 type OutputToLockboxParameters struct {
 
-	// Entry where to store the value of secret_key.
+	// (String) entry that will store the value of secret_key
 	// entry that will store the value of secret_key
 	// +kubebuilder:validation:Optional
 	EntryForSecretKey *string `json:"entryForSecretKey" tf:"entry_for_secret_key,omitempty"`
 
+	// (String) ID of the Lockbox secret where to store the sensible values.
 	// ID of the Lockbox secret where to store the sensible values.
-	// secret where to add the version with the sensitive values
 	// +kubebuilder:validation:Optional
 	SecretID *string `json:"secretId" tf:"secret_id,omitempty"`
 }
 
 type ServiceAccountAPIKeyInitParameters struct {
 
-	// The description of the key.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) The key will be no longer valid after expiration timestamp.
 	// The key will be no longer valid after expiration timestamp.
 	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
 
+	// (Block List, Max: 1) option to create a Lockbox secret version from sensitive outputs (see below for nested schema)
 	// option to create a Lockbox secret version from sensitive outputs
 	OutputToLockbox []OutputToLockboxInitParameters `json:"outputToLockbox,omitempty" tf:"output_to_lockbox,omitempty"`
 
-	// An optional PGP key to encrypt the resulting secret key material. May either be a base64-encoded public key or a keybase username in the form keybase:keybaseusername.
+	// encoded public key or a keybase username in the form keybase:keybaseusername.
+	// An optional PGP key to encrypt the resulting secret key material. May either be a base64-encoded public key or a keybase username in the form `keybase:keybaseusername`.
 	PgpKey *string `json:"pgpKey,omitempty" tf:"pgp_key,omitempty"`
 
+	// (String, Deprecated) The scope of the key.
 	// The scope of the key.
 	Scope *string `json:"scope,omitempty" tf:"scope,omitempty"`
 
+	// (List of String) The list of scopes of the key.
+	// The list of scopes of the key.
+	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
+
+	// (String) ID of the service account to an API key for.
 	// ID of the service account to an API key for.
 	// +crossplane:generate:reference:type=ServiceAccount
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
@@ -94,62 +104,87 @@ type ServiceAccountAPIKeyInitParameters struct {
 
 type ServiceAccountAPIKeyObservation struct {
 
-	// Creation timestamp of the static access key.
+	// (String) The creation timestamp of the resource.
+	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// The description of the key.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The encrypted secret key, base64 encoded. This is only populated when pgp_key is supplied.
+	// (String) The encrypted secret key, base64 encoded. This is only populated when pgp_key is supplied.
+	// The encrypted secret key, base64 encoded. This is only populated when `pgp_key` is supplied.
 	EncryptedSecretKey *string `json:"encryptedSecretKey,omitempty" tf:"encrypted_secret_key,omitempty"`
 
+	// (String) The key will be no longer valid after expiration timestamp.
 	// The key will be no longer valid after expiration timestamp.
 	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The fingerprint of the PGP key used to encrypt the secret key. This is only populated when pgp_key is supplied.
+	// (String) The fingerprint of the PGP key used to encrypt the secret key. This is only populated when pgp_key is supplied.
+	// The fingerprint of the PGP key used to encrypt the secret key. This is only populated when `pgp_key` is supplied.
 	KeyFingerprint *string `json:"keyFingerprint,omitempty" tf:"key_fingerprint,omitempty"`
 
+	// (Block List, Max: 1) option to create a Lockbox secret version from sensitive outputs (see below for nested schema)
 	// option to create a Lockbox secret version from sensitive outputs
 	OutputToLockbox []OutputToLockboxObservation `json:"outputToLockbox,omitempty" tf:"output_to_lockbox,omitempty"`
 
-	// ID of the Lockbox secret version that contains the value of secret_key. This is only populated when output_to_lockbox is supplied. This version will be destroyed when the IAM key is destroyed, or when output_to_lockbox is removed.
-	// version generated, that will contain the sensitive outputs
+	// (String) ID of the Lockbox secret version that contains the value of secret_key. This is only populated when output_to_lockbox is supplied. This version will be destroyed when the IAM key is destroyed, or when output_to_lockbox is removed.
+	// ID of the Lockbox secret version that contains the value of `secret_key`. This is only populated when `output_to_lockbox` is supplied. This version will be destroyed when the IAM key is destroyed, or when `output_to_lockbox` is removed.
 	OutputToLockboxVersionID *string `json:"outputToLockboxVersionId,omitempty" tf:"output_to_lockbox_version_id,omitempty"`
 
-	// An optional PGP key to encrypt the resulting secret key material. May either be a base64-encoded public key or a keybase username in the form keybase:keybaseusername.
+	// encoded public key or a keybase username in the form keybase:keybaseusername.
+	// An optional PGP key to encrypt the resulting secret key material. May either be a base64-encoded public key or a keybase username in the form `keybase:keybaseusername`.
 	PgpKey *string `json:"pgpKey,omitempty" tf:"pgp_key,omitempty"`
 
+	// (String, Deprecated) The scope of the key.
 	// The scope of the key.
 	Scope *string `json:"scope,omitempty" tf:"scope,omitempty"`
 
+	// (List of String) The list of scopes of the key.
+	// The list of scopes of the key.
+	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
+
+	// (String) ID of the service account to an API key for.
 	// ID of the service account to an API key for.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 }
 
 type ServiceAccountAPIKeyParameters struct {
 
-	// The description of the key.
+	// (String) The resource description.
+	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) The key will be no longer valid after expiration timestamp.
 	// The key will be no longer valid after expiration timestamp.
 	// +kubebuilder:validation:Optional
 	ExpiresAt *string `json:"expiresAt,omitempty" tf:"expires_at,omitempty"`
 
+	// (Block List, Max: 1) option to create a Lockbox secret version from sensitive outputs (see below for nested schema)
 	// option to create a Lockbox secret version from sensitive outputs
 	// +kubebuilder:validation:Optional
 	OutputToLockbox []OutputToLockboxParameters `json:"outputToLockbox,omitempty" tf:"output_to_lockbox,omitempty"`
 
-	// An optional PGP key to encrypt the resulting secret key material. May either be a base64-encoded public key or a keybase username in the form keybase:keybaseusername.
+	// encoded public key or a keybase username in the form keybase:keybaseusername.
+	// An optional PGP key to encrypt the resulting secret key material. May either be a base64-encoded public key or a keybase username in the form `keybase:keybaseusername`.
 	// +kubebuilder:validation:Optional
 	PgpKey *string `json:"pgpKey,omitempty" tf:"pgp_key,omitempty"`
 
+	// (String, Deprecated) The scope of the key.
 	// The scope of the key.
 	// +kubebuilder:validation:Optional
 	Scope *string `json:"scope,omitempty" tf:"scope,omitempty"`
 
+	// (List of String) The list of scopes of the key.
+	// The list of scopes of the key.
+	// +kubebuilder:validation:Optional
+	Scopes []*string `json:"scopes,omitempty" tf:"scopes,omitempty"`
+
+	// (String) ID of the service account to an API key for.
 	// ID of the service account to an API key for.
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +kubebuilder:validation:Optional
@@ -191,7 +226,7 @@ type ServiceAccountAPIKeyStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// ServiceAccountAPIKey is the Schema for the ServiceAccountAPIKeys API. Allows management of a Yandex.Cloud IAM service account API key.
+// ServiceAccountAPIKey is the Schema for the ServiceAccountAPIKeys API. Allows management of a Yandex Cloud IAM service account API key.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

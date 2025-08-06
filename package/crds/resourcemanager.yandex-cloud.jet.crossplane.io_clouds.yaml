@@ -74,21 +74,27 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: A description of the Cloud.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Cloud.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: The name of the Cloud.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   organizationId:
-                    description: Yandex.Cloud Organization that the cloud belongs
-                      to. If value is omitted, the default provider Organization ID
-                      is used.
+                    description: |-
+                      (String) Yandex Cloud Organization that the cloud belongs to. If value is omitted, the default provider Organization ID is used.
+                      Yandex Cloud Organization that the cloud belongs to. If value is omitted, the default provider Organization ID is used.
                     type: string
                 type: object
               initProvider:
@@ -105,21 +111,27 @@ spec:
                   autoscaler.
                 properties:
                   description:
-                    description: A description of the Cloud.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Cloud.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: The name of the Cloud.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   organizationId:
-                    description: Yandex.Cloud Organization that the cloud belongs
-                      to. If value is omitted, the default provider Organization ID
-                      is used.
+                    description: |-
+                      (String) Yandex Cloud Organization that the cloud belongs to. If value is omitted, the default provider Organization ID is used.
+                      Yandex Cloud Organization that the cloud belongs to. If value is omitted, the default provider Organization ID is used.
                     type: string
                 type: object
               managementPolicies:
@@ -295,25 +307,35 @@ spec:
               atProvider:
                 properties:
                   createdAt:
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   description:
-                    description: A description of the Cloud.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Cloud.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: The name of the Cloud.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   organizationId:
-                    description: Yandex.Cloud Organization that the cloud belongs
-                      to. If value is omitted, the default provider Organization ID
-                      is used.
+                    description: |-
+                      (String) Yandex Cloud Organization that the cloud belongs to. If value is omitted, the default provider Organization ID is used.
+                      Yandex Cloud Organization that the cloud belongs to. If value is omitted, the default provider Organization ID is used.
                     type: string
                 type: object
               conditions:

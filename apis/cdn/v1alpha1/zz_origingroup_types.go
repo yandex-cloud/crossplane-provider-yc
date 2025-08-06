@@ -29,6 +29,8 @@ import (
 
 type OriginGroupInitParameters struct {
 
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -40,31 +42,45 @@ type OriginGroupInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// CDN Origin Group name used to define device.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block Set, Min: 1) A set of available origins, an origins group must contain at least one enabled origin with fields below. (see below for nested schema)
+	// A set of available origins, an origins group must contain at least one enabled origin with fields below.
 	Origin []OriginInitParameters `json:"origin,omitempty" tf:"origin,omitempty"`
 
+	// (Boolean) If the option is active (has true value), in case the origin responds with 4XX or 5XX codes, use the next origin from the list.
 	// If the option is active (has true value), in case the origin responds with 4XX or 5XX codes, use the next origin from the list.
 	UseNext *bool `json:"useNext,omitempty" tf:"use_next,omitempty"`
 }
 
 type OriginGroupObservation struct {
+
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// CDN Origin Group name used to define device.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block Set, Min: 1) A set of available origins, an origins group must contain at least one enabled origin with fields below. (see below for nested schema)
+	// A set of available origins, an origins group must contain at least one enabled origin with fields below.
 	Origin []OriginObservation `json:"origin,omitempty" tf:"origin,omitempty"`
 
+	// (Boolean) If the option is active (has true value), in case the origin responds with 4XX or 5XX codes, use the next origin from the list.
 	// If the option is active (has true value), in case the origin responds with 4XX or 5XX codes, use the next origin from the list.
 	UseNext *bool `json:"useNext,omitempty" tf:"use_next,omitempty"`
 }
 
 type OriginGroupParameters struct {
 
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -77,44 +93,69 @@ type OriginGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// CDN Origin Group name used to define device.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block Set, Min: 1) A set of available origins, an origins group must contain at least one enabled origin with fields below. (see below for nested schema)
+	// A set of available origins, an origins group must contain at least one enabled origin with fields below.
 	// +kubebuilder:validation:Optional
 	Origin []OriginParameters `json:"origin,omitempty" tf:"origin,omitempty"`
 
+	// (Boolean) If the option is active (has true value), in case the origin responds with 4XX or 5XX codes, use the next origin from the list.
 	// If the option is active (has true value), in case the origin responds with 4XX or 5XX codes, use the next origin from the list.
 	// +kubebuilder:validation:Optional
 	UseNext *bool `json:"useNext,omitempty" tf:"use_next,omitempty"`
 }
 
 type OriginInitParameters struct {
+
+	// (Boolean) Specifies whether the origin is used in its origin group as backup. A backup origin is used when one of active origins becomes unavailable.
+	// Specifies whether the origin is used in its origin group as backup. A backup origin is used when one of active origins becomes unavailable.
 	Backup *bool `json:"backup,omitempty" tf:"backup,omitempty"`
 
+	// (Boolean) The origin is enabled and used as a source for the CDN. Default enabled.
+	// The origin is enabled and used as a source for the CDN. Default `enabled`.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// (String) IP address or Domain name of your origin and the port.
+	// IP address or Domain name of your origin and the port.
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 }
 
 type OriginObservation struct {
+
+	// (Boolean) Specifies whether the origin is used in its origin group as backup. A backup origin is used when one of active origins becomes unavailable.
+	// Specifies whether the origin is used in its origin group as backup. A backup origin is used when one of active origins becomes unavailable.
 	Backup *bool `json:"backup,omitempty" tf:"backup,omitempty"`
 
+	// (Boolean) The origin is enabled and used as a source for the CDN. Default enabled.
+	// The origin is enabled and used as a source for the CDN. Default `enabled`.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// (Number)
 	OriginGroupID *float64 `json:"originGroupId,omitempty" tf:"origin_group_id,omitempty"`
 
+	// (String) IP address or Domain name of your origin and the port.
+	// IP address or Domain name of your origin and the port.
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 }
 
 type OriginParameters struct {
 
+	// (Boolean) Specifies whether the origin is used in its origin group as backup. A backup origin is used when one of active origins becomes unavailable.
+	// Specifies whether the origin is used in its origin group as backup. A backup origin is used when one of active origins becomes unavailable.
 	// +kubebuilder:validation:Optional
 	Backup *bool `json:"backup,omitempty" tf:"backup,omitempty"`
 
+	// (Boolean) The origin is enabled and used as a source for the CDN. Default enabled.
+	// The origin is enabled and used as a source for the CDN. Default `enabled`.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// (String) IP address or Domain name of your origin and the port.
+	// IP address or Domain name of your origin and the port.
 	// +kubebuilder:validation:Optional
 	Source *string `json:"source" tf:"source,omitempty"`
 }
@@ -146,7 +187,7 @@ type OriginGroupStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// OriginGroup is the Schema for the OriginGroups API. Allows management of a Yandex.Cloud CDN Origin Groups.
+// OriginGroup is the Schema for the OriginGroups API. Allows management of a Yandex Cloud CDN Origin Groups.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

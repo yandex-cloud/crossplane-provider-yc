@@ -29,6 +29,8 @@ import (
 
 type MongodbDatabaseInitParameters struct {
 
+	// (String) The ID of MongoDB Cluster.
+	// The ID of MongoDB Cluster.
 	// +crossplane:generate:reference:type=MongodbCluster
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
@@ -40,21 +42,29 @@ type MongodbDatabaseInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
+	// (String) The name of the database.
 	// The name of the database.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type MongodbDatabaseObservation struct {
+
+	// (String) The ID of MongoDB Cluster.
+	// The ID of MongoDB Cluster.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
+	// (String) The resource identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (String) The name of the database.
 	// The name of the database.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type MongodbDatabaseParameters struct {
 
+	// (String) The ID of MongoDB Cluster.
+	// The ID of MongoDB Cluster.
 	// +crossplane:generate:reference:type=MongodbCluster
 	// +kubebuilder:validation:Optional
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
@@ -67,6 +77,7 @@ type MongodbDatabaseParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
+	// (String) The name of the database.
 	// The name of the database.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -99,7 +110,7 @@ type MongodbDatabaseStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// MongodbDatabase is the Schema for the MongodbDatabases API. Manages a MongoDB database within Yandex.Cloud.
+// MongodbDatabase is the Schema for the MongodbDatabases API. Manages a MongoDB Database within Yandex Cloud.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

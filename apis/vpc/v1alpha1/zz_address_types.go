@@ -29,19 +29,30 @@ import (
 
 type AddressInitParameters struct {
 
-	// DNS record specification of address
+	// (Block List) DNS record specification of address. (see below for nested schema)
+	// DNS record specification of address.
 	DNSRecord []DNSRecordInitParameters `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
-	// Flag that protects the address from accidental deletion.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// An optional description of this resource. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// spec of IP v4 address
+	// (Block List, Max: 1) Specification of IPv4 address.
+	// Specification of IPv4 address.
+	//
+	// ~> Either one `address` or `zone_id` arguments can be specified.
+	//
+	// ~> Either one `ddos_protection_provider` or `outgoing_smtp_capability` arguments can be specified.
+	//
+	// ~> Change any argument in `external_ipv4_address` will cause an address recreate.
 	ExternalIPv4Address []ExternalIPv4AddressInitParameters `json:"externalIpv4Address,omitempty" tf:"external_ipv4_address,omitempty"`
 
-	// ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -53,69 +64,99 @@ type AddressInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Labels to apply to this resource. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the address. Provided by the client when the address is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type AddressObservation struct {
 
-	// Creation timestamp of the key.
+	// (String) The creation timestamp of the resource.
+	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// DNS record specification of address
+	// (Block List) DNS record specification of address. (see below for nested schema)
+	// DNS record specification of address.
 	DNSRecord []DNSRecordObservation `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
-	// Flag that protects the address from accidental deletion.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// An optional description of this resource. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// spec of IP v4 address
+	// (Block List, Max: 1) Specification of IPv4 address.
+	// Specification of IPv4 address.
+	//
+	// ~> Either one `address` or `zone_id` arguments can be specified.
+	//
+	// ~> Either one `ddos_protection_provider` or `outgoing_smtp_capability` arguments can be specified.
+	//
+	// ~> Change any argument in `external_ipv4_address` will cause an address recreate.
 	ExternalIPv4Address []ExternalIPv4AddressObservation `json:"externalIpv4Address,omitempty" tf:"external_ipv4_address,omitempty"`
 
-	// ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Labels to apply to this resource. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the address. Provided by the client when the address is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// false means that address is ephemeral.
+	// (Boolean) false means that address is ephemeral.
+	// `false` means that address is ephemeral.
 	Reserved *bool `json:"reserved,omitempty" tf:"reserved,omitempty"`
 
-	// true if address is used.
+	// (Boolean) true if address is used.
+	// `true` if address is used.
 	Used *bool `json:"used,omitempty" tf:"used,omitempty"`
 }
 
 type AddressParameters struct {
 
-	// DNS record specification of address
+	// (Block List) DNS record specification of address. (see below for nested schema)
+	// DNS record specification of address.
 	// +kubebuilder:validation:Optional
 	DNSRecord []DNSRecordParameters `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
-	// Flag that protects the address from accidental deletion.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// An optional description of this resource. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// spec of IP v4 address
+	// (Block List, Max: 1) Specification of IPv4 address.
+	// Specification of IPv4 address.
+	//
+	// ~> Either one `address` or `zone_id` arguments can be specified.
+	//
+	// ~> Either one `ddos_protection_provider` or `outgoing_smtp_capability` arguments can be specified.
+	//
+	// ~> Change any argument in `external_ipv4_address` will cause an address recreate.
 	// +kubebuilder:validation:Optional
 	ExternalIPv4Address []ExternalIPv4AddressParameters `json:"externalIpv4Address,omitempty" tf:"external_ipv4_address,omitempty"`
 
-	// ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -128,103 +169,127 @@ type AddressParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Labels to apply to this resource. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the address. Provided by the client when the address is created.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type DNSRecordInitParameters struct {
 
+	// (String) DNS zone id to create record at.
 	// DNS zone id to create record at.
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
-	// FQDN for record to address
+	// (String) FQDN for record to address.
+	// FQDN for record to address.
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// If PTR record is needed
+	// (Boolean) If PTR record is needed.
+	// If PTR record is needed.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// TTL of DNS record
+	// (Number) TTL of DNS record.
+	// TTL of DNS record.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type DNSRecordObservation struct {
 
+	// (String) DNS zone id to create record at.
 	// DNS zone id to create record at.
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
-	// FQDN for record to address
+	// (String) FQDN for record to address.
+	// FQDN for record to address.
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// If PTR record is needed
+	// (Boolean) If PTR record is needed.
+	// If PTR record is needed.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// TTL of DNS record
+	// (Number) TTL of DNS record.
+	// TTL of DNS record.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type DNSRecordParameters struct {
 
+	// (String) DNS zone id to create record at.
 	// DNS zone id to create record at.
 	// +kubebuilder:validation:Optional
 	DNSZoneID *string `json:"dnsZoneId" tf:"dns_zone_id,omitempty"`
 
-	// FQDN for record to address
+	// (String) FQDN for record to address.
+	// FQDN for record to address.
 	// +kubebuilder:validation:Optional
 	Fqdn *string `json:"fqdn" tf:"fqdn,omitempty"`
 
-	// If PTR record is needed
+	// (Boolean) If PTR record is needed.
+	// If PTR record is needed.
 	// +kubebuilder:validation:Optional
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// TTL of DNS record
+	// (Number) TTL of DNS record.
+	// TTL of DNS record.
 	// +kubebuilder:validation:Optional
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type ExternalIPv4AddressInitParameters struct {
 
-	// Enable DDOS protection. Possible values are: "qrator"
+	// (String) Enable DDOS protection. Possible values are: qrator
+	// Enable DDOS protection. Possible values are: `qrator`
 	DdosProtectionProvider *string `json:"ddosProtectionProvider,omitempty" tf:"ddos_protection_provider,omitempty"`
 
+	// (String) Wanted outgoing smtp capability.
 	// Wanted outgoing smtp capability.
 	OutgoingSMTPCapability *string `json:"outgoingSmtpCapability,omitempty" tf:"outgoing_smtp_capability,omitempty"`
 
-	// Zone for allocating address.
+	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 type ExternalIPv4AddressObservation struct {
 
+	// (String) Allocated IP address.
 	// Allocated IP address.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// Enable DDOS protection. Possible values are: "qrator"
+	// (String) Enable DDOS protection. Possible values are: qrator
+	// Enable DDOS protection. Possible values are: `qrator`
 	DdosProtectionProvider *string `json:"ddosProtectionProvider,omitempty" tf:"ddos_protection_provider,omitempty"`
 
+	// (String) Wanted outgoing smtp capability.
 	// Wanted outgoing smtp capability.
 	OutgoingSMTPCapability *string `json:"outgoingSmtpCapability,omitempty" tf:"outgoing_smtp_capability,omitempty"`
 
-	// Zone for allocating address.
+	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 type ExternalIPv4AddressParameters struct {
 
-	// Enable DDOS protection. Possible values are: "qrator"
+	// (String) Enable DDOS protection. Possible values are: qrator
+	// Enable DDOS protection. Possible values are: `qrator`
 	// +kubebuilder:validation:Optional
 	DdosProtectionProvider *string `json:"ddosProtectionProvider,omitempty" tf:"ddos_protection_provider,omitempty"`
 
+	// (String) Wanted outgoing smtp capability.
 	// Wanted outgoing smtp capability.
 	// +kubebuilder:validation:Optional
 	OutgoingSMTPCapability *string `json:"outgoingSmtpCapability,omitempty" tf:"outgoing_smtp_capability,omitempty"`
 
-	// Zone for allocating address.
+	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	// +kubebuilder:validation:Optional
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
@@ -256,7 +321,7 @@ type AddressStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Address is the Schema for the Addresss API. Manages a VPC address within Yandex.Cloud.
+// Address is the Schema for the Addresss API. Manages a VPC address within Yandex Cloud.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

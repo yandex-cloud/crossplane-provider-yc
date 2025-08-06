@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: MongodbDatabase is the Schema for the MongodbDatabases API. Manages
-          a MongoDB database within Yandex.Cloud.
+          a MongoDB Database within Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -74,6 +74,9 @@ spec:
               forProvider:
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of MongoDB Cluster.
+                      The ID of MongoDB Cluster.
                     type: string
                   clusterIdRef:
                     description: Reference to a MongodbCluster to populate clusterId.
@@ -150,7 +153,9 @@ spec:
                         type: object
                     type: object
                   name:
-                    description: The name of the database.
+                    description: |-
+                      (String) The name of the database.
+                      The name of the database.
                     type: string
                 type: object
               initProvider:
@@ -167,6 +172,9 @@ spec:
                   autoscaler.
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of MongoDB Cluster.
+                      The ID of MongoDB Cluster.
                     type: string
                   clusterIdRef:
                     description: Reference to a MongodbCluster to populate clusterId.
@@ -243,7 +251,9 @@ spec:
                         type: object
                     type: object
                   name:
-                    description: The name of the database.
+                    description: |-
+                      (String) The name of the database.
+                      The name of the database.
                     type: string
                 type: object
               managementPolicies:
@@ -424,11 +434,17 @@ spec:
               atProvider:
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of MongoDB Cluster.
+                      The ID of MongoDB Cluster.
                     type: string
                   id:
+                    description: (String) The resource identifier.
                     type: string
                   name:
-                    description: The name of the database.
+                    description: |-
+                      (String) The name of the database.
+                      The name of the database.
                     type: string
                 type: object
               conditions:

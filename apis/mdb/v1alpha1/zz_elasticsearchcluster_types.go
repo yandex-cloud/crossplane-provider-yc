@@ -29,123 +29,155 @@ import (
 
 type DataNodeInitParameters struct {
 
-	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the Elasticsearch data nodes subcluster.
 	Resources []DataNodeResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type DataNodeObservation struct {
 
-	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the Elasticsearch data nodes subcluster.
 	Resources []DataNodeResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type DataNodeParameters struct {
 
-	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the Elasticsearch data nodes subcluster.
 	// +kubebuilder:validation:Optional
 	Resources []DataNodeResourcesParameters `json:"resources" tf:"resources,omitempty"`
 }
 
 type DataNodeResourcesInitParameters struct {
 
+	// (Number) Volume of the storage available to a host, in gigabytes.
 	// Volume of the storage available to a host, in gigabytes.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// (String) Type of the storage of Elasticsearch hosts.
 	// Type of the storage of Elasticsearch hosts.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type DataNodeResourcesObservation struct {
 
+	// (Number) Volume of the storage available to a host, in gigabytes.
 	// Volume of the storage available to a host, in gigabytes.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// (String) Type of the storage of Elasticsearch hosts.
 	// Type of the storage of Elasticsearch hosts.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type DataNodeResourcesParameters struct {
 
+	// (Number) Volume of the storage available to a host, in gigabytes.
 	// Volume of the storage available to a host, in gigabytes.
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
 
+	// (String) Type of the storage of Elasticsearch hosts.
 	// Type of the storage of Elasticsearch hosts.
 	// +kubebuilder:validation:Optional
 	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
 	// +kubebuilder:validation:Optional
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
 }
 
 type ElasticsearchClusterConfigInitParameters struct {
 
+	// (String, Sensitive) Password for admin user of Elasticsearch.
 	// Password for admin user of Elasticsearch.
 	AdminPasswordSecretRef v1.SecretKeySelector `json:"adminPasswordSecretRef" tf:"-"`
 
-	// Configuration for Elasticsearch data nodes subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Configuration for Elasticsearch data nodes subcluster. (see below for nested schema)
+	// Configuration for Elasticsearch data nodes subcluster.
 	DataNode []DataNodeInitParameters `json:"dataNode,omitempty" tf:"data_node,omitempty"`
 
-	// Edition of Elasticsearch. For more information, see the official documentation.
+	// (String) Edition of Elasticsearch. For more information, see the official documentation.
+	// Edition of Elasticsearch. For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts/es-editions).
 	Edition *string `json:"edition,omitempty" tf:"edition,omitempty"`
 
-	// Configuration for Elasticsearch master nodes subcluster. The structure is documented below.
+	// (Block List, Max: 1) Configuration for Elasticsearch master nodes subcluster. (see below for nested schema)
+	// Configuration for Elasticsearch master nodes subcluster.
 	MasterNode []MasterNodeInitParameters `json:"masterNode,omitempty" tf:"master_node,omitempty"`
 
+	// (Set of String) A set of Elasticsearch plugins to install.
 	// A set of Elasticsearch plugins to install.
 	// +listType=set
 	Plugins []*string `json:"plugins,omitempty" tf:"plugins,omitempty"`
 
+	// (String) Version of Elasticsearch.
 	// Version of Elasticsearch.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type ElasticsearchClusterConfigObservation struct {
 
-	// Configuration for Elasticsearch data nodes subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Configuration for Elasticsearch data nodes subcluster. (see below for nested schema)
+	// Configuration for Elasticsearch data nodes subcluster.
 	DataNode []DataNodeObservation `json:"dataNode,omitempty" tf:"data_node,omitempty"`
 
-	// Edition of Elasticsearch. For more information, see the official documentation.
+	// (String) Edition of Elasticsearch. For more information, see the official documentation.
+	// Edition of Elasticsearch. For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts/es-editions).
 	Edition *string `json:"edition,omitempty" tf:"edition,omitempty"`
 
-	// Configuration for Elasticsearch master nodes subcluster. The structure is documented below.
+	// (Block List, Max: 1) Configuration for Elasticsearch master nodes subcluster. (see below for nested schema)
+	// Configuration for Elasticsearch master nodes subcluster.
 	MasterNode []MasterNodeObservation `json:"masterNode,omitempty" tf:"master_node,omitempty"`
 
+	// (Set of String) A set of Elasticsearch plugins to install.
 	// A set of Elasticsearch plugins to install.
 	// +listType=set
 	Plugins []*string `json:"plugins,omitempty" tf:"plugins,omitempty"`
 
+	// (String) Version of Elasticsearch.
 	// Version of Elasticsearch.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type ElasticsearchClusterConfigParameters struct {
 
+	// (String, Sensitive) Password for admin user of Elasticsearch.
 	// Password for admin user of Elasticsearch.
 	// +kubebuilder:validation:Optional
 	AdminPasswordSecretRef v1.SecretKeySelector `json:"adminPasswordSecretRef" tf:"-"`
 
-	// Configuration for Elasticsearch data nodes subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Configuration for Elasticsearch data nodes subcluster. (see below for nested schema)
+	// Configuration for Elasticsearch data nodes subcluster.
 	// +kubebuilder:validation:Optional
 	DataNode []DataNodeParameters `json:"dataNode" tf:"data_node,omitempty"`
 
-	// Edition of Elasticsearch. For more information, see the official documentation.
+	// (String) Edition of Elasticsearch. For more information, see the official documentation.
+	// Edition of Elasticsearch. For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts/es-editions).
 	// +kubebuilder:validation:Optional
 	Edition *string `json:"edition,omitempty" tf:"edition,omitempty"`
 
-	// Configuration for Elasticsearch master nodes subcluster. The structure is documented below.
+	// (Block List, Max: 1) Configuration for Elasticsearch master nodes subcluster. (see below for nested schema)
+	// Configuration for Elasticsearch master nodes subcluster.
 	// +kubebuilder:validation:Optional
 	MasterNode []MasterNodeParameters `json:"masterNode,omitempty" tf:"master_node,omitempty"`
 
+	// (Set of String) A set of Elasticsearch plugins to install.
 	// A set of Elasticsearch plugins to install.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Plugins []*string `json:"plugins,omitempty" tf:"plugins,omitempty"`
 
+	// (String) Version of Elasticsearch.
 	// Version of Elasticsearch.
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
@@ -153,12 +185,15 @@ type ElasticsearchClusterConfigParameters struct {
 
 type ElasticsearchClusterHostInitParameters struct {
 
-	// Sets whether the host should get a public IP address on creation. Can be either true or false.
+	// (Boolean) Sets whether the host should get a public IP address on creation. Can be either true or false.
+	// Sets whether the host should get a public IP address on creation. Can be either `true` or `false`.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
+	// (String) The resource name.
 	// User defined host name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -171,44 +206,55 @@ type ElasticsearchClusterHostInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+	// (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+	// The type of the host to be deployed. Can be either `DATA_NODE` or `MASTER_NODE`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// The availability zone where the Elasticsearch host will be created. For more information see the official documentation.
+	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type ElasticsearchClusterHostObservation struct {
 
-	// Sets whether the host should get a public IP address on creation. Can be either true or false.
+	// (Boolean) Sets whether the host should get a public IP address on creation. Can be either true or false.
+	// Sets whether the host should get a public IP address on creation. Can be either `true` or `false`.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
+	// (String) The fully qualified domain name of the host.
 	// The fully qualified domain name of the host.
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
+	// (String) The resource name.
 	// User defined host name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+	// (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+	// The type of the host to be deployed. Can be either `DATA_NODE` or `MASTER_NODE`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// The availability zone where the Elasticsearch host will be created. For more information see the official documentation.
+	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type ElasticsearchClusterHostParameters struct {
 
-	// Sets whether the host should get a public IP address on creation. Can be either true or false.
+	// (Boolean) Sets whether the host should get a public IP address on creation. Can be either true or false.
+	// Sets whether the host should get a public IP address on creation. Can be either `true` or `false`.
 	// +kubebuilder:validation:Optional
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
+	// (String) The resource name.
 	// User defined host name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
@@ -222,30 +268,37 @@ type ElasticsearchClusterHostParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+	// (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+	// The type of the host to be deployed. Can be either `DATA_NODE` or `MASTER_NODE`.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
-	// The availability zone where the Elasticsearch host will be created. For more information see the official documentation.
+	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone" tf:"zone,omitempty"`
 }
 
 type ElasticsearchClusterInitParameters struct {
 
-	// Configuration of the Elasticsearch cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Configuration of the Elasticsearch cluster. (see below for nested schema)
+	// Configuration of the Elasticsearch cluster.
 	Config []ElasticsearchClusterConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
 
-	// Inhibits deletion of the cluster. Can be either true or false.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// Description of the Elasticsearch cluster.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+	// (String) Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+	// Deployment environment of the Elasticsearch cluster. Can be either `PRESTABLE` or `PRODUCTION`.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -257,19 +310,25 @@ type ElasticsearchClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// A host of the Elasticsearch cluster. The structure is documented below.
+	// (Block Set) A host of the Elasticsearch cluster. (see below for nested schema)
+	// A host of the Elasticsearch cluster.
 	Host []ElasticsearchClusterHostInitParameters `json:"host,omitempty" tf:"host,omitempty"`
 
-	// A set of key/value label pairs to assign to the Elasticsearch cluster.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Block List, Max: 1) Elasticsearch cluster maintenance window. (see below for nested schema)
+	// Elasticsearch cluster maintenance window.
 	MaintenanceWindow []ElasticsearchClusterMaintenanceWindowInitParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// Name of the Elasticsearch cluster. Provided by the client when the cluster is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the network, to which the Elasticsearch cluster belongs.
+	// (String) The VPC Network ID of subnets which resource attached to.
+	// The `VPC Network ID` of subnets which resource attached to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
@@ -281,7 +340,7 @@ type ElasticsearchClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// A set of ids of security groups assigned to hosts of the cluster.
+	// (Set of String)
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
@@ -294,7 +353,8 @@ type ElasticsearchClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
-	// ID of the service account authorized for this cluster.
+	// (String) Service account which linked to the resource.
+	// [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
@@ -309,113 +369,143 @@ type ElasticsearchClusterInitParameters struct {
 
 type ElasticsearchClusterMaintenanceWindowInitParameters struct {
 
-	// Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
+	// 24) for maintenance window if window type is weekly.
 	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
 	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
-	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+	// Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type ElasticsearchClusterMaintenanceWindowObservation struct {
 
-	// Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
+	// 24) for maintenance window if window type is weekly.
 	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
 	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
-	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+	// Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type ElasticsearchClusterMaintenanceWindowParameters struct {
 
-	// Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
 	// +kubebuilder:validation:Optional
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
+	// 24) for maintenance window if window type is weekly.
 	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
 	// +kubebuilder:validation:Optional
 	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
-	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+	// Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 type ElasticsearchClusterObservation struct {
 
-	// Configuration of the Elasticsearch cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Configuration of the Elasticsearch cluster. (see below for nested schema)
+	// Configuration of the Elasticsearch cluster.
 	Config []ElasticsearchClusterConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
 
-	// Creation timestamp of the key.
+	// (String) The creation timestamp of the resource.
+	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Inhibits deletion of the cluster. Can be either true or false.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// Description of the Elasticsearch cluster.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+	// (String) Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+	// Deployment environment of the Elasticsearch cluster. Can be either `PRESTABLE` or `PRODUCTION`.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
+	// (String) Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
+	// Aggregated health of the cluster. Can be either `ALIVE`, `DEGRADED`, `DEAD` or `HEALTH_UNKNOWN`. For more information see `health` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/api-ref/Cluster/).
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
-	// A host of the Elasticsearch cluster. The structure is documented below.
+	// (Block Set) A host of the Elasticsearch cluster. (see below for nested schema)
+	// A host of the Elasticsearch cluster.
 	Host []ElasticsearchClusterHostObservation `json:"host,omitempty" tf:"host,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// A set of key/value label pairs to assign to the Elasticsearch cluster.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Block List, Max: 1) Elasticsearch cluster maintenance window. (see below for nested schema)
+	// Elasticsearch cluster maintenance window.
 	MaintenanceWindow []ElasticsearchClusterMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// Name of the Elasticsearch cluster. Provided by the client when the cluster is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the network, to which the Elasticsearch cluster belongs.
+	// (String) The VPC Network ID of subnets which resource attached to.
+	// The `VPC Network ID` of subnets which resource attached to.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// A set of ids of security groups assigned to hosts of the cluster.
+	// (Set of String)
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// ID of the service account authorized for this cluster.
+	// (String) Service account which linked to the resource.
+	// [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
-	// Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
+	// (String) Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
+	// Status of the cluster. Can be either `CREATING`, `STARTING`, `RUNNING`, `UPDATING`, `STOPPING`, `STOPPED`, `ERROR` or `STATUS_UNKNOWN`. For more information see `status` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/api-ref/Cluster/).
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type ElasticsearchClusterParameters struct {
 
-	// Configuration of the Elasticsearch cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Configuration of the Elasticsearch cluster. (see below for nested schema)
+	// Configuration of the Elasticsearch cluster.
 	// +kubebuilder:validation:Optional
 	Config []ElasticsearchClusterConfigParameters `json:"config,omitempty" tf:"config,omitempty"`
 
-	// Inhibits deletion of the cluster. Can be either true or false.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// Description of the Elasticsearch cluster.
+	// (String) The resource description.
+	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+	// (String) Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+	// Deployment environment of the Elasticsearch cluster. Can be either `PRESTABLE` or `PRODUCTION`.
 	// +kubebuilder:validation:Optional
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -428,23 +518,29 @@ type ElasticsearchClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// A host of the Elasticsearch cluster. The structure is documented below.
+	// (Block Set) A host of the Elasticsearch cluster. (see below for nested schema)
+	// A host of the Elasticsearch cluster.
 	// +kubebuilder:validation:Optional
 	Host []ElasticsearchClusterHostParameters `json:"host,omitempty" tf:"host,omitempty"`
 
-	// A set of key/value label pairs to assign to the Elasticsearch cluster.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Block List, Max: 1) Elasticsearch cluster maintenance window. (see below for nested schema)
+	// Elasticsearch cluster maintenance window.
 	// +kubebuilder:validation:Optional
 	MaintenanceWindow []ElasticsearchClusterMaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// Name of the Elasticsearch cluster. Provided by the client when the cluster is created.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the network, to which the Elasticsearch cluster belongs.
+	// (String) The VPC Network ID of subnets which resource attached to.
+	// The `VPC Network ID` of subnets which resource attached to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -457,7 +553,7 @@ type ElasticsearchClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// A set of ids of security groups assigned to hosts of the cluster.
+	// (Set of String)
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	// +listType=set
@@ -471,7 +567,8 @@ type ElasticsearchClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
-	// ID of the service account authorized for this cluster.
+	// (String) Service account which linked to the resource.
+	// [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
@@ -487,55 +584,70 @@ type ElasticsearchClusterParameters struct {
 
 type MasterNodeInitParameters struct {
 
-	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the Elasticsearch master nodes subcluster.
 	Resources []MasterNodeResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type MasterNodeObservation struct {
 
-	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the Elasticsearch master nodes subcluster.
 	Resources []MasterNodeResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type MasterNodeParameters struct {
 
-	// Resources allocated to hosts of the Elasticsearch master nodes subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the Elasticsearch master nodes subcluster.
 	// +kubebuilder:validation:Optional
 	Resources []MasterNodeResourcesParameters `json:"resources" tf:"resources,omitempty"`
 }
 
 type MasterNodeResourcesInitParameters struct {
 
+	// (Number) Volume of the storage available to a host, in gigabytes.
 	// Volume of the storage available to a host, in gigabytes.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// (String) Type of the storage of Elasticsearch hosts.
 	// Type of the storage of Elasticsearch hosts.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type MasterNodeResourcesObservation struct {
 
+	// (Number) Volume of the storage available to a host, in gigabytes.
 	// Volume of the storage available to a host, in gigabytes.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// (String) Type of the storage of Elasticsearch hosts.
 	// Type of the storage of Elasticsearch hosts.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type MasterNodeResourcesParameters struct {
 
+	// (Number) Volume of the storage available to a host, in gigabytes.
 	// Volume of the storage available to a host, in gigabytes.
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
 
+	// (String) Type of the storage of Elasticsearch hosts.
 	// Type of the storage of Elasticsearch hosts.
 	// +kubebuilder:validation:Optional
 	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
 	// +kubebuilder:validation:Optional
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
 }
@@ -567,7 +679,7 @@ type ElasticsearchClusterStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// ElasticsearchCluster is the Schema for the ElasticsearchClusters API. Manages a Elasticsearch cluster within Yandex.Cloud.
+// ElasticsearchCluster is the Schema for the ElasticsearchClusters API. Manages a Elasticsearch cluster within Yandex Cloud.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -112,6 +112,8 @@ spec:
                     - Environment
                     - Filesystem
                     type: string
+                  yq_endpoint:
+                    type: string
                 required:
                 - source
                 type: object
@@ -272,6 +274,8 @@ spec:
                     - InjectedIdentity
                     - Environment
                     - Filesystem
+                    type: string
+                  yq_endpoint:
                     type: string
                 required:
                 - source

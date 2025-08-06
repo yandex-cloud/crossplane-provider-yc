@@ -29,13 +29,16 @@ import (
 
 type DefaultSecurityGroupInitParameters struct {
 
-	// Description of the security group.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// A list of egress rules. The structure is documented below.
+	// (Block Set) A list of egress rules. (see below for nested schema)
+	// A list of egress rules.
 	Egress []EgressInitParameters `json:"egress,omitempty" tf:"egress,omitempty"`
 
-	// ID of the folder this security group belongs to.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -47,13 +50,16 @@ type DefaultSecurityGroupInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// (Block Set) A list of ingress rules. (see below for nested schema)
 	// A list of ingress rules.
 	Ingress []IngressInitParameters `json:"ingress,omitempty" tf:"ingress,omitempty"`
 
-	// Labels to assign to this security group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (String) ID of the network this security group belongs to.
 	// ID of the network this security group belongs to.
 	// +crossplane:generate:reference:type=Network
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -69,49 +75,61 @@ type DefaultSecurityGroupInitParameters struct {
 
 type DefaultSecurityGroupObservation struct {
 
-	// Creation timestamp of this security group.
+	// (String) The creation timestamp of the resource.
+	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Description of the security group.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// A list of egress rules. The structure is documented below.
+	// (Block Set) A list of egress rules. (see below for nested schema)
+	// A list of egress rules.
 	Egress []EgressObservation `json:"egress,omitempty" tf:"egress,omitempty"`
 
-	// ID of the folder this security group belongs to.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// Id of the security group.
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Block Set) A list of ingress rules. (see below for nested schema)
 	// A list of ingress rules.
 	Ingress []IngressObservation `json:"ingress,omitempty" tf:"ingress,omitempty"`
 
-	// Labels to assign to this security group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of this security group.
+	// (String) The resource name. Cannot be updated.
+	// The resource name. Cannot be updated.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) ID of the network this security group belongs to.
 	// ID of the network this security group belongs to.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
+	// (String) Status of this security group.
 	// Status of this security group.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type DefaultSecurityGroupParameters struct {
 
-	// Description of the security group.
+	// (String) The resource description.
+	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// A list of egress rules. The structure is documented below.
+	// (Block Set) A list of egress rules. (see below for nested schema)
+	// A list of egress rules.
 	// +kubebuilder:validation:Optional
 	Egress []EgressParameters `json:"egress,omitempty" tf:"egress,omitempty"`
 
-	// ID of the folder this security group belongs to.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -124,15 +142,18 @@ type DefaultSecurityGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// (Block Set) A list of ingress rules. (see below for nested schema)
 	// A list of ingress rules.
 	// +kubebuilder:validation:Optional
 	Ingress []IngressParameters `json:"ingress,omitempty" tf:"ingress,omitempty"`
 
-	// Labels to assign to this security group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (String) ID of the network this security group belongs to.
 	// ID of the network this security group belongs to.
 	// +crossplane:generate:reference:type=Network
 	// +kubebuilder:validation:Optional
@@ -149,230 +170,292 @@ type DefaultSecurityGroupParameters struct {
 
 type EgressInitParameters struct {
 
+	// (String) The resource description.
 	// Description of the rule.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (Number) Minimum port number.
 	// Minimum port number.
 	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
-	// Labels to assign to this security group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// Labels to assign to this rule.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Number) Port number (if applied to a single port).
 	// Port number (if applied to a single port).
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// Special-purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
+	// purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
+	// Special-purpose targets. `self_security_group` refers to this particular security group. `loadbalancer_healthchecks` represents [loadbalancer health check nodes](https://yandex.cloud/docs/network-load-balancer/concepts/health-check).
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
-	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// (String) One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// One of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
+	// (String) Target security group ID for this rule.
 	// Target security group ID for this rule.
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 
+	// (Number) Maximum port number.
 	// Maximum port number.
 	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
 
+	// (List of String) The blocks of IPv4 addresses for this rule.
 	// The blocks of IPv4 addresses for this rule.
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
-	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+	// (List of String) The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+	// The blocks of IPv6 addresses for this rule. `v6_cidr_blocks` argument is currently not supported. It will be available in the future.
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }
 
 type EgressObservation struct {
 
+	// (String) The resource description.
 	// Description of the rule.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (Number) Minimum port number.
 	// Minimum port number.
 	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
-	// Id of the security group.
+	// (String) The ID of this resource.
+	// The resource identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Labels to assign to this security group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// Labels to assign to this rule.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Number) Port number (if applied to a single port).
 	// Port number (if applied to a single port).
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// Special-purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
+	// purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
+	// Special-purpose targets. `self_security_group` refers to this particular security group. `loadbalancer_healthchecks` represents [loadbalancer health check nodes](https://yandex.cloud/docs/network-load-balancer/concepts/health-check).
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
-	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// (String) One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// One of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
+	// (String) Target security group ID for this rule.
 	// Target security group ID for this rule.
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 
+	// (Number) Maximum port number.
 	// Maximum port number.
 	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
 
+	// (List of String) The blocks of IPv4 addresses for this rule.
 	// The blocks of IPv4 addresses for this rule.
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
-	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+	// (List of String) The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+	// The blocks of IPv6 addresses for this rule. `v6_cidr_blocks` argument is currently not supported. It will be available in the future.
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }
 
 type EgressParameters struct {
 
+	// (String) The resource description.
 	// Description of the rule.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (Number) Minimum port number.
 	// Minimum port number.
 	// +kubebuilder:validation:Optional
 	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
-	// Labels to assign to this security group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// Labels to assign to this rule.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Number) Port number (if applied to a single port).
 	// Port number (if applied to a single port).
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// Special-purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
+	// purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
+	// Special-purpose targets. `self_security_group` refers to this particular security group. `loadbalancer_healthchecks` represents [loadbalancer health check nodes](https://yandex.cloud/docs/network-load-balancer/concepts/health-check).
 	// +kubebuilder:validation:Optional
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
-	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// (String) One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// One of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
 	// +kubebuilder:validation:Optional
 	Protocol *string `json:"protocol" tf:"protocol,omitempty"`
 
+	// (String) Target security group ID for this rule.
 	// Target security group ID for this rule.
 	// +kubebuilder:validation:Optional
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 
+	// (Number) Maximum port number.
 	// Maximum port number.
 	// +kubebuilder:validation:Optional
 	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
 
+	// (List of String) The blocks of IPv4 addresses for this rule.
 	// The blocks of IPv4 addresses for this rule.
 	// +kubebuilder:validation:Optional
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
-	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+	// (List of String) The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+	// The blocks of IPv6 addresses for this rule. `v6_cidr_blocks` argument is currently not supported. It will be available in the future.
 	// +kubebuilder:validation:Optional
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }
 
 type IngressInitParameters struct {
 
+	// (String) The resource description.
 	// Description of the rule.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (Number) Minimum port number.
 	// Minimum port number.
 	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
+	// (Map of String) A set of key/value label pairs which assigned to resource.
 	// Labels to assign to this rule.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Number) Port number (if applied to a single port).
 	// Port number (if applied to a single port).
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// Special-purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
+	// purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
+	// Special-purpose targets. `self_security_group` refers to this particular security group. `loadbalancer_healthchecks` represents [loadbalancer health check nodes](https://yandex.cloud/docs/network-load-balancer/concepts/health-check).
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
-	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// (String) One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// One of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
+	// (String) Target security group ID for this rule.
 	// Target security group ID for this rule.
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 
+	// (Number) Maximum port number.
 	// Maximum port number.
 	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
 
+	// (List of String) The blocks of IPv4 addresses for this rule.
 	// The blocks of IPv4 addresses for this rule.
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
-	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+	// (List of String) The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+	// The blocks of IPv6 addresses for this rule. `v6_cidr_blocks` argument is currently not supported. It will be available in the future.
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }
 
 type IngressObservation struct {
 
+	// (String) The resource description.
 	// Description of the rule.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (Number) Minimum port number.
 	// Minimum port number.
 	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
-	// Id of the security group.
+	// (String) The ID of this resource.
+	// The resource identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Map of String) A set of key/value label pairs which assigned to resource.
 	// Labels to assign to this rule.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Number) Port number (if applied to a single port).
 	// Port number (if applied to a single port).
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// Special-purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
+	// purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
+	// Special-purpose targets. `self_security_group` refers to this particular security group. `loadbalancer_healthchecks` represents [loadbalancer health check nodes](https://yandex.cloud/docs/network-load-balancer/concepts/health-check).
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
-	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// (String) One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// One of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
+	// (String) Target security group ID for this rule.
 	// Target security group ID for this rule.
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 
+	// (Number) Maximum port number.
 	// Maximum port number.
 	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
 
+	// (List of String) The blocks of IPv4 addresses for this rule.
 	// The blocks of IPv4 addresses for this rule.
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
-	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+	// (List of String) The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+	// The blocks of IPv6 addresses for this rule. `v6_cidr_blocks` argument is currently not supported. It will be available in the future.
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }
 
 type IngressParameters struct {
 
+	// (String) The resource description.
 	// Description of the rule.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (Number) Minimum port number.
 	// Minimum port number.
 	// +kubebuilder:validation:Optional
 	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
+	// (Map of String) A set of key/value label pairs which assigned to resource.
 	// Labels to assign to this rule.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Number) Port number (if applied to a single port).
 	// Port number (if applied to a single port).
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
-	// Special-purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
+	// purpose targets. self_security_group refers to this particular security group. loadbalancer_healthchecks represents loadbalancer health check nodes.
+	// Special-purpose targets. `self_security_group` refers to this particular security group. `loadbalancer_healthchecks` represents [loadbalancer health check nodes](https://yandex.cloud/docs/network-load-balancer/concepts/health-check).
 	// +kubebuilder:validation:Optional
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
-	// One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// (String) One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// One of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
 	// +kubebuilder:validation:Optional
 	Protocol *string `json:"protocol" tf:"protocol,omitempty"`
 
+	// (String) Target security group ID for this rule.
 	// Target security group ID for this rule.
 	// +kubebuilder:validation:Optional
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 
+	// (Number) Maximum port number.
 	// Maximum port number.
 	// +kubebuilder:validation:Optional
 	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
 
+	// (List of String) The blocks of IPv4 addresses for this rule.
 	// The blocks of IPv4 addresses for this rule.
 	// +kubebuilder:validation:Optional
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
-	// The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+	// (List of String) The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+	// The blocks of IPv6 addresses for this rule. `v6_cidr_blocks` argument is currently not supported. It will be available in the future.
 	// +kubebuilder:validation:Optional
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }

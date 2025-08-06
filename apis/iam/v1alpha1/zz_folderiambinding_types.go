@@ -29,7 +29,8 @@ import (
 
 type FolderIAMBindingInitParameters struct {
 
-	// ID of the folder to attach a policy to.
+	// (String) The ID of the folder to attach a policy to.
+	// The ID of the folder to attach a policy to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -41,7 +42,19 @@ type FolderIAMBindingInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// An array of identities that will be granted the privilege that is specified in the role field. Each entry can have one of the following values:
+	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
+	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
+	// * **serviceAccount:{service_account_id}**: A unique service account ID.
+	// * **federatedUser:{federated_user_id}**: A unique federated user ID.
+	// * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
+	// * **group:{group_id}**: A unique group ID.
+	// * **system:group:federation:{federation_id}:users**: All users in federation.
+	// * **system:group:organization:{organization_id}:users**: All users in organization.
+	// * **system:allAuthenticatedUsers**: All authenticated users.
+	// * **system:allUsers**: All users, including unauthenticated ones.
+	//
+	// ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountsRef
@@ -49,7 +62,8 @@ type FolderIAMBindingInitParameters struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// The role that should be assigned. Only one yandex_resourcemanager_folder_iam_binding can be used per role.
+	// (String) The role that should be applied. See roles catalog.
+	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
 	// References to ServiceAccount to populate members.
@@ -60,29 +74,47 @@ type FolderIAMBindingInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountsSelector *v1.Selector `json:"serviceAccountsSelector,omitempty" tf:"-"`
 
+	// (Number)
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type FolderIAMBindingObservation struct {
 
-	// ID of the folder to attach a policy to.
+	// (String) The ID of the folder to attach a policy to.
+	// The ID of the folder to attach a policy to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// An array of identities that will be granted the privilege that is specified in the role field. Each entry can have one of the following values:
+	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
+	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
+	// * **serviceAccount:{service_account_id}**: A unique service account ID.
+	// * **federatedUser:{federated_user_id}**: A unique federated user ID.
+	// * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
+	// * **group:{group_id}**: A unique group ID.
+	// * **system:group:federation:{federation_id}:users**: All users in federation.
+	// * **system:group:organization:{organization_id}:users**: All users in organization.
+	// * **system:allAuthenticatedUsers**: All authenticated users.
+	// * **system:allUsers**: All users, including unauthenticated ones.
+	//
+	// ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// The role that should be assigned. Only one yandex_resourcemanager_folder_iam_binding can be used per role.
+	// (String) The role that should be applied. See roles catalog.
+	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
+	// (Number)
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type FolderIAMBindingParameters struct {
 
-	// ID of the folder to attach a policy to.
+	// (String) The ID of the folder to attach a policy to.
+	// The ID of the folder to attach a policy to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -95,7 +127,19 @@ type FolderIAMBindingParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// An array of identities that will be granted the privilege that is specified in the role field. Each entry can have one of the following values:
+	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
+	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
+	// * **serviceAccount:{service_account_id}**: A unique service account ID.
+	// * **federatedUser:{federated_user_id}**: A unique federated user ID.
+	// * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
+	// * **group:{group_id}**: A unique group ID.
+	// * **system:group:federation:{federation_id}:users**: All users in federation.
+	// * **system:group:organization:{organization_id}:users**: All users in organization.
+	// * **system:allAuthenticatedUsers**: All authenticated users.
+	// * **system:allUsers**: All users, including unauthenticated ones.
+	//
+	// ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/iam.ServiceAccountRefValue()
 	// +crossplane:generate:reference:refFieldName=ServiceAccountsRef
@@ -104,7 +148,8 @@ type FolderIAMBindingParameters struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// The role that should be assigned. Only one yandex_resourcemanager_folder_iam_binding can be used per role.
+	// (String) The role that should be applied. See roles catalog.
+	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
 	// +kubebuilder:validation:Optional
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
@@ -116,6 +161,7 @@ type FolderIAMBindingParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountsSelector *v1.Selector `json:"serviceAccountsSelector,omitempty" tf:"-"`
 
+	// (Number)
 	// +kubebuilder:validation:Optional
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }

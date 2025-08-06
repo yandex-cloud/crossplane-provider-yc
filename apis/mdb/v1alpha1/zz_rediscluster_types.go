@@ -29,183 +29,434 @@ import (
 
 type RedisClusterAccessInitParameters struct {
 
-	// Allow access for DataLens. Can be either true or false.
+	// (Boolean) Allow access for DataLens. Can be either true or false.
+	// Allow access for DataLens. Can be either `true` or `false`.
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
 
-	// Allow access for Web SQL. Can be either true or false.
+	// (Boolean) Allow access for Web SQL. Can be either true or false.
+	// Allow access for Web SQL. Can be either `true` or `false`.
 	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
 }
 
 type RedisClusterAccessObservation struct {
 
-	// Allow access for DataLens. Can be either true or false.
+	// (Boolean) Allow access for DataLens. Can be either true or false.
+	// Allow access for DataLens. Can be either `true` or `false`.
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
 
-	// Allow access for Web SQL. Can be either true or false.
+	// (Boolean) Allow access for Web SQL. Can be either true or false.
+	// Allow access for Web SQL. Can be either `true` or `false`.
 	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
 }
 
 type RedisClusterAccessParameters struct {
 
-	// Allow access for DataLens. Can be either true or false.
+	// (Boolean) Allow access for DataLens. Can be either true or false.
+	// Allow access for DataLens. Can be either `true` or `false`.
 	// +kubebuilder:validation:Optional
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
 
-	// Allow access for Web SQL. Can be either true or false.
+	// (Boolean) Allow access for Web SQL. Can be either true or false.
+	// Allow access for Web SQL. Can be either `true` or `false`.
 	// +kubebuilder:validation:Optional
 	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
 }
 
+type RedisClusterConfigBackupWindowStartInitParameters struct {
+
+	// (Number) The hour at which backup will be started.
+	// The hour at which backup will be started.
+	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
+
+	// (Number) The minute at which backup will be started.
+	// The minute at which backup will be started.
+	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
+}
+
+type RedisClusterConfigBackupWindowStartObservation struct {
+
+	// (Number) The hour at which backup will be started.
+	// The hour at which backup will be started.
+	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
+
+	// (Number) The minute at which backup will be started.
+	// The minute at which backup will be started.
+	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
+}
+
+type RedisClusterConfigBackupWindowStartParameters struct {
+
+	// (Number) The hour at which backup will be started.
+	// The hour at which backup will be started.
+	// +kubebuilder:validation:Optional
+	Hours *int64 `json:"hours,omitempty" tf:"hours,omitempty"`
+
+	// (Number) The minute at which backup will be started.
+	// The minute at which backup will be started.
+	// +kubebuilder:validation:Optional
+	Minutes *int64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
+}
+
 type RedisClusterConfigInitParameters struct {
 
-	// Normal clients output buffer limits. See redis config file.
+	// (Boolean) Allows some data to be lost in favor of faster switchover/restart by RDSync.
+	// Allows some data to be lost in favor of faster switchover/restart by RDSync.
+	AllowDataLoss *bool `json:"allowDataLoss,omitempty" tf:"allow_data_loss,omitempty"`
+
+	// (Block List, Max: 1) Time to start the daily backup, in the UTC timezone. (see below for nested schema)
+	// Time to start the daily backup, in the UTC timezone.
+	BackupWindowStart []RedisClusterConfigBackupWindowStartInitParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
+
+	// (String) Normal clients output buffer limits. See redis config file.
+	// Normal clients output buffer limits. See [redis config file](https://github.com/redis/redis/blob/6.2/redis.conf#L1841).
 	ClientOutputBufferLimitNormal *string `json:"clientOutputBufferLimitNormal,omitempty" tf:"client_output_buffer_limit_normal,omitempty"`
 
-	// Pubsub clients output buffer limits. See redis config file.
+	// (String) Pubsub clients output buffer limits. See redis config file.
+	// Pubsub clients output buffer limits. See [redis config file](https://github.com/redis/redis/blob/6.2/redis.conf#L1843).
 	ClientOutputBufferLimitPubsub *string `json:"clientOutputBufferLimitPubsub,omitempty" tf:"client_output_buffer_limit_pubsub,omitempty"`
 
+	// (Boolean) Permits Pub/Sub shard operations when cluster is down.
+	// Permits Pub/Sub shard operations when cluster is down.
+	ClusterAllowPubsubshardWhenDown *bool `json:"clusterAllowPubsubshardWhenDown,omitempty" tf:"cluster_allow_pubsubshard_when_down,omitempty"`
+
+	// (Boolean) Allows read operations when cluster is down.
+	// Allows read operations when cluster is down.
+	ClusterAllowReadsWhenDown *bool `json:"clusterAllowReadsWhenDown,omitempty" tf:"cluster_allow_reads_when_down,omitempty"`
+
+	// (Boolean) Controls whether all hash slots must be covered by nodes.
+	// Controls whether all hash slots must be covered by nodes.
+	ClusterRequireFullCoverage *bool `json:"clusterRequireFullCoverage,omitempty" tf:"cluster_require_full_coverage,omitempty"`
+
+	// server restart).
 	// Number of databases (changing requires redis-server restart).
 	Databases *int64 `json:"databases,omitempty" tf:"databases,omitempty"`
 
+	// threads.
+	// Allow Redis to use io-threads.
+	IoThreadsAllowed *bool `json:"ioThreadsAllowed,omitempty" tf:"io_threads_allowed,omitempty"`
+
+	// (Number) The time, in minutes, that must elapse in order for the key counter to be divided by two (or decremented if it has a value less <= 10).
+	// The time, in minutes, that must elapse in order for the key counter to be divided by two (or decremented if it has a value less <= 10).
+	LfuDecayTime *int64 `json:"lfuDecayTime,omitempty" tf:"lfu_decay_time,omitempty"`
+
+	// (Number) Determines how the frequency counter represents key hits.
+	// Determines how the frequency counter represents key hits.
+	LfuLogFactor *int64 `json:"lfuLogFactor,omitempty" tf:"lfu_log_factor,omitempty"`
+
+	// (Number) Maximum time in milliseconds for Lua scripts.
+	// Maximum time in milliseconds for Lua scripts.
+	LuaTimeLimit *int64 `json:"luaTimeLimit,omitempty" tf:"lua_time_limit,omitempty"`
+
+	// (Number) Redis maxmemory usage in percent
 	// Redis maxmemory usage in percent
 	MaxmemoryPercent *int64 `json:"maxmemoryPercent,omitempty" tf:"maxmemory_percent,omitempty"`
 
-	// Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in the official RedisDB documentation.
+	// (String) Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in the official RedisDB documentation.
+	// Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in [the official RedisDB documentation](https://docs.redislabs.com/latest/rs/administering/database-operations/eviction-policy/).
 	MaxmemoryPolicy *string `json:"maxmemoryPolicy,omitempty" tf:"maxmemory_policy,omitempty"`
 
+	// (String) Select the events that Redis will notify among a set of classes.
 	// Select the events that Redis will notify among a set of classes.
 	NotifyKeyspaceEvents *string `json:"notifyKeyspaceEvents,omitempty" tf:"notify_keyspace_events,omitempty"`
 
+	// (String, Sensitive) Password for the Redis cluster.
 	// Password for the Redis cluster.
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
+	// (Number) Replication backlog size as a percentage of flavor maxmemory.
+	// Replication backlog size as a percentage of flavor maxmemory.
+	ReplBacklogSizePercent *int64 `json:"replBacklogSizePercent,omitempty" tf:"repl_backlog_size_percent,omitempty"`
+
+	// (Number) Log slow queries below this number in microseconds.
 	// Log slow queries below this number in microseconds.
 	SlowlogLogSlowerThan *int64 `json:"slowlogLogSlowerThan,omitempty" tf:"slowlog_log_slower_than,omitempty"`
 
+	// (Number) Slow queries log length.
 	// Slow queries log length.
 	SlowlogMaxLen *int64 `json:"slowlogMaxLen,omitempty" tf:"slowlog_max_len,omitempty"`
 
+	// (Number) Close the connection after a client is idle for N seconds.
 	// Close the connection after a client is idle for N seconds.
 	Timeout *int64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// Version of Redis (6.2).
+	// (Boolean) Allows to turn before switchover in RDSync.
+	// Allows to turn before switchover in RDSync.
+	TurnBeforeSwitchover *bool `json:"turnBeforeSwitchover,omitempty" tf:"turn_before_switchover,omitempty"`
+
+	// (Boolean) Use JIT for lua scripts and functions.
+	// Use JIT for lua scripts and functions.
+	UseLuajit *bool `json:"useLuajit,omitempty" tf:"use_luajit,omitempty"`
+
+	// (String) Version of Redis.
+	// Version of Redis.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+
+	// efficient listpack to CPU-efficient hash table and skiplist
+	// Controls max number of entries in zset before conversion from memory-efficient listpack to CPU-efficient hash table and skiplist
+	ZsetMaxListpackEntries *int64 `json:"zsetMaxListpackEntries,omitempty" tf:"zset_max_listpack_entries,omitempty"`
 }
 
 type RedisClusterConfigObservation struct {
 
-	// Normal clients output buffer limits. See redis config file.
+	// (Boolean) Allows some data to be lost in favor of faster switchover/restart by RDSync.
+	// Allows some data to be lost in favor of faster switchover/restart by RDSync.
+	AllowDataLoss *bool `json:"allowDataLoss,omitempty" tf:"allow_data_loss,omitempty"`
+
+	// (Block List, Max: 1) Time to start the daily backup, in the UTC timezone. (see below for nested schema)
+	// Time to start the daily backup, in the UTC timezone.
+	BackupWindowStart []RedisClusterConfigBackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
+
+	// (String) Normal clients output buffer limits. See redis config file.
+	// Normal clients output buffer limits. See [redis config file](https://github.com/redis/redis/blob/6.2/redis.conf#L1841).
 	ClientOutputBufferLimitNormal *string `json:"clientOutputBufferLimitNormal,omitempty" tf:"client_output_buffer_limit_normal,omitempty"`
 
-	// Pubsub clients output buffer limits. See redis config file.
+	// (String) Pubsub clients output buffer limits. See redis config file.
+	// Pubsub clients output buffer limits. See [redis config file](https://github.com/redis/redis/blob/6.2/redis.conf#L1843).
 	ClientOutputBufferLimitPubsub *string `json:"clientOutputBufferLimitPubsub,omitempty" tf:"client_output_buffer_limit_pubsub,omitempty"`
 
+	// (Boolean) Permits Pub/Sub shard operations when cluster is down.
+	// Permits Pub/Sub shard operations when cluster is down.
+	ClusterAllowPubsubshardWhenDown *bool `json:"clusterAllowPubsubshardWhenDown,omitempty" tf:"cluster_allow_pubsubshard_when_down,omitempty"`
+
+	// (Boolean) Allows read operations when cluster is down.
+	// Allows read operations when cluster is down.
+	ClusterAllowReadsWhenDown *bool `json:"clusterAllowReadsWhenDown,omitempty" tf:"cluster_allow_reads_when_down,omitempty"`
+
+	// (Boolean) Controls whether all hash slots must be covered by nodes.
+	// Controls whether all hash slots must be covered by nodes.
+	ClusterRequireFullCoverage *bool `json:"clusterRequireFullCoverage,omitempty" tf:"cluster_require_full_coverage,omitempty"`
+
+	// server restart).
 	// Number of databases (changing requires redis-server restart).
 	Databases *int64 `json:"databases,omitempty" tf:"databases,omitempty"`
 
+	// threads.
+	// Allow Redis to use io-threads.
+	IoThreadsAllowed *bool `json:"ioThreadsAllowed,omitempty" tf:"io_threads_allowed,omitempty"`
+
+	// (Number) The time, in minutes, that must elapse in order for the key counter to be divided by two (or decremented if it has a value less <= 10).
+	// The time, in minutes, that must elapse in order for the key counter to be divided by two (or decremented if it has a value less <= 10).
+	LfuDecayTime *int64 `json:"lfuDecayTime,omitempty" tf:"lfu_decay_time,omitempty"`
+
+	// (Number) Determines how the frequency counter represents key hits.
+	// Determines how the frequency counter represents key hits.
+	LfuLogFactor *int64 `json:"lfuLogFactor,omitempty" tf:"lfu_log_factor,omitempty"`
+
+	// (Number) Maximum time in milliseconds for Lua scripts.
+	// Maximum time in milliseconds for Lua scripts.
+	LuaTimeLimit *int64 `json:"luaTimeLimit,omitempty" tf:"lua_time_limit,omitempty"`
+
+	// (Number) Redis maxmemory usage in percent
 	// Redis maxmemory usage in percent
 	MaxmemoryPercent *int64 `json:"maxmemoryPercent,omitempty" tf:"maxmemory_percent,omitempty"`
 
-	// Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in the official RedisDB documentation.
+	// (String) Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in the official RedisDB documentation.
+	// Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in [the official RedisDB documentation](https://docs.redislabs.com/latest/rs/administering/database-operations/eviction-policy/).
 	MaxmemoryPolicy *string `json:"maxmemoryPolicy,omitempty" tf:"maxmemory_policy,omitempty"`
 
+	// (String) Select the events that Redis will notify among a set of classes.
 	// Select the events that Redis will notify among a set of classes.
 	NotifyKeyspaceEvents *string `json:"notifyKeyspaceEvents,omitempty" tf:"notify_keyspace_events,omitempty"`
 
+	// (Number) Replication backlog size as a percentage of flavor maxmemory.
+	// Replication backlog size as a percentage of flavor maxmemory.
+	ReplBacklogSizePercent *int64 `json:"replBacklogSizePercent,omitempty" tf:"repl_backlog_size_percent,omitempty"`
+
+	// (Number) Log slow queries below this number in microseconds.
 	// Log slow queries below this number in microseconds.
 	SlowlogLogSlowerThan *int64 `json:"slowlogLogSlowerThan,omitempty" tf:"slowlog_log_slower_than,omitempty"`
 
+	// (Number) Slow queries log length.
 	// Slow queries log length.
 	SlowlogMaxLen *int64 `json:"slowlogMaxLen,omitempty" tf:"slowlog_max_len,omitempty"`
 
+	// (Number) Close the connection after a client is idle for N seconds.
 	// Close the connection after a client is idle for N seconds.
 	Timeout *int64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// Version of Redis (6.2).
+	// (Boolean) Allows to turn before switchover in RDSync.
+	// Allows to turn before switchover in RDSync.
+	TurnBeforeSwitchover *bool `json:"turnBeforeSwitchover,omitempty" tf:"turn_before_switchover,omitempty"`
+
+	// (Boolean) Use JIT for lua scripts and functions.
+	// Use JIT for lua scripts and functions.
+	UseLuajit *bool `json:"useLuajit,omitempty" tf:"use_luajit,omitempty"`
+
+	// (String) Version of Redis.
+	// Version of Redis.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+
+	// efficient listpack to CPU-efficient hash table and skiplist
+	// Controls max number of entries in zset before conversion from memory-efficient listpack to CPU-efficient hash table and skiplist
+	ZsetMaxListpackEntries *int64 `json:"zsetMaxListpackEntries,omitempty" tf:"zset_max_listpack_entries,omitempty"`
 }
 
 type RedisClusterConfigParameters struct {
 
-	// Normal clients output buffer limits. See redis config file.
+	// (Boolean) Allows some data to be lost in favor of faster switchover/restart by RDSync.
+	// Allows some data to be lost in favor of faster switchover/restart by RDSync.
+	// +kubebuilder:validation:Optional
+	AllowDataLoss *bool `json:"allowDataLoss,omitempty" tf:"allow_data_loss,omitempty"`
+
+	// (Block List, Max: 1) Time to start the daily backup, in the UTC timezone. (see below for nested schema)
+	// Time to start the daily backup, in the UTC timezone.
+	// +kubebuilder:validation:Optional
+	BackupWindowStart []RedisClusterConfigBackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
+
+	// (String) Normal clients output buffer limits. See redis config file.
+	// Normal clients output buffer limits. See [redis config file](https://github.com/redis/redis/blob/6.2/redis.conf#L1841).
 	// +kubebuilder:validation:Optional
 	ClientOutputBufferLimitNormal *string `json:"clientOutputBufferLimitNormal,omitempty" tf:"client_output_buffer_limit_normal,omitempty"`
 
-	// Pubsub clients output buffer limits. See redis config file.
+	// (String) Pubsub clients output buffer limits. See redis config file.
+	// Pubsub clients output buffer limits. See [redis config file](https://github.com/redis/redis/blob/6.2/redis.conf#L1843).
 	// +kubebuilder:validation:Optional
 	ClientOutputBufferLimitPubsub *string `json:"clientOutputBufferLimitPubsub,omitempty" tf:"client_output_buffer_limit_pubsub,omitempty"`
 
+	// (Boolean) Permits Pub/Sub shard operations when cluster is down.
+	// Permits Pub/Sub shard operations when cluster is down.
+	// +kubebuilder:validation:Optional
+	ClusterAllowPubsubshardWhenDown *bool `json:"clusterAllowPubsubshardWhenDown,omitempty" tf:"cluster_allow_pubsubshard_when_down,omitempty"`
+
+	// (Boolean) Allows read operations when cluster is down.
+	// Allows read operations when cluster is down.
+	// +kubebuilder:validation:Optional
+	ClusterAllowReadsWhenDown *bool `json:"clusterAllowReadsWhenDown,omitempty" tf:"cluster_allow_reads_when_down,omitempty"`
+
+	// (Boolean) Controls whether all hash slots must be covered by nodes.
+	// Controls whether all hash slots must be covered by nodes.
+	// +kubebuilder:validation:Optional
+	ClusterRequireFullCoverage *bool `json:"clusterRequireFullCoverage,omitempty" tf:"cluster_require_full_coverage,omitempty"`
+
+	// server restart).
 	// Number of databases (changing requires redis-server restart).
 	// +kubebuilder:validation:Optional
 	Databases *int64 `json:"databases,omitempty" tf:"databases,omitempty"`
 
+	// threads.
+	// Allow Redis to use io-threads.
+	// +kubebuilder:validation:Optional
+	IoThreadsAllowed *bool `json:"ioThreadsAllowed,omitempty" tf:"io_threads_allowed,omitempty"`
+
+	// (Number) The time, in minutes, that must elapse in order for the key counter to be divided by two (or decremented if it has a value less <= 10).
+	// The time, in minutes, that must elapse in order for the key counter to be divided by two (or decremented if it has a value less <= 10).
+	// +kubebuilder:validation:Optional
+	LfuDecayTime *int64 `json:"lfuDecayTime,omitempty" tf:"lfu_decay_time,omitempty"`
+
+	// (Number) Determines how the frequency counter represents key hits.
+	// Determines how the frequency counter represents key hits.
+	// +kubebuilder:validation:Optional
+	LfuLogFactor *int64 `json:"lfuLogFactor,omitempty" tf:"lfu_log_factor,omitempty"`
+
+	// (Number) Maximum time in milliseconds for Lua scripts.
+	// Maximum time in milliseconds for Lua scripts.
+	// +kubebuilder:validation:Optional
+	LuaTimeLimit *int64 `json:"luaTimeLimit,omitempty" tf:"lua_time_limit,omitempty"`
+
+	// (Number) Redis maxmemory usage in percent
 	// Redis maxmemory usage in percent
 	// +kubebuilder:validation:Optional
 	MaxmemoryPercent *int64 `json:"maxmemoryPercent,omitempty" tf:"maxmemory_percent,omitempty"`
 
-	// Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in the official RedisDB documentation.
+	// (String) Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in the official RedisDB documentation.
+	// Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in [the official RedisDB documentation](https://docs.redislabs.com/latest/rs/administering/database-operations/eviction-policy/).
 	// +kubebuilder:validation:Optional
 	MaxmemoryPolicy *string `json:"maxmemoryPolicy,omitempty" tf:"maxmemory_policy,omitempty"`
 
+	// (String) Select the events that Redis will notify among a set of classes.
 	// Select the events that Redis will notify among a set of classes.
 	// +kubebuilder:validation:Optional
 	NotifyKeyspaceEvents *string `json:"notifyKeyspaceEvents,omitempty" tf:"notify_keyspace_events,omitempty"`
 
+	// (String, Sensitive) Password for the Redis cluster.
 	// Password for the Redis cluster.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
+	// (Number) Replication backlog size as a percentage of flavor maxmemory.
+	// Replication backlog size as a percentage of flavor maxmemory.
+	// +kubebuilder:validation:Optional
+	ReplBacklogSizePercent *int64 `json:"replBacklogSizePercent,omitempty" tf:"repl_backlog_size_percent,omitempty"`
+
+	// (Number) Log slow queries below this number in microseconds.
 	// Log slow queries below this number in microseconds.
 	// +kubebuilder:validation:Optional
 	SlowlogLogSlowerThan *int64 `json:"slowlogLogSlowerThan,omitempty" tf:"slowlog_log_slower_than,omitempty"`
 
+	// (Number) Slow queries log length.
 	// Slow queries log length.
 	// +kubebuilder:validation:Optional
 	SlowlogMaxLen *int64 `json:"slowlogMaxLen,omitempty" tf:"slowlog_max_len,omitempty"`
 
+	// (Number) Close the connection after a client is idle for N seconds.
 	// Close the connection after a client is idle for N seconds.
 	// +kubebuilder:validation:Optional
 	Timeout *int64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// Version of Redis (6.2).
+	// (Boolean) Allows to turn before switchover in RDSync.
+	// Allows to turn before switchover in RDSync.
+	// +kubebuilder:validation:Optional
+	TurnBeforeSwitchover *bool `json:"turnBeforeSwitchover,omitempty" tf:"turn_before_switchover,omitempty"`
+
+	// (Boolean) Use JIT for lua scripts and functions.
+	// Use JIT for lua scripts and functions.
+	// +kubebuilder:validation:Optional
+	UseLuajit *bool `json:"useLuajit,omitempty" tf:"use_luajit,omitempty"`
+
+	// (String) Version of Redis.
+	// Version of Redis.
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version" tf:"version,omitempty"`
+
+	// efficient listpack to CPU-efficient hash table and skiplist
+	// Controls max number of entries in zset before conversion from memory-efficient listpack to CPU-efficient hash table and skiplist
+	// +kubebuilder:validation:Optional
+	ZsetMaxListpackEntries *int64 `json:"zsetMaxListpackEntries,omitempty" tf:"zset_max_listpack_entries,omitempty"`
 }
 
 type RedisClusterDiskSizeAutoscalingInitParameters struct {
 
+	// (Number) Limit of disk size after autoscaling (GiB).
 	// Limit of disk size after autoscaling (GiB).
 	DiskSizeLimit *int64 `json:"diskSizeLimit,omitempty" tf:"disk_size_limit,omitempty"`
 
+	// (Number) Immediate autoscaling disk usage (percent).
 	// Immediate autoscaling disk usage (percent).
 	EmergencyUsageThreshold *int64 `json:"emergencyUsageThreshold,omitempty" tf:"emergency_usage_threshold,omitempty"`
 
+	// (Number) Maintenance window autoscaling disk usage (percent).
 	// Maintenance window autoscaling disk usage (percent).
 	PlannedUsageThreshold *int64 `json:"plannedUsageThreshold,omitempty" tf:"planned_usage_threshold,omitempty"`
 }
 
 type RedisClusterDiskSizeAutoscalingObservation struct {
 
+	// (Number) Limit of disk size after autoscaling (GiB).
 	// Limit of disk size after autoscaling (GiB).
 	DiskSizeLimit *int64 `json:"diskSizeLimit,omitempty" tf:"disk_size_limit,omitempty"`
 
+	// (Number) Immediate autoscaling disk usage (percent).
 	// Immediate autoscaling disk usage (percent).
 	EmergencyUsageThreshold *int64 `json:"emergencyUsageThreshold,omitempty" tf:"emergency_usage_threshold,omitempty"`
 
+	// (Number) Maintenance window autoscaling disk usage (percent).
 	// Maintenance window autoscaling disk usage (percent).
 	PlannedUsageThreshold *int64 `json:"plannedUsageThreshold,omitempty" tf:"planned_usage_threshold,omitempty"`
 }
 
 type RedisClusterDiskSizeAutoscalingParameters struct {
 
+	// (Number) Limit of disk size after autoscaling (GiB).
 	// Limit of disk size after autoscaling (GiB).
 	// +kubebuilder:validation:Optional
 	DiskSizeLimit *int64 `json:"diskSizeLimit" tf:"disk_size_limit,omitempty"`
 
+	// (Number) Immediate autoscaling disk usage (percent).
 	// Immediate autoscaling disk usage (percent).
 	// +kubebuilder:validation:Optional
 	EmergencyUsageThreshold *int64 `json:"emergencyUsageThreshold,omitempty" tf:"emergency_usage_threshold,omitempty"`
 
+	// (Number) Maintenance window autoscaling disk usage (percent).
 	// Maintenance window autoscaling disk usage (percent).
 	// +kubebuilder:validation:Optional
 	PlannedUsageThreshold *int64 `json:"plannedUsageThreshold,omitempty" tf:"planned_usage_threshold,omitempty"`
@@ -213,15 +464,19 @@ type RedisClusterDiskSizeAutoscalingParameters struct {
 
 type RedisClusterHostInitParameters struct {
 
+	// (Boolean) Sets whether the host should get a public IP address or not.
 	// Sets whether the host should get a public IP address or not.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
+	// sharded only).
 	// Replica priority of a current replica (usable for non-sharded only).
 	ReplicaPriority *int64 `json:"replicaPriority,omitempty" tf:"replica_priority,omitempty"`
 
+	// (String) The name of the shard to which the host belongs.
 	// The name of the shard to which the host belongs.
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
 
+	// (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -234,45 +489,56 @@ type RedisClusterHostInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// The availability zone where the Redis host will be created. For more information see the official documentation.
+	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type RedisClusterHostObservation struct {
 
+	// (Boolean) Sets whether the host should get a public IP address or not.
 	// Sets whether the host should get a public IP address or not.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
+	// (String) The fully qualified domain name of the host.
 	// The fully qualified domain name of the host.
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
+	// sharded only).
 	// Replica priority of a current replica (usable for non-sharded only).
 	ReplicaPriority *int64 `json:"replicaPriority,omitempty" tf:"replica_priority,omitempty"`
 
+	// (String) The name of the shard to which the host belongs.
 	// The name of the shard to which the host belongs.
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
 
+	// (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// The availability zone where the Redis host will be created. For more information see the official documentation.
+	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type RedisClusterHostParameters struct {
 
+	// (Boolean) Sets whether the host should get a public IP address or not.
 	// Sets whether the host should get a public IP address or not.
 	// +kubebuilder:validation:Optional
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
+	// sharded only).
 	// Replica priority of a current replica (usable for non-sharded only).
 	// +kubebuilder:validation:Optional
 	ReplicaPriority *int64 `json:"replicaPriority,omitempty" tf:"replica_priority,omitempty"`
 
+	// (String) The name of the shard to which the host belongs.
 	// The name of the shard to which the host belongs.
 	// +kubebuilder:validation:Optional
 	ShardName *string `json:"shardName,omitempty" tf:"shard_name,omitempty"`
 
+	// (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
@@ -286,34 +552,48 @@ type RedisClusterHostParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// The availability zone where the Redis host will be created. For more information see the official documentation.
+	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone" tf:"zone,omitempty"`
 }
 
 type RedisClusterInitParameters struct {
 
-	// Access policy to the Redis cluster. The structure is documented below.
+	// (Block List, Max: 1) Access policy to the Redis cluster. (see below for nested schema)
+	// Access policy to the Redis cluster.
 	Access []RedisClusterAccessInitParameters `json:"access,omitempty" tf:"access,omitempty"`
 
+	// (Boolean) Announce fqdn instead of ip address.
 	// Announce fqdn instead of ip address.
 	AnnounceHostnames *bool `json:"announceHostnames,omitempty" tf:"announce_hostnames,omitempty"`
 
-	// Configuration of the Redis cluster. The structure is documented below.
+	// (Boolean) Allows to use ACL users to auth in sentinel
+	// Allows to use ACL users to auth in sentinel
+	AuthSentinel *bool `json:"authSentinel,omitempty" tf:"auth_sentinel,omitempty"`
+
+	// (Block List, Min: 1, Max: 1) Configuration of the Redis cluster. (see below for nested schema)
+	// Configuration of the Redis cluster.
 	Config []RedisClusterConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
 
-	// Inhibits deletion of the cluster. Can be either true or false.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// Description of the Redis cluster.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (Block List, Max: 1) Disk size autoscaling settings. (see below for nested schema)
+	// Disk size autoscaling settings.
 	DiskSizeAutoscaling []RedisClusterDiskSizeAutoscalingInitParameters `json:"diskSizeAutoscaling,omitempty" tf:"disk_size_autoscaling,omitempty"`
 
-	// Deployment environment of the Redis cluster. Can be either PRESTABLE or PRODUCTION.
+	// (String) Deployment environment of the Redis cluster. Can be either PRESTABLE or PRODUCTION.
+	// Deployment environment of the Redis cluster. Can be either `PRESTABLE` or `PRODUCTION`.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -325,19 +605,25 @@ type RedisClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// A host of the Redis cluster. The structure is documented below.
+	// (Block List, Min: 1) A host of the Redis cluster. (see below for nested schema)
+	// A host of the Redis cluster.
 	Host []RedisClusterHostInitParameters `json:"host,omitempty" tf:"host,omitempty"`
 
-	// A set of key/value label pairs to assign to the Redis cluster.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Block List, Max: 1) Maintenance window settings. (see below for nested schema)
+	// Maintenance window settings.
 	MaintenanceWindow []RedisClusterMaintenanceWindowInitParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// Name of the Redis cluster. Provided by the client when the cluster is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the network, to which the Redis cluster belongs.
+	// (String) The VPC Network ID of subnets which resource attached to.
+	// The `VPC Network ID` of subnets which resource attached to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
@@ -349,13 +635,16 @@ type RedisClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// Persistence mode.
+	// (String) Persistence mode. Possible values: ON, OFF.
+	// Persistence mode. Possible values: `ON`, `OFF`.
 	PersistenceMode *string `json:"persistenceMode,omitempty" tf:"persistence_mode,omitempty"`
 
-	// Resources allocated to hosts of the Redis cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Redis cluster. (see below for nested schema)
+	// Resources allocated to hosts of the Redis cluster.
 	Resources []RedisClusterResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// A set of ids of security groups assigned to hosts of the cluster.
+	// (Set of String) The list of security groups applied to resource or their components.
+	// The list of security groups applied to resource or their components.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
@@ -368,150 +657,203 @@ type RedisClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
+	// sharded. If cluster is sharded - disabling is not allowed.
 	// Redis Cluster mode enabled/disabled. Enables sharding when cluster non-sharded. If cluster is sharded - disabling is not allowed.
 	Sharded *bool `json:"sharded,omitempty" tf:"sharded,omitempty"`
 
+	// (Boolean) TLS support mode enabled/disabled.
 	// TLS support mode enabled/disabled.
 	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 }
 
 type RedisClusterMaintenanceWindowInitParameters struct {
 
-	// Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
+	// 24) for maintenance window if window type is weekly.
 	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
 	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
-	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type RedisClusterMaintenanceWindowObservation struct {
 
-	// Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
+	// 24) for maintenance window if window type is weekly.
 	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
 	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
-	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type RedisClusterMaintenanceWindowParameters struct {
 
-	// Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
 	// +kubebuilder:validation:Optional
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
+	// 24) for maintenance window if window type is weekly.
 	// Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
 	// +kubebuilder:validation:Optional
 	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
-	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 type RedisClusterObservation struct {
 
-	// Access policy to the Redis cluster. The structure is documented below.
+	// (Block List, Max: 1) Access policy to the Redis cluster. (see below for nested schema)
+	// Access policy to the Redis cluster.
 	Access []RedisClusterAccessObservation `json:"access,omitempty" tf:"access,omitempty"`
 
+	// (Boolean) Announce fqdn instead of ip address.
 	// Announce fqdn instead of ip address.
 	AnnounceHostnames *bool `json:"announceHostnames,omitempty" tf:"announce_hostnames,omitempty"`
 
-	// Configuration of the Redis cluster. The structure is documented below.
+	// (Boolean) Allows to use ACL users to auth in sentinel
+	// Allows to use ACL users to auth in sentinel
+	AuthSentinel *bool `json:"authSentinel,omitempty" tf:"auth_sentinel,omitempty"`
+
+	// (Block List, Min: 1, Max: 1) Configuration of the Redis cluster. (see below for nested schema)
+	// Configuration of the Redis cluster.
 	Config []RedisClusterConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
 
-	// Creation timestamp of the key.
+	// (String) The creation timestamp of the resource.
+	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Inhibits deletion of the cluster. Can be either true or false.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// Description of the Redis cluster.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (Block List, Max: 1) Disk size autoscaling settings. (see below for nested schema)
+	// Disk size autoscaling settings.
 	DiskSizeAutoscaling []RedisClusterDiskSizeAutoscalingObservation `json:"diskSizeAutoscaling,omitempty" tf:"disk_size_autoscaling,omitempty"`
 
-	// Deployment environment of the Redis cluster. Can be either PRESTABLE or PRODUCTION.
+	// (String) Deployment environment of the Redis cluster. Can be either PRESTABLE or PRODUCTION.
+	// Deployment environment of the Redis cluster. Can be either `PRESTABLE` or `PRODUCTION`.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
+	// (String) Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
+	// Aggregated health of the cluster. Can be either `ALIVE`, `DEGRADED`, `DEAD` or `HEALTH_UNKNOWN`. For more information see `health` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-redis/api-ref/Cluster/).
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
-	// A host of the Redis cluster. The structure is documented below.
+	// (Block List, Min: 1) A host of the Redis cluster. (see below for nested schema)
+	// A host of the Redis cluster.
 	Host []RedisClusterHostObservation `json:"host,omitempty" tf:"host,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// A set of key/value label pairs to assign to the Redis cluster.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Block List, Max: 1) Maintenance window settings. (see below for nested schema)
+	// Maintenance window settings.
 	MaintenanceWindow []RedisClusterMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// Name of the Redis cluster. Provided by the client when the cluster is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the network, to which the Redis cluster belongs.
+	// (String) The VPC Network ID of subnets which resource attached to.
+	// The `VPC Network ID` of subnets which resource attached to.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// Persistence mode.
+	// (String) Persistence mode. Possible values: ON, OFF.
+	// Persistence mode. Possible values: `ON`, `OFF`.
 	PersistenceMode *string `json:"persistenceMode,omitempty" tf:"persistence_mode,omitempty"`
 
-	// Resources allocated to hosts of the Redis cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Redis cluster. (see below for nested schema)
+	// Resources allocated to hosts of the Redis cluster.
 	Resources []RedisClusterResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// A set of ids of security groups assigned to hosts of the cluster.
+	// (Set of String) The list of security groups applied to resource or their components.
+	// The list of security groups applied to resource or their components.
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
+	// sharded. If cluster is sharded - disabling is not allowed.
 	// Redis Cluster mode enabled/disabled. Enables sharding when cluster non-sharded. If cluster is sharded - disabling is not allowed.
 	Sharded *bool `json:"sharded,omitempty" tf:"sharded,omitempty"`
 
-	// Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
+	// (String) Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
+	// Status of the cluster. Can be either `CREATING`, `STARTING`, `RUNNING`, `UPDATING`, `STOPPING`, `STOPPED`, `ERROR` or `STATUS_UNKNOWN`. For more information see `status` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-redis/api-ref/Cluster/).
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
+	// (Boolean) TLS support mode enabled/disabled.
 	// TLS support mode enabled/disabled.
 	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 }
 
 type RedisClusterParameters struct {
 
-	// Access policy to the Redis cluster. The structure is documented below.
+	// (Block List, Max: 1) Access policy to the Redis cluster. (see below for nested schema)
+	// Access policy to the Redis cluster.
 	// +kubebuilder:validation:Optional
 	Access []RedisClusterAccessParameters `json:"access,omitempty" tf:"access,omitempty"`
 
+	// (Boolean) Announce fqdn instead of ip address.
 	// Announce fqdn instead of ip address.
 	// +kubebuilder:validation:Optional
 	AnnounceHostnames *bool `json:"announceHostnames,omitempty" tf:"announce_hostnames,omitempty"`
 
-	// Configuration of the Redis cluster. The structure is documented below.
+	// (Boolean) Allows to use ACL users to auth in sentinel
+	// Allows to use ACL users to auth in sentinel
+	// +kubebuilder:validation:Optional
+	AuthSentinel *bool `json:"authSentinel,omitempty" tf:"auth_sentinel,omitempty"`
+
+	// (Block List, Min: 1, Max: 1) Configuration of the Redis cluster. (see below for nested schema)
+	// Configuration of the Redis cluster.
 	// +kubebuilder:validation:Optional
 	Config []RedisClusterConfigParameters `json:"config,omitempty" tf:"config,omitempty"`
 
-	// Inhibits deletion of the cluster. Can be either true or false.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// Description of the Redis cluster.
+	// (String) The resource description.
+	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (Block List, Max: 1) Disk size autoscaling settings. (see below for nested schema)
+	// Disk size autoscaling settings.
 	// +kubebuilder:validation:Optional
 	DiskSizeAutoscaling []RedisClusterDiskSizeAutoscalingParameters `json:"diskSizeAutoscaling,omitempty" tf:"disk_size_autoscaling,omitempty"`
 
-	// Deployment environment of the Redis cluster. Can be either PRESTABLE or PRODUCTION.
+	// (String) Deployment environment of the Redis cluster. Can be either PRESTABLE or PRODUCTION.
+	// Deployment environment of the Redis cluster. Can be either `PRESTABLE` or `PRODUCTION`.
 	// +kubebuilder:validation:Optional
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -524,23 +866,29 @@ type RedisClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// A host of the Redis cluster. The structure is documented below.
+	// (Block List, Min: 1) A host of the Redis cluster. (see below for nested schema)
+	// A host of the Redis cluster.
 	// +kubebuilder:validation:Optional
 	Host []RedisClusterHostParameters `json:"host,omitempty" tf:"host,omitempty"`
 
-	// A set of key/value label pairs to assign to the Redis cluster.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Block List, Max: 1) Maintenance window settings. (see below for nested schema)
+	// Maintenance window settings.
 	// +kubebuilder:validation:Optional
 	MaintenanceWindow []RedisClusterMaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// Name of the Redis cluster. Provided by the client when the cluster is created.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the network, to which the Redis cluster belongs.
+	// (String) The VPC Network ID of subnets which resource attached to.
+	// The `VPC Network ID` of subnets which resource attached to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -553,15 +901,18 @@ type RedisClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// Persistence mode.
+	// (String) Persistence mode. Possible values: ON, OFF.
+	// Persistence mode. Possible values: `ON`, `OFF`.
 	// +kubebuilder:validation:Optional
 	PersistenceMode *string `json:"persistenceMode,omitempty" tf:"persistence_mode,omitempty"`
 
-	// Resources allocated to hosts of the Redis cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Redis cluster. (see below for nested schema)
+	// Resources allocated to hosts of the Redis cluster.
 	// +kubebuilder:validation:Optional
 	Resources []RedisClusterResourcesParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// A set of ids of security groups assigned to hosts of the cluster.
+	// (Set of String) The list of security groups applied to resource or their components.
+	// The list of security groups applied to resource or their components.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	// +listType=set
@@ -575,10 +926,12 @@ type RedisClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
+	// sharded. If cluster is sharded - disabling is not allowed.
 	// Redis Cluster mode enabled/disabled. Enables sharding when cluster non-sharded. If cluster is sharded - disabling is not allowed.
 	// +kubebuilder:validation:Optional
 	Sharded *bool `json:"sharded,omitempty" tf:"sharded,omitempty"`
 
+	// (Boolean) TLS support mode enabled/disabled.
 	// TLS support mode enabled/disabled.
 	// +kubebuilder:validation:Optional
 	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
@@ -586,36 +939,48 @@ type RedisClusterParameters struct {
 
 type RedisClusterResourcesInitParameters struct {
 
+	// (Number) Volume of the storage available to a host, in gigabytes.
 	// Volume of the storage available to a host, in gigabytes.
 	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// environment default is used if missing.
 	// Type of the storage of Redis hosts - environment default is used if missing.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-redis/concepts).
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type RedisClusterResourcesObservation struct {
 
+	// (Number) Volume of the storage available to a host, in gigabytes.
 	// Volume of the storage available to a host, in gigabytes.
 	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
+	// environment default is used if missing.
 	// Type of the storage of Redis hosts - environment default is used if missing.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-redis/concepts).
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type RedisClusterResourcesParameters struct {
 
+	// (Number) Volume of the storage available to a host, in gigabytes.
 	// Volume of the storage available to a host, in gigabytes.
 	// +kubebuilder:validation:Optional
 	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
 
+	// environment default is used if missing.
 	// Type of the storage of Redis hosts - environment default is used if missing.
 	// +kubebuilder:validation:Optional
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-redis/concepts).
 	// +kubebuilder:validation:Optional
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
 }
@@ -647,7 +1012,7 @@ type RedisClusterStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// RedisCluster is the Schema for the RedisClusters API. Manages a Redis cluster within Yandex.Cloud.
+// RedisCluster is the Schema for the RedisClusters API. Manages a Redis cluster within Yandex Cloud.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

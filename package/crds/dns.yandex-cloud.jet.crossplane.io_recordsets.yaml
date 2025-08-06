@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Recordset is the Schema for the Recordsets API. Manages a DNS
-          Recordset within Yandex.Cloud.
+          RecordSet within Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -74,23 +74,32 @@ spec:
               forProvider:
                 properties:
                   data:
-                    description: The string data for the records in this record set.
+                    description: |-
+                      (Set of String) The string data for the records in this record set.
+                      The string data for the records in this record set.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   name:
-                    description: The DNS name this record set will apply to.
+                    description: |-
+                      (String) The DNS name this record set will apply to.
+                      The DNS name this record set will apply to.
                     type: string
                   ttl:
-                    description: The time-to-live of this record set (seconds).
+                    description: |-
+                      to-live of this record set (seconds).
+                      The time-to-live of this record set (seconds).
                     type: number
                   type:
-                    description: The DNS record set type.
+                    description: |-
+                      (String) The DNS record set type.
+                      The DNS record set type.
                     type: string
                   zoneId:
-                    description: The id of the zone in which this record set will
-                      reside.
+                    description: |-
+                      (String) The id of the zone in which this record set will reside.
+                      The id of the zone in which this record set will reside.
                     type: string
                   zoneIdRef:
                     description: Reference to a Zone to populate zoneId.
@@ -181,23 +190,32 @@ spec:
                   autoscaler.
                 properties:
                   data:
-                    description: The string data for the records in this record set.
+                    description: |-
+                      (Set of String) The string data for the records in this record set.
+                      The string data for the records in this record set.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   name:
-                    description: The DNS name this record set will apply to.
+                    description: |-
+                      (String) The DNS name this record set will apply to.
+                      The DNS name this record set will apply to.
                     type: string
                   ttl:
-                    description: The time-to-live of this record set (seconds).
+                    description: |-
+                      to-live of this record set (seconds).
+                      The time-to-live of this record set (seconds).
                     type: number
                   type:
-                    description: The DNS record set type.
+                    description: |-
+                      (String) The DNS record set type.
+                      The DNS record set type.
                     type: string
                   zoneId:
-                    description: The id of the zone in which this record set will
-                      reside.
+                    description: |-
+                      (String) The id of the zone in which this record set will reside.
+                      The id of the zone in which this record set will reside.
                     type: string
                   zoneIdRef:
                     description: Reference to a Zone to populate zoneId.
@@ -464,25 +482,35 @@ spec:
               atProvider:
                 properties:
                   data:
-                    description: The string data for the records in this record set.
+                    description: |-
+                      (Set of String) The string data for the records in this record set.
+                      The string data for the records in this record set.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   name:
-                    description: The DNS name this record set will apply to.
+                    description: |-
+                      (String) The DNS name this record set will apply to.
+                      The DNS name this record set will apply to.
                     type: string
                   ttl:
-                    description: The time-to-live of this record set (seconds).
+                    description: |-
+                      to-live of this record set (seconds).
+                      The time-to-live of this record set (seconds).
                     type: number
                   type:
-                    description: The DNS record set type.
+                    description: |-
+                      (String) The DNS record set type.
+                      The DNS record set type.
                     type: string
                   zoneId:
-                    description: The id of the zone in which this record set will
-                      reside.
+                    description: |-
+                      (String) The id of the zone in which this record set will reside.
+                      The id of the zone in which this record set will reside.
                     type: string
                 type: object
               conditions:

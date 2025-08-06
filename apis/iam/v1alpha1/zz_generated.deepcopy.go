@@ -1636,6 +1636,17 @@ func (in *ServiceAccountAPIKeyInitParameters) DeepCopyInto(out *ServiceAccountAP
 		*out = new(string)
 		**out = **in
 	}
+	if in.Scopes != nil {
+		in, out := &in.Scopes, &out.Scopes
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.ServiceAccountID != nil {
 		in, out := &in.ServiceAccountID, &out.ServiceAccountID
 		*out = new(string)
@@ -1750,6 +1761,17 @@ func (in *ServiceAccountAPIKeyObservation) DeepCopyInto(out *ServiceAccountAPIKe
 		*out = new(string)
 		**out = **in
 	}
+	if in.Scopes != nil {
+		in, out := &in.Scopes, &out.Scopes
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.ServiceAccountID != nil {
 		in, out := &in.ServiceAccountID, &out.ServiceAccountID
 		*out = new(string)
@@ -1796,6 +1818,17 @@ func (in *ServiceAccountAPIKeyParameters) DeepCopyInto(out *ServiceAccountAPIKey
 		in, out := &in.Scope, &out.Scope
 		*out = new(string)
 		**out = **in
+	}
+	if in.Scopes != nil {
+		in, out := &in.Scopes, &out.Scopes
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
 	}
 	if in.ServiceAccountID != nil {
 		in, out := &in.ServiceAccountID, &out.ServiceAccountID

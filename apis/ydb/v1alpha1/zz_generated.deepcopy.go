@@ -147,6 +147,17 @@ func (in *DatabaseDedicatedInitParameters) DeepCopyInto(out *DatabaseDedicatedIn
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.SecurityGroupIds != nil {
+		in, out := &in.SecurityGroupIds, &out.SecurityGroupIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.SleepAfter != nil {
 		in, out := &in.SleepAfter, &out.SleepAfter
 		*out = new(float64)
@@ -314,6 +325,17 @@ func (in *DatabaseDedicatedObservation) DeepCopyInto(out *DatabaseDedicatedObser
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.SecurityGroupIds != nil {
+		in, out := &in.SecurityGroupIds, &out.SecurityGroupIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
 	if in.SleepAfter != nil {
 		in, out := &in.SleepAfter, &out.SleepAfter
 		*out = new(float64)
@@ -460,6 +482,17 @@ func (in *DatabaseDedicatedParameters) DeepCopyInto(out *DatabaseDedicatedParame
 		*out = make([]ScalePolicyParameters, len(*in))
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.SecurityGroupIds != nil {
+		in, out := &in.SecurityGroupIds, &out.SecurityGroupIds
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
 		}
 	}
 	if in.SleepAfter != nil {

@@ -29,16 +29,16 @@ import (
 
 type ZoneInitParameters struct {
 
-	// (Boolean) Flag that protects the dns zone from accidental deletion.
-	// Flag that protects the dns zone from accidental deletion.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) Description of the DNS zone.
-	// Description of the DNS zone.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
-	// ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -50,13 +50,13 @@ type ZoneInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs to assign to the DNS zone.
-	// A set of key/value label pairs to assign to the DNS zone.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) User assigned name of a specific resource. Must be unique within the folder.
-	// User assigned name of a specific resource. Must be unique within the folder.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Set of String) For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
@@ -77,39 +77,39 @@ type ZoneInitParameters struct {
 	// The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
 
-	// (String) The DNS name of this zone, e.g. "example.com.". Must ends with dot.
-	// The DNS name of this zone, e.g. "example.com.". Must ends with dot.
+	// (String) The DNS name of this zone, e.g. example.com.. Must ends with dot.
+	// The DNS name of this zone, e.g. `example.com.`. Must ends with dot.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type ZoneObservation struct {
 
-	// (String) The DNS zone creation timestamp.
-	// The DNS zone creation timestamp.
+	// (String) The creation timestamp of the resource.
+	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Boolean) Flag that protects the dns zone from accidental deletion.
-	// Flag that protects the dns zone from accidental deletion.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) Description of the DNS zone.
-	// Description of the DNS zone.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
-	// ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
 	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs to assign to the DNS zone.
-	// A set of key/value label pairs to assign to the DNS zone.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) User assigned name of a specific resource. Must be unique within the folder.
-	// User assigned name of a specific resource. Must be unique within the folder.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// (Set of String) For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
@@ -121,25 +121,25 @@ type ZoneObservation struct {
 	// The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
 
-	// (String) The DNS name of this zone, e.g. "example.com.". Must ends with dot.
-	// The DNS name of this zone, e.g. "example.com.". Must ends with dot.
+	// (String) The DNS name of this zone, e.g. example.com.. Must ends with dot.
+	// The DNS name of this zone, e.g. `example.com.`. Must ends with dot.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type ZoneParameters struct {
 
-	// (Boolean) Flag that protects the dns zone from accidental deletion.
-	// Flag that protects the dns zone from accidental deletion.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) Description of the DNS zone.
-	// Description of the DNS zone.
+	// (String) The resource description.
+	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
-	// ID of the folder to create a zone in. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -152,14 +152,14 @@ type ZoneParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs to assign to the DNS zone.
-	// A set of key/value label pairs to assign to the DNS zone.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) User assigned name of a specific resource. Must be unique within the folder.
-	// User assigned name of a specific resource. Must be unique within the folder.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -183,8 +183,8 @@ type ZoneParameters struct {
 	// +kubebuilder:validation:Optional
 	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
 
-	// (String) The DNS name of this zone, e.g. "example.com.". Must ends with dot.
-	// The DNS name of this zone, e.g. "example.com.". Must ends with dot.
+	// (String) The DNS name of this zone, e.g. example.com.. Must ends with dot.
+	// The DNS name of this zone, e.g. `example.com.`. Must ends with dot.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
@@ -216,7 +216,7 @@ type ZoneStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Zone is the Schema for the Zones API. Manages a DNS Zone within Yandex.Cloud.
+// Zone is the Schema for the Zones API. Manages a DNS Zone within Yandex Cloud.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

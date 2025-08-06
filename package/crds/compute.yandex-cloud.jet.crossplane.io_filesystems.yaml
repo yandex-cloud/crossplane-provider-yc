@@ -75,15 +75,19 @@ spec:
               forProvider:
                 properties:
                   blockSize:
-                    description: Block size of the filesystem, specified in bytes.
+                    description: |-
+                      (Number) Block size of the filesystem, specified in bytes.
+                      Block size of the filesystem, specified in bytes.
                     type: number
                   description:
-                    description: Description of the filesystem. Provide this property
-                      when you create a resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: The ID of the folder that the filesystem belongs
-                      to. If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -164,23 +168,30 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this filesystem. A list of key/value
-                      pairs. For details about the concept, see documentation.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the filesystem. Provide this property when
-                      you create a resource.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   size:
-                    description: Size of the filesystem, specified in GB.
+                    description: |-
+                      (Number) Size of the filesystem, specified in GB.
+                      Size of the filesystem, specified in GB.
                     type: number
                   type:
-                    description: Type of filesystem to create. Type network-hdd is
-                      set by default.
+                    description: |-
+                      hdd is set by default.
+                      Type of filesystem to create. Type `network-hdd` is set by default.
                     type: string
                   zone:
-                    description: Availability zone where the filesystem will reside.
+                    description: |-
+                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                     type: string
                 type: object
               initProvider:
@@ -197,15 +208,19 @@ spec:
                   autoscaler.
                 properties:
                   blockSize:
-                    description: Block size of the filesystem, specified in bytes.
+                    description: |-
+                      (Number) Block size of the filesystem, specified in bytes.
+                      Block size of the filesystem, specified in bytes.
                     type: number
                   description:
-                    description: Description of the filesystem. Provide this property
-                      when you create a resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: The ID of the folder that the filesystem belongs
-                      to. If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -286,23 +301,30 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this filesystem. A list of key/value
-                      pairs. For details about the concept, see documentation.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the filesystem. Provide this property when
-                      you create a resource.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   size:
-                    description: Size of the filesystem, specified in GB.
+                    description: |-
+                      (Number) Size of the filesystem, specified in GB.
+                      Size of the filesystem, specified in GB.
                     type: number
                   type:
-                    description: Type of filesystem to create. Type network-hdd is
-                      set by default.
+                    description: |-
+                      hdd is set by default.
+                      Type of filesystem to create. Type `network-hdd` is set by default.
                     type: string
                   zone:
-                    description: Availability zone where the filesystem will reside.
+                    description: |-
+                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                     type: string
                 type: object
               managementPolicies:
@@ -478,44 +500,60 @@ spec:
               atProvider:
                 properties:
                   blockSize:
-                    description: Block size of the filesystem, specified in bytes.
+                    description: |-
+                      (Number) Block size of the filesystem, specified in bytes.
+                      Block size of the filesystem, specified in bytes.
                     type: number
                   createdAt:
-                    description: Creation timestamp of the filesystem.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   description:
-                    description: Description of the filesystem. Provide this property
-                      when you create a resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: The ID of the folder that the filesystem belongs
-                      to. If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this filesystem. A list of key/value
-                      pairs. For details about the concept, see documentation.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the filesystem. Provide this property when
-                      you create a resource.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   size:
-                    description: Size of the filesystem, specified in GB.
+                    description: |-
+                      (Number) Size of the filesystem, specified in GB.
+                      Size of the filesystem, specified in GB.
                     type: number
                   status:
-                    description: The status of the filesystem.
+                    description: |-
+                      (String) The status of the filesystem.
+                      The status of the filesystem.
                     type: string
                   type:
-                    description: Type of filesystem to create. Type network-hdd is
-                      set by default.
+                    description: |-
+                      hdd is set by default.
+                      Type of filesystem to create. Type `network-hdd` is set by default.
                     type: string
                   zone:
-                    description: Availability zone where the filesystem will reside.
+                    description: |-
+                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                     type: string
                 type: object
               conditions:

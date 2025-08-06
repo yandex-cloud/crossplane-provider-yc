@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: KafkaUser is the Schema for the KafkaUsers API. Manages a user
-          of a Kafka cluster within Yandex.Cloud.
+          of a Kafka cluster within Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -74,6 +74,9 @@ spec:
               forProvider:
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of the Kafka cluster.
+                      The ID of the Kafka cluster.
                     type: string
                   clusterIdRef:
                     description: Reference to a KafkaCluster to populate clusterId.
@@ -150,10 +153,14 @@ spec:
                         type: object
                     type: object
                   name:
-                    description: The name of the user.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   passwordSecretRef:
-                    description: The password of the user.
+                    description: |-
+                      (String, Sensitive) The password of the user.
+                      The password of the user.
                     properties:
                       key:
                         description: The key to select.
@@ -170,23 +177,28 @@ spec:
                     - namespace
                     type: object
                   permission:
-                    description: Set of permissions granted to the user. The structure
-                      is documented below.
+                    description: |-
+                      (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                      Set of permissions granted to the user.
                     items:
                       properties:
                         allowHosts:
-                          description: Set of hosts, to which this permission grants
-                            access to.
+                          description: |-
+                            addresses allowed as value of single host.
+                            Set of hosts, to which this permission grants access to. Only ip-addresses allowed as value of single host.
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         role:
-                          description: The role type to grant to the topic.
+                          description: |-
+                            (String) The role type to grant to the topic.
+                            The role type to grant to the topic.
                           type: string
                         topicName:
-                          description: The name of the topic that the permission grants
-                            access to.
+                          description: |-
+                            (String) The name of the topic that the permission grants access to.
+                            The name of the topic that the permission grants access to.
                           type: string
                       type: object
                     type: array
@@ -205,6 +217,9 @@ spec:
                   autoscaler.
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of the Kafka cluster.
+                      The ID of the Kafka cluster.
                     type: string
                   clusterIdRef:
                     description: Reference to a KafkaCluster to populate clusterId.
@@ -281,10 +296,14 @@ spec:
                         type: object
                     type: object
                   name:
-                    description: The name of the user.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   passwordSecretRef:
-                    description: The password of the user.
+                    description: |-
+                      (String, Sensitive) The password of the user.
+                      The password of the user.
                     properties:
                       key:
                         description: The key to select.
@@ -301,23 +320,28 @@ spec:
                     - namespace
                     type: object
                   permission:
-                    description: Set of permissions granted to the user. The structure
-                      is documented below.
+                    description: |-
+                      (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                      Set of permissions granted to the user.
                     items:
                       properties:
                         allowHosts:
-                          description: Set of hosts, to which this permission grants
-                            access to.
+                          description: |-
+                            addresses allowed as value of single host.
+                            Set of hosts, to which this permission grants access to. Only ip-addresses allowed as value of single host.
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         role:
-                          description: The role type to grant to the topic.
+                          description: |-
+                            (String) The role type to grant to the topic.
+                            The role type to grant to the topic.
                           type: string
                         topicName:
-                          description: The name of the topic that the permission grants
-                            access to.
+                          description: |-
+                            (String) The name of the topic that the permission grants access to.
+                            The name of the topic that the permission grants access to.
                           type: string
                       type: object
                     type: array
@@ -505,30 +529,41 @@ spec:
               atProvider:
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of the Kafka cluster.
+                      The ID of the Kafka cluster.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   name:
-                    description: The name of the user.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   permission:
-                    description: Set of permissions granted to the user. The structure
-                      is documented below.
+                    description: |-
+                      (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                      Set of permissions granted to the user.
                     items:
                       properties:
                         allowHosts:
-                          description: Set of hosts, to which this permission grants
-                            access to.
+                          description: |-
+                            addresses allowed as value of single host.
+                            Set of hosts, to which this permission grants access to. Only ip-addresses allowed as value of single host.
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         role:
-                          description: The role type to grant to the topic.
+                          description: |-
+                            (String) The role type to grant to the topic.
+                            The role type to grant to the topic.
                           type: string
                         topicName:
-                          description: The name of the topic that the permission grants
-                            access to.
+                          description: |-
+                            (String) The name of the topic that the permission grants access to.
+                            The name of the topic that the permission grants access to.
                           type: string
                       type: object
                     type: array

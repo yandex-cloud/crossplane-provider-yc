@@ -75,32 +75,41 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: An optional description of the subnet. Provide this
-                      property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   dhcpOptions:
-                    description: Options for DHCP client. The structure is documented
-                      below.
+                    description: |-
+                      (Block List, Max: 1) Options for DHCP client. (see below for nested schema)
+                      Options for DHCP client.
                     items:
                       properties:
                         domainName:
-                          description: Domain name.
+                          description: |-
+                            (String) Domain name.
+                            Domain name.
                           type: string
                         domainNameServers:
-                          description: Domain name server IP addresses.
+                          description: |-
+                            (List of String) Domain name server IP addresses.
+                            Domain name server IP addresses.
                           items:
                             type: string
                           type: array
                         ntpServers:
-                          description: NTP server IP addresses.
+                          description: |-
+                            (List of String) NTP server IP addresses.
+                            NTP server IP addresses.
                           items:
                             type: string
                           type: array
                       type: object
                     type: array
                   folderId:
-                    description: The ID of the folder to which the resource belongs.
-                      If omitted, the provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -181,17 +190,20 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this subnet. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the subnet. Provided by the client when the
-                      subnet is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network this subnet belongs to. Only networks
-                      that are in the distributed mode can have subnets.
+                    description: |-
+                      (String) ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
+                      ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
                     type: string
                   networkIdRef:
                     description: Reference to a Network to populate networkId.
@@ -268,22 +280,21 @@ spec:
                         type: object
                     type: object
                   routeTableId:
-                    description: The ID of the route table to assign to this subnet.
-                      Assigned route table should belong to the same network as this
-                      subnet.
+                    description: |-
+                      (String) The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
+                      The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
                     type: string
                   v4CidrBlocks:
-                    description: A list of blocks of internal IPv4 addresses that
-                      are owned by this subnet. Provide this property when you create
-                      the subnet. For example, 10.0.0.0/22 or 192.168.0.0/16. Blocks
-                      of addresses must be unique and non-overlapping within a network.
-                      Minimum subnet size is /28, and maximum subnet size is /16.
-                      Only IPv4 is supported.
+                    description: |-
+                      overlapping within a network. Minimum subnet size is /28, and maximum subnet size is /16. Only IPv4 is supported.
+                      A list of blocks of internal IPv4 addresses that are owned by this subnet. Provide this property when you create the subnet. For example, `10.0.0.0/22` or `192.168.0.0/16`. Blocks of addresses must be unique and non-overlapping within a network. Minimum subnet size is `/28`, and maximum subnet size is `/16`. Only IPv4 is supported.
                     items:
                       type: string
                     type: array
                   zone:
-                    description: Name of the Yandex.Cloud zone for this subnet.
+                    description: |-
+                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                     type: string
                 type: object
               initProvider:
@@ -300,32 +311,41 @@ spec:
                   autoscaler.
                 properties:
                   description:
-                    description: An optional description of the subnet. Provide this
-                      property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   dhcpOptions:
-                    description: Options for DHCP client. The structure is documented
-                      below.
+                    description: |-
+                      (Block List, Max: 1) Options for DHCP client. (see below for nested schema)
+                      Options for DHCP client.
                     items:
                       properties:
                         domainName:
-                          description: Domain name.
+                          description: |-
+                            (String) Domain name.
+                            Domain name.
                           type: string
                         domainNameServers:
-                          description: Domain name server IP addresses.
+                          description: |-
+                            (List of String) Domain name server IP addresses.
+                            Domain name server IP addresses.
                           items:
                             type: string
                           type: array
                         ntpServers:
-                          description: NTP server IP addresses.
+                          description: |-
+                            (List of String) NTP server IP addresses.
+                            NTP server IP addresses.
                           items:
                             type: string
                           type: array
                       type: object
                     type: array
                   folderId:
-                    description: The ID of the folder to which the resource belongs.
-                      If omitted, the provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -406,17 +426,20 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this subnet. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the subnet. Provided by the client when the
-                      subnet is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network this subnet belongs to. Only networks
-                      that are in the distributed mode can have subnets.
+                    description: |-
+                      (String) ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
+                      ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
                     type: string
                   networkIdRef:
                     description: Reference to a Network to populate networkId.
@@ -493,22 +516,21 @@ spec:
                         type: object
                     type: object
                   routeTableId:
-                    description: The ID of the route table to assign to this subnet.
-                      Assigned route table should belong to the same network as this
-                      subnet.
+                    description: |-
+                      (String) The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
+                      The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
                     type: string
                   v4CidrBlocks:
-                    description: A list of blocks of internal IPv4 addresses that
-                      are owned by this subnet. Provide this property when you create
-                      the subnet. For example, 10.0.0.0/22 or 192.168.0.0/16. Blocks
-                      of addresses must be unique and non-overlapping within a network.
-                      Minimum subnet size is /28, and maximum subnet size is /16.
-                      Only IPv4 is supported.
+                    description: |-
+                      overlapping within a network. Minimum subnet size is /28, and maximum subnet size is /16. Only IPv4 is supported.
+                      A list of blocks of internal IPv4 addresses that are owned by this subnet. Provide this property when you create the subnet. For example, `10.0.0.0/22` or `192.168.0.0/16`. Blocks of addresses must be unique and non-overlapping within a network. Minimum subnet size is `/28`, and maximum subnet size is `/16`. Only IPv4 is supported.
                     items:
                       type: string
                     type: array
                   zone:
-                    description: Name of the Yandex.Cloud zone for this subnet.
+                    description: |-
+                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                     type: string
                 type: object
               managementPolicies:
@@ -689,75 +711,91 @@ spec:
               atProvider:
                 properties:
                   createdAt:
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   description:
-                    description: An optional description of the subnet. Provide this
-                      property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   dhcpOptions:
-                    description: Options for DHCP client. The structure is documented
-                      below.
+                    description: |-
+                      (Block List, Max: 1) Options for DHCP client. (see below for nested schema)
+                      Options for DHCP client.
                     items:
                       properties:
                         domainName:
-                          description: Domain name.
+                          description: |-
+                            (String) Domain name.
+                            Domain name.
                           type: string
                         domainNameServers:
-                          description: Domain name server IP addresses.
+                          description: |-
+                            (List of String) Domain name server IP addresses.
+                            Domain name server IP addresses.
                           items:
                             type: string
                           type: array
                         ntpServers:
-                          description: NTP server IP addresses.
+                          description: |-
+                            (List of String) NTP server IP addresses.
+                            NTP server IP addresses.
                           items:
                             type: string
                           type: array
                       type: object
                     type: array
                   folderId:
-                    description: The ID of the folder to which the resource belongs.
-                      If omitted, the provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this subnet. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the subnet. Provided by the client when the
-                      subnet is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network this subnet belongs to. Only networks
-                      that are in the distributed mode can have subnets.
+                    description: |-
+                      (String) ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
+                      ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
                     type: string
                   routeTableId:
-                    description: The ID of the route table to assign to this subnet.
-                      Assigned route table should belong to the same network as this
-                      subnet.
+                    description: |-
+                      (String) The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
+                      The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
                     type: string
                   v4CidrBlocks:
-                    description: A list of blocks of internal IPv4 addresses that
-                      are owned by this subnet. Provide this property when you create
-                      the subnet. For example, 10.0.0.0/22 or 192.168.0.0/16. Blocks
-                      of addresses must be unique and non-overlapping within a network.
-                      Minimum subnet size is /28, and maximum subnet size is /16.
-                      Only IPv4 is supported.
+                    description: |-
+                      overlapping within a network. Minimum subnet size is /28, and maximum subnet size is /16. Only IPv4 is supported.
+                      A list of blocks of internal IPv4 addresses that are owned by this subnet. Provide this property when you create the subnet. For example, `10.0.0.0/22` or `192.168.0.0/16`. Blocks of addresses must be unique and non-overlapping within a network. Minimum subnet size is `/28`, and maximum subnet size is `/16`. Only IPv4 is supported.
                     items:
                       type: string
                     type: array
                   v6CidrBlocks:
-                    description: An optional list of blocks of IPv6 addresses that
-                      are owned by this subnet.
+                    description: |-
+                      (List of String) An optional list of blocks of IPv6 addresses that are owned by this subnet.
+                      An optional list of blocks of IPv6 addresses that are owned by this subnet.
                     items:
                       type: string
                     type: array
                   zone:
-                    description: Name of the Yandex.Cloud zone for this subnet.
+                    description: |-
+                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                     type: string
                 type: object
               conditions:

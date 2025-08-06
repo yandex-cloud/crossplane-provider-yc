@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Repository is the Schema for the Repositorys API.
+        description: Repository is the Schema for the Repositorys API. Creates a new
+          Container Repository.
         properties:
           apiVersion:
             description: |-
@@ -73,7 +74,9 @@ spec:
               forProvider:
                 properties:
                   name:
-                    description: (String)
+                    description: |-
+                      (String) A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+                      A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
                     type: string
                 type: object
               initProvider:
@@ -90,7 +93,9 @@ spec:
                   autoscaler.
                 properties:
                   name:
-                    description: (String)
+                    description: |-
+                      (String) A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+                      A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
                     type: string
                 type: object
               managementPolicies:
@@ -274,7 +279,9 @@ spec:
                     description: (String) The ID of this resource.
                     type: string
                   name:
-                    description: (String)
+                    description: |-
+                      (String) A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+                      A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
                     type: string
                 type: object
               conditions:

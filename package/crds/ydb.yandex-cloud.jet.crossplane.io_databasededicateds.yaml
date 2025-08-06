@@ -74,20 +74,24 @@ spec:
               forProvider:
                 properties:
                   assignPublicIps:
-                    description: Whether public IP addresses should be assigned to
-                      the Yandex Database cluster.
+                    description: |-
+                      (Boolean) Whether public IP addresses should be assigned to the Yandex Database cluster.
+                      Whether public IP addresses should be assigned to the Yandex Database cluster.
                     type: boolean
                   deletionProtection:
-                    description: Inhibits deletion of the database. Can be either
-                      true or false
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: A description for the Yandex Database cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: ID of the folder that the Yandex Database cluster
-                      belongs to. It will be deduced from provider configuration if
-                      not set explicitly.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -168,36 +172,46 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Yandex
-                      Database cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   location:
-                    description: Location for the Yandex Database cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Location for the Yandex Database cluster. (see below for nested schema)
+                      Location for the Yandex Database cluster.
                     items:
                       properties:
                         region:
-                          description: Region for the Yandex Database cluster. The
-                            structure is documented below.
+                          description: |-
+                            (Block List, Max: 1) Region for the Yandex Database cluster. (see below for nested schema)
+                            Region for the Yandex Database cluster.
                           items:
                             properties:
                               id:
-                                description: Region ID for the Yandex Database cluster.
+                                description: |-
+                                  (String) The ID of this resource.
+                                  Region ID for the Yandex Database cluster.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   locationId:
-                    description: Location ID for the Yandex Database cluster.
+                    description: |-
+                      (String) Location ID for the Yandex Database cluster.
+                      Location ID for the Yandex Database cluster.
                     type: string
                   name:
-                    description: Name of the Yandex Database cluster.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network to attach the Yandex Database cluster
-                      to.
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -274,48 +288,66 @@ spec:
                         type: object
                     type: object
                   resourcePresetId:
-                    description: The Yandex Database cluster preset. Available presets
-                      can be obtained via yc ydb resource-preset list command.
+                    description: |-
+                      preset list command.
+                      The Yandex Database cluster preset. Available presets can be obtained via `yc ydb resource-preset list` command.
                     type: string
                   scalePolicy:
-                    description: Scaling policy for the Yandex Database cluster. The
-                      structure is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Scaling policy for the Yandex Database cluster.
+                      Scaling policy for the Yandex Database cluster.
+
+                      ~> Currently, only `fixed_scale` is supported.
                     items:
                       properties:
                         fixedScale:
-                          description: Fixed scaling policy for the Yandex Database
-                            cluster. The structure is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Fixed scaling policy for the Yandex Database cluster. (see below for nested schema)
+                            Fixed scaling policy for the Yandex Database cluster.
                           items:
                             properties:
                               size:
-                                description: Number of instances for the Yandex Database
-                                  cluster.
+                                description: |-
+                                  (Number) Number of instances for the Yandex Database cluster.
+                                  Number of instances for the Yandex Database cluster.
                                 type: number
                             type: object
                           type: array
                       type: object
                     type: array
+                  securityGroupIds:
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                   sleepAfter:
+                    description: (Number)
                     type: number
                   storageConfig:
-                    description: A list of storage configuration options for the Yandex
-                      Database cluster. The structure is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) A list of storage configuration options for the Yandex Database cluster. (see below for nested schema)
+                      A list of storage configuration options for the Yandex Database cluster.
                     items:
                       properties:
                         groupCount:
-                          description: Amount of storage groups of selected type for
-                            the Yandex Database cluster.
+                          description: |-
+                            (Number) Amount of storage groups of selected type for the Yandex Database cluster.
+                            Amount of storage groups of selected type for the Yandex Database cluster.
                           type: number
                         storageTypeId:
-                          description: Storage type ID for the Yandex Database cluster.
-                            Available presets can be obtained via yc ydb storage-type
-                            list command.
+                          description: |-
+                            type list command.
+                            Storage type ID for the Yandex Database cluster. Available presets can be obtained via `yc ydb storage-type list` command.
                           type: string
                       type: object
                     type: array
                   subnetIds:
-                    description: List of subnet IDs to attach the Yandex Database
-                      cluster to.
+                    description: |-
+                      (Set of String) The list of VPC subnets identifiers which resource is attached.
+                      The list of VPC subnets identifiers which resource is attached.
                     items:
                       type: string
                     type: array
@@ -413,20 +445,24 @@ spec:
                   autoscaler.
                 properties:
                   assignPublicIps:
-                    description: Whether public IP addresses should be assigned to
-                      the Yandex Database cluster.
+                    description: |-
+                      (Boolean) Whether public IP addresses should be assigned to the Yandex Database cluster.
+                      Whether public IP addresses should be assigned to the Yandex Database cluster.
                     type: boolean
                   deletionProtection:
-                    description: Inhibits deletion of the database. Can be either
-                      true or false
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: A description for the Yandex Database cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: ID of the folder that the Yandex Database cluster
-                      belongs to. It will be deduced from provider configuration if
-                      not set explicitly.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -507,36 +543,46 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Yandex
-                      Database cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   location:
-                    description: Location for the Yandex Database cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Location for the Yandex Database cluster. (see below for nested schema)
+                      Location for the Yandex Database cluster.
                     items:
                       properties:
                         region:
-                          description: Region for the Yandex Database cluster. The
-                            structure is documented below.
+                          description: |-
+                            (Block List, Max: 1) Region for the Yandex Database cluster. (see below for nested schema)
+                            Region for the Yandex Database cluster.
                           items:
                             properties:
                               id:
-                                description: Region ID for the Yandex Database cluster.
+                                description: |-
+                                  (String) The ID of this resource.
+                                  Region ID for the Yandex Database cluster.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   locationId:
-                    description: Location ID for the Yandex Database cluster.
+                    description: |-
+                      (String) Location ID for the Yandex Database cluster.
+                      Location ID for the Yandex Database cluster.
                     type: string
                   name:
-                    description: Name of the Yandex Database cluster.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network to attach the Yandex Database cluster
-                      to.
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -613,48 +659,66 @@ spec:
                         type: object
                     type: object
                   resourcePresetId:
-                    description: The Yandex Database cluster preset. Available presets
-                      can be obtained via yc ydb resource-preset list command.
+                    description: |-
+                      preset list command.
+                      The Yandex Database cluster preset. Available presets can be obtained via `yc ydb resource-preset list` command.
                     type: string
                   scalePolicy:
-                    description: Scaling policy for the Yandex Database cluster. The
-                      structure is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Scaling policy for the Yandex Database cluster.
+                      Scaling policy for the Yandex Database cluster.
+
+                      ~> Currently, only `fixed_scale` is supported.
                     items:
                       properties:
                         fixedScale:
-                          description: Fixed scaling policy for the Yandex Database
-                            cluster. The structure is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Fixed scaling policy for the Yandex Database cluster. (see below for nested schema)
+                            Fixed scaling policy for the Yandex Database cluster.
                           items:
                             properties:
                               size:
-                                description: Number of instances for the Yandex Database
-                                  cluster.
+                                description: |-
+                                  (Number) Number of instances for the Yandex Database cluster.
+                                  Number of instances for the Yandex Database cluster.
                                 type: number
                             type: object
                           type: array
                       type: object
                     type: array
+                  securityGroupIds:
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                   sleepAfter:
+                    description: (Number)
                     type: number
                   storageConfig:
-                    description: A list of storage configuration options for the Yandex
-                      Database cluster. The structure is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) A list of storage configuration options for the Yandex Database cluster. (see below for nested schema)
+                      A list of storage configuration options for the Yandex Database cluster.
                     items:
                       properties:
                         groupCount:
-                          description: Amount of storage groups of selected type for
-                            the Yandex Database cluster.
+                          description: |-
+                            (Number) Amount of storage groups of selected type for the Yandex Database cluster.
+                            Amount of storage groups of selected type for the Yandex Database cluster.
                           type: number
                         storageTypeId:
-                          description: Storage type ID for the Yandex Database cluster.
-                            Available presets can be obtained via yc ydb storage-type
-                            list command.
+                          description: |-
+                            type list command.
+                            Storage type ID for the Yandex Database cluster. Available presets can be obtained via `yc ydb storage-type list` command.
                           type: string
                       type: object
                     type: array
                   subnetIds:
-                    description: List of subnet IDs to attach the Yandex Database
-                      cluster to.
+                    description: |-
+                      (Set of String) The list of VPC subnets identifiers which resource is attached.
+                      The list of VPC subnets identifiers which resource is attached.
                     items:
                       type: string
                     type: array
@@ -928,125 +992,166 @@ spec:
               atProvider:
                 properties:
                   assignPublicIps:
-                    description: Whether public IP addresses should be assigned to
-                      the Yandex Database cluster.
+                    description: |-
+                      (Boolean) Whether public IP addresses should be assigned to the Yandex Database cluster.
+                      Whether public IP addresses should be assigned to the Yandex Database cluster.
                     type: boolean
                   createdAt:
-                    description: The Yandex Database cluster creation timestamp.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   databasePath:
-                    description: Full database path of the Yandex Database cluster.
-                      Useful for SDK configuration.
+                    description: |-
+                      (String) Full database path of the Yandex Database cluster. Useful for SDK configuration.
+                      Full database path of the Yandex Database cluster. Useful for SDK configuration.
                     type: string
                   deletionProtection:
-                    description: Inhibits deletion of the database. Can be either
-                      true or false
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: A description for the Yandex Database cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: ID of the folder that the Yandex Database cluster
-                      belongs to. It will be deduced from provider configuration if
-                      not set explicitly.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
-                    description: ID of the Yandex Database cluster.
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Yandex
-                      Database cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   location:
-                    description: Location for the Yandex Database cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Location for the Yandex Database cluster. (see below for nested schema)
+                      Location for the Yandex Database cluster.
                     items:
                       properties:
                         region:
-                          description: Region for the Yandex Database cluster. The
-                            structure is documented below.
+                          description: |-
+                            (Block List, Max: 1) Region for the Yandex Database cluster. (see below for nested schema)
+                            Region for the Yandex Database cluster.
                           items:
                             properties:
                               id:
-                                description: Region ID for the Yandex Database cluster.
+                                description: |-
+                                  (String) The ID of this resource.
+                                  Region ID for the Yandex Database cluster.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   locationId:
-                    description: Location ID for the Yandex Database cluster.
+                    description: |-
+                      (String) Location ID for the Yandex Database cluster.
+                      Location ID for the Yandex Database cluster.
                     type: string
                   name:
-                    description: Name of the Yandex Database cluster.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network to attach the Yandex Database cluster
-                      to.
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   resourcePresetId:
-                    description: The Yandex Database cluster preset. Available presets
-                      can be obtained via yc ydb resource-preset list command.
+                    description: |-
+                      preset list command.
+                      The Yandex Database cluster preset. Available presets can be obtained via `yc ydb resource-preset list` command.
                     type: string
                   scalePolicy:
-                    description: Scaling policy for the Yandex Database cluster. The
-                      structure is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Scaling policy for the Yandex Database cluster.
+                      Scaling policy for the Yandex Database cluster.
+
+                      ~> Currently, only `fixed_scale` is supported.
                     items:
                       properties:
                         fixedScale:
-                          description: Fixed scaling policy for the Yandex Database
-                            cluster. The structure is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Fixed scaling policy for the Yandex Database cluster. (see below for nested schema)
+                            Fixed scaling policy for the Yandex Database cluster.
                           items:
                             properties:
                               size:
-                                description: Number of instances for the Yandex Database
-                                  cluster.
+                                description: |-
+                                  (Number) Number of instances for the Yandex Database cluster.
+                                  Number of instances for the Yandex Database cluster.
                                 type: number
                             type: object
                           type: array
                       type: object
                     type: array
+                  securityGroupIds:
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
                   sleepAfter:
+                    description: (Number)
                     type: number
                   status:
-                    description: Status of the Yandex Database cluster.
+                    description: |-
+                      (String) Status of the Yandex Database cluster.
+                      Status of the Yandex Database cluster.
                     type: string
                   storageConfig:
-                    description: A list of storage configuration options for the Yandex
-                      Database cluster. The structure is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) A list of storage configuration options for the Yandex Database cluster. (see below for nested schema)
+                      A list of storage configuration options for the Yandex Database cluster.
                     items:
                       properties:
                         groupCount:
-                          description: Amount of storage groups of selected type for
-                            the Yandex Database cluster.
+                          description: |-
+                            (Number) Amount of storage groups of selected type for the Yandex Database cluster.
+                            Amount of storage groups of selected type for the Yandex Database cluster.
                           type: number
                         storageTypeId:
-                          description: Storage type ID for the Yandex Database cluster.
-                            Available presets can be obtained via yc ydb storage-type
-                            list command.
+                          description: |-
+                            type list command.
+                            Storage type ID for the Yandex Database cluster. Available presets can be obtained via `yc ydb storage-type list` command.
                           type: string
                       type: object
                     type: array
                   subnetIds:
-                    description: List of subnet IDs to attach the Yandex Database
-                      cluster to.
+                    description: |-
+                      (Set of String) The list of VPC subnets identifiers which resource is attached.
+                      The list of VPC subnets identifiers which resource is attached.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   tlsEnabled:
-                    description: Whether TLS is enabled for the Yandex Database cluster.
-                      Useful for SDK configuration.
+                    description: |-
+                      (Boolean) Whether TLS is enabled for the Yandex Database cluster. Useful for SDK configuration.
+                      Whether TLS is enabled for the Yandex Database cluster. Useful for SDK configuration.
                     type: boolean
                   ydbApiEndpoint:
-                    description: API endpoint of the Yandex Database cluster. Useful
-                      for SDK configuration.
+                    description: |-
+                      (String) API endpoint of the Yandex Database cluster. Useful for SDK configuration.
+                      API endpoint of the Yandex Database cluster. Useful for SDK configuration.
                     type: string
                   ydbFullEndpoint:
-                    description: Full endpoint of the Yandex Database cluster.
+                    description: |-
+                      (String) Full endpoint of the Yandex Database cluster.
+                      Full endpoint of the Yandex Database cluster.
                     type: string
                 type: object
               conditions:

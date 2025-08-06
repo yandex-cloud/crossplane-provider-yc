@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Gateway is the Schema for the Gateways API. Manages a gateway
-          within Yandex.Cloud.
+          within Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -74,12 +74,14 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: An optional description of this resource. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: ID of the folder that the resource belongs to. If
-                      it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -160,16 +162,20 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to apply to this VPC Gateway. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the VPC Gateway. Provided by the client when
-                      the VPC Gateway is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   sharedEgressGateway:
-                    description: Shared egress gateway configuration. Currently empty.
+                    description: |-
+                      (Block List, Max: 1) Shared egress gateway configuration. Currently empty. (see below for nested schema)
+                      Shared egress gateway configuration. Currently empty.
                     items:
                       type: object
                     type: array
@@ -188,12 +194,14 @@ spec:
                   autoscaler.
                 properties:
                   description:
-                    description: An optional description of this resource. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: ID of the folder that the resource belongs to. If
-                      it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -274,16 +282,20 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to apply to this VPC Gateway. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the VPC Gateway. Provided by the client when
-                      the VPC Gateway is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   sharedEgressGateway:
-                    description: Shared egress gateway configuration. Currently empty.
+                    description: |-
+                      (Block List, Max: 1) Shared egress gateway configuration. Currently empty. (see below for nested schema)
+                      Shared egress gateway configuration. Currently empty.
                     items:
                       type: object
                     type: array
@@ -461,31 +473,40 @@ spec:
               atProvider:
                 properties:
                   createdAt:
-                    description: Creation timestamp of the key.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   description:
-                    description: An optional description of this resource. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   folderId:
-                    description: ID of the folder that the resource belongs to. If
-                      it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to apply to this VPC Gateway. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the VPC Gateway. Provided by the client when
-                      the VPC Gateway is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   sharedEgressGateway:
-                    description: Shared egress gateway configuration. Currently empty.
+                    description: |-
+                      (Block List, Max: 1) Shared egress gateway configuration. Currently empty. (see below for nested schema)
+                      Shared egress gateway configuration. Currently empty.
                     items:
                       type: object
                     type: array

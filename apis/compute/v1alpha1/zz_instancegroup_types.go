@@ -29,31 +29,37 @@ import (
 
 type AllocationPolicyInitParameters struct {
 
+	// (Block List) Array of availability zone IDs with list of instance tags. (see below for nested schema)
 	// Array of availability zone IDs with list of instance tags.
 	InstanceTagsPool []InstanceTagsPoolInitParameters `json:"instanceTagsPool,omitempty" tf:"instance_tags_pool,omitempty"`
 
-	// A list of availability zones.
+	// (Set of String) A list of availability zones.
+	// A list of [availability zones](https://yandex.cloud/docs/overview/concepts/geo-scope).
 	// +listType=set
 	Zones []*string `json:"zones,omitempty" tf:"zones,omitempty"`
 }
 
 type AllocationPolicyObservation struct {
 
+	// (Block List) Array of availability zone IDs with list of instance tags. (see below for nested schema)
 	// Array of availability zone IDs with list of instance tags.
 	InstanceTagsPool []InstanceTagsPoolObservation `json:"instanceTagsPool,omitempty" tf:"instance_tags_pool,omitempty"`
 
-	// A list of availability zones.
+	// (Set of String) A list of availability zones.
+	// A list of [availability zones](https://yandex.cloud/docs/overview/concepts/geo-scope).
 	// +listType=set
 	Zones []*string `json:"zones,omitempty" tf:"zones,omitempty"`
 }
 
 type AllocationPolicyParameters struct {
 
+	// (Block List) Array of availability zone IDs with list of instance tags. (see below for nested schema)
 	// Array of availability zone IDs with list of instance tags.
 	// +kubebuilder:validation:Optional
 	InstanceTagsPool []InstanceTagsPoolParameters `json:"instanceTagsPool,omitempty" tf:"instance_tags_pool,omitempty"`
 
-	// A list of availability zones.
+	// (Set of String) A list of availability zones.
+	// A list of [availability zones](https://yandex.cloud/docs/overview/concepts/geo-scope).
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Zones []*string `json:"zones" tf:"zones,omitempty"`
@@ -61,67 +67,84 @@ type AllocationPolicyParameters struct {
 
 type ApplicationLoadBalancerInitParameters struct {
 
+	// (Boolean) Do not wait load balancer health checks.
 	// Do not wait load balancer health checks.
 	IgnoreHealthChecks *bool `json:"ignoreHealthChecks,omitempty" tf:"ignore_health_checks,omitempty"`
 
+	// (Number) Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	// Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	MaxOpeningTrafficDuration *float64 `json:"maxOpeningTrafficDuration,omitempty" tf:"max_opening_traffic_duration,omitempty"`
 
+	// (String) A description of the target group.
 	// A description of the target group.
 	TargetGroupDescription *string `json:"targetGroupDescription,omitempty" tf:"target_group_description,omitempty"`
 
+	// (Map of String) A set of key/value label pairs.
 	// A set of key/value label pairs.
 	// +mapType=granular
 	TargetGroupLabels map[string]*string `json:"targetGroupLabels,omitempty" tf:"target_group_labels,omitempty"`
 
+	// (String) The name of the target group.
 	// The name of the target group.
 	TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
 }
 
 type ApplicationLoadBalancerObservation struct {
 
+	// (Boolean) Do not wait load balancer health checks.
 	// Do not wait load balancer health checks.
 	IgnoreHealthChecks *bool `json:"ignoreHealthChecks,omitempty" tf:"ignore_health_checks,omitempty"`
 
+	// (Number) Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	// Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	MaxOpeningTrafficDuration *float64 `json:"maxOpeningTrafficDuration,omitempty" tf:"max_opening_traffic_duration,omitempty"`
 
-	// The status message of the target group.
+	// (String) The status message of the instance.
+	// The status message of the instance.
 	StatusMessage *string `json:"statusMessage,omitempty" tf:"status_message,omitempty"`
 
+	// (String) A description of the target group.
 	// A description of the target group.
 	TargetGroupDescription *string `json:"targetGroupDescription,omitempty" tf:"target_group_description,omitempty"`
 
+	// (String) The ID of the target group.
 	// The ID of the target group.
 	TargetGroupID *string `json:"targetGroupId,omitempty" tf:"target_group_id,omitempty"`
 
+	// (Map of String) A set of key/value label pairs.
 	// A set of key/value label pairs.
 	// +mapType=granular
 	TargetGroupLabels map[string]*string `json:"targetGroupLabels,omitempty" tf:"target_group_labels,omitempty"`
 
+	// (String) The name of the target group.
 	// The name of the target group.
 	TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
 }
 
 type ApplicationLoadBalancerParameters struct {
 
+	// (Boolean) Do not wait load balancer health checks.
 	// Do not wait load balancer health checks.
 	// +kubebuilder:validation:Optional
 	IgnoreHealthChecks *bool `json:"ignoreHealthChecks,omitempty" tf:"ignore_health_checks,omitempty"`
 
+	// (Number) Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	// Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	// +kubebuilder:validation:Optional
 	MaxOpeningTrafficDuration *float64 `json:"maxOpeningTrafficDuration,omitempty" tf:"max_opening_traffic_duration,omitempty"`
 
+	// (String) A description of the target group.
 	// A description of the target group.
 	// +kubebuilder:validation:Optional
 	TargetGroupDescription *string `json:"targetGroupDescription,omitempty" tf:"target_group_description,omitempty"`
 
+	// (Map of String) A set of key/value label pairs.
 	// A set of key/value label pairs.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	TargetGroupLabels map[string]*string `json:"targetGroupLabels,omitempty" tf:"target_group_labels,omitempty"`
 
+	// (String) The name of the target group.
 	// The name of the target group.
 	// +kubebuilder:validation:Optional
 	TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
@@ -129,98 +152,125 @@ type ApplicationLoadBalancerParameters struct {
 
 type AutoScaleInitParameters struct {
 
-	// . Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// (String) Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// Autoscale type, can be `ZONAL` or `REGIONAL`. By default `ZONAL` type is used.
 	AutoScaleType *string `json:"autoScaleType,omitempty" tf:"auto_scale_type,omitempty"`
 
+	// (Number) Target CPU load level.
 	// Target CPU load level.
 	CPUUtilizationTarget *float64 `json:"cpuUtilizationTarget,omitempty" tf:"cpu_utilization_target,omitempty"`
 
-	// A list of custom rules. The structure is documented below.
+	// (Block List) A list of custom rules. (see below for nested schema)
+	// A list of custom rules.
 	CustomRule []CustomRuleInitParameters `json:"customRule,omitempty" tf:"custom_rule,omitempty"`
 
+	// (Number) The initial number of instances in the instance group.
 	// The initial number of instances in the instance group.
 	InitialSize *float64 `json:"initialSize,omitempty" tf:"initial_size,omitempty"`
 
+	// (Number) The maximum number of virtual machines in the group.
 	// The maximum number of virtual machines in the group.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
+	// (Number) The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
+	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the `cpu_utilization_target`, the instance group will increase the number of virtual machines in the group.
 	MeasurementDuration *float64 `json:"measurementDuration,omitempty" tf:"measurement_duration,omitempty"`
 
+	// (Number) The minimum number of virtual machines in a single availability zone.
 	// The minimum number of virtual machines in a single availability zone.
 	MinZoneSize *float64 `json:"minZoneSize,omitempty" tf:"min_zone_size,omitempty"`
 
-	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// (Number) The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of `cpu_utilization_target`.
 	StabilizationDuration *float64 `json:"stabilizationDuration,omitempty" tf:"stabilization_duration,omitempty"`
 
+	// up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	// The warm-up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	WarmupDuration *float64 `json:"warmupDuration,omitempty" tf:"warmup_duration,omitempty"`
 }
 
 type AutoScaleObservation struct {
 
-	// . Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// (String) Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// Autoscale type, can be `ZONAL` or `REGIONAL`. By default `ZONAL` type is used.
 	AutoScaleType *string `json:"autoScaleType,omitempty" tf:"auto_scale_type,omitempty"`
 
+	// (Number) Target CPU load level.
 	// Target CPU load level.
 	CPUUtilizationTarget *float64 `json:"cpuUtilizationTarget,omitempty" tf:"cpu_utilization_target,omitempty"`
 
-	// A list of custom rules. The structure is documented below.
+	// (Block List) A list of custom rules. (see below for nested schema)
+	// A list of custom rules.
 	CustomRule []CustomRuleObservation `json:"customRule,omitempty" tf:"custom_rule,omitempty"`
 
+	// (Number) The initial number of instances in the instance group.
 	// The initial number of instances in the instance group.
 	InitialSize *float64 `json:"initialSize,omitempty" tf:"initial_size,omitempty"`
 
+	// (Number) The maximum number of virtual machines in the group.
 	// The maximum number of virtual machines in the group.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
+	// (Number) The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
+	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the `cpu_utilization_target`, the instance group will increase the number of virtual machines in the group.
 	MeasurementDuration *float64 `json:"measurementDuration,omitempty" tf:"measurement_duration,omitempty"`
 
+	// (Number) The minimum number of virtual machines in a single availability zone.
 	// The minimum number of virtual machines in a single availability zone.
 	MinZoneSize *float64 `json:"minZoneSize,omitempty" tf:"min_zone_size,omitempty"`
 
-	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// (Number) The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of `cpu_utilization_target`.
 	StabilizationDuration *float64 `json:"stabilizationDuration,omitempty" tf:"stabilization_duration,omitempty"`
 
+	// up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	// The warm-up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	WarmupDuration *float64 `json:"warmupDuration,omitempty" tf:"warmup_duration,omitempty"`
 }
 
 type AutoScaleParameters struct {
 
-	// . Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// (String) Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// Autoscale type, can be `ZONAL` or `REGIONAL`. By default `ZONAL` type is used.
 	// +kubebuilder:validation:Optional
 	AutoScaleType *string `json:"autoScaleType,omitempty" tf:"auto_scale_type,omitempty"`
 
+	// (Number) Target CPU load level.
 	// Target CPU load level.
 	// +kubebuilder:validation:Optional
 	CPUUtilizationTarget *float64 `json:"cpuUtilizationTarget,omitempty" tf:"cpu_utilization_target,omitempty"`
 
-	// A list of custom rules. The structure is documented below.
+	// (Block List) A list of custom rules. (see below for nested schema)
+	// A list of custom rules.
 	// +kubebuilder:validation:Optional
 	CustomRule []CustomRuleParameters `json:"customRule,omitempty" tf:"custom_rule,omitempty"`
 
+	// (Number) The initial number of instances in the instance group.
 	// The initial number of instances in the instance group.
 	// +kubebuilder:validation:Optional
 	InitialSize *float64 `json:"initialSize" tf:"initial_size,omitempty"`
 
+	// (Number) The maximum number of virtual machines in the group.
 	// The maximum number of virtual machines in the group.
 	// +kubebuilder:validation:Optional
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
+	// (Number) The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
+	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the `cpu_utilization_target`, the instance group will increase the number of virtual machines in the group.
 	// +kubebuilder:validation:Optional
 	MeasurementDuration *float64 `json:"measurementDuration" tf:"measurement_duration,omitempty"`
 
+	// (Number) The minimum number of virtual machines in a single availability zone.
 	// The minimum number of virtual machines in a single availability zone.
 	// +kubebuilder:validation:Optional
 	MinZoneSize *float64 `json:"minZoneSize,omitempty" tf:"min_zone_size,omitempty"`
 
-	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// (Number) The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of `cpu_utilization_target`.
 	// +kubebuilder:validation:Optional
 	StabilizationDuration *float64 `json:"stabilizationDuration,omitempty" tf:"stabilization_duration,omitempty"`
 
+	// up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	// The warm-up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	// +kubebuilder:validation:Optional
 	WarmupDuration *float64 `json:"warmupDuration,omitempty" tf:"warmup_duration,omitempty"`
@@ -228,326 +278,407 @@ type AutoScaleParameters struct {
 
 type BootDiskInitializeParamsInitParameters struct {
 
-	// A description of the instance.
+	// (String) The resource description.
+	// A description of the boot disk.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) The disk image to initialize this disk from.
 	// The disk image to initialize this disk from.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
+	// (Number) The size of the disk in GB.
 	// The size of the disk in GB.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
+	// (String) The snapshot to initialize this disk from.
 	// The snapshot to initialize this disk from.
 	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 
-	// Network acceleration type. By default a network is in STANDARD mode.
+	// (String) The disk type.
+	// The disk type.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type BootDiskInitializeParamsObservation struct {
 
-	// A description of the instance.
+	// (String) The resource description.
+	// A description of the boot disk.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) The disk image to initialize this disk from.
 	// The disk image to initialize this disk from.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
+	// (Number) The size of the disk in GB.
 	// The size of the disk in GB.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
+	// (String) The snapshot to initialize this disk from.
 	// The snapshot to initialize this disk from.
 	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 
-	// Network acceleration type. By default a network is in STANDARD mode.
+	// (String) The disk type.
+	// The disk type.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type BootDiskInitializeParamsParameters struct {
 
-	// A description of the instance.
+	// (String) The resource description.
+	// A description of the boot disk.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) The disk image to initialize this disk from.
 	// The disk image to initialize this disk from.
 	// +kubebuilder:validation:Optional
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
+	// (Number) The size of the disk in GB.
 	// The size of the disk in GB.
 	// +kubebuilder:validation:Optional
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
+	// (String) The snapshot to initialize this disk from.
 	// The snapshot to initialize this disk from.
 	// +kubebuilder:validation:Optional
 	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 
-	// Network acceleration type. By default a network is in STANDARD mode.
+	// (String) The disk type.
+	// The disk type.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type CustomRuleInitParameters struct {
 
-	// The ID of the folder that the resources belong to.
+	// id is used.
+	// If specified, sets the folder id to fetch metrics from. By default, it is the ID of the folder the group belongs to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// A set of key/value label pairs to assign to the instance group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// Metrics [labels](https://yandex.cloud/en/docs/monitoring/concepts/data-model#label) from Monitoring.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// The name of metric.
+	// (String) Name of the metric in Monitoring.
+	// Name of the metric in Monitoring.
 	MetricName *string `json:"metricName,omitempty" tf:"metric_name,omitempty"`
 
-	// Metric type, GAUGE or COUNTER.
+	// (String) Type of metric, can be GAUGE or COUNTER. GAUGE metric reflects the value at particular time point. COUNTER metric exhibits a monotonous growth over time.
+	// Type of metric, can be `GAUGE` or `COUNTER`. `GAUGE` metric reflects the value at particular time point. `COUNTER` metric exhibits a monotonous growth over time.
 	MetricType *string `json:"metricType,omitempty" tf:"metric_type,omitempty"`
 
-	// Rule type: UTILIZATION - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone. This type of metric must have the zone_id label.
+	// (String) The metric rule type (UTILIZATION, WORKLOAD). UTILIZATION for metrics describing resource utilization per VM instance. WORKLOAD for metrics describing total workload on all VM instances.
+	// The metric rule type (UTILIZATION, WORKLOAD). UTILIZATION for metrics describing resource utilization per VM instance. WORKLOAD for metrics describing total workload on all VM instances.
 	RuleType *string `json:"ruleType,omitempty" tf:"rule_type,omitempty"`
 
-	// Service of custom metric in Yandex Monitoring that should be used for scaling.
+	// (String) If specified, sets the service name to fetch metrics. The default value is custom. You can use a label to specify service metrics, e.g., service with the compute value for Compute Cloud.
+	// If specified, sets the service name to fetch metrics. The default value is `custom`. You can use a label to specify service metrics, e.g., `service` with the `compute` value for Compute Cloud.
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
-	// Target metric value level.
+	// (Number) Target metric value by which Instance Groups calculates the number of required VM instances.
+	// Target metric value by which Instance Groups calculates the number of required VM instances.
 	Target *float64 `json:"target,omitempty" tf:"target,omitempty"`
 }
 
 type CustomRuleObservation struct {
 
-	// The ID of the folder that the resources belong to.
+	// id is used.
+	// If specified, sets the folder id to fetch metrics from. By default, it is the ID of the folder the group belongs to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// A set of key/value label pairs to assign to the instance group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// Metrics [labels](https://yandex.cloud/en/docs/monitoring/concepts/data-model#label) from Monitoring.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// The name of metric.
+	// (String) Name of the metric in Monitoring.
+	// Name of the metric in Monitoring.
 	MetricName *string `json:"metricName,omitempty" tf:"metric_name,omitempty"`
 
-	// Metric type, GAUGE or COUNTER.
+	// (String) Type of metric, can be GAUGE or COUNTER. GAUGE metric reflects the value at particular time point. COUNTER metric exhibits a monotonous growth over time.
+	// Type of metric, can be `GAUGE` or `COUNTER`. `GAUGE` metric reflects the value at particular time point. `COUNTER` metric exhibits a monotonous growth over time.
 	MetricType *string `json:"metricType,omitempty" tf:"metric_type,omitempty"`
 
-	// Rule type: UTILIZATION - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone. This type of metric must have the zone_id label.
+	// (String) The metric rule type (UTILIZATION, WORKLOAD). UTILIZATION for metrics describing resource utilization per VM instance. WORKLOAD for metrics describing total workload on all VM instances.
+	// The metric rule type (UTILIZATION, WORKLOAD). UTILIZATION for metrics describing resource utilization per VM instance. WORKLOAD for metrics describing total workload on all VM instances.
 	RuleType *string `json:"ruleType,omitempty" tf:"rule_type,omitempty"`
 
-	// Service of custom metric in Yandex Monitoring that should be used for scaling.
+	// (String) If specified, sets the service name to fetch metrics. The default value is custom. You can use a label to specify service metrics, e.g., service with the compute value for Compute Cloud.
+	// If specified, sets the service name to fetch metrics. The default value is `custom`. You can use a label to specify service metrics, e.g., `service` with the `compute` value for Compute Cloud.
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
-	// Target metric value level.
+	// (Number) Target metric value by which Instance Groups calculates the number of required VM instances.
+	// Target metric value by which Instance Groups calculates the number of required VM instances.
 	Target *float64 `json:"target,omitempty" tf:"target,omitempty"`
 }
 
 type CustomRuleParameters struct {
 
-	// The ID of the folder that the resources belong to.
+	// id is used.
+	// If specified, sets the folder id to fetch metrics from. By default, it is the ID of the folder the group belongs to.
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// A set of key/value label pairs to assign to the instance group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// Metrics [labels](https://yandex.cloud/en/docs/monitoring/concepts/data-model#label) from Monitoring.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// The name of metric.
+	// (String) Name of the metric in Monitoring.
+	// Name of the metric in Monitoring.
 	// +kubebuilder:validation:Optional
 	MetricName *string `json:"metricName" tf:"metric_name,omitempty"`
 
-	// Metric type, GAUGE or COUNTER.
+	// (String) Type of metric, can be GAUGE or COUNTER. GAUGE metric reflects the value at particular time point. COUNTER metric exhibits a monotonous growth over time.
+	// Type of metric, can be `GAUGE` or `COUNTER`. `GAUGE` metric reflects the value at particular time point. `COUNTER` metric exhibits a monotonous growth over time.
 	// +kubebuilder:validation:Optional
 	MetricType *string `json:"metricType" tf:"metric_type,omitempty"`
 
-	// Rule type: UTILIZATION - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone. This type of metric must have the zone_id label.
+	// (String) The metric rule type (UTILIZATION, WORKLOAD). UTILIZATION for metrics describing resource utilization per VM instance. WORKLOAD for metrics describing total workload on all VM instances.
+	// The metric rule type (UTILIZATION, WORKLOAD). UTILIZATION for metrics describing resource utilization per VM instance. WORKLOAD for metrics describing total workload on all VM instances.
 	// +kubebuilder:validation:Optional
 	RuleType *string `json:"ruleType" tf:"rule_type,omitempty"`
 
-	// Service of custom metric in Yandex Monitoring that should be used for scaling.
+	// (String) If specified, sets the service name to fetch metrics. The default value is custom. You can use a label to specify service metrics, e.g., service with the compute value for Compute Cloud.
+	// If specified, sets the service name to fetch metrics. The default value is `custom`. You can use a label to specify service metrics, e.g., `service` with the `compute` value for Compute Cloud.
 	// +kubebuilder:validation:Optional
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
-	// Target metric value level.
+	// (Number) Target metric value by which Instance Groups calculates the number of required VM instances.
+	// Target metric value by which Instance Groups calculates the number of required VM instances.
 	// +kubebuilder:validation:Optional
 	Target *float64 `json:"target" tf:"target,omitempty"`
 }
 
 type DeployPolicyInitParameters struct {
 
+	// (Number) The maximum number of instances that can be created at the same time.
 	// The maximum number of instances that can be created at the same time.
 	MaxCreating *float64 `json:"maxCreating,omitempty" tf:"max_creating,omitempty"`
 
+	// (Number) The maximum number of instances that can be deleted at the same time.
 	// The maximum number of instances that can be deleted at the same time.
 	MaxDeleting *float64 `json:"maxDeleting,omitempty" tf:"max_deleting,omitempty"`
 
+	// (Number) The maximum number of instances that can be temporarily allocated above the group's target size during the update process.
 	// The maximum number of instances that can be temporarily allocated above the group's target size during the update process.
 	MaxExpansion *float64 `json:"maxExpansion,omitempty" tf:"max_expansion,omitempty"`
 
+	// (Number) The maximum number of running instances that can be taken offline (stopped or deleted) at the same time during the update process.
 	// The maximum number of running instances that can be taken offline (stopped or deleted) at the same time during the update process.
 	MaxUnavailable *float64 `json:"maxUnavailable,omitempty" tf:"max_unavailable,omitempty"`
 
+	// (Number) The amount of time in seconds to allow for an instance to start. Instance will be considered up and running (and start receiving traffic) only after the startup_duration has elapsed and all health checks are passed.
 	// The amount of time in seconds to allow for an instance to start. Instance will be considered up and running (and start receiving traffic) only after the startup_duration has elapsed and all health checks are passed.
 	StartupDuration *float64 `json:"startupDuration,omitempty" tf:"startup_duration,omitempty"`
 
-	// Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead, it will wait until the instance stops itself or becomes unhealthy.
+	// (String) Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead, it will wait until the instance stops itself or becomes unhealthy.
+	// Affects the lifecycle of the instance during deployment. If set to `proactive` (default), Instance Groups can forcefully stop a running instance. If `opportunistic`, Instance Groups does not stop a running instance. Instead, it will wait until the instance stops itself or becomes unhealthy.
 	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
 }
 
 type DeployPolicyObservation struct {
 
+	// (Number) The maximum number of instances that can be created at the same time.
 	// The maximum number of instances that can be created at the same time.
 	MaxCreating *float64 `json:"maxCreating,omitempty" tf:"max_creating,omitempty"`
 
+	// (Number) The maximum number of instances that can be deleted at the same time.
 	// The maximum number of instances that can be deleted at the same time.
 	MaxDeleting *float64 `json:"maxDeleting,omitempty" tf:"max_deleting,omitempty"`
 
+	// (Number) The maximum number of instances that can be temporarily allocated above the group's target size during the update process.
 	// The maximum number of instances that can be temporarily allocated above the group's target size during the update process.
 	MaxExpansion *float64 `json:"maxExpansion,omitempty" tf:"max_expansion,omitempty"`
 
+	// (Number) The maximum number of running instances that can be taken offline (stopped or deleted) at the same time during the update process.
 	// The maximum number of running instances that can be taken offline (stopped or deleted) at the same time during the update process.
 	MaxUnavailable *float64 `json:"maxUnavailable,omitempty" tf:"max_unavailable,omitempty"`
 
+	// (Number) The amount of time in seconds to allow for an instance to start. Instance will be considered up and running (and start receiving traffic) only after the startup_duration has elapsed and all health checks are passed.
 	// The amount of time in seconds to allow for an instance to start. Instance will be considered up and running (and start receiving traffic) only after the startup_duration has elapsed and all health checks are passed.
 	StartupDuration *float64 `json:"startupDuration,omitempty" tf:"startup_duration,omitempty"`
 
-	// Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead, it will wait until the instance stops itself or becomes unhealthy.
+	// (String) Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead, it will wait until the instance stops itself or becomes unhealthy.
+	// Affects the lifecycle of the instance during deployment. If set to `proactive` (default), Instance Groups can forcefully stop a running instance. If `opportunistic`, Instance Groups does not stop a running instance. Instead, it will wait until the instance stops itself or becomes unhealthy.
 	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
 }
 
 type DeployPolicyParameters struct {
 
+	// (Number) The maximum number of instances that can be created at the same time.
 	// The maximum number of instances that can be created at the same time.
 	// +kubebuilder:validation:Optional
 	MaxCreating *float64 `json:"maxCreating,omitempty" tf:"max_creating,omitempty"`
 
+	// (Number) The maximum number of instances that can be deleted at the same time.
 	// The maximum number of instances that can be deleted at the same time.
 	// +kubebuilder:validation:Optional
 	MaxDeleting *float64 `json:"maxDeleting,omitempty" tf:"max_deleting,omitempty"`
 
+	// (Number) The maximum number of instances that can be temporarily allocated above the group's target size during the update process.
 	// The maximum number of instances that can be temporarily allocated above the group's target size during the update process.
 	// +kubebuilder:validation:Optional
 	MaxExpansion *float64 `json:"maxExpansion" tf:"max_expansion,omitempty"`
 
+	// (Number) The maximum number of running instances that can be taken offline (stopped or deleted) at the same time during the update process.
 	// The maximum number of running instances that can be taken offline (stopped or deleted) at the same time during the update process.
 	// +kubebuilder:validation:Optional
 	MaxUnavailable *float64 `json:"maxUnavailable" tf:"max_unavailable,omitempty"`
 
+	// (Number) The amount of time in seconds to allow for an instance to start. Instance will be considered up and running (and start receiving traffic) only after the startup_duration has elapsed and all health checks are passed.
 	// The amount of time in seconds to allow for an instance to start. Instance will be considered up and running (and start receiving traffic) only after the startup_duration has elapsed and all health checks are passed.
 	// +kubebuilder:validation:Optional
 	StartupDuration *float64 `json:"startupDuration,omitempty" tf:"startup_duration,omitempty"`
 
-	// Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead, it will wait until the instance stops itself or becomes unhealthy.
+	// (String) Affects the lifecycle of the instance during deployment. If set to proactive (default), Instance Groups can forcefully stop a running instance. If opportunistic, Instance Groups does not stop a running instance. Instead, it will wait until the instance stops itself or becomes unhealthy.
+	// Affects the lifecycle of the instance during deployment. If set to `proactive` (default), Instance Groups can forcefully stop a running instance. If `opportunistic`, Instance Groups does not stop a running instance. Instead, it will wait until the instance stops itself or becomes unhealthy.
 	// +kubebuilder:validation:Optional
 	Strategy *string `json:"strategy,omitempty" tf:"strategy,omitempty"`
 }
 
 type FixedScaleInitParameters struct {
 
-	// The size of the disk in GB.
+	// (Number) The size of the disk in GB.
+	// The number of instances in the instance group.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 }
 
 type FixedScaleObservation struct {
 
-	// The size of the disk in GB.
+	// (Number) The size of the disk in GB.
+	// The number of instances in the instance group.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 }
 
 type FixedScaleParameters struct {
 
-	// The size of the disk in GB.
+	// (Number) The size of the disk in GB.
+	// The number of instances in the instance group.
 	// +kubebuilder:validation:Optional
 	Size *float64 `json:"size" tf:"size,omitempty"`
 }
 
 type HTTPOptionsInitParameters struct {
 
+	// (String) The URL path used for health check requests.
 	// The URL path used for health check requests.
 	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
-	// The port used for TCP health checks.
+	// (Number) The port used for HTTP health checks.
+	// The port used for HTTP health checks.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
 
 type HTTPOptionsObservation struct {
 
+	// (String) The URL path used for health check requests.
 	// The URL path used for health check requests.
 	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
-	// The port used for TCP health checks.
+	// (Number) The port used for HTTP health checks.
+	// The port used for HTTP health checks.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
 
 type HTTPOptionsParameters struct {
 
+	// (String) The URL path used for health check requests.
 	// The URL path used for health check requests.
 	// +kubebuilder:validation:Optional
 	Path *string `json:"path" tf:"path,omitempty"`
 
-	// The port used for TCP health checks.
+	// (Number) The port used for HTTP health checks.
+	// The port used for HTTP health checks.
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port" tf:"port,omitempty"`
 }
 
 type HealthCheckInitParameters struct {
 
-	// HTTP check options. The structure is documented below.
+	// (Block List, Max: 1) HTTP check options. (see below for nested schema)
+	// HTTP check options.
 	HTTPOptions []HTTPOptionsInitParameters `json:"httpOptions,omitempty" tf:"http_options,omitempty"`
 
+	// (Number) The number of successful health checks before the managed instance is declared healthy.
 	// The number of successful health checks before the managed instance is declared healthy.
 	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
 
+	// (Number) The interval to wait between health checks in seconds.
 	// The interval to wait between health checks in seconds.
 	Interval *float64 `json:"interval,omitempty" tf:"interval,omitempty"`
 
-	// TCP check options. The structure is documented below.
+	// (Block List, Max: 1) TCP check options. (see below for nested schema)
+	// TCP check options.
 	TCPOptions []TCPOptionsInitParameters `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
 
+	// (Number) The length of time to wait for a response before the health check times out in seconds.
 	// The length of time to wait for a response before the health check times out in seconds.
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
+	// (Number) The number of failed health checks before the managed instance is declared unhealthy.
 	// The number of failed health checks before the managed instance is declared unhealthy.
 	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
 
 type HealthCheckObservation struct {
 
-	// HTTP check options. The structure is documented below.
+	// (Block List, Max: 1) HTTP check options. (see below for nested schema)
+	// HTTP check options.
 	HTTPOptions []HTTPOptionsObservation `json:"httpOptions,omitempty" tf:"http_options,omitempty"`
 
+	// (Number) The number of successful health checks before the managed instance is declared healthy.
 	// The number of successful health checks before the managed instance is declared healthy.
 	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
 
+	// (Number) The interval to wait between health checks in seconds.
 	// The interval to wait between health checks in seconds.
 	Interval *float64 `json:"interval,omitempty" tf:"interval,omitempty"`
 
-	// TCP check options. The structure is documented below.
+	// (Block List, Max: 1) TCP check options. (see below for nested schema)
+	// TCP check options.
 	TCPOptions []TCPOptionsObservation `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
 
+	// (Number) The length of time to wait for a response before the health check times out in seconds.
 	// The length of time to wait for a response before the health check times out in seconds.
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
+	// (Number) The number of failed health checks before the managed instance is declared unhealthy.
 	// The number of failed health checks before the managed instance is declared unhealthy.
 	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
 
 type HealthCheckParameters struct {
 
-	// HTTP check options. The structure is documented below.
+	// (Block List, Max: 1) HTTP check options. (see below for nested schema)
+	// HTTP check options.
 	// +kubebuilder:validation:Optional
 	HTTPOptions []HTTPOptionsParameters `json:"httpOptions,omitempty" tf:"http_options,omitempty"`
 
+	// (Number) The number of successful health checks before the managed instance is declared healthy.
 	// The number of successful health checks before the managed instance is declared healthy.
 	// +kubebuilder:validation:Optional
 	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
 
+	// (Number) The interval to wait between health checks in seconds.
 	// The interval to wait between health checks in seconds.
 	// +kubebuilder:validation:Optional
 	Interval *float64 `json:"interval,omitempty" tf:"interval,omitempty"`
 
-	// TCP check options. The structure is documented below.
+	// (Block List, Max: 1) TCP check options. (see below for nested schema)
+	// TCP check options.
 	// +kubebuilder:validation:Optional
 	TCPOptions []TCPOptionsParameters `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
 
+	// (Number) The length of time to wait for a response before the health check times out in seconds.
 	// The length of time to wait for a response before the health check times out in seconds.
 	// +kubebuilder:validation:Optional
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
+	// (Number) The number of failed health checks before the managed instance is declared unhealthy.
 	// The number of failed health checks before the managed instance is declared unhealthy.
 	// +kubebuilder:validation:Optional
 	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
@@ -555,22 +686,28 @@ type HealthCheckParameters struct {
 
 type InstanceGroupInitParameters struct {
 
-	// The allocation policy of the instance group by zone and region. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The allocation policy of the instance group by zone and region. (see below for nested schema)
+	// The allocation policy of the instance group by zone and region.
 	AllocationPolicy []AllocationPolicyInitParameters `json:"allocationPolicy,omitempty" tf:"allocation_policy,omitempty"`
 
-	// Application Load balancing (L7) specifications. The structure is documented below.
+	// (Block List, Max: 1) Application Load balancing (L7) specifications. (see below for nested schema)
+	// Application Load balancing (L7) specifications.
 	ApplicationLoadBalancer []ApplicationLoadBalancerInitParameters `json:"applicationLoadBalancer,omitempty" tf:"application_load_balancer,omitempty"`
 
-	// Flag that protects the instance group from accidental deletion.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// The deployment policy of the instance group. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The deployment policy of the instance group. (see below for nested schema)
+	// The deployment policy of the instance group.
 	DeployPolicy []DeployPolicyInitParameters `json:"deployPolicy,omitempty" tf:"deploy_policy,omitempty"`
 
-	// A description of the instance group.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder that the resources belong to.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -582,29 +719,39 @@ type InstanceGroupInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Health check specifications. The structure is documented below.
+	// (Block List) Health check specifications. (see below for nested schema)
+	// Health check specifications.
 	HealthCheck []HealthCheckInitParameters `json:"healthCheck,omitempty" tf:"health_check,omitempty"`
 
-	// The template for creating new instances. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The template for creating new instances. (see below for nested schema)
+	// The template for creating new instances.
 	InstanceTemplate []InstanceTemplateInitParameters `json:"instanceTemplate,omitempty" tf:"instance_template,omitempty"`
 
-	// A set of key/value label pairs to assign to the instance group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Load balancing specifications. The structure is documented below.
+	// (Block List, Max: 1) Load balancing specifications. (see below for nested schema)
+	// Load balancing specifications.
 	LoadBalancer []LoadBalancerInitParameters `json:"loadBalancer,omitempty" tf:"load_balancer,omitempty"`
 
+	// (Number) Timeout for waiting for the VM to become healthy. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	// Timeout for waiting for the VM to become healthy. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	MaxCheckingHealthDuration *float64 `json:"maxCheckingHealthDuration,omitempty" tf:"max_checking_health_duration,omitempty"`
 
-	// The name of the instance group.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The scaling policy of the instance group. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The scaling policy of the instance group.
+	// The scaling policy of the instance group.
+	//
+	// ~> Either `fixed_scale` or `auto_scale` must be specified.
 	ScalePolicy []ScalePolicyInitParameters `json:"scalePolicy,omitempty" tf:"scale_policy,omitempty"`
 
-	// The ID of the service account authorized for this instance group.
+	// (String) Service account which linked to the resource.
+	// [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
@@ -616,6 +763,7 @@ type InstanceGroupInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
+	// (Map of String) A set of key/value variables pairs to assign to the instance group.
 	// A set of key/value variables pairs to assign to the instance group.
 	// +mapType=granular
 	Variables map[string]*string `json:"variables,omitempty" tf:"variables,omitempty"`
@@ -623,60 +771,81 @@ type InstanceGroupInitParameters struct {
 
 type InstanceGroupObservation struct {
 
-	// The allocation policy of the instance group by zone and region. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The allocation policy of the instance group by zone and region. (see below for nested schema)
+	// The allocation policy of the instance group by zone and region.
 	AllocationPolicy []AllocationPolicyObservation `json:"allocationPolicy,omitempty" tf:"allocation_policy,omitempty"`
 
-	// Application Load balancing (L7) specifications. The structure is documented below.
+	// (Block List, Max: 1) Application Load balancing (L7) specifications. (see below for nested schema)
+	// Application Load balancing (L7) specifications.
 	ApplicationLoadBalancer []ApplicationLoadBalancerObservation `json:"applicationLoadBalancer,omitempty" tf:"application_load_balancer,omitempty"`
 
-	// The instance group creation timestamp.
+	// (String) The creation timestamp of the resource.
+	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Flag that protects the instance group from accidental deletion.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// The deployment policy of the instance group. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The deployment policy of the instance group. (see below for nested schema)
+	// The deployment policy of the instance group.
 	DeployPolicy []DeployPolicyObservation `json:"deployPolicy,omitempty" tf:"deploy_policy,omitempty"`
 
-	// A description of the instance group.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder that the resources belong to.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// Health check specifications. The structure is documented below.
+	// (Block List) Health check specifications. (see below for nested schema)
+	// Health check specifications.
 	HealthCheck []HealthCheckObservation `json:"healthCheck,omitempty" tf:"health_check,omitempty"`
 
-	// The ID of the instance group.
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The template for creating new instances. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The template for creating new instances. (see below for nested schema)
+	// The template for creating new instances.
 	InstanceTemplate []InstanceTemplateObservation `json:"instanceTemplate,omitempty" tf:"instance_template,omitempty"`
 
+	// (List of Object) Instances block. (see below for nested schema)
+	// Instances block.
 	Instances []InstancesObservation `json:"instances,omitempty" tf:"instances,omitempty"`
 
-	// A set of key/value label pairs to assign to the instance group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Load balancing specifications. The structure is documented below.
+	// (Block List, Max: 1) Load balancing specifications. (see below for nested schema)
+	// Load balancing specifications.
 	LoadBalancer []LoadBalancerObservation `json:"loadBalancer,omitempty" tf:"load_balancer,omitempty"`
 
+	// (Number) Timeout for waiting for the VM to become healthy. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	// Timeout for waiting for the VM to become healthy. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	MaxCheckingHealthDuration *float64 `json:"maxCheckingHealthDuration,omitempty" tf:"max_checking_health_duration,omitempty"`
 
-	// The name of the instance group.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The scaling policy of the instance group. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The scaling policy of the instance group.
+	// The scaling policy of the instance group.
+	//
+	// ~> Either `fixed_scale` or `auto_scale` must be specified.
 	ScalePolicy []ScalePolicyObservation `json:"scalePolicy,omitempty" tf:"scale_policy,omitempty"`
 
-	// The ID of the service account authorized for this instance group.
+	// (String) Service account which linked to the resource.
+	// [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
+	// (String) The status of the instance.
 	// The status of the instance.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
+	// (Map of String) A set of key/value variables pairs to assign to the instance group.
 	// A set of key/value variables pairs to assign to the instance group.
 	// +mapType=granular
 	Variables map[string]*string `json:"variables,omitempty" tf:"variables,omitempty"`
@@ -684,27 +853,33 @@ type InstanceGroupObservation struct {
 
 type InstanceGroupParameters struct {
 
-	// The allocation policy of the instance group by zone and region. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The allocation policy of the instance group by zone and region. (see below for nested schema)
+	// The allocation policy of the instance group by zone and region.
 	// +kubebuilder:validation:Optional
 	AllocationPolicy []AllocationPolicyParameters `json:"allocationPolicy,omitempty" tf:"allocation_policy,omitempty"`
 
-	// Application Load balancing (L7) specifications. The structure is documented below.
+	// (Block List, Max: 1) Application Load balancing (L7) specifications. (see below for nested schema)
+	// Application Load balancing (L7) specifications.
 	// +kubebuilder:validation:Optional
 	ApplicationLoadBalancer []ApplicationLoadBalancerParameters `json:"applicationLoadBalancer,omitempty" tf:"application_load_balancer,omitempty"`
 
-	// Flag that protects the instance group from accidental deletion.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// The deployment policy of the instance group. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The deployment policy of the instance group. (see below for nested schema)
+	// The deployment policy of the instance group.
 	// +kubebuilder:validation:Optional
 	DeployPolicy []DeployPolicyParameters `json:"deployPolicy,omitempty" tf:"deploy_policy,omitempty"`
 
-	// A description of the instance group.
+	// (String) The resource description.
+	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder that the resources belong to.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -717,36 +892,46 @@ type InstanceGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Health check specifications. The structure is documented below.
+	// (Block List) Health check specifications. (see below for nested schema)
+	// Health check specifications.
 	// +kubebuilder:validation:Optional
 	HealthCheck []HealthCheckParameters `json:"healthCheck,omitempty" tf:"health_check,omitempty"`
 
-	// The template for creating new instances. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The template for creating new instances. (see below for nested schema)
+	// The template for creating new instances.
 	// +kubebuilder:validation:Optional
 	InstanceTemplate []InstanceTemplateParameters `json:"instanceTemplate,omitempty" tf:"instance_template,omitempty"`
 
-	// A set of key/value label pairs to assign to the instance group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Load balancing specifications. The structure is documented below.
+	// (Block List, Max: 1) Load balancing specifications. (see below for nested schema)
+	// Load balancing specifications.
 	// +kubebuilder:validation:Optional
 	LoadBalancer []LoadBalancerParameters `json:"loadBalancer,omitempty" tf:"load_balancer,omitempty"`
 
+	// (Number) Timeout for waiting for the VM to become healthy. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	// Timeout for waiting for the VM to become healthy. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	// +kubebuilder:validation:Optional
 	MaxCheckingHealthDuration *float64 `json:"maxCheckingHealthDuration,omitempty" tf:"max_checking_health_duration,omitempty"`
 
-	// The name of the instance group.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The scaling policy of the instance group. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The scaling policy of the instance group.
+	// The scaling policy of the instance group.
+	//
+	// ~> Either `fixed_scale` or `auto_scale` must be specified.
 	// +kubebuilder:validation:Optional
 	ScalePolicy []ScalePolicyParameters `json:"scalePolicy,omitempty" tf:"scale_policy,omitempty"`
 
-	// The ID of the service account authorized for this instance group.
+	// (String) Service account which linked to the resource.
+	// [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
@@ -759,6 +944,7 @@ type InstanceGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
+	// (Map of String) A set of key/value variables pairs to assign to the instance group.
 	// A set of key/value variables pairs to assign to the instance group.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
@@ -767,28 +953,34 @@ type InstanceGroupParameters struct {
 
 type InstanceTagsPoolInitParameters struct {
 
+	// (List of String) List of tags for instances in zone.
 	// List of tags for instances in zone.
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
+	// (String) Availability zone.
 	// Availability zone.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type InstanceTagsPoolObservation struct {
 
+	// (List of String) List of tags for instances in zone.
 	// List of tags for instances in zone.
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
+	// (String) Availability zone.
 	// Availability zone.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type InstanceTagsPoolParameters struct {
 
+	// (List of String) List of tags for instances in zone.
 	// List of tags for instances in zone.
 	// +kubebuilder:validation:Optional
 	Tags []*string `json:"tags" tf:"tags,omitempty"`
 
+	// (String) Availability zone.
 	// Availability zone.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone" tf:"zone,omitempty"`
@@ -796,10 +988,12 @@ type InstanceTagsPoolParameters struct {
 
 type InstanceTemplateBootDiskInitParameters struct {
 
-	// This value can be used to reference the device under /dev/disk/by-id/.
+	// id/.
+	// This value can be used to reference the device under `/dev/disk/by-id/`.
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
-	// ID of the existing disk. To set use variables.
+	// (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+	// The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Disk
 	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
 
@@ -811,41 +1005,55 @@ type InstanceTemplateBootDiskInitParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskIDSelector *v1.Selector `json:"diskIdSelector,omitempty" tf:"-"`
 
-	// Parameters used for creating a disk alongside the instance. The structure is documented below.
+	// (Block List, Max: 1) Parameters for creating a disk alongside the instance.
+	// Parameters for creating a disk alongside the instance.
+	//
+	// ~> `image_id` or `snapshot_id` must be specified.
 	InitializeParams []BootDiskInitializeParamsInitParameters `json:"initializeParams,omitempty" tf:"initialize_params,omitempty"`
 
-	// The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// (String) The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// The access mode to the disk resource. By default a disk is attached in `READ_WRITE` mode.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
+	// (String) The resource name.
 	// When set can be later used to change DiskSpec of actual disk.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type InstanceTemplateBootDiskObservation struct {
 
-	// This value can be used to reference the device under /dev/disk/by-id/.
+	// id/.
+	// This value can be used to reference the device under `/dev/disk/by-id/`.
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
-	// ID of the existing disk. To set use variables.
+	// (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+	// The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
 	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
 
-	// Parameters used for creating a disk alongside the instance. The structure is documented below.
+	// (Block List, Max: 1) Parameters for creating a disk alongside the instance.
+	// Parameters for creating a disk alongside the instance.
+	//
+	// ~> `image_id` or `snapshot_id` must be specified.
 	InitializeParams []BootDiskInitializeParamsObservation `json:"initializeParams,omitempty" tf:"initialize_params,omitempty"`
 
-	// The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// (String) The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// The access mode to the disk resource. By default a disk is attached in `READ_WRITE` mode.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
+	// (String) The resource name.
 	// When set can be later used to change DiskSpec of actual disk.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type InstanceTemplateBootDiskParameters struct {
 
-	// This value can be used to reference the device under /dev/disk/by-id/.
+	// id/.
+	// This value can be used to reference the device under `/dev/disk/by-id/`.
 	// +kubebuilder:validation:Optional
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
-	// ID of the existing disk. To set use variables.
+	// (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+	// The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Disk
 	// +kubebuilder:validation:Optional
 	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
@@ -858,14 +1066,19 @@ type InstanceTemplateBootDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskIDSelector *v1.Selector `json:"diskIdSelector,omitempty" tf:"-"`
 
-	// Parameters used for creating a disk alongside the instance. The structure is documented below.
+	// (Block List, Max: 1) Parameters for creating a disk alongside the instance.
+	// Parameters for creating a disk alongside the instance.
+	//
+	// ~> `image_id` or `snapshot_id` must be specified.
 	// +kubebuilder:validation:Optional
 	InitializeParams []BootDiskInitializeParamsParameters `json:"initializeParams,omitempty" tf:"initialize_params,omitempty"`
 
-	// The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// (String) The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// The access mode to the disk resource. By default a disk is attached in `READ_WRITE` mode.
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
+	// (String) The resource name.
 	// When set can be later used to change DiskSpec of actual disk.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -873,9 +1086,11 @@ type InstanceTemplateBootDiskParameters struct {
 
 type InstanceTemplateFilesystemInitParameters struct {
 
-	// This value can be used to reference the device under /dev/disk/by-id/.
+	// id/.
+	// Name of the device representing the filesystem on the instance.
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
+	// (String) ID of the filesystem that should be attached.
 	// ID of the filesystem that should be attached.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Filesystem
 	FilesystemID *string `json:"filesystemId,omitempty" tf:"filesystem_id,omitempty"`
@@ -888,28 +1103,34 @@ type InstanceTemplateFilesystemInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FilesystemIDSelector *v1.Selector `json:"filesystemIdSelector,omitempty" tf:"-"`
 
-	// The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// (String) The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// Mode of access to the filesystem that should be attached. By default, filesystem is attached in `READ_WRITE` mode.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 }
 
 type InstanceTemplateFilesystemObservation struct {
 
-	// This value can be used to reference the device under /dev/disk/by-id/.
+	// id/.
+	// Name of the device representing the filesystem on the instance.
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
+	// (String) ID of the filesystem that should be attached.
 	// ID of the filesystem that should be attached.
 	FilesystemID *string `json:"filesystemId,omitempty" tf:"filesystem_id,omitempty"`
 
-	// The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// (String) The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// Mode of access to the filesystem that should be attached. By default, filesystem is attached in `READ_WRITE` mode.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 }
 
 type InstanceTemplateFilesystemParameters struct {
 
-	// This value can be used to reference the device under /dev/disk/by-id/.
+	// id/.
+	// Name of the device representing the filesystem on the instance.
 	// +kubebuilder:validation:Optional
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
+	// (String) ID of the filesystem that should be attached.
 	// ID of the filesystem that should be attached.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Filesystem
 	// +kubebuilder:validation:Optional
@@ -923,145 +1144,192 @@ type InstanceTemplateFilesystemParameters struct {
 	// +kubebuilder:validation:Optional
 	FilesystemIDSelector *v1.Selector `json:"filesystemIdSelector,omitempty" tf:"-"`
 
-	// The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// (String) The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// Mode of access to the filesystem that should be attached. By default, filesystem is attached in `READ_WRITE` mode.
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 }
 
 type InstanceTemplateInitParameters struct {
 
-	// Boot disk specifications for the instance. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Boot disk specifications for the instance. (see below for nested schema)
+	// Boot disk specifications for the instance.
 	BootDisk []InstanceTemplateBootDiskInitParameters `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
 
+	// (String) The resource description.
 	// A description of the instance.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of filesystems to attach to the instance. The structure is documented below.
+	// (Block Set) List of filesystems to attach to the instance. (see below for nested schema)
+	// List of filesystems to attach to the instance.
 	Filesystem []InstanceTemplateFilesystemInitParameters `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
 
-	// Hostname template for the instance.
-	// This field is used to generate the FQDN value of instance.
-	// The hostname must be unique within the network and region.
-	// If not specified, the hostname will be equal to id of the instance
-	// and FQDN will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
+	// (String) Hostname template for the instance. This field is used to generate the FQDN value of instance. The hostname must be unique within the network and region. If not specified, the hostname will be equal to id of the instance and FQDN will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
 	// In order to be unique it must contain at least on of instance unique placeholders:
-	// {instance.short_id}
-	// {instance.index}
-	// combination of {instance.zone_id} and {instance.index_in_zone}
-	// Example: my-instance-{instance.index}
-	// If not set, name value will be used
-	// It may also contain another placeholders, see metadata doc for full list.
+	// Hostname template for the instance. This field is used to generate the FQDN value of instance. The `hostname` must be unique within the network and region. If not specified, the hostname will be equal to `id` of the instance and FQDN will be `<id>.auto.internal`. Otherwise FQDN will be `<hostname>.<region_id>.internal`.
+	// In order to be unique it must contain at least on of instance unique placeholders:
+	// * `{instance.short_id}`
+	// * {instance.index}
+	// * combination of `{instance.zone_id}` and `{instance.index_in_zone}`
+	// Example: `my-instance-{instance.index}`. If hostname is not set, `name` value will be used. It may also contain another placeholders, see `metadata` doc for full list.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
+	// (Map of String) A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs to assign to the instance.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Map of String) A set of metadata key/value pairs to make available from within the instance.
 	// A set of metadata key/value pairs to make available from within the instance.
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
+	// (Block List, Max: 1) Options allow user to configure access to managed instances metadata (see below for nested schema)
 	// Options allow user to configure access to managed instances metadata
 	MetadataOptions []InstanceTemplateMetadataOptionsInitParameters `json:"metadataOptions,omitempty" tf:"metadata_options,omitempty"`
 
+	// (String) The resource name.
 	// Name template of the instance.
-	// In order to be unique it must contain at least one of instance unique placeholders:
-	// {instance.short_id}
-	// {instance.index}
-	// combination of {instance.zone_id} and {instance.index_in_zone}
-	// Example: my-instance-{instance.index}
-	// If not set, default is used: {instance_group.id}-{instance.short_id}
-	// It may also contain another placeholders, see metadata doc for full list.
+	// In order to be unique it must contain at least one of instance unique placeholders:*`{instance.short_id}`
+	// * `{instance.index}`
+	// * combination of `{instance.zone_id}` and`{instance.index_in_zone}`.
+	// Example: `my-instance-{instance.index}`.
+	// If not set, default name is used: `{instance_group.id}-{instance.short_id}`. It may also contain another placeholders, see `metadata` doc for full list.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Network specifications for the instance. This can be used multiple times for adding multiple interfaces. The structure is documented below.
+	// (Block List, Min: 1) Network specifications for the instance. This can be used multiple times for adding multiple interfaces. (see below for nested schema)
+	// Network specifications for the instance. This can be used multiple times for adding multiple interfaces.
 	NetworkInterface []InstanceTemplateNetworkInterfaceInitParameters `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
 
-	// Network acceleration type for instance. The structure is documented below.
+	// (Block List) Network acceleration type for instance. (see below for nested schema)
+	// Network acceleration type for instance.
 	NetworkSettings []NetworkSettingsInitParameters `json:"networkSettings,omitempty" tf:"network_settings,omitempty"`
 
-	// The placement policy configuration. The structure is documented below.
+	// (Block List, Max: 1) The placement policy configuration. (see below for nested schema)
+	// The placement policy configuration.
 	PlacementPolicy []InstanceTemplatePlacementPolicyInitParameters `json:"placementPolicy,omitempty" tf:"placement_policy,omitempty"`
 
-	// The ID of the hardware platform configuration for the instance. The default is 'standard-v1'.
+	// (String) The ID of the hardware platform configuration for the instance.
+	// The ID of the hardware platform configuration for the instance.
 	PlatformID *string `json:"platformId,omitempty" tf:"platform_id,omitempty"`
 
-	// Compute resource specifications for the instance. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Compute resource specifications for the instance. (see below for nested schema)
+	// Compute resource specifications for the instance.
 	Resources []InstanceTemplateResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// The scheduling policy configuration. The structure is documented below.
+	// (Block List, Max: 1) The scheduling policy configuration. (see below for nested schema)
+	// The scheduling policy configuration.
 	SchedulingPolicy []InstanceTemplateSchedulingPolicyInitParameters `json:"schedulingPolicy,omitempty" tf:"scheduling_policy,omitempty"`
 
-	// A list of disks to attach to the instance. The structure is documented below.
+	// (Block List) A list of disks to attach to the instance. (see below for nested schema)
+	// A list of disks to attach to the instance.
 	SecondaryDisk []InstanceTemplateSecondaryDiskInitParameters `json:"secondaryDisk,omitempty" tf:"secondary_disk,omitempty"`
 
+	// (String) Service account which linked to the resource.
 	// The ID of the service account authorized for this instance.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 }
 
 type InstanceTemplateMetadataOptionsInitParameters struct {
+
+	// (Number) Enables access to AWS flavored metadata (IMDSv1). Possible values: 0, 1 for enabled and 2 for disabled.
+	// Enables access to AWS flavored metadata (IMDSv1). Possible values: `0`, `1` for `enabled` and `2` for `disabled`.
 	AwsV1HTTPEndpoint *float64 `json:"awsV1HttpEndpoint,omitempty" tf:"aws_v1_http_endpoint,omitempty"`
 
+	// (Number) Enables access to IAM credentials with AWS flavored metadata (IMDSv1). Possible values: 0, 1 for enabled and 2 for disabled.
+	// Enables access to IAM credentials with AWS flavored metadata (IMDSv1). Possible values: `0`, `1` for `enabled` and `2` for `disabled`.
 	AwsV1HTTPToken *float64 `json:"awsV1HttpToken,omitempty" tf:"aws_v1_http_token,omitempty"`
 
+	// (Number) Enables access to GCE flavored metadata. Possible values: 0, 1 for enabled and 2 for disabled.
+	// Enables access to GCE flavored metadata. Possible values: `0`, `1` for `enabled` and `2` for `disabled`.
 	GceHTTPEndpoint *float64 `json:"gceHttpEndpoint,omitempty" tf:"gce_http_endpoint,omitempty"`
 
+	// (Number) Enables access to IAM credentials with GCE flavored metadata. Possible values: 0, 1 for enabled and 2 for disabled.
+	// Enables access to IAM credentials with GCE flavored metadata. Possible values: `0`, `1` for `enabled` and `2` for `disabled`.
 	GceHTTPToken *float64 `json:"gceHttpToken,omitempty" tf:"gce_http_token,omitempty"`
 }
 
 type InstanceTemplateMetadataOptionsObservation struct {
+
+	// (Number) Enables access to AWS flavored metadata (IMDSv1). Possible values: 0, 1 for enabled and 2 for disabled.
+	// Enables access to AWS flavored metadata (IMDSv1). Possible values: `0`, `1` for `enabled` and `2` for `disabled`.
 	AwsV1HTTPEndpoint *float64 `json:"awsV1HttpEndpoint,omitempty" tf:"aws_v1_http_endpoint,omitempty"`
 
+	// (Number) Enables access to IAM credentials with AWS flavored metadata (IMDSv1). Possible values: 0, 1 for enabled and 2 for disabled.
+	// Enables access to IAM credentials with AWS flavored metadata (IMDSv1). Possible values: `0`, `1` for `enabled` and `2` for `disabled`.
 	AwsV1HTTPToken *float64 `json:"awsV1HttpToken,omitempty" tf:"aws_v1_http_token,omitempty"`
 
+	// (Number) Enables access to GCE flavored metadata. Possible values: 0, 1 for enabled and 2 for disabled.
+	// Enables access to GCE flavored metadata. Possible values: `0`, `1` for `enabled` and `2` for `disabled`.
 	GceHTTPEndpoint *float64 `json:"gceHttpEndpoint,omitempty" tf:"gce_http_endpoint,omitempty"`
 
+	// (Number) Enables access to IAM credentials with GCE flavored metadata. Possible values: 0, 1 for enabled and 2 for disabled.
+	// Enables access to IAM credentials with GCE flavored metadata. Possible values: `0`, `1` for `enabled` and `2` for `disabled`.
 	GceHTTPToken *float64 `json:"gceHttpToken,omitempty" tf:"gce_http_token,omitempty"`
 }
 
 type InstanceTemplateMetadataOptionsParameters struct {
 
+	// (Number) Enables access to AWS flavored metadata (IMDSv1). Possible values: 0, 1 for enabled and 2 for disabled.
+	// Enables access to AWS flavored metadata (IMDSv1). Possible values: `0`, `1` for `enabled` and `2` for `disabled`.
 	// +kubebuilder:validation:Optional
 	AwsV1HTTPEndpoint *float64 `json:"awsV1HttpEndpoint,omitempty" tf:"aws_v1_http_endpoint,omitempty"`
 
+	// (Number) Enables access to IAM credentials with AWS flavored metadata (IMDSv1). Possible values: 0, 1 for enabled and 2 for disabled.
+	// Enables access to IAM credentials with AWS flavored metadata (IMDSv1). Possible values: `0`, `1` for `enabled` and `2` for `disabled`.
 	// +kubebuilder:validation:Optional
 	AwsV1HTTPToken *float64 `json:"awsV1HttpToken,omitempty" tf:"aws_v1_http_token,omitempty"`
 
+	// (Number) Enables access to GCE flavored metadata. Possible values: 0, 1 for enabled and 2 for disabled.
+	// Enables access to GCE flavored metadata. Possible values: `0`, `1` for `enabled` and `2` for `disabled`.
 	// +kubebuilder:validation:Optional
 	GceHTTPEndpoint *float64 `json:"gceHttpEndpoint,omitempty" tf:"gce_http_endpoint,omitempty"`
 
+	// (Number) Enables access to IAM credentials with GCE flavored metadata. Possible values: 0, 1 for enabled and 2 for disabled.
+	// Enables access to IAM credentials with GCE flavored metadata. Possible values: `0`, `1` for `enabled` and `2` for `disabled`.
 	// +kubebuilder:validation:Optional
 	GceHTTPToken *float64 `json:"gceHttpToken,omitempty" tf:"gce_http_token,omitempty"`
 }
 
 type InstanceTemplateNetworkInterfaceInitParameters struct {
 
-	// List of dns records. The structure is documented below.
+	// (Block List) List of DNS records. (see below for nested schema)
+	// List of DNS records.
 	DNSRecord []NetworkInterfaceDNSRecordInitParameters `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
+	// (String) Manual set static IP address.
 	// Manual set static IP address.
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// True if IPv4 address allocated for the network interface.
+	// (Boolean) Allocate an IPv4 address for the interface. The default value is true.
+	// Allocate an IPv4 address for the interface. The default value is `true`.
 	IPv4 *bool `json:"ipv4,omitempty" tf:"ipv4,omitempty"`
 
+	// (Boolean) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+	// If `true`, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
+	// (String) Manual set static IPv6 address.
 	// Manual set static IPv6 address.
 	IPv6Address *string `json:"ipv6Address,omitempty" tf:"ipv6_address,omitempty"`
 
-	// List of ipv6 dns records. The structure is documented below.
+	// (Block List) List of IPv6 DNS records. (see below for nested schema)
+	// List of IPv6 DNS records.
 	IPv6DNSRecord []NetworkInterfaceIPv6DNSRecordInitParameters `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
 
+	// (Boolean) Flag for using NAT.
 	// Flag for using NAT.
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
-	// List of nat dns records. The structure is documented below.
+	// (Block List) List of NAT DNS records. (see below for nested schema)
+	// List of NAT DNS records.
 	NATDNSRecord []NetworkInterfaceNATDNSRecordInitParameters `json:"natDnsRecord,omitempty" tf:"nat_dns_record,omitempty"`
 
-	// A public address that can be used to access the internet over NAT. Use variables to set.
+	// (String) A public address that can be used to access the internet over NAT. Use variables to set.
+	// A public address that can be used to access the internet over NAT. Use `variables` to set.
 	NATIPAddress *string `json:"natIpAddress,omitempty" tf:"nat_ip_address,omitempty"`
 
+	// (String) The ID of the network.
 	// The ID of the network.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -1074,7 +1342,8 @@ type InstanceTemplateNetworkInterfaceInitParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// Security group ids for network interface.
+	// (Set of String) Security group (SG) IDs for network interface.
+	// Security group (SG) `IDs` for network interface.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
@@ -1087,6 +1356,7 @@ type InstanceTemplateNetworkInterfaceInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
+	// (Set of String) The ID of the subnets to attach this interface to.
 	// The ID of the subnets to attach this interface to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +listType=set
@@ -1103,39 +1373,52 @@ type InstanceTemplateNetworkInterfaceInitParameters struct {
 
 type InstanceTemplateNetworkInterfaceObservation struct {
 
-	// List of dns records. The structure is documented below.
+	// (Block List) List of DNS records. (see below for nested schema)
+	// List of DNS records.
 	DNSRecord []NetworkInterfaceDNSRecordObservation `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
+	// (String) Manual set static IP address.
 	// Manual set static IP address.
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// True if IPv4 address allocated for the network interface.
+	// (Boolean) Allocate an IPv4 address for the interface. The default value is true.
+	// Allocate an IPv4 address for the interface. The default value is `true`.
 	IPv4 *bool `json:"ipv4,omitempty" tf:"ipv4,omitempty"`
 
+	// (Boolean) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+	// If `true`, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
+	// (String) Manual set static IPv6 address.
 	// Manual set static IPv6 address.
 	IPv6Address *string `json:"ipv6Address,omitempty" tf:"ipv6_address,omitempty"`
 
-	// List of ipv6 dns records. The structure is documented below.
+	// (Block List) List of IPv6 DNS records. (see below for nested schema)
+	// List of IPv6 DNS records.
 	IPv6DNSRecord []NetworkInterfaceIPv6DNSRecordObservation `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
 
+	// (Boolean) Flag for using NAT.
 	// Flag for using NAT.
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
-	// List of nat dns records. The structure is documented below.
+	// (Block List) List of NAT DNS records. (see below for nested schema)
+	// List of NAT DNS records.
 	NATDNSRecord []NetworkInterfaceNATDNSRecordObservation `json:"natDnsRecord,omitempty" tf:"nat_dns_record,omitempty"`
 
-	// A public address that can be used to access the internet over NAT. Use variables to set.
+	// (String) A public address that can be used to access the internet over NAT. Use variables to set.
+	// A public address that can be used to access the internet over NAT. Use `variables` to set.
 	NATIPAddress *string `json:"natIpAddress,omitempty" tf:"nat_ip_address,omitempty"`
 
+	// (String) The ID of the network.
 	// The ID of the network.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// Security group ids for network interface.
+	// (Set of String) Security group (SG) IDs for network interface.
+	// Security group (SG) `IDs` for network interface.
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
+	// (Set of String) The ID of the subnets to attach this interface to.
 	// The ID of the subnets to attach this interface to.
 	// +listType=set
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
@@ -1143,41 +1426,52 @@ type InstanceTemplateNetworkInterfaceObservation struct {
 
 type InstanceTemplateNetworkInterfaceParameters struct {
 
-	// List of dns records. The structure is documented below.
+	// (Block List) List of DNS records. (see below for nested schema)
+	// List of DNS records.
 	// +kubebuilder:validation:Optional
 	DNSRecord []NetworkInterfaceDNSRecordParameters `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
+	// (String) Manual set static IP address.
 	// Manual set static IP address.
 	// +kubebuilder:validation:Optional
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// True if IPv4 address allocated for the network interface.
+	// (Boolean) Allocate an IPv4 address for the interface. The default value is true.
+	// Allocate an IPv4 address for the interface. The default value is `true`.
 	// +kubebuilder:validation:Optional
 	IPv4 *bool `json:"ipv4,omitempty" tf:"ipv4,omitempty"`
 
+	// (Boolean) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+	// If `true`, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
 	// +kubebuilder:validation:Optional
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
+	// (String) Manual set static IPv6 address.
 	// Manual set static IPv6 address.
 	// +kubebuilder:validation:Optional
 	IPv6Address *string `json:"ipv6Address,omitempty" tf:"ipv6_address,omitempty"`
 
-	// List of ipv6 dns records. The structure is documented below.
+	// (Block List) List of IPv6 DNS records. (see below for nested schema)
+	// List of IPv6 DNS records.
 	// +kubebuilder:validation:Optional
 	IPv6DNSRecord []NetworkInterfaceIPv6DNSRecordParameters `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
 
+	// (Boolean) Flag for using NAT.
 	// Flag for using NAT.
 	// +kubebuilder:validation:Optional
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
-	// List of nat dns records. The structure is documented below.
+	// (Block List) List of NAT DNS records. (see below for nested schema)
+	// List of NAT DNS records.
 	// +kubebuilder:validation:Optional
 	NATDNSRecord []NetworkInterfaceNATDNSRecordParameters `json:"natDnsRecord,omitempty" tf:"nat_dns_record,omitempty"`
 
-	// A public address that can be used to access the internet over NAT. Use variables to set.
+	// (String) A public address that can be used to access the internet over NAT. Use variables to set.
+	// A public address that can be used to access the internet over NAT. Use `variables` to set.
 	// +kubebuilder:validation:Optional
 	NATIPAddress *string `json:"natIpAddress,omitempty" tf:"nat_ip_address,omitempty"`
 
+	// (String) The ID of the network.
 	// The ID of the network.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
@@ -1191,7 +1485,8 @@ type InstanceTemplateNetworkInterfaceParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// Security group ids for network interface.
+	// (Set of String) Security group (SG) IDs for network interface.
+	// Security group (SG) `IDs` for network interface.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	// +listType=set
@@ -1205,6 +1500,7 @@ type InstanceTemplateNetworkInterfaceParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
+	// (Set of String) The ID of the subnets to attach this interface to.
 	// The ID of the subnets to attach this interface to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
@@ -1222,157 +1518,175 @@ type InstanceTemplateNetworkInterfaceParameters struct {
 
 type InstanceTemplateObservation struct {
 
-	// Boot disk specifications for the instance. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Boot disk specifications for the instance. (see below for nested schema)
+	// Boot disk specifications for the instance.
 	BootDisk []InstanceTemplateBootDiskObservation `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
 
+	// (String) The resource description.
 	// A description of the instance.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of filesystems to attach to the instance. The structure is documented below.
+	// (Block Set) List of filesystems to attach to the instance. (see below for nested schema)
+	// List of filesystems to attach to the instance.
 	Filesystem []InstanceTemplateFilesystemObservation `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
 
-	// Hostname template for the instance.
-	// This field is used to generate the FQDN value of instance.
-	// The hostname must be unique within the network and region.
-	// If not specified, the hostname will be equal to id of the instance
-	// and FQDN will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
+	// (String) Hostname template for the instance. This field is used to generate the FQDN value of instance. The hostname must be unique within the network and region. If not specified, the hostname will be equal to id of the instance and FQDN will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
 	// In order to be unique it must contain at least on of instance unique placeholders:
-	// {instance.short_id}
-	// {instance.index}
-	// combination of {instance.zone_id} and {instance.index_in_zone}
-	// Example: my-instance-{instance.index}
-	// If not set, name value will be used
-	// It may also contain another placeholders, see metadata doc for full list.
+	// Hostname template for the instance. This field is used to generate the FQDN value of instance. The `hostname` must be unique within the network and region. If not specified, the hostname will be equal to `id` of the instance and FQDN will be `<id>.auto.internal`. Otherwise FQDN will be `<hostname>.<region_id>.internal`.
+	// In order to be unique it must contain at least on of instance unique placeholders:
+	// * `{instance.short_id}`
+	// * {instance.index}
+	// * combination of `{instance.zone_id}` and `{instance.index_in_zone}`
+	// Example: `my-instance-{instance.index}`. If hostname is not set, `name` value will be used. It may also contain another placeholders, see `metadata` doc for full list.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
+	// (Map of String) A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs to assign to the instance.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Map of String) A set of metadata key/value pairs to make available from within the instance.
 	// A set of metadata key/value pairs to make available from within the instance.
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
+	// (Block List, Max: 1) Options allow user to configure access to managed instances metadata (see below for nested schema)
 	// Options allow user to configure access to managed instances metadata
 	MetadataOptions []InstanceTemplateMetadataOptionsObservation `json:"metadataOptions,omitempty" tf:"metadata_options,omitempty"`
 
+	// (String) The resource name.
 	// Name template of the instance.
-	// In order to be unique it must contain at least one of instance unique placeholders:
-	// {instance.short_id}
-	// {instance.index}
-	// combination of {instance.zone_id} and {instance.index_in_zone}
-	// Example: my-instance-{instance.index}
-	// If not set, default is used: {instance_group.id}-{instance.short_id}
-	// It may also contain another placeholders, see metadata doc for full list.
+	// In order to be unique it must contain at least one of instance unique placeholders:*`{instance.short_id}`
+	// * `{instance.index}`
+	// * combination of `{instance.zone_id}` and`{instance.index_in_zone}`.
+	// Example: `my-instance-{instance.index}`.
+	// If not set, default name is used: `{instance_group.id}-{instance.short_id}`. It may also contain another placeholders, see `metadata` doc for full list.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Network specifications for the instance. This can be used multiple times for adding multiple interfaces. The structure is documented below.
+	// (Block List, Min: 1) Network specifications for the instance. This can be used multiple times for adding multiple interfaces. (see below for nested schema)
+	// Network specifications for the instance. This can be used multiple times for adding multiple interfaces.
 	NetworkInterface []InstanceTemplateNetworkInterfaceObservation `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
 
-	// Network acceleration type for instance. The structure is documented below.
+	// (Block List) Network acceleration type for instance. (see below for nested schema)
+	// Network acceleration type for instance.
 	NetworkSettings []NetworkSettingsObservation `json:"networkSettings,omitempty" tf:"network_settings,omitempty"`
 
-	// The placement policy configuration. The structure is documented below.
+	// (Block List, Max: 1) The placement policy configuration. (see below for nested schema)
+	// The placement policy configuration.
 	PlacementPolicy []InstanceTemplatePlacementPolicyObservation `json:"placementPolicy,omitempty" tf:"placement_policy,omitempty"`
 
-	// The ID of the hardware platform configuration for the instance. The default is 'standard-v1'.
+	// (String) The ID of the hardware platform configuration for the instance.
+	// The ID of the hardware platform configuration for the instance.
 	PlatformID *string `json:"platformId,omitempty" tf:"platform_id,omitempty"`
 
-	// Compute resource specifications for the instance. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Compute resource specifications for the instance. (see below for nested schema)
+	// Compute resource specifications for the instance.
 	Resources []InstanceTemplateResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// The scheduling policy configuration. The structure is documented below.
+	// (Block List, Max: 1) The scheduling policy configuration. (see below for nested schema)
+	// The scheduling policy configuration.
 	SchedulingPolicy []InstanceTemplateSchedulingPolicyObservation `json:"schedulingPolicy,omitempty" tf:"scheduling_policy,omitempty"`
 
-	// A list of disks to attach to the instance. The structure is documented below.
+	// (Block List) A list of disks to attach to the instance. (see below for nested schema)
+	// A list of disks to attach to the instance.
 	SecondaryDisk []InstanceTemplateSecondaryDiskObservation `json:"secondaryDisk,omitempty" tf:"secondary_disk,omitempty"`
 
+	// (String) Service account which linked to the resource.
 	// The ID of the service account authorized for this instance.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 }
 
 type InstanceTemplateParameters struct {
 
-	// Boot disk specifications for the instance. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Boot disk specifications for the instance. (see below for nested schema)
+	// Boot disk specifications for the instance.
 	// +kubebuilder:validation:Optional
 	BootDisk []InstanceTemplateBootDiskParameters `json:"bootDisk" tf:"boot_disk,omitempty"`
 
+	// (String) The resource description.
 	// A description of the instance.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of filesystems to attach to the instance. The structure is documented below.
+	// (Block Set) List of filesystems to attach to the instance. (see below for nested schema)
+	// List of filesystems to attach to the instance.
 	// +kubebuilder:validation:Optional
 	Filesystem []InstanceTemplateFilesystemParameters `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
 
-	// Hostname template for the instance.
-	// This field is used to generate the FQDN value of instance.
-	// The hostname must be unique within the network and region.
-	// If not specified, the hostname will be equal to id of the instance
-	// and FQDN will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
+	// (String) Hostname template for the instance. This field is used to generate the FQDN value of instance. The hostname must be unique within the network and region. If not specified, the hostname will be equal to id of the instance and FQDN will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
 	// In order to be unique it must contain at least on of instance unique placeholders:
-	// {instance.short_id}
-	// {instance.index}
-	// combination of {instance.zone_id} and {instance.index_in_zone}
-	// Example: my-instance-{instance.index}
-	// If not set, name value will be used
-	// It may also contain another placeholders, see metadata doc for full list.
+	// Hostname template for the instance. This field is used to generate the FQDN value of instance. The `hostname` must be unique within the network and region. If not specified, the hostname will be equal to `id` of the instance and FQDN will be `<id>.auto.internal`. Otherwise FQDN will be `<hostname>.<region_id>.internal`.
+	// In order to be unique it must contain at least on of instance unique placeholders:
+	// * `{instance.short_id}`
+	// * {instance.index}
+	// * combination of `{instance.zone_id}` and `{instance.index_in_zone}`
+	// Example: `my-instance-{instance.index}`. If hostname is not set, `name` value will be used. It may also contain another placeholders, see `metadata` doc for full list.
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
+	// (Map of String) A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs to assign to the instance.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (Map of String) A set of metadata key/value pairs to make available from within the instance.
 	// A set of metadata key/value pairs to make available from within the instance.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
+	// (Block List, Max: 1) Options allow user to configure access to managed instances metadata (see below for nested schema)
 	// Options allow user to configure access to managed instances metadata
 	// +kubebuilder:validation:Optional
 	MetadataOptions []InstanceTemplateMetadataOptionsParameters `json:"metadataOptions,omitempty" tf:"metadata_options,omitempty"`
 
+	// (String) The resource name.
 	// Name template of the instance.
-	// In order to be unique it must contain at least one of instance unique placeholders:
-	// {instance.short_id}
-	// {instance.index}
-	// combination of {instance.zone_id} and {instance.index_in_zone}
-	// Example: my-instance-{instance.index}
-	// If not set, default is used: {instance_group.id}-{instance.short_id}
-	// It may also contain another placeholders, see metadata doc for full list.
+	// In order to be unique it must contain at least one of instance unique placeholders:*`{instance.short_id}`
+	// * `{instance.index}`
+	// * combination of `{instance.zone_id}` and`{instance.index_in_zone}`.
+	// Example: `my-instance-{instance.index}`.
+	// If not set, default name is used: `{instance_group.id}-{instance.short_id}`. It may also contain another placeholders, see `metadata` doc for full list.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Network specifications for the instance. This can be used multiple times for adding multiple interfaces. The structure is documented below.
+	// (Block List, Min: 1) Network specifications for the instance. This can be used multiple times for adding multiple interfaces. (see below for nested schema)
+	// Network specifications for the instance. This can be used multiple times for adding multiple interfaces.
 	// +kubebuilder:validation:Optional
 	NetworkInterface []InstanceTemplateNetworkInterfaceParameters `json:"networkInterface" tf:"network_interface,omitempty"`
 
-	// Network acceleration type for instance. The structure is documented below.
+	// (Block List) Network acceleration type for instance. (see below for nested schema)
+	// Network acceleration type for instance.
 	// +kubebuilder:validation:Optional
 	NetworkSettings []NetworkSettingsParameters `json:"networkSettings,omitempty" tf:"network_settings,omitempty"`
 
-	// The placement policy configuration. The structure is documented below.
+	// (Block List, Max: 1) The placement policy configuration. (see below for nested schema)
+	// The placement policy configuration.
 	// +kubebuilder:validation:Optional
 	PlacementPolicy []InstanceTemplatePlacementPolicyParameters `json:"placementPolicy,omitempty" tf:"placement_policy,omitempty"`
 
-	// The ID of the hardware platform configuration for the instance. The default is 'standard-v1'.
+	// (String) The ID of the hardware platform configuration for the instance.
+	// The ID of the hardware platform configuration for the instance.
 	// +kubebuilder:validation:Optional
 	PlatformID *string `json:"platformId,omitempty" tf:"platform_id,omitempty"`
 
-	// Compute resource specifications for the instance. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Compute resource specifications for the instance. (see below for nested schema)
+	// Compute resource specifications for the instance.
 	// +kubebuilder:validation:Optional
 	Resources []InstanceTemplateResourcesParameters `json:"resources" tf:"resources,omitempty"`
 
-	// The scheduling policy configuration. The structure is documented below.
+	// (Block List, Max: 1) The scheduling policy configuration. (see below for nested schema)
+	// The scheduling policy configuration.
 	// +kubebuilder:validation:Optional
 	SchedulingPolicy []InstanceTemplateSchedulingPolicyParameters `json:"schedulingPolicy,omitempty" tf:"scheduling_policy,omitempty"`
 
-	// A list of disks to attach to the instance. The structure is documented below.
+	// (Block List) A list of disks to attach to the instance. (see below for nested schema)
+	// A list of disks to attach to the instance.
 	// +kubebuilder:validation:Optional
 	SecondaryDisk []InstanceTemplateSecondaryDiskParameters `json:"secondaryDisk,omitempty" tf:"secondary_disk,omitempty"`
 
+	// (String) Service account which linked to the resource.
 	// The ID of the service account authorized for this instance.
 	// +kubebuilder:validation:Optional
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
@@ -1380,6 +1694,7 @@ type InstanceTemplateParameters struct {
 
 type InstanceTemplatePlacementPolicyInitParameters struct {
 
+	// (String) Specifies the id of the Placement Group to assign to the instances.
 	// Specifies the id of the Placement Group to assign to the instances.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.PlacementGroup
 	PlacementGroupID *string `json:"placementGroupId,omitempty" tf:"placement_group_id,omitempty"`
@@ -1395,12 +1710,14 @@ type InstanceTemplatePlacementPolicyInitParameters struct {
 
 type InstanceTemplatePlacementPolicyObservation struct {
 
+	// (String) Specifies the id of the Placement Group to assign to the instances.
 	// Specifies the id of the Placement Group to assign to the instances.
 	PlacementGroupID *string `json:"placementGroupId,omitempty" tf:"placement_group_id,omitempty"`
 }
 
 type InstanceTemplatePlacementPolicyParameters struct {
 
+	// (String) Specifies the id of the Placement Group to assign to the instances.
 	// Specifies the id of the Placement Group to assign to the instances.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.PlacementGroup
 	// +kubebuilder:validation:Optional
@@ -1417,45 +1734,60 @@ type InstanceTemplatePlacementPolicyParameters struct {
 
 type InstanceTemplateResourcesInitParameters struct {
 
+	// (Number) If provided, specifies baseline core performance as a percent.
 	// If provided, specifies baseline core performance as a percent.
 	CoreFraction *float64 `json:"coreFraction,omitempty" tf:"core_fraction,omitempty"`
 
+	// (Number) The number of CPU cores for the instance.
 	// The number of CPU cores for the instance.
 	Cores *float64 `json:"cores,omitempty" tf:"cores,omitempty"`
 
+	// (Number) If provided, specifies the number of GPU devices for the instance.
+	// If provided, specifies the number of GPU devices for the instance.
 	Gpus *float64 `json:"gpus,omitempty" tf:"gpus,omitempty"`
 
+	// (Number) The memory size in GB.
 	// The memory size in GB.
 	Memory *float64 `json:"memory,omitempty" tf:"memory,omitempty"`
 }
 
 type InstanceTemplateResourcesObservation struct {
 
+	// (Number) If provided, specifies baseline core performance as a percent.
 	// If provided, specifies baseline core performance as a percent.
 	CoreFraction *float64 `json:"coreFraction,omitempty" tf:"core_fraction,omitempty"`
 
+	// (Number) The number of CPU cores for the instance.
 	// The number of CPU cores for the instance.
 	Cores *float64 `json:"cores,omitempty" tf:"cores,omitempty"`
 
+	// (Number) If provided, specifies the number of GPU devices for the instance.
+	// If provided, specifies the number of GPU devices for the instance.
 	Gpus *float64 `json:"gpus,omitempty" tf:"gpus,omitempty"`
 
+	// (Number) The memory size in GB.
 	// The memory size in GB.
 	Memory *float64 `json:"memory,omitempty" tf:"memory,omitempty"`
 }
 
 type InstanceTemplateResourcesParameters struct {
 
+	// (Number) If provided, specifies baseline core performance as a percent.
 	// If provided, specifies baseline core performance as a percent.
 	// +kubebuilder:validation:Optional
 	CoreFraction *float64 `json:"coreFraction,omitempty" tf:"core_fraction,omitempty"`
 
+	// (Number) The number of CPU cores for the instance.
 	// The number of CPU cores for the instance.
 	// +kubebuilder:validation:Optional
 	Cores *float64 `json:"cores" tf:"cores,omitempty"`
 
+	// (Number) If provided, specifies the number of GPU devices for the instance.
+	// If provided, specifies the number of GPU devices for the instance.
 	// +kubebuilder:validation:Optional
 	Gpus *float64 `json:"gpus,omitempty" tf:"gpus,omitempty"`
 
+	// (Number) The memory size in GB.
 	// The memory size in GB.
 	// +kubebuilder:validation:Optional
 	Memory *float64 `json:"memory" tf:"memory,omitempty"`
@@ -1463,28 +1795,33 @@ type InstanceTemplateResourcesParameters struct {
 
 type InstanceTemplateSchedulingPolicyInitParameters struct {
 
-	// Specifies if the instance is preemptible. Defaults to false.
+	// (Boolean) Specifies if the instance is preemptible. Defaults to false.
+	// Specifies if the instance is preemptible. Defaults to `false`.
 	Preemptible *bool `json:"preemptible,omitempty" tf:"preemptible,omitempty"`
 }
 
 type InstanceTemplateSchedulingPolicyObservation struct {
 
-	// Specifies if the instance is preemptible. Defaults to false.
+	// (Boolean) Specifies if the instance is preemptible. Defaults to false.
+	// Specifies if the instance is preemptible. Defaults to `false`.
 	Preemptible *bool `json:"preemptible,omitempty" tf:"preemptible,omitempty"`
 }
 
 type InstanceTemplateSchedulingPolicyParameters struct {
 
-	// Specifies if the instance is preemptible. Defaults to false.
+	// (Boolean) Specifies if the instance is preemptible. Defaults to false.
+	// Specifies if the instance is preemptible. Defaults to `false`.
 	// +kubebuilder:validation:Optional
 	Preemptible *bool `json:"preemptible,omitempty" tf:"preemptible,omitempty"`
 }
 
 type InstanceTemplateSecondaryDiskInitParameters struct {
 
-	// This value can be used to reference the device under /dev/disk/by-id/.
+	// id/.
+	// This value can be used to reference the device under `/dev/disk/by-id/`.
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
+	// (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
 	// ID of the existing disk. To set use variables.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Disk
 	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
@@ -1497,40 +1834,54 @@ type InstanceTemplateSecondaryDiskInitParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskIDSelector *v1.Selector `json:"diskIdSelector,omitempty" tf:"-"`
 
-	// Parameters used for creating a disk alongside the instance. The structure is documented below.
+	// (Block List, Max: 1) Parameters for creating a disk alongside the instance.
+	// Parameters used for creating a disk alongside the instance.
+	//
+	// ~> `image_id` or `snapshot_id` must be specified.
 	InitializeParams []SecondaryDiskInitializeParamsInitParameters `json:"initializeParams,omitempty" tf:"initialize_params,omitempty"`
 
-	// The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// (String) The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// The access mode to the disk resource. By default a disk is attached in `READ_WRITE` mode.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
+	// (String) The resource name.
 	// When set can be later used to change DiskSpec of actual disk.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type InstanceTemplateSecondaryDiskObservation struct {
 
-	// This value can be used to reference the device under /dev/disk/by-id/.
+	// id/.
+	// This value can be used to reference the device under `/dev/disk/by-id/`.
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
+	// (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
 	// ID of the existing disk. To set use variables.
 	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
 
-	// Parameters used for creating a disk alongside the instance. The structure is documented below.
+	// (Block List, Max: 1) Parameters for creating a disk alongside the instance.
+	// Parameters used for creating a disk alongside the instance.
+	//
+	// ~> `image_id` or `snapshot_id` must be specified.
 	InitializeParams []SecondaryDiskInitializeParamsObservation `json:"initializeParams,omitempty" tf:"initialize_params,omitempty"`
 
-	// The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// (String) The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// The access mode to the disk resource. By default a disk is attached in `READ_WRITE` mode.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
+	// (String) The resource name.
 	// When set can be later used to change DiskSpec of actual disk.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type InstanceTemplateSecondaryDiskParameters struct {
 
-	// This value can be used to reference the device under /dev/disk/by-id/.
+	// id/.
+	// This value can be used to reference the device under `/dev/disk/by-id/`.
 	// +kubebuilder:validation:Optional
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
+	// (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
 	// ID of the existing disk. To set use variables.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Disk
 	// +kubebuilder:validation:Optional
@@ -1544,14 +1895,19 @@ type InstanceTemplateSecondaryDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskIDSelector *v1.Selector `json:"diskIdSelector,omitempty" tf:"-"`
 
-	// Parameters used for creating a disk alongside the instance. The structure is documented below.
+	// (Block List, Max: 1) Parameters for creating a disk alongside the instance.
+	// Parameters used for creating a disk alongside the instance.
+	//
+	// ~> `image_id` or `snapshot_id` must be specified.
 	// +kubebuilder:validation:Optional
 	InitializeParams []SecondaryDiskInitializeParamsParameters `json:"initializeParams,omitempty" tf:"initialize_params,omitempty"`
 
-	// The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// (String) The access mode to the disk resource. By default a disk is attached in READ_WRITE mode.
+	// The access mode to the disk resource. By default a disk is attached in `READ_WRITE` mode.
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
+	// (String) The resource name.
 	// When set can be later used to change DiskSpec of actual disk.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -1565,33 +1921,34 @@ type InstancesNetworkInterfaceInitParameters struct {
 
 type InstancesNetworkInterfaceObservation struct {
 
-	// The private IP address to assign to the instance. If empty, the address is automatically assigned from the specified subnet.
+	// (String) Manual set static IP address.
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// True if IPv4 address allocated for the network interface.
+	// (Boolean) Allocate an IPv4 address for the interface. The default value is true.
 	IPv4 *bool `json:"ipv4,omitempty" tf:"ipv4,omitempty"`
 
+	// (Boolean) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
-	// Manual set static IPv6 address.
+	// (String) Manual set static IPv6 address.
 	IPv6Address *string `json:"ipv6Address,omitempty" tf:"ipv6_address,omitempty"`
 
-	// The index of the network interface as generated by the server.
+	// (Number)
 	Index *float64 `json:"index,omitempty" tf:"index,omitempty"`
 
-	// The MAC address assigned to the network interface.
+	// (String)
 	MacAddress *string `json:"macAddress,omitempty" tf:"mac_address,omitempty"`
 
-	// The instance's public address for accessing the internet over NAT.
+	// (Boolean) Flag for using NAT.
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
-	// The public IP address of the instance.
+	// (String) A public address that can be used to access the internet over NAT. Use variables to set.
 	NATIPAddress *string `json:"natIpAddress,omitempty" tf:"nat_ip_address,omitempty"`
 
-	// The IP version for the public address.
+	// (String)
 	NATIPVersion *string `json:"natIpVersion,omitempty" tf:"nat_ip_version,omitempty"`
 
-	// The ID of the subnet to attach this interface to. The subnet must reside in the same zone where this instance was created.
+	// (String)
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
@@ -1600,29 +1957,31 @@ type InstancesNetworkInterfaceParameters struct {
 
 type InstancesObservation struct {
 
-	// The Fully Qualified Domain Name.
+	// (String) DNS record FQDN (must have dot at the end).
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// The ID of the instance.
+	// (String)
 	InstanceID *string `json:"instanceId,omitempty" tf:"instance_id,omitempty"`
 
+	// (String)
 	InstanceTag *string `json:"instanceTag,omitempty" tf:"instance_tag,omitempty"`
 
-	// The name of the managed instance.
+	// (String) The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// An array with the network interfaces attached to the managed instance.
+	// (Block List, Min: 1) Network specifications for the instance. This can be used multiple times for adding multiple interfaces. (see below for nested schema)
 	NetworkInterface []InstancesNetworkInterfaceObservation `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
 
-	// The status of the instance.
+	// (String) The status of the instance.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
+	// (String)
 	StatusChangedAt *string `json:"statusChangedAt,omitempty" tf:"status_changed_at,omitempty"`
 
-	// The status message of the instance.
+	// (String) The status message of the instance.
 	StatusMessage *string `json:"statusMessage,omitempty" tf:"status_message,omitempty"`
 
-	// The ID of the availability zone where the instance resides.
+	// (String)
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
@@ -1631,67 +1990,84 @@ type InstancesParameters struct {
 
 type LoadBalancerInitParameters struct {
 
+	// (Boolean) Do not wait load balancer health checks.
 	// Do not wait load balancer health checks.
 	IgnoreHealthChecks *bool `json:"ignoreHealthChecks,omitempty" tf:"ignore_health_checks,omitempty"`
 
+	// (Number) Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	// Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	MaxOpeningTrafficDuration *float64 `json:"maxOpeningTrafficDuration,omitempty" tf:"max_opening_traffic_duration,omitempty"`
 
+	// (String) A description of the target group.
 	// A description of the target group.
 	TargetGroupDescription *string `json:"targetGroupDescription,omitempty" tf:"target_group_description,omitempty"`
 
+	// (Map of String) A set of key/value label pairs.
 	// A set of key/value label pairs.
 	// +mapType=granular
 	TargetGroupLabels map[string]*string `json:"targetGroupLabels,omitempty" tf:"target_group_labels,omitempty"`
 
+	// (String) The name of the target group.
 	// The name of the target group.
 	TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
 }
 
 type LoadBalancerObservation struct {
 
+	// (Boolean) Do not wait load balancer health checks.
 	// Do not wait load balancer health checks.
 	IgnoreHealthChecks *bool `json:"ignoreHealthChecks,omitempty" tf:"ignore_health_checks,omitempty"`
 
+	// (Number) Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	// Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	MaxOpeningTrafficDuration *float64 `json:"maxOpeningTrafficDuration,omitempty" tf:"max_opening_traffic_duration,omitempty"`
 
+	// (String) The status message of the instance.
 	// The status message of the target group.
 	StatusMessage *string `json:"statusMessage,omitempty" tf:"status_message,omitempty"`
 
+	// (String) A description of the target group.
 	// A description of the target group.
 	TargetGroupDescription *string `json:"targetGroupDescription,omitempty" tf:"target_group_description,omitempty"`
 
+	// (String) The ID of the target group.
 	// The ID of the target group.
 	TargetGroupID *string `json:"targetGroupId,omitempty" tf:"target_group_id,omitempty"`
 
+	// (Map of String) A set of key/value label pairs.
 	// A set of key/value label pairs.
 	// +mapType=granular
 	TargetGroupLabels map[string]*string `json:"targetGroupLabels,omitempty" tf:"target_group_labels,omitempty"`
 
+	// (String) The name of the target group.
 	// The name of the target group.
 	TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
 }
 
 type LoadBalancerParameters struct {
 
+	// (Boolean) Do not wait load balancer health checks.
 	// Do not wait load balancer health checks.
 	// +kubebuilder:validation:Optional
 	IgnoreHealthChecks *bool `json:"ignoreHealthChecks,omitempty" tf:"ignore_health_checks,omitempty"`
 
+	// (Number) Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	// Timeout for waiting for the VM to be checked by the load balancer. If the timeout is exceeded, the VM will be turned off based on the deployment policy. Specified in seconds.
 	// +kubebuilder:validation:Optional
 	MaxOpeningTrafficDuration *float64 `json:"maxOpeningTrafficDuration,omitempty" tf:"max_opening_traffic_duration,omitempty"`
 
+	// (String) A description of the target group.
 	// A description of the target group.
 	// +kubebuilder:validation:Optional
 	TargetGroupDescription *string `json:"targetGroupDescription,omitempty" tf:"target_group_description,omitempty"`
 
+	// (Map of String) A set of key/value label pairs.
 	// A set of key/value label pairs.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	TargetGroupLabels map[string]*string `json:"targetGroupLabels,omitempty" tf:"target_group_labels,omitempty"`
 
+	// (String) The name of the target group.
 	// The name of the target group.
 	// +kubebuilder:validation:Optional
 	TargetGroupName *string `json:"targetGroupName,omitempty" tf:"target_group_name,omitempty"`
@@ -1699,48 +2075,60 @@ type LoadBalancerParameters struct {
 
 type NetworkInterfaceDNSRecordInitParameters struct {
 
+	// (String) DNS zone id (if not set, private zone used).
 	// DNS zone id (if not set, private zone used).
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
-	// DNS record fqdn (must have dot at the end).
+	// (String) DNS record FQDN (must have dot at the end).
+	// DNS record FQDN (must have dot at the end).
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// When set to true, also create PTR DNS record.
+	// (Boolean) When set to true, also create PTR DNS record.
+	// When set to `true`, also create PTR DNS record.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
+	// (Number) DNS record TTL.
 	// DNS record TTL.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type NetworkInterfaceDNSRecordObservation struct {
 
+	// (String) DNS zone id (if not set, private zone used).
 	// DNS zone id (if not set, private zone used).
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
-	// DNS record fqdn (must have dot at the end).
+	// (String) DNS record FQDN (must have dot at the end).
+	// DNS record FQDN (must have dot at the end).
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// When set to true, also create PTR DNS record.
+	// (Boolean) When set to true, also create PTR DNS record.
+	// When set to `true`, also create PTR DNS record.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
+	// (Number) DNS record TTL.
 	// DNS record TTL.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type NetworkInterfaceDNSRecordParameters struct {
 
+	// (String) DNS zone id (if not set, private zone used).
 	// DNS zone id (if not set, private zone used).
 	// +kubebuilder:validation:Optional
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
-	// DNS record fqdn (must have dot at the end).
+	// (String) DNS record FQDN (must have dot at the end).
+	// DNS record FQDN (must have dot at the end).
 	// +kubebuilder:validation:Optional
 	Fqdn *string `json:"fqdn" tf:"fqdn,omitempty"`
 
-	// When set to true, also create PTR DNS record.
+	// (Boolean) When set to true, also create PTR DNS record.
+	// When set to `true`, also create PTR DNS record.
 	// +kubebuilder:validation:Optional
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
+	// (Number) DNS record TTL.
 	// DNS record TTL.
 	// +kubebuilder:validation:Optional
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
@@ -1748,48 +2136,60 @@ type NetworkInterfaceDNSRecordParameters struct {
 
 type NetworkInterfaceIPv6DNSRecordInitParameters struct {
 
+	// (String) DNS zone id (if not set, private zone used).
 	// DNS zone id (if not set, private zone used).
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
-	// DNS record fqdn (must have dot at the end).
+	// (String) DNS record FQDN (must have dot at the end).
+	// DNS record FQDN (must have dot at the end).
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// When set to true, also create PTR DNS record.
+	// (Boolean) When set to true, also create PTR DNS record.
+	// When set to `true`, also create PTR DNS record.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
+	// (Number) DNS record TTL.
 	// DNS record TTL.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type NetworkInterfaceIPv6DNSRecordObservation struct {
 
+	// (String) DNS zone id (if not set, private zone used).
 	// DNS zone id (if not set, private zone used).
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
-	// DNS record fqdn (must have dot at the end).
+	// (String) DNS record FQDN (must have dot at the end).
+	// DNS record FQDN (must have dot at the end).
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// When set to true, also create PTR DNS record.
+	// (Boolean) When set to true, also create PTR DNS record.
+	// When set to `true`, also create PTR DNS record.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
+	// (Number) DNS record TTL.
 	// DNS record TTL.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type NetworkInterfaceIPv6DNSRecordParameters struct {
 
+	// (String) DNS zone id (if not set, private zone used).
 	// DNS zone id (if not set, private zone used).
 	// +kubebuilder:validation:Optional
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
-	// DNS record fqdn (must have dot at the end).
+	// (String) DNS record FQDN (must have dot at the end).
+	// DNS record FQDN (must have dot at the end).
 	// +kubebuilder:validation:Optional
 	Fqdn *string `json:"fqdn" tf:"fqdn,omitempty"`
 
-	// When set to true, also create PTR DNS record.
+	// (Boolean) When set to true, also create PTR DNS record.
+	// When set to `true`, also create PTR DNS record.
 	// +kubebuilder:validation:Optional
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
+	// (Number) DNS record TTL.
 	// DNS record TTL.
 	// +kubebuilder:validation:Optional
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
@@ -1797,48 +2197,60 @@ type NetworkInterfaceIPv6DNSRecordParameters struct {
 
 type NetworkInterfaceNATDNSRecordInitParameters struct {
 
+	// (String) DNS zone id (if not set, private zone used).
 	// DNS zone id (if not set, private zone used).
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
-	// DNS record fqdn (must have dot at the end).
+	// (String) DNS record FQDN (must have dot at the end).
+	// DNS record FQDN (must have dot at the end).
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// When set to true, also create PTR DNS record.
+	// (Boolean) When set to true, also create PTR DNS record.
+	// When set to `true`, also create PTR DNS record.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
+	// (Number) DNS record TTL.
 	// DNS record TTL.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type NetworkInterfaceNATDNSRecordObservation struct {
 
+	// (String) DNS zone id (if not set, private zone used).
 	// DNS zone id (if not set, private zone used).
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
-	// DNS record fqdn (must have dot at the end).
+	// (String) DNS record FQDN (must have dot at the end).
+	// DNS record FQDN (must have dot at the end).
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// When set to true, also create PTR DNS record.
+	// (Boolean) When set to true, also create PTR DNS record.
+	// When set to `true`, also create PTR DNS record.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
+	// (Number) DNS record TTL.
 	// DNS record TTL.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type NetworkInterfaceNATDNSRecordParameters struct {
 
+	// (String) DNS zone id (if not set, private zone used).
 	// DNS zone id (if not set, private zone used).
 	// +kubebuilder:validation:Optional
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
-	// DNS record fqdn (must have dot at the end).
+	// (String) DNS record FQDN (must have dot at the end).
+	// DNS record FQDN (must have dot at the end).
 	// +kubebuilder:validation:Optional
 	Fqdn *string `json:"fqdn" tf:"fqdn,omitempty"`
 
-	// When set to true, also create PTR DNS record.
+	// (Boolean) When set to true, also create PTR DNS record.
+	// When set to `true`, also create PTR DNS record.
 	// +kubebuilder:validation:Optional
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
+	// (Number) DNS record TTL.
 	// DNS record TTL.
 	// +kubebuilder:validation:Optional
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
@@ -1846,135 +2258,165 @@ type NetworkInterfaceNATDNSRecordParameters struct {
 
 type NetworkSettingsInitParameters struct {
 
-	// Network acceleration type. By default a network is in STANDARD mode.
+	// (String) The disk type.
+	// Network acceleration type. By default a network is in `STANDARD` mode.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type NetworkSettingsObservation struct {
 
-	// Network acceleration type. By default a network is in STANDARD mode.
+	// (String) The disk type.
+	// Network acceleration type. By default a network is in `STANDARD` mode.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type NetworkSettingsParameters struct {
 
-	// Network acceleration type. By default a network is in STANDARD mode.
+	// (String) The disk type.
+	// Network acceleration type. By default a network is in `STANDARD` mode.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type ScalePolicyInitParameters struct {
 
-	// The auto scaling policy of the instance group. The structure is documented below.
+	// (Block List, Max: 1) The auto scaling policy of the instance group. (see below for nested schema)
+	// The auto scaling policy of the instance group.
 	AutoScale []AutoScaleInitParameters `json:"autoScale,omitempty" tf:"auto_scale,omitempty"`
 
-	// The fixed scaling policy of the instance group. The structure is documented below.
+	// (Block List, Max: 1) The fixed scaling policy of the instance group. (see below for nested schema)
+	// The fixed scaling policy of the instance group.
 	FixedScale []FixedScaleInitParameters `json:"fixedScale,omitempty" tf:"fixed_scale,omitempty"`
 
-	// The test auto scaling policy of the instance group. Use it to test how the auto scale works. The structure is documented below.
+	// (Block List, Max: 1) The test auto scaling policy of the instance group. Use it to test how the auto scale works. (see below for nested schema)
+	// The test auto scaling policy of the instance group. Use it to test how the auto scale works.
 	TestAutoScale []TestAutoScaleInitParameters `json:"testAutoScale,omitempty" tf:"test_auto_scale,omitempty"`
 }
 
 type ScalePolicyObservation struct {
 
-	// The auto scaling policy of the instance group. The structure is documented below.
+	// (Block List, Max: 1) The auto scaling policy of the instance group. (see below for nested schema)
+	// The auto scaling policy of the instance group.
 	AutoScale []AutoScaleObservation `json:"autoScale,omitempty" tf:"auto_scale,omitempty"`
 
-	// The fixed scaling policy of the instance group. The structure is documented below.
+	// (Block List, Max: 1) The fixed scaling policy of the instance group. (see below for nested schema)
+	// The fixed scaling policy of the instance group.
 	FixedScale []FixedScaleObservation `json:"fixedScale,omitempty" tf:"fixed_scale,omitempty"`
 
-	// The test auto scaling policy of the instance group. Use it to test how the auto scale works. The structure is documented below.
+	// (Block List, Max: 1) The test auto scaling policy of the instance group. Use it to test how the auto scale works. (see below for nested schema)
+	// The test auto scaling policy of the instance group. Use it to test how the auto scale works.
 	TestAutoScale []TestAutoScaleObservation `json:"testAutoScale,omitempty" tf:"test_auto_scale,omitempty"`
 }
 
 type ScalePolicyParameters struct {
 
-	// The auto scaling policy of the instance group. The structure is documented below.
+	// (Block List, Max: 1) The auto scaling policy of the instance group. (see below for nested schema)
+	// The auto scaling policy of the instance group.
 	// +kubebuilder:validation:Optional
 	AutoScale []AutoScaleParameters `json:"autoScale,omitempty" tf:"auto_scale,omitempty"`
 
-	// The fixed scaling policy of the instance group. The structure is documented below.
+	// (Block List, Max: 1) The fixed scaling policy of the instance group. (see below for nested schema)
+	// The fixed scaling policy of the instance group.
 	// +kubebuilder:validation:Optional
 	FixedScale []FixedScaleParameters `json:"fixedScale,omitempty" tf:"fixed_scale,omitempty"`
 
-	// The test auto scaling policy of the instance group. Use it to test how the auto scale works. The structure is documented below.
+	// (Block List, Max: 1) The test auto scaling policy of the instance group. Use it to test how the auto scale works. (see below for nested schema)
+	// The test auto scaling policy of the instance group. Use it to test how the auto scale works.
 	// +kubebuilder:validation:Optional
 	TestAutoScale []TestAutoScaleParameters `json:"testAutoScale,omitempty" tf:"test_auto_scale,omitempty"`
 }
 
 type SecondaryDiskInitializeParamsInitParameters struct {
 
-	// A description of the instance.
+	// (String) The resource description.
+	// A description of the boot disk.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) The disk image to initialize this disk from.
 	// The disk image to initialize this disk from.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
+	// (Number) The size of the disk in GB.
 	// The size of the disk in GB.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
+	// (String) The snapshot to initialize this disk from.
 	// The snapshot to initialize this disk from.
 	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 
-	// Network acceleration type. By default a network is in STANDARD mode.
+	// (String) The disk type.
+	// The disk type.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type SecondaryDiskInitializeParamsObservation struct {
 
-	// A description of the instance.
+	// (String) The resource description.
+	// A description of the boot disk.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) The disk image to initialize this disk from.
 	// The disk image to initialize this disk from.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
+	// (Number) The size of the disk in GB.
 	// The size of the disk in GB.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
+	// (String) The snapshot to initialize this disk from.
 	// The snapshot to initialize this disk from.
 	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 
-	// Network acceleration type. By default a network is in STANDARD mode.
+	// (String) The disk type.
+	// The disk type.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type SecondaryDiskInitializeParamsParameters struct {
 
-	// A description of the instance.
+	// (String) The resource description.
+	// A description of the boot disk.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) The disk image to initialize this disk from.
 	// The disk image to initialize this disk from.
 	// +kubebuilder:validation:Optional
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
+	// (Number) The size of the disk in GB.
 	// The size of the disk in GB.
 	// +kubebuilder:validation:Optional
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
+	// (String) The snapshot to initialize this disk from.
 	// The snapshot to initialize this disk from.
 	// +kubebuilder:validation:Optional
 	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 
-	// Network acceleration type. By default a network is in STANDARD mode.
+	// (String) The disk type.
+	// The disk type.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type TCPOptionsInitParameters struct {
 
+	// (Number) The port used for HTTP health checks.
 	// The port used for TCP health checks.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
 
 type TCPOptionsObservation struct {
 
+	// (Number) The port used for HTTP health checks.
 	// The port used for TCP health checks.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
 
 type TCPOptionsParameters struct {
 
+	// (Number) The port used for HTTP health checks.
 	// The port used for TCP health checks.
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port" tf:"port,omitempty"`
@@ -1982,81 +2424,102 @@ type TCPOptionsParameters struct {
 
 type TestAutoScaleCustomRuleInitParameters struct {
 
-	// The ID of the folder that the resources belong to.
+	// id is used.
+	// Folder ID of custom metric in Yandex Monitoring that should be used for scaling.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// A set of key/value label pairs to assign to the instance group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A map of labels of metric.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (String) Name of the metric in Monitoring.
 	// The name of metric.
 	MetricName *string `json:"metricName,omitempty" tf:"metric_name,omitempty"`
 
-	// Metric type, GAUGE or COUNTER.
+	// (String) Type of metric, can be GAUGE or COUNTER. GAUGE metric reflects the value at particular time point. COUNTER metric exhibits a monotonous growth over time.
+	// Metric type, `GAUGE` or `COUNTER`.
 	MetricType *string `json:"metricType,omitempty" tf:"metric_type,omitempty"`
 
-	// Rule type: UTILIZATION - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone. This type of metric must have the zone_id label.
+	// (String) The metric rule type (UTILIZATION, WORKLOAD). UTILIZATION for metrics describing resource utilization per VM instance. WORKLOAD for metrics describing total workload on all VM instances.
+	// Rule type: `UTILIZATION` - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the `instance_id` label. `WORKLOAD` - This type means that the metric applies to instances in one availability zone. This type of metric must have the `zone_id` label.
 	RuleType *string `json:"ruleType,omitempty" tf:"rule_type,omitempty"`
 
+	// (String) If specified, sets the service name to fetch metrics. The default value is custom. You can use a label to specify service metrics, e.g., service with the compute value for Compute Cloud.
 	// Service of custom metric in Yandex Monitoring that should be used for scaling.
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
+	// (Number) Target metric value by which Instance Groups calculates the number of required VM instances.
 	// Target metric value level.
 	Target *float64 `json:"target,omitempty" tf:"target,omitempty"`
 }
 
 type TestAutoScaleCustomRuleObservation struct {
 
-	// The ID of the folder that the resources belong to.
+	// id is used.
+	// Folder ID of custom metric in Yandex Monitoring that should be used for scaling.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// A set of key/value label pairs to assign to the instance group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A map of labels of metric.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (String) Name of the metric in Monitoring.
 	// The name of metric.
 	MetricName *string `json:"metricName,omitempty" tf:"metric_name,omitempty"`
 
-	// Metric type, GAUGE or COUNTER.
+	// (String) Type of metric, can be GAUGE or COUNTER. GAUGE metric reflects the value at particular time point. COUNTER metric exhibits a monotonous growth over time.
+	// Metric type, `GAUGE` or `COUNTER`.
 	MetricType *string `json:"metricType,omitempty" tf:"metric_type,omitempty"`
 
-	// Rule type: UTILIZATION - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone. This type of metric must have the zone_id label.
+	// (String) The metric rule type (UTILIZATION, WORKLOAD). UTILIZATION for metrics describing resource utilization per VM instance. WORKLOAD for metrics describing total workload on all VM instances.
+	// Rule type: `UTILIZATION` - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the `instance_id` label. `WORKLOAD` - This type means that the metric applies to instances in one availability zone. This type of metric must have the `zone_id` label.
 	RuleType *string `json:"ruleType,omitempty" tf:"rule_type,omitempty"`
 
+	// (String) If specified, sets the service name to fetch metrics. The default value is custom. You can use a label to specify service metrics, e.g., service with the compute value for Compute Cloud.
 	// Service of custom metric in Yandex Monitoring that should be used for scaling.
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
+	// (Number) Target metric value by which Instance Groups calculates the number of required VM instances.
 	// Target metric value level.
 	Target *float64 `json:"target,omitempty" tf:"target,omitempty"`
 }
 
 type TestAutoScaleCustomRuleParameters struct {
 
-	// The ID of the folder that the resources belong to.
+	// id is used.
+	// Folder ID of custom metric in Yandex Monitoring that should be used for scaling.
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// A set of key/value label pairs to assign to the instance group.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A map of labels of metric.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// (String) Name of the metric in Monitoring.
 	// The name of metric.
 	// +kubebuilder:validation:Optional
 	MetricName *string `json:"metricName" tf:"metric_name,omitempty"`
 
-	// Metric type, GAUGE or COUNTER.
+	// (String) Type of metric, can be GAUGE or COUNTER. GAUGE metric reflects the value at particular time point. COUNTER metric exhibits a monotonous growth over time.
+	// Metric type, `GAUGE` or `COUNTER`.
 	// +kubebuilder:validation:Optional
 	MetricType *string `json:"metricType" tf:"metric_type,omitempty"`
 
-	// Rule type: UTILIZATION - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the instance_id label. WORKLOAD - This type means that the metric applies to instances in one availability zone. This type of metric must have the zone_id label.
+	// (String) The metric rule type (UTILIZATION, WORKLOAD). UTILIZATION for metrics describing resource utilization per VM instance. WORKLOAD for metrics describing total workload on all VM instances.
+	// Rule type: `UTILIZATION` - This type means that the metric applies to one instance. First, Instance Groups calculates the average metric value for each instance, then averages the values for instances in one availability zone. This type of metric must have the `instance_id` label. `WORKLOAD` - This type means that the metric applies to instances in one availability zone. This type of metric must have the `zone_id` label.
 	// +kubebuilder:validation:Optional
 	RuleType *string `json:"ruleType" tf:"rule_type,omitempty"`
 
+	// (String) If specified, sets the service name to fetch metrics. The default value is custom. You can use a label to specify service metrics, e.g., service with the compute value for Compute Cloud.
 	// Service of custom metric in Yandex Monitoring that should be used for scaling.
 	// +kubebuilder:validation:Optional
 	Service *string `json:"service,omitempty" tf:"service,omitempty"`
 
+	// (Number) Target metric value by which Instance Groups calculates the number of required VM instances.
 	// Target metric value level.
 	// +kubebuilder:validation:Optional
 	Target *float64 `json:"target" tf:"target,omitempty"`
@@ -2064,98 +2527,125 @@ type TestAutoScaleCustomRuleParameters struct {
 
 type TestAutoScaleInitParameters struct {
 
-	// . Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// (String) Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// Autoscale type, can be `ZONAL` or `REGIONAL`. By default `ZONAL` type is used.
 	AutoScaleType *string `json:"autoScaleType,omitempty" tf:"auto_scale_type,omitempty"`
 
+	// (Number) Target CPU load level.
 	// Target CPU load level.
 	CPUUtilizationTarget *float64 `json:"cpuUtilizationTarget,omitempty" tf:"cpu_utilization_target,omitempty"`
 
-	// A list of custom rules. The structure is documented below.
+	// (Block List) A list of custom rules. (see below for nested schema)
+	// A list of custom rules.
 	CustomRule []TestAutoScaleCustomRuleInitParameters `json:"customRule,omitempty" tf:"custom_rule,omitempty"`
 
+	// (Number) The initial number of instances in the instance group.
 	// The initial number of instances in the instance group.
 	InitialSize *float64 `json:"initialSize,omitempty" tf:"initial_size,omitempty"`
 
+	// (Number) The maximum number of virtual machines in the group.
 	// The maximum number of virtual machines in the group.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
+	// (Number) The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
+	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the `cpu_utilization_target`, the instance group will increase the number of virtual machines in the group.
 	MeasurementDuration *float64 `json:"measurementDuration,omitempty" tf:"measurement_duration,omitempty"`
 
+	// (Number) The minimum number of virtual machines in a single availability zone.
 	// The minimum number of virtual machines in a single availability zone.
 	MinZoneSize *float64 `json:"minZoneSize,omitempty" tf:"min_zone_size,omitempty"`
 
-	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// (Number) The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of `cpu_utilization_target`.
 	StabilizationDuration *float64 `json:"stabilizationDuration,omitempty" tf:"stabilization_duration,omitempty"`
 
+	// up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	// The warm-up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	WarmupDuration *float64 `json:"warmupDuration,omitempty" tf:"warmup_duration,omitempty"`
 }
 
 type TestAutoScaleObservation struct {
 
-	// . Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// (String) Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// Autoscale type, can be `ZONAL` or `REGIONAL`. By default `ZONAL` type is used.
 	AutoScaleType *string `json:"autoScaleType,omitempty" tf:"auto_scale_type,omitempty"`
 
+	// (Number) Target CPU load level.
 	// Target CPU load level.
 	CPUUtilizationTarget *float64 `json:"cpuUtilizationTarget,omitempty" tf:"cpu_utilization_target,omitempty"`
 
-	// A list of custom rules. The structure is documented below.
+	// (Block List) A list of custom rules. (see below for nested schema)
+	// A list of custom rules.
 	CustomRule []TestAutoScaleCustomRuleObservation `json:"customRule,omitempty" tf:"custom_rule,omitempty"`
 
+	// (Number) The initial number of instances in the instance group.
 	// The initial number of instances in the instance group.
 	InitialSize *float64 `json:"initialSize,omitempty" tf:"initial_size,omitempty"`
 
+	// (Number) The maximum number of virtual machines in the group.
 	// The maximum number of virtual machines in the group.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
+	// (Number) The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
+	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the `cpu_utilization_target`, the instance group will increase the number of virtual machines in the group.
 	MeasurementDuration *float64 `json:"measurementDuration,omitempty" tf:"measurement_duration,omitempty"`
 
+	// (Number) The minimum number of virtual machines in a single availability zone.
 	// The minimum number of virtual machines in a single availability zone.
 	MinZoneSize *float64 `json:"minZoneSize,omitempty" tf:"min_zone_size,omitempty"`
 
-	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// (Number) The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of `cpu_utilization_target`.
 	StabilizationDuration *float64 `json:"stabilizationDuration,omitempty" tf:"stabilization_duration,omitempty"`
 
+	// up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	// The warm-up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	WarmupDuration *float64 `json:"warmupDuration,omitempty" tf:"warmup_duration,omitempty"`
 }
 
 type TestAutoScaleParameters struct {
 
-	// . Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// (String) Autoscale type, can be ZONAL or REGIONAL. By default ZONAL type is used.
+	// Autoscale type, can be `ZONAL` or `REGIONAL`. By default `ZONAL` type is used.
 	// +kubebuilder:validation:Optional
 	AutoScaleType *string `json:"autoScaleType,omitempty" tf:"auto_scale_type,omitempty"`
 
+	// (Number) Target CPU load level.
 	// Target CPU load level.
 	// +kubebuilder:validation:Optional
 	CPUUtilizationTarget *float64 `json:"cpuUtilizationTarget,omitempty" tf:"cpu_utilization_target,omitempty"`
 
-	// A list of custom rules. The structure is documented below.
+	// (Block List) A list of custom rules. (see below for nested schema)
+	// A list of custom rules.
 	// +kubebuilder:validation:Optional
 	CustomRule []TestAutoScaleCustomRuleParameters `json:"customRule,omitempty" tf:"custom_rule,omitempty"`
 
+	// (Number) The initial number of instances in the instance group.
 	// The initial number of instances in the instance group.
 	// +kubebuilder:validation:Optional
 	InitialSize *float64 `json:"initialSize" tf:"initial_size,omitempty"`
 
+	// (Number) The maximum number of virtual machines in the group.
 	// The maximum number of virtual machines in the group.
 	// +kubebuilder:validation:Optional
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
+	// (Number) The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the cpu_utilization_target, the instance group will increase the number of virtual machines in the group.
+	// The amount of time, in seconds, that metrics are averaged for. If the average value at the end of the interval is higher than the `cpu_utilization_target`, the instance group will increase the number of virtual machines in the group.
 	// +kubebuilder:validation:Optional
 	MeasurementDuration *float64 `json:"measurementDuration" tf:"measurement_duration,omitempty"`
 
+	// (Number) The minimum number of virtual machines in a single availability zone.
 	// The minimum number of virtual machines in a single availability zone.
 	// +kubebuilder:validation:Optional
 	MinZoneSize *float64 `json:"minZoneSize,omitempty" tf:"min_zone_size,omitempty"`
 
-	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// (Number) The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of cpu_utilization_target.
+	// The minimum time interval, in seconds, to monitor the load before an instance group can reduce the number of virtual machines in the group. During this time, the group will not decrease even if the average load falls below the value of `cpu_utilization_target`.
 	// +kubebuilder:validation:Optional
 	StabilizationDuration *float64 `json:"stabilizationDuration,omitempty" tf:"stabilization_duration,omitempty"`
 
+	// up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	// The warm-up time of the virtual machine, in seconds. During this time, traffic is fed to the virtual machine, but load metrics are not taken into account.
 	// +kubebuilder:validation:Optional
 	WarmupDuration *float64 `json:"warmupDuration,omitempty" tf:"warmup_duration,omitempty"`

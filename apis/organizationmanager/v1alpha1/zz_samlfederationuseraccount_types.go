@@ -29,30 +29,37 @@ import (
 
 type SAMLFederationUserAccountInitParameters struct {
 
+	// (String) ID of a SAML Federation.
 	// ID of a SAML Federation.
 	FederationID *string `json:"federationId,omitempty" tf:"federation_id,omitempty"`
 
+	// (String) Name ID of the SAML federated user.
 	// Name ID of the SAML federated user.
 	NameID *string `json:"nameId,omitempty" tf:"name_id,omitempty"`
 }
 
 type SAMLFederationUserAccountObservation struct {
 
+	// (String) ID of a SAML Federation.
 	// ID of a SAML Federation.
 	FederationID *string `json:"federationId,omitempty" tf:"federation_id,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (String) Name ID of the SAML federated user.
 	// Name ID of the SAML federated user.
 	NameID *string `json:"nameId,omitempty" tf:"name_id,omitempty"`
 }
 
 type SAMLFederationUserAccountParameters struct {
 
+	// (String) ID of a SAML Federation.
 	// ID of a SAML Federation.
 	// +kubebuilder:validation:Optional
 	FederationID *string `json:"federationId,omitempty" tf:"federation_id,omitempty"`
 
+	// (String) Name ID of the SAML federated user.
 	// Name ID of the SAML federated user.
 	// +kubebuilder:validation:Optional
 	NameID *string `json:"nameId,omitempty" tf:"name_id,omitempty"`
@@ -85,7 +92,7 @@ type SAMLFederationUserAccountStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SAMLFederationUserAccount is the Schema for the SAMLFederationUserAccounts API. Allows management of a single SAML Federation user account within an existing Yandex.Cloud Organization.
+// SAMLFederationUserAccount is the Schema for the SAMLFederationUserAccounts API. Allows management of a single SAML Federation user account within an existing Yandex Cloud Organization.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Resource is the Schema for the Resources API. Allows management
-          of a Yandex.Cloud CDN Resource.
+          of a Yandex Cloud CDN Resource.
         properties:
           apiVersion:
             description: |-
@@ -74,13 +74,19 @@ spec:
               forProvider:
                 properties:
                   active:
-                    description: Flag to create Resource either in active or disabled
-                      state. True - the content from CDN is available to clients.
+                    description: |-
+                      the content from CDN is available to clients.
+                      Flag to create Resource either in active or disabled state. `True` - the content from CDN is available to clients.
                     type: boolean
                   cname:
-                    description: CDN endpoint CNAME, must be unique among resources.
+                    description: |-
+                      (String) CDN endpoint CNAME, must be unique among resources.
+                      CDN endpoint CNAME, must be unique among resources.
                     type: string
                   folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -158,157 +164,182 @@ spec:
                             type: string
                         type: object
                     type: object
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
                   options:
-                    description: CDN Resource settings and options to tune CDN edge
-                      behavior.
+                    description: |-
+                      (Block List, Max: 1) CDN Resource settings and options to tune CDN edge behavior. (see below for nested schema)
+                      CDN Resource settings and options to tune CDN edge behavior.
                     items:
                       properties:
                         allowedHttpMethods:
-                          description: 'HTTP methods for your CDN content. By default
-                            the following methods are allowed: GET, HEAD, POST, PUT,
-                            PATCH, DELETE, OPTIONS. In case some methods are not allowed
-                            to the user, they will get the 405 (Method Not Allowed)
-                            response. If the method is not supported, the user gets
-                            the 501 (Not Implemented) response.'
+                          description: |-
+                            (List of String) HTTP methods for your CDN content. By default the following methods are allowed: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS. In case some methods are not allowed to the user, they will get the 405 (Method Not Allowed) response. If the method is not supported, the user gets the 501 (Not Implemented) response.
+                            HTTP methods for your CDN content. By default the following methods are allowed: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS. In case some methods are not allowed to the user, they will get the 405 (Method Not Allowed) response. If the method is not supported, the user gets the 501 (Not Implemented) response.
                           items:
                             type: string
                           type: array
                         browserCacheSettings:
-                          description: 'set up a cache period for the end-users browser.
-                            Content will be cached due to origin settings. If there
-                            are no cache settings on your origin, the content will
-                            not be cached. The list of HTTP response codes that can
-                            be cached in browsers: 200, 201, 204, 206, 301, 302, 303,
-                            304, 307, 308. Other response codes will not be cached.
-                            The default value is 4 days.'
+                          description: |-
+                            users browser. Content will be cached due to origin settings. If there are no cache settings on your origin, the content will not be cached. The list of HTTP response codes that can be cached in browsers: 200, 201, 204, 206, 301, 302, 303, 304, 307, 308. Other response codes will not be cached. The default value is 4 days.
+                            Set up a cache period for the end-users browser. Content will be cached due to origin settings. If there are no cache settings on your origin, the content will not be cached. The list of HTTP response codes that can be cached in browsers: 200, 201, 204, 206, 301, 302, 303, 304, 307, 308. Other response codes will not be cached. The default value is 4 days.
                           type: number
                         cacheHttpHeaders:
-                          description: list HTTP headers that must be included in
-                            responses to clients.
+                          description: |-
+                            (List of String) List HTTP headers that must be included in responses to clients.
+                            List HTTP headers that must be included in responses to clients.
                           items:
                             type: string
                           type: array
                         cors:
-                          description: parameter that lets browsers get access to
-                            selected resources from a domain different to a domain
-                            from which the request is received.
+                          description: |-
+                            (List of String) Parameter that lets browsers get access to selected resources from a domain different to a domain from which the request is received.
+                            Parameter that lets browsers get access to selected resources from a domain different to a domain from which the request is received.
                           items:
                             type: string
                           type: array
                         customHostHeader:
-                          description: custom value for the Host header. Your server
-                            must be able to process requests with the chosen header.
+                          description: |-
+                            (String) Custom value for the Host header. Your server must be able to process requests with the chosen header.
+                            Custom value for the Host header. Your server must be able to process requests with the chosen header.
                           type: string
                         customServerName:
-                          description: wildcard additional CNAME. If a resource has
-                            a wildcard additional CNAME, you can use your own certificate
-                            for content delivery via HTTPS. Read-only.
+                          description: |-
+                            (String) Wildcard additional CNAME. If a resource has a wildcard additional CNAME, you can use your own certificate for content delivery via HTTPS.
+                            Wildcard additional CNAME. If a resource has a wildcard additional CNAME, you can use your own certificate for content delivery via HTTPS.
                           type: string
                         disableCache:
-                          description: setup a cache status.
+                          description: |-
+                            (Boolean) Setup a cache status.
+                            Setup a cache status.
                           type: boolean
                         disableProxyForceRanges:
-                          description: disabling proxy force ranges.
+                          description: |-
+                            (Boolean) Disabling proxy force ranges.
+                            Disabling proxy force ranges.
                           type: boolean
                         edgeCacheSettings:
-                          description: content will be cached according to origin
-                            cache settings. The value applies for a response with
-                            codes 200, 201, 204, 206, 301, 302, 303, 304, 307, 308
-                            if an origin server does not have caching HTTP headers.
-                            Responses with other codes will not be cached.
+                          description: |-
+                            (Number) Content will be cached according to origin cache settings. The value applies for a response with codes 200, 201, 204, 206, 301, 302, 303, 304, 307, 308 if an origin server does not have caching HTTP headers. Responses with other codes will not be cached.
+                            Content will be cached according to origin cache settings. The value applies for a response with codes 200, 201, 204, 206, 301, 302, 303, 304, 307, 308 if an origin server does not have caching HTTP headers. Responses with other codes will not be cached.
                           type: number
                         enableIpUrlSigning:
-                          description: enable access limiting by IP addresses, option
-                            available only with setting secure_key.
+                          description: |-
+                            (Boolean) Enable access limiting by IP addresses, option available only with setting secure_key.
+                            Enable access limiting by IP addresses, option available only with setting secure_key.
                           type: boolean
                         fetchedCompressed:
-                          description: option helps you to reduce the bandwidth between
-                            origin and CDN servers. Also, content delivery speed becomes
-                            higher because of reducing the time for compressing files
-                            in a CDN.
+                          description: |-
+                            (Boolean) Option helps you to reduce the bandwidth between origin and CDN servers. Also, content delivery speed becomes higher because of reducing the time for compressing files in a CDN.
+                            Option helps you to reduce the bandwidth between origin and CDN servers. Also, content delivery speed becomes higher because of reducing the time for compressing files in a CDN.
                           type: boolean
                         forwardHostHeader:
-                          description: choose the Forward Host header option if is
-                            important to send in the request to the Origin the same
-                            Host header as was sent in the request to CDN server.
+                          description: |-
+                            (Boolean) Choose the Forward Host header option if is important to send in the request to the Origin the same Host header as was sent in the request to CDN server.
+                            Choose the Forward Host header option if is important to send in the request to the Origin the same Host header as was sent in the request to CDN server.
                           type: boolean
                         gzipOn:
-                          description: GZip compression at CDN servers reduces file
-                            size by 70% and can be as high as 90%.
+                          description: |-
+                            (Boolean) GZip compression at CDN servers reduces file size by 70% and can be as high as 90%.
+                            GZip compression at CDN servers reduces file size by 70% and can be as high as 90%.
                           type: boolean
                         ignoreCookie:
-                          description: set for ignoring cookie.
+                          description: |-
+                            (Boolean) Set for ignoring cookie.
+                            Set for ignoring cookie.
                           type: boolean
                         ignoreQueryParams:
-                          description: files with different query parameters are cached
-                            as objects with the same key regardless of the parameter
-                            value. selected by default.
+                          description: |-
+                            (Boolean) Files with different query parameters are cached as objects with the same key regardless of the parameter value. selected by default.
+                            Files with different query parameters are cached as objects with the same key regardless of the parameter value. selected by default.
                           type: boolean
                         ipAddressAcl:
+                          description: |-
+                            (Block List, Max: 1) IP address access control list. The list of specified IP addresses to be allowed or denied depending on acl policy type. (see below for nested schema)
+                            IP address access control list. The list of specified IP addresses to be allowed or denied depending on acl policy type.
                           items:
                             properties:
                               exceptedValues:
-                                description: the list of specified IP addresses to
-                                  be allowed or denied depending on acl policy type.
+                                description: |-
+                                  (List of String) The list of specified IP addresses to be allowed or denied depending on acl policy type.
+                                  The list of specified IP addresses to be allowed or denied depending on acl policy type.
                                 items:
                                   type: string
                                 type: array
                               policyType:
-                                description: the policy type for ip_address_acl option,
-                                  one of "allow" or "deny" values.
+                                description: |-
+                                  (String) The policy type for ACL. One of allow or deny values.
+                                  The policy type for ACL. One of `allow` or `deny` values.
                                 type: string
                             type: object
                           type: array
                         proxyCacheMethodsSet:
-                          description: allows caching for GET, HEAD and POST requests.
+                          description: |-
+                            (Boolean) Allows caching for GET, HEAD and POST requests.
+                            Allows caching for GET, HEAD and POST requests.
                           type: boolean
                         queryParamsBlacklist:
-                          description: files with the specified query parameters are
-                            cached as objects with the same key, files with other
-                            parameters are cached as objects with different keys.
+                          description: |-
+                            (List of String) Files with the specified query parameters are cached as objects with the same key, files with other parameters are cached as objects with different keys.
+                            Files with the specified query parameters are cached as objects with the same key, files with other parameters are cached as objects with different keys.
                           items:
                             type: string
                           type: array
                         queryParamsWhitelist:
-                          description: files with the specified query parameters are
-                            cached as objects with different keys, files with other
-                            parameters are cached as objects with the same key.
+                          description: |-
+                            (List of String) Files with the specified query parameters are cached as objects with different keys, files with other parameters are cached as objects with the same key.
+                            Files with the specified query parameters are cached as objects with different keys, files with other parameters are cached as objects with the same key.
                           items:
                             type: string
                           type: array
                         redirectHttpToHttps:
-                          description: set up a redirect from HTTP to HTTPS.
+                          description: |-
+                            (Boolean) Set up a redirect from HTTP to HTTPS.
+                            Set up a redirect from HTTP to HTTPS.
                           type: boolean
                         redirectHttpsToHttp:
-                          description: set up a redirect from HTTPS to HTTP.
+                          description: |-
+                            (Boolean) Set up a redirect from HTTPS to HTTP.
+                            Set up a redirect from HTTPS to HTTP.
                           type: boolean
                         secureKey:
-                          description: set secure key for url encoding to protect
-                            contect and limit access by IP addresses and time limits.
+                          description: |-
+                            (String) Set secure key for url encoding to protect contect and limit access by IP addresses and time limits.
+                            Set secure key for url encoding to protect contect and limit access by IP addresses and time limits.
                           type: string
                         slice:
-                          description: files larger than 10 MB will be requested and
-                            cached in parts (no larger than 10 MB each part). It reduces
-                            time to first byte. The origin must support HTTP Range
-                            requests.
+                          description: |-
+                            (Boolean) Files larger than 10 MB will be requested and cached in parts (no larger than 10 MB each part). It reduces time to first byte. The origin must support HTTP Range requests.
+                            Files larger than 10 MB will be requested and cached in parts (no larger than 10 MB each part). It reduces time to first byte. The origin must support HTTP Range requests.
                           type: boolean
                         staticRequestHeaders:
                           additionalProperties:
                             type: string
-                          description: set up custom headers that CDN servers will
-                            send in requests to origins.
+                          description: |-
+                            (Map of String) Set up custom headers that CDN servers will send in requests to origins.
+                            Set up custom headers that CDN servers will send in requests to origins.
                           type: object
                           x-kubernetes-map-type: granular
                         staticResponseHeaders:
                           additionalProperties:
                             type: string
-                          description: set up custom headers that CDN servers will
-                            send in response to clients.
+                          description: |-
+                            (Map of String) Set up a static response header. The header name must be lowercase.
+                            Set up a static response header. The header name must be lowercase.
                           type: object
                           x-kubernetes-map-type: granular
                       type: object
                     type: array
                   originGroupId:
+                    description: |-
+                      (Number) The ID of a specific origin group.
+                      The ID of a specific origin group.
                     type: number
                   originGroupIdRef:
                     description: Reference to a OriginGroup to populate originGroupId.
@@ -385,26 +416,45 @@ spec:
                         type: object
                     type: object
                   originGroupName:
+                    description: |-
+                      (String) The name of a specific origin group.
+                      The name of a specific origin group.
                     type: string
                   originProtocol:
+                    description: |-
+                      (String) Protocol of origin resource. http or https.
+                      Protocol of origin resource. `http` or `https`.
                     type: string
                   secondaryHostnames:
-                    description: list of secondary hostname strings.
+                    description: |-
+                      (Set of String) List of secondary hostname strings.
+                      List of secondary hostname strings.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   sslCertificate:
-                    description: SSL certificate of CDN resource.
+                    description: |-
+                      (Block Set, Max: 1) SSL certificate of CDN resource. (see below for nested schema)
+                      SSL certificate of CDN resource.
                     items:
                       properties:
                         certificateManagerId:
+                          description: |-
+                            (String) Certificate Manager ID.
+                            Certificate Manager ID.
                           type: string
                         type:
+                          description: |-
+                            (String) SSL certificate type.
+                            SSL certificate type.
                           type: string
                       type: object
                     type: array
                   updatedAt:
+                    description: |-
+                      (String) Last update timestamp. Computed value for read and update operations.
+                      Last update timestamp. Computed value for read and update operations.
                     type: string
                 type: object
               initProvider:
@@ -421,13 +471,19 @@ spec:
                   autoscaler.
                 properties:
                   active:
-                    description: Flag to create Resource either in active or disabled
-                      state. True - the content from CDN is available to clients.
+                    description: |-
+                      the content from CDN is available to clients.
+                      Flag to create Resource either in active or disabled state. `True` - the content from CDN is available to clients.
                     type: boolean
                   cname:
-                    description: CDN endpoint CNAME, must be unique among resources.
+                    description: |-
+                      (String) CDN endpoint CNAME, must be unique among resources.
+                      CDN endpoint CNAME, must be unique among resources.
                     type: string
                   folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -505,157 +561,182 @@ spec:
                             type: string
                         type: object
                     type: object
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
                   options:
-                    description: CDN Resource settings and options to tune CDN edge
-                      behavior.
+                    description: |-
+                      (Block List, Max: 1) CDN Resource settings and options to tune CDN edge behavior. (see below for nested schema)
+                      CDN Resource settings and options to tune CDN edge behavior.
                     items:
                       properties:
                         allowedHttpMethods:
-                          description: 'HTTP methods for your CDN content. By default
-                            the following methods are allowed: GET, HEAD, POST, PUT,
-                            PATCH, DELETE, OPTIONS. In case some methods are not allowed
-                            to the user, they will get the 405 (Method Not Allowed)
-                            response. If the method is not supported, the user gets
-                            the 501 (Not Implemented) response.'
+                          description: |-
+                            (List of String) HTTP methods for your CDN content. By default the following methods are allowed: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS. In case some methods are not allowed to the user, they will get the 405 (Method Not Allowed) response. If the method is not supported, the user gets the 501 (Not Implemented) response.
+                            HTTP methods for your CDN content. By default the following methods are allowed: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS. In case some methods are not allowed to the user, they will get the 405 (Method Not Allowed) response. If the method is not supported, the user gets the 501 (Not Implemented) response.
                           items:
                             type: string
                           type: array
                         browserCacheSettings:
-                          description: 'set up a cache period for the end-users browser.
-                            Content will be cached due to origin settings. If there
-                            are no cache settings on your origin, the content will
-                            not be cached. The list of HTTP response codes that can
-                            be cached in browsers: 200, 201, 204, 206, 301, 302, 303,
-                            304, 307, 308. Other response codes will not be cached.
-                            The default value is 4 days.'
+                          description: |-
+                            users browser. Content will be cached due to origin settings. If there are no cache settings on your origin, the content will not be cached. The list of HTTP response codes that can be cached in browsers: 200, 201, 204, 206, 301, 302, 303, 304, 307, 308. Other response codes will not be cached. The default value is 4 days.
+                            Set up a cache period for the end-users browser. Content will be cached due to origin settings. If there are no cache settings on your origin, the content will not be cached. The list of HTTP response codes that can be cached in browsers: 200, 201, 204, 206, 301, 302, 303, 304, 307, 308. Other response codes will not be cached. The default value is 4 days.
                           type: number
                         cacheHttpHeaders:
-                          description: list HTTP headers that must be included in
-                            responses to clients.
+                          description: |-
+                            (List of String) List HTTP headers that must be included in responses to clients.
+                            List HTTP headers that must be included in responses to clients.
                           items:
                             type: string
                           type: array
                         cors:
-                          description: parameter that lets browsers get access to
-                            selected resources from a domain different to a domain
-                            from which the request is received.
+                          description: |-
+                            (List of String) Parameter that lets browsers get access to selected resources from a domain different to a domain from which the request is received.
+                            Parameter that lets browsers get access to selected resources from a domain different to a domain from which the request is received.
                           items:
                             type: string
                           type: array
                         customHostHeader:
-                          description: custom value for the Host header. Your server
-                            must be able to process requests with the chosen header.
+                          description: |-
+                            (String) Custom value for the Host header. Your server must be able to process requests with the chosen header.
+                            Custom value for the Host header. Your server must be able to process requests with the chosen header.
                           type: string
                         customServerName:
-                          description: wildcard additional CNAME. If a resource has
-                            a wildcard additional CNAME, you can use your own certificate
-                            for content delivery via HTTPS. Read-only.
+                          description: |-
+                            (String) Wildcard additional CNAME. If a resource has a wildcard additional CNAME, you can use your own certificate for content delivery via HTTPS.
+                            Wildcard additional CNAME. If a resource has a wildcard additional CNAME, you can use your own certificate for content delivery via HTTPS.
                           type: string
                         disableCache:
-                          description: setup a cache status.
+                          description: |-
+                            (Boolean) Setup a cache status.
+                            Setup a cache status.
                           type: boolean
                         disableProxyForceRanges:
-                          description: disabling proxy force ranges.
+                          description: |-
+                            (Boolean) Disabling proxy force ranges.
+                            Disabling proxy force ranges.
                           type: boolean
                         edgeCacheSettings:
-                          description: content will be cached according to origin
-                            cache settings. The value applies for a response with
-                            codes 200, 201, 204, 206, 301, 302, 303, 304, 307, 308
-                            if an origin server does not have caching HTTP headers.
-                            Responses with other codes will not be cached.
+                          description: |-
+                            (Number) Content will be cached according to origin cache settings. The value applies for a response with codes 200, 201, 204, 206, 301, 302, 303, 304, 307, 308 if an origin server does not have caching HTTP headers. Responses with other codes will not be cached.
+                            Content will be cached according to origin cache settings. The value applies for a response with codes 200, 201, 204, 206, 301, 302, 303, 304, 307, 308 if an origin server does not have caching HTTP headers. Responses with other codes will not be cached.
                           type: number
                         enableIpUrlSigning:
-                          description: enable access limiting by IP addresses, option
-                            available only with setting secure_key.
+                          description: |-
+                            (Boolean) Enable access limiting by IP addresses, option available only with setting secure_key.
+                            Enable access limiting by IP addresses, option available only with setting secure_key.
                           type: boolean
                         fetchedCompressed:
-                          description: option helps you to reduce the bandwidth between
-                            origin and CDN servers. Also, content delivery speed becomes
-                            higher because of reducing the time for compressing files
-                            in a CDN.
+                          description: |-
+                            (Boolean) Option helps you to reduce the bandwidth between origin and CDN servers. Also, content delivery speed becomes higher because of reducing the time for compressing files in a CDN.
+                            Option helps you to reduce the bandwidth between origin and CDN servers. Also, content delivery speed becomes higher because of reducing the time for compressing files in a CDN.
                           type: boolean
                         forwardHostHeader:
-                          description: choose the Forward Host header option if is
-                            important to send in the request to the Origin the same
-                            Host header as was sent in the request to CDN server.
+                          description: |-
+                            (Boolean) Choose the Forward Host header option if is important to send in the request to the Origin the same Host header as was sent in the request to CDN server.
+                            Choose the Forward Host header option if is important to send in the request to the Origin the same Host header as was sent in the request to CDN server.
                           type: boolean
                         gzipOn:
-                          description: GZip compression at CDN servers reduces file
-                            size by 70% and can be as high as 90%.
+                          description: |-
+                            (Boolean) GZip compression at CDN servers reduces file size by 70% and can be as high as 90%.
+                            GZip compression at CDN servers reduces file size by 70% and can be as high as 90%.
                           type: boolean
                         ignoreCookie:
-                          description: set for ignoring cookie.
+                          description: |-
+                            (Boolean) Set for ignoring cookie.
+                            Set for ignoring cookie.
                           type: boolean
                         ignoreQueryParams:
-                          description: files with different query parameters are cached
-                            as objects with the same key regardless of the parameter
-                            value. selected by default.
+                          description: |-
+                            (Boolean) Files with different query parameters are cached as objects with the same key regardless of the parameter value. selected by default.
+                            Files with different query parameters are cached as objects with the same key regardless of the parameter value. selected by default.
                           type: boolean
                         ipAddressAcl:
+                          description: |-
+                            (Block List, Max: 1) IP address access control list. The list of specified IP addresses to be allowed or denied depending on acl policy type. (see below for nested schema)
+                            IP address access control list. The list of specified IP addresses to be allowed or denied depending on acl policy type.
                           items:
                             properties:
                               exceptedValues:
-                                description: the list of specified IP addresses to
-                                  be allowed or denied depending on acl policy type.
+                                description: |-
+                                  (List of String) The list of specified IP addresses to be allowed or denied depending on acl policy type.
+                                  The list of specified IP addresses to be allowed or denied depending on acl policy type.
                                 items:
                                   type: string
                                 type: array
                               policyType:
-                                description: the policy type for ip_address_acl option,
-                                  one of "allow" or "deny" values.
+                                description: |-
+                                  (String) The policy type for ACL. One of allow or deny values.
+                                  The policy type for ACL. One of `allow` or `deny` values.
                                 type: string
                             type: object
                           type: array
                         proxyCacheMethodsSet:
-                          description: allows caching for GET, HEAD and POST requests.
+                          description: |-
+                            (Boolean) Allows caching for GET, HEAD and POST requests.
+                            Allows caching for GET, HEAD and POST requests.
                           type: boolean
                         queryParamsBlacklist:
-                          description: files with the specified query parameters are
-                            cached as objects with the same key, files with other
-                            parameters are cached as objects with different keys.
+                          description: |-
+                            (List of String) Files with the specified query parameters are cached as objects with the same key, files with other parameters are cached as objects with different keys.
+                            Files with the specified query parameters are cached as objects with the same key, files with other parameters are cached as objects with different keys.
                           items:
                             type: string
                           type: array
                         queryParamsWhitelist:
-                          description: files with the specified query parameters are
-                            cached as objects with different keys, files with other
-                            parameters are cached as objects with the same key.
+                          description: |-
+                            (List of String) Files with the specified query parameters are cached as objects with different keys, files with other parameters are cached as objects with the same key.
+                            Files with the specified query parameters are cached as objects with different keys, files with other parameters are cached as objects with the same key.
                           items:
                             type: string
                           type: array
                         redirectHttpToHttps:
-                          description: set up a redirect from HTTP to HTTPS.
+                          description: |-
+                            (Boolean) Set up a redirect from HTTP to HTTPS.
+                            Set up a redirect from HTTP to HTTPS.
                           type: boolean
                         redirectHttpsToHttp:
-                          description: set up a redirect from HTTPS to HTTP.
+                          description: |-
+                            (Boolean) Set up a redirect from HTTPS to HTTP.
+                            Set up a redirect from HTTPS to HTTP.
                           type: boolean
                         secureKey:
-                          description: set secure key for url encoding to protect
-                            contect and limit access by IP addresses and time limits.
+                          description: |-
+                            (String) Set secure key for url encoding to protect contect and limit access by IP addresses and time limits.
+                            Set secure key for url encoding to protect contect and limit access by IP addresses and time limits.
                           type: string
                         slice:
-                          description: files larger than 10 MB will be requested and
-                            cached in parts (no larger than 10 MB each part). It reduces
-                            time to first byte. The origin must support HTTP Range
-                            requests.
+                          description: |-
+                            (Boolean) Files larger than 10 MB will be requested and cached in parts (no larger than 10 MB each part). It reduces time to first byte. The origin must support HTTP Range requests.
+                            Files larger than 10 MB will be requested and cached in parts (no larger than 10 MB each part). It reduces time to first byte. The origin must support HTTP Range requests.
                           type: boolean
                         staticRequestHeaders:
                           additionalProperties:
                             type: string
-                          description: set up custom headers that CDN servers will
-                            send in requests to origins.
+                          description: |-
+                            (Map of String) Set up custom headers that CDN servers will send in requests to origins.
+                            Set up custom headers that CDN servers will send in requests to origins.
                           type: object
                           x-kubernetes-map-type: granular
                         staticResponseHeaders:
                           additionalProperties:
                             type: string
-                          description: set up custom headers that CDN servers will
-                            send in response to clients.
+                          description: |-
+                            (Map of String) Set up a static response header. The header name must be lowercase.
+                            Set up a static response header. The header name must be lowercase.
                           type: object
                           x-kubernetes-map-type: granular
                       type: object
                     type: array
                   originGroupId:
+                    description: |-
+                      (Number) The ID of a specific origin group.
+                      The ID of a specific origin group.
                     type: number
                   originGroupIdRef:
                     description: Reference to a OriginGroup to populate originGroupId.
@@ -732,26 +813,45 @@ spec:
                         type: object
                     type: object
                   originGroupName:
+                    description: |-
+                      (String) The name of a specific origin group.
+                      The name of a specific origin group.
                     type: string
                   originProtocol:
+                    description: |-
+                      (String) Protocol of origin resource. http or https.
+                      Protocol of origin resource. `http` or `https`.
                     type: string
                   secondaryHostnames:
-                    description: list of secondary hostname strings.
+                    description: |-
+                      (Set of String) List of secondary hostname strings.
+                      List of secondary hostname strings.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   sslCertificate:
-                    description: SSL certificate of CDN resource.
+                    description: |-
+                      (Block Set, Max: 1) SSL certificate of CDN resource. (see below for nested schema)
+                      SSL certificate of CDN resource.
                     items:
                       properties:
                         certificateManagerId:
+                          description: |-
+                            (String) Certificate Manager ID.
+                            Certificate Manager ID.
                           type: string
                         type:
+                          description: |-
+                            (String) SSL certificate type.
+                            SSL certificate type.
                           type: string
                       type: object
                     type: array
                   updatedAt:
+                    description: |-
+                      (String) Last update timestamp. Computed value for read and update operations.
+                      Last update timestamp. Computed value for read and update operations.
                     type: string
                 type: object
               managementPolicies:
@@ -927,198 +1027,255 @@ spec:
               atProvider:
                 properties:
                   active:
-                    description: Flag to create Resource either in active or disabled
-                      state. True - the content from CDN is available to clients.
+                    description: |-
+                      the content from CDN is available to clients.
+                      Flag to create Resource either in active or disabled state. `True` - the content from CDN is available to clients.
                     type: boolean
                   cname:
-                    description: CDN endpoint CNAME, must be unique among resources.
+                    description: |-
+                      (String) CDN endpoint CNAME, must be unique among resources.
+                      CDN endpoint CNAME, must be unique among resources.
                     type: string
                   createdAt:
-                    description: Creation timestamp of the IoT Core Device
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
                   options:
-                    description: CDN Resource settings and options to tune CDN edge
-                      behavior.
+                    description: |-
+                      (Block List, Max: 1) CDN Resource settings and options to tune CDN edge behavior. (see below for nested schema)
+                      CDN Resource settings and options to tune CDN edge behavior.
                     items:
                       properties:
                         allowedHttpMethods:
-                          description: 'HTTP methods for your CDN content. By default
-                            the following methods are allowed: GET, HEAD, POST, PUT,
-                            PATCH, DELETE, OPTIONS. In case some methods are not allowed
-                            to the user, they will get the 405 (Method Not Allowed)
-                            response. If the method is not supported, the user gets
-                            the 501 (Not Implemented) response.'
+                          description: |-
+                            (List of String) HTTP methods for your CDN content. By default the following methods are allowed: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS. In case some methods are not allowed to the user, they will get the 405 (Method Not Allowed) response. If the method is not supported, the user gets the 501 (Not Implemented) response.
+                            HTTP methods for your CDN content. By default the following methods are allowed: GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS. In case some methods are not allowed to the user, they will get the 405 (Method Not Allowed) response. If the method is not supported, the user gets the 501 (Not Implemented) response.
                           items:
                             type: string
                           type: array
                         browserCacheSettings:
-                          description: 'set up a cache period for the end-users browser.
-                            Content will be cached due to origin settings. If there
-                            are no cache settings on your origin, the content will
-                            not be cached. The list of HTTP response codes that can
-                            be cached in browsers: 200, 201, 204, 206, 301, 302, 303,
-                            304, 307, 308. Other response codes will not be cached.
-                            The default value is 4 days.'
+                          description: |-
+                            users browser. Content will be cached due to origin settings. If there are no cache settings on your origin, the content will not be cached. The list of HTTP response codes that can be cached in browsers: 200, 201, 204, 206, 301, 302, 303, 304, 307, 308. Other response codes will not be cached. The default value is 4 days.
+                            Set up a cache period for the end-users browser. Content will be cached due to origin settings. If there are no cache settings on your origin, the content will not be cached. The list of HTTP response codes that can be cached in browsers: 200, 201, 204, 206, 301, 302, 303, 304, 307, 308. Other response codes will not be cached. The default value is 4 days.
                           type: number
                         cacheHttpHeaders:
-                          description: list HTTP headers that must be included in
-                            responses to clients.
+                          description: |-
+                            (List of String) List HTTP headers that must be included in responses to clients.
+                            List HTTP headers that must be included in responses to clients.
                           items:
                             type: string
                           type: array
                         cors:
-                          description: parameter that lets browsers get access to
-                            selected resources from a domain different to a domain
-                            from which the request is received.
+                          description: |-
+                            (List of String) Parameter that lets browsers get access to selected resources from a domain different to a domain from which the request is received.
+                            Parameter that lets browsers get access to selected resources from a domain different to a domain from which the request is received.
                           items:
                             type: string
                           type: array
                         customHostHeader:
-                          description: custom value for the Host header. Your server
-                            must be able to process requests with the chosen header.
+                          description: |-
+                            (String) Custom value for the Host header. Your server must be able to process requests with the chosen header.
+                            Custom value for the Host header. Your server must be able to process requests with the chosen header.
                           type: string
                         customServerName:
-                          description: wildcard additional CNAME. If a resource has
-                            a wildcard additional CNAME, you can use your own certificate
-                            for content delivery via HTTPS. Read-only.
+                          description: |-
+                            (String) Wildcard additional CNAME. If a resource has a wildcard additional CNAME, you can use your own certificate for content delivery via HTTPS.
+                            Wildcard additional CNAME. If a resource has a wildcard additional CNAME, you can use your own certificate for content delivery via HTTPS.
                           type: string
                         disableCache:
-                          description: setup a cache status.
+                          description: |-
+                            (Boolean) Setup a cache status.
+                            Setup a cache status.
                           type: boolean
                         disableProxyForceRanges:
-                          description: disabling proxy force ranges.
+                          description: |-
+                            (Boolean) Disabling proxy force ranges.
+                            Disabling proxy force ranges.
                           type: boolean
                         edgeCacheSettings:
-                          description: content will be cached according to origin
-                            cache settings. The value applies for a response with
-                            codes 200, 201, 204, 206, 301, 302, 303, 304, 307, 308
-                            if an origin server does not have caching HTTP headers.
-                            Responses with other codes will not be cached.
+                          description: |-
+                            (Number) Content will be cached according to origin cache settings. The value applies for a response with codes 200, 201, 204, 206, 301, 302, 303, 304, 307, 308 if an origin server does not have caching HTTP headers. Responses with other codes will not be cached.
+                            Content will be cached according to origin cache settings. The value applies for a response with codes 200, 201, 204, 206, 301, 302, 303, 304, 307, 308 if an origin server does not have caching HTTP headers. Responses with other codes will not be cached.
                           type: number
                         enableIpUrlSigning:
-                          description: enable access limiting by IP addresses, option
-                            available only with setting secure_key.
+                          description: |-
+                            (Boolean) Enable access limiting by IP addresses, option available only with setting secure_key.
+                            Enable access limiting by IP addresses, option available only with setting secure_key.
                           type: boolean
                         fetchedCompressed:
-                          description: option helps you to reduce the bandwidth between
-                            origin and CDN servers. Also, content delivery speed becomes
-                            higher because of reducing the time for compressing files
-                            in a CDN.
+                          description: |-
+                            (Boolean) Option helps you to reduce the bandwidth between origin and CDN servers. Also, content delivery speed becomes higher because of reducing the time for compressing files in a CDN.
+                            Option helps you to reduce the bandwidth between origin and CDN servers. Also, content delivery speed becomes higher because of reducing the time for compressing files in a CDN.
                           type: boolean
                         forwardHostHeader:
-                          description: choose the Forward Host header option if is
-                            important to send in the request to the Origin the same
-                            Host header as was sent in the request to CDN server.
+                          description: |-
+                            (Boolean) Choose the Forward Host header option if is important to send in the request to the Origin the same Host header as was sent in the request to CDN server.
+                            Choose the Forward Host header option if is important to send in the request to the Origin the same Host header as was sent in the request to CDN server.
                           type: boolean
                         gzipOn:
-                          description: GZip compression at CDN servers reduces file
-                            size by 70% and can be as high as 90%.
+                          description: |-
+                            (Boolean) GZip compression at CDN servers reduces file size by 70% and can be as high as 90%.
+                            GZip compression at CDN servers reduces file size by 70% and can be as high as 90%.
                           type: boolean
                         ignoreCookie:
-                          description: set for ignoring cookie.
+                          description: |-
+                            (Boolean) Set for ignoring cookie.
+                            Set for ignoring cookie.
                           type: boolean
                         ignoreQueryParams:
-                          description: files with different query parameters are cached
-                            as objects with the same key regardless of the parameter
-                            value. selected by default.
+                          description: |-
+                            (Boolean) Files with different query parameters are cached as objects with the same key regardless of the parameter value. selected by default.
+                            Files with different query parameters are cached as objects with the same key regardless of the parameter value. selected by default.
                           type: boolean
                         ipAddressAcl:
+                          description: |-
+                            (Block List, Max: 1) IP address access control list. The list of specified IP addresses to be allowed or denied depending on acl policy type. (see below for nested schema)
+                            IP address access control list. The list of specified IP addresses to be allowed or denied depending on acl policy type.
                           items:
                             properties:
                               exceptedValues:
-                                description: the list of specified IP addresses to
-                                  be allowed or denied depending on acl policy type.
+                                description: |-
+                                  (List of String) The list of specified IP addresses to be allowed or denied depending on acl policy type.
+                                  The list of specified IP addresses to be allowed or denied depending on acl policy type.
                                 items:
                                   type: string
                                 type: array
                               policyType:
-                                description: the policy type for ip_address_acl option,
-                                  one of "allow" or "deny" values.
+                                description: |-
+                                  (String) The policy type for ACL. One of allow or deny values.
+                                  The policy type for ACL. One of `allow` or `deny` values.
                                 type: string
                             type: object
                           type: array
                         proxyCacheMethodsSet:
-                          description: allows caching for GET, HEAD and POST requests.
+                          description: |-
+                            (Boolean) Allows caching for GET, HEAD and POST requests.
+                            Allows caching for GET, HEAD and POST requests.
                           type: boolean
                         queryParamsBlacklist:
-                          description: files with the specified query parameters are
-                            cached as objects with the same key, files with other
-                            parameters are cached as objects with different keys.
+                          description: |-
+                            (List of String) Files with the specified query parameters are cached as objects with the same key, files with other parameters are cached as objects with different keys.
+                            Files with the specified query parameters are cached as objects with the same key, files with other parameters are cached as objects with different keys.
                           items:
                             type: string
                           type: array
                         queryParamsWhitelist:
-                          description: files with the specified query parameters are
-                            cached as objects with different keys, files with other
-                            parameters are cached as objects with the same key.
+                          description: |-
+                            (List of String) Files with the specified query parameters are cached as objects with different keys, files with other parameters are cached as objects with the same key.
+                            Files with the specified query parameters are cached as objects with different keys, files with other parameters are cached as objects with the same key.
                           items:
                             type: string
                           type: array
                         redirectHttpToHttps:
-                          description: set up a redirect from HTTP to HTTPS.
+                          description: |-
+                            (Boolean) Set up a redirect from HTTP to HTTPS.
+                            Set up a redirect from HTTP to HTTPS.
                           type: boolean
                         redirectHttpsToHttp:
-                          description: set up a redirect from HTTPS to HTTP.
+                          description: |-
+                            (Boolean) Set up a redirect from HTTPS to HTTP.
+                            Set up a redirect from HTTPS to HTTP.
                           type: boolean
                         secureKey:
-                          description: set secure key for url encoding to protect
-                            contect and limit access by IP addresses and time limits.
+                          description: |-
+                            (String) Set secure key for url encoding to protect contect and limit access by IP addresses and time limits.
+                            Set secure key for url encoding to protect contect and limit access by IP addresses and time limits.
                           type: string
                         slice:
-                          description: files larger than 10 MB will be requested and
-                            cached in parts (no larger than 10 MB each part). It reduces
-                            time to first byte. The origin must support HTTP Range
-                            requests.
+                          description: |-
+                            (Boolean) Files larger than 10 MB will be requested and cached in parts (no larger than 10 MB each part). It reduces time to first byte. The origin must support HTTP Range requests.
+                            Files larger than 10 MB will be requested and cached in parts (no larger than 10 MB each part). It reduces time to first byte. The origin must support HTTP Range requests.
                           type: boolean
                         staticRequestHeaders:
                           additionalProperties:
                             type: string
-                          description: set up custom headers that CDN servers will
-                            send in requests to origins.
+                          description: |-
+                            (Map of String) Set up custom headers that CDN servers will send in requests to origins.
+                            Set up custom headers that CDN servers will send in requests to origins.
                           type: object
                           x-kubernetes-map-type: granular
                         staticResponseHeaders:
                           additionalProperties:
                             type: string
-                          description: set up custom headers that CDN servers will
-                            send in response to clients.
+                          description: |-
+                            (Map of String) Set up a static response header. The header name must be lowercase.
+                            Set up a static response header. The header name must be lowercase.
                           type: object
                           x-kubernetes-map-type: granular
                       type: object
                     type: array
                   originGroupId:
+                    description: |-
+                      (Number) The ID of a specific origin group.
+                      The ID of a specific origin group.
                     type: number
                   originGroupName:
+                    description: |-
+                      (String) The name of a specific origin group.
+                      The name of a specific origin group.
                     type: string
                   originProtocol:
+                    description: |-
+                      (String) Protocol of origin resource. http or https.
+                      Protocol of origin resource. `http` or `https`.
                     type: string
                   providerCname:
-                    description: provider CNAME of CDN resource, computed value for
-                      read and update operations.
+                    description: |-
+                      (String) Provider CNAME of CDN resource, computed value for read and update operations.
+                      Provider CNAME of CDN resource, computed value for read and update operations.
                     type: string
                   secondaryHostnames:
-                    description: list of secondary hostname strings.
+                    description: |-
+                      (Set of String) List of secondary hostname strings.
+                      List of secondary hostname strings.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   sslCertificate:
-                    description: SSL certificate of CDN resource.
+                    description: |-
+                      (Block Set, Max: 1) SSL certificate of CDN resource. (see below for nested schema)
+                      SSL certificate of CDN resource.
                     items:
                       properties:
                         certificateManagerId:
+                          description: |-
+                            (String) Certificate Manager ID.
+                            Certificate Manager ID.
                           type: string
                         status:
+                          description: |-
+                            (String) SSL certificate status.
+                            SSL certificate status.
                           type: string
                         type:
+                          description: |-
+                            (String) SSL certificate type.
+                            SSL certificate type.
                           type: string
                       type: object
                     type: array
                   updatedAt:
+                    description: |-
+                      (String) Last update timestamp. Computed value for read and update operations.
+                      Last update timestamp. Computed value for read and update operations.
                     type: string
                 type: object
               conditions:

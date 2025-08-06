@@ -51,6 +51,7 @@ func Configure(p *config.Provider) {
 		r.References["security_group_binding"] = config.Reference{
 			Type: "SecurityGroup",
 		}
+		r.TerraformConversions = append(r.TerraformConversions, sgPortConversion{})
 	})
 
 	p.AddResourceConfigurator("yandex_vpc_route_table", func(r *config.Resource) {
@@ -61,4 +62,42 @@ func Configure(p *config.Provider) {
 			Type: "Gateway",
 		}
 	})
+}
+
+// sgPortConversion handles the conversion of security group rule port fields.
+// In TF state, port value -1 means "N/A", but the validations don't allow it to
+// be passed in.
+type sgPortConversion struct{}
+
+func (c sgPortConversion) Convert(params map[string]any, r *config.Resource, mode config.Mode) (map[string]any, error) {
+	if mode == config.ToTerraform {
+		return params, nil
+	}
+
+	// Helper function to check if a value represents -1
+	isMinusOne := func(v any) bool {
+		switch val := v.(type) {
+		case string:
+			return val == "-1"
+		case float64:
+			return val == -1.0
+		case int:
+			return val == -1
+		case int64:
+			return val == -1
+		}
+		return false
+	}
+
+	// Remove port fields that have -1 value (indicating "any port")
+	if p, ok := params["port"]; ok && isMinusOne(p) {
+		delete(params, "port")
+	}
+	if p, ok := params["from_port"]; ok && isMinusOne(p) {
+		delete(params, "from_port")
+	}
+	if p, ok := params["to_port"]; ok && isMinusOne(p) {
+		delete(params, "to_port")
+	}
+	return params, nil
 }

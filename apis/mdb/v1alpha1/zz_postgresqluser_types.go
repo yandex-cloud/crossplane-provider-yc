@@ -29,6 +29,8 @@ import (
 
 type PostgresqlUserInitParameters struct {
 
+	// (String) The ID of the PostgreSQL cluster.
+	// The ID of the PostgreSQL cluster.
 	// +crossplane:generate:reference:type=PostgresqlCluster
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
@@ -40,62 +42,184 @@ type PostgresqlUserInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// The maximum number of connections per user. (Default 50)
+	// (Number) The maximum number of connections per user. (Default 50).
+	// The maximum number of connections per user. (Default 50).
 	ConnLimit *float64 `json:"connLimit,omitempty" tf:"conn_limit,omitempty"`
 
-	// Inhibits deletion of the user. Can either be true, false or unspecified.
+	// (String) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *string `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
+	// (Boolean) Generate password using Connection Manager. Allowed values: true or false. It's used only during user creation and is ignored during updating.
+	// Generate password using Connection Manager. Allowed values: true or false. It's used only during user creation and is ignored during updating.
+	//
+	// ~> **Must specify either password or generate_password**.
+	GeneratePassword *bool `json:"generatePassword,omitempty" tf:"generate_password,omitempty"`
+
+	// (List of String) List of the user's grants.
 	// List of the user's grants.
 	Grants []*string `json:"grants,omitempty" tf:"grants,omitempty"`
 
+	// (Boolean) User's ability to login.
 	// User's ability to login.
 	Login *bool `json:"login,omitempty" tf:"login,omitempty"`
 
+	// (String) The name of the user.
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String, Sensitive) The password of the user.
 	// The password of the user.
-	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
-	// Set of permissions granted to the user. The structure is documented below.
+	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// Set of permissions granted to the user.
 	Permission []PostgresqlUserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 
-	// Map of user settings. List of settings is documented below.
+	// (Map of String) Map of user settings. Full description.
+	// Map of user settings. [Full description](https://yandex.cloud/docs/managed-postgresql/api-ref/grpc/Cluster/create#yandex.cloud.mdb.postgresql.v1.UserSettings).
+	//
+	// * `default_transaction_isolation` - defines the default isolation level to be set for all new SQL transactions. One of:  - 0: `unspecified`
+	// - 1: `read uncommitted`
+	// - 2: `read committed`
+	// - 3: `repeatable read`
+	// - 4: `serializable`
+	//
+	// * `lock_timeout` - The maximum time (in milliseconds) for any statement to wait for acquiring a lock on an table, index, row or other database object (default 0)
+	//
+	// * `log_min_duration_statement` - This setting controls logging of the duration of statements. (default -1 disables logging of the duration of statements.)
+	//
+	// * `synchronous_commit` - This setting defines whether DBMS will commit transaction in a synchronous way. One of:
+	// - 0: `unspecified`
+	// - 1: `on`
+	// - 2: `off`
+	// - 3: `local`
+	// - 4: `remote write`
+	// - 5: `remote apply`
+	//
+	// * `temp_file_limit` - The maximum storage space size (in kilobytes) that a single process can use to create temporary files.
+	//
+	// * `log_statement` - This setting specifies which SQL statements should be logged (on the user level). One of:
+	// - 0: `unspecified`
+	// - 1: `none`
+	// - 2: `ddl`
+	// - 3: `mod`
+	// - 4: `all`
+	//
+	// * `pool_mode` - Mode that the connection pooler is working in with specified user. One of:
+	// - 1: `session`
+	// - 2: `transaction`
+	// - 3: `statement`
+	//
+	// * `prepared_statements_pooling` - This setting allows user to use prepared statements with transaction pooling. Boolean.
+	//
+	// * `catchup_timeout` - The connection pooler setting. It determines the maximum allowed replication lag (in seconds). Pooler will reject connections to the replica with a lag above this threshold. Default value is 0, which disables this feature. Integer.
+	//
+	// * `wal_sender_timeout` - The maximum time (in milliseconds) to wait for WAL replication (can be set only for PostgreSQL 12+). Terminate replication connections that are inactive for longer than this amount of time. Integer.
+	//
+	// * `idle_in_transaction_session_timeout` - Sets the maximum allowed idle time (in milliseconds) between queries, when in a transaction. Value of 0 (default) disables the timeout. Integer.
+	//
+	// * `statement_timeout` - The maximum time (in milliseconds) to wait for statement. Value of 0 (default) disables the timeout. Integer
 	// +mapType=granular
 	Settings map[string]*string `json:"settings,omitempty" tf:"settings,omitempty"`
 }
 
 type PostgresqlUserObservation struct {
+
+	// (String) The ID of the PostgreSQL cluster.
+	// The ID of the PostgreSQL cluster.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
-	// The maximum number of connections per user. (Default 50)
+	// (Number) The maximum number of connections per user. (Default 50).
+	// The maximum number of connections per user. (Default 50).
 	ConnLimit *float64 `json:"connLimit,omitempty" tf:"conn_limit,omitempty"`
 
-	// Inhibits deletion of the user. Can either be true, false or unspecified.
+	// (Map of String) Connection Manager connection configuration. Filled in by the server automatically.
+	// Connection Manager connection configuration. Filled in by the server automatically.
+	// +mapType=granular
+	ConnectionManager map[string]*string `json:"connectionManager,omitempty" tf:"connection_manager,omitempty"`
+
+	// (String) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *string `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
+	// (Boolean) Generate password using Connection Manager. Allowed values: true or false. It's used only during user creation and is ignored during updating.
+	// Generate password using Connection Manager. Allowed values: true or false. It's used only during user creation and is ignored during updating.
+	//
+	// ~> **Must specify either password or generate_password**.
+	GeneratePassword *bool `json:"generatePassword,omitempty" tf:"generate_password,omitempty"`
+
+	// (List of String) List of the user's grants.
 	// List of the user's grants.
 	Grants []*string `json:"grants,omitempty" tf:"grants,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// (Boolean) User's ability to login.
 	// User's ability to login.
 	Login *bool `json:"login,omitempty" tf:"login,omitempty"`
 
+	// (String) The name of the user.
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Set of permissions granted to the user. The structure is documented below.
+	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// Set of permissions granted to the user.
 	Permission []PostgresqlUserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
 
-	// Map of user settings. List of settings is documented below.
+	// (Map of String) Map of user settings. Full description.
+	// Map of user settings. [Full description](https://yandex.cloud/docs/managed-postgresql/api-ref/grpc/Cluster/create#yandex.cloud.mdb.postgresql.v1.UserSettings).
+	//
+	// * `default_transaction_isolation` - defines the default isolation level to be set for all new SQL transactions. One of:  - 0: `unspecified`
+	// - 1: `read uncommitted`
+	// - 2: `read committed`
+	// - 3: `repeatable read`
+	// - 4: `serializable`
+	//
+	// * `lock_timeout` - The maximum time (in milliseconds) for any statement to wait for acquiring a lock on an table, index, row or other database object (default 0)
+	//
+	// * `log_min_duration_statement` - This setting controls logging of the duration of statements. (default -1 disables logging of the duration of statements.)
+	//
+	// * `synchronous_commit` - This setting defines whether DBMS will commit transaction in a synchronous way. One of:
+	// - 0: `unspecified`
+	// - 1: `on`
+	// - 2: `off`
+	// - 3: `local`
+	// - 4: `remote write`
+	// - 5: `remote apply`
+	//
+	// * `temp_file_limit` - The maximum storage space size (in kilobytes) that a single process can use to create temporary files.
+	//
+	// * `log_statement` - This setting specifies which SQL statements should be logged (on the user level). One of:
+	// - 0: `unspecified`
+	// - 1: `none`
+	// - 2: `ddl`
+	// - 3: `mod`
+	// - 4: `all`
+	//
+	// * `pool_mode` - Mode that the connection pooler is working in with specified user. One of:
+	// - 1: `session`
+	// - 2: `transaction`
+	// - 3: `statement`
+	//
+	// * `prepared_statements_pooling` - This setting allows user to use prepared statements with transaction pooling. Boolean.
+	//
+	// * `catchup_timeout` - The connection pooler setting. It determines the maximum allowed replication lag (in seconds). Pooler will reject connections to the replica with a lag above this threshold. Default value is 0, which disables this feature. Integer.
+	//
+	// * `wal_sender_timeout` - The maximum time (in milliseconds) to wait for WAL replication (can be set only for PostgreSQL 12+). Terminate replication connections that are inactive for longer than this amount of time. Integer.
+	//
+	// * `idle_in_transaction_session_timeout` - Sets the maximum allowed idle time (in milliseconds) between queries, when in a transaction. Value of 0 (default) disables the timeout. Integer.
+	//
+	// * `statement_timeout` - The maximum time (in milliseconds) to wait for statement. Value of 0 (default) disables the timeout. Integer
 	// +mapType=granular
 	Settings map[string]*string `json:"settings,omitempty" tf:"settings,omitempty"`
 }
 
 type PostgresqlUserParameters struct {
 
+	// (String) The ID of the PostgreSQL cluster.
+	// The ID of the PostgreSQL cluster.
 	// +crossplane:generate:reference:type=PostgresqlCluster
 	// +kubebuilder:validation:Optional
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
@@ -108,35 +232,92 @@ type PostgresqlUserParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// The maximum number of connections per user. (Default 50)
+	// (Number) The maximum number of connections per user. (Default 50).
+	// The maximum number of connections per user. (Default 50).
 	// +kubebuilder:validation:Optional
 	ConnLimit *float64 `json:"connLimit,omitempty" tf:"conn_limit,omitempty"`
 
-	// Inhibits deletion of the user. Can either be true, false or unspecified.
+	// (String) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *string `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
+	// (Boolean) Generate password using Connection Manager. Allowed values: true or false. It's used only during user creation and is ignored during updating.
+	// Generate password using Connection Manager. Allowed values: true or false. It's used only during user creation and is ignored during updating.
+	//
+	// ~> **Must specify either password or generate_password**.
+	// +kubebuilder:validation:Optional
+	GeneratePassword *bool `json:"generatePassword,omitempty" tf:"generate_password,omitempty"`
+
+	// (List of String) List of the user's grants.
 	// List of the user's grants.
 	// +kubebuilder:validation:Optional
 	Grants []*string `json:"grants,omitempty" tf:"grants,omitempty"`
 
+	// (Boolean) User's ability to login.
 	// User's ability to login.
 	// +kubebuilder:validation:Optional
 	Login *bool `json:"login,omitempty" tf:"login,omitempty"`
 
+	// (String) The name of the user.
 	// The name of the user.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String, Sensitive) The password of the user.
 	// The password of the user.
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
-	// Set of permissions granted to the user. The structure is documented below.
+	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// Set of permissions granted to the user.
 	// +kubebuilder:validation:Optional
 	Permission []PostgresqlUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 
-	// Map of user settings. List of settings is documented below.
+	// (Map of String) Map of user settings. Full description.
+	// Map of user settings. [Full description](https://yandex.cloud/docs/managed-postgresql/api-ref/grpc/Cluster/create#yandex.cloud.mdb.postgresql.v1.UserSettings).
+	//
+	// * `default_transaction_isolation` - defines the default isolation level to be set for all new SQL transactions. One of:  - 0: `unspecified`
+	// - 1: `read uncommitted`
+	// - 2: `read committed`
+	// - 3: `repeatable read`
+	// - 4: `serializable`
+	//
+	// * `lock_timeout` - The maximum time (in milliseconds) for any statement to wait for acquiring a lock on an table, index, row or other database object (default 0)
+	//
+	// * `log_min_duration_statement` - This setting controls logging of the duration of statements. (default -1 disables logging of the duration of statements.)
+	//
+	// * `synchronous_commit` - This setting defines whether DBMS will commit transaction in a synchronous way. One of:
+	// - 0: `unspecified`
+	// - 1: `on`
+	// - 2: `off`
+	// - 3: `local`
+	// - 4: `remote write`
+	// - 5: `remote apply`
+	//
+	// * `temp_file_limit` - The maximum storage space size (in kilobytes) that a single process can use to create temporary files.
+	//
+	// * `log_statement` - This setting specifies which SQL statements should be logged (on the user level). One of:
+	// - 0: `unspecified`
+	// - 1: `none`
+	// - 2: `ddl`
+	// - 3: `mod`
+	// - 4: `all`
+	//
+	// * `pool_mode` - Mode that the connection pooler is working in with specified user. One of:
+	// - 1: `session`
+	// - 2: `transaction`
+	// - 3: `statement`
+	//
+	// * `prepared_statements_pooling` - This setting allows user to use prepared statements with transaction pooling. Boolean.
+	//
+	// * `catchup_timeout` - The connection pooler setting. It determines the maximum allowed replication lag (in seconds). Pooler will reject connections to the replica with a lag above this threshold. Default value is 0, which disables this feature. Integer.
+	//
+	// * `wal_sender_timeout` - The maximum time (in milliseconds) to wait for WAL replication (can be set only for PostgreSQL 12+). Terminate replication connections that are inactive for longer than this amount of time. Integer.
+	//
+	// * `idle_in_transaction_session_timeout` - Sets the maximum allowed idle time (in milliseconds) between queries, when in a transaction. Value of 0 (default) disables the timeout. Integer.
+	//
+	// * `statement_timeout` - The maximum time (in milliseconds) to wait for statement. Value of 0 (default) disables the timeout. Integer
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Settings map[string]*string `json:"settings,omitempty" tf:"settings,omitempty"`
@@ -144,18 +325,21 @@ type PostgresqlUserParameters struct {
 
 type PostgresqlUserPermissionInitParameters struct {
 
+	// (String) The name of the database that the permission grants access to.
 	// The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 }
 
 type PostgresqlUserPermissionObservation struct {
 
+	// (String) The name of the database that the permission grants access to.
 	// The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 }
 
 type PostgresqlUserPermissionParameters struct {
 
+	// (String) The name of the database that the permission grants access to.
 	// The name of the database that the permission grants access to.
 	// +kubebuilder:validation:Optional
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
@@ -188,7 +372,7 @@ type PostgresqlUserStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// PostgresqlUser is the Schema for the PostgresqlUsers API. Manages a PostgreSQL user within Yandex.Cloud.
+// PostgresqlUser is the Schema for the PostgresqlUsers API. Manages a PostgreSQL user within Yandex Cloud.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -198,7 +382,6 @@ type PostgresqlUser struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.passwordSecretRef)",message="spec.forProvider.passwordSecretRef is a required parameter"
 	Spec   PostgresqlUserSpec   `json:"spec"`
 	Status PostgresqlUserStatus `json:"status,omitempty"`
 }

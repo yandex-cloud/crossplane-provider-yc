@@ -29,10 +29,12 @@ import (
 
 type RouteTableInitParameters struct {
 
-	// An optional description of the route table. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -44,13 +46,16 @@ type RouteTableInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Labels to assign to this route table. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the route table. Provided by the client when the route table is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) ID of the network this route table belongs to.
 	// ID of the network this route table belongs to.
 	// +crossplane:generate:reference:type=Network
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -63,44 +68,59 @@ type RouteTableInitParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// A list of static route records for the route table. The structure is documented below.
+	// (Block Set) A list of static route records for the route table.
+	// A list of static route records for the route table.
+	//
+	// ~> Only one of `next_hop_address` or `gateway_id` should be specified.
 	StaticRoute []StaticRouteInitParameters `json:"staticRoute,omitempty" tf:"static_route,omitempty"`
 }
 
 type RouteTableObservation struct {
 
-	// Creation timestamp of the route table.
+	// (String) The creation timestamp of the resource.
+	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// An optional description of the route table. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Labels to assign to this route table. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the route table. Provided by the client when the route table is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) ID of the network this route table belongs to.
 	// ID of the network this route table belongs to.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// A list of static route records for the route table. The structure is documented below.
+	// (Block Set) A list of static route records for the route table.
+	// A list of static route records for the route table.
+	//
+	// ~> Only one of `next_hop_address` or `gateway_id` should be specified.
 	StaticRoute []StaticRouteObservation `json:"staticRoute,omitempty" tf:"static_route,omitempty"`
 }
 
 type RouteTableParameters struct {
 
-	// An optional description of the route table. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -113,15 +133,18 @@ type RouteTableParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Labels to assign to this route table. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the route table. Provided by the client when the route table is created.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) ID of the network this route table belongs to.
 	// ID of the network this route table belongs to.
 	// +crossplane:generate:reference:type=Network
 	// +kubebuilder:validation:Optional
@@ -135,16 +158,21 @@ type RouteTableParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// A list of static route records for the route table. The structure is documented below.
+	// (Block Set) A list of static route records for the route table.
+	// A list of static route records for the route table.
+	//
+	// ~> Only one of `next_hop_address` or `gateway_id` should be specified.
 	// +kubebuilder:validation:Optional
 	StaticRoute []StaticRouteParameters `json:"staticRoute,omitempty" tf:"static_route,omitempty"`
 }
 
 type StaticRouteInitParameters struct {
 
+	// (String) Route prefix in CIDR notation.
 	// Route prefix in CIDR notation.
 	DestinationPrefix *string `json:"destinationPrefix,omitempty" tf:"destination_prefix,omitempty"`
 
+	// (String) ID of the gateway used ad next hop.
 	// ID of the gateway used ad next hop.
 	// +crossplane:generate:reference:type=Gateway
 	GatewayID *string `json:"gatewayId,omitempty" tf:"gateway_id,omitempty"`
@@ -157,28 +185,34 @@ type StaticRouteInitParameters struct {
 	// +kubebuilder:validation:Optional
 	GatewayIDSelector *v1.Selector `json:"gatewayIdSelector,omitempty" tf:"-"`
 
+	// (String) Address of the next hop.
 	// Address of the next hop.
 	NextHopAddress *string `json:"nextHopAddress,omitempty" tf:"next_hop_address,omitempty"`
 }
 
 type StaticRouteObservation struct {
 
+	// (String) Route prefix in CIDR notation.
 	// Route prefix in CIDR notation.
 	DestinationPrefix *string `json:"destinationPrefix,omitempty" tf:"destination_prefix,omitempty"`
 
+	// (String) ID of the gateway used ad next hop.
 	// ID of the gateway used ad next hop.
 	GatewayID *string `json:"gatewayId,omitempty" tf:"gateway_id,omitempty"`
 
+	// (String) Address of the next hop.
 	// Address of the next hop.
 	NextHopAddress *string `json:"nextHopAddress,omitempty" tf:"next_hop_address,omitempty"`
 }
 
 type StaticRouteParameters struct {
 
+	// (String) Route prefix in CIDR notation.
 	// Route prefix in CIDR notation.
 	// +kubebuilder:validation:Optional
 	DestinationPrefix *string `json:"destinationPrefix,omitempty" tf:"destination_prefix,omitempty"`
 
+	// (String) ID of the gateway used ad next hop.
 	// ID of the gateway used ad next hop.
 	// +crossplane:generate:reference:type=Gateway
 	// +kubebuilder:validation:Optional
@@ -192,6 +226,7 @@ type StaticRouteParameters struct {
 	// +kubebuilder:validation:Optional
 	GatewayIDSelector *v1.Selector `json:"gatewayIdSelector,omitempty" tf:"-"`
 
+	// (String) Address of the next hop.
 	// Address of the next hop.
 	// +kubebuilder:validation:Optional
 	NextHopAddress *string `json:"nextHopAddress,omitempty" tf:"next_hop_address,omitempty"`

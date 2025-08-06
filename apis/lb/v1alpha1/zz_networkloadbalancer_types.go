@@ -29,9 +29,13 @@ import (
 
 type AttachedTargetGroupInitParameters struct {
 
-	// A HealthCheck resource. The structure is documented below.
+	// (Block List, Min: 1) A HealthCheck resource.
+	// A HealthCheck resource.
+	//
+	// ~> One of `http_options` or `tcp_options` should be specified.
 	Healthcheck []HealthcheckInitParameters `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
 
+	// (String) ID of the target group.
 	// ID of the target group.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/lb/v1alpha1.TargetGroup
 	TargetGroupID *string `json:"targetGroupId,omitempty" tf:"target_group_id,omitempty"`
@@ -47,19 +51,27 @@ type AttachedTargetGroupInitParameters struct {
 
 type AttachedTargetGroupObservation struct {
 
-	// A HealthCheck resource. The structure is documented below.
+	// (Block List, Min: 1) A HealthCheck resource.
+	// A HealthCheck resource.
+	//
+	// ~> One of `http_options` or `tcp_options` should be specified.
 	Healthcheck []HealthcheckObservation `json:"healthcheck,omitempty" tf:"healthcheck,omitempty"`
 
+	// (String) ID of the target group.
 	// ID of the target group.
 	TargetGroupID *string `json:"targetGroupId,omitempty" tf:"target_group_id,omitempty"`
 }
 
 type AttachedTargetGroupParameters struct {
 
-	// A HealthCheck resource. The structure is documented below.
+	// (Block List, Min: 1) A HealthCheck resource.
+	// A HealthCheck resource.
+	//
+	// ~> One of `http_options` or `tcp_options` should be specified.
 	// +kubebuilder:validation:Optional
 	Healthcheck []HealthcheckParameters `json:"healthcheck" tf:"healthcheck,omitempty"`
 
+	// (String) ID of the target group.
 	// ID of the target group.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/lb/v1alpha1.TargetGroup
 	// +kubebuilder:validation:Optional
@@ -76,175 +88,217 @@ type AttachedTargetGroupParameters struct {
 
 type ExternalAddressSpecInitParameters struct {
 
-	// Internal IP address for a listener. Must belong to the subnet that is referenced in subnet_id. IP address will be allocated if it wasn't been set.
+	// (String) External IP address for a listener. IP address will be allocated if it wasn't been set.
+	// External IP address for a listener. IP address will be allocated if it wasn't been set.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// IP version of the internal addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+	// (String) IP version of the external addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+	// IP version of the external addresses that the load balancer works with. Must be one of `ipv4` or `ipv6`. The default is `ipv4`.
 	IPVersion *string `json:"ipVersion,omitempty" tf:"ip_version,omitempty"`
 }
 
 type ExternalAddressSpecObservation struct {
 
-	// Internal IP address for a listener. Must belong to the subnet that is referenced in subnet_id. IP address will be allocated if it wasn't been set.
+	// (String) External IP address for a listener. IP address will be allocated if it wasn't been set.
+	// External IP address for a listener. IP address will be allocated if it wasn't been set.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// IP version of the internal addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+	// (String) IP version of the external addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+	// IP version of the external addresses that the load balancer works with. Must be one of `ipv4` or `ipv6`. The default is `ipv4`.
 	IPVersion *string `json:"ipVersion,omitempty" tf:"ip_version,omitempty"`
 }
 
 type ExternalAddressSpecParameters struct {
 
-	// Internal IP address for a listener. Must belong to the subnet that is referenced in subnet_id. IP address will be allocated if it wasn't been set.
+	// (String) External IP address for a listener. IP address will be allocated if it wasn't been set.
+	// External IP address for a listener. IP address will be allocated if it wasn't been set.
 	// +kubebuilder:validation:Optional
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// IP version of the internal addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+	// (String) IP version of the external addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+	// IP version of the external addresses that the load balancer works with. Must be one of `ipv4` or `ipv6`. The default is `ipv4`.
 	// +kubebuilder:validation:Optional
 	IPVersion *string `json:"ipVersion,omitempty" tf:"ip_version,omitempty"`
 }
 
 type HTTPOptionsInitParameters struct {
 
-	// URL path to set for health checking requests for every target in the target group. For example /ping. The default path is /.
+	// (String) URL path to set for health checking requests for every target in the target group. For example /ping. The default path is /.
+	// URL path to set for health checking requests for every target in the target group. For example `/ping`. The default path is `/`.
 	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
-	// Port to use for TCP health checks.
+	// (Number) Port to use for HTTP health checks.
+	// Port to use for HTTP health checks.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
 
 type HTTPOptionsObservation struct {
 
-	// URL path to set for health checking requests for every target in the target group. For example /ping. The default path is /.
+	// (String) URL path to set for health checking requests for every target in the target group. For example /ping. The default path is /.
+	// URL path to set for health checking requests for every target in the target group. For example `/ping`. The default path is `/`.
 	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
-	// Port to use for TCP health checks.
+	// (Number) Port to use for HTTP health checks.
+	// Port to use for HTTP health checks.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
 
 type HTTPOptionsParameters struct {
 
-	// URL path to set for health checking requests for every target in the target group. For example /ping. The default path is /.
+	// (String) URL path to set for health checking requests for every target in the target group. For example /ping. The default path is /.
+	// URL path to set for health checking requests for every target in the target group. For example `/ping`. The default path is `/`.
 	// +kubebuilder:validation:Optional
 	Path *string `json:"path,omitempty" tf:"path,omitempty"`
 
-	// Port to use for TCP health checks.
+	// (Number) Port to use for HTTP health checks.
+	// Port to use for HTTP health checks.
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port" tf:"port,omitempty"`
 }
 
 type HealthcheckInitParameters struct {
 
-	// Options for HTTP health check. The structure is documented below.
+	// (Block List, Max: 1) Options for HTTP health check. (see below for nested schema)
+	// Options for HTTP health check.
 	HTTPOptions []HTTPOptionsInitParameters `json:"httpOptions,omitempty" tf:"http_options,omitempty"`
 
-	// Number of successful health checks required in order to set the HEALTHY status for the target.
+	// (Number) Number of successful health checks required in order to set the HEALTHY status for the target.
+	// Number of successful health checks required in order to set the `HEALTHY` status for the target.
 	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
 
+	// (Number) The interval between health checks. The default is 2 seconds.
 	// The interval between health checks. The default is 2 seconds.
 	Interval *float64 `json:"interval,omitempty" tf:"interval,omitempty"`
 
-	// Name of the network load balancer. Provided by the client when the network load balancer is created.
+	// (String) The resource name.
+	// Name of the health check. The name must be unique for each target group that attached to a single load balancer.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Options for TCP health check. The structure is documented below.
+	// (Block List, Max: 1) Options for TCP health check. (see below for nested schema)
+	// Options for TCP health check.
 	TCPOptions []TCPOptionsInitParameters `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
 
+	// (Number) Timeout for a target to return a response for the health check. The default is 1 second.
 	// Timeout for a target to return a response for the health check. The default is 1 second.
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// Number of failed health checks before changing the status to UNHEALTHY. The default is 2.
+	// (Number) Number of failed health checks before changing the status to UNHEALTHY. The default is 2.
+	// Number of failed health checks before changing the status to `UNHEALTHY`. The default is 2.
 	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
 
 type HealthcheckObservation struct {
 
-	// Options for HTTP health check. The structure is documented below.
+	// (Block List, Max: 1) Options for HTTP health check. (see below for nested schema)
+	// Options for HTTP health check.
 	HTTPOptions []HTTPOptionsObservation `json:"httpOptions,omitempty" tf:"http_options,omitempty"`
 
-	// Number of successful health checks required in order to set the HEALTHY status for the target.
+	// (Number) Number of successful health checks required in order to set the HEALTHY status for the target.
+	// Number of successful health checks required in order to set the `HEALTHY` status for the target.
 	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
 
+	// (Number) The interval between health checks. The default is 2 seconds.
 	// The interval between health checks. The default is 2 seconds.
 	Interval *float64 `json:"interval,omitempty" tf:"interval,omitempty"`
 
-	// Name of the network load balancer. Provided by the client when the network load balancer is created.
+	// (String) The resource name.
+	// Name of the health check. The name must be unique for each target group that attached to a single load balancer.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Options for TCP health check. The structure is documented below.
+	// (Block List, Max: 1) Options for TCP health check. (see below for nested schema)
+	// Options for TCP health check.
 	TCPOptions []TCPOptionsObservation `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
 
+	// (Number) Timeout for a target to return a response for the health check. The default is 1 second.
 	// Timeout for a target to return a response for the health check. The default is 1 second.
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// Number of failed health checks before changing the status to UNHEALTHY. The default is 2.
+	// (Number) Number of failed health checks before changing the status to UNHEALTHY. The default is 2.
+	// Number of failed health checks before changing the status to `UNHEALTHY`. The default is 2.
 	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
 
 type HealthcheckParameters struct {
 
-	// Options for HTTP health check. The structure is documented below.
+	// (Block List, Max: 1) Options for HTTP health check. (see below for nested schema)
+	// Options for HTTP health check.
 	// +kubebuilder:validation:Optional
 	HTTPOptions []HTTPOptionsParameters `json:"httpOptions,omitempty" tf:"http_options,omitempty"`
 
-	// Number of successful health checks required in order to set the HEALTHY status for the target.
+	// (Number) Number of successful health checks required in order to set the HEALTHY status for the target.
+	// Number of successful health checks required in order to set the `HEALTHY` status for the target.
 	// +kubebuilder:validation:Optional
 	HealthyThreshold *float64 `json:"healthyThreshold,omitempty" tf:"healthy_threshold,omitempty"`
 
+	// (Number) The interval between health checks. The default is 2 seconds.
 	// The interval between health checks. The default is 2 seconds.
 	// +kubebuilder:validation:Optional
 	Interval *float64 `json:"interval,omitempty" tf:"interval,omitempty"`
 
-	// Name of the network load balancer. Provided by the client when the network load balancer is created.
+	// (String) The resource name.
+	// Name of the health check. The name must be unique for each target group that attached to a single load balancer.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// Options for TCP health check. The structure is documented below.
+	// (Block List, Max: 1) Options for TCP health check. (see below for nested schema)
+	// Options for TCP health check.
 	// +kubebuilder:validation:Optional
 	TCPOptions []TCPOptionsParameters `json:"tcpOptions,omitempty" tf:"tcp_options,omitempty"`
 
+	// (Number) Timeout for a target to return a response for the health check. The default is 1 second.
 	// Timeout for a target to return a response for the health check. The default is 1 second.
 	// +kubebuilder:validation:Optional
 	Timeout *float64 `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// Number of failed health checks before changing the status to UNHEALTHY. The default is 2.
+	// (Number) Number of failed health checks before changing the status to UNHEALTHY. The default is 2.
+	// Number of failed health checks before changing the status to `UNHEALTHY`. The default is 2.
 	// +kubebuilder:validation:Optional
 	UnhealthyThreshold *float64 `json:"unhealthyThreshold,omitempty" tf:"unhealthy_threshold,omitempty"`
 }
 
 type InternalAddressSpecInitParameters struct {
 
+	// (String) External IP address for a listener. IP address will be allocated if it wasn't been set.
 	// Internal IP address for a listener. Must belong to the subnet that is referenced in subnet_id. IP address will be allocated if it wasn't been set.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// IP version of the internal addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+	// (String) IP version of the external addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+	// IP version of the external addresses that the load balancer works with. Must be one of `ipv4` or `ipv6`. The default is `ipv4`.
 	IPVersion *string `json:"ipVersion,omitempty" tf:"ip_version,omitempty"`
 
+	// (String) ID of the subnet to which the internal IP address belongs.
 	// ID of the subnet to which the internal IP address belongs.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
 type InternalAddressSpecObservation struct {
 
+	// (String) External IP address for a listener. IP address will be allocated if it wasn't been set.
 	// Internal IP address for a listener. Must belong to the subnet that is referenced in subnet_id. IP address will be allocated if it wasn't been set.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// IP version of the internal addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+	// (String) IP version of the external addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+	// IP version of the external addresses that the load balancer works with. Must be one of `ipv4` or `ipv6`. The default is `ipv4`.
 	IPVersion *string `json:"ipVersion,omitempty" tf:"ip_version,omitempty"`
 
+	// (String) ID of the subnet to which the internal IP address belongs.
 	// ID of the subnet to which the internal IP address belongs.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
 type InternalAddressSpecParameters struct {
 
+	// (String) External IP address for a listener. IP address will be allocated if it wasn't been set.
 	// Internal IP address for a listener. Must belong to the subnet that is referenced in subnet_id. IP address will be allocated if it wasn't been set.
 	// +kubebuilder:validation:Optional
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// IP version of the internal addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+	// (String) IP version of the external addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+	// IP version of the external addresses that the load balancer works with. Must be one of `ipv4` or `ipv6`. The default is `ipv4`.
 	// +kubebuilder:validation:Optional
 	IPVersion *string `json:"ipVersion,omitempty" tf:"ip_version,omitempty"`
 
+	// (String) ID of the subnet to which the internal IP address belongs.
 	// ID of the subnet to which the internal IP address belongs.
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
@@ -252,68 +306,86 @@ type InternalAddressSpecParameters struct {
 
 type ListenerInitParameters struct {
 
-	// External IP address specification. The structure is documented below.
+	// (Block Set, Max: 1) External IP address specification. (see below for nested schema)
+	// External IP address specification.
 	ExternalAddressSpec []ExternalAddressSpecInitParameters `json:"externalAddressSpec,omitempty" tf:"external_address_spec,omitempty"`
 
-	// Internal IP address specification. The structure is documented below.
+	// (Block Set, Max: 1) Internal IP address specification. (see below for nested schema)
+	// Internal IP address specification.
 	InternalAddressSpec []InternalAddressSpecInitParameters `json:"internalAddressSpec,omitempty" tf:"internal_address_spec,omitempty"`
 
+	// (String) The resource name.
 	// Name of the listener. The name must be unique for each listener on a single load balancer.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Number) Port to use for HTTP health checks.
 	// Port for incoming traffic.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// (String) Protocol for incoming traffic. TCP or UDP and the default is TCP.
 	// Protocol for incoming traffic. TCP or UDP and the default is TCP.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
+	// (Number) Port of a target. The default is the same as listener's port.
 	// Port of a target. The default is the same as listener's port.
 	TargetPort *float64 `json:"targetPort,omitempty" tf:"target_port,omitempty"`
 }
 
 type ListenerObservation struct {
 
-	// External IP address specification. The structure is documented below.
+	// (Block Set, Max: 1) External IP address specification. (see below for nested schema)
+	// External IP address specification.
 	ExternalAddressSpec []ExternalAddressSpecObservation `json:"externalAddressSpec,omitempty" tf:"external_address_spec,omitempty"`
 
-	// Internal IP address specification. The structure is documented below.
+	// (Block Set, Max: 1) Internal IP address specification. (see below for nested schema)
+	// Internal IP address specification.
 	InternalAddressSpec []InternalAddressSpecObservation `json:"internalAddressSpec,omitempty" tf:"internal_address_spec,omitempty"`
 
+	// (String) The resource name.
 	// Name of the listener. The name must be unique for each listener on a single load balancer.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Number) Port to use for HTTP health checks.
 	// Port for incoming traffic.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
+	// (String) Protocol for incoming traffic. TCP or UDP and the default is TCP.
 	// Protocol for incoming traffic. TCP or UDP and the default is TCP.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
+	// (Number) Port of a target. The default is the same as listener's port.
 	// Port of a target. The default is the same as listener's port.
 	TargetPort *float64 `json:"targetPort,omitempty" tf:"target_port,omitempty"`
 }
 
 type ListenerParameters struct {
 
-	// External IP address specification. The structure is documented below.
+	// (Block Set, Max: 1) External IP address specification. (see below for nested schema)
+	// External IP address specification.
 	// +kubebuilder:validation:Optional
 	ExternalAddressSpec []ExternalAddressSpecParameters `json:"externalAddressSpec,omitempty" tf:"external_address_spec,omitempty"`
 
-	// Internal IP address specification. The structure is documented below.
+	// (Block Set, Max: 1) Internal IP address specification. (see below for nested schema)
+	// Internal IP address specification.
 	// +kubebuilder:validation:Optional
 	InternalAddressSpec []InternalAddressSpecParameters `json:"internalAddressSpec,omitempty" tf:"internal_address_spec,omitempty"`
 
+	// (String) The resource name.
 	// Name of the listener. The name must be unique for each listener on a single load balancer.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// (Number) Port to use for HTTP health checks.
 	// Port for incoming traffic.
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port" tf:"port,omitempty"`
 
+	// (String) Protocol for incoming traffic. TCP or UDP and the default is TCP.
 	// Protocol for incoming traffic. TCP or UDP and the default is TCP.
 	// +kubebuilder:validation:Optional
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
+	// (Number) Port of a target. The default is the same as listener's port.
 	// Port of a target. The default is the same as listener's port.
 	// +kubebuilder:validation:Optional
 	TargetPort *float64 `json:"targetPort,omitempty" tf:"target_port,omitempty"`
@@ -321,16 +393,24 @@ type ListenerParameters struct {
 
 type NetworkLoadBalancerInitParameters struct {
 
-	// An AttachedTargetGroup resource. The structure is documented below.
+	// (Boolean) Flag that marks the network load balancer as available to zonal shift.
+	// Flag that marks the network load balancer as available to zonal shift.
+	AllowZonalShift *bool `json:"allowZonalShift,omitempty" tf:"allow_zonal_shift,omitempty"`
+
+	// (Block Set) An AttachedTargetGroup resource. (see below for nested schema)
+	// An AttachedTargetGroup resource.
 	AttachedTargetGroup []AttachedTargetGroupInitParameters `json:"attachedTargetGroup,omitempty" tf:"attached_target_group,omitempty"`
 
-	// Flag that protects the network load balancer from accidental deletion.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// An optional description of the network load balancer. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -342,75 +422,107 @@ type NetworkLoadBalancerInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Labels to assign to this network load balancer. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Listener specification that will be used by a network load balancer. The structure is documented below.
+	// (Block Set) Listener specification that will be used by a network load balancer.
+	// Listener specification that will be used by a network load balancer.
+	//
+	// ~> One of `external_address_spec` or `internal_address_spec` should be specified.
 	Listener []ListenerInitParameters `json:"listener,omitempty" tf:"listener,omitempty"`
 
-	// Name of the network load balancer. Provided by the client when the network load balancer is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
 	// ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
+	// (String) Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
 	// Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type NetworkLoadBalancerObservation struct {
 
-	// An AttachedTargetGroup resource. The structure is documented below.
+	// (Boolean) Flag that marks the network load balancer as available to zonal shift.
+	// Flag that marks the network load balancer as available to zonal shift.
+	AllowZonalShift *bool `json:"allowZonalShift,omitempty" tf:"allow_zonal_shift,omitempty"`
+
+	// (Block Set) An AttachedTargetGroup resource. (see below for nested schema)
+	// An AttachedTargetGroup resource.
 	AttachedTargetGroup []AttachedTargetGroupObservation `json:"attachedTargetGroup,omitempty" tf:"attached_target_group,omitempty"`
 
-	// The network load balancer creation timestamp.
+	// (String) The creation timestamp of the resource.
+	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Flag that protects the network load balancer from accidental deletion.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// An optional description of the network load balancer. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// The ID of the network load balancer.
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Labels to assign to this network load balancer. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Listener specification that will be used by a network load balancer. The structure is documented below.
+	// (Block Set) Listener specification that will be used by a network load balancer.
+	// Listener specification that will be used by a network load balancer.
+	//
+	// ~> One of `external_address_spec` or `internal_address_spec` should be specified.
 	Listener []ListenerObservation `json:"listener,omitempty" tf:"listener,omitempty"`
 
-	// Name of the network load balancer. Provided by the client when the network load balancer is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
 	// ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
+	// (String) Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
 	// Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type NetworkLoadBalancerParameters struct {
 
-	// An AttachedTargetGroup resource. The structure is documented below.
+	// (Boolean) Flag that marks the network load balancer as available to zonal shift.
+	// Flag that marks the network load balancer as available to zonal shift.
+	// +kubebuilder:validation:Optional
+	AllowZonalShift *bool `json:"allowZonalShift,omitempty" tf:"allow_zonal_shift,omitempty"`
+
+	// (Block Set) An AttachedTargetGroup resource. (see below for nested schema)
+	// An AttachedTargetGroup resource.
 	// +kubebuilder:validation:Optional
 	AttachedTargetGroup []AttachedTargetGroupParameters `json:"attachedTargetGroup,omitempty" tf:"attached_target_group,omitempty"`
 
-	// Flag that protects the network load balancer from accidental deletion.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// An optional description of the network load balancer. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -423,23 +535,30 @@ type NetworkLoadBalancerParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Labels to assign to this network load balancer. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Listener specification that will be used by a network load balancer. The structure is documented below.
+	// (Block Set) Listener specification that will be used by a network load balancer.
+	// Listener specification that will be used by a network load balancer.
+	//
+	// ~> One of `external_address_spec` or `internal_address_spec` should be specified.
 	// +kubebuilder:validation:Optional
 	Listener []ListenerParameters `json:"listener,omitempty" tf:"listener,omitempty"`
 
-	// Name of the network load balancer. Provided by the client when the network load balancer is created.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
 	// ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
 	// +kubebuilder:validation:Optional
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
+	// (String) Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
 	// Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -447,18 +566,21 @@ type NetworkLoadBalancerParameters struct {
 
 type TCPOptionsInitParameters struct {
 
+	// (Number) Port to use for HTTP health checks.
 	// Port to use for TCP health checks.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
 
 type TCPOptionsObservation struct {
 
+	// (Number) Port to use for HTTP health checks.
 	// Port to use for TCP health checks.
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 }
 
 type TCPOptionsParameters struct {
 
+	// (Number) Port to use for HTTP health checks.
 	// Port to use for TCP health checks.
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port" tf:"port,omitempty"`

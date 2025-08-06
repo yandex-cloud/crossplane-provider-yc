@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: PostgresqlDatabase is the Schema for the PostgresqlDatabases
-          API. Manages a PostgreSQL database within Yandex.Cloud.
+          API. Manages a PostgreSQL database within Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -74,6 +74,9 @@ spec:
               forProvider:
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of the PostgreSQL cluster.
+                      The ID of the PostgreSQL cluster.
                     type: string
                   clusterIdRef:
                     description: Reference to a PostgresqlCluster to populate clusterId.
@@ -150,40 +153,47 @@ spec:
                         type: object
                     type: object
                   deletionProtection:
-                    description: Inhibits deletion of the database. Can either be
-                      true, false or unspecified.
+                    description: |-
+                      (String) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: string
                   extension:
-                    description: Set of database extensions. The structure is documented
-                      below
+                    description: |-
+                      (Block Set) Set of database extensions. (see below for nested schema)
+                      Set of database extensions.
                     items:
                       properties:
                         name:
-                          description: Name of the database extension. For more information
-                            on available extensions see the official documentation.
-                          type: string
-                        version:
-                          description: Version of the extension.
+                          description: |-
+                            (String) The resource name.
+                            Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
                           type: string
                       type: object
                     type: array
                   lcCollate:
-                    description: POSIX locale for string sorting order. Forbidden
-                      to change in an existing database.
+                    description: |-
+                      (String) POSIX locale for string sorting order. Forbidden to change in an existing database.
+                      POSIX locale for string sorting order. Forbidden to change in an existing database.
                     type: string
                   lcType:
-                    description: POSIX locale for character classification. Forbidden
-                      to change in an existing database.
+                    description: |-
+                      (String) POSIX locale for character classification. Forbidden to change in an existing database.
+                      POSIX locale for character classification. Forbidden to change in an existing database.
                     type: string
                   name:
-                    description: The name of the database.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   owner:
-                    description: Name of the user assigned as the owner of the database.
-                      Forbidden to change in an existing database.
+                    description: |-
+                      (String) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                      Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
                     type: string
                   templateDb:
-                    description: Name of the template database.
+                    description: |-
+                      (String) Name of the template database.
+                      Name of the template database.
                     type: string
                 type: object
               initProvider:
@@ -200,6 +210,9 @@ spec:
                   autoscaler.
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of the PostgreSQL cluster.
+                      The ID of the PostgreSQL cluster.
                     type: string
                   clusterIdRef:
                     description: Reference to a PostgresqlCluster to populate clusterId.
@@ -276,40 +289,47 @@ spec:
                         type: object
                     type: object
                   deletionProtection:
-                    description: Inhibits deletion of the database. Can either be
-                      true, false or unspecified.
+                    description: |-
+                      (String) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: string
                   extension:
-                    description: Set of database extensions. The structure is documented
-                      below
+                    description: |-
+                      (Block Set) Set of database extensions. (see below for nested schema)
+                      Set of database extensions.
                     items:
                       properties:
                         name:
-                          description: Name of the database extension. For more information
-                            on available extensions see the official documentation.
-                          type: string
-                        version:
-                          description: Version of the extension.
+                          description: |-
+                            (String) The resource name.
+                            Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
                           type: string
                       type: object
                     type: array
                   lcCollate:
-                    description: POSIX locale for string sorting order. Forbidden
-                      to change in an existing database.
+                    description: |-
+                      (String) POSIX locale for string sorting order. Forbidden to change in an existing database.
+                      POSIX locale for string sorting order. Forbidden to change in an existing database.
                     type: string
                   lcType:
-                    description: POSIX locale for character classification. Forbidden
-                      to change in an existing database.
+                    description: |-
+                      (String) POSIX locale for character classification. Forbidden to change in an existing database.
+                      POSIX locale for character classification. Forbidden to change in an existing database.
                     type: string
                   name:
-                    description: The name of the database.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   owner:
-                    description: Name of the user assigned as the owner of the database.
-                      Forbidden to change in an existing database.
+                    description: |-
+                      (String) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                      Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
                     type: string
                   templateDb:
-                    description: Name of the template database.
+                    description: |-
+                      (String) Name of the template database.
+                      Name of the template database.
                     type: string
                 type: object
               managementPolicies:
@@ -494,44 +514,55 @@ spec:
               atProvider:
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of the PostgreSQL cluster.
+                      The ID of the PostgreSQL cluster.
                     type: string
                   deletionProtection:
-                    description: Inhibits deletion of the database. Can either be
-                      true, false or unspecified.
+                    description: |-
+                      (String) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: string
                   extension:
-                    description: Set of database extensions. The structure is documented
-                      below
+                    description: |-
+                      (Block Set) Set of database extensions. (see below for nested schema)
+                      Set of database extensions.
                     items:
                       properties:
                         name:
-                          description: Name of the database extension. For more information
-                            on available extensions see the official documentation.
-                          type: string
-                        version:
-                          description: Version of the extension.
+                          description: |-
+                            (String) The resource name.
+                            Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
                           type: string
                       type: object
                     type: array
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   lcCollate:
-                    description: POSIX locale for string sorting order. Forbidden
-                      to change in an existing database.
+                    description: |-
+                      (String) POSIX locale for string sorting order. Forbidden to change in an existing database.
+                      POSIX locale for string sorting order. Forbidden to change in an existing database.
                     type: string
                   lcType:
-                    description: POSIX locale for character classification. Forbidden
-                      to change in an existing database.
+                    description: |-
+                      (String) POSIX locale for character classification. Forbidden to change in an existing database.
+                      POSIX locale for character classification. Forbidden to change in an existing database.
                     type: string
                   name:
-                    description: The name of the database.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   owner:
-                    description: Name of the user assigned as the owner of the database.
-                      Forbidden to change in an existing database.
+                    description: |-
+                      (String) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                      Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
                     type: string
                   templateDb:
-                    description: Name of the template database.
+                    description: |-
+                      (String) Name of the template database.
+                      Name of the template database.
                     type: string
                 type: object
               conditions:

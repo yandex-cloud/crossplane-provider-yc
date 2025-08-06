@@ -37,6 +37,7 @@ const (
 	folderID              = "folder_id"
 	cloudID               = "cloud_id"
 	endpoint              = "endpoint"
+	yqEndpoint            = "yq_endpoint"
 	serviceAccountKeyFile = "service_account_key_file"
 )
 
@@ -90,6 +91,7 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 		ps.Configuration[folderID] = pc.Spec.Credentials.FolderID
 		ps.Configuration[cloudID] = pc.Spec.Credentials.CloudID
 		ps.Configuration[endpoint] = pc.Spec.Credentials.Endpoint
+		ps.Configuration[yqEndpoint] = pc.Spec.Credentials.YQEndpoint
 		diag := ujprovider.TerraformProvider.Configure(ctx, &sdk.ResourceConfig{
 			Config: ps.Configuration,
 		})

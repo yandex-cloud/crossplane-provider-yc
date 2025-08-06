@@ -29,13 +29,16 @@ import (
 
 type BootDiskInitParameters struct {
 
-	// Defines whether the disk will be auto-deleted when the instance is deleted. The default value is True.
+	// deleted when the instance is deleted. The default value is True.
+	// Defines whether the disk will be auto-deleted when the instance is deleted. The default value is `True`.
 	AutoDelete *bool `json:"autoDelete,omitempty" tf:"auto_delete,omitempty"`
 
+	// (String) Name that can be used to access an attached disk.
 	// Name that can be used to access an attached disk.
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
-	// The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+	// (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+	// The ID of the existing disk (such as those managed by `yandex_compute_disk`) to attach as a boot disk.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Disk
 	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
 
@@ -47,42 +50,52 @@ type BootDiskInitParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskIDSelector *v1.Selector `json:"diskIdSelector,omitempty" tf:"-"`
 
-	// Parameters for a new disk that will be created alongside the new instance. Either initialize_params or disk_id must be set. The structure is documented below.
+	// (Block List, Max: 1) Parameters for a new disk that will be created alongside the new instance. Either initialize_params or disk_id must be set. Either image_id or snapshot_id must be specified. (see below for nested schema)
+	// Parameters for a new disk that will be created alongside the new instance. Either `initialize_params` or `disk_id` must be set. Either `image_id` or `snapshot_id` must be specified.
 	InitializeParams []InitializeParamsInitParameters `json:"initializeParams,omitempty" tf:"initialize_params,omitempty"`
 
-	// Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// Type of access to the disk resource. By default, a disk is attached in `READ_WRITE` mode.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 }
 
 type BootDiskObservation struct {
 
-	// Defines whether the disk will be auto-deleted when the instance is deleted. The default value is True.
+	// deleted when the instance is deleted. The default value is True.
+	// Defines whether the disk will be auto-deleted when the instance is deleted. The default value is `True`.
 	AutoDelete *bool `json:"autoDelete,omitempty" tf:"auto_delete,omitempty"`
 
+	// (String) Name that can be used to access an attached disk.
 	// Name that can be used to access an attached disk.
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
-	// The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+	// (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+	// The ID of the existing disk (such as those managed by `yandex_compute_disk`) to attach as a boot disk.
 	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
 
-	// Parameters for a new disk that will be created alongside the new instance. Either initialize_params or disk_id must be set. The structure is documented below.
+	// (Block List, Max: 1) Parameters for a new disk that will be created alongside the new instance. Either initialize_params or disk_id must be set. Either image_id or snapshot_id must be specified. (see below for nested schema)
+	// Parameters for a new disk that will be created alongside the new instance. Either `initialize_params` or `disk_id` must be set. Either `image_id` or `snapshot_id` must be specified.
 	InitializeParams []InitializeParamsObservation `json:"initializeParams,omitempty" tf:"initialize_params,omitempty"`
 
-	// Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// Type of access to the disk resource. By default, a disk is attached in `READ_WRITE` mode.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 }
 
 type BootDiskParameters struct {
 
-	// Defines whether the disk will be auto-deleted when the instance is deleted. The default value is True.
+	// deleted when the instance is deleted. The default value is True.
+	// Defines whether the disk will be auto-deleted when the instance is deleted. The default value is `True`.
 	// +kubebuilder:validation:Optional
 	AutoDelete *bool `json:"autoDelete,omitempty" tf:"auto_delete,omitempty"`
 
+	// (String) Name that can be used to access an attached disk.
 	// Name that can be used to access an attached disk.
 	// +kubebuilder:validation:Optional
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
-	// The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+	// (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+	// The ID of the existing disk (such as those managed by `yandex_compute_disk`) to attach as a boot disk.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Disk
 	// +kubebuilder:validation:Optional
 	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
@@ -95,223 +108,286 @@ type BootDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskIDSelector *v1.Selector `json:"diskIdSelector,omitempty" tf:"-"`
 
-	// Parameters for a new disk that will be created alongside the new instance. Either initialize_params or disk_id must be set. The structure is documented below.
+	// (Block List, Max: 1) Parameters for a new disk that will be created alongside the new instance. Either initialize_params or disk_id must be set. Either image_id or snapshot_id must be specified. (see below for nested schema)
+	// Parameters for a new disk that will be created alongside the new instance. Either `initialize_params` or `disk_id` must be set. Either `image_id` or `snapshot_id` must be specified.
 	// +kubebuilder:validation:Optional
 	InitializeParams []InitializeParamsParameters `json:"initializeParams,omitempty" tf:"initialize_params,omitempty"`
 
-	// Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// Type of access to the disk resource. By default, a disk is attached in `READ_WRITE` mode.
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 }
 
 type DNSRecordInitParameters struct {
 
+	// (String) DNS zone ID (if not set, private zone used).
 	// DNS zone ID (if not set, private zone used).
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
+	// (String) The fully qualified DNS name of this instance.
 	// DNS record FQDN (must have a dot at the end).
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// When set to true, also create a PTR DNS record.
+	// (Boolean) When set to true, also create a PTR DNS record.
+	// When set to `true`, also create a PTR DNS record.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// DNS record TTL. in seconds
+	// (Number) DNS record TTL in seconds.
+	// DNS record TTL in seconds.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type DNSRecordObservation struct {
 
+	// (String) DNS zone ID (if not set, private zone used).
 	// DNS zone ID (if not set, private zone used).
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
+	// (String) The fully qualified DNS name of this instance.
 	// DNS record FQDN (must have a dot at the end).
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// When set to true, also create a PTR DNS record.
+	// (Boolean) When set to true, also create a PTR DNS record.
+	// When set to `true`, also create a PTR DNS record.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// DNS record TTL. in seconds
+	// (Number) DNS record TTL in seconds.
+	// DNS record TTL in seconds.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type DNSRecordParameters struct {
 
+	// (String) DNS zone ID (if not set, private zone used).
 	// DNS zone ID (if not set, private zone used).
 	// +kubebuilder:validation:Optional
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
+	// (String) The fully qualified DNS name of this instance.
 	// DNS record FQDN (must have a dot at the end).
 	// +kubebuilder:validation:Optional
 	Fqdn *string `json:"fqdn" tf:"fqdn,omitempty"`
 
-	// When set to true, also create a PTR DNS record.
+	// (Boolean) When set to true, also create a PTR DNS record.
+	// When set to `true`, also create a PTR DNS record.
 	// +kubebuilder:validation:Optional
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// DNS record TTL. in seconds
+	// (Number) DNS record TTL in seconds.
+	// DNS record TTL in seconds.
 	// +kubebuilder:validation:Optional
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type HostAffinityRulesInitParameters struct {
 
-	// Affinity label or one of reserved values - yc.hostId, yc.hostGroupId.
+	// (String)
 	Key *string `json:"key,omitempty" tf:"key"`
 
-	// Affinity action. The only value supported is IN.
+	// (String)
 	Op *string `json:"op,omitempty" tf:"op"`
 
+	// (List of String)
 	Values []*string `json:"values,omitempty" tf:"values"`
 }
 
 type HostAffinityRulesObservation struct {
 
-	// Affinity label or one of reserved values - yc.hostId, yc.hostGroupId.
+	// (String)
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// Affinity action. The only value supported is IN.
+	// (String)
 	Op *string `json:"op,omitempty" tf:"op,omitempty"`
 
+	// (List of String)
 	Values []*string `json:"values,omitempty" tf:"values,omitempty"`
 }
 
 type HostAffinityRulesParameters struct {
 
-	// Affinity label or one of reserved values - yc.hostId, yc.hostGroupId.
+	// (String)
 	// +kubebuilder:validation:Optional
 	Key *string `json:"key,omitempty" tf:"key"`
 
-	// Affinity action. The only value supported is IN.
+	// (String)
 	// +kubebuilder:validation:Optional
 	Op *string `json:"op,omitempty" tf:"op"`
 
+	// (List of String)
 	// +kubebuilder:validation:Optional
 	Values []*string `json:"values,omitempty" tf:"values"`
 }
 
 type IPv6DNSRecordInitParameters struct {
 
+	// (String) DNS zone ID (if not set, private zone used).
 	// DNS zone ID (if not set, private zone used).
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
+	// (String) The fully qualified DNS name of this instance.
 	// DNS record FQDN (must have a dot at the end).
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// When set to true, also create a PTR DNS record.
+	// (Boolean) When set to true, also create a PTR DNS record.
+	// When set to `true`, also create a PTR DNS record.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// DNS record TTL. in seconds
+	// (Number) DNS record TTL in seconds.
+	// DNS record TTL in seconds.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type IPv6DNSRecordObservation struct {
 
+	// (String) DNS zone ID (if not set, private zone used).
 	// DNS zone ID (if not set, private zone used).
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
+	// (String) The fully qualified DNS name of this instance.
 	// DNS record FQDN (must have a dot at the end).
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// When set to true, also create a PTR DNS record.
+	// (Boolean) When set to true, also create a PTR DNS record.
+	// When set to `true`, also create a PTR DNS record.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// DNS record TTL. in seconds
+	// (Number) DNS record TTL in seconds.
+	// DNS record TTL in seconds.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type IPv6DNSRecordParameters struct {
 
+	// (String) DNS zone ID (if not set, private zone used).
 	// DNS zone ID (if not set, private zone used).
 	// +kubebuilder:validation:Optional
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
+	// (String) The fully qualified DNS name of this instance.
 	// DNS record FQDN (must have a dot at the end).
 	// +kubebuilder:validation:Optional
 	Fqdn *string `json:"fqdn" tf:"fqdn,omitempty"`
 
-	// When set to true, also create a PTR DNS record.
+	// (Boolean) When set to true, also create a PTR DNS record.
+	// When set to `true`, also create a PTR DNS record.
 	// +kubebuilder:validation:Optional
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// DNS record TTL. in seconds
+	// (Number) DNS record TTL in seconds.
+	// DNS record TTL in seconds.
 	// +kubebuilder:validation:Optional
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type InitializeParamsInitParameters struct {
 
+	// (Number) Block size of the disk, specified in bytes.
 	// Block size of the disk, specified in bytes.
 	BlockSize *float64 `json:"blockSize,omitempty" tf:"block_size,omitempty"`
 
+	// (String) The resource description.
 	// Description of the boot disk.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) A disk image to initialize this disk from.
 	// A disk image to initialize this disk from.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
-	// Resource name.
+	// (String) ID of KMS symmetric key used to encrypt disk.
+	// ID of KMS symmetric key used to encrypt disk.
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// (String) The resource name.
+	// Name of the boot disk.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Number) Size of the disk in GB.
 	// Size of the disk in GB.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
+	// (String) A snapshot to initialize this disk from.
 	// A snapshot to initialize this disk from.
 	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 
+	// (String) Disk type.
 	// Disk type.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type InitializeParamsObservation struct {
 
+	// (Number) Block size of the disk, specified in bytes.
 	// Block size of the disk, specified in bytes.
 	BlockSize *float64 `json:"blockSize,omitempty" tf:"block_size,omitempty"`
 
+	// (String) The resource description.
 	// Description of the boot disk.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) A disk image to initialize this disk from.
 	// A disk image to initialize this disk from.
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
-	// Resource name.
+	// (String) ID of KMS symmetric key used to encrypt disk.
+	// ID of KMS symmetric key used to encrypt disk.
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// (String) The resource name.
+	// Name of the boot disk.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Number) Size of the disk in GB.
 	// Size of the disk in GB.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
+	// (String) A snapshot to initialize this disk from.
 	// A snapshot to initialize this disk from.
 	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 
+	// (String) Disk type.
 	// Disk type.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type InitializeParamsParameters struct {
 
+	// (Number) Block size of the disk, specified in bytes.
 	// Block size of the disk, specified in bytes.
 	// +kubebuilder:validation:Optional
 	BlockSize *float64 `json:"blockSize,omitempty" tf:"block_size,omitempty"`
 
+	// (String) The resource description.
 	// Description of the boot disk.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) A disk image to initialize this disk from.
 	// A disk image to initialize this disk from.
 	// +kubebuilder:validation:Optional
 	ImageID *string `json:"imageId,omitempty" tf:"image_id,omitempty"`
 
-	// Resource name.
+	// (String) ID of KMS symmetric key used to encrypt disk.
+	// ID of KMS symmetric key used to encrypt disk.
+	// +kubebuilder:validation:Optional
+	KMSKeyID *string `json:"kmsKeyId,omitempty" tf:"kms_key_id,omitempty"`
+
+	// (String) The resource name.
+	// Name of the boot disk.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Number) Size of the disk in GB.
 	// Size of the disk in GB.
 	// +kubebuilder:validation:Optional
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
+	// (String) A snapshot to initialize this disk from.
 	// A snapshot to initialize this disk from.
 	// +kubebuilder:validation:Optional
 	SnapshotID *string `json:"snapshotId,omitempty" tf:"snapshot_id,omitempty"`
 
+	// (String) Disk type.
 	// Disk type.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
@@ -319,9 +395,11 @@ type InitializeParamsParameters struct {
 
 type InstanceFilesystemInitParameters struct {
 
+	// (String) Name that can be used to access an attached disk.
 	// Name of the device representing the filesystem on the instance.
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
+	// (String) ID of the filesystem that should be attached.
 	// ID of the filesystem that should be attached.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Filesystem
 	FilesystemID *string `json:"filesystemId,omitempty" tf:"filesystem_id,omitempty"`
@@ -334,28 +412,34 @@ type InstanceFilesystemInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FilesystemIDSelector *v1.Selector `json:"filesystemIdSelector,omitempty" tf:"-"`
 
-	// Mode of access to the filesystem that should be attached. By default, filesystem is attached in READ_WRITE mode.
+	// (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// Mode of access to the filesystem that should be attached. By default, filesystem is attached in `READ_WRITE` mode.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 }
 
 type InstanceFilesystemObservation struct {
 
+	// (String) Name that can be used to access an attached disk.
 	// Name of the device representing the filesystem on the instance.
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
+	// (String) ID of the filesystem that should be attached.
 	// ID of the filesystem that should be attached.
 	FilesystemID *string `json:"filesystemId,omitempty" tf:"filesystem_id,omitempty"`
 
-	// Mode of access to the filesystem that should be attached. By default, filesystem is attached in READ_WRITE mode.
+	// (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// Mode of access to the filesystem that should be attached. By default, filesystem is attached in `READ_WRITE` mode.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 }
 
 type InstanceFilesystemParameters struct {
 
+	// (String) Name that can be used to access an attached disk.
 	// Name of the device representing the filesystem on the instance.
 	// +kubebuilder:validation:Optional
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
+	// (String) ID of the filesystem that should be attached.
 	// ID of the filesystem that should be attached.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Filesystem
 	// +kubebuilder:validation:Optional
@@ -369,7 +453,8 @@ type InstanceFilesystemParameters struct {
 	// +kubebuilder:validation:Optional
 	FilesystemIDSelector *v1.Selector `json:"filesystemIdSelector,omitempty" tf:"-"`
 
-	// Mode of access to the filesystem that should be attached. By default, filesystem is attached in READ_WRITE mode.
+	// (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// Mode of access to the filesystem that should be attached. By default, filesystem is attached in `READ_WRITE` mode.
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 }
@@ -390,6 +475,8 @@ type InstanceHardwareGenerationLegacyFeaturesInitParameters struct {
 }
 
 type InstanceHardwareGenerationLegacyFeaturesObservation struct {
+
+	// (String)
 	PciTopology *string `json:"pciTopology,omitempty" tf:"pci_topology,omitempty"`
 }
 
@@ -397,8 +484,11 @@ type InstanceHardwareGenerationLegacyFeaturesParameters struct {
 }
 
 type InstanceHardwareGenerationObservation struct {
+
+	// (List of Object) (see below for nested schema)
 	Generation2Features []InstanceHardwareGenerationGeneration2FeaturesObservation `json:"generation2Features,omitempty" tf:"generation2_features,omitempty"`
 
+	// (List of Object) (see below for nested schema)
 	LegacyFeatures []InstanceHardwareGenerationLegacyFeaturesObservation `json:"legacyFeatures,omitempty" tf:"legacy_features,omitempty"`
 }
 
@@ -407,22 +497,26 @@ type InstanceHardwareGenerationParameters struct {
 
 type InstanceInitParameters struct {
 
-	// Default 5 minutes
+	// (Boolean)
 	AllowRecreate *bool `json:"allowRecreate,omitempty" tf:"allow_recreate,omitempty"`
 
-	// If you try to update a property that requires stopping the instance without setting this field, the update will fail.
+	// If you try to update a property that requires stopping the instance without setting this field, the update will fail. If you try to update a property that requires stopping the instance without setting this field, the update will fail.
 	AllowStoppingForUpdate *bool `json:"allowStoppingForUpdate,omitempty" tf:"allow_stopping_for_update,omitempty"`
 
-	// The boot disk for the instance. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The boot disk for the instance. Either initialize_params or disk_id must be specified. (see below for nested schema)
+	// The boot disk for the instance. Either `initialize_params` or `disk_id` must be specified.
 	BootDisk []BootDiskInitParameters `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
 
-	// Description of the instance.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of filesystems that are attached to the instance. Structure is documented below.
+	// (Block Set) List of filesystems that are attached to the instance. (see below for nested schema)
+	// List of filesystems that are attached to the instance.
 	Filesystem []InstanceFilesystemInitParameters `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -434,57 +528,78 @@ type InstanceInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// ID of the GPU cluster to attach this instance to. The GPU cluster must exist in the same zone as the instance.
+	// (String) ID of the GPU cluster to attach this instance to.
+	// ID of the GPU cluster to attach this instance to.
 	GpuClusterID *string `json:"gpuClusterId,omitempty" tf:"gpu_cluster_id,omitempty"`
 
-	// Host name for the instance. This field is used to generate the instance fqdn value. The host name must be unique within the network and region. If not specified, the host name will be equal to id of the instance and fqdn will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
+	// (String) Host name for the instance. This field is used to generate the instance fqdn value. The host name must be unique within the network and region. If not specified, the host name will be equal to id of the instance and fqdn will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
+	// Host name for the instance. This field is used to generate the instance `fqdn` value. The host name must be unique within the network and region. If not specified, the host name will be equal to `id` of the instance and `fqdn` will be `<id>.auto.internal`. Otherwise FQDN will be `<hostname>.<region_id>.internal`.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// A set of key/value label pairs to assign to the instance.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// List of local disks that are attached to the instance. Structure is documented below.
+	// (Block List) List of local disks that are attached to the instance.
+	// List of local disks that are attached to the instance.
+	//
+	// ~> Local disks are not available for all users by default.
 	LocalDisk []LocalDiskInitParameters `json:"localDisk,omitempty" tf:"local_disk,omitempty"`
 
-	// Time between notification via metadata service and maintenance. E.g., 60s.
+	// (String) Time between notification via metadata service and maintenance. E.g., 60s.
+	// Time between notification via metadata service and maintenance. E.g., `60s`.
 	MaintenanceGracePeriod *string `json:"maintenanceGracePeriod,omitempty" tf:"maintenance_grace_period,omitempty"`
 
-	// Behaviour on maintenance events. The default is unspecified. Values: unspecified, migrate, restart.
+	// (String) Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is unspecified.
+	// Behavior on maintenance events. Can be: `unspecified`, `migrate`, `restart`. The default is `unspecified`.
 	MaintenancePolicy *string `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
+	// (Map of String) Metadata key/value pairs to make available from within the instance.
 	// Metadata key/value pairs to make available from within the instance.
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Options allow user to configure access to instance's metadata
+	// (Block List, Max: 1) Options allow user to configure access to instance's metadata. (see below for nested schema)
+	// Options allow user to configure access to instance's metadata.
 	MetadataOptions []MetadataOptionsInitParameters `json:"metadataOptions,omitempty" tf:"metadata_options,omitempty"`
 
-	// Resource name.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Type of network acceleration. The default is standard. Values: standard, software_accelerated
+	// (String) Type of network acceleration. Can be standard or software_accelerated. The default is standard.
+	// Type of network acceleration. Can be `standard` or `software_accelerated`. The default is `standard`.
 	NetworkAccelerationType *string `json:"networkAccelerationType,omitempty" tf:"network_acceleration_type,omitempty"`
 
-	// Networks to attach to the instance. This can be specified multiple times. The structure is documented below.
+	// (Block List, Min: 1) Networks to attach to the instance. This can be specified multiple times. (see below for nested schema)
+	// Networks to attach to the instance. This can be specified multiple times.
 	NetworkInterface []NetworkInterfaceInitParameters `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
 
-	// The placement policy configuration. The structure is documented below.
+	// (Block List, Max: 1) The placement policy configuration. (see below for nested schema)
+	// The placement policy configuration.
 	PlacementPolicy []PlacementPolicyInitParameters `json:"placementPolicy,omitempty" tf:"placement_policy,omitempty"`
 
-	// The type of virtual machine to create. The default is 'standard-v1'.
+	// (String) The type of virtual machine to create.
+	// The type of virtual machine to create.
 	PlatformID *string `json:"platformId,omitempty" tf:"platform_id,omitempty"`
 
-	// Compute resources that are allocated for the instance. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Compute resources that are allocated for the instance. (see below for nested schema)
+	// Compute resources that are allocated for the instance.
 	Resources []ResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// Scheduling policy configuration. The structure is documented below.
+	// (Block List, Max: 1) Scheduling policy configuration. (see below for nested schema)
+	// Scheduling policy configuration.
 	SchedulingPolicy []SchedulingPolicyInitParameters `json:"schedulingPolicy,omitempty" tf:"scheduling_policy,omitempty"`
 
-	// A set of disks to attach to the instance. The structure is documented below. Note: The allow_stopping_for_update property must be set to true in order to update this structure.
+	// (Block Set) A set of disks to attach to the instance. The structure is documented below.
+	// A set of disks to attach to the instance. The structure is documented below.
+	//
+	// ~> The [`allow_stopping_for_update`](#allow_stopping_for_update) property must be set to `true` in order to update this structure.
 	SecondaryDisk []SecondaryDiskInitParameters `json:"secondaryDisk,omitempty" tf:"secondary_disk,omitempty"`
 
-	// ID of the service account authorized for this instance.
+	// (String) Service account which linked to the resource.
+	// [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
@@ -496,123 +611,159 @@ type InstanceInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
-	// The availability zone where the virtual machine will be created. If it is not provided, the default provider folder is used.
+	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type InstanceObservation struct {
 
-	// Default 5 minutes
+	// (Boolean)
 	AllowRecreate *bool `json:"allowRecreate,omitempty" tf:"allow_recreate,omitempty"`
 
-	// If you try to update a property that requires stopping the instance without setting this field, the update will fail.
+	// If you try to update a property that requires stopping the instance without setting this field, the update will fail. If you try to update a property that requires stopping the instance without setting this field, the update will fail.
 	AllowStoppingForUpdate *bool `json:"allowStoppingForUpdate,omitempty" tf:"allow_stopping_for_update,omitempty"`
 
-	// The boot disk for the instance. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The boot disk for the instance. Either initialize_params or disk_id must be specified. (see below for nested schema)
+	// The boot disk for the instance. Either `initialize_params` or `disk_id` must be specified.
 	BootDisk []BootDiskObservation `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
 
-	// Creation timestamp of the instance.
+	// (String) The creation timestamp of the resource.
+	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Description of the instance.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of filesystems that are attached to the instance. Structure is documented below.
+	// (Block Set) List of filesystems that are attached to the instance. (see below for nested schema)
+	// List of filesystems that are attached to the instance.
 	Filesystem []InstanceFilesystemObservation `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
+	// (String) The fully qualified DNS name of this instance.
 	// The fully qualified DNS name of this instance.
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// ID of the GPU cluster to attach this instance to. The GPU cluster must exist in the same zone as the instance.
+	// (String) ID of the GPU cluster to attach this instance to.
+	// ID of the GPU cluster to attach this instance to.
 	GpuClusterID *string `json:"gpuClusterId,omitempty" tf:"gpu_cluster_id,omitempty"`
 
+	// (List of Object) (see below for nested schema)
 	HardwareGeneration []InstanceHardwareGenerationObservation `json:"hardwareGeneration,omitempty" tf:"hardware_generation,omitempty"`
 
-	// Host name for the instance. This field is used to generate the instance fqdn value. The host name must be unique within the network and region. If not specified, the host name will be equal to id of the instance and fqdn will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
+	// (String) Host name for the instance. This field is used to generate the instance fqdn value. The host name must be unique within the network and region. If not specified, the host name will be equal to id of the instance and fqdn will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
+	// Host name for the instance. This field is used to generate the instance `fqdn` value. The host name must be unique within the network and region. If not specified, the host name will be equal to `id` of the instance and `fqdn` will be `<id>.auto.internal`. Otherwise FQDN will be `<hostname>.<region_id>.internal`.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// A set of key/value label pairs to assign to the instance.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// List of local disks that are attached to the instance. Structure is documented below.
+	// (Block List) List of local disks that are attached to the instance.
+	// List of local disks that are attached to the instance.
+	//
+	// ~> Local disks are not available for all users by default.
 	LocalDisk []LocalDiskObservation `json:"localDisk,omitempty" tf:"local_disk,omitempty"`
 
-	// Time between notification via metadata service and maintenance. E.g., 60s.
+	// (String) Time between notification via metadata service and maintenance. E.g., 60s.
+	// Time between notification via metadata service and maintenance. E.g., `60s`.
 	MaintenanceGracePeriod *string `json:"maintenanceGracePeriod,omitempty" tf:"maintenance_grace_period,omitempty"`
 
-	// Behaviour on maintenance events. The default is unspecified. Values: unspecified, migrate, restart.
+	// (String) Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is unspecified.
+	// Behavior on maintenance events. Can be: `unspecified`, `migrate`, `restart`. The default is `unspecified`.
 	MaintenancePolicy *string `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
+	// (Map of String) Metadata key/value pairs to make available from within the instance.
 	// Metadata key/value pairs to make available from within the instance.
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Options allow user to configure access to instance's metadata
+	// (Block List, Max: 1) Options allow user to configure access to instance's metadata. (see below for nested schema)
+	// Options allow user to configure access to instance's metadata.
 	MetadataOptions []MetadataOptionsObservation `json:"metadataOptions,omitempty" tf:"metadata_options,omitempty"`
 
-	// Resource name.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Type of network acceleration. The default is standard. Values: standard, software_accelerated
+	// (String) Type of network acceleration. Can be standard or software_accelerated. The default is standard.
+	// Type of network acceleration. Can be `standard` or `software_accelerated`. The default is `standard`.
 	NetworkAccelerationType *string `json:"networkAccelerationType,omitempty" tf:"network_acceleration_type,omitempty"`
 
-	// Networks to attach to the instance. This can be specified multiple times. The structure is documented below.
+	// (Block List, Min: 1) Networks to attach to the instance. This can be specified multiple times. (see below for nested schema)
+	// Networks to attach to the instance. This can be specified multiple times.
 	NetworkInterface []NetworkInterfaceObservation `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
 
-	// The placement policy configuration. The structure is documented below.
+	// (Block List, Max: 1) The placement policy configuration. (see below for nested schema)
+	// The placement policy configuration.
 	PlacementPolicy []PlacementPolicyObservation `json:"placementPolicy,omitempty" tf:"placement_policy,omitempty"`
 
-	// The type of virtual machine to create. The default is 'standard-v1'.
+	// (String) The type of virtual machine to create.
+	// The type of virtual machine to create.
 	PlatformID *string `json:"platformId,omitempty" tf:"platform_id,omitempty"`
 
-	// Compute resources that are allocated for the instance. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Compute resources that are allocated for the instance. (see below for nested schema)
+	// Compute resources that are allocated for the instance.
 	Resources []ResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// Scheduling policy configuration. The structure is documented below.
+	// (Block List, Max: 1) Scheduling policy configuration. (see below for nested schema)
+	// Scheduling policy configuration.
 	SchedulingPolicy []SchedulingPolicyObservation `json:"schedulingPolicy,omitempty" tf:"scheduling_policy,omitempty"`
 
-	// A set of disks to attach to the instance. The structure is documented below. Note: The allow_stopping_for_update property must be set to true in order to update this structure.
+	// (Block Set) A set of disks to attach to the instance. The structure is documented below.
+	// A set of disks to attach to the instance. The structure is documented below.
+	//
+	// ~> The [`allow_stopping_for_update`](#allow_stopping_for_update) property must be set to `true` in order to update this structure.
 	SecondaryDisk []SecondaryDiskObservation `json:"secondaryDisk,omitempty" tf:"secondary_disk,omitempty"`
 
-	// ID of the service account authorized for this instance.
+	// (String) Service account which linked to the resource.
+	// [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
+	// (String) The status of this instance.
 	// The status of this instance.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// The availability zone where the virtual machine will be created. If it is not provided, the default provider folder is used.
+	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type InstanceParameters struct {
 
-	// Default 5 minutes
+	// (Boolean)
 	// +kubebuilder:validation:Optional
 	AllowRecreate *bool `json:"allowRecreate,omitempty" tf:"allow_recreate,omitempty"`
 
-	// If you try to update a property that requires stopping the instance without setting this field, the update will fail.
+	// If you try to update a property that requires stopping the instance without setting this field, the update will fail. If you try to update a property that requires stopping the instance without setting this field, the update will fail.
 	// +kubebuilder:validation:Optional
 	AllowStoppingForUpdate *bool `json:"allowStoppingForUpdate,omitempty" tf:"allow_stopping_for_update,omitempty"`
 
-	// The boot disk for the instance. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) The boot disk for the instance. Either initialize_params or disk_id must be specified. (see below for nested schema)
+	// The boot disk for the instance. Either `initialize_params` or `disk_id` must be specified.
 	// +kubebuilder:validation:Optional
 	BootDisk []BootDiskParameters `json:"bootDisk,omitempty" tf:"boot_disk,omitempty"`
 
-	// Description of the instance.
+	// (String) The resource description.
+	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// List of filesystems that are attached to the instance. Structure is documented below.
+	// (Block Set) List of filesystems that are attached to the instance. (see below for nested schema)
+	// List of filesystems that are attached to the instance.
 	// +kubebuilder:validation:Optional
 	Filesystem []InstanceFilesystemParameters `json:"filesystem,omitempty" tf:"filesystem,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -625,73 +776,94 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// ID of the GPU cluster to attach this instance to. The GPU cluster must exist in the same zone as the instance.
+	// (String) ID of the GPU cluster to attach this instance to.
+	// ID of the GPU cluster to attach this instance to.
 	// +kubebuilder:validation:Optional
 	GpuClusterID *string `json:"gpuClusterId,omitempty" tf:"gpu_cluster_id,omitempty"`
 
-	// Host name for the instance. This field is used to generate the instance fqdn value. The host name must be unique within the network and region. If not specified, the host name will be equal to id of the instance and fqdn will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
+	// (String) Host name for the instance. This field is used to generate the instance fqdn value. The host name must be unique within the network and region. If not specified, the host name will be equal to id of the instance and fqdn will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
+	// Host name for the instance. This field is used to generate the instance `fqdn` value. The host name must be unique within the network and region. If not specified, the host name will be equal to `id` of the instance and `fqdn` will be `<id>.auto.internal`. Otherwise FQDN will be `<hostname>.<region_id>.internal`.
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
-	// A set of key/value label pairs to assign to the instance.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// List of local disks that are attached to the instance. Structure is documented below.
+	// (Block List) List of local disks that are attached to the instance.
+	// List of local disks that are attached to the instance.
+	//
+	// ~> Local disks are not available for all users by default.
 	// +kubebuilder:validation:Optional
 	LocalDisk []LocalDiskParameters `json:"localDisk,omitempty" tf:"local_disk,omitempty"`
 
-	// Time between notification via metadata service and maintenance. E.g., 60s.
+	// (String) Time between notification via metadata service and maintenance. E.g., 60s.
+	// Time between notification via metadata service and maintenance. E.g., `60s`.
 	// +kubebuilder:validation:Optional
 	MaintenanceGracePeriod *string `json:"maintenanceGracePeriod,omitempty" tf:"maintenance_grace_period,omitempty"`
 
-	// Behaviour on maintenance events. The default is unspecified. Values: unspecified, migrate, restart.
+	// (String) Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is unspecified.
+	// Behavior on maintenance events. Can be: `unspecified`, `migrate`, `restart`. The default is `unspecified`.
 	// +kubebuilder:validation:Optional
 	MaintenancePolicy *string `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
+	// (Map of String) Metadata key/value pairs to make available from within the instance.
 	// Metadata key/value pairs to make available from within the instance.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Metadata map[string]*string `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
-	// Options allow user to configure access to instance's metadata
+	// (Block List, Max: 1) Options allow user to configure access to instance's metadata. (see below for nested schema)
+	// Options allow user to configure access to instance's metadata.
 	// +kubebuilder:validation:Optional
 	MetadataOptions []MetadataOptionsParameters `json:"metadataOptions,omitempty" tf:"metadata_options,omitempty"`
 
-	// Resource name.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Type of network acceleration. The default is standard. Values: standard, software_accelerated
+	// (String) Type of network acceleration. Can be standard or software_accelerated. The default is standard.
+	// Type of network acceleration. Can be `standard` or `software_accelerated`. The default is `standard`.
 	// +kubebuilder:validation:Optional
 	NetworkAccelerationType *string `json:"networkAccelerationType,omitempty" tf:"network_acceleration_type,omitempty"`
 
-	// Networks to attach to the instance. This can be specified multiple times. The structure is documented below.
+	// (Block List, Min: 1) Networks to attach to the instance. This can be specified multiple times. (see below for nested schema)
+	// Networks to attach to the instance. This can be specified multiple times.
 	// +kubebuilder:validation:Optional
 	NetworkInterface []NetworkInterfaceParameters `json:"networkInterface,omitempty" tf:"network_interface,omitempty"`
 
-	// The placement policy configuration. The structure is documented below.
+	// (Block List, Max: 1) The placement policy configuration. (see below for nested schema)
+	// The placement policy configuration.
 	// +kubebuilder:validation:Optional
 	PlacementPolicy []PlacementPolicyParameters `json:"placementPolicy,omitempty" tf:"placement_policy,omitempty"`
 
-	// The type of virtual machine to create. The default is 'standard-v1'.
+	// (String) The type of virtual machine to create.
+	// The type of virtual machine to create.
 	// +kubebuilder:validation:Optional
 	PlatformID *string `json:"platformId,omitempty" tf:"platform_id,omitempty"`
 
-	// Compute resources that are allocated for the instance. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Compute resources that are allocated for the instance. (see below for nested schema)
+	// Compute resources that are allocated for the instance.
 	// +kubebuilder:validation:Optional
 	Resources []ResourcesParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// Scheduling policy configuration. The structure is documented below.
+	// (Block List, Max: 1) Scheduling policy configuration. (see below for nested schema)
+	// Scheduling policy configuration.
 	// +kubebuilder:validation:Optional
 	SchedulingPolicy []SchedulingPolicyParameters `json:"schedulingPolicy,omitempty" tf:"scheduling_policy,omitempty"`
 
-	// A set of disks to attach to the instance. The structure is documented below. Note: The allow_stopping_for_update property must be set to true in order to update this structure.
+	// (Block Set) A set of disks to attach to the instance. The structure is documented below.
+	// A set of disks to attach to the instance. The structure is documented below.
+	//
+	// ~> The [`allow_stopping_for_update`](#allow_stopping_for_update) property must be set to `true` in order to update this structure.
 	// +kubebuilder:validation:Optional
 	SecondaryDisk []SecondaryDiskParameters `json:"secondaryDisk,omitempty" tf:"secondary_disk,omitempty"`
 
-	// ID of the service account authorized for this instance.
+	// (String) Service account which linked to the resource.
+	// [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
@@ -704,150 +876,192 @@ type InstanceParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
-	// The availability zone where the virtual machine will be created. If it is not provided, the default provider folder is used.
+	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type LocalDiskInitParameters struct {
 
+	// (Number) Size of the disk, specified in bytes.
 	// Size of the disk, specified in bytes.
 	SizeBytes *float64 `json:"sizeBytes,omitempty" tf:"size_bytes,omitempty"`
 }
 
 type LocalDiskObservation struct {
 
+	// (String) Name that can be used to access an attached disk.
 	// The name of the local disk device.
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
+	// (Number) Size of the disk, specified in bytes.
 	// Size of the disk, specified in bytes.
 	SizeBytes *float64 `json:"sizeBytes,omitempty" tf:"size_bytes,omitempty"`
 }
 
 type LocalDiskParameters struct {
 
+	// (Number) Size of the disk, specified in bytes.
 	// Size of the disk, specified in bytes.
 	// +kubebuilder:validation:Optional
 	SizeBytes *float64 `json:"sizeBytes" tf:"size_bytes,omitempty"`
 }
 
 type MetadataOptionsInitParameters struct {
+
+	// (Number)
 	AwsV1HTTPEndpoint *float64 `json:"awsV1HttpEndpoint,omitempty" tf:"aws_v1_http_endpoint,omitempty"`
 
+	// (Number)
 	AwsV1HTTPToken *float64 `json:"awsV1HttpToken,omitempty" tf:"aws_v1_http_token,omitempty"`
 
+	// (Number)
 	GceHTTPEndpoint *float64 `json:"gceHttpEndpoint,omitempty" tf:"gce_http_endpoint,omitempty"`
 
+	// (Number)
 	GceHTTPToken *float64 `json:"gceHttpToken,omitempty" tf:"gce_http_token,omitempty"`
 }
 
 type MetadataOptionsObservation struct {
+
+	// (Number)
 	AwsV1HTTPEndpoint *float64 `json:"awsV1HttpEndpoint,omitempty" tf:"aws_v1_http_endpoint,omitempty"`
 
+	// (Number)
 	AwsV1HTTPToken *float64 `json:"awsV1HttpToken,omitempty" tf:"aws_v1_http_token,omitempty"`
 
+	// (Number)
 	GceHTTPEndpoint *float64 `json:"gceHttpEndpoint,omitempty" tf:"gce_http_endpoint,omitempty"`
 
+	// (Number)
 	GceHTTPToken *float64 `json:"gceHttpToken,omitempty" tf:"gce_http_token,omitempty"`
 }
 
 type MetadataOptionsParameters struct {
 
+	// (Number)
 	// +kubebuilder:validation:Optional
 	AwsV1HTTPEndpoint *float64 `json:"awsV1HttpEndpoint,omitempty" tf:"aws_v1_http_endpoint,omitempty"`
 
+	// (Number)
 	// +kubebuilder:validation:Optional
 	AwsV1HTTPToken *float64 `json:"awsV1HttpToken,omitempty" tf:"aws_v1_http_token,omitempty"`
 
+	// (Number)
 	// +kubebuilder:validation:Optional
 	GceHTTPEndpoint *float64 `json:"gceHttpEndpoint,omitempty" tf:"gce_http_endpoint,omitempty"`
 
+	// (Number)
 	// +kubebuilder:validation:Optional
 	GceHTTPToken *float64 `json:"gceHttpToken,omitempty" tf:"gce_http_token,omitempty"`
 }
 
 type NATDNSRecordInitParameters struct {
 
+	// (String) DNS zone ID (if not set, private zone used).
 	// DNS zone ID (if not set, private zone used).
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
+	// (String) The fully qualified DNS name of this instance.
 	// DNS record FQDN (must have a dot at the end).
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// When set to true, also create a PTR DNS record.
+	// (Boolean) When set to true, also create a PTR DNS record.
+	// When set to `true`, also create a PTR DNS record.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// DNS record TTL. in seconds
+	// (Number) DNS record TTL in seconds.
+	// DNS record TTL in seconds.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type NATDNSRecordObservation struct {
 
+	// (String) DNS zone ID (if not set, private zone used).
 	// DNS zone ID (if not set, private zone used).
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
+	// (String) The fully qualified DNS name of this instance.
 	// DNS record FQDN (must have a dot at the end).
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// When set to true, also create a PTR DNS record.
+	// (Boolean) When set to true, also create a PTR DNS record.
+	// When set to `true`, also create a PTR DNS record.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// DNS record TTL. in seconds
+	// (Number) DNS record TTL in seconds.
+	// DNS record TTL in seconds.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type NATDNSRecordParameters struct {
 
+	// (String) DNS zone ID (if not set, private zone used).
 	// DNS zone ID (if not set, private zone used).
 	// +kubebuilder:validation:Optional
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
+	// (String) The fully qualified DNS name of this instance.
 	// DNS record FQDN (must have a dot at the end).
 	// +kubebuilder:validation:Optional
 	Fqdn *string `json:"fqdn" tf:"fqdn,omitempty"`
 
-	// When set to true, also create a PTR DNS record.
+	// (Boolean) When set to true, also create a PTR DNS record.
+	// When set to `true`, also create a PTR DNS record.
 	// +kubebuilder:validation:Optional
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// DNS record TTL. in seconds
+	// (Number) DNS record TTL in seconds.
+	// DNS record TTL in seconds.
 	// +kubebuilder:validation:Optional
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type NetworkInterfaceInitParameters struct {
 
-	// List of configurations for creating ipv4 DNS records. The structure is documented below.
+	// (Block List) List of configurations for creating ipv4 DNS records. (see below for nested schema)
+	// List of configurations for creating ipv4 DNS records.
 	DNSRecord []DNSRecordInitParameters `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
+	// (String) The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
 	// The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// Allocate an IPv4 address for the interface. The default value is true.
+	// (Boolean) Allocate an IPv4 address for the interface. The default value is true.
+	// Allocate an IPv4 address for the interface. The default value is `true`.
 	IPv4 *bool `json:"ipv4,omitempty" tf:"ipv4,omitempty"`
 
-	// If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+	// (Boolean) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+	// If `true`, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
+	// (String) The private IPv6 address to assign to the instance.
 	// The private IPv6 address to assign to the instance.
 	IPv6Address *string `json:"ipv6Address,omitempty" tf:"ipv6_address,omitempty"`
 
-	// List of configurations for creating ipv6 DNS records. The structure is documented below.
+	// (Block List) List of configurations for creating ipv6 DNS records. (see below for nested schema)
+	// List of configurations for creating ipv6 DNS records.
 	IPv6DNSRecord []IPv6DNSRecordInitParameters `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
 
+	// (Number) Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
 	// Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
 	Index *float64 `json:"index,omitempty" tf:"index,omitempty"`
 
+	// (Boolean) Provide a public address, for instance, to access the internet over NAT.
 	// Provide a public address, for instance, to access the internet over NAT.
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
-	// List of configurations for creating ipv4 NAT DNS records. The structure is documented below.
+	// (Block List) List of configurations for creating ipv4 NAT DNS records. (see below for nested schema)
+	// List of configurations for creating ipv4 NAT DNS records.
 	NATDNSRecord []NATDNSRecordInitParameters `json:"natDnsRecord,omitempty" tf:"nat_dns_record,omitempty"`
 
+	// (String) Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
 	// Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
 	NATIPAddress *string `json:"natIpAddress,omitempty" tf:"nat_ip_address,omitempty"`
 
-	// Security group ids for network interface.
+	// (Set of String) Security Group (SG) IDs for network interface.
+	// Security Group (SG) IDs for network interface.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
@@ -860,6 +1074,7 @@ type NetworkInterfaceInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
+	// (String) ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
 	// ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -875,91 +1090,116 @@ type NetworkInterfaceInitParameters struct {
 
 type NetworkInterfaceObservation struct {
 
-	// List of configurations for creating ipv4 DNS records. The structure is documented below.
+	// (Block List) List of configurations for creating ipv4 DNS records. (see below for nested schema)
+	// List of configurations for creating ipv4 DNS records.
 	DNSRecord []DNSRecordObservation `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
+	// (String) The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
 	// The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// Allocate an IPv4 address for the interface. The default value is true.
+	// (Boolean) Allocate an IPv4 address for the interface. The default value is true.
+	// Allocate an IPv4 address for the interface. The default value is `true`.
 	IPv4 *bool `json:"ipv4,omitempty" tf:"ipv4,omitempty"`
 
-	// If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+	// (Boolean) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+	// If `true`, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
+	// (String) The private IPv6 address to assign to the instance.
 	// The private IPv6 address to assign to the instance.
 	IPv6Address *string `json:"ipv6Address,omitempty" tf:"ipv6_address,omitempty"`
 
-	// List of configurations for creating ipv6 DNS records. The structure is documented below.
+	// (Block List) List of configurations for creating ipv6 DNS records. (see below for nested schema)
+	// List of configurations for creating ipv6 DNS records.
 	IPv6DNSRecord []IPv6DNSRecordObservation `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
 
+	// (Number) Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
 	// Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
 	Index *float64 `json:"index,omitempty" tf:"index,omitempty"`
 
+	// (String)
 	MacAddress *string `json:"macAddress,omitempty" tf:"mac_address,omitempty"`
 
+	// (Boolean) Provide a public address, for instance, to access the internet over NAT.
 	// Provide a public address, for instance, to access the internet over NAT.
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
-	// List of configurations for creating ipv4 NAT DNS records. The structure is documented below.
+	// (Block List) List of configurations for creating ipv4 NAT DNS records. (see below for nested schema)
+	// List of configurations for creating ipv4 NAT DNS records.
 	NATDNSRecord []NATDNSRecordObservation `json:"natDnsRecord,omitempty" tf:"nat_dns_record,omitempty"`
 
+	// (String) Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
 	// Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
 	NATIPAddress *string `json:"natIpAddress,omitempty" tf:"nat_ip_address,omitempty"`
 
+	// (String)
 	NATIPVersion *string `json:"natIpVersion,omitempty" tf:"nat_ip_version,omitempty"`
 
-	// Security group ids for network interface.
+	// (Set of String) Security Group (SG) IDs for network interface.
+	// Security Group (SG) IDs for network interface.
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
+	// (String) ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
 	// ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
 type NetworkInterfaceParameters struct {
 
-	// List of configurations for creating ipv4 DNS records. The structure is documented below.
+	// (Block List) List of configurations for creating ipv4 DNS records. (see below for nested schema)
+	// List of configurations for creating ipv4 DNS records.
 	// +kubebuilder:validation:Optional
 	DNSRecord []DNSRecordParameters `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
+	// (String) The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
 	// The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
 	// +kubebuilder:validation:Optional
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// Allocate an IPv4 address for the interface. The default value is true.
+	// (Boolean) Allocate an IPv4 address for the interface. The default value is true.
+	// Allocate an IPv4 address for the interface. The default value is `true`.
 	// +kubebuilder:validation:Optional
 	IPv4 *bool `json:"ipv4,omitempty" tf:"ipv4,omitempty"`
 
-	// If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+	// (Boolean) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+	// If `true`, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
 	// +kubebuilder:validation:Optional
 	IPv6 *bool `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
+	// (String) The private IPv6 address to assign to the instance.
 	// The private IPv6 address to assign to the instance.
 	// +kubebuilder:validation:Optional
 	IPv6Address *string `json:"ipv6Address,omitempty" tf:"ipv6_address,omitempty"`
 
-	// List of configurations for creating ipv6 DNS records. The structure is documented below.
+	// (Block List) List of configurations for creating ipv6 DNS records. (see below for nested schema)
+	// List of configurations for creating ipv6 DNS records.
 	// +kubebuilder:validation:Optional
 	IPv6DNSRecord []IPv6DNSRecordParameters `json:"ipv6DnsRecord,omitempty" tf:"ipv6_dns_record,omitempty"`
 
+	// (Number) Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
 	// Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
 	// +kubebuilder:validation:Optional
 	Index *float64 `json:"index,omitempty" tf:"index,omitempty"`
 
+	// (Boolean) Provide a public address, for instance, to access the internet over NAT.
 	// Provide a public address, for instance, to access the internet over NAT.
 	// +kubebuilder:validation:Optional
 	NAT *bool `json:"nat,omitempty" tf:"nat,omitempty"`
 
-	// List of configurations for creating ipv4 NAT DNS records. The structure is documented below.
+	// (Block List) List of configurations for creating ipv4 NAT DNS records. (see below for nested schema)
+	// List of configurations for creating ipv4 NAT DNS records.
 	// +kubebuilder:validation:Optional
 	NATDNSRecord []NATDNSRecordParameters `json:"natDnsRecord,omitempty" tf:"nat_dns_record,omitempty"`
 
+	// (String) Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
 	// Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
 	// +kubebuilder:validation:Optional
 	NATIPAddress *string `json:"natIpAddress,omitempty" tf:"nat_ip_address,omitempty"`
 
-	// Security group ids for network interface.
+	// (Set of String) Security Group (SG) IDs for network interface.
+	// Security Group (SG) IDs for network interface.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	// +listType=set
@@ -973,6 +1213,7 @@ type NetworkInterfaceParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
+	// (String) ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
 	// ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
@@ -989,9 +1230,16 @@ type NetworkInterfaceParameters struct {
 
 type PlacementPolicyInitParameters struct {
 
-	// List of host affinity rules. The structure is documented below.
+	// (List of Object) List of host affinity rules.
+	// List of host affinity rules. To reset the values of these fields, you need to set them empty:
+	//
+	// placement_policy {
+	// placement_group_id = ""
+	// host_affinity_rules = []
+	// }
 	HostAffinityRules []HostAffinityRulesInitParameters `json:"hostAffinityRules,omitempty" tf:"host_affinity_rules,omitempty"`
 
+	// (String) Specifies the id of the Placement Group to assign to the instance.
 	// Specifies the id of the Placement Group to assign to the instance.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.PlacementGroup
 	PlacementGroupID *string `json:"placementGroupId,omitempty" tf:"placement_group_id,omitempty"`
@@ -1004,26 +1252,42 @@ type PlacementPolicyInitParameters struct {
 	// +kubebuilder:validation:Optional
 	PlacementGroupIDSelector *v1.Selector `json:"placementGroupIdSelector,omitempty" tf:"-"`
 
+	// (Number)
 	PlacementGroupPartition *float64 `json:"placementGroupPartition,omitempty" tf:"placement_group_partition,omitempty"`
 }
 
 type PlacementPolicyObservation struct {
 
-	// List of host affinity rules. The structure is documented below.
+	// (List of Object) List of host affinity rules.
+	// List of host affinity rules. To reset the values of these fields, you need to set them empty:
+	//
+	// placement_policy {
+	// placement_group_id = ""
+	// host_affinity_rules = []
+	// }
 	HostAffinityRules []HostAffinityRulesObservation `json:"hostAffinityRules,omitempty" tf:"host_affinity_rules,omitempty"`
 
+	// (String) Specifies the id of the Placement Group to assign to the instance.
 	// Specifies the id of the Placement Group to assign to the instance.
 	PlacementGroupID *string `json:"placementGroupId,omitempty" tf:"placement_group_id,omitempty"`
 
+	// (Number)
 	PlacementGroupPartition *float64 `json:"placementGroupPartition,omitempty" tf:"placement_group_partition,omitempty"`
 }
 
 type PlacementPolicyParameters struct {
 
-	// List of host affinity rules. The structure is documented below.
+	// (List of Object) List of host affinity rules.
+	// List of host affinity rules. To reset the values of these fields, you need to set them empty:
+	//
+	// placement_policy {
+	// placement_group_id = ""
+	// host_affinity_rules = []
+	// }
 	// +kubebuilder:validation:Optional
 	HostAffinityRules []HostAffinityRulesParameters `json:"hostAffinityRules,omitempty" tf:"host_affinity_rules,omitempty"`
 
+	// (String) Specifies the id of the Placement Group to assign to the instance.
 	// Specifies the id of the Placement Group to assign to the instance.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.PlacementGroup
 	// +kubebuilder:validation:Optional
@@ -1037,54 +1301,67 @@ type PlacementPolicyParameters struct {
 	// +kubebuilder:validation:Optional
 	PlacementGroupIDSelector *v1.Selector `json:"placementGroupIdSelector,omitempty" tf:"-"`
 
+	// (Number)
 	// +kubebuilder:validation:Optional
 	PlacementGroupPartition *float64 `json:"placementGroupPartition,omitempty" tf:"placement_group_partition,omitempty"`
 }
 
 type ResourcesInitParameters struct {
 
+	// (Number) If provided, specifies baseline performance for a core as a percent.
 	// If provided, specifies baseline performance for a core as a percent.
 	CoreFraction *float64 `json:"coreFraction,omitempty" tf:"core_fraction,omitempty"`
 
+	// (Number) CPU cores for the instance.
 	// CPU cores for the instance.
 	Cores *float64 `json:"cores,omitempty" tf:"cores,omitempty"`
 
-	// If provided, specifies the number of GPU devices for the instance
+	// (Number) If provided, specifies the number of GPU devices for the instance.
+	// If provided, specifies the number of GPU devices for the instance.
 	Gpus *float64 `json:"gpus,omitempty" tf:"gpus,omitempty"`
 
+	// (Number) Memory size in GB.
 	// Memory size in GB.
 	Memory *float64 `json:"memory,omitempty" tf:"memory,omitempty"`
 }
 
 type ResourcesObservation struct {
 
+	// (Number) If provided, specifies baseline performance for a core as a percent.
 	// If provided, specifies baseline performance for a core as a percent.
 	CoreFraction *float64 `json:"coreFraction,omitempty" tf:"core_fraction,omitempty"`
 
+	// (Number) CPU cores for the instance.
 	// CPU cores for the instance.
 	Cores *float64 `json:"cores,omitempty" tf:"cores,omitempty"`
 
-	// If provided, specifies the number of GPU devices for the instance
+	// (Number) If provided, specifies the number of GPU devices for the instance.
+	// If provided, specifies the number of GPU devices for the instance.
 	Gpus *float64 `json:"gpus,omitempty" tf:"gpus,omitempty"`
 
+	// (Number) Memory size in GB.
 	// Memory size in GB.
 	Memory *float64 `json:"memory,omitempty" tf:"memory,omitempty"`
 }
 
 type ResourcesParameters struct {
 
+	// (Number) If provided, specifies baseline performance for a core as a percent.
 	// If provided, specifies baseline performance for a core as a percent.
 	// +kubebuilder:validation:Optional
 	CoreFraction *float64 `json:"coreFraction,omitempty" tf:"core_fraction,omitempty"`
 
+	// (Number) CPU cores for the instance.
 	// CPU cores for the instance.
 	// +kubebuilder:validation:Optional
 	Cores *float64 `json:"cores" tf:"cores,omitempty"`
 
-	// If provided, specifies the number of GPU devices for the instance
+	// (Number) If provided, specifies the number of GPU devices for the instance.
+	// If provided, specifies the number of GPU devices for the instance.
 	// +kubebuilder:validation:Optional
 	Gpus *float64 `json:"gpus,omitempty" tf:"gpus,omitempty"`
 
+	// (Number) Memory size in GB.
 	// Memory size in GB.
 	// +kubebuilder:validation:Optional
 	Memory *float64 `json:"memory" tf:"memory,omitempty"`
@@ -1092,31 +1369,37 @@ type ResourcesParameters struct {
 
 type SchedulingPolicyInitParameters struct {
 
-	// Specifies if the instance is preemptible. Defaults to false.
+	// (Boolean) Specifies if the instance is preemptible. Defaults to false.
+	// Specifies if the instance is preemptible. Defaults to `false`.
 	Preemptible *bool `json:"preemptible,omitempty" tf:"preemptible,omitempty"`
 }
 
 type SchedulingPolicyObservation struct {
 
-	// Specifies if the instance is preemptible. Defaults to false.
+	// (Boolean) Specifies if the instance is preemptible. Defaults to false.
+	// Specifies if the instance is preemptible. Defaults to `false`.
 	Preemptible *bool `json:"preemptible,omitempty" tf:"preemptible,omitempty"`
 }
 
 type SchedulingPolicyParameters struct {
 
-	// Specifies if the instance is preemptible. Defaults to false.
+	// (Boolean) Specifies if the instance is preemptible. Defaults to false.
+	// Specifies if the instance is preemptible. Defaults to `false`.
 	// +kubebuilder:validation:Optional
 	Preemptible *bool `json:"preemptible,omitempty" tf:"preemptible,omitempty"`
 }
 
 type SecondaryDiskInitParameters struct {
 
-	// Whether the disk is auto-deleted when the instance is deleted. The default value is false.
+	// deleted when the instance is deleted. The default value is True.
+	// Whether the disk is auto-deleted when the instance is deleted. The default value is `false`.
 	AutoDelete *bool `json:"autoDelete,omitempty" tf:"auto_delete,omitempty"`
 
-	// Name that can be used to access an attached disk under /dev/disk/by-id/.
+	// (String) Name that can be used to access an attached disk.
+	// Name that can be used to access an attached disk under `/dev/disk/by-id/`.
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
+	// (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
 	// ID of the disk that is attached to the instance.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Disk
 	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
@@ -1129,35 +1412,43 @@ type SecondaryDiskInitParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskIDSelector *v1.Selector `json:"diskIdSelector,omitempty" tf:"-"`
 
-	// Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// Type of access to the disk resource. By default, a disk is attached in `READ_WRITE` mode.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 }
 
 type SecondaryDiskObservation struct {
 
-	// Whether the disk is auto-deleted when the instance is deleted. The default value is false.
+	// deleted when the instance is deleted. The default value is True.
+	// Whether the disk is auto-deleted when the instance is deleted. The default value is `false`.
 	AutoDelete *bool `json:"autoDelete,omitempty" tf:"auto_delete,omitempty"`
 
-	// Name that can be used to access an attached disk under /dev/disk/by-id/.
+	// (String) Name that can be used to access an attached disk.
+	// Name that can be used to access an attached disk under `/dev/disk/by-id/`.
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
+	// (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
 	// ID of the disk that is attached to the instance.
 	DiskID *string `json:"diskId,omitempty" tf:"disk_id,omitempty"`
 
-	// Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// Type of access to the disk resource. By default, a disk is attached in `READ_WRITE` mode.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 }
 
 type SecondaryDiskParameters struct {
 
-	// Whether the disk is auto-deleted when the instance is deleted. The default value is false.
+	// deleted when the instance is deleted. The default value is True.
+	// Whether the disk is auto-deleted when the instance is deleted. The default value is `false`.
 	// +kubebuilder:validation:Optional
 	AutoDelete *bool `json:"autoDelete,omitempty" tf:"auto_delete,omitempty"`
 
-	// Name that can be used to access an attached disk under /dev/disk/by-id/.
+	// (String) Name that can be used to access an attached disk.
+	// Name that can be used to access an attached disk under `/dev/disk/by-id/`.
 	// +kubebuilder:validation:Optional
 	DeviceName *string `json:"deviceName,omitempty" tf:"device_name,omitempty"`
 
+	// (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
 	// ID of the disk that is attached to the instance.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/compute/v1alpha1.Disk
 	// +kubebuilder:validation:Optional
@@ -1171,7 +1462,8 @@ type SecondaryDiskParameters struct {
 	// +kubebuilder:validation:Optional
 	DiskIDSelector *v1.Selector `json:"diskIdSelector,omitempty" tf:"-"`
 
-	// Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+	// Type of access to the disk resource. By default, a disk is attached in `READ_WRITE` mode.
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 }

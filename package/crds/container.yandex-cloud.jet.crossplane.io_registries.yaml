@@ -74,8 +74,9 @@ spec:
               forProvider:
                 properties:
                   folderId:
-                    description: Folder that the resource belongs to. If value is
-                      omitted, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -156,11 +157,15 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the registry.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: A name of the registry.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                 type: object
               initProvider:
@@ -177,8 +182,9 @@ spec:
                   autoscaler.
                 properties:
                   folderId:
-                    description: Folder that the resource belongs to. If value is
-                      omitted, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -259,11 +265,15 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the registry.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: A name of the registry.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                 type: object
               managementPolicies:
@@ -439,25 +449,35 @@ spec:
               atProvider:
                 properties:
                   createdAt:
-                    description: Creation timestamp of the registry.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   folderId:
-                    description: Folder that the resource belongs to. If value is
-                      omitted, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the registry.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: A name of the registry.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   status:
-                    description: Status of the registry.
+                    description: |-
+                      (String) Status of the registry.
+                      Status of the registry.
                     type: string
                 type: object
               conditions:

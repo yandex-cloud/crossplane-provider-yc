@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: KafkaConnector is the Schema for the KafkaConnectors API. Manages
-          a connectors of a Kafka cluster within Yandex.Cloud.
+          a connectors of a Kafka cluster within Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -74,6 +74,9 @@ spec:
               forProvider:
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of the Kafka cluster.
+                      The ID of the Kafka cluster.
                     type: string
                   clusterIdRef:
                     description: Reference to a KafkaCluster to populate clusterId.
@@ -150,39 +153,48 @@ spec:
                         type: object
                     type: object
                   connectorConfigMirrormaker:
-                    description: Params for MirrorMaker2 connector. The structure
-                      is documented below.
+                    description: |-
+                      (Block List) Settings for MirrorMaker2 connector. (see below for nested schema)
+                      Settings for MirrorMaker2 connector.
                     items:
                       properties:
                         replicationFactor:
-                          description: Replication factor for topics created in target
-                            cluster
+                          description: |-
+                            (Number) Replication factor for topics created in target cluster.
+                            Replication factor for topics created in target cluster.
                           format: int64
                           type: integer
                         sourceCluster:
-                          description: Settings for source cluster. The structure
-                            is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Settings for source cluster. (see below for nested schema)
+                            Settings for source cluster.
                           items:
                             properties:
                               alias:
-                                description: Name of the cluster. Used also as a topic
-                                  prefix
+                                description: |-
+                                  (String) Name of the cluster. Used also as a topic prefix.
+                                  Name of the cluster. Used also as a topic prefix.
                                 type: string
                               externalCluster:
-                                description: Connection params for external cluster
+                                description: |-
+                                  (Block List) Connection settings for external cluster. (see below for nested schema)
+                                  Connection settings for external cluster.
                                 items:
                                   properties:
                                     bootstrapServers:
-                                      description: List of bootstrap servers to connect
-                                        to cluster
+                                      description: |-
+                                        (String) List of bootstrap servers to connect to cluster.
+                                        List of bootstrap servers to connect to cluster.
                                       type: string
                                     saslMechanism:
-                                      description: Type of SASL authentification mechanism
-                                        to use
+                                      description: |-
+                                        (String) Type of SASL authentification mechanism to use.
+                                        Type of SASL authentification mechanism to use.
                                       type: string
                                     saslPasswordSecretRef:
-                                      description: Password to use in SASL authentification
-                                        mechanism
+                                      description: |-
+                                        (String, Sensitive) Password to use in SASL authentification mechanism
+                                        Password to use in SASL authentification mechanism
                                       properties:
                                         key:
                                           description: The key to select.
@@ -199,46 +211,57 @@ spec:
                                       - namespace
                                       type: object
                                     saslUsername:
-                                      description: Username to use in SASL authentification
-                                        mechanism
+                                      description: |-
+                                        (String) Username to use in SASL authentification mechanism.
+                                        Username to use in SASL authentification mechanism.
                                       type: string
                                     securityProtocol:
-                                      description: Security protocol to use
+                                      description: |-
+                                        (String) Security protocol to use.
+                                        Security protocol to use.
                                       type: string
                                   type: object
                                 type: array
                               thisCluster:
-                                description: Using this section in the cluster definition
-                                  (source or target) means it's this cluster
+                                description: |-
+                                  (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+                                  Using this section in the cluster definition (source or target) means it's this cluster.
                                 items:
                                   type: object
                                 type: array
                             type: object
                           type: array
                         targetCluster:
-                          description: Settings for target cluster. The structure
-                            is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Settings for target cluster. (see below for nested schema)
+                            Settings for target cluster.
                           items:
                             properties:
                               alias:
-                                description: Name of the cluster. Used also as a topic
-                                  prefix
+                                description: |-
+                                  (String) Name of the cluster. Used also as a topic prefix.
+                                  Name of the cluster. Used also as a topic prefix.
                                 type: string
                               externalCluster:
-                                description: Connection params for external cluster
+                                description: |-
+                                  (Block List) Connection settings for external cluster. (see below for nested schema)
+                                  Connection settings for external cluster.
                                 items:
                                   properties:
                                     bootstrapServers:
-                                      description: List of bootstrap servers to connect
-                                        to cluster
+                                      description: |-
+                                        (String) List of bootstrap servers to connect to cluster.
+                                        List of bootstrap servers to connect to cluster.
                                       type: string
                                     saslMechanism:
-                                      description: Type of SASL authentification mechanism
-                                        to use
+                                      description: |-
+                                        (String) Type of SASL authentification mechanism to use.
+                                        Type of SASL authentification mechanism to use.
                                       type: string
                                     saslPasswordSecretRef:
-                                      description: Password to use in SASL authentification
-                                        mechanism
+                                      description: |-
+                                        (String, Sensitive) Password to use in SASL authentification mechanism
+                                        Password to use in SASL authentification mechanism
                                       properties:
                                         key:
                                           description: The key to select.
@@ -255,65 +278,86 @@ spec:
                                       - namespace
                                       type: object
                                     saslUsername:
-                                      description: Username to use in SASL authentification
-                                        mechanism
+                                      description: |-
+                                        (String) Username to use in SASL authentification mechanism.
+                                        Username to use in SASL authentification mechanism.
                                       type: string
                                     securityProtocol:
-                                      description: Security protocol to use
+                                      description: |-
+                                        (String) Security protocol to use.
+                                        Security protocol to use.
                                       type: string
                                   type: object
                                 type: array
                               thisCluster:
-                                description: Using this section in the cluster definition
-                                  (source or target) means it's this cluster
+                                description: |-
+                                  (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+                                  Using this section in the cluster definition (source or target) means it's this cluster.
                                 items:
                                   type: object
                                 type: array
                             type: object
                           type: array
                         topics:
-                          description: The pattern for topic names to be replicated.
+                          description: |-
+                            (String) The pattern for topic names to be replicated.
+                            The pattern for topic names to be replicated.
                           type: string
                       type: object
                     type: array
                   connectorConfigS3Sink:
-                    description: Params for S3 Sink connector. The structure is documented
-                      below.
+                    description: |-
+                      (Block List) Settings for S3 Sink connector. (see below for nested schema)
+                      Settings for S3 Sink connector.
                     items:
                       properties:
                         fileCompressionType:
-                          description: Сompression type for messages. Cannot be changed.
+                          description: |-
+                            (String) Compression type for messages. Cannot be changed.
+                            Compression type for messages. Cannot be changed.
                           type: string
                         fileMaxRecords:
-                          description: Max records per file.
+                          description: |-
+                            (Number) Max records per file.
+                            Max records per file.
                           format: int64
                           type: integer
                         s3Connection:
-                          description: Settings for connection to s3-compatible storage.
-                            The structure is documented below.
+                          description: |-
+                            compatible storage. (see below for nested schema)
+                            Settings for connection to s3-compatible storage.
                           items:
                             properties:
                               bucketName:
-                                description: Name of the bucket in s3-compatible storage.
+                                description: |-
+                                  compatible storage.
+                                  Name of the bucket in s3-compatible storage.
                                 type: string
                               externalS3:
-                                description: Connection params for external s3-compatible
-                                  storage. The structure is documented below.
+                                description: |-
+                                  compatible storage. (see below for nested schema)
+                                  Connection params for external s3-compatible storage.
                                 items:
                                   properties:
                                     accessKeyId:
-                                      description: ID of aws-compatible static key.
+                                      description: |-
+                                        compatible static key.
+                                        ID of aws-compatible static key.
                                       type: string
                                     endpoint:
-                                      description: URL of s3-compatible storage.
+                                      description: |-
+                                        compatible storage.
+                                        URL of s3-compatible storage.
                                       type: string
                                     region:
-                                      description: region of s3-compatible storage.
-                                        Available region list.
+                                      description: |-
+                                        compatible storage. Available region list.
+                                        Region of s3-compatible storage. [Available region list](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/regions/Regions.html).
                                       type: string
                                     secretAccessKeySecretRef:
-                                      description: Secret key of aws-compatible static
-                                        key.
+                                      description: |-
+                                        compatible static key.
+                                        Secret key of aws-compatible static key.
                                       properties:
                                         key:
                                           description: The key to select.
@@ -334,23 +378,29 @@ spec:
                             type: object
                           type: array
                         topics:
-                          description: The pattern for topic names to be copied to
-                            s3 bucket.
+                          description: |-
+                            (String) The pattern for topic names to be replicated.
+                            The pattern for topic names to be copied to s3 bucket.
                           type: string
                       type: object
                     type: array
                   name:
-                    description: The name of the connector.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   properties:
                     additionalProperties:
                       type: string
-                    description: Additional properties for connector.
+                    description: |-
+                      (Map of String) Additional properties for connector.
+                      Additional properties for connector.
                     type: object
                     x-kubernetes-map-type: granular
                   tasksMax:
-                    description: The number of the connector's parallel working tasks.
-                      Default is the number of brokers
+                    description: |-
+                      (Number) The number of the connector's parallel working tasks. Default is the number of brokers.
+                      The number of the connector's parallel working tasks. Default is the number of brokers.
                     format: int64
                     type: integer
                 type: object
@@ -368,6 +418,9 @@ spec:
                   autoscaler.
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of the Kafka cluster.
+                      The ID of the Kafka cluster.
                     type: string
                   clusterIdRef:
                     description: Reference to a KafkaCluster to populate clusterId.
@@ -444,39 +497,48 @@ spec:
                         type: object
                     type: object
                   connectorConfigMirrormaker:
-                    description: Params for MirrorMaker2 connector. The structure
-                      is documented below.
+                    description: |-
+                      (Block List) Settings for MirrorMaker2 connector. (see below for nested schema)
+                      Settings for MirrorMaker2 connector.
                     items:
                       properties:
                         replicationFactor:
-                          description: Replication factor for topics created in target
-                            cluster
+                          description: |-
+                            (Number) Replication factor for topics created in target cluster.
+                            Replication factor for topics created in target cluster.
                           format: int64
                           type: integer
                         sourceCluster:
-                          description: Settings for source cluster. The structure
-                            is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Settings for source cluster. (see below for nested schema)
+                            Settings for source cluster.
                           items:
                             properties:
                               alias:
-                                description: Name of the cluster. Used also as a topic
-                                  prefix
+                                description: |-
+                                  (String) Name of the cluster. Used also as a topic prefix.
+                                  Name of the cluster. Used also as a topic prefix.
                                 type: string
                               externalCluster:
-                                description: Connection params for external cluster
+                                description: |-
+                                  (Block List) Connection settings for external cluster. (see below for nested schema)
+                                  Connection settings for external cluster.
                                 items:
                                   properties:
                                     bootstrapServers:
-                                      description: List of bootstrap servers to connect
-                                        to cluster
+                                      description: |-
+                                        (String) List of bootstrap servers to connect to cluster.
+                                        List of bootstrap servers to connect to cluster.
                                       type: string
                                     saslMechanism:
-                                      description: Type of SASL authentification mechanism
-                                        to use
+                                      description: |-
+                                        (String) Type of SASL authentification mechanism to use.
+                                        Type of SASL authentification mechanism to use.
                                       type: string
                                     saslPasswordSecretRef:
-                                      description: Password to use in SASL authentification
-                                        mechanism
+                                      description: |-
+                                        (String, Sensitive) Password to use in SASL authentification mechanism
+                                        Password to use in SASL authentification mechanism
                                       properties:
                                         key:
                                           description: The key to select.
@@ -493,46 +555,57 @@ spec:
                                       - namespace
                                       type: object
                                     saslUsername:
-                                      description: Username to use in SASL authentification
-                                        mechanism
+                                      description: |-
+                                        (String) Username to use in SASL authentification mechanism.
+                                        Username to use in SASL authentification mechanism.
                                       type: string
                                     securityProtocol:
-                                      description: Security protocol to use
+                                      description: |-
+                                        (String) Security protocol to use.
+                                        Security protocol to use.
                                       type: string
                                   type: object
                                 type: array
                               thisCluster:
-                                description: Using this section in the cluster definition
-                                  (source or target) means it's this cluster
+                                description: |-
+                                  (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+                                  Using this section in the cluster definition (source or target) means it's this cluster.
                                 items:
                                   type: object
                                 type: array
                             type: object
                           type: array
                         targetCluster:
-                          description: Settings for target cluster. The structure
-                            is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Settings for target cluster. (see below for nested schema)
+                            Settings for target cluster.
                           items:
                             properties:
                               alias:
-                                description: Name of the cluster. Used also as a topic
-                                  prefix
+                                description: |-
+                                  (String) Name of the cluster. Used also as a topic prefix.
+                                  Name of the cluster. Used also as a topic prefix.
                                 type: string
                               externalCluster:
-                                description: Connection params for external cluster
+                                description: |-
+                                  (Block List) Connection settings for external cluster. (see below for nested schema)
+                                  Connection settings for external cluster.
                                 items:
                                   properties:
                                     bootstrapServers:
-                                      description: List of bootstrap servers to connect
-                                        to cluster
+                                      description: |-
+                                        (String) List of bootstrap servers to connect to cluster.
+                                        List of bootstrap servers to connect to cluster.
                                       type: string
                                     saslMechanism:
-                                      description: Type of SASL authentification mechanism
-                                        to use
+                                      description: |-
+                                        (String) Type of SASL authentification mechanism to use.
+                                        Type of SASL authentification mechanism to use.
                                       type: string
                                     saslPasswordSecretRef:
-                                      description: Password to use in SASL authentification
-                                        mechanism
+                                      description: |-
+                                        (String, Sensitive) Password to use in SASL authentification mechanism
+                                        Password to use in SASL authentification mechanism
                                       properties:
                                         key:
                                           description: The key to select.
@@ -549,65 +622,86 @@ spec:
                                       - namespace
                                       type: object
                                     saslUsername:
-                                      description: Username to use in SASL authentification
-                                        mechanism
+                                      description: |-
+                                        (String) Username to use in SASL authentification mechanism.
+                                        Username to use in SASL authentification mechanism.
                                       type: string
                                     securityProtocol:
-                                      description: Security protocol to use
+                                      description: |-
+                                        (String) Security protocol to use.
+                                        Security protocol to use.
                                       type: string
                                   type: object
                                 type: array
                               thisCluster:
-                                description: Using this section in the cluster definition
-                                  (source or target) means it's this cluster
+                                description: |-
+                                  (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+                                  Using this section in the cluster definition (source or target) means it's this cluster.
                                 items:
                                   type: object
                                 type: array
                             type: object
                           type: array
                         topics:
-                          description: The pattern for topic names to be replicated.
+                          description: |-
+                            (String) The pattern for topic names to be replicated.
+                            The pattern for topic names to be replicated.
                           type: string
                       type: object
                     type: array
                   connectorConfigS3Sink:
-                    description: Params for S3 Sink connector. The structure is documented
-                      below.
+                    description: |-
+                      (Block List) Settings for S3 Sink connector. (see below for nested schema)
+                      Settings for S3 Sink connector.
                     items:
                       properties:
                         fileCompressionType:
-                          description: Сompression type for messages. Cannot be changed.
+                          description: |-
+                            (String) Compression type for messages. Cannot be changed.
+                            Compression type for messages. Cannot be changed.
                           type: string
                         fileMaxRecords:
-                          description: Max records per file.
+                          description: |-
+                            (Number) Max records per file.
+                            Max records per file.
                           format: int64
                           type: integer
                         s3Connection:
-                          description: Settings for connection to s3-compatible storage.
-                            The structure is documented below.
+                          description: |-
+                            compatible storage. (see below for nested schema)
+                            Settings for connection to s3-compatible storage.
                           items:
                             properties:
                               bucketName:
-                                description: Name of the bucket in s3-compatible storage.
+                                description: |-
+                                  compatible storage.
+                                  Name of the bucket in s3-compatible storage.
                                 type: string
                               externalS3:
-                                description: Connection params for external s3-compatible
-                                  storage. The structure is documented below.
+                                description: |-
+                                  compatible storage. (see below for nested schema)
+                                  Connection params for external s3-compatible storage.
                                 items:
                                   properties:
                                     accessKeyId:
-                                      description: ID of aws-compatible static key.
+                                      description: |-
+                                        compatible static key.
+                                        ID of aws-compatible static key.
                                       type: string
                                     endpoint:
-                                      description: URL of s3-compatible storage.
+                                      description: |-
+                                        compatible storage.
+                                        URL of s3-compatible storage.
                                       type: string
                                     region:
-                                      description: region of s3-compatible storage.
-                                        Available region list.
+                                      description: |-
+                                        compatible storage. Available region list.
+                                        Region of s3-compatible storage. [Available region list](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/regions/Regions.html).
                                       type: string
                                     secretAccessKeySecretRef:
-                                      description: Secret key of aws-compatible static
-                                        key.
+                                      description: |-
+                                        compatible static key.
+                                        Secret key of aws-compatible static key.
                                       properties:
                                         key:
                                           description: The key to select.
@@ -628,23 +722,29 @@ spec:
                             type: object
                           type: array
                         topics:
-                          description: The pattern for topic names to be copied to
-                            s3 bucket.
+                          description: |-
+                            (String) The pattern for topic names to be replicated.
+                            The pattern for topic names to be copied to s3 bucket.
                           type: string
                       type: object
                     type: array
                   name:
-                    description: The name of the connector.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   properties:
                     additionalProperties:
                       type: string
-                    description: Additional properties for connector.
+                    description: |-
+                      (Map of String) Additional properties for connector.
+                      Additional properties for connector.
                     type: object
                     x-kubernetes-map-type: granular
                   tasksMax:
-                    description: The number of the connector's parallel working tasks.
-                      Default is the number of brokers
+                    description: |-
+                      (Number) The number of the connector's parallel working tasks. Default is the number of brokers.
+                      The number of the connector's parallel working tasks. Default is the number of brokers.
                     format: int64
                     type: integer
                 type: object
@@ -826,157 +926,205 @@ spec:
               atProvider:
                 properties:
                   clusterId:
+                    description: |-
+                      (String) The ID of the Kafka cluster.
+                      The ID of the Kafka cluster.
                     type: string
                   connectorConfigMirrormaker:
-                    description: Params for MirrorMaker2 connector. The structure
-                      is documented below.
+                    description: |-
+                      (Block List) Settings for MirrorMaker2 connector. (see below for nested schema)
+                      Settings for MirrorMaker2 connector.
                     items:
                       properties:
                         replicationFactor:
-                          description: Replication factor for topics created in target
-                            cluster
+                          description: |-
+                            (Number) Replication factor for topics created in target cluster.
+                            Replication factor for topics created in target cluster.
                           format: int64
                           type: integer
                         sourceCluster:
-                          description: Settings for source cluster. The structure
-                            is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Settings for source cluster. (see below for nested schema)
+                            Settings for source cluster.
                           items:
                             properties:
                               alias:
-                                description: Name of the cluster. Used also as a topic
-                                  prefix
+                                description: |-
+                                  (String) Name of the cluster. Used also as a topic prefix.
+                                  Name of the cluster. Used also as a topic prefix.
                                 type: string
                               externalCluster:
-                                description: Connection params for external cluster
+                                description: |-
+                                  (Block List) Connection settings for external cluster. (see below for nested schema)
+                                  Connection settings for external cluster.
                                 items:
                                   properties:
                                     bootstrapServers:
-                                      description: List of bootstrap servers to connect
-                                        to cluster
+                                      description: |-
+                                        (String) List of bootstrap servers to connect to cluster.
+                                        List of bootstrap servers to connect to cluster.
                                       type: string
                                     saslMechanism:
-                                      description: Type of SASL authentification mechanism
-                                        to use
+                                      description: |-
+                                        (String) Type of SASL authentification mechanism to use.
+                                        Type of SASL authentification mechanism to use.
                                       type: string
                                     saslUsername:
-                                      description: Username to use in SASL authentification
-                                        mechanism
+                                      description: |-
+                                        (String) Username to use in SASL authentification mechanism.
+                                        Username to use in SASL authentification mechanism.
                                       type: string
                                     securityProtocol:
-                                      description: Security protocol to use
+                                      description: |-
+                                        (String) Security protocol to use.
+                                        Security protocol to use.
                                       type: string
                                   type: object
                                 type: array
                               thisCluster:
-                                description: Using this section in the cluster definition
-                                  (source or target) means it's this cluster
+                                description: |-
+                                  (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+                                  Using this section in the cluster definition (source or target) means it's this cluster.
                                 items:
                                   type: object
                                 type: array
                             type: object
                           type: array
                         targetCluster:
-                          description: Settings for target cluster. The structure
-                            is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Settings for target cluster. (see below for nested schema)
+                            Settings for target cluster.
                           items:
                             properties:
                               alias:
-                                description: Name of the cluster. Used also as a topic
-                                  prefix
+                                description: |-
+                                  (String) Name of the cluster. Used also as a topic prefix.
+                                  Name of the cluster. Used also as a topic prefix.
                                 type: string
                               externalCluster:
-                                description: Connection params for external cluster
+                                description: |-
+                                  (Block List) Connection settings for external cluster. (see below for nested schema)
+                                  Connection settings for external cluster.
                                 items:
                                   properties:
                                     bootstrapServers:
-                                      description: List of bootstrap servers to connect
-                                        to cluster
+                                      description: |-
+                                        (String) List of bootstrap servers to connect to cluster.
+                                        List of bootstrap servers to connect to cluster.
                                       type: string
                                     saslMechanism:
-                                      description: Type of SASL authentification mechanism
-                                        to use
+                                      description: |-
+                                        (String) Type of SASL authentification mechanism to use.
+                                        Type of SASL authentification mechanism to use.
                                       type: string
                                     saslUsername:
-                                      description: Username to use in SASL authentification
-                                        mechanism
+                                      description: |-
+                                        (String) Username to use in SASL authentification mechanism.
+                                        Username to use in SASL authentification mechanism.
                                       type: string
                                     securityProtocol:
-                                      description: Security protocol to use
+                                      description: |-
+                                        (String) Security protocol to use.
+                                        Security protocol to use.
                                       type: string
                                   type: object
                                 type: array
                               thisCluster:
-                                description: Using this section in the cluster definition
-                                  (source or target) means it's this cluster
+                                description: |-
+                                  (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+                                  Using this section in the cluster definition (source or target) means it's this cluster.
                                 items:
                                   type: object
                                 type: array
                             type: object
                           type: array
                         topics:
-                          description: The pattern for topic names to be replicated.
+                          description: |-
+                            (String) The pattern for topic names to be replicated.
+                            The pattern for topic names to be replicated.
                           type: string
                       type: object
                     type: array
                   connectorConfigS3Sink:
-                    description: Params for S3 Sink connector. The structure is documented
-                      below.
+                    description: |-
+                      (Block List) Settings for S3 Sink connector. (see below for nested schema)
+                      Settings for S3 Sink connector.
                     items:
                       properties:
                         fileCompressionType:
-                          description: Сompression type for messages. Cannot be changed.
+                          description: |-
+                            (String) Compression type for messages. Cannot be changed.
+                            Compression type for messages. Cannot be changed.
                           type: string
                         fileMaxRecords:
-                          description: Max records per file.
+                          description: |-
+                            (Number) Max records per file.
+                            Max records per file.
                           format: int64
                           type: integer
                         s3Connection:
-                          description: Settings for connection to s3-compatible storage.
-                            The structure is documented below.
+                          description: |-
+                            compatible storage. (see below for nested schema)
+                            Settings for connection to s3-compatible storage.
                           items:
                             properties:
                               bucketName:
-                                description: Name of the bucket in s3-compatible storage.
+                                description: |-
+                                  compatible storage.
+                                  Name of the bucket in s3-compatible storage.
                                 type: string
                               externalS3:
-                                description: Connection params for external s3-compatible
-                                  storage. The structure is documented below.
+                                description: |-
+                                  compatible storage. (see below for nested schema)
+                                  Connection params for external s3-compatible storage.
                                 items:
                                   properties:
                                     accessKeyId:
-                                      description: ID of aws-compatible static key.
+                                      description: |-
+                                        compatible static key.
+                                        ID of aws-compatible static key.
                                       type: string
                                     endpoint:
-                                      description: URL of s3-compatible storage.
+                                      description: |-
+                                        compatible storage.
+                                        URL of s3-compatible storage.
                                       type: string
                                     region:
-                                      description: region of s3-compatible storage.
-                                        Available region list.
+                                      description: |-
+                                        compatible storage. Available region list.
+                                        Region of s3-compatible storage. [Available region list](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/regions/Regions.html).
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         topics:
-                          description: The pattern for topic names to be copied to
-                            s3 bucket.
+                          description: |-
+                            (String) The pattern for topic names to be replicated.
+                            The pattern for topic names to be copied to s3 bucket.
                           type: string
                       type: object
                     type: array
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   name:
-                    description: The name of the connector.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   properties:
                     additionalProperties:
                       type: string
-                    description: Additional properties for connector.
+                    description: |-
+                      (Map of String) Additional properties for connector.
+                      Additional properties for connector.
                     type: object
                     x-kubernetes-map-type: granular
                   tasksMax:
-                    description: The number of the connector's parallel working tasks.
-                      Default is the number of brokers
+                    description: |-
+                      (Number) The number of the connector's parallel working tasks. Default is the number of brokers.
+                      The number of the connector's parallel working tasks. Default is the number of brokers.
                     format: int64
                     type: integer
                 type: object

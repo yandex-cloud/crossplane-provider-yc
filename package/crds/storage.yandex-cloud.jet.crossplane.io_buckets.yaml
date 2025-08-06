@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Bucket is the Schema for the Buckets API. Allows management of
-          a Yandex.Cloud Storage Bucket.
+          a Yandex Cloud Storage Bucket.
         properties:
           apiVersion:
             description: |-
@@ -74,10 +74,9 @@ spec:
               forProvider:
                 properties:
                   accessKey:
-                    description: The access key to use when applying changes. This
-                      value can also be provided as storage_access_key specified in
-                      provider config (explicitly or within shared_credentials_file)
-                      is used.
+                    description: |-
+                      (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     type: string
                   accessKeyRef:
                     description: Reference to a ServiceAccountStaticAccessKey in iam
@@ -156,72 +155,98 @@ spec:
                         type: object
                     type: object
                   acl:
-                    description: The predefined ACL to apply. Defaults to private.
-                      Conflicts with grant.
+                    description: |-
+                      (String, Deprecated) The predefined ACL to apply. Defaults to private. Conflicts with grant.
+                      The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`. Conflicts with `grant`.
+
+                      ~> To change ACL after creation, service account with `storage.admin` role should be used, though this role is not necessary to create a bucket with any ACL.
                     type: string
                   anonymousAccessFlags:
-                    description: Provides various access to objects. See bucket availability
-                      for more infomation.
+                    description: |-
+                      (Block Set, Max: 1) Provides various access to objects. See Bucket Availability for more information. (see below for nested schema)
+                      Provides various access to objects. See [Bucket Availability](https://yandex.cloud/docs/storage/operations/buckets/bucket-availability) for more information.
                     items:
                       properties:
                         configRead:
-                          description: Allows to read objects in bucket anonymously.
+                          description: |-
+                            (Boolean) Allows to read bucket configuration anonymously.
+                            Allows to read bucket configuration anonymously.
                           type: boolean
                         list:
-                          description: Allows to list object in bucket anonymously.
+                          description: |-
+                            (Boolean) Allows to list object in bucket anonymously.
+                            Allows to list object in bucket anonymously.
                           type: boolean
                         read:
-                          description: Allows to read objects in bucket anonymously.
+                          description: |-
+                            (Boolean) Allows to read objects in bucket anonymously.
+                            Allows to read objects in bucket anonymously.
                           type: boolean
                       type: object
                     type: array
                   bucket:
-                    description: The name of the bucket.
+                    description: |-
+                      (String) The name of the bucket.
+                      The name of the bucket.
                     type: string
                   bucketPrefix:
-                    description: Creates a unique bucket name beginning with the specified
-                      prefix. Conflicts with bucket.
+                    description: |-
+                      (String) Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
+                      Creates a unique bucket name beginning with the specified prefix. Conflicts with `bucket`.
                     type: string
                   corsRule:
-                    description: A rule of Cross-Origin Resource Sharing (documented
-                      below).
+                    description: |-
+                      Origin Resource Sharing (CORS object). (see below for nested schema)
+                      A rule of [Cross-Origin Resource Sharing](https://yandex.cloud/docs/storage/concepts/cors) (CORS object).
                     items:
                       properties:
                         allowedHeaders:
-                          description: Specifies which headers are allowed.
+                          description: |-
+                            (List of String) Specifies which headers are allowed.
+                            Specifies which headers are allowed.
                           items:
                             type: string
                           type: array
                         allowedMethods:
-                          description: Specifies which methods are allowed. Can be
-                            GET, PUT, POST, DELETE or HEAD.
+                          description: |-
+                            (List of String) Specifies which methods are allowed. Can be GET, PUT, POST, DELETE or HEAD.
+                            Specifies which methods are allowed. Can be `GET`, `PUT`, `POST`, `DELETE` or `HEAD`.
                           items:
                             type: string
                           type: array
                         allowedOrigins:
-                          description: Specifies which origins are allowed.
+                          description: |-
+                            (List of String) Specifies which origins are allowed.
+                            Specifies which origins are allowed.
                           items:
                             type: string
                           type: array
                         exposeHeaders:
-                          description: Specifies expose header in the response.
+                          description: |-
+                            (List of String) Specifies expose header in the response.
+                            Specifies expose header in the response.
                           items:
                             type: string
                           type: array
                         maxAgeSeconds:
-                          description: Specifies time in seconds that browser can
-                            cache the response for a preflight request.
+                          description: |-
+                            (Number) Specifies time in seconds that browser can cache the response for a preflight request.
+                            Specifies time in seconds that browser can cache the response for a preflight request.
                           format: int64
                           type: integer
                       type: object
                     type: array
                   defaultStorageClass:
-                    description: 'Storage class which is used for storing objects
-                      by default. Available values are: "STANDARD", "COLD", "ICE".
-                      Default is "STANDARD". See storage class for more inforamtion.'
+                    description: |-
+                      (String) Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD". See Storage Class for more information.
+                      Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is `"STANDARD"`. See [Storage Class](https://yandex.cloud/docs/storage/concepts/storage-class) for more information.
                     type: string
                   folderId:
-                    description: Allow to create bucket in different folder.
+                    description: |-
+                      (String) Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
+                      Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
+
+                      ~> It will try to create bucket using `IAM-token`, not using `access keys`.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -300,17 +325,22 @@ spec:
                         type: object
                     type: object
                   forceDestroy:
-                    description: A boolean that indicates all objects should be deleted
-                      from the bucket so that the bucket can be destroyed without
-                      error. These objects are not recoverable.
+                    description: |-
+                      (Boolean) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable. Default is false.
+                      A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are *not* recoverable. Default is `false`.
                     type: boolean
                   grant:
-                    description: An ACL policy grant. Conflicts with acl.
+                    description: |-
+                      (Block Set, Deprecated) An ACL policy grant. Conflicts with acl.
+                      An [ACL policy grant](https://yandex.cloud/docs/storage/concepts/acl#permissions-types). Conflicts with `acl`.
+
+                      ~> To manage `grant` argument, service account with `storage.admin` role should be used.
                     items:
                       properties:
                         id:
-                          description: Canonical user id to grant for. Used only when
-                            type is CanonicalUser.
+                          description: |-
+                            (String) The ID of this resource.
+                            Canonical user id to grant for. Used only when type is `CanonicalUser`.
                           type: string
                         idRef:
                           description: Reference to a ServiceAccount in iam to populate
@@ -389,241 +419,288 @@ spec:
                               type: object
                           type: object
                         permissions:
-                          description: List of permissions to apply for grantee. Valid
-                            values are READ, WRITE, FULL_CONTROL.
+                          description: |-
+                            (Set of String) List of permissions to apply for grantee. Valid values are READ, WRITE, FULL_CONTROL.
+                            List of permissions to apply for grantee. Valid values are `READ`, `WRITE`, `FULL_CONTROL`.
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         type:
-                          description: Type of grantee to apply for. Valid values
-                            are CanonicalUser and Group.
+                          description: |-
+                            (String) Type of grantee to apply for. Valid values are CanonicalUser and Group.
+                            Type of grantee to apply for. Valid values are `CanonicalUser` and `Group`.
                           type: string
                         uri:
-                          description: Uri address to grant for. Used only when type
-                            is Group.
+                          description: |-
+                            (String) URI address to grant for. Used only when type is Group.
+                            URI address to grant for. Used only when type is Group.
                           type: string
                       type: object
                     type: array
                   https:
-                    description: Manages https certificates for bucket. See https
-                      for more infomation.
+                    description: |-
+                      (Block Set, Max: 1) Manages https certificates for bucket. See https for more information. (see below for nested schema)
+                      Manages https certificates for bucket. See [https](https://yandex.cloud/docs/storage/operations/hosting/certificate) for more information.
                     items:
                       properties:
                         certificateId:
-                          description: — Id of the certificate in Certificate Manager,
-                            that will be used for bucket.
+                          description: |-
+                            (String) Id of the certificate in Certificate Manager, that will be used for bucket.
+                            Id of the certificate in Certificate Manager, that will be used for bucket.
                           type: string
                       type: object
                     type: array
                   lifecycleRule:
-                    description: A configuration of object lifecycle management (documented
-                      below).
+                    description: |-
+                      (Block List) A configuration of object lifecycle management. (see below for nested schema)
+                      A configuration of [object lifecycle management](https://yandex.cloud/docs/storage/concepts/lifecycles).
                     items:
                       properties:
                         abortIncompleteMultipartUploadDays:
-                          description: Specifies the number of days after initiating
-                            a multipart upload when the multipart upload must be completed.
+                          description: |-
+                            (Number) Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
+                            Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
                           format: int64
                           type: integer
                         enabled:
-                          description: Enable versioning. Once you version-enable
-                            a bucket, it can never return to an unversioned state.
-                            You can, however, suspend versioning on that bucket.
+                          description: |-
+                            (Boolean) Specifies lifecycle rule status.
+                            Specifies lifecycle rule status.
                           type: boolean
                         expiration:
-                          description: Specifies a period in the object's expire (documented
-                            below).
+                          description: |-
+                            (Block List, Max: 1) Specifies a period in the object's expire. (see below for nested schema)
+                            Specifies a period in the object's expire.
                           items:
                             properties:
                               date:
-                                description: Specifies the date after which you want
-                                  the corresponding action to take effect.
+                                description: |-
+                                  (String) Specifies the date after which you want the corresponding action to take effect.
+                                  Specifies the date after which you want the corresponding action to take effect.
                                 type: string
                               days:
-                                description: Specifies a retention period in days
-                                  after uploading an object version. It must be a
-                                  positive integer. You can't set it simultaneously
-                                  with years.
+                                description: |-
+                                  (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                  Specifies the number of days after object creation when the specific rule action takes effect.
                                 format: int64
                                 type: integer
                               expiredObjectDeleteMarker:
-                                description: On a versioned bucket (versioning-enabled
-                                  or versioning-suspended bucket), you can add this
-                                  element in the lifecycle configuration to direct
-                                  Object Storage to delete expired object delete markers.
+                                description: |-
+                                  enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
+                                  n a versioned bucket (versioning-enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
                                 type: boolean
                             type: object
                           type: array
                         filter:
-                          description: 'Filter block identifies one or more objects
-                            to which the rule applies. A Filter must have exactly
-                            one of Prefix, Tag, or And specified. The filter supports
-                            the following options:'
+                          description: |-
+                            (Block List, Max: 1) Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
+                            Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
+
+                            At least one of `abort_incomplete_multipart_upload_days`, `expiration`, `transition`, `noncurrent_version_expiration`, `noncurrent_version_transition` must be specified.
                           items:
                             properties:
                               and:
-                                description: 'operator applied to one or more filter
-                                  parameters. It should be used when two or more of
-                                  the above parameters are used. It supports the following
-                                  parameters:'
+                                description: |-
+                                  (Block List, Max: 1) A logical and operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used. (see below for nested schema)
+                                  A logical `and` operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used.
                                 items:
                                   properties:
                                     objectSizeGreaterThan:
+                                      description: |-
+                                        (Number) Minimum object size to which the rule applies.
+                                        Minimum object size to which the rule applies.
                                       format: int64
                                       type: integer
                                     objectSizeLessThan:
+                                      description: |-
+                                        (Number) Maximum object size to which the rule applies.
+                                        Maximum object size to which the rule applies.
                                       format: int64
                                       type: integer
                                     prefix:
-                                      description: Object key prefix identifying one
-                                        or more objects to which the rule applies.
+                                      description: |-
+                                        (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+                                        Object key prefix identifying one or more objects to which the rule applies.
                                       type: string
                                     tags:
                                       additionalProperties:
                                         type: string
+                                      description: |-
+                                        (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+                                        The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
                                       type: object
                                       x-kubernetes-map-type: granular
                                   type: object
                                 type: array
                               objectSizeGreaterThan:
+                                description: |-
+                                  (Number) Minimum object size to which the rule applies.
+                                  Minimum object size to which the rule applies.
                                 format: int64
                                 type: integer
                               objectSizeLessThan:
+                                description: |-
+                                  (Number) Maximum object size to which the rule applies.
+                                  Maximum object size to which the rule applies.
                                 format: int64
                                 type: integer
                               prefix:
-                                description: Object key prefix identifying one or
-                                  more objects to which the rule applies.
+                                description: |-
+                                  (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+                                  Object key prefix identifying one or more objects to which the rule applies.
                                 type: string
                               tag:
+                                description: |-
+                                  (Block List, Max: 1) A key and value pair for filtering objects. E.g.: key=key1, value=value1. (see below for nested schema)
+                                  A key and value pair for filtering objects. E.g.: `key=key1, value=value1`.
                                 items:
                                   properties:
                                     key:
+                                      description: |-
+                                        (String) A key.
+                                        A key.
                                       type: string
                                     value:
+                                      description: |-
+                                        (String) A value.
+                                        A value.
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         id:
-                          description: Canonical user id to grant for. Used only when
-                            type is CanonicalUser.
+                          description: |-
+                            (String) The ID of this resource.
+                            Unique identifier for the rule. Must be less than or equal to 255 characters in length.
                           type: string
                         noncurrentVersionExpiration:
-                          description: Specifies when noncurrent object versions expire
-                            (documented below).
+                          description: |-
+                            (Block List, Max: 1) Specifies when noncurrent object versions expire. (see below for nested schema)
+                            Specifies when noncurrent object versions expire.
                           items:
                             properties:
                               days:
-                                description: Specifies a retention period in days
-                                  after uploading an object version. It must be a
-                                  positive integer. You can't set it simultaneously
-                                  with years.
+                                description: |-
+                                  (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                  Specifies the number of days noncurrent object versions expire.
                                 format: int64
                                 type: integer
                             type: object
                           type: array
                         noncurrentVersionTransition:
-                          description: Specifies when noncurrent object versions transitions
-                            (documented below).
+                          description: |-
+                            (Block Set) Specifies when noncurrent object versions transitions. (see below for nested schema)
+                            Specifies when noncurrent object versions transitions.
                           items:
                             properties:
                               days:
-                                description: Specifies a retention period in days
-                                  after uploading an object version. It must be a
-                                  positive integer. You can't set it simultaneously
-                                  with years.
+                                description: |-
+                                  (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                  Specifies the number of days noncurrent object versions transition.
                                 format: int64
                                 type: integer
                               storageClass:
-                                description: 'Specifies the storage class to which
-                                  you want the object to transition. Supported values:
-                                  [STANDARD_IA, COLD, ICE].'
+                                description: |-
+                                  (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
+                                  Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`].
                                 type: string
                             type: object
                           type: array
                         prefix:
-                          description: Object key prefix identifying one or more objects
-                            to which the rule applies.
+                          description: |-
+                            (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+                            Object key prefix identifying one or more objects to which the rule applies.
                           type: string
                         transition:
-                          description: Specifies a period in the object's transitions
-                            (documented below).
+                          description: |-
+                            (Block Set) Specifies a period in the object's transitions. (see below for nested schema)
+                            Specifies a period in the object's transitions.
                           items:
                             properties:
                               date:
-                                description: Specifies the date after which you want
-                                  the corresponding action to take effect.
+                                description: |-
+                                  (String) Specifies the date after which you want the corresponding action to take effect.
+                                  Specifies the date after which you want the corresponding action to take effect.
                                 type: string
                               days:
-                                description: Specifies a retention period in days
-                                  after uploading an object version. It must be a
-                                  positive integer. You can't set it simultaneously
-                                  with years.
+                                description: |-
+                                  (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                  Specifies the number of days after object creation when the specific rule action takes effect.
                                 format: int64
                                 type: integer
                               storageClass:
-                                description: 'Specifies the storage class to which
-                                  you want the object to transition. Supported values:
-                                  [STANDARD_IA, COLD, ICE].'
+                                description: |-
+                                  (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
+                                  Specifies the storage class to which you want the object to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`].
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   logging:
-                    description: A settings of bucket logging (documented below).
+                    description: |-
+                      (Block Set) A settings of bucket logging. (see below for nested schema)
+                      A settings of [bucket logging](https://yandex.cloud/docs/storage/concepts/server-logs).
                     items:
                       properties:
                         targetBucket:
-                          description: The name of the bucket that will receive the
-                            log objects.
+                          description: |-
+                            (String) The name of the bucket that will receive the log objects.
+                            The name of the bucket that will receive the log objects.
                           type: string
                         targetPrefix:
-                          description: To specify a key prefix for log objects.
+                          description: |-
+                            (String) To specify a key prefix for log objects.
+                            To specify a key prefix for log objects.
                           type: string
                       type: object
                     type: array
                   maxSize:
-                    description: The size of bucket, in bytes. See size limiting for
-                      more information.
+                    description: |-
+                      (Number) The size of bucket, in bytes. See Size Limiting for more information.
+                      The size of bucket, in bytes. See [Size Limiting](https://yandex.cloud/docs/storage/operations/buckets/limit-max-volume) for more information.
                     format: int64
                     type: integer
                   objectLockConfiguration:
-                    description: A configuration of object lock management (documented
-                      below).
+                    description: |-
+                      (Block List, Max: 1) A configuration of object lock management. (see below for nested schema)
+                      A configuration of [object lock management](https://yandex.cloud/docs/storage/concepts/object-lock).
                     items:
                       properties:
                         objectLockEnabled:
-                          description: Enable object locking in a bucket. Require
-                            versioning to be enabled.
+                          description: |-
+                            (String) Enable object locking in a bucket. Require versioning to be enabled.
+                            Enable object locking in a bucket. Require versioning to be enabled.
                           type: string
                         rule:
-                          description: Specifies a default locking configuration for
-                            added objects. Require object_lock_enabled to be enabled.
+                          description: |-
+                            (Block List, Max: 1) Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled. (see below for nested schema)
+                            Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
                           items:
                             properties:
                               defaultRetention:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Default retention object. (see below for nested schema)
+                                  Default retention object.
                                 items:
                                   properties:
                                     days:
-                                      description: Specifies a retention period in
-                                        days after uploading an object version. It
-                                        must be a positive integer. You can't set
-                                        it simultaneously with years.
+                                      description: |-
+                                        (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                        Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with `years`.
                                       format: int64
                                       type: integer
                                     mode:
-                                      description: Specifies a type of object lock.
-                                        One of ["GOVERNANCE", "COMPLIANCE"].
+                                      description: |-
+                                        (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
+                                        Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`.
                                       type: string
                                     years:
-                                      description: Specifies a retention period in
-                                        years after uploading an object version. It
-                                        must be a positive integer. You can't set
-                                        it simultaneously with days.
+                                      description: |-
+                                        (Number) Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
+                                        Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with `days`.
                                       format: int64
                                       type: integer
                                   type: object
@@ -633,12 +710,14 @@ spec:
                       type: object
                     type: array
                   policy:
+                    description: |-
+                      (String, Deprecated) The policy object should contain the only field with the text of the policy. See policy documentation for more information on policy format.
+                      The `policy` object should contain the only field with the text of the policy. See [policy documentation](https://yandex.cloud/docs/storage/concepts/policy) for more information on policy format.
                     type: string
                   secretKeySecretRef:
-                    description: The secret key to use when applying changes. This
-                      value can also be provided as storage_secret_key specified in
-                      provider config (explicitly or within shared_credentials_file)
-                      is used.
+                    description: |-
+                      (String, Sensitive) The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      The secret key to use when applying changes. This value can also be provided as `storage_secret_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     properties:
                       key:
                         description: The key to select.
@@ -655,27 +734,32 @@ spec:
                     - namespace
                     type: object
                   serverSideEncryptionConfiguration:
-                    description: A configuration of server-side encryption for the
-                      bucket (documented below)
+                    description: |-
+                      side encryption for the bucket. (see below for nested schema)
+                      A configuration of server-side encryption for the bucket.
                     items:
                       properties:
                         rule:
-                          description: Specifies a default locking configuration for
-                            added objects. Require object_lock_enabled to be enabled.
+                          description: |-
+                            (Block List, Max: 1) Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled. (see below for nested schema)
+                            A single object for server-side encryption by default configuration.
                           items:
                             properties:
                               applyServerSideEncryptionByDefault:
-                                description: A single object for setting server-side
-                                  encryption by default. (documented below)
+                                description: |-
+                                  side encryption by default. (see below for nested schema)
+                                  A single object for setting server-side encryption by default.
                                 items:
                                   properties:
                                     kmsMasterKeyId:
-                                      description: The KMS master key ID used for
-                                        the SSE-KMS encryption.
+                                      description: |-
+                                        KMS encryption.
+                                        The KMS master key ID used for the SSE-KMS encryption.
                                       type: string
                                     sseAlgorithm:
-                                      description: The server-side encryption algorithm
-                                        to use. Single valid value is aws:kms
+                                      description: |-
+                                        side encryption algorithm to use. Single valid value is aws:kms.
+                                        The server-side encryption algorithm to use. Single valid value is `aws:kms`.
                                       type: string
                                   type: object
                                 type: array
@@ -686,52 +770,63 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
+                    description: |-
+                      (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+                      The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
                     type: object
                     x-kubernetes-map-type: granular
                   versioning:
-                    description: A state of versioning (documented below)
+                    description: |-
+                      (Block List, Max: 1) A state of versioning.
+                      A state of [versioning](https://yandex.cloud/docs/storage/concepts/versioning).
+
+                      ~> To manage `versioning` argument, service account with `storage.admin` role should be used.
                     items:
                       properties:
                         enabled:
-                          description: Enable versioning. Once you version-enable
-                            a bucket, it can never return to an unversioned state.
-                            You can, however, suspend versioning on that bucket.
+                          description: |-
+                            (Boolean) Specifies lifecycle rule status.
+                            Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
                           type: boolean
                       type: object
                     type: array
                   website:
-                    description: A website object (documented below).
+                    description: |-
+                      (Block List, Max: 1) A Website Object (see below for nested schema)
+                      A [Website Object](https://yandex.cloud/docs/storage/concepts/hosting)
                     items:
                       properties:
                         errorDocument:
-                          description: An absolute path to the document to return
-                            in case of a 4XX error.
+                          description: |-
+                            (String) An absolute path to the document to return in case of a 4XX error.
+                            An absolute path to the document to return in case of a 4XX error.
                           type: string
                         indexDocument:
-                          description: Storage returns this index document when requests
-                            are made to the root domain or any of the subfolders.
+                          description: |-
+                            (String) Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using redirect_all_requests_to).
+                            Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using `redirect_all_requests_to`).
                           type: string
                         redirectAllRequestsTo:
-                          description: A hostname to redirect all website requests
-                            for this bucket to. Hostname can optionally be prefixed
-                            with a protocol (http:// or https://) to use when redirecting
-                            requests. The default is the protocol that is used in
-                            the original request.
+                          description: |-
+                            (String) A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (http:// or https://) to use when redirecting requests. The default is the protocol that is used in the original request.
+                            A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (`http://` or `https://`) to use when redirecting requests. The default is the protocol that is used in the original request.
                           type: string
                         routingRules:
-                          description: A json array containing routing rules describing
-                            redirect behavior and when redirects are applied.
+                          description: |-
+                            (String) A JSON array containing routing rules describing redirect behavior and when redirects are applied.
+                            A JSON array containing [routing rules](https://yandex.cloud/docs/storage/s3/api-ref/hosting/upload#request-scheme) describing redirect behavior and when redirects are applied.
                           type: string
                       type: object
                     type: array
                   websiteDomain:
-                    description: The domain of the website endpoint, if the bucket
-                      is configured with a website. If not, this will be an empty
-                      string.
+                    description: |-
+                      (String) The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+                      The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
                     type: string
                   websiteEndpoint:
-                    description: The website endpoint, if the bucket is configured
-                      with a website. If not, this will be an empty string.
+                    description: |-
+                      (String) The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+                      The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
                     type: string
                 type: object
               initProvider:
@@ -748,10 +843,9 @@ spec:
                   autoscaler.
                 properties:
                   accessKey:
-                    description: The access key to use when applying changes. This
-                      value can also be provided as storage_access_key specified in
-                      provider config (explicitly or within shared_credentials_file)
-                      is used.
+                    description: |-
+                      (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     type: string
                   accessKeyRef:
                     description: Reference to a ServiceAccountStaticAccessKey in iam
@@ -830,72 +924,98 @@ spec:
                         type: object
                     type: object
                   acl:
-                    description: The predefined ACL to apply. Defaults to private.
-                      Conflicts with grant.
+                    description: |-
+                      (String, Deprecated) The predefined ACL to apply. Defaults to private. Conflicts with grant.
+                      The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`. Conflicts with `grant`.
+
+                      ~> To change ACL after creation, service account with `storage.admin` role should be used, though this role is not necessary to create a bucket with any ACL.
                     type: string
                   anonymousAccessFlags:
-                    description: Provides various access to objects. See bucket availability
-                      for more infomation.
+                    description: |-
+                      (Block Set, Max: 1) Provides various access to objects. See Bucket Availability for more information. (see below for nested schema)
+                      Provides various access to objects. See [Bucket Availability](https://yandex.cloud/docs/storage/operations/buckets/bucket-availability) for more information.
                     items:
                       properties:
                         configRead:
-                          description: Allows to read objects in bucket anonymously.
+                          description: |-
+                            (Boolean) Allows to read bucket configuration anonymously.
+                            Allows to read bucket configuration anonymously.
                           type: boolean
                         list:
-                          description: Allows to list object in bucket anonymously.
+                          description: |-
+                            (Boolean) Allows to list object in bucket anonymously.
+                            Allows to list object in bucket anonymously.
                           type: boolean
                         read:
-                          description: Allows to read objects in bucket anonymously.
+                          description: |-
+                            (Boolean) Allows to read objects in bucket anonymously.
+                            Allows to read objects in bucket anonymously.
                           type: boolean
                       type: object
                     type: array
                   bucket:
-                    description: The name of the bucket.
+                    description: |-
+                      (String) The name of the bucket.
+                      The name of the bucket.
                     type: string
                   bucketPrefix:
-                    description: Creates a unique bucket name beginning with the specified
-                      prefix. Conflicts with bucket.
+                    description: |-
+                      (String) Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
+                      Creates a unique bucket name beginning with the specified prefix. Conflicts with `bucket`.
                     type: string
                   corsRule:
-                    description: A rule of Cross-Origin Resource Sharing (documented
-                      below).
+                    description: |-
+                      Origin Resource Sharing (CORS object). (see below for nested schema)
+                      A rule of [Cross-Origin Resource Sharing](https://yandex.cloud/docs/storage/concepts/cors) (CORS object).
                     items:
                       properties:
                         allowedHeaders:
-                          description: Specifies which headers are allowed.
+                          description: |-
+                            (List of String) Specifies which headers are allowed.
+                            Specifies which headers are allowed.
                           items:
                             type: string
                           type: array
                         allowedMethods:
-                          description: Specifies which methods are allowed. Can be
-                            GET, PUT, POST, DELETE or HEAD.
+                          description: |-
+                            (List of String) Specifies which methods are allowed. Can be GET, PUT, POST, DELETE or HEAD.
+                            Specifies which methods are allowed. Can be `GET`, `PUT`, `POST`, `DELETE` or `HEAD`.
                           items:
                             type: string
                           type: array
                         allowedOrigins:
-                          description: Specifies which origins are allowed.
+                          description: |-
+                            (List of String) Specifies which origins are allowed.
+                            Specifies which origins are allowed.
                           items:
                             type: string
                           type: array
                         exposeHeaders:
-                          description: Specifies expose header in the response.
+                          description: |-
+                            (List of String) Specifies expose header in the response.
+                            Specifies expose header in the response.
                           items:
                             type: string
                           type: array
                         maxAgeSeconds:
-                          description: Specifies time in seconds that browser can
-                            cache the response for a preflight request.
+                          description: |-
+                            (Number) Specifies time in seconds that browser can cache the response for a preflight request.
+                            Specifies time in seconds that browser can cache the response for a preflight request.
                           format: int64
                           type: integer
                       type: object
                     type: array
                   defaultStorageClass:
-                    description: 'Storage class which is used for storing objects
-                      by default. Available values are: "STANDARD", "COLD", "ICE".
-                      Default is "STANDARD". See storage class for more inforamtion.'
+                    description: |-
+                      (String) Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD". See Storage Class for more information.
+                      Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is `"STANDARD"`. See [Storage Class](https://yandex.cloud/docs/storage/concepts/storage-class) for more information.
                     type: string
                   folderId:
-                    description: Allow to create bucket in different folder.
+                    description: |-
+                      (String) Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
+                      Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
+
+                      ~> It will try to create bucket using `IAM-token`, not using `access keys`.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -974,17 +1094,22 @@ spec:
                         type: object
                     type: object
                   forceDestroy:
-                    description: A boolean that indicates all objects should be deleted
-                      from the bucket so that the bucket can be destroyed without
-                      error. These objects are not recoverable.
+                    description: |-
+                      (Boolean) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable. Default is false.
+                      A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are *not* recoverable. Default is `false`.
                     type: boolean
                   grant:
-                    description: An ACL policy grant. Conflicts with acl.
+                    description: |-
+                      (Block Set, Deprecated) An ACL policy grant. Conflicts with acl.
+                      An [ACL policy grant](https://yandex.cloud/docs/storage/concepts/acl#permissions-types). Conflicts with `acl`.
+
+                      ~> To manage `grant` argument, service account with `storage.admin` role should be used.
                     items:
                       properties:
                         id:
-                          description: Canonical user id to grant for. Used only when
-                            type is CanonicalUser.
+                          description: |-
+                            (String) The ID of this resource.
+                            Canonical user id to grant for. Used only when type is `CanonicalUser`.
                           type: string
                         idRef:
                           description: Reference to a ServiceAccount in iam to populate
@@ -1063,241 +1188,288 @@ spec:
                               type: object
                           type: object
                         permissions:
-                          description: List of permissions to apply for grantee. Valid
-                            values are READ, WRITE, FULL_CONTROL.
+                          description: |-
+                            (Set of String) List of permissions to apply for grantee. Valid values are READ, WRITE, FULL_CONTROL.
+                            List of permissions to apply for grantee. Valid values are `READ`, `WRITE`, `FULL_CONTROL`.
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         type:
-                          description: Type of grantee to apply for. Valid values
-                            are CanonicalUser and Group.
+                          description: |-
+                            (String) Type of grantee to apply for. Valid values are CanonicalUser and Group.
+                            Type of grantee to apply for. Valid values are `CanonicalUser` and `Group`.
                           type: string
                         uri:
-                          description: Uri address to grant for. Used only when type
-                            is Group.
+                          description: |-
+                            (String) URI address to grant for. Used only when type is Group.
+                            URI address to grant for. Used only when type is Group.
                           type: string
                       type: object
                     type: array
                   https:
-                    description: Manages https certificates for bucket. See https
-                      for more infomation.
+                    description: |-
+                      (Block Set, Max: 1) Manages https certificates for bucket. See https for more information. (see below for nested schema)
+                      Manages https certificates for bucket. See [https](https://yandex.cloud/docs/storage/operations/hosting/certificate) for more information.
                     items:
                       properties:
                         certificateId:
-                          description: — Id of the certificate in Certificate Manager,
-                            that will be used for bucket.
+                          description: |-
+                            (String) Id of the certificate in Certificate Manager, that will be used for bucket.
+                            Id of the certificate in Certificate Manager, that will be used for bucket.
                           type: string
                       type: object
                     type: array
                   lifecycleRule:
-                    description: A configuration of object lifecycle management (documented
-                      below).
+                    description: |-
+                      (Block List) A configuration of object lifecycle management. (see below for nested schema)
+                      A configuration of [object lifecycle management](https://yandex.cloud/docs/storage/concepts/lifecycles).
                     items:
                       properties:
                         abortIncompleteMultipartUploadDays:
-                          description: Specifies the number of days after initiating
-                            a multipart upload when the multipart upload must be completed.
+                          description: |-
+                            (Number) Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
+                            Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
                           format: int64
                           type: integer
                         enabled:
-                          description: Enable versioning. Once you version-enable
-                            a bucket, it can never return to an unversioned state.
-                            You can, however, suspend versioning on that bucket.
+                          description: |-
+                            (Boolean) Specifies lifecycle rule status.
+                            Specifies lifecycle rule status.
                           type: boolean
                         expiration:
-                          description: Specifies a period in the object's expire (documented
-                            below).
+                          description: |-
+                            (Block List, Max: 1) Specifies a period in the object's expire. (see below for nested schema)
+                            Specifies a period in the object's expire.
                           items:
                             properties:
                               date:
-                                description: Specifies the date after which you want
-                                  the corresponding action to take effect.
+                                description: |-
+                                  (String) Specifies the date after which you want the corresponding action to take effect.
+                                  Specifies the date after which you want the corresponding action to take effect.
                                 type: string
                               days:
-                                description: Specifies a retention period in days
-                                  after uploading an object version. It must be a
-                                  positive integer. You can't set it simultaneously
-                                  with years.
+                                description: |-
+                                  (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                  Specifies the number of days after object creation when the specific rule action takes effect.
                                 format: int64
                                 type: integer
                               expiredObjectDeleteMarker:
-                                description: On a versioned bucket (versioning-enabled
-                                  or versioning-suspended bucket), you can add this
-                                  element in the lifecycle configuration to direct
-                                  Object Storage to delete expired object delete markers.
+                                description: |-
+                                  enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
+                                  n a versioned bucket (versioning-enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
                                 type: boolean
                             type: object
                           type: array
                         filter:
-                          description: 'Filter block identifies one or more objects
-                            to which the rule applies. A Filter must have exactly
-                            one of Prefix, Tag, or And specified. The filter supports
-                            the following options:'
+                          description: |-
+                            (Block List, Max: 1) Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
+                            Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
+
+                            At least one of `abort_incomplete_multipart_upload_days`, `expiration`, `transition`, `noncurrent_version_expiration`, `noncurrent_version_transition` must be specified.
                           items:
                             properties:
                               and:
-                                description: 'operator applied to one or more filter
-                                  parameters. It should be used when two or more of
-                                  the above parameters are used. It supports the following
-                                  parameters:'
+                                description: |-
+                                  (Block List, Max: 1) A logical and operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used. (see below for nested schema)
+                                  A logical `and` operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used.
                                 items:
                                   properties:
                                     objectSizeGreaterThan:
+                                      description: |-
+                                        (Number) Minimum object size to which the rule applies.
+                                        Minimum object size to which the rule applies.
                                       format: int64
                                       type: integer
                                     objectSizeLessThan:
+                                      description: |-
+                                        (Number) Maximum object size to which the rule applies.
+                                        Maximum object size to which the rule applies.
                                       format: int64
                                       type: integer
                                     prefix:
-                                      description: Object key prefix identifying one
-                                        or more objects to which the rule applies.
+                                      description: |-
+                                        (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+                                        Object key prefix identifying one or more objects to which the rule applies.
                                       type: string
                                     tags:
                                       additionalProperties:
                                         type: string
+                                      description: |-
+                                        (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+                                        The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
                                       type: object
                                       x-kubernetes-map-type: granular
                                   type: object
                                 type: array
                               objectSizeGreaterThan:
+                                description: |-
+                                  (Number) Minimum object size to which the rule applies.
+                                  Minimum object size to which the rule applies.
                                 format: int64
                                 type: integer
                               objectSizeLessThan:
+                                description: |-
+                                  (Number) Maximum object size to which the rule applies.
+                                  Maximum object size to which the rule applies.
                                 format: int64
                                 type: integer
                               prefix:
-                                description: Object key prefix identifying one or
-                                  more objects to which the rule applies.
+                                description: |-
+                                  (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+                                  Object key prefix identifying one or more objects to which the rule applies.
                                 type: string
                               tag:
+                                description: |-
+                                  (Block List, Max: 1) A key and value pair for filtering objects. E.g.: key=key1, value=value1. (see below for nested schema)
+                                  A key and value pair for filtering objects. E.g.: `key=key1, value=value1`.
                                 items:
                                   properties:
                                     key:
+                                      description: |-
+                                        (String) A key.
+                                        A key.
                                       type: string
                                     value:
+                                      description: |-
+                                        (String) A value.
+                                        A value.
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         id:
-                          description: Canonical user id to grant for. Used only when
-                            type is CanonicalUser.
+                          description: |-
+                            (String) The ID of this resource.
+                            Unique identifier for the rule. Must be less than or equal to 255 characters in length.
                           type: string
                         noncurrentVersionExpiration:
-                          description: Specifies when noncurrent object versions expire
-                            (documented below).
+                          description: |-
+                            (Block List, Max: 1) Specifies when noncurrent object versions expire. (see below for nested schema)
+                            Specifies when noncurrent object versions expire.
                           items:
                             properties:
                               days:
-                                description: Specifies a retention period in days
-                                  after uploading an object version. It must be a
-                                  positive integer. You can't set it simultaneously
-                                  with years.
+                                description: |-
+                                  (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                  Specifies the number of days noncurrent object versions expire.
                                 format: int64
                                 type: integer
                             type: object
                           type: array
                         noncurrentVersionTransition:
-                          description: Specifies when noncurrent object versions transitions
-                            (documented below).
+                          description: |-
+                            (Block Set) Specifies when noncurrent object versions transitions. (see below for nested schema)
+                            Specifies when noncurrent object versions transitions.
                           items:
                             properties:
                               days:
-                                description: Specifies a retention period in days
-                                  after uploading an object version. It must be a
-                                  positive integer. You can't set it simultaneously
-                                  with years.
+                                description: |-
+                                  (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                  Specifies the number of days noncurrent object versions transition.
                                 format: int64
                                 type: integer
                               storageClass:
-                                description: 'Specifies the storage class to which
-                                  you want the object to transition. Supported values:
-                                  [STANDARD_IA, COLD, ICE].'
+                                description: |-
+                                  (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
+                                  Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`].
                                 type: string
                             type: object
                           type: array
                         prefix:
-                          description: Object key prefix identifying one or more objects
-                            to which the rule applies.
+                          description: |-
+                            (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+                            Object key prefix identifying one or more objects to which the rule applies.
                           type: string
                         transition:
-                          description: Specifies a period in the object's transitions
-                            (documented below).
+                          description: |-
+                            (Block Set) Specifies a period in the object's transitions. (see below for nested schema)
+                            Specifies a period in the object's transitions.
                           items:
                             properties:
                               date:
-                                description: Specifies the date after which you want
-                                  the corresponding action to take effect.
+                                description: |-
+                                  (String) Specifies the date after which you want the corresponding action to take effect.
+                                  Specifies the date after which you want the corresponding action to take effect.
                                 type: string
                               days:
-                                description: Specifies a retention period in days
-                                  after uploading an object version. It must be a
-                                  positive integer. You can't set it simultaneously
-                                  with years.
+                                description: |-
+                                  (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                  Specifies the number of days after object creation when the specific rule action takes effect.
                                 format: int64
                                 type: integer
                               storageClass:
-                                description: 'Specifies the storage class to which
-                                  you want the object to transition. Supported values:
-                                  [STANDARD_IA, COLD, ICE].'
+                                description: |-
+                                  (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
+                                  Specifies the storage class to which you want the object to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`].
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   logging:
-                    description: A settings of bucket logging (documented below).
+                    description: |-
+                      (Block Set) A settings of bucket logging. (see below for nested schema)
+                      A settings of [bucket logging](https://yandex.cloud/docs/storage/concepts/server-logs).
                     items:
                       properties:
                         targetBucket:
-                          description: The name of the bucket that will receive the
-                            log objects.
+                          description: |-
+                            (String) The name of the bucket that will receive the log objects.
+                            The name of the bucket that will receive the log objects.
                           type: string
                         targetPrefix:
-                          description: To specify a key prefix for log objects.
+                          description: |-
+                            (String) To specify a key prefix for log objects.
+                            To specify a key prefix for log objects.
                           type: string
                       type: object
                     type: array
                   maxSize:
-                    description: The size of bucket, in bytes. See size limiting for
-                      more information.
+                    description: |-
+                      (Number) The size of bucket, in bytes. See Size Limiting for more information.
+                      The size of bucket, in bytes. See [Size Limiting](https://yandex.cloud/docs/storage/operations/buckets/limit-max-volume) for more information.
                     format: int64
                     type: integer
                   objectLockConfiguration:
-                    description: A configuration of object lock management (documented
-                      below).
+                    description: |-
+                      (Block List, Max: 1) A configuration of object lock management. (see below for nested schema)
+                      A configuration of [object lock management](https://yandex.cloud/docs/storage/concepts/object-lock).
                     items:
                       properties:
                         objectLockEnabled:
-                          description: Enable object locking in a bucket. Require
-                            versioning to be enabled.
+                          description: |-
+                            (String) Enable object locking in a bucket. Require versioning to be enabled.
+                            Enable object locking in a bucket. Require versioning to be enabled.
                           type: string
                         rule:
-                          description: Specifies a default locking configuration for
-                            added objects. Require object_lock_enabled to be enabled.
+                          description: |-
+                            (Block List, Max: 1) Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled. (see below for nested schema)
+                            Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
                           items:
                             properties:
                               defaultRetention:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Default retention object. (see below for nested schema)
+                                  Default retention object.
                                 items:
                                   properties:
                                     days:
-                                      description: Specifies a retention period in
-                                        days after uploading an object version. It
-                                        must be a positive integer. You can't set
-                                        it simultaneously with years.
+                                      description: |-
+                                        (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                        Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with `years`.
                                       format: int64
                                       type: integer
                                     mode:
-                                      description: Specifies a type of object lock.
-                                        One of ["GOVERNANCE", "COMPLIANCE"].
+                                      description: |-
+                                        (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
+                                        Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`.
                                       type: string
                                     years:
-                                      description: Specifies a retention period in
-                                        years after uploading an object version. It
-                                        must be a positive integer. You can't set
-                                        it simultaneously with days.
+                                      description: |-
+                                        (Number) Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
+                                        Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with `days`.
                                       format: int64
                                       type: integer
                                   type: object
@@ -1307,12 +1479,14 @@ spec:
                       type: object
                     type: array
                   policy:
+                    description: |-
+                      (String, Deprecated) The policy object should contain the only field with the text of the policy. See policy documentation for more information on policy format.
+                      The `policy` object should contain the only field with the text of the policy. See [policy documentation](https://yandex.cloud/docs/storage/concepts/policy) for more information on policy format.
                     type: string
                   secretKeySecretRef:
-                    description: The secret key to use when applying changes. This
-                      value can also be provided as storage_secret_key specified in
-                      provider config (explicitly or within shared_credentials_file)
-                      is used.
+                    description: |-
+                      (String, Sensitive) The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      The secret key to use when applying changes. This value can also be provided as `storage_secret_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     properties:
                       key:
                         description: The key to select.
@@ -1329,27 +1503,32 @@ spec:
                     - namespace
                     type: object
                   serverSideEncryptionConfiguration:
-                    description: A configuration of server-side encryption for the
-                      bucket (documented below)
+                    description: |-
+                      side encryption for the bucket. (see below for nested schema)
+                      A configuration of server-side encryption for the bucket.
                     items:
                       properties:
                         rule:
-                          description: Specifies a default locking configuration for
-                            added objects. Require object_lock_enabled to be enabled.
+                          description: |-
+                            (Block List, Max: 1) Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled. (see below for nested schema)
+                            A single object for server-side encryption by default configuration.
                           items:
                             properties:
                               applyServerSideEncryptionByDefault:
-                                description: A single object for setting server-side
-                                  encryption by default. (documented below)
+                                description: |-
+                                  side encryption by default. (see below for nested schema)
+                                  A single object for setting server-side encryption by default.
                                 items:
                                   properties:
                                     kmsMasterKeyId:
-                                      description: The KMS master key ID used for
-                                        the SSE-KMS encryption.
+                                      description: |-
+                                        KMS encryption.
+                                        The KMS master key ID used for the SSE-KMS encryption.
                                       type: string
                                     sseAlgorithm:
-                                      description: The server-side encryption algorithm
-                                        to use. Single valid value is aws:kms
+                                      description: |-
+                                        side encryption algorithm to use. Single valid value is aws:kms.
+                                        The server-side encryption algorithm to use. Single valid value is `aws:kms`.
                                       type: string
                                   type: object
                                 type: array
@@ -1360,52 +1539,63 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
+                    description: |-
+                      (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+                      The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
                     type: object
                     x-kubernetes-map-type: granular
                   versioning:
-                    description: A state of versioning (documented below)
+                    description: |-
+                      (Block List, Max: 1) A state of versioning.
+                      A state of [versioning](https://yandex.cloud/docs/storage/concepts/versioning).
+
+                      ~> To manage `versioning` argument, service account with `storage.admin` role should be used.
                     items:
                       properties:
                         enabled:
-                          description: Enable versioning. Once you version-enable
-                            a bucket, it can never return to an unversioned state.
-                            You can, however, suspend versioning on that bucket.
+                          description: |-
+                            (Boolean) Specifies lifecycle rule status.
+                            Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
                           type: boolean
                       type: object
                     type: array
                   website:
-                    description: A website object (documented below).
+                    description: |-
+                      (Block List, Max: 1) A Website Object (see below for nested schema)
+                      A [Website Object](https://yandex.cloud/docs/storage/concepts/hosting)
                     items:
                       properties:
                         errorDocument:
-                          description: An absolute path to the document to return
-                            in case of a 4XX error.
+                          description: |-
+                            (String) An absolute path to the document to return in case of a 4XX error.
+                            An absolute path to the document to return in case of a 4XX error.
                           type: string
                         indexDocument:
-                          description: Storage returns this index document when requests
-                            are made to the root domain or any of the subfolders.
+                          description: |-
+                            (String) Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using redirect_all_requests_to).
+                            Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using `redirect_all_requests_to`).
                           type: string
                         redirectAllRequestsTo:
-                          description: A hostname to redirect all website requests
-                            for this bucket to. Hostname can optionally be prefixed
-                            with a protocol (http:// or https://) to use when redirecting
-                            requests. The default is the protocol that is used in
-                            the original request.
+                          description: |-
+                            (String) A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (http:// or https://) to use when redirecting requests. The default is the protocol that is used in the original request.
+                            A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (`http://` or `https://`) to use when redirecting requests. The default is the protocol that is used in the original request.
                           type: string
                         routingRules:
-                          description: A json array containing routing rules describing
-                            redirect behavior and when redirects are applied.
+                          description: |-
+                            (String) A JSON array containing routing rules describing redirect behavior and when redirects are applied.
+                            A JSON array containing [routing rules](https://yandex.cloud/docs/storage/s3/api-ref/hosting/upload#request-scheme) describing redirect behavior and when redirects are applied.
                           type: string
                       type: object
                     type: array
                   websiteDomain:
-                    description: The domain of the website endpoint, if the bucket
-                      is configured with a website. If not, this will be an empty
-                      string.
+                    description: |-
+                      (String) The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+                      The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
                     type: string
                   websiteEndpoint:
-                    description: The website endpoint, if the bucket is configured
-                      with a website. If not, this will be an empty string.
+                    description: |-
+                      (String) The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+                      The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
                     type: string
                 type: object
               managementPolicies:
@@ -1581,335 +1771,413 @@ spec:
               atProvider:
                 properties:
                   accessKey:
-                    description: The access key to use when applying changes. This
-                      value can also be provided as storage_access_key specified in
-                      provider config (explicitly or within shared_credentials_file)
-                      is used.
+                    description: |-
+                      (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     type: string
                   acl:
-                    description: The predefined ACL to apply. Defaults to private.
-                      Conflicts with grant.
+                    description: |-
+                      (String, Deprecated) The predefined ACL to apply. Defaults to private. Conflicts with grant.
+                      The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`. Conflicts with `grant`.
+
+                      ~> To change ACL after creation, service account with `storage.admin` role should be used, though this role is not necessary to create a bucket with any ACL.
                     type: string
                   anonymousAccessFlags:
-                    description: Provides various access to objects. See bucket availability
-                      for more infomation.
+                    description: |-
+                      (Block Set, Max: 1) Provides various access to objects. See Bucket Availability for more information. (see below for nested schema)
+                      Provides various access to objects. See [Bucket Availability](https://yandex.cloud/docs/storage/operations/buckets/bucket-availability) for more information.
                     items:
                       properties:
                         configRead:
-                          description: Allows to read objects in bucket anonymously.
+                          description: |-
+                            (Boolean) Allows to read bucket configuration anonymously.
+                            Allows to read bucket configuration anonymously.
                           type: boolean
                         list:
-                          description: Allows to list object in bucket anonymously.
+                          description: |-
+                            (Boolean) Allows to list object in bucket anonymously.
+                            Allows to list object in bucket anonymously.
                           type: boolean
                         read:
-                          description: Allows to read objects in bucket anonymously.
+                          description: |-
+                            (Boolean) Allows to read objects in bucket anonymously.
+                            Allows to read objects in bucket anonymously.
                           type: boolean
                       type: object
                     type: array
                   bucket:
-                    description: The name of the bucket.
+                    description: |-
+                      (String) The name of the bucket.
+                      The name of the bucket.
                     type: string
                   bucketDomainName:
-                    description: The bucket domain name.
+                    description: |-
+                      (String) The bucket domain name.
+                      The bucket domain name.
                     type: string
                   bucketPrefix:
-                    description: Creates a unique bucket name beginning with the specified
-                      prefix. Conflicts with bucket.
+                    description: |-
+                      (String) Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
+                      Creates a unique bucket name beginning with the specified prefix. Conflicts with `bucket`.
                     type: string
                   corsRule:
-                    description: A rule of Cross-Origin Resource Sharing (documented
-                      below).
+                    description: |-
+                      Origin Resource Sharing (CORS object). (see below for nested schema)
+                      A rule of [Cross-Origin Resource Sharing](https://yandex.cloud/docs/storage/concepts/cors) (CORS object).
                     items:
                       properties:
                         allowedHeaders:
-                          description: Specifies which headers are allowed.
+                          description: |-
+                            (List of String) Specifies which headers are allowed.
+                            Specifies which headers are allowed.
                           items:
                             type: string
                           type: array
                         allowedMethods:
-                          description: Specifies which methods are allowed. Can be
-                            GET, PUT, POST, DELETE or HEAD.
+                          description: |-
+                            (List of String) Specifies which methods are allowed. Can be GET, PUT, POST, DELETE or HEAD.
+                            Specifies which methods are allowed. Can be `GET`, `PUT`, `POST`, `DELETE` or `HEAD`.
                           items:
                             type: string
                           type: array
                         allowedOrigins:
-                          description: Specifies which origins are allowed.
+                          description: |-
+                            (List of String) Specifies which origins are allowed.
+                            Specifies which origins are allowed.
                           items:
                             type: string
                           type: array
                         exposeHeaders:
-                          description: Specifies expose header in the response.
+                          description: |-
+                            (List of String) Specifies expose header in the response.
+                            Specifies expose header in the response.
                           items:
                             type: string
                           type: array
                         maxAgeSeconds:
-                          description: Specifies time in seconds that browser can
-                            cache the response for a preflight request.
+                          description: |-
+                            (Number) Specifies time in seconds that browser can cache the response for a preflight request.
+                            Specifies time in seconds that browser can cache the response for a preflight request.
                           format: int64
                           type: integer
                       type: object
                     type: array
                   defaultStorageClass:
-                    description: 'Storage class which is used for storing objects
-                      by default. Available values are: "STANDARD", "COLD", "ICE".
-                      Default is "STANDARD". See storage class for more inforamtion.'
+                    description: |-
+                      (String) Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD". See Storage Class for more information.
+                      Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is `"STANDARD"`. See [Storage Class](https://yandex.cloud/docs/storage/concepts/storage-class) for more information.
                     type: string
                   folderId:
-                    description: Allow to create bucket in different folder.
+                    description: |-
+                      (String) Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
+                      Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
+
+                      ~> It will try to create bucket using `IAM-token`, not using `access keys`.
                     type: string
                   forceDestroy:
-                    description: A boolean that indicates all objects should be deleted
-                      from the bucket so that the bucket can be destroyed without
-                      error. These objects are not recoverable.
+                    description: |-
+                      (Boolean) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable. Default is false.
+                      A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are *not* recoverable. Default is `false`.
                     type: boolean
                   grant:
-                    description: An ACL policy grant. Conflicts with acl.
+                    description: |-
+                      (Block Set, Deprecated) An ACL policy grant. Conflicts with acl.
+                      An [ACL policy grant](https://yandex.cloud/docs/storage/concepts/acl#permissions-types). Conflicts with `acl`.
+
+                      ~> To manage `grant` argument, service account with `storage.admin` role should be used.
                     items:
                       properties:
                         id:
-                          description: Canonical user id to grant for. Used only when
-                            type is CanonicalUser.
+                          description: |-
+                            (String) The ID of this resource.
+                            Canonical user id to grant for. Used only when type is `CanonicalUser`.
                           type: string
                         permissions:
-                          description: List of permissions to apply for grantee. Valid
-                            values are READ, WRITE, FULL_CONTROL.
+                          description: |-
+                            (Set of String) List of permissions to apply for grantee. Valid values are READ, WRITE, FULL_CONTROL.
+                            List of permissions to apply for grantee. Valid values are `READ`, `WRITE`, `FULL_CONTROL`.
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         type:
-                          description: Type of grantee to apply for. Valid values
-                            are CanonicalUser and Group.
+                          description: |-
+                            (String) Type of grantee to apply for. Valid values are CanonicalUser and Group.
+                            Type of grantee to apply for. Valid values are `CanonicalUser` and `Group`.
                           type: string
                         uri:
-                          description: Uri address to grant for. Used only when type
-                            is Group.
+                          description: |-
+                            (String) URI address to grant for. Used only when type is Group.
+                            URI address to grant for. Used only when type is Group.
                           type: string
                       type: object
                     type: array
                   https:
-                    description: Manages https certificates for bucket. See https
-                      for more infomation.
+                    description: |-
+                      (Block Set, Max: 1) Manages https certificates for bucket. See https for more information. (see below for nested schema)
+                      Manages https certificates for bucket. See [https](https://yandex.cloud/docs/storage/operations/hosting/certificate) for more information.
                     items:
                       properties:
                         certificateId:
-                          description: — Id of the certificate in Certificate Manager,
-                            that will be used for bucket.
+                          description: |-
+                            (String) Id of the certificate in Certificate Manager, that will be used for bucket.
+                            Id of the certificate in Certificate Manager, that will be used for bucket.
                           type: string
                       type: object
                     type: array
                   id:
-                    description: Canonical user id to grant for. Used only when type
-                      is CanonicalUser.
+                    description: (String) The ID of this resource.
                     type: string
                   lifecycleRule:
-                    description: A configuration of object lifecycle management (documented
-                      below).
+                    description: |-
+                      (Block List) A configuration of object lifecycle management. (see below for nested schema)
+                      A configuration of [object lifecycle management](https://yandex.cloud/docs/storage/concepts/lifecycles).
                     items:
                       properties:
                         abortIncompleteMultipartUploadDays:
-                          description: Specifies the number of days after initiating
-                            a multipart upload when the multipart upload must be completed.
+                          description: |-
+                            (Number) Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
+                            Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
                           format: int64
                           type: integer
                         enabled:
-                          description: Enable versioning. Once you version-enable
-                            a bucket, it can never return to an unversioned state.
-                            You can, however, suspend versioning on that bucket.
+                          description: |-
+                            (Boolean) Specifies lifecycle rule status.
+                            Specifies lifecycle rule status.
                           type: boolean
                         expiration:
-                          description: Specifies a period in the object's expire (documented
-                            below).
+                          description: |-
+                            (Block List, Max: 1) Specifies a period in the object's expire. (see below for nested schema)
+                            Specifies a period in the object's expire.
                           items:
                             properties:
                               date:
-                                description: Specifies the date after which you want
-                                  the corresponding action to take effect.
+                                description: |-
+                                  (String) Specifies the date after which you want the corresponding action to take effect.
+                                  Specifies the date after which you want the corresponding action to take effect.
                                 type: string
                               days:
-                                description: Specifies a retention period in days
-                                  after uploading an object version. It must be a
-                                  positive integer. You can't set it simultaneously
-                                  with years.
+                                description: |-
+                                  (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                  Specifies the number of days after object creation when the specific rule action takes effect.
                                 format: int64
                                 type: integer
                               expiredObjectDeleteMarker:
-                                description: On a versioned bucket (versioning-enabled
-                                  or versioning-suspended bucket), you can add this
-                                  element in the lifecycle configuration to direct
-                                  Object Storage to delete expired object delete markers.
+                                description: |-
+                                  enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
+                                  n a versioned bucket (versioning-enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
                                 type: boolean
                             type: object
                           type: array
                         filter:
-                          description: 'Filter block identifies one or more objects
-                            to which the rule applies. A Filter must have exactly
-                            one of Prefix, Tag, or And specified. The filter supports
-                            the following options:'
+                          description: |-
+                            (Block List, Max: 1) Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
+                            Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
+
+                            At least one of `abort_incomplete_multipart_upload_days`, `expiration`, `transition`, `noncurrent_version_expiration`, `noncurrent_version_transition` must be specified.
                           items:
                             properties:
                               and:
-                                description: 'operator applied to one or more filter
-                                  parameters. It should be used when two or more of
-                                  the above parameters are used. It supports the following
-                                  parameters:'
+                                description: |-
+                                  (Block List, Max: 1) A logical and operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used. (see below for nested schema)
+                                  A logical `and` operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used.
                                 items:
                                   properties:
                                     objectSizeGreaterThan:
+                                      description: |-
+                                        (Number) Minimum object size to which the rule applies.
+                                        Minimum object size to which the rule applies.
                                       format: int64
                                       type: integer
                                     objectSizeLessThan:
+                                      description: |-
+                                        (Number) Maximum object size to which the rule applies.
+                                        Maximum object size to which the rule applies.
                                       format: int64
                                       type: integer
                                     prefix:
-                                      description: Object key prefix identifying one
-                                        or more objects to which the rule applies.
+                                      description: |-
+                                        (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+                                        Object key prefix identifying one or more objects to which the rule applies.
                                       type: string
                                     tags:
                                       additionalProperties:
                                         type: string
+                                      description: |-
+                                        (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+                                        The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
                                       type: object
                                       x-kubernetes-map-type: granular
                                   type: object
                                 type: array
                               objectSizeGreaterThan:
+                                description: |-
+                                  (Number) Minimum object size to which the rule applies.
+                                  Minimum object size to which the rule applies.
                                 format: int64
                                 type: integer
                               objectSizeLessThan:
+                                description: |-
+                                  (Number) Maximum object size to which the rule applies.
+                                  Maximum object size to which the rule applies.
                                 format: int64
                                 type: integer
                               prefix:
-                                description: Object key prefix identifying one or
-                                  more objects to which the rule applies.
+                                description: |-
+                                  (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+                                  Object key prefix identifying one or more objects to which the rule applies.
                                 type: string
                               tag:
+                                description: |-
+                                  (Block List, Max: 1) A key and value pair for filtering objects. E.g.: key=key1, value=value1. (see below for nested schema)
+                                  A key and value pair for filtering objects. E.g.: `key=key1, value=value1`.
                                 items:
                                   properties:
                                     key:
+                                      description: |-
+                                        (String) A key.
+                                        A key.
                                       type: string
                                     value:
+                                      description: |-
+                                        (String) A value.
+                                        A value.
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         id:
-                          description: Canonical user id to grant for. Used only when
-                            type is CanonicalUser.
+                          description: |-
+                            (String) The ID of this resource.
+                            Unique identifier for the rule. Must be less than or equal to 255 characters in length.
                           type: string
                         noncurrentVersionExpiration:
-                          description: Specifies when noncurrent object versions expire
-                            (documented below).
+                          description: |-
+                            (Block List, Max: 1) Specifies when noncurrent object versions expire. (see below for nested schema)
+                            Specifies when noncurrent object versions expire.
                           items:
                             properties:
                               days:
-                                description: Specifies a retention period in days
-                                  after uploading an object version. It must be a
-                                  positive integer. You can't set it simultaneously
-                                  with years.
+                                description: |-
+                                  (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                  Specifies the number of days noncurrent object versions expire.
                                 format: int64
                                 type: integer
                             type: object
                           type: array
                         noncurrentVersionTransition:
-                          description: Specifies when noncurrent object versions transitions
-                            (documented below).
+                          description: |-
+                            (Block Set) Specifies when noncurrent object versions transitions. (see below for nested schema)
+                            Specifies when noncurrent object versions transitions.
                           items:
                             properties:
                               days:
-                                description: Specifies a retention period in days
-                                  after uploading an object version. It must be a
-                                  positive integer. You can't set it simultaneously
-                                  with years.
+                                description: |-
+                                  (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                  Specifies the number of days noncurrent object versions transition.
                                 format: int64
                                 type: integer
                               storageClass:
-                                description: 'Specifies the storage class to which
-                                  you want the object to transition. Supported values:
-                                  [STANDARD_IA, COLD, ICE].'
+                                description: |-
+                                  (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
+                                  Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`].
                                 type: string
                             type: object
                           type: array
                         prefix:
-                          description: Object key prefix identifying one or more objects
-                            to which the rule applies.
+                          description: |-
+                            (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+                            Object key prefix identifying one or more objects to which the rule applies.
                           type: string
                         transition:
-                          description: Specifies a period in the object's transitions
-                            (documented below).
+                          description: |-
+                            (Block Set) Specifies a period in the object's transitions. (see below for nested schema)
+                            Specifies a period in the object's transitions.
                           items:
                             properties:
                               date:
-                                description: Specifies the date after which you want
-                                  the corresponding action to take effect.
+                                description: |-
+                                  (String) Specifies the date after which you want the corresponding action to take effect.
+                                  Specifies the date after which you want the corresponding action to take effect.
                                 type: string
                               days:
-                                description: Specifies a retention period in days
-                                  after uploading an object version. It must be a
-                                  positive integer. You can't set it simultaneously
-                                  with years.
+                                description: |-
+                                  (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                  Specifies the number of days after object creation when the specific rule action takes effect.
                                 format: int64
                                 type: integer
                               storageClass:
-                                description: 'Specifies the storage class to which
-                                  you want the object to transition. Supported values:
-                                  [STANDARD_IA, COLD, ICE].'
+                                description: |-
+                                  (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
+                                  Specifies the storage class to which you want the object to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`].
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
                   logging:
-                    description: A settings of bucket logging (documented below).
+                    description: |-
+                      (Block Set) A settings of bucket logging. (see below for nested schema)
+                      A settings of [bucket logging](https://yandex.cloud/docs/storage/concepts/server-logs).
                     items:
                       properties:
                         targetBucket:
-                          description: The name of the bucket that will receive the
-                            log objects.
+                          description: |-
+                            (String) The name of the bucket that will receive the log objects.
+                            The name of the bucket that will receive the log objects.
                           type: string
                         targetPrefix:
-                          description: To specify a key prefix for log objects.
+                          description: |-
+                            (String) To specify a key prefix for log objects.
+                            To specify a key prefix for log objects.
                           type: string
                       type: object
                     type: array
                   maxSize:
-                    description: The size of bucket, in bytes. See size limiting for
-                      more information.
+                    description: |-
+                      (Number) The size of bucket, in bytes. See Size Limiting for more information.
+                      The size of bucket, in bytes. See [Size Limiting](https://yandex.cloud/docs/storage/operations/buckets/limit-max-volume) for more information.
                     format: int64
                     type: integer
                   objectLockConfiguration:
-                    description: A configuration of object lock management (documented
-                      below).
+                    description: |-
+                      (Block List, Max: 1) A configuration of object lock management. (see below for nested schema)
+                      A configuration of [object lock management](https://yandex.cloud/docs/storage/concepts/object-lock).
                     items:
                       properties:
                         objectLockEnabled:
-                          description: Enable object locking in a bucket. Require
-                            versioning to be enabled.
+                          description: |-
+                            (String) Enable object locking in a bucket. Require versioning to be enabled.
+                            Enable object locking in a bucket. Require versioning to be enabled.
                           type: string
                         rule:
-                          description: Specifies a default locking configuration for
-                            added objects. Require object_lock_enabled to be enabled.
+                          description: |-
+                            (Block List, Max: 1) Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled. (see below for nested schema)
+                            Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
                           items:
                             properties:
                               defaultRetention:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Default retention object. (see below for nested schema)
+                                  Default retention object.
                                 items:
                                   properties:
                                     days:
-                                      description: Specifies a retention period in
-                                        days after uploading an object version. It
-                                        must be a positive integer. You can't set
-                                        it simultaneously with years.
+                                      description: |-
+                                        (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+                                        Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with `years`.
                                       format: int64
                                       type: integer
                                     mode:
-                                      description: Specifies a type of object lock.
-                                        One of ["GOVERNANCE", "COMPLIANCE"].
+                                      description: |-
+                                        (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
+                                        Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`.
                                       type: string
                                     years:
-                                      description: Specifies a retention period in
-                                        years after uploading an object version. It
-                                        must be a positive integer. You can't set
-                                        it simultaneously with days.
+                                      description: |-
+                                        (Number) Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
+                                        Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with `days`.
                                       format: int64
                                       type: integer
                                   type: object
@@ -1919,29 +2187,37 @@ spec:
                       type: object
                     type: array
                   policy:
+                    description: |-
+                      (String, Deprecated) The policy object should contain the only field with the text of the policy. See policy documentation for more information on policy format.
+                      The `policy` object should contain the only field with the text of the policy. See [policy documentation](https://yandex.cloud/docs/storage/concepts/policy) for more information on policy format.
                     type: string
                   serverSideEncryptionConfiguration:
-                    description: A configuration of server-side encryption for the
-                      bucket (documented below)
+                    description: |-
+                      side encryption for the bucket. (see below for nested schema)
+                      A configuration of server-side encryption for the bucket.
                     items:
                       properties:
                         rule:
-                          description: Specifies a default locking configuration for
-                            added objects. Require object_lock_enabled to be enabled.
+                          description: |-
+                            (Block List, Max: 1) Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled. (see below for nested schema)
+                            A single object for server-side encryption by default configuration.
                           items:
                             properties:
                               applyServerSideEncryptionByDefault:
-                                description: A single object for setting server-side
-                                  encryption by default. (documented below)
+                                description: |-
+                                  side encryption by default. (see below for nested schema)
+                                  A single object for setting server-side encryption by default.
                                 items:
                                   properties:
                                     kmsMasterKeyId:
-                                      description: The KMS master key ID used for
-                                        the SSE-KMS encryption.
+                                      description: |-
+                                        KMS encryption.
+                                        The KMS master key ID used for the SSE-KMS encryption.
                                       type: string
                                     sseAlgorithm:
-                                      description: The server-side encryption algorithm
-                                        to use. Single valid value is aws:kms
+                                      description: |-
+                                        side encryption algorithm to use. Single valid value is aws:kms.
+                                        The server-side encryption algorithm to use. Single valid value is `aws:kms`.
                                       type: string
                                   type: object
                                 type: array
@@ -1952,52 +2228,63 @@ spec:
                   tags:
                     additionalProperties:
                       type: string
+                    description: |-
+                      (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+                      The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
                     type: object
                     x-kubernetes-map-type: granular
                   versioning:
-                    description: A state of versioning (documented below)
+                    description: |-
+                      (Block List, Max: 1) A state of versioning.
+                      A state of [versioning](https://yandex.cloud/docs/storage/concepts/versioning).
+
+                      ~> To manage `versioning` argument, service account with `storage.admin` role should be used.
                     items:
                       properties:
                         enabled:
-                          description: Enable versioning. Once you version-enable
-                            a bucket, it can never return to an unversioned state.
-                            You can, however, suspend versioning on that bucket.
+                          description: |-
+                            (Boolean) Specifies lifecycle rule status.
+                            Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
                           type: boolean
                       type: object
                     type: array
                   website:
-                    description: A website object (documented below).
+                    description: |-
+                      (Block List, Max: 1) A Website Object (see below for nested schema)
+                      A [Website Object](https://yandex.cloud/docs/storage/concepts/hosting)
                     items:
                       properties:
                         errorDocument:
-                          description: An absolute path to the document to return
-                            in case of a 4XX error.
+                          description: |-
+                            (String) An absolute path to the document to return in case of a 4XX error.
+                            An absolute path to the document to return in case of a 4XX error.
                           type: string
                         indexDocument:
-                          description: Storage returns this index document when requests
-                            are made to the root domain or any of the subfolders.
+                          description: |-
+                            (String) Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using redirect_all_requests_to).
+                            Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using `redirect_all_requests_to`).
                           type: string
                         redirectAllRequestsTo:
-                          description: A hostname to redirect all website requests
-                            for this bucket to. Hostname can optionally be prefixed
-                            with a protocol (http:// or https://) to use when redirecting
-                            requests. The default is the protocol that is used in
-                            the original request.
+                          description: |-
+                            (String) A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (http:// or https://) to use when redirecting requests. The default is the protocol that is used in the original request.
+                            A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (`http://` or `https://`) to use when redirecting requests. The default is the protocol that is used in the original request.
                           type: string
                         routingRules:
-                          description: A json array containing routing rules describing
-                            redirect behavior and when redirects are applied.
+                          description: |-
+                            (String) A JSON array containing routing rules describing redirect behavior and when redirects are applied.
+                            A JSON array containing [routing rules](https://yandex.cloud/docs/storage/s3/api-ref/hosting/upload#request-scheme) describing redirect behavior and when redirects are applied.
                           type: string
                       type: object
                     type: array
                   websiteDomain:
-                    description: The domain of the website endpoint, if the bucket
-                      is configured with a website. If not, this will be an empty
-                      string.
+                    description: |-
+                      (String) The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+                      The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
                     type: string
                   websiteEndpoint:
-                    description: The website endpoint, if the bucket is configured
-                      with a website. If not, this will be an empty string.
+                    description: |-
+                      (String) The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+                      The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
                     type: string
                 type: object
               conditions:

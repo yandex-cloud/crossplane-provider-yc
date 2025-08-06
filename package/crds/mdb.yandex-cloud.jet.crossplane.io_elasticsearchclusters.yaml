@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: ElasticsearchCluster is the Schema for the ElasticsearchClusters
-          API. Manages a Elasticsearch cluster within Yandex.Cloud.
+          API. Manages a Elasticsearch cluster within Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -74,12 +74,15 @@ spec:
               forProvider:
                 properties:
                   config:
-                    description: Configuration of the Elasticsearch cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the Elasticsearch cluster. (see below for nested schema)
+                      Configuration of the Elasticsearch cluster.
                     items:
                       properties:
                         adminPasswordSecretRef:
-                          description: Password for admin user of Elasticsearch.
+                          description: |-
+                            (String, Sensitive) Password for admin user of Elasticsearch.
+                            Password for admin user of Elasticsearch.
                           properties:
                             key:
                               description: The key to select.
@@ -96,84 +99,106 @@ spec:
                           - namespace
                           type: object
                         dataNode:
-                          description: Configuration for Elasticsearch data nodes
-                            subcluster. The structure is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Configuration for Elasticsearch data nodes subcluster. (see below for nested schema)
+                            Configuration for Elasticsearch data nodes subcluster.
                           items:
                             properties:
                               resources:
-                                description: Resources allocated to hosts of the Elasticsearch
-                                  master nodes subcluster. The structure is documented
-                                  below.
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Elasticsearch data nodes subcluster.
                                 items:
                                   properties:
                                     diskSize:
-                                      description: Volume of the storage available
-                                        to a host, in gigabytes.
+                                      description: |-
+                                        (Number) Volume of the storage available to a host, in gigabytes.
+                                        Volume of the storage available to a host, in gigabytes.
                                       type: number
                                     diskTypeId:
-                                      description: Type of the storage of Elasticsearch
-                                        hosts.
+                                      description: |-
+                                        (String) Type of the storage of Elasticsearch hosts.
+                                        Type of the storage of Elasticsearch hosts.
                                       type: string
                                     resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         edition:
-                          description: Edition of Elasticsearch. For more information,
-                            see the official documentation.
+                          description: |-
+                            (String) Edition of Elasticsearch. For more information, see the official documentation.
+                            Edition of Elasticsearch. For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts/es-editions).
                           type: string
                         masterNode:
-                          description: Configuration for Elasticsearch master nodes
-                            subcluster. The structure is documented below.
+                          description: |-
+                            (Block List, Max: 1) Configuration for Elasticsearch master nodes subcluster. (see below for nested schema)
+                            Configuration for Elasticsearch master nodes subcluster.
                           items:
                             properties:
                               resources:
-                                description: Resources allocated to hosts of the Elasticsearch
-                                  master nodes subcluster. The structure is documented
-                                  below.
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Elasticsearch master nodes subcluster.
                                 items:
                                   properties:
                                     diskSize:
-                                      description: Volume of the storage available
-                                        to a host, in gigabytes.
+                                      description: |-
+                                        (Number) Volume of the storage available to a host, in gigabytes.
+                                        Volume of the storage available to a host, in gigabytes.
                                       type: number
                                     diskTypeId:
-                                      description: Type of the storage of Elasticsearch
-                                        hosts.
+                                      description: |-
+                                        (String) Type of the storage of Elasticsearch hosts.
+                                        Type of the storage of Elasticsearch hosts.
                                       type: string
                                     resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         plugins:
-                          description: A set of Elasticsearch plugins to install.
+                          description: |-
+                            (Set of String) A set of Elasticsearch plugins to install.
+                            A set of Elasticsearch plugins to install.
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         version:
-                          description: Version of Elasticsearch.
+                          description: |-
+                            (String) Version of Elasticsearch.
+                            Version of Elasticsearch.
                           type: string
                       type: object
                     type: array
                   deletionProtection:
-                    description: Inhibits deletion of the cluster. Can be either true
-                      or false.
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: Description of the Elasticsearch cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   environment:
-                    description: Deployment environment of the Elasticsearch cluster.
-                      Can be either PRESTABLE or PRODUCTION.
+                    description: |-
+                      (String) Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+                      Deployment environment of the Elasticsearch cluster. Can be either `PRESTABLE` or `PRODUCTION`.
                     type: string
                   folderId:
-                    description: The ID of the folder that the resource belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -252,21 +277,25 @@ spec:
                         type: object
                     type: object
                   host:
-                    description: A host of the Elasticsearch cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block Set) A host of the Elasticsearch cluster. (see below for nested schema)
+                      A host of the Elasticsearch cluster.
                     items:
                       properties:
                         assignPublicIp:
-                          description: Sets whether the host should get a public IP
-                            address on creation. Can be either true or false.
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address on creation. Can be either true or false.
+                            Sets whether the host should get a public IP address on creation. Can be either `true` or `false`.
                           type: boolean
                         name:
-                          description: User defined host name.
+                          description: |-
+                            (String) The resource name.
+                            User defined host name.
                           type: string
                         subnetId:
-                          description: The ID of the subnet, to which the host belongs.
-                            The subnet must be a part of the network to which the
-                            cluster belongs.
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -343,49 +372,57 @@ spec:
                               type: object
                           type: object
                         type:
-                          description: The type of the host to be deployed. Can be
-                            either DATA_NODE or MASTER_NODE.
+                          description: |-
+                            (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+                            The type of the host to be deployed. Can be either `DATA_NODE` or `MASTER_NODE`.
                           type: string
                         zone:
-                          description: The availability zone where the Elasticsearch
-                            host will be created. For more information see the official
-                            documentation.
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                           type: string
                       type: object
                     type: array
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Elasticsearch
-                      cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   maintenanceWindow:
+                    description: |-
+                      (Block List, Max: 1) Elasticsearch cluster maintenance window. (see below for nested schema)
+                      Elasticsearch cluster maintenance window.
                     items:
                       properties:
                         day:
-                          description: 'Day of week for maintenance window if window
-                            type is weekly. Possible values: MON, TUE, WED, THU, FRI,
-                            SAT, SUN.'
+                          description: |-
+                            (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+                            Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
                           type: string
                         hour:
-                          description: Hour of day in UTC time zone (1-24) for maintenance
-                            window if window type is weekly.
+                          description: |-
+                            24) for maintenance window if window type is weekly.
+                            Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
                           type: number
                         type:
-                          description: Type of maintenance window. Can be either ANYTIME
-                            or WEEKLY. A day and hour of window need to be specified
-                            with weekly window.
+                          description: |-
+                            (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
                           type: string
                       type: object
                     type: array
                   name:
-                    description: Name of the Elasticsearch cluster. Provided by the
-                      client when the cluster is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network, to which the Elasticsearch cluster
-                      belongs.
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -462,8 +499,7 @@ spec:
                         type: object
                     type: object
                   securityGroupIds:
-                    description: A set of ids of security groups assigned to hosts
-                      of the cluster.
+                    description: (Set of String)
                     items:
                       type: string
                     type: array
@@ -547,7 +583,9 @@ spec:
                         type: object
                     type: object
                   serviceAccountId:
-                    description: ID of the service account authorized for this cluster.
+                    description: |-
+                      (String) Service account which linked to the resource.
+                      [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
                     type: string
                   serviceAccountIdRef:
                     description: Reference to a ServiceAccount in iam to populate
@@ -640,12 +678,15 @@ spec:
                   autoscaler.
                 properties:
                   config:
-                    description: Configuration of the Elasticsearch cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the Elasticsearch cluster. (see below for nested schema)
+                      Configuration of the Elasticsearch cluster.
                     items:
                       properties:
                         adminPasswordSecretRef:
-                          description: Password for admin user of Elasticsearch.
+                          description: |-
+                            (String, Sensitive) Password for admin user of Elasticsearch.
+                            Password for admin user of Elasticsearch.
                           properties:
                             key:
                               description: The key to select.
@@ -662,86 +703,108 @@ spec:
                           - namespace
                           type: object
                         dataNode:
-                          description: Configuration for Elasticsearch data nodes
-                            subcluster. The structure is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Configuration for Elasticsearch data nodes subcluster. (see below for nested schema)
+                            Configuration for Elasticsearch data nodes subcluster.
                           items:
                             properties:
                               resources:
-                                description: Resources allocated to hosts of the Elasticsearch
-                                  master nodes subcluster. The structure is documented
-                                  below.
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Elasticsearch data nodes subcluster.
                                 items:
                                   properties:
                                     diskSize:
-                                      description: Volume of the storage available
-                                        to a host, in gigabytes.
+                                      description: |-
+                                        (Number) Volume of the storage available to a host, in gigabytes.
+                                        Volume of the storage available to a host, in gigabytes.
                                       type: number
                                     diskTypeId:
-                                      description: Type of the storage of Elasticsearch
-                                        hosts.
+                                      description: |-
+                                        (String) Type of the storage of Elasticsearch hosts.
+                                        Type of the storage of Elasticsearch hosts.
                                       type: string
                                     resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         edition:
-                          description: Edition of Elasticsearch. For more information,
-                            see the official documentation.
+                          description: |-
+                            (String) Edition of Elasticsearch. For more information, see the official documentation.
+                            Edition of Elasticsearch. For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts/es-editions).
                           type: string
                         masterNode:
-                          description: Configuration for Elasticsearch master nodes
-                            subcluster. The structure is documented below.
+                          description: |-
+                            (Block List, Max: 1) Configuration for Elasticsearch master nodes subcluster. (see below for nested schema)
+                            Configuration for Elasticsearch master nodes subcluster.
                           items:
                             properties:
                               resources:
-                                description: Resources allocated to hosts of the Elasticsearch
-                                  master nodes subcluster. The structure is documented
-                                  below.
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Elasticsearch master nodes subcluster.
                                 items:
                                   properties:
                                     diskSize:
-                                      description: Volume of the storage available
-                                        to a host, in gigabytes.
+                                      description: |-
+                                        (Number) Volume of the storage available to a host, in gigabytes.
+                                        Volume of the storage available to a host, in gigabytes.
                                       type: number
                                     diskTypeId:
-                                      description: Type of the storage of Elasticsearch
-                                        hosts.
+                                      description: |-
+                                        (String) Type of the storage of Elasticsearch hosts.
+                                        Type of the storage of Elasticsearch hosts.
                                       type: string
                                     resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         plugins:
-                          description: A set of Elasticsearch plugins to install.
+                          description: |-
+                            (Set of String) A set of Elasticsearch plugins to install.
+                            A set of Elasticsearch plugins to install.
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         version:
-                          description: Version of Elasticsearch.
+                          description: |-
+                            (String) Version of Elasticsearch.
+                            Version of Elasticsearch.
                           type: string
                       required:
                       - adminPasswordSecretRef
                       type: object
                     type: array
                   deletionProtection:
-                    description: Inhibits deletion of the cluster. Can be either true
-                      or false.
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: Description of the Elasticsearch cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   environment:
-                    description: Deployment environment of the Elasticsearch cluster.
-                      Can be either PRESTABLE or PRODUCTION.
+                    description: |-
+                      (String) Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+                      Deployment environment of the Elasticsearch cluster. Can be either `PRESTABLE` or `PRODUCTION`.
                     type: string
                   folderId:
-                    description: The ID of the folder that the resource belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -820,21 +883,25 @@ spec:
                         type: object
                     type: object
                   host:
-                    description: A host of the Elasticsearch cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block Set) A host of the Elasticsearch cluster. (see below for nested schema)
+                      A host of the Elasticsearch cluster.
                     items:
                       properties:
                         assignPublicIp:
-                          description: Sets whether the host should get a public IP
-                            address on creation. Can be either true or false.
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address on creation. Can be either true or false.
+                            Sets whether the host should get a public IP address on creation. Can be either `true` or `false`.
                           type: boolean
                         name:
-                          description: User defined host name.
+                          description: |-
+                            (String) The resource name.
+                            User defined host name.
                           type: string
                         subnetId:
-                          description: The ID of the subnet, to which the host belongs.
-                            The subnet must be a part of the network to which the
-                            cluster belongs.
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -911,49 +978,57 @@ spec:
                               type: object
                           type: object
                         type:
-                          description: The type of the host to be deployed. Can be
-                            either DATA_NODE or MASTER_NODE.
+                          description: |-
+                            (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+                            The type of the host to be deployed. Can be either `DATA_NODE` or `MASTER_NODE`.
                           type: string
                         zone:
-                          description: The availability zone where the Elasticsearch
-                            host will be created. For more information see the official
-                            documentation.
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                           type: string
                       type: object
                     type: array
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Elasticsearch
-                      cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   maintenanceWindow:
+                    description: |-
+                      (Block List, Max: 1) Elasticsearch cluster maintenance window. (see below for nested schema)
+                      Elasticsearch cluster maintenance window.
                     items:
                       properties:
                         day:
-                          description: 'Day of week for maintenance window if window
-                            type is weekly. Possible values: MON, TUE, WED, THU, FRI,
-                            SAT, SUN.'
+                          description: |-
+                            (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+                            Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
                           type: string
                         hour:
-                          description: Hour of day in UTC time zone (1-24) for maintenance
-                            window if window type is weekly.
+                          description: |-
+                            24) for maintenance window if window type is weekly.
+                            Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
                           type: number
                         type:
-                          description: Type of maintenance window. Can be either ANYTIME
-                            or WEEKLY. A day and hour of window need to be specified
-                            with weekly window.
+                          description: |-
+                            (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
                           type: string
                       type: object
                     type: array
                   name:
-                    description: Name of the Elasticsearch cluster. Provided by the
-                      client when the cluster is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network, to which the Elasticsearch cluster
-                      belongs.
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -1030,8 +1105,7 @@ spec:
                         type: object
                     type: object
                   securityGroupIds:
-                    description: A set of ids of security groups assigned to hosts
-                      of the cluster.
+                    description: (Set of String)
                     items:
                       type: string
                     type: array
@@ -1115,7 +1189,9 @@ spec:
                         type: object
                     type: object
                   serviceAccountId:
-                    description: ID of the service account authorized for this cluster.
+                    description: |-
+                      (String) Service account which linked to the resource.
+                      [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
                     type: string
                   serviceAccountIdRef:
                     description: Reference to a ServiceAccount in iam to populate
@@ -1381,180 +1457,220 @@ spec:
               atProvider:
                 properties:
                   config:
-                    description: Configuration of the Elasticsearch cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the Elasticsearch cluster. (see below for nested schema)
+                      Configuration of the Elasticsearch cluster.
                     items:
                       properties:
                         dataNode:
-                          description: Configuration for Elasticsearch data nodes
-                            subcluster. The structure is documented below.
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Configuration for Elasticsearch data nodes subcluster. (see below for nested schema)
+                            Configuration for Elasticsearch data nodes subcluster.
                           items:
                             properties:
                               resources:
-                                description: Resources allocated to hosts of the Elasticsearch
-                                  master nodes subcluster. The structure is documented
-                                  below.
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Elasticsearch data nodes subcluster.
                                 items:
                                   properties:
                                     diskSize:
-                                      description: Volume of the storage available
-                                        to a host, in gigabytes.
+                                      description: |-
+                                        (Number) Volume of the storage available to a host, in gigabytes.
+                                        Volume of the storage available to a host, in gigabytes.
                                       type: number
                                     diskTypeId:
-                                      description: Type of the storage of Elasticsearch
-                                        hosts.
+                                      description: |-
+                                        (String) Type of the storage of Elasticsearch hosts.
+                                        Type of the storage of Elasticsearch hosts.
                                       type: string
                                     resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         edition:
-                          description: Edition of Elasticsearch. For more information,
-                            see the official documentation.
+                          description: |-
+                            (String) Edition of Elasticsearch. For more information, see the official documentation.
+                            Edition of Elasticsearch. For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts/es-editions).
                           type: string
                         masterNode:
-                          description: Configuration for Elasticsearch master nodes
-                            subcluster. The structure is documented below.
+                          description: |-
+                            (Block List, Max: 1) Configuration for Elasticsearch master nodes subcluster. (see below for nested schema)
+                            Configuration for Elasticsearch master nodes subcluster.
                           items:
                             properties:
                               resources:
-                                description: Resources allocated to hosts of the Elasticsearch
-                                  master nodes subcluster. The structure is documented
-                                  below.
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Elasticsearch master nodes subcluster.
                                 items:
                                   properties:
                                     diskSize:
-                                      description: Volume of the storage available
-                                        to a host, in gigabytes.
+                                      description: |-
+                                        (Number) Volume of the storage available to a host, in gigabytes.
+                                        Volume of the storage available to a host, in gigabytes.
                                       type: number
                                     diskTypeId:
-                                      description: Type of the storage of Elasticsearch
-                                        hosts.
+                                      description: |-
+                                        (String) Type of the storage of Elasticsearch hosts.
+                                        Type of the storage of Elasticsearch hosts.
                                       type: string
                                     resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
                                       type: string
                                   type: object
                                 type: array
                             type: object
                           type: array
                         plugins:
-                          description: A set of Elasticsearch plugins to install.
+                          description: |-
+                            (Set of String) A set of Elasticsearch plugins to install.
+                            A set of Elasticsearch plugins to install.
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         version:
-                          description: Version of Elasticsearch.
+                          description: |-
+                            (String) Version of Elasticsearch.
+                            Version of Elasticsearch.
                           type: string
                       type: object
                     type: array
                   createdAt:
-                    description: Creation timestamp of the key.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   deletionProtection:
-                    description: Inhibits deletion of the cluster. Can be either true
-                      or false.
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: Description of the Elasticsearch cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   environment:
-                    description: Deployment environment of the Elasticsearch cluster.
-                      Can be either PRESTABLE or PRODUCTION.
+                    description: |-
+                      (String) Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+                      Deployment environment of the Elasticsearch cluster. Can be either `PRESTABLE` or `PRODUCTION`.
                     type: string
                   folderId:
-                    description: The ID of the folder that the resource belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   health:
-                    description: Aggregated health of the cluster. Can be either ALIVE,
-                      DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health
-                      field of JSON representation in the official documentation.
+                    description: |-
+                      (String) Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
+                      Aggregated health of the cluster. Can be either `ALIVE`, `DEGRADED`, `DEAD` or `HEALTH_UNKNOWN`. For more information see `health` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/api-ref/Cluster/).
                     type: string
                   host:
-                    description: A host of the Elasticsearch cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block Set) A host of the Elasticsearch cluster. (see below for nested schema)
+                      A host of the Elasticsearch cluster.
                     items:
                       properties:
                         assignPublicIp:
-                          description: Sets whether the host should get a public IP
-                            address on creation. Can be either true or false.
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address on creation. Can be either true or false.
+                            Sets whether the host should get a public IP address on creation. Can be either `true` or `false`.
                           type: boolean
                         fqdn:
-                          description: The fully qualified domain name of the host.
+                          description: |-
+                            (String) The fully qualified domain name of the host.
+                            The fully qualified domain name of the host.
                           type: string
                         name:
-                          description: User defined host name.
+                          description: |-
+                            (String) The resource name.
+                            User defined host name.
                           type: string
                         subnetId:
-                          description: The ID of the subnet, to which the host belongs.
-                            The subnet must be a part of the network to which the
-                            cluster belongs.
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
                           type: string
                         type:
-                          description: The type of the host to be deployed. Can be
-                            either DATA_NODE or MASTER_NODE.
+                          description: |-
+                            (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+                            The type of the host to be deployed. Can be either `DATA_NODE` or `MASTER_NODE`.
                           type: string
                         zone:
-                          description: The availability zone where the Elasticsearch
-                            host will be created. For more information see the official
-                            documentation.
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                           type: string
                       type: object
                     type: array
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the Elasticsearch
-                      cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   maintenanceWindow:
+                    description: |-
+                      (Block List, Max: 1) Elasticsearch cluster maintenance window. (see below for nested schema)
+                      Elasticsearch cluster maintenance window.
                     items:
                       properties:
                         day:
-                          description: 'Day of week for maintenance window if window
-                            type is weekly. Possible values: MON, TUE, WED, THU, FRI,
-                            SAT, SUN.'
+                          description: |-
+                            (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+                            Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
                           type: string
                         hour:
-                          description: Hour of day in UTC time zone (1-24) for maintenance
-                            window if window type is weekly.
+                          description: |-
+                            24) for maintenance window if window type is weekly.
+                            Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
                           type: number
                         type:
-                          description: Type of maintenance window. Can be either ANYTIME
-                            or WEEKLY. A day and hour of window need to be specified
-                            with weekly window.
+                          description: |-
+                            (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
                           type: string
                       type: object
                     type: array
                   name:
-                    description: Name of the Elasticsearch cluster. Provided by the
-                      client when the cluster is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network, to which the Elasticsearch cluster
-                      belongs.
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   securityGroupIds:
-                    description: A set of ids of security groups assigned to hosts
-                      of the cluster.
+                    description: (Set of String)
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   serviceAccountId:
-                    description: ID of the service account authorized for this cluster.
+                    description: |-
+                      (String) Service account which linked to the resource.
+                      [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
                     type: string
                   status:
-                    description: Status of the cluster. Can be either CREATING, STARTING,
-                      RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN.
-                      For more information see status field of JSON representation
-                      in the official documentation.
+                    description: |-
+                      (String) Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
+                      Status of the cluster. Can be either `CREATING`, `STARTING`, `RUNNING`, `UPDATING`, `STOPPING`, `STOPPED`, `ERROR` or `STATUS_UNKNOWN`. For more information see `status` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/api-ref/Cluster/).
                     type: string
                 type: object
               conditions:

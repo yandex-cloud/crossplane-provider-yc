@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: MySQLCluster is the Schema for the MySQLClusters API. Manages
-          a MySQL cluster within Yandex.Cloud.
+          a MySQL cluster within Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -74,65 +74,90 @@ spec:
               forProvider:
                 properties:
                   access:
-                    description: Access policy to the MySQL cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Access policy to the MySQL cluster. (see below for nested schema)
+                      Access policy to the MySQL cluster.
                     items:
                       properties:
                         dataLens:
-                          description: Allow access for Yandex DataLens.
+                          description: |-
+                            (Boolean) Allow access for Yandex DataLens.
+                            Allow access for [Yandex DataLens](https://yandex.cloud/services/datalens).
                           type: boolean
                         dataTransfer:
-                          description: Allow access for DataTransfer
+                          description: |-
+                            (Boolean) Allow access for DataTransfer.
+                            Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
                           type: boolean
                         webSql:
-                          description: Allows access for SQL queries in the management
-                            console.
+                          description: |-
+                            (Boolean) Allows access for SQL queries in the management console.
+                            Allows access for [SQL queries in the management console](https://yandex.cloud/docs/managed-mysql/operations/web-sql-query).
                           type: boolean
                       type: object
                     type: array
                   allowRegenerationHost:
-                    description: A host of the MySQL cluster. The structure is documented
-                      below.
+                    description: |-
+                      (Boolean, Deprecated) Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
+                      Regenerate hosts after changing the assign_public_ip parameter.
+                      Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
+                      Regenerate hosts after changing the assign_public_ip parameter.
                     type: boolean
                   backupRetainPeriodDays:
-                    description: The period in days during which backups are stored.
+                    description: |-
+                      (Number) The period in days during which backups are stored.
+                      The period in days during which backups are stored.
                     type: number
                   backupWindowStart:
-                    description: Time to start the daily backup, in the UTC. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Time to start the daily backup, in the UTC. (see below for nested schema)
+                      Time to start the daily backup, in the UTC.
                     items:
                       properties:
                         hours:
-                          description: The hour at which backup will be started.
+                          description: |-
+                            (Number) The hour at which backup will be started.
+                            The hour at which backup will be started.
                           type: number
                         minutes:
-                          description: The minute at which backup will be started.
+                          description: |-
+                            (Number) The minute at which backup will be started.
+                            The minute at which backup will be started.
                           type: number
                       type: object
                     type: array
                   database:
-                    description: (Deprecated) To manage databases, please switch to
-                      using a separate resource type yandex_mdb_mysql_databases.
+                    description: |-
+                      (Block Set, Deprecated) To manage databases, please switch to using a separate resource type yandex_mdb_mysql_databases. (see below for nested schema)
+                      To manage databases, please switch to using a separate resource type `yandex_mdb_mysql_databases`.
                     items:
                       properties:
                         name:
-                          description: The name of the database.
+                          description: |-
+                            (String) The resource name.
+                            The name of the database.
                           type: string
                       type: object
                     type: array
                   deletionProtection:
-                    description: Inhibits deletion of the cluster. Can be either true
-                      or false.
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: Description of the MySQL cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   environment:
-                    description: Deployment environment of the MySQL cluster.
+                    description: |-
+                      (String) Deployment environment of the MySQL cluster.
+                      Deployment environment of the MySQL cluster.
                     type: string
                   folderId:
-                    description: The ID of the folder that the resource belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -211,38 +236,40 @@ spec:
                         type: object
                     type: object
                   host:
-                    description: A host of the MySQL cluster. The structure is documented
-                      below.
+                    description: |-
+                      (Block List, Min: 1) A host of the MySQL cluster. (see below for nested schema)
+                      A host of the MySQL cluster.
                     items:
                       properties:
                         assignPublicIp:
-                          description: Sets whether the host should get a public IP
-                            address. It can be changed on the fly only when name is
-                            set.
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address. It can be changed on the fly only when name is set.
+                            Sets whether the host should get a public IP address. It can be changed on the fly only when `name` is set.
                           type: boolean
                         backupPriority:
-                          description: Host backup priority. Value is between 0 and
-                            100, default is 0.
+                          description: |-
+                            (Number) Host backup priority. Value is between 0 and 100, default is 0.
+                            Host backup priority. Value is between 0 and 100, default is 0.
                           type: number
                         name:
-                          description: Host state name. It should be set for all hosts
-                            or unset for all hosts. This field can be used by another
-                            host, to select which host will be its replication source.
-                            Please refer to replication_source_name parameter.
+                          description: |-
+                            (String) The resource name.
+                            Host state name. It should be set for all hosts or unset for all hosts. This field can be used by another host, to select which host will be its replication source. Please refer to `replication_source_name` parameter.
                           type: string
                         priority:
-                          description: Host master promotion priority. Value is between
-                            0 and 100, default is 0.
+                          description: |-
+                            (Number) Host master promotion priority. Value is between 0 and 100, default is 0.
+                            Host master promotion priority. Value is between 0 and 100, default is 0.
                           type: number
                         replicationSourceName:
-                          description: Host replication source name points to host's
-                            name from which this host should replicate. When not set
-                            then host in HA group. It works only when name is set.
+                          description: |-
+                            (String) Host replication source name points to host's name from which this host should replicate. When not set then host in HA group. It works only when name is set.
+                            Host replication source name points to host's `name` from which this host should replicate. When not set then host in HA group. It works only when `name` is set.
                           type: string
                         subnetId:
-                          description: The ID of the subnet, to which the host belongs.
-                            The subnet must be a part of the network to which the
-                            cluster belongs.
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -319,12 +346,14 @@ spec:
                               type: object
                           type: object
                         zone:
-                          description: The availability zone where the MySQL host
-                            will be created.
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                           type: string
                       type: object
                     type: array
                   hostGroupIds:
+                    description: (Set of String)
                     items:
                       type: string
                     type: array
@@ -332,43 +361,51 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the MySQL
-                      cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   maintenanceWindow:
-                    description: Maintenance policy of the MySQL cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Maintenance policy of the MySQL cluster. (see below for nested schema)
+                      Maintenance policy of the MySQL cluster.
                     items:
                       properties:
                         day:
-                          description: 'Day of the week (in DDD format). Allowed values:
-                            "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"'
+                          description: |-
+                            (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN
+                            Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`
                           type: string
                         hour:
-                          description: Hour of the day in UTC (in HH format). Allowed
-                            value is between 0 and 23.
+                          description: |-
+                            (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+                            Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
                           type: number
                         type:
-                          description: Type of maintenance window. Can be either ANYTIME
-                            or WEEKLY. A day and hour of window need to be specified
-                            with weekly window.
+                          description: |-
+                            (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
                           type: string
                       type: object
                     type: array
                   mysqlConfig:
                     additionalProperties:
                       type: string
-                    description: MySQL cluster config. Detail info in "MySQL config"
-                      section (documented below).
+                    description: |-
+                      (Map of String) MySQL cluster config block.
+                      MySQL cluster config block.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the MySQL cluster. Provided by the client
-                      when the cluster is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network, to which the MySQL cluster uses.
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -445,58 +482,73 @@ spec:
                         type: object
                     type: object
                   performanceDiagnostics:
-                    description: Cluster performance diagnostics settings. The structure
-                      is documented below. YC Documentation
+                    description: |-
+                      (Block List, Max: 1) Cluster performance diagnostics settings. YC Documentation. (see below for nested schema)
+                      Cluster performance diagnostics settings. [YC Documentation](https://yandex.cloud/docs/managed-mysql/api-ref/grpc/cluster_service#PerformanceDiagnostics).
                     items:
                       properties:
                         enabled:
-                          description: Enable performance diagnostics
+                          description: |-
+                            (Boolean) Enable performance diagnostics.
+                            Enable performance diagnostics.
                           type: boolean
                         sessionsSamplingInterval:
-                          description: Interval (in seconds) for my_stat_activity
-                            sampling Acceptable values are 1 to 86400, inclusive.
+                          description: |-
+                            (Number) Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+                            Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
                           type: number
                         statementsSamplingInterval:
-                          description: Interval (in seconds) for my_stat_statements
-                            sampling Acceptable values are 1 to 86400, inclusive.
+                          description: |-
+                            (Number) Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+                            Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
                           type: number
                       type: object
                     type: array
                   resources:
-                    description: Resources allocated to hosts of the MySQL cluster.
-                      The structure is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Resources allocated to hosts of the MySQL cluster. (see below for nested schema)
+                      Resources allocated to hosts of the MySQL cluster.
                     items:
                       properties:
                         diskSize:
-                          description: Volume of the storage available to a MySQL
-                            host, in gigabytes.
+                          description: |-
+                            (Number) Volume of the storage available to a MySQL host, in gigabytes.
+                            Volume of the storage available to a MySQL host, in gigabytes.
                           type: number
                         diskTypeId:
-                          description: Type of the storage of MySQL hosts.
+                          description: |-
+                            (String) Type of the storage of MySQL hosts.
+                            Type of the storage of MySQL hosts.
                           type: string
                         resourcePresetId:
+                          description: |-
+                            (String) The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see the official documentation.
+                            The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-mysql/concepts/instance-types).
                           type: string
                       type: object
                     type: array
                   restore:
-                    description: The cluster will be created from the specified backup.
-                      The structure is documented below.
+                    description: |-
+                      (Block List, Max: 1) The cluster will be created from the specified backup. (see below for nested schema)
+                      The cluster will be created from the specified backup.
                     items:
                       properties:
                         backupId:
-                          description: Backup ID. The cluster will be created from
-                            the specified backup. How to get a list of MySQL backups.
+                          description: |-
+                            (String) Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
+                            Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups).
                           type: string
                         time:
-                          description: 'Timestamp of the moment to which the MySQL
-                            cluster should be restored. (Format: "2006-01-02T15:04:05"
-                            - UTC). When not set, current time is used.'
+                          description: |-
+                            01-02T15:04:05 - UTC). When not set, current time is used.
+                            Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). When not set, current time is used.
                           type: string
                       type: object
                     type: array
                   securityGroupIds:
-                    description: A set of ids of security groups assigned to hosts
-                      of the cluster.
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
                     items:
                       type: string
                     type: array
@@ -580,48 +632,61 @@ spec:
                         type: object
                     type: object
                   user:
-                    description: (Deprecated) To manage users, please switch to using
-                      a separate resource type yandex_mdb_mysql_user.
+                    description: |-
+                      (Block List, Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_mysql_user. (see below for nested schema)
+                      To manage users, please switch to using a separate resource type `yandex_mdb_mysql_user`.
                     items:
                       properties:
                         authenticationPlugin:
-                          description: 'Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD,
-                            CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7
-                            MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD)'
+                          description: |-
+                            (String) Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD).
+                            Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`).
                           type: string
                         connectionLimits:
-                          description: User's connection limits. The structure is
-                            documented below. If the attribute is not specified there
-                            will be no changes.
+                          description: |-
+                            1. When these parameters are set to -1, backend default values will be actually used. (see below for nested schema)
+                            User's connection limits. If not specified there will be no changes. Default value is -1. When these parameters are set to -1, backend default values will be actually used.
                           items:
                             properties:
                               maxConnectionsPerHour:
-                                description: Max connections per hour.
+                                description: |-
+                                  (Number) Max connections per hour.
+                                  Max connections per hour.
                                 type: number
                               maxQuestionsPerHour:
-                                description: Max questions per hour.
+                                description: |-
+                                  (Number) Max questions per hour.
+                                  Max questions per hour.
                                 type: number
                               maxUpdatesPerHour:
-                                description: Max updates per hour.
+                                description: |-
+                                  (Number) Max updates per hour.
+                                  Max updates per hour.
                                 type: number
                               maxUserConnections:
-                                description: Max user connections.
+                                description: |-
+                                  (Number) Max user connections.
+                                  Max user connections.
                                 type: number
                             type: object
                           type: array
                         globalPermissions:
                           description: |-
-                            List user's global permissions
-                            Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
+                            (Set of String) List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
+                            List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS` for clear list use empty list. If the attribute is not specified there will be no changes.
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         name:
-                          description: The name of the user.
+                          description: |-
+                            (String) The resource name.
+                            The name of the user.
                           type: string
                         passwordSecretRef:
-                          description: The password of the user.
+                          description: |-
+                            (String, Sensitive) The password of the user.
+                            The password of the user.
                           properties:
                             key:
                               description: The key to select.
@@ -638,18 +703,20 @@ spec:
                           - namespace
                           type: object
                         permission:
-                          description: Set of permissions granted to the user. The
-                            structure is documented below.
+                          description: |-
+                            (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                            Set of permissions granted to the user.
                           items:
                             properties:
                               databaseName:
-                                description: The name of the database that the permission
-                                  grants access to.
+                                description: |-
+                                  (String) The name of the database that the permission grants access to.
+                                  The name of the database that the permission grants access to.
                                 type: string
                               roles:
-                                description: 'List user''s roles in the database.
-                                  Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES,
-                                  CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.'
+                                description: |-
+                                  (List of String) List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
+                                  List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`.
                                 items:
                                   type: string
                                 type: array
@@ -658,8 +725,9 @@ spec:
                       type: object
                     type: array
                   version:
-                    description: 'Version of the MySQL cluster. (allowed versions
-                      are: 5.7, 8.0)'
+                    description: |-
+                      (String) Version of the MySQL cluster. (allowed versions are: 5.7, 8.0).
+                      Version of the MySQL cluster. (allowed versions are: 5.7, 8.0).
                     type: string
                 type: object
               initProvider:
@@ -676,65 +744,90 @@ spec:
                   autoscaler.
                 properties:
                   access:
-                    description: Access policy to the MySQL cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Access policy to the MySQL cluster. (see below for nested schema)
+                      Access policy to the MySQL cluster.
                     items:
                       properties:
                         dataLens:
-                          description: Allow access for Yandex DataLens.
+                          description: |-
+                            (Boolean) Allow access for Yandex DataLens.
+                            Allow access for [Yandex DataLens](https://yandex.cloud/services/datalens).
                           type: boolean
                         dataTransfer:
-                          description: Allow access for DataTransfer
+                          description: |-
+                            (Boolean) Allow access for DataTransfer.
+                            Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
                           type: boolean
                         webSql:
-                          description: Allows access for SQL queries in the management
-                            console.
+                          description: |-
+                            (Boolean) Allows access for SQL queries in the management console.
+                            Allows access for [SQL queries in the management console](https://yandex.cloud/docs/managed-mysql/operations/web-sql-query).
                           type: boolean
                       type: object
                     type: array
                   allowRegenerationHost:
-                    description: A host of the MySQL cluster. The structure is documented
-                      below.
+                    description: |-
+                      (Boolean, Deprecated) Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
+                      Regenerate hosts after changing the assign_public_ip parameter.
+                      Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
+                      Regenerate hosts after changing the assign_public_ip parameter.
                     type: boolean
                   backupRetainPeriodDays:
-                    description: The period in days during which backups are stored.
+                    description: |-
+                      (Number) The period in days during which backups are stored.
+                      The period in days during which backups are stored.
                     type: number
                   backupWindowStart:
-                    description: Time to start the daily backup, in the UTC. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Time to start the daily backup, in the UTC. (see below for nested schema)
+                      Time to start the daily backup, in the UTC.
                     items:
                       properties:
                         hours:
-                          description: The hour at which backup will be started.
+                          description: |-
+                            (Number) The hour at which backup will be started.
+                            The hour at which backup will be started.
                           type: number
                         minutes:
-                          description: The minute at which backup will be started.
+                          description: |-
+                            (Number) The minute at which backup will be started.
+                            The minute at which backup will be started.
                           type: number
                       type: object
                     type: array
                   database:
-                    description: (Deprecated) To manage databases, please switch to
-                      using a separate resource type yandex_mdb_mysql_databases.
+                    description: |-
+                      (Block Set, Deprecated) To manage databases, please switch to using a separate resource type yandex_mdb_mysql_databases. (see below for nested schema)
+                      To manage databases, please switch to using a separate resource type `yandex_mdb_mysql_databases`.
                     items:
                       properties:
                         name:
-                          description: The name of the database.
+                          description: |-
+                            (String) The resource name.
+                            The name of the database.
                           type: string
                       type: object
                     type: array
                   deletionProtection:
-                    description: Inhibits deletion of the cluster. Can be either true
-                      or false.
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: Description of the MySQL cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   environment:
-                    description: Deployment environment of the MySQL cluster.
+                    description: |-
+                      (String) Deployment environment of the MySQL cluster.
+                      Deployment environment of the MySQL cluster.
                     type: string
                   folderId:
-                    description: The ID of the folder that the resource belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -813,38 +906,40 @@ spec:
                         type: object
                     type: object
                   host:
-                    description: A host of the MySQL cluster. The structure is documented
-                      below.
+                    description: |-
+                      (Block List, Min: 1) A host of the MySQL cluster. (see below for nested schema)
+                      A host of the MySQL cluster.
                     items:
                       properties:
                         assignPublicIp:
-                          description: Sets whether the host should get a public IP
-                            address. It can be changed on the fly only when name is
-                            set.
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address. It can be changed on the fly only when name is set.
+                            Sets whether the host should get a public IP address. It can be changed on the fly only when `name` is set.
                           type: boolean
                         backupPriority:
-                          description: Host backup priority. Value is between 0 and
-                            100, default is 0.
+                          description: |-
+                            (Number) Host backup priority. Value is between 0 and 100, default is 0.
+                            Host backup priority. Value is between 0 and 100, default is 0.
                           type: number
                         name:
-                          description: Host state name. It should be set for all hosts
-                            or unset for all hosts. This field can be used by another
-                            host, to select which host will be its replication source.
-                            Please refer to replication_source_name parameter.
+                          description: |-
+                            (String) The resource name.
+                            Host state name. It should be set for all hosts or unset for all hosts. This field can be used by another host, to select which host will be its replication source. Please refer to `replication_source_name` parameter.
                           type: string
                         priority:
-                          description: Host master promotion priority. Value is between
-                            0 and 100, default is 0.
+                          description: |-
+                            (Number) Host master promotion priority. Value is between 0 and 100, default is 0.
+                            Host master promotion priority. Value is between 0 and 100, default is 0.
                           type: number
                         replicationSourceName:
-                          description: Host replication source name points to host's
-                            name from which this host should replicate. When not set
-                            then host in HA group. It works only when name is set.
+                          description: |-
+                            (String) Host replication source name points to host's name from which this host should replicate. When not set then host in HA group. It works only when name is set.
+                            Host replication source name points to host's `name` from which this host should replicate. When not set then host in HA group. It works only when `name` is set.
                           type: string
                         subnetId:
-                          description: The ID of the subnet, to which the host belongs.
-                            The subnet must be a part of the network to which the
-                            cluster belongs.
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -921,12 +1016,14 @@ spec:
                               type: object
                           type: object
                         zone:
-                          description: The availability zone where the MySQL host
-                            will be created.
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                           type: string
                       type: object
                     type: array
                   hostGroupIds:
+                    description: (Set of String)
                     items:
                       type: string
                     type: array
@@ -934,43 +1031,51 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the MySQL
-                      cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   maintenanceWindow:
-                    description: Maintenance policy of the MySQL cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Maintenance policy of the MySQL cluster. (see below for nested schema)
+                      Maintenance policy of the MySQL cluster.
                     items:
                       properties:
                         day:
-                          description: 'Day of the week (in DDD format). Allowed values:
-                            "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"'
+                          description: |-
+                            (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN
+                            Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`
                           type: string
                         hour:
-                          description: Hour of the day in UTC (in HH format). Allowed
-                            value is between 0 and 23.
+                          description: |-
+                            (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+                            Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
                           type: number
                         type:
-                          description: Type of maintenance window. Can be either ANYTIME
-                            or WEEKLY. A day and hour of window need to be specified
-                            with weekly window.
+                          description: |-
+                            (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
                           type: string
                       type: object
                     type: array
                   mysqlConfig:
                     additionalProperties:
                       type: string
-                    description: MySQL cluster config. Detail info in "MySQL config"
-                      section (documented below).
+                    description: |-
+                      (Map of String) MySQL cluster config block.
+                      MySQL cluster config block.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the MySQL cluster. Provided by the client
-                      when the cluster is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network, to which the MySQL cluster uses.
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   networkIdRef:
                     description: Reference to a Network in vpc to populate networkId.
@@ -1047,58 +1152,73 @@ spec:
                         type: object
                     type: object
                   performanceDiagnostics:
-                    description: Cluster performance diagnostics settings. The structure
-                      is documented below. YC Documentation
+                    description: |-
+                      (Block List, Max: 1) Cluster performance diagnostics settings. YC Documentation. (see below for nested schema)
+                      Cluster performance diagnostics settings. [YC Documentation](https://yandex.cloud/docs/managed-mysql/api-ref/grpc/cluster_service#PerformanceDiagnostics).
                     items:
                       properties:
                         enabled:
-                          description: Enable performance diagnostics
+                          description: |-
+                            (Boolean) Enable performance diagnostics.
+                            Enable performance diagnostics.
                           type: boolean
                         sessionsSamplingInterval:
-                          description: Interval (in seconds) for my_stat_activity
-                            sampling Acceptable values are 1 to 86400, inclusive.
+                          description: |-
+                            (Number) Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+                            Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
                           type: number
                         statementsSamplingInterval:
-                          description: Interval (in seconds) for my_stat_statements
-                            sampling Acceptable values are 1 to 86400, inclusive.
+                          description: |-
+                            (Number) Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+                            Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
                           type: number
                       type: object
                     type: array
                   resources:
-                    description: Resources allocated to hosts of the MySQL cluster.
-                      The structure is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Resources allocated to hosts of the MySQL cluster. (see below for nested schema)
+                      Resources allocated to hosts of the MySQL cluster.
                     items:
                       properties:
                         diskSize:
-                          description: Volume of the storage available to a MySQL
-                            host, in gigabytes.
+                          description: |-
+                            (Number) Volume of the storage available to a MySQL host, in gigabytes.
+                            Volume of the storage available to a MySQL host, in gigabytes.
                           type: number
                         diskTypeId:
-                          description: Type of the storage of MySQL hosts.
+                          description: |-
+                            (String) Type of the storage of MySQL hosts.
+                            Type of the storage of MySQL hosts.
                           type: string
                         resourcePresetId:
+                          description: |-
+                            (String) The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see the official documentation.
+                            The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-mysql/concepts/instance-types).
                           type: string
                       type: object
                     type: array
                   restore:
-                    description: The cluster will be created from the specified backup.
-                      The structure is documented below.
+                    description: |-
+                      (Block List, Max: 1) The cluster will be created from the specified backup. (see below for nested schema)
+                      The cluster will be created from the specified backup.
                     items:
                       properties:
                         backupId:
-                          description: Backup ID. The cluster will be created from
-                            the specified backup. How to get a list of MySQL backups.
+                          description: |-
+                            (String) Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
+                            Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups).
                           type: string
                         time:
-                          description: 'Timestamp of the moment to which the MySQL
-                            cluster should be restored. (Format: "2006-01-02T15:04:05"
-                            - UTC). When not set, current time is used.'
+                          description: |-
+                            01-02T15:04:05 - UTC). When not set, current time is used.
+                            Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). When not set, current time is used.
                           type: string
                       type: object
                     type: array
                   securityGroupIds:
-                    description: A set of ids of security groups assigned to hosts
-                      of the cluster.
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
                     items:
                       type: string
                     type: array
@@ -1182,48 +1302,61 @@ spec:
                         type: object
                     type: object
                   user:
-                    description: (Deprecated) To manage users, please switch to using
-                      a separate resource type yandex_mdb_mysql_user.
+                    description: |-
+                      (Block List, Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_mysql_user. (see below for nested schema)
+                      To manage users, please switch to using a separate resource type `yandex_mdb_mysql_user`.
                     items:
                       properties:
                         authenticationPlugin:
-                          description: 'Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD,
-                            CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7
-                            MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD)'
+                          description: |-
+                            (String) Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD).
+                            Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`).
                           type: string
                         connectionLimits:
-                          description: User's connection limits. The structure is
-                            documented below. If the attribute is not specified there
-                            will be no changes.
+                          description: |-
+                            1. When these parameters are set to -1, backend default values will be actually used. (see below for nested schema)
+                            User's connection limits. If not specified there will be no changes. Default value is -1. When these parameters are set to -1, backend default values will be actually used.
                           items:
                             properties:
                               maxConnectionsPerHour:
-                                description: Max connections per hour.
+                                description: |-
+                                  (Number) Max connections per hour.
+                                  Max connections per hour.
                                 type: number
                               maxQuestionsPerHour:
-                                description: Max questions per hour.
+                                description: |-
+                                  (Number) Max questions per hour.
+                                  Max questions per hour.
                                 type: number
                               maxUpdatesPerHour:
-                                description: Max updates per hour.
+                                description: |-
+                                  (Number) Max updates per hour.
+                                  Max updates per hour.
                                 type: number
                               maxUserConnections:
-                                description: Max user connections.
+                                description: |-
+                                  (Number) Max user connections.
+                                  Max user connections.
                                 type: number
                             type: object
                           type: array
                         globalPermissions:
                           description: |-
-                            List user's global permissions
-                            Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
+                            (Set of String) List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
+                            List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS` for clear list use empty list. If the attribute is not specified there will be no changes.
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         name:
-                          description: The name of the user.
+                          description: |-
+                            (String) The resource name.
+                            The name of the user.
                           type: string
                         passwordSecretRef:
-                          description: The password of the user.
+                          description: |-
+                            (String, Sensitive) The password of the user.
+                            The password of the user.
                           properties:
                             key:
                               description: The key to select.
@@ -1240,18 +1373,20 @@ spec:
                           - namespace
                           type: object
                         permission:
-                          description: Set of permissions granted to the user. The
-                            structure is documented below.
+                          description: |-
+                            (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                            Set of permissions granted to the user.
                           items:
                             properties:
                               databaseName:
-                                description: The name of the database that the permission
-                                  grants access to.
+                                description: |-
+                                  (String) The name of the database that the permission grants access to.
+                                  The name of the database that the permission grants access to.
                                 type: string
                               roles:
-                                description: 'List user''s roles in the database.
-                                  Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES,
-                                  CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.'
+                                description: |-
+                                  (List of String) List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
+                                  List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`.
                                 items:
                                   type: string
                                 type: array
@@ -1262,8 +1397,9 @@ spec:
                       type: object
                     type: array
                   version:
-                    description: 'Version of the MySQL cluster. (allowed versions
-                      are: 5.7, 8.0)'
+                    description: |-
+                      (String) Version of the MySQL cluster. (allowed versions are: 5.7, 8.0).
+                      Version of the MySQL cluster. (allowed versions are: 5.7, 8.0).
                     type: string
                 type: object
               managementPolicies:
@@ -1460,282 +1596,356 @@ spec:
               atProvider:
                 properties:
                   access:
-                    description: Access policy to the MySQL cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Access policy to the MySQL cluster. (see below for nested schema)
+                      Access policy to the MySQL cluster.
                     items:
                       properties:
                         dataLens:
-                          description: Allow access for Yandex DataLens.
+                          description: |-
+                            (Boolean) Allow access for Yandex DataLens.
+                            Allow access for [Yandex DataLens](https://yandex.cloud/services/datalens).
                           type: boolean
                         dataTransfer:
-                          description: Allow access for DataTransfer
+                          description: |-
+                            (Boolean) Allow access for DataTransfer.
+                            Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
                           type: boolean
                         webSql:
-                          description: Allows access for SQL queries in the management
-                            console.
+                          description: |-
+                            (Boolean) Allows access for SQL queries in the management console.
+                            Allows access for [SQL queries in the management console](https://yandex.cloud/docs/managed-mysql/operations/web-sql-query).
                           type: boolean
                       type: object
                     type: array
                   allowRegenerationHost:
-                    description: A host of the MySQL cluster. The structure is documented
-                      below.
+                    description: |-
+                      (Boolean, Deprecated) Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
+                      Regenerate hosts after changing the assign_public_ip parameter.
+                      Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
+                      Regenerate hosts after changing the assign_public_ip parameter.
                     type: boolean
                   backupRetainPeriodDays:
-                    description: The period in days during which backups are stored.
+                    description: |-
+                      (Number) The period in days during which backups are stored.
+                      The period in days during which backups are stored.
                     type: number
                   backupWindowStart:
-                    description: Time to start the daily backup, in the UTC. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Time to start the daily backup, in the UTC. (see below for nested schema)
+                      Time to start the daily backup, in the UTC.
                     items:
                       properties:
                         hours:
-                          description: The hour at which backup will be started.
+                          description: |-
+                            (Number) The hour at which backup will be started.
+                            The hour at which backup will be started.
                           type: number
                         minutes:
-                          description: The minute at which backup will be started.
+                          description: |-
+                            (Number) The minute at which backup will be started.
+                            The minute at which backup will be started.
                           type: number
                       type: object
                     type: array
                   createdAt:
-                    description: Creation timestamp of the cluster.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   database:
-                    description: (Deprecated) To manage databases, please switch to
-                      using a separate resource type yandex_mdb_mysql_databases.
+                    description: |-
+                      (Block Set, Deprecated) To manage databases, please switch to using a separate resource type yandex_mdb_mysql_databases. (see below for nested schema)
+                      To manage databases, please switch to using a separate resource type `yandex_mdb_mysql_databases`.
                     items:
                       properties:
                         name:
-                          description: The name of the database.
+                          description: |-
+                            (String) The resource name.
+                            The name of the database.
                           type: string
                       type: object
                     type: array
                   deletionProtection:
-                    description: Inhibits deletion of the cluster. Can be either true
-                      or false.
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: Description of the MySQL cluster.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   environment:
-                    description: Deployment environment of the MySQL cluster.
+                    description: |-
+                      (String) Deployment environment of the MySQL cluster.
+                      Deployment environment of the MySQL cluster.
                     type: string
                   folderId:
-                    description: The ID of the folder that the resource belongs to.
-                      If it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   health:
-                    description: Aggregated health of the cluster.
+                    description: |-
+                      (String) Aggregated health of the cluster.
+                      Aggregated health of the cluster.
                     type: string
                   host:
-                    description: A host of the MySQL cluster. The structure is documented
-                      below.
+                    description: |-
+                      (Block List, Min: 1) A host of the MySQL cluster. (see below for nested schema)
+                      A host of the MySQL cluster.
                     items:
                       properties:
                         assignPublicIp:
-                          description: Sets whether the host should get a public IP
-                            address. It can be changed on the fly only when name is
-                            set.
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address. It can be changed on the fly only when name is set.
+                            Sets whether the host should get a public IP address. It can be changed on the fly only when `name` is set.
                           type: boolean
                         backupPriority:
-                          description: Host backup priority. Value is between 0 and
-                            100, default is 0.
+                          description: |-
+                            (Number) Host backup priority. Value is between 0 and 100, default is 0.
+                            Host backup priority. Value is between 0 and 100, default is 0.
                           type: number
                         fqdn:
-                          description: (Computed) The fully qualified domain name
-                            of the host.
+                          description: |-
+                            (String) The fully qualified domain name of the host.
+                            The fully qualified domain name of the host.
                           type: string
                         name:
-                          description: Host state name. It should be set for all hosts
-                            or unset for all hosts. This field can be used by another
-                            host, to select which host will be its replication source.
-                            Please refer to replication_source_name parameter.
+                          description: |-
+                            (String) The resource name.
+                            Host state name. It should be set for all hosts or unset for all hosts. This field can be used by another host, to select which host will be its replication source. Please refer to `replication_source_name` parameter.
                           type: string
                         priority:
-                          description: Host master promotion priority. Value is between
-                            0 and 100, default is 0.
+                          description: |-
+                            (Number) Host master promotion priority. Value is between 0 and 100, default is 0.
+                            Host master promotion priority. Value is between 0 and 100, default is 0.
                           type: number
                         replicationSource:
-                          description: (Computed) Host replication source (fqdn),
-                            when replication_source is empty then host is in HA group.
+                          description: |-
+                            (String) Host replication source (fqdn), when replication_source is empty then host is in HA group.
+                            Host replication source (fqdn), when replication_source is empty then host is in HA group.
                           type: string
                         replicationSourceName:
-                          description: Host replication source name points to host's
-                            name from which this host should replicate. When not set
-                            then host in HA group. It works only when name is set.
+                          description: |-
+                            (String) Host replication source name points to host's name from which this host should replicate. When not set then host in HA group. It works only when name is set.
+                            Host replication source name points to host's `name` from which this host should replicate. When not set then host in HA group. It works only when `name` is set.
                           type: string
                         subnetId:
-                          description: The ID of the subnet, to which the host belongs.
-                            The subnet must be a part of the network to which the
-                            cluster belongs.
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
                           type: string
                         zone:
-                          description: The availability zone where the MySQL host
-                            will be created.
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                           type: string
                       type: object
                     type: array
                   hostGroupIds:
+                    description: (Set of String)
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs to assign to the MySQL
-                      cluster.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   maintenanceWindow:
-                    description: Maintenance policy of the MySQL cluster. The structure
-                      is documented below.
+                    description: |-
+                      (Block List, Max: 1) Maintenance policy of the MySQL cluster. (see below for nested schema)
+                      Maintenance policy of the MySQL cluster.
                     items:
                       properties:
                         day:
-                          description: 'Day of the week (in DDD format). Allowed values:
-                            "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"'
+                          description: |-
+                            (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN
+                            Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`
                           type: string
                         hour:
-                          description: Hour of the day in UTC (in HH format). Allowed
-                            value is between 0 and 23.
+                          description: |-
+                            (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+                            Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
                           type: number
                         type:
-                          description: Type of maintenance window. Can be either ANYTIME
-                            or WEEKLY. A day and hour of window need to be specified
-                            with weekly window.
+                          description: |-
+                            (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
                           type: string
                       type: object
                     type: array
                   mysqlConfig:
                     additionalProperties:
                       type: string
-                    description: MySQL cluster config. Detail info in "MySQL config"
-                      section (documented below).
+                    description: |-
+                      (Map of String) MySQL cluster config block.
+                      MySQL cluster config block.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the MySQL cluster. Provided by the client
-                      when the cluster is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   networkId:
-                    description: ID of the network, to which the MySQL cluster uses.
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   performanceDiagnostics:
-                    description: Cluster performance diagnostics settings. The structure
-                      is documented below. YC Documentation
+                    description: |-
+                      (Block List, Max: 1) Cluster performance diagnostics settings. YC Documentation. (see below for nested schema)
+                      Cluster performance diagnostics settings. [YC Documentation](https://yandex.cloud/docs/managed-mysql/api-ref/grpc/cluster_service#PerformanceDiagnostics).
                     items:
                       properties:
                         enabled:
-                          description: Enable performance diagnostics
+                          description: |-
+                            (Boolean) Enable performance diagnostics.
+                            Enable performance diagnostics.
                           type: boolean
                         sessionsSamplingInterval:
-                          description: Interval (in seconds) for my_stat_activity
-                            sampling Acceptable values are 1 to 86400, inclusive.
+                          description: |-
+                            (Number) Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+                            Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
                           type: number
                         statementsSamplingInterval:
-                          description: Interval (in seconds) for my_stat_statements
-                            sampling Acceptable values are 1 to 86400, inclusive.
+                          description: |-
+                            (Number) Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+                            Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
                           type: number
                       type: object
                     type: array
                   resources:
-                    description: Resources allocated to hosts of the MySQL cluster.
-                      The structure is documented below.
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Resources allocated to hosts of the MySQL cluster. (see below for nested schema)
+                      Resources allocated to hosts of the MySQL cluster.
                     items:
                       properties:
                         diskSize:
-                          description: Volume of the storage available to a MySQL
-                            host, in gigabytes.
+                          description: |-
+                            (Number) Volume of the storage available to a MySQL host, in gigabytes.
+                            Volume of the storage available to a MySQL host, in gigabytes.
                           type: number
                         diskTypeId:
-                          description: Type of the storage of MySQL hosts.
+                          description: |-
+                            (String) Type of the storage of MySQL hosts.
+                            Type of the storage of MySQL hosts.
                           type: string
                         resourcePresetId:
+                          description: |-
+                            (String) The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see the official documentation.
+                            The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-mysql/concepts/instance-types).
                           type: string
                       type: object
                     type: array
                   restore:
-                    description: The cluster will be created from the specified backup.
-                      The structure is documented below.
+                    description: |-
+                      (Block List, Max: 1) The cluster will be created from the specified backup. (see below for nested schema)
+                      The cluster will be created from the specified backup.
                     items:
                       properties:
                         backupId:
-                          description: Backup ID. The cluster will be created from
-                            the specified backup. How to get a list of MySQL backups.
+                          description: |-
+                            (String) Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
+                            Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups).
                           type: string
                         time:
-                          description: 'Timestamp of the moment to which the MySQL
-                            cluster should be restored. (Format: "2006-01-02T15:04:05"
-                            - UTC). When not set, current time is used.'
+                          description: |-
+                            01-02T15:04:05 - UTC). When not set, current time is used.
+                            Timestamp of the moment to which the MySQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). When not set, current time is used.
                           type: string
                       type: object
                     type: array
                   securityGroupIds:
-                    description: A set of ids of security groups assigned to hosts
-                      of the cluster.
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   status:
-                    description: Status of the cluster.
+                    description: |-
+                      (String) Status of the cluster.
+                      Status of the cluster.
                     type: string
                   user:
-                    description: (Deprecated) To manage users, please switch to using
-                      a separate resource type yandex_mdb_mysql_user.
+                    description: |-
+                      (Block List, Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_mysql_user. (see below for nested schema)
+                      To manage users, please switch to using a separate resource type `yandex_mdb_mysql_user`.
                     items:
                       properties:
                         authenticationPlugin:
-                          description: 'Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD,
-                            CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7
-                            MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD)'
+                          description: |-
+                            (String) Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD).
+                            Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`).
                           type: string
                         connectionLimits:
-                          description: User's connection limits. The structure is
-                            documented below. If the attribute is not specified there
-                            will be no changes.
+                          description: |-
+                            1. When these parameters are set to -1, backend default values will be actually used. (see below for nested schema)
+                            User's connection limits. If not specified there will be no changes. Default value is -1. When these parameters are set to -1, backend default values will be actually used.
                           items:
                             properties:
                               maxConnectionsPerHour:
-                                description: Max connections per hour.
+                                description: |-
+                                  (Number) Max connections per hour.
+                                  Max connections per hour.
                                 type: number
                               maxQuestionsPerHour:
-                                description: Max questions per hour.
+                                description: |-
+                                  (Number) Max questions per hour.
+                                  Max questions per hour.
                                 type: number
                               maxUpdatesPerHour:
-                                description: Max updates per hour.
+                                description: |-
+                                  (Number) Max updates per hour.
+                                  Max updates per hour.
                                 type: number
                               maxUserConnections:
-                                description: Max user connections.
+                                description: |-
+                                  (Number) Max user connections.
+                                  Max user connections.
                                 type: number
                             type: object
                           type: array
                         globalPermissions:
                           description: |-
-                            List user's global permissions
-                            Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
+                            (Set of String) List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
+                            List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS` for clear list use empty list. If the attribute is not specified there will be no changes.
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
                         name:
-                          description: The name of the user.
+                          description: |-
+                            (String) The resource name.
+                            The name of the user.
                           type: string
                         permission:
-                          description: Set of permissions granted to the user. The
-                            structure is documented below.
+                          description: |-
+                            (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                            Set of permissions granted to the user.
                           items:
                             properties:
                               databaseName:
-                                description: The name of the database that the permission
-                                  grants access to.
+                                description: |-
+                                  (String) The name of the database that the permission grants access to.
+                                  The name of the database that the permission grants access to.
                                 type: string
                               roles:
-                                description: 'List user''s roles in the database.
-                                  Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES,
-                                  CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.'
+                                description: |-
+                                  (List of String) List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
+                                  List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`.
                                 items:
                                   type: string
                                 type: array
@@ -1744,8 +1954,9 @@ spec:
                       type: object
                     type: array
                   version:
-                    description: 'Version of the MySQL cluster. (allowed versions
-                      are: 5.7, 8.0)'
+                    description: |-
+                      (String) Version of the MySQL cluster. (allowed versions are: 5.7, 8.0).
+                      Version of the MySQL cluster. (allowed versions are: 5.7, 8.0).
                     type: string
                 type: object
               conditions:

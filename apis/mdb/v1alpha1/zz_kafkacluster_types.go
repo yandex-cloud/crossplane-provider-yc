@@ -29,141 +29,174 @@ import (
 
 type ConfigAccessInitParameters struct {
 
-	// Allow access for DataTransfer
+	// (Boolean) Allow access for DataTransfer.
+	// Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
 	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
 }
 
 type ConfigAccessObservation struct {
 
-	// Allow access for DataTransfer
+	// (Boolean) Allow access for DataTransfer.
+	// Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
 	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
 }
 
 type ConfigAccessParameters struct {
 
-	// Allow access for DataTransfer
+	// (Boolean) Allow access for DataTransfer.
+	// Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
 	// +kubebuilder:validation:Optional
 	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
 }
 
 type ConfigKafkaInitParameters struct {
 
-	// User-defined settings for the Kafka cluster. The structure is documented below.
+	// defined settings for the Kafka cluster. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+	// User-defined settings for the Kafka cluster. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/operations/cluster-update) and [the Kafka documentation](https://kafka.apache.org/documentation/#configuration).
 	KafkaConfig []KafkaConfigInitParameters `json:"kafkaConfig,omitempty" tf:"kafka_config,omitempty"`
 
-	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the Kafka subcluster.
 	Resources []KafkaResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type ConfigKafkaObservation struct {
 
-	// User-defined settings for the Kafka cluster. The structure is documented below.
+	// defined settings for the Kafka cluster. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+	// User-defined settings for the Kafka cluster. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/operations/cluster-update) and [the Kafka documentation](https://kafka.apache.org/documentation/#configuration).
 	KafkaConfig []KafkaConfigObservation `json:"kafkaConfig,omitempty" tf:"kafka_config,omitempty"`
 
-	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the Kafka subcluster.
 	Resources []KafkaResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type ConfigKafkaParameters struct {
 
-	// User-defined settings for the Kafka cluster. The structure is documented below.
+	// defined settings for the Kafka cluster. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+	// User-defined settings for the Kafka cluster. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/operations/cluster-update) and [the Kafka documentation](https://kafka.apache.org/documentation/#configuration).
 	// +kubebuilder:validation:Optional
 	KafkaConfig []KafkaConfigParameters `json:"kafkaConfig,omitempty" tf:"kafka_config,omitempty"`
 
-	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the Kafka subcluster.
 	// +kubebuilder:validation:Optional
 	Resources []KafkaResourcesParameters `json:"resources" tf:"resources,omitempty"`
 }
 
 type ConfigZookeeperInitParameters struct {
 
-	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the ZooKeeper subcluster.
 	Resources []ConfigZookeeperResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type ConfigZookeeperObservation struct {
 
-	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the ZooKeeper subcluster.
 	Resources []ConfigZookeeperResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type ConfigZookeeperParameters struct {
 
-	// Resources allocated to hosts of the ZooKeeper subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the ZooKeeper subcluster.
 	// +kubebuilder:validation:Optional
 	Resources []ConfigZookeeperResourcesParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 }
 
 type ConfigZookeeperResourcesInitParameters struct {
 
+	// (Number) Volume of the storage available to a Kafka host, in gigabytes.
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
+	// (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a ZooKeeper host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type ConfigZookeeperResourcesObservation struct {
 
+	// (Number) Volume of the storage available to a Kafka host, in gigabytes.
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
+	// (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a ZooKeeper host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type ConfigZookeeperResourcesParameters struct {
 
+	// (Number) Volume of the storage available to a Kafka host, in gigabytes.
 	// Volume of the storage available to a ZooKeeper host, in gigabytes.
 	// +kubebuilder:validation:Optional
 	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
+	// (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+	// Type of the storage of ZooKeeper hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
 	// +kubebuilder:validation:Optional
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a ZooKeeper host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
 	// +kubebuilder:validation:Optional
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type DiskSizeAutoscalingInitParameters struct {
 
+	// (Number) Maximum possible size of disk in bytes.
 	// Maximum possible size of disk in bytes.
 	DiskSizeLimit *int64 `json:"diskSizeLimit,omitempty" tf:"disk_size_limit,omitempty"`
 
+	// (Number) Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
 	// Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
 	EmergencyUsageThreshold *int64 `json:"emergencyUsageThreshold,omitempty" tf:"emergency_usage_threshold,omitempty"`
 
+	// (Number) Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
 	// Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
 	PlannedUsageThreshold *int64 `json:"plannedUsageThreshold,omitempty" tf:"planned_usage_threshold,omitempty"`
 }
 
 type DiskSizeAutoscalingObservation struct {
 
+	// (Number) Maximum possible size of disk in bytes.
 	// Maximum possible size of disk in bytes.
 	DiskSizeLimit *int64 `json:"diskSizeLimit,omitempty" tf:"disk_size_limit,omitempty"`
 
+	// (Number) Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
 	// Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
 	EmergencyUsageThreshold *int64 `json:"emergencyUsageThreshold,omitempty" tf:"emergency_usage_threshold,omitempty"`
 
+	// (Number) Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
 	// Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
 	PlannedUsageThreshold *int64 `json:"plannedUsageThreshold,omitempty" tf:"planned_usage_threshold,omitempty"`
 }
 
 type DiskSizeAutoscalingParameters struct {
 
+	// (Number) Maximum possible size of disk in bytes.
 	// Maximum possible size of disk in bytes.
 	// +kubebuilder:validation:Optional
 	DiskSizeLimit *int64 `json:"diskSizeLimit" tf:"disk_size_limit,omitempty"`
 
+	// (Number) Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
 	// Percent of disk utilization. Disk will autoscale immediately, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled). Must be not less then 'planned_usage_threshold' value.
 	// +kubebuilder:validation:Optional
 	EmergencyUsageThreshold *int64 `json:"emergencyUsageThreshold,omitempty" tf:"emergency_usage_threshold,omitempty"`
 
+	// (Number) Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
 	// Percent of disk utilization. During maintenance disk will autoscale, if this threshold reached. Value is between 0 and 100. Default value is 0 (autoscaling disabled).
 	// +kubebuilder:validation:Optional
 	PlannedUsageThreshold *int64 `json:"plannedUsageThreshold,omitempty" tf:"planned_usage_threshold,omitempty"`
@@ -171,106 +204,175 @@ type DiskSizeAutoscalingParameters struct {
 
 type KafkaClusterConfigInitParameters struct {
 
-	// Access policy to the Kafka cluster. The structure is documented below.
+	// (Block List, Max: 1) Access policy to the Kafka cluster. (see below for nested schema)
+	// Access policy to the Kafka cluster.
 	Access []ConfigAccessInitParameters `json:"access,omitempty" tf:"access,omitempty"`
 
-	// Determines whether each broker will be assigned a public IP address. The default is false.
+	// (Boolean) Determines whether each broker will be assigned a public IP address. The default is false.
+	// Determines whether each broker will be assigned a public IP address. The default is `false`.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
-	// Count of brokers per availability zone. The default is 1.
+	// (Number) Count of brokers per availability zone. The default is 1.
+	// Count of brokers per availability zone. The default is `1`.
 	BrokersCount *int64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
 
-	// Disk autoscaling settings of the Kafka cluster. The structure is documented below.
+	// (Block List, Max: 1) Disk autoscaling settings of the Kafka cluster. (see below for nested schema)
+	// Disk autoscaling settings of the Kafka cluster.
 	DiskSizeAutoscaling []DiskSizeAutoscalingInitParameters `json:"diskSizeAutoscaling,omitempty" tf:"disk_size_autoscaling,omitempty"`
 
-	// Configuration of the Kafka subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Configuration of the Kafka subcluster. (see below for nested schema)
+	// Configuration of the Kafka subcluster.
 	Kafka []ConfigKafkaInitParameters `json:"kafka,omitempty" tf:"kafka,omitempty"`
 
-	// Enables managed schema registry on cluster. The default is false.
+	// (Block List, Max: 1) KAFKA UI settings of the Kafka cluster. (see below for nested schema)
+	// KAFKA UI settings of the Kafka cluster.
+	KafkaUI []KafkaUIInitParameters `json:"kafkaUi,omitempty" tf:"kafka_ui,omitempty"`
+
+	// controller subcluster. (see below for nested schema)
+	// Configuration of the KRaft-controller subcluster.
+	Kraft []KraftInitParameters `json:"kraft,omitempty" tf:"kraft,omitempty"`
+
+	// (Block List, Max: 1) REST API settings of the Kafka cluster. (see below for nested schema)
+	// REST API settings of the Kafka cluster.
+	RestAPI []RestAPIInitParameters `json:"restApi,omitempty" tf:"rest_api,omitempty"`
+
+	// (Boolean) Enables managed schema registry on cluster. The default is false.
+	// Enables managed schema registry on cluster. The default is `false`.
 	SchemaRegistry *bool `json:"schemaRegistry,omitempty" tf:"schema_registry,omitempty"`
 
+	// (Boolean, Deprecated)
 	UnmanagedTopics *bool `json:"unmanagedTopics,omitempty" tf:"unmanaged_topics,omitempty"`
 
+	// (String) Version of the Kafka server software.
 	// Version of the Kafka server software.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 
+	// (List of String) List of availability zones.
 	// List of availability zones.
 	Zones []*string `json:"zones,omitempty" tf:"zones,omitempty"`
 
-	// Configuration of the ZooKeeper subcluster. The structure is documented below.
+	// (Block List, Max: 1) Configuration of the ZooKeeper subcluster. (see below for nested schema)
+	// Configuration of the ZooKeeper subcluster.
 	Zookeeper []ConfigZookeeperInitParameters `json:"zookeeper,omitempty" tf:"zookeeper,omitempty"`
 }
 
 type KafkaClusterConfigObservation struct {
 
-	// Access policy to the Kafka cluster. The structure is documented below.
+	// (Block List, Max: 1) Access policy to the Kafka cluster. (see below for nested schema)
+	// Access policy to the Kafka cluster.
 	Access []ConfigAccessObservation `json:"access,omitempty" tf:"access,omitempty"`
 
-	// Determines whether each broker will be assigned a public IP address. The default is false.
+	// (Boolean) Determines whether each broker will be assigned a public IP address. The default is false.
+	// Determines whether each broker will be assigned a public IP address. The default is `false`.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
-	// Count of brokers per availability zone. The default is 1.
+	// (Number) Count of brokers per availability zone. The default is 1.
+	// Count of brokers per availability zone. The default is `1`.
 	BrokersCount *int64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
 
-	// Disk autoscaling settings of the Kafka cluster. The structure is documented below.
+	// (Block List, Max: 1) Disk autoscaling settings of the Kafka cluster. (see below for nested schema)
+	// Disk autoscaling settings of the Kafka cluster.
 	DiskSizeAutoscaling []DiskSizeAutoscalingObservation `json:"diskSizeAutoscaling,omitempty" tf:"disk_size_autoscaling,omitempty"`
 
-	// Configuration of the Kafka subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Configuration of the Kafka subcluster. (see below for nested schema)
+	// Configuration of the Kafka subcluster.
 	Kafka []ConfigKafkaObservation `json:"kafka,omitempty" tf:"kafka,omitempty"`
 
-	// Enables managed schema registry on cluster. The default is false.
+	// (Block List, Max: 1) KAFKA UI settings of the Kafka cluster. (see below for nested schema)
+	// KAFKA UI settings of the Kafka cluster.
+	KafkaUI []KafkaUIObservation `json:"kafkaUi,omitempty" tf:"kafka_ui,omitempty"`
+
+	// controller subcluster. (see below for nested schema)
+	// Configuration of the KRaft-controller subcluster.
+	Kraft []KraftObservation `json:"kraft,omitempty" tf:"kraft,omitempty"`
+
+	// (Block List, Max: 1) REST API settings of the Kafka cluster. (see below for nested schema)
+	// REST API settings of the Kafka cluster.
+	RestAPI []RestAPIObservation `json:"restApi,omitempty" tf:"rest_api,omitempty"`
+
+	// (Boolean) Enables managed schema registry on cluster. The default is false.
+	// Enables managed schema registry on cluster. The default is `false`.
 	SchemaRegistry *bool `json:"schemaRegistry,omitempty" tf:"schema_registry,omitempty"`
 
+	// (Boolean, Deprecated)
 	UnmanagedTopics *bool `json:"unmanagedTopics,omitempty" tf:"unmanaged_topics,omitempty"`
 
+	// (String) Version of the Kafka server software.
 	// Version of the Kafka server software.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 
+	// (List of String) List of availability zones.
 	// List of availability zones.
 	Zones []*string `json:"zones,omitempty" tf:"zones,omitempty"`
 
-	// Configuration of the ZooKeeper subcluster. The structure is documented below.
+	// (Block List, Max: 1) Configuration of the ZooKeeper subcluster. (see below for nested schema)
+	// Configuration of the ZooKeeper subcluster.
 	Zookeeper []ConfigZookeeperObservation `json:"zookeeper,omitempty" tf:"zookeeper,omitempty"`
 }
 
 type KafkaClusterConfigParameters struct {
 
-	// Access policy to the Kafka cluster. The structure is documented below.
+	// (Block List, Max: 1) Access policy to the Kafka cluster. (see below for nested schema)
+	// Access policy to the Kafka cluster.
 	// +kubebuilder:validation:Optional
 	Access []ConfigAccessParameters `json:"access,omitempty" tf:"access,omitempty"`
 
-	// Determines whether each broker will be assigned a public IP address. The default is false.
+	// (Boolean) Determines whether each broker will be assigned a public IP address. The default is false.
+	// Determines whether each broker will be assigned a public IP address. The default is `false`.
 	// +kubebuilder:validation:Optional
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
-	// Count of brokers per availability zone. The default is 1.
+	// (Number) Count of brokers per availability zone. The default is 1.
+	// Count of brokers per availability zone. The default is `1`.
 	// +kubebuilder:validation:Optional
 	BrokersCount *int64 `json:"brokersCount,omitempty" tf:"brokers_count,omitempty"`
 
-	// Disk autoscaling settings of the Kafka cluster. The structure is documented below.
+	// (Block List, Max: 1) Disk autoscaling settings of the Kafka cluster. (see below for nested schema)
+	// Disk autoscaling settings of the Kafka cluster.
 	// +kubebuilder:validation:Optional
 	DiskSizeAutoscaling []DiskSizeAutoscalingParameters `json:"diskSizeAutoscaling,omitempty" tf:"disk_size_autoscaling,omitempty"`
 
-	// Configuration of the Kafka subcluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Configuration of the Kafka subcluster. (see below for nested schema)
+	// Configuration of the Kafka subcluster.
 	// +kubebuilder:validation:Optional
 	Kafka []ConfigKafkaParameters `json:"kafka" tf:"kafka,omitempty"`
 
-	// Enables managed schema registry on cluster. The default is false.
+	// (Block List, Max: 1) KAFKA UI settings of the Kafka cluster. (see below for nested schema)
+	// KAFKA UI settings of the Kafka cluster.
+	// +kubebuilder:validation:Optional
+	KafkaUI []KafkaUIParameters `json:"kafkaUi,omitempty" tf:"kafka_ui,omitempty"`
+
+	// controller subcluster. (see below for nested schema)
+	// Configuration of the KRaft-controller subcluster.
+	// +kubebuilder:validation:Optional
+	Kraft []KraftParameters `json:"kraft,omitempty" tf:"kraft,omitempty"`
+
+	// (Block List, Max: 1) REST API settings of the Kafka cluster. (see below for nested schema)
+	// REST API settings of the Kafka cluster.
+	// +kubebuilder:validation:Optional
+	RestAPI []RestAPIParameters `json:"restApi,omitempty" tf:"rest_api,omitempty"`
+
+	// (Boolean) Enables managed schema registry on cluster. The default is false.
+	// Enables managed schema registry on cluster. The default is `false`.
 	// +kubebuilder:validation:Optional
 	SchemaRegistry *bool `json:"schemaRegistry,omitempty" tf:"schema_registry,omitempty"`
 
+	// (Boolean, Deprecated)
 	// +kubebuilder:validation:Optional
 	UnmanagedTopics *bool `json:"unmanagedTopics,omitempty" tf:"unmanaged_topics,omitempty"`
 
+	// (String) Version of the Kafka server software.
 	// Version of the Kafka server software.
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version" tf:"version,omitempty"`
 
+	// (List of String) List of availability zones.
 	// List of availability zones.
 	// +kubebuilder:validation:Optional
 	Zones []*string `json:"zones" tf:"zones,omitempty"`
 
-	// Configuration of the ZooKeeper subcluster. The structure is documented below.
+	// (Block List, Max: 1) Configuration of the ZooKeeper subcluster. (see below for nested schema)
+	// Configuration of the ZooKeeper subcluster.
 	// +kubebuilder:validation:Optional
 	Zookeeper []ConfigZookeeperParameters `json:"zookeeper,omitempty" tf:"zookeeper,omitempty"`
 }
@@ -280,22 +382,28 @@ type KafkaClusterHostInitParameters struct {
 
 type KafkaClusterHostObservation struct {
 
+	// (Boolean) Determines whether each broker will be assigned a public IP address. The default is false.
 	// The flag that defines whether a public IP address is assigned to the node.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
+	// (String) Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
 	// Health of the host.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
+	// (String) The resource name.
 	// The fully qualified domain name of the host.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String) The role type to grant to the topic.
 	// Role of the host in the cluster.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
+	// (String)
 	// The ID of the subnet, to which the host belongs.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// The availability zone where the Kafka host was created.
+	// (String)
+	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
@@ -304,19 +412,24 @@ type KafkaClusterHostParameters struct {
 
 type KafkaClusterInitParameters struct {
 
-	// Configuration of the Kafka cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Configuration of the Kafka cluster. (see below for nested schema)
+	// Configuration of the Kafka cluster.
 	Config []KafkaClusterConfigInitParameters `json:"config,omitempty" tf:"config,omitempty"`
 
-	// Inhibits deletion of the cluster. Can be either true or false.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// Description of the Kafka cluster.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
+	// (String) Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
+	// Deployment environment of the Kafka cluster. Can be either `PRESTABLE` or `PRODUCTION`. The default is `PRODUCTION`.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -328,21 +441,26 @@ type KafkaClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// (Set of String) A list of IDs of the host groups to place VMs of the cluster on.
 	// A list of IDs of the host groups to place VMs of the cluster on.
 	// +listType=set
 	HostGroupIds []*string `json:"hostGroupIds,omitempty" tf:"host_group_ids,omitempty"`
 
-	// A set of key/value label pairs to assign to the Kafka cluster.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Maintenance policy of the Kafka cluster. The structure is documented below.
+	// (Block List, Max: 1) Maintenance policy of the Kafka cluster. (see below for nested schema)
+	// Maintenance policy of the Kafka cluster.
 	MaintenanceWindow []KafkaClusterMaintenanceWindowInitParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// Name of the Kafka cluster. Provided by the client when the cluster is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the network, to which the Kafka cluster belongs.
+	// (String) The VPC Network ID of subnets which resource attached to.
+	// The `VPC Network ID` of subnets which resource attached to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
@@ -354,7 +472,8 @@ type KafkaClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// Security group ids, to which the Kafka cluster belongs.
+	// (Set of String) The list of security groups applied to resource or their components.
+	// The list of security groups applied to resource or their components.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
@@ -367,7 +486,8 @@ type KafkaClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
-	// IDs of the subnets, to which the Kafka cluster belongs.
+	// (List of String) The list of VPC subnets identifiers which resource is attached.
+	// The list of VPC subnets identifiers which resource is attached.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
@@ -379,133 +499,168 @@ type KafkaClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIdsSelector *v1.Selector `json:"subnetIdsSelector,omitempty" tf:"-"`
 
-	// (Deprecated) To manage topics, please switch to using a separate resource type yandex_mdb_kafka_topic.
+	// (Block List, Deprecated) To manage topics, please switch to using a separate resource type yandex_mdb_kafka_topic. (see below for nested schema)
+	// To manage topics, please switch to using a separate resource type `yandex_mdb_kafka_topic`.
 	Topic []TopicInitParameters `json:"topic,omitempty" tf:"topic,omitempty"`
 
-	// (Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user.
+	// (Block Set, Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user. (see below for nested schema)
+	// To manage users, please switch to using a separate resource type `yandex_mdb_kafka_user`.
 	User []KafkaClusterUserInitParameters `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type KafkaClusterMaintenanceWindowInitParameters struct {
 
-	// Day of the week (in DDD format). Allowed values: "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"
+	// (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
-	// Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+	// (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+	// Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
 	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
-	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type KafkaClusterMaintenanceWindowObservation struct {
 
-	// Day of the week (in DDD format). Allowed values: "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"
+	// (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
-	// Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+	// (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+	// Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
 	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
-	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type KafkaClusterMaintenanceWindowParameters struct {
 
-	// Day of the week (in DDD format). Allowed values: "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"
+	// (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN.
+	// Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
 	// +kubebuilder:validation:Optional
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
-	// Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+	// (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+	// Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
 	// +kubebuilder:validation:Optional
 	Hour *int64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
-	// Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 type KafkaClusterObservation struct {
 
-	// Configuration of the Kafka cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Configuration of the Kafka cluster. (see below for nested schema)
+	// Configuration of the Kafka cluster.
 	Config []KafkaClusterConfigObservation `json:"config,omitempty" tf:"config,omitempty"`
 
-	// Timestamp of cluster creation.
+	// (String) The creation timestamp of the resource.
+	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// Inhibits deletion of the cluster. Can be either true or false.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// Description of the Kafka cluster.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
+	// (String) Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
+	// Deployment environment of the Kafka cluster. Can be either `PRESTABLE` or `PRODUCTION`. The default is `PRODUCTION`.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
+	// (String) Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
+	// Aggregated health of the cluster. Can be either `ALIVE`, `DEGRADED`, `DEAD` or `HEALTH_UNKNOWN`. For more information see `health` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-kafka/api-ref/Cluster/).
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
-	// A host of the Kafka cluster. The structure is documented below.
+	// (Set of Object) A host of the Kafka cluster. (see below for nested schema)
+	// A host of the Kafka cluster.
 	Host []KafkaClusterHostObservation `json:"host,omitempty" tf:"host,omitempty"`
 
+	// (Set of String) A list of IDs of the host groups to place VMs of the cluster on.
 	// A list of IDs of the host groups to place VMs of the cluster on.
 	// +listType=set
 	HostGroupIds []*string `json:"hostGroupIds,omitempty" tf:"host_group_ids,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// A set of key/value label pairs to assign to the Kafka cluster.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Maintenance policy of the Kafka cluster. The structure is documented below.
+	// (Block List, Max: 1) Maintenance policy of the Kafka cluster. (see below for nested schema)
+	// Maintenance policy of the Kafka cluster.
 	MaintenanceWindow []KafkaClusterMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// Name of the Kafka cluster. Provided by the client when the cluster is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the network, to which the Kafka cluster belongs.
+	// (String) The VPC Network ID of subnets which resource attached to.
+	// The `VPC Network ID` of subnets which resource attached to.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// Security group ids, to which the Kafka cluster belongs.
+	// (Set of String) The list of security groups applied to resource or their components.
+	// The list of security groups applied to resource or their components.
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
+	// (String) Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
+	// Status of the cluster. Can be either `CREATING`, `STARTING`, `RUNNING`, `UPDATING`, `STOPPING`, `STOPPED`, `ERROR` or `STATUS_UNKNOWN`. For more information see `status` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-kafka/api-ref/Cluster/).
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// IDs of the subnets, to which the Kafka cluster belongs.
+	// (List of String) The list of VPC subnets identifiers which resource is attached.
+	// The list of VPC subnets identifiers which resource is attached.
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
 
-	// (Deprecated) To manage topics, please switch to using a separate resource type yandex_mdb_kafka_topic.
+	// (Block List, Deprecated) To manage topics, please switch to using a separate resource type yandex_mdb_kafka_topic. (see below for nested schema)
+	// To manage topics, please switch to using a separate resource type `yandex_mdb_kafka_topic`.
 	Topic []TopicObservation `json:"topic,omitempty" tf:"topic,omitempty"`
 
-	// (Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user.
+	// (Block Set, Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user. (see below for nested schema)
+	// To manage users, please switch to using a separate resource type `yandex_mdb_kafka_user`.
 	User []KafkaClusterUserObservation `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type KafkaClusterParameters struct {
 
-	// Configuration of the Kafka cluster. The structure is documented below.
+	// (Block List, Min: 1, Max: 1) Configuration of the Kafka cluster. (see below for nested schema)
+	// Configuration of the Kafka cluster.
 	// +kubebuilder:validation:Optional
 	Config []KafkaClusterConfigParameters `json:"config,omitempty" tf:"config,omitempty"`
 
-	// Inhibits deletion of the cluster. Can be either true or false.
+	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// The `true` value means that resource is protected from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// Description of the Kafka cluster.
+	// (String) The resource description.
+	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
+	// (String) Deployment environment of the Kafka cluster. Can be either PRESTABLE or PRODUCTION. The default is PRODUCTION.
+	// Deployment environment of the Kafka cluster. Can be either `PRESTABLE` or `PRODUCTION`. The default is `PRODUCTION`.
 	// +kubebuilder:validation:Optional
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
-	// The ID of the folder that the resource belongs to. If it is not provided, the default provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -518,25 +673,30 @@ type KafkaClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
+	// (Set of String) A list of IDs of the host groups to place VMs of the cluster on.
 	// A list of IDs of the host groups to place VMs of the cluster on.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	HostGroupIds []*string `json:"hostGroupIds,omitempty" tf:"host_group_ids,omitempty"`
 
-	// A set of key/value label pairs to assign to the Kafka cluster.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Maintenance policy of the Kafka cluster. The structure is documented below.
+	// (Block List, Max: 1) Maintenance policy of the Kafka cluster. (see below for nested schema)
+	// Maintenance policy of the Kafka cluster.
 	// +kubebuilder:validation:Optional
 	MaintenanceWindow []KafkaClusterMaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// Name of the Kafka cluster. Provided by the client when the cluster is created.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// ID of the network, to which the Kafka cluster belongs.
+	// (String) The VPC Network ID of subnets which resource attached to.
+	// The `VPC Network ID` of subnets which resource attached to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -549,7 +709,8 @@ type KafkaClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// Security group ids, to which the Kafka cluster belongs.
+	// (Set of String) The list of security groups applied to resource or their components.
+	// The list of security groups applied to resource or their components.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
 	// +listType=set
@@ -563,7 +724,8 @@ type KafkaClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
-	// IDs of the subnets, to which the Kafka cluster belongs.
+	// (List of String) The list of VPC subnets identifiers which resource is attached.
+	// The list of VPC subnets identifiers which resource is attached.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetIds []*string `json:"subnetIds,omitempty" tf:"subnet_ids,omitempty"`
@@ -576,430 +738,783 @@ type KafkaClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIdsSelector *v1.Selector `json:"subnetIdsSelector,omitempty" tf:"-"`
 
-	// (Deprecated) To manage topics, please switch to using a separate resource type yandex_mdb_kafka_topic.
+	// (Block List, Deprecated) To manage topics, please switch to using a separate resource type yandex_mdb_kafka_topic. (see below for nested schema)
+	// To manage topics, please switch to using a separate resource type `yandex_mdb_kafka_topic`.
 	// +kubebuilder:validation:Optional
 	Topic []TopicParameters `json:"topic,omitempty" tf:"topic,omitempty"`
 
-	// (Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user.
+	// (Block Set, Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_kafka_user. (see below for nested schema)
+	// To manage users, please switch to using a separate resource type `yandex_mdb_kafka_user`.
 	// +kubebuilder:validation:Optional
 	User []KafkaClusterUserParameters `json:"user,omitempty" tf:"user,omitempty"`
 }
 
 type KafkaClusterUserInitParameters struct {
 
+	// (String) The resource name.
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (String, Sensitive) The password of the user.
 	// The password of the user.
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
-	// Set of permissions granted to the user. The structure is documented below.
+	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// Set of permissions granted to the user.
 	Permission []UserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type KafkaClusterUserObservation struct {
 
+	// (String) The resource name.
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Set of permissions granted to the user. The structure is documented below.
+	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// Set of permissions granted to the user.
 	Permission []UserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type KafkaClusterUserParameters struct {
 
+	// (String) The resource name.
 	// The name of the user.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// (String, Sensitive) The password of the user.
 	// The password of the user.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.SecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
-	// Set of permissions granted to the user. The structure is documented below.
+	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// Set of permissions granted to the user.
 	// +kubebuilder:validation:Optional
 	Permission []UserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type KafkaConfigInitParameters struct {
+
+	// (Boolean) Enable auto creation of topic on the server.
+	// Enable auto creation of topic on the server.
 	AutoCreateTopicsEnable *bool `json:"autoCreateTopicsEnable,omitempty" tf:"auto_create_topics_enable,omitempty"`
 
-	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
+	// (String) Compression type of kafka topics.
+	// Compression type of kafka topics.
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
+	// 1 as the replication factor.
+	// The replication factor for automatically created topics, and for topics created with -1 as the replication factor.
 	DefaultReplicationFactor *string `json:"defaultReplicationFactor,omitempty" tf:"default_replication_factor,omitempty"`
 
+	// (String) The number of messages accumulated on a log partition before messages are flushed to disk.
+	// The number of messages accumulated on a log partition before messages are flushed to disk.
 	LogFlushIntervalMessages *string `json:"logFlushIntervalMessages,omitempty" tf:"log_flush_interval_messages,omitempty"`
 
+	// (String) The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used.
+	// The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used.
 	LogFlushIntervalMs *string `json:"logFlushIntervalMs,omitempty" tf:"log_flush_interval_ms,omitempty"`
 
+	// (String) The frequency in ms that the log flusher checks whether any log needs to be flushed to disk.
+	// The frequency in ms that the log flusher checks whether any log needs to be flushed to disk.
 	LogFlushSchedulerIntervalMs *string `json:"logFlushSchedulerIntervalMs,omitempty" tf:"log_flush_scheduler_interval_ms,omitempty"`
 
+	// (Boolean, Deprecated) Should pre allocate file when create new segment?
+	// Should pre allocate file when create new segment?
 	LogPreallocate *bool `json:"logPreallocate,omitempty" tf:"log_preallocate,omitempty"`
 
+	// (String) The maximum size of the log before deleting it.
+	// The maximum size of the log before deleting it.
 	LogRetentionBytes *string `json:"logRetentionBytes,omitempty" tf:"log_retention_bytes,omitempty"`
 
+	// (String) The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property.
+	// The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property.
 	LogRetentionHours *string `json:"logRetentionHours,omitempty" tf:"log_retention_hours,omitempty"`
 
+	// (String) The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used.
+	// The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used.
 	LogRetentionMinutes *string `json:"logRetentionMinutes,omitempty" tf:"log_retention_minutes,omitempty"`
 
+	// 1, no time limit is applied.
+	// The number of milliseconds to keep a log file before deleting it (in milliseconds), If not set, the value in log.retention.minutes is used. If set to -1, no time limit is applied.
 	LogRetentionMs *string `json:"logRetentionMs,omitempty" tf:"log_retention_ms,omitempty"`
 
+	// (String) The maximum size of a single log file.
+	// The maximum size of a single log file.
 	LogSegmentBytes *string `json:"logSegmentBytes,omitempty" tf:"log_segment_bytes,omitempty"`
 
+	// (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+	// The largest record batch size allowed by Kafka (after compression if compression is enabled).
 	MessageMaxBytes *string `json:"messageMaxBytes,omitempty" tf:"message_max_bytes,omitempty"`
 
+	// (String) The default number of log partitions per topic.
+	// The default number of log partitions per topic.
 	NumPartitions *string `json:"numPartitions,omitempty" tf:"num_partitions,omitempty"`
 
+	// (String) For subscribed consumers, committed offset of a specific partition will be expired and discarded after this period of time.
+	// For subscribed consumers, committed offset of a specific partition will be expired and discarded after this period of time.
 	OffsetsRetentionMinutes *string `json:"offsetsRetentionMinutes,omitempty" tf:"offsets_retention_minutes,omitempty"`
 
+	// (String) The number of bytes of messages to attempt to fetch for each partition.
+	// The number of bytes of messages to attempt to fetch for each partition.
 	ReplicaFetchMaxBytes *string `json:"replicaFetchMaxBytes,omitempty" tf:"replica_fetch_max_bytes,omitempty"`
 
+	// (Set of String) A list of cipher suites.
+	// A list of cipher suites.
 	// +listType=set
 	SSLCipherSuites []*string `json:"sslCipherSuites,omitempty" tf:"ssl_cipher_suites,omitempty"`
 
+	// (Set of String) The list of SASL mechanisms enabled in the Kafka server.
+	// The list of SASL mechanisms enabled in the Kafka server.
 	// +listType=set
 	SaslEnabledMechanisms []*string `json:"saslEnabledMechanisms,omitempty" tf:"sasl_enabled_mechanisms,omitempty"`
 
+	// 1, the OS default will be used.
+	// The SO_RCVBUF buffer of the socket server sockets. If the value is -1, the OS default will be used.
 	SocketReceiveBufferBytes *string `json:"socketReceiveBufferBytes,omitempty" tf:"socket_receive_buffer_bytes,omitempty"`
 
+	// 1, the OS default will be used.
+	// The SO_SNDBUF buffer of the socket server sockets. If the value is -1, the OS default will be used.
 	SocketSendBufferBytes *string `json:"socketSendBufferBytes,omitempty" tf:"socket_send_buffer_bytes,omitempty"`
 }
 
 type KafkaConfigObservation struct {
+
+	// (Boolean) Enable auto creation of topic on the server.
+	// Enable auto creation of topic on the server.
 	AutoCreateTopicsEnable *bool `json:"autoCreateTopicsEnable,omitempty" tf:"auto_create_topics_enable,omitempty"`
 
-	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
+	// (String) Compression type of kafka topics.
+	// Compression type of kafka topics.
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
+	// 1 as the replication factor.
+	// The replication factor for automatically created topics, and for topics created with -1 as the replication factor.
 	DefaultReplicationFactor *string `json:"defaultReplicationFactor,omitempty" tf:"default_replication_factor,omitempty"`
 
+	// (String) The number of messages accumulated on a log partition before messages are flushed to disk.
+	// The number of messages accumulated on a log partition before messages are flushed to disk.
 	LogFlushIntervalMessages *string `json:"logFlushIntervalMessages,omitempty" tf:"log_flush_interval_messages,omitempty"`
 
+	// (String) The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used.
+	// The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used.
 	LogFlushIntervalMs *string `json:"logFlushIntervalMs,omitempty" tf:"log_flush_interval_ms,omitempty"`
 
+	// (String) The frequency in ms that the log flusher checks whether any log needs to be flushed to disk.
+	// The frequency in ms that the log flusher checks whether any log needs to be flushed to disk.
 	LogFlushSchedulerIntervalMs *string `json:"logFlushSchedulerIntervalMs,omitempty" tf:"log_flush_scheduler_interval_ms,omitempty"`
 
+	// (Boolean, Deprecated) Should pre allocate file when create new segment?
+	// Should pre allocate file when create new segment?
 	LogPreallocate *bool `json:"logPreallocate,omitempty" tf:"log_preallocate,omitempty"`
 
+	// (String) The maximum size of the log before deleting it.
+	// The maximum size of the log before deleting it.
 	LogRetentionBytes *string `json:"logRetentionBytes,omitempty" tf:"log_retention_bytes,omitempty"`
 
+	// (String) The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property.
+	// The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property.
 	LogRetentionHours *string `json:"logRetentionHours,omitempty" tf:"log_retention_hours,omitempty"`
 
+	// (String) The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used.
+	// The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used.
 	LogRetentionMinutes *string `json:"logRetentionMinutes,omitempty" tf:"log_retention_minutes,omitempty"`
 
+	// 1, no time limit is applied.
+	// The number of milliseconds to keep a log file before deleting it (in milliseconds), If not set, the value in log.retention.minutes is used. If set to -1, no time limit is applied.
 	LogRetentionMs *string `json:"logRetentionMs,omitempty" tf:"log_retention_ms,omitempty"`
 
+	// (String) The maximum size of a single log file.
+	// The maximum size of a single log file.
 	LogSegmentBytes *string `json:"logSegmentBytes,omitempty" tf:"log_segment_bytes,omitempty"`
 
+	// (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+	// The largest record batch size allowed by Kafka (after compression if compression is enabled).
 	MessageMaxBytes *string `json:"messageMaxBytes,omitempty" tf:"message_max_bytes,omitempty"`
 
+	// (String) The default number of log partitions per topic.
+	// The default number of log partitions per topic.
 	NumPartitions *string `json:"numPartitions,omitempty" tf:"num_partitions,omitempty"`
 
+	// (String) For subscribed consumers, committed offset of a specific partition will be expired and discarded after this period of time.
+	// For subscribed consumers, committed offset of a specific partition will be expired and discarded after this period of time.
 	OffsetsRetentionMinutes *string `json:"offsetsRetentionMinutes,omitempty" tf:"offsets_retention_minutes,omitempty"`
 
+	// (String) The number of bytes of messages to attempt to fetch for each partition.
+	// The number of bytes of messages to attempt to fetch for each partition.
 	ReplicaFetchMaxBytes *string `json:"replicaFetchMaxBytes,omitempty" tf:"replica_fetch_max_bytes,omitempty"`
 
+	// (Set of String) A list of cipher suites.
+	// A list of cipher suites.
 	// +listType=set
 	SSLCipherSuites []*string `json:"sslCipherSuites,omitempty" tf:"ssl_cipher_suites,omitempty"`
 
+	// (Set of String) The list of SASL mechanisms enabled in the Kafka server.
+	// The list of SASL mechanisms enabled in the Kafka server.
 	// +listType=set
 	SaslEnabledMechanisms []*string `json:"saslEnabledMechanisms,omitempty" tf:"sasl_enabled_mechanisms,omitempty"`
 
+	// 1, the OS default will be used.
+	// The SO_RCVBUF buffer of the socket server sockets. If the value is -1, the OS default will be used.
 	SocketReceiveBufferBytes *string `json:"socketReceiveBufferBytes,omitempty" tf:"socket_receive_buffer_bytes,omitempty"`
 
+	// 1, the OS default will be used.
+	// The SO_SNDBUF buffer of the socket server sockets. If the value is -1, the OS default will be used.
 	SocketSendBufferBytes *string `json:"socketSendBufferBytes,omitempty" tf:"socket_send_buffer_bytes,omitempty"`
 }
 
 type KafkaConfigParameters struct {
 
+	// (Boolean) Enable auto creation of topic on the server.
+	// Enable auto creation of topic on the server.
 	// +kubebuilder:validation:Optional
 	AutoCreateTopicsEnable *bool `json:"autoCreateTopicsEnable,omitempty" tf:"auto_create_topics_enable,omitempty"`
 
-	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
+	// (String) Compression type of kafka topics.
+	// Compression type of kafka topics.
 	// +kubebuilder:validation:Optional
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
+	// 1 as the replication factor.
+	// The replication factor for automatically created topics, and for topics created with -1 as the replication factor.
 	// +kubebuilder:validation:Optional
 	DefaultReplicationFactor *string `json:"defaultReplicationFactor,omitempty" tf:"default_replication_factor,omitempty"`
 
+	// (String) The number of messages accumulated on a log partition before messages are flushed to disk.
+	// The number of messages accumulated on a log partition before messages are flushed to disk.
 	// +kubebuilder:validation:Optional
 	LogFlushIntervalMessages *string `json:"logFlushIntervalMessages,omitempty" tf:"log_flush_interval_messages,omitempty"`
 
+	// (String) The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used.
+	// The maximum time in ms that a message in any topic is kept in memory before flushed to disk. If not set, the value in log.flush.scheduler.interval.ms is used.
 	// +kubebuilder:validation:Optional
 	LogFlushIntervalMs *string `json:"logFlushIntervalMs,omitempty" tf:"log_flush_interval_ms,omitempty"`
 
+	// (String) The frequency in ms that the log flusher checks whether any log needs to be flushed to disk.
+	// The frequency in ms that the log flusher checks whether any log needs to be flushed to disk.
 	// +kubebuilder:validation:Optional
 	LogFlushSchedulerIntervalMs *string `json:"logFlushSchedulerIntervalMs,omitempty" tf:"log_flush_scheduler_interval_ms,omitempty"`
 
+	// (Boolean, Deprecated) Should pre allocate file when create new segment?
+	// Should pre allocate file when create new segment?
 	// +kubebuilder:validation:Optional
 	LogPreallocate *bool `json:"logPreallocate,omitempty" tf:"log_preallocate,omitempty"`
 
+	// (String) The maximum size of the log before deleting it.
+	// The maximum size of the log before deleting it.
 	// +kubebuilder:validation:Optional
 	LogRetentionBytes *string `json:"logRetentionBytes,omitempty" tf:"log_retention_bytes,omitempty"`
 
+	// (String) The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property.
+	// The number of hours to keep a log file before deleting it (in hours), tertiary to log.retention.ms property.
 	// +kubebuilder:validation:Optional
 	LogRetentionHours *string `json:"logRetentionHours,omitempty" tf:"log_retention_hours,omitempty"`
 
+	// (String) The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used.
+	// The number of minutes to keep a log file before deleting it (in minutes), secondary to log.retention.ms property. If not set, the value in log.retention.hours is used.
 	// +kubebuilder:validation:Optional
 	LogRetentionMinutes *string `json:"logRetentionMinutes,omitempty" tf:"log_retention_minutes,omitempty"`
 
+	// 1, no time limit is applied.
+	// The number of milliseconds to keep a log file before deleting it (in milliseconds), If not set, the value in log.retention.minutes is used. If set to -1, no time limit is applied.
 	// +kubebuilder:validation:Optional
 	LogRetentionMs *string `json:"logRetentionMs,omitempty" tf:"log_retention_ms,omitempty"`
 
+	// (String) The maximum size of a single log file.
+	// The maximum size of a single log file.
 	// +kubebuilder:validation:Optional
 	LogSegmentBytes *string `json:"logSegmentBytes,omitempty" tf:"log_segment_bytes,omitempty"`
 
+	// (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+	// The largest record batch size allowed by Kafka (after compression if compression is enabled).
 	// +kubebuilder:validation:Optional
 	MessageMaxBytes *string `json:"messageMaxBytes,omitempty" tf:"message_max_bytes,omitempty"`
 
+	// (String) The default number of log partitions per topic.
+	// The default number of log partitions per topic.
 	// +kubebuilder:validation:Optional
 	NumPartitions *string `json:"numPartitions,omitempty" tf:"num_partitions,omitempty"`
 
+	// (String) For subscribed consumers, committed offset of a specific partition will be expired and discarded after this period of time.
+	// For subscribed consumers, committed offset of a specific partition will be expired and discarded after this period of time.
 	// +kubebuilder:validation:Optional
 	OffsetsRetentionMinutes *string `json:"offsetsRetentionMinutes,omitempty" tf:"offsets_retention_minutes,omitempty"`
 
+	// (String) The number of bytes of messages to attempt to fetch for each partition.
+	// The number of bytes of messages to attempt to fetch for each partition.
 	// +kubebuilder:validation:Optional
 	ReplicaFetchMaxBytes *string `json:"replicaFetchMaxBytes,omitempty" tf:"replica_fetch_max_bytes,omitempty"`
 
+	// (Set of String) A list of cipher suites.
+	// A list of cipher suites.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	SSLCipherSuites []*string `json:"sslCipherSuites,omitempty" tf:"ssl_cipher_suites,omitempty"`
 
+	// (Set of String) The list of SASL mechanisms enabled in the Kafka server.
+	// The list of SASL mechanisms enabled in the Kafka server.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	SaslEnabledMechanisms []*string `json:"saslEnabledMechanisms,omitempty" tf:"sasl_enabled_mechanisms,omitempty"`
 
+	// 1, the OS default will be used.
+	// The SO_RCVBUF buffer of the socket server sockets. If the value is -1, the OS default will be used.
 	// +kubebuilder:validation:Optional
 	SocketReceiveBufferBytes *string `json:"socketReceiveBufferBytes,omitempty" tf:"socket_receive_buffer_bytes,omitempty"`
 
+	// 1, the OS default will be used.
+	// The SO_SNDBUF buffer of the socket server sockets. If the value is -1, the OS default will be used.
 	// +kubebuilder:validation:Optional
 	SocketSendBufferBytes *string `json:"socketSendBufferBytes,omitempty" tf:"socket_send_buffer_bytes,omitempty"`
 }
 
 type KafkaResourcesInitParameters struct {
 
-	// Volume of the storage available to a ZooKeeper host, in gigabytes.
+	// (Number) Volume of the storage available to a Kafka host, in gigabytes.
+	// Volume of the storage available to a Kafka host, in gigabytes.
 	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
+	// (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+	// Type of the storage of Kafka hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type KafkaResourcesObservation struct {
 
-	// Volume of the storage available to a ZooKeeper host, in gigabytes.
+	// (Number) Volume of the storage available to a Kafka host, in gigabytes.
+	// Volume of the storage available to a Kafka host, in gigabytes.
 	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
+	// (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+	// Type of the storage of Kafka hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type KafkaResourcesParameters struct {
 
-	// Volume of the storage available to a ZooKeeper host, in gigabytes.
+	// (Number) Volume of the storage available to a Kafka host, in gigabytes.
+	// Volume of the storage available to a Kafka host, in gigabytes.
 	// +kubebuilder:validation:Optional
 	DiskSize *int64 `json:"diskSize" tf:"disk_size,omitempty"`
 
-	// Type of the storage of ZooKeeper hosts. For more information see the official documentation.
+	// (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+	// Type of the storage of Kafka hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
 	// +kubebuilder:validation:Optional
 	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
 
+	// (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
 	// +kubebuilder:validation:Optional
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
 }
 
+type KafkaUIInitParameters struct {
+
+	// (Boolean) Enables KAFKA UI on cluster. The default is false.
+	// Enables KAFKA UI on cluster. The default is `false`.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type KafkaUIObservation struct {
+
+	// (Boolean) Enables KAFKA UI on cluster. The default is false.
+	// Enables KAFKA UI on cluster. The default is `false`.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type KafkaUIParameters struct {
+
+	// (Boolean) Enables KAFKA UI on cluster. The default is false.
+	// Enables KAFKA UI on cluster. The default is `false`.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type KraftInitParameters struct {
+
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the KRaft-controller subcluster.
+	Resources []KraftResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
+}
+
+type KraftObservation struct {
+
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the KRaft-controller subcluster.
+	Resources []KraftResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
+}
+
+type KraftParameters struct {
+
+	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Kafka subcluster. (see below for nested schema)
+	// Resources allocated to hosts of the KRaft-controller subcluster.
+	// +kubebuilder:validation:Optional
+	Resources []KraftResourcesParameters `json:"resources,omitempty" tf:"resources,omitempty"`
+}
+
+type KraftResourcesInitParameters struct {
+
+	// (Number) Volume of the storage available to a Kafka host, in gigabytes.
+	// Volume of the storage available to a KRaft-controller host, in gigabytes.
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+	// Type of the storage of KRaft-controller hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	// (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a KRaft-controller host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
+type KraftResourcesObservation struct {
+
+	// (Number) Volume of the storage available to a Kafka host, in gigabytes.
+	// Volume of the storage available to a KRaft-controller host, in gigabytes.
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+	// Type of the storage of KRaft-controller hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	// (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a KRaft-controller host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
+type KraftResourcesParameters struct {
+
+	// (Number) Volume of the storage available to a Kafka host, in gigabytes.
+	// Volume of the storage available to a KRaft-controller host, in gigabytes.
+	// +kubebuilder:validation:Optional
+	DiskSize *int64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// (String) Type of the storage of Kafka hosts. For more information see the official documentation.
+	// Type of the storage of KRaft-controller hosts. For more information see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/storage).
+	// +kubebuilder:validation:Optional
+	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
+
+	// (String) The ID of the preset for computational resources available to a Kafka host (CPU, memory etc.). For more information, see the official documentation.
+	// The ID of the preset for computational resources available to a KRaft-controller host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts).
+	// +kubebuilder:validation:Optional
+	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
+}
+
+type RestAPIInitParameters struct {
+
+	// (Boolean) Enables KAFKA UI on cluster. The default is false.
+	// Enables REST API on cluster. The default is `false`.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type RestAPIObservation struct {
+
+	// (Boolean) Enables KAFKA UI on cluster. The default is false.
+	// Enables REST API on cluster. The default is `false`.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type RestAPIParameters struct {
+
+	// (Boolean) Enables KAFKA UI on cluster. The default is false.
+	// Enables REST API on cluster. The default is `false`.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
 type TopicConfigInitParameters struct {
+
+	// (String) Retention policy to use on log segments.
+	// Retention policy to use on log segments.
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
-	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
+	// (String) Compression type of kafka topics.
+	// Compression type of kafka topic.
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
+	// (String) The amount of time to retain delete tombstone markers for log compacted topics.
+	// The amount of time to retain delete tombstone markers for log compacted topics.
 	DeleteRetentionMs *string `json:"deleteRetentionMs,omitempty" tf:"delete_retention_ms,omitempty"`
 
+	// (String) The time to wait before deleting a file from the filesystem.
+	// The time to wait before deleting a file from the filesystem.
 	FileDeleteDelayMs *string `json:"fileDeleteDelayMs,omitempty" tf:"file_delete_delay_ms,omitempty"`
 
+	// (String) This setting allows specifying an interval at which we will force an fsync of data written to the log.
+	// This setting allows specifying an interval at which we will force an fsync of data written to the log.
 	FlushMessages *string `json:"flushMessages,omitempty" tf:"flush_messages,omitempty"`
 
+	// (String) This setting allows specifying a time interval at which we will force an fsync of data written to the log.
+	// This setting allows specifying a time interval at which we will force an fsync of data written to the log.
 	FlushMs *string `json:"flushMs,omitempty" tf:"flush_ms,omitempty"`
 
+	// (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+	// The largest record batch size allowed by Kafka (after compression if compression is enabled).
 	MaxMessageBytes *string `json:"maxMessageBytes,omitempty" tf:"max_message_bytes,omitempty"`
 
+	// (String) The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
+	// The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
 	MinCompactionLagMs *string `json:"minCompactionLagMs,omitempty" tf:"min_compaction_lag_ms,omitempty"`
 
+	// 1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
+	// When a producer sets acks to "all" (or "-1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
 	MinInsyncReplicas *string `json:"minInsyncReplicas,omitempty" tf:"min_insync_replicas,omitempty"`
 
+	// (Boolean, Deprecated) True if we should preallocate the file on disk when creating a new log segment.
+	// True if we should preallocate the file on disk when creating a new log segment.
 	Preallocate *bool `json:"preallocate,omitempty" tf:"preallocate,omitempty"`
 
+	// (String) This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
+	// This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
 	RetentionBytes *string `json:"retentionBytes,omitempty" tf:"retention_bytes,omitempty"`
 
+	// (String) This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
+	// This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
 	RetentionMs *string `json:"retentionMs,omitempty" tf:"retention_ms,omitempty"`
 
+	// (String) This configuration controls the segment file size for the log.
+	// This configuration controls the segment file size for the log.
 	SegmentBytes *string `json:"segmentBytes,omitempty" tf:"segment_bytes,omitempty"`
 }
 
 type TopicConfigObservation struct {
+
+	// (String) Retention policy to use on log segments.
+	// Retention policy to use on log segments.
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
-	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
+	// (String) Compression type of kafka topics.
+	// Compression type of kafka topic.
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
+	// (String) The amount of time to retain delete tombstone markers for log compacted topics.
+	// The amount of time to retain delete tombstone markers for log compacted topics.
 	DeleteRetentionMs *string `json:"deleteRetentionMs,omitempty" tf:"delete_retention_ms,omitempty"`
 
+	// (String) The time to wait before deleting a file from the filesystem.
+	// The time to wait before deleting a file from the filesystem.
 	FileDeleteDelayMs *string `json:"fileDeleteDelayMs,omitempty" tf:"file_delete_delay_ms,omitempty"`
 
+	// (String) This setting allows specifying an interval at which we will force an fsync of data written to the log.
+	// This setting allows specifying an interval at which we will force an fsync of data written to the log.
 	FlushMessages *string `json:"flushMessages,omitempty" tf:"flush_messages,omitempty"`
 
+	// (String) This setting allows specifying a time interval at which we will force an fsync of data written to the log.
+	// This setting allows specifying a time interval at which we will force an fsync of data written to the log.
 	FlushMs *string `json:"flushMs,omitempty" tf:"flush_ms,omitempty"`
 
+	// (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+	// The largest record batch size allowed by Kafka (after compression if compression is enabled).
 	MaxMessageBytes *string `json:"maxMessageBytes,omitempty" tf:"max_message_bytes,omitempty"`
 
+	// (String) The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
+	// The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
 	MinCompactionLagMs *string `json:"minCompactionLagMs,omitempty" tf:"min_compaction_lag_ms,omitempty"`
 
+	// 1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
+	// When a producer sets acks to "all" (or "-1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
 	MinInsyncReplicas *string `json:"minInsyncReplicas,omitempty" tf:"min_insync_replicas,omitempty"`
 
+	// (Boolean, Deprecated) True if we should preallocate the file on disk when creating a new log segment.
+	// True if we should preallocate the file on disk when creating a new log segment.
 	Preallocate *bool `json:"preallocate,omitempty" tf:"preallocate,omitempty"`
 
+	// (String) This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
+	// This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
 	RetentionBytes *string `json:"retentionBytes,omitempty" tf:"retention_bytes,omitempty"`
 
+	// (String) This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
+	// This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
 	RetentionMs *string `json:"retentionMs,omitempty" tf:"retention_ms,omitempty"`
 
+	// (String) This configuration controls the segment file size for the log.
+	// This configuration controls the segment file size for the log.
 	SegmentBytes *string `json:"segmentBytes,omitempty" tf:"segment_bytes,omitempty"`
 }
 
 type TopicConfigParameters struct {
 
+	// (String) Retention policy to use on log segments.
+	// Retention policy to use on log segments.
 	// +kubebuilder:validation:Optional
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
-	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
+	// (String) Compression type of kafka topics.
+	// Compression type of kafka topic.
 	// +kubebuilder:validation:Optional
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
+	// (String) The amount of time to retain delete tombstone markers for log compacted topics.
+	// The amount of time to retain delete tombstone markers for log compacted topics.
 	// +kubebuilder:validation:Optional
 	DeleteRetentionMs *string `json:"deleteRetentionMs,omitempty" tf:"delete_retention_ms,omitempty"`
 
+	// (String) The time to wait before deleting a file from the filesystem.
+	// The time to wait before deleting a file from the filesystem.
 	// +kubebuilder:validation:Optional
 	FileDeleteDelayMs *string `json:"fileDeleteDelayMs,omitempty" tf:"file_delete_delay_ms,omitempty"`
 
+	// (String) This setting allows specifying an interval at which we will force an fsync of data written to the log.
+	// This setting allows specifying an interval at which we will force an fsync of data written to the log.
 	// +kubebuilder:validation:Optional
 	FlushMessages *string `json:"flushMessages,omitempty" tf:"flush_messages,omitempty"`
 
+	// (String) This setting allows specifying a time interval at which we will force an fsync of data written to the log.
+	// This setting allows specifying a time interval at which we will force an fsync of data written to the log.
 	// +kubebuilder:validation:Optional
 	FlushMs *string `json:"flushMs,omitempty" tf:"flush_ms,omitempty"`
 
+	// (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+	// The largest record batch size allowed by Kafka (after compression if compression is enabled).
 	// +kubebuilder:validation:Optional
 	MaxMessageBytes *string `json:"maxMessageBytes,omitempty" tf:"max_message_bytes,omitempty"`
 
+	// (String) The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
+	// The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
 	// +kubebuilder:validation:Optional
 	MinCompactionLagMs *string `json:"minCompactionLagMs,omitempty" tf:"min_compaction_lag_ms,omitempty"`
 
+	// 1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
+	// When a producer sets acks to "all" (or "-1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
 	// +kubebuilder:validation:Optional
 	MinInsyncReplicas *string `json:"minInsyncReplicas,omitempty" tf:"min_insync_replicas,omitempty"`
 
+	// (Boolean, Deprecated) True if we should preallocate the file on disk when creating a new log segment.
+	// True if we should preallocate the file on disk when creating a new log segment.
 	// +kubebuilder:validation:Optional
 	Preallocate *bool `json:"preallocate,omitempty" tf:"preallocate,omitempty"`
 
+	// (String) This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
+	// This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
 	// +kubebuilder:validation:Optional
 	RetentionBytes *string `json:"retentionBytes,omitempty" tf:"retention_bytes,omitempty"`
 
+	// (String) This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
+	// This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
 	// +kubebuilder:validation:Optional
 	RetentionMs *string `json:"retentionMs,omitempty" tf:"retention_ms,omitempty"`
 
+	// (String) This configuration controls the segment file size for the log.
+	// This configuration controls the segment file size for the log.
 	// +kubebuilder:validation:Optional
 	SegmentBytes *string `json:"segmentBytes,omitempty" tf:"segment_bytes,omitempty"`
 }
 
 type TopicInitParameters struct {
 
+	// (String) The resource name.
 	// The name of the topic.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Number) The number of the topic's partitions.
 	// The number of the topic's partitions.
 	Partitions *int64 `json:"partitions,omitempty" tf:"partitions,omitempty"`
 
+	// (Number) Amount of data copies (replicas) for the topic in the cluster.
 	// Amount of data copies (replicas) for the topic in the cluster.
 	ReplicationFactor *int64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
 
-	// User-defined settings for the topic. The structure is documented below.
+	// defined settings for the topic. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+	// User-defined settings for the topic. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/operations/cluster-topics#update-topic) and [the Kafka documentation](https://kafka.apache.org/documentation/#configuration).
 	TopicConfig []TopicConfigInitParameters `json:"topicConfig,omitempty" tf:"topic_config,omitempty"`
 }
 
 type TopicObservation struct {
 
+	// (String) The resource name.
 	// The name of the topic.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Number) The number of the topic's partitions.
 	// The number of the topic's partitions.
 	Partitions *int64 `json:"partitions,omitempty" tf:"partitions,omitempty"`
 
+	// (Number) Amount of data copies (replicas) for the topic in the cluster.
 	// Amount of data copies (replicas) for the topic in the cluster.
 	ReplicationFactor *int64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
 
-	// User-defined settings for the topic. The structure is documented below.
+	// defined settings for the topic. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+	// User-defined settings for the topic. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/operations/cluster-topics#update-topic) and [the Kafka documentation](https://kafka.apache.org/documentation/#configuration).
 	TopicConfig []TopicConfigObservation `json:"topicConfig,omitempty" tf:"topic_config,omitempty"`
 }
 
 type TopicParameters struct {
 
+	// (String) The resource name.
 	// The name of the topic.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// (Number) The number of the topic's partitions.
 	// The number of the topic's partitions.
 	// +kubebuilder:validation:Optional
 	Partitions *int64 `json:"partitions" tf:"partitions,omitempty"`
 
+	// (Number) Amount of data copies (replicas) for the topic in the cluster.
 	// Amount of data copies (replicas) for the topic in the cluster.
 	// +kubebuilder:validation:Optional
 	ReplicationFactor *int64 `json:"replicationFactor" tf:"replication_factor,omitempty"`
 
-	// User-defined settings for the topic. The structure is documented below.
+	// defined settings for the topic. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+	// User-defined settings for the topic. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/operations/cluster-topics#update-topic) and [the Kafka documentation](https://kafka.apache.org/documentation/#configuration).
 	// +kubebuilder:validation:Optional
 	TopicConfig []TopicConfigParameters `json:"topicConfig,omitempty" tf:"topic_config,omitempty"`
 }
 
 type UserPermissionInitParameters struct {
 
-	// Set of hosts, to which this permission grants access to.
+	// addresses allowed as value of single host.
+	// Set of hosts, to which this permission grants access to. Only ip-addresses allowed as value of single host.
 	// +listType=set
 	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
 
+	// (String) The role type to grant to the topic.
 	// The role type to grant to the topic.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
+	// (String) The name of the topic that the permission grants access to.
 	// The name of the topic that the permission grants access to.
 	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
 }
 
 type UserPermissionObservation struct {
 
-	// Set of hosts, to which this permission grants access to.
+	// addresses allowed as value of single host.
+	// Set of hosts, to which this permission grants access to. Only ip-addresses allowed as value of single host.
 	// +listType=set
 	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
 
+	// (String) The role type to grant to the topic.
 	// The role type to grant to the topic.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
+	// (String) The name of the topic that the permission grants access to.
 	// The name of the topic that the permission grants access to.
 	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
 }
 
 type UserPermissionParameters struct {
 
-	// Set of hosts, to which this permission grants access to.
+	// addresses allowed as value of single host.
+	// Set of hosts, to which this permission grants access to. Only ip-addresses allowed as value of single host.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
 
+	// (String) The role type to grant to the topic.
 	// The role type to grant to the topic.
 	// +kubebuilder:validation:Optional
 	Role *string `json:"role" tf:"role,omitempty"`
 
+	// (String) The name of the topic that the permission grants access to.
 	// The name of the topic that the permission grants access to.
 	// +kubebuilder:validation:Optional
 	TopicName *string `json:"topicName" tf:"topic_name,omitempty"`
@@ -1032,7 +1547,7 @@ type KafkaClusterStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// KafkaCluster is the Schema for the KafkaClusters API. Manages a Kafka cluster within Yandex.Cloud.
+// KafkaCluster is the Schema for the KafkaClusters API. Manages a Kafka cluster within Yandex Cloud.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -75,19 +75,33 @@ spec:
               forProvider:
                 properties:
                   members:
-                    description: 'An array of identities that will be granted the
-                      privilege in the role. Each entry can have one of the following
-                      values:'
+                    description: |-
+                      (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+                      An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
+                      * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
+                      * **serviceAccount:{service_account_id}**: A unique service account ID.
+                      * **federatedUser:{federated_user_id}**: A unique federated user ID.
+                      * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
+                      * **group:{group_id}**: A unique group ID.
+                      * **system:group:federation:{federation_id}:users**: All users in federation.
+                      * **system:group:organization:{organization_id}:users**: All users in organization.
+                      * **system:allAuthenticatedUsers**: All authenticated users.
+                      * **system:allUsers**: All users, including unauthenticated ones.
+
+                      ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   organizationId:
-                    description: ID of the organization to attach the policy to.
+                    description: |-
+                      (String) The ID of the organization to attach the policy to.
+                      The ID of the organization to attach the policy to.
                     type: string
                   role:
-                    description: The role that should be assigned. Only one yandex_organizationmanager_organization_iam_binding
-                      can be used per role.
+                    description: |-
+                      (String) The role that should be applied. See roles catalog.
+                      The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
                     type: string
                   serviceAccountRef:
                     description: References to ServiceAccount to populate members.
@@ -168,6 +182,7 @@ spec:
                         type: object
                     type: object
                   sleepAfter:
+                    description: (Number)
                     type: number
                 type: object
               initProvider:
@@ -184,19 +199,33 @@ spec:
                   autoscaler.
                 properties:
                   members:
-                    description: 'An array of identities that will be granted the
-                      privilege in the role. Each entry can have one of the following
-                      values:'
+                    description: |-
+                      (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+                      An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
+                      * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
+                      * **serviceAccount:{service_account_id}**: A unique service account ID.
+                      * **federatedUser:{federated_user_id}**: A unique federated user ID.
+                      * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
+                      * **group:{group_id}**: A unique group ID.
+                      * **system:group:federation:{federation_id}:users**: All users in federation.
+                      * **system:group:organization:{organization_id}:users**: All users in organization.
+                      * **system:allAuthenticatedUsers**: All authenticated users.
+                      * **system:allUsers**: All users, including unauthenticated ones.
+
+                      ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   organizationId:
-                    description: ID of the organization to attach the policy to.
+                    description: |-
+                      (String) The ID of the organization to attach the policy to.
+                      The ID of the organization to attach the policy to.
                     type: string
                   role:
-                    description: The role that should be assigned. Only one yandex_organizationmanager_organization_iam_binding
-                      can be used per role.
+                    description: |-
+                      (String) The role that should be applied. See roles catalog.
+                      The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
                     type: string
                   serviceAccountRef:
                     description: References to ServiceAccount to populate members.
@@ -277,6 +306,7 @@ spec:
                         type: object
                     type: object
                   sleepAfter:
+                    description: (Number)
                     type: number
                 type: object
               managementPolicies:
@@ -462,23 +492,39 @@ spec:
               atProvider:
                 properties:
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   members:
-                    description: 'An array of identities that will be granted the
-                      privilege in the role. Each entry can have one of the following
-                      values:'
+                    description: |-
+                      (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+                      An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
+                      * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
+                      * **serviceAccount:{service_account_id}**: A unique service account ID.
+                      * **federatedUser:{federated_user_id}**: A unique federated user ID.
+                      * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
+                      * **group:{group_id}**: A unique group ID.
+                      * **system:group:federation:{federation_id}:users**: All users in federation.
+                      * **system:group:organization:{organization_id}:users**: All users in organization.
+                      * **system:allAuthenticatedUsers**: All authenticated users.
+                      * **system:allUsers**: All users, including unauthenticated ones.
+
+                      ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   organizationId:
-                    description: ID of the organization to attach the policy to.
+                    description: |-
+                      (String) The ID of the organization to attach the policy to.
+                      The ID of the organization to attach the policy to.
                     type: string
                   role:
-                    description: The role that should be assigned. Only one yandex_organizationmanager_organization_iam_binding
-                      can be used per role.
+                    description: |-
+                      (String) The role that should be applied. See roles catalog.
+                      The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
                     type: string
                   sleepAfter:
+                    description: (Number)
                     type: number
                 type: object
               conditions:

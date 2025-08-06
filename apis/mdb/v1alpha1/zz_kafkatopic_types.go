@@ -29,6 +29,8 @@ import (
 
 type KafkaTopicInitParameters_2 struct {
 
+	// (String) The ID of the Kafka cluster.
+	// The ID of the Kafka cluster.
 	// +crossplane:generate:reference:type=KafkaCluster
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
@@ -40,39 +42,53 @@ type KafkaTopicInitParameters_2 struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// The name of the topic.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Number) The number of the topic's partitions.
 	// The number of the topic's partitions.
 	Partitions *float64 `json:"partitions,omitempty" tf:"partitions,omitempty"`
 
+	// (Number) Amount of data copies (replicas) for the topic in the cluster.
 	// Amount of data copies (replicas) for the topic in the cluster.
 	ReplicationFactor *float64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
 
-	// User-defined settings for the topic. The structure is documented below.
+	// defined settings for the topic. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+	// User-defined settings for the topic. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/settings-list#topic-settings) and [the Kafka documentation](https://kafka.apache.org/documentation/#topicconfigs).
 	TopicConfig []KafkaTopicTopicConfigInitParameters `json:"topicConfig,omitempty" tf:"topic_config,omitempty"`
 }
 
 type KafkaTopicObservation_2 struct {
+
+	// (String) The ID of the Kafka cluster.
+	// The ID of the Kafka cluster.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The name of the topic.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Number) The number of the topic's partitions.
 	// The number of the topic's partitions.
 	Partitions *float64 `json:"partitions,omitempty" tf:"partitions,omitempty"`
 
+	// (Number) Amount of data copies (replicas) for the topic in the cluster.
 	// Amount of data copies (replicas) for the topic in the cluster.
 	ReplicationFactor *float64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
 
-	// User-defined settings for the topic. The structure is documented below.
+	// defined settings for the topic. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+	// User-defined settings for the topic. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/settings-list#topic-settings) and [the Kafka documentation](https://kafka.apache.org/documentation/#topicconfigs).
 	TopicConfig []KafkaTopicTopicConfigObservation `json:"topicConfig,omitempty" tf:"topic_config,omitempty"`
 }
 
 type KafkaTopicParameters_2 struct {
 
+	// (String) The ID of the Kafka cluster.
+	// The ID of the Kafka cluster.
 	// +crossplane:generate:reference:type=KafkaCluster
 	// +kubebuilder:validation:Optional
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
@@ -85,122 +101,201 @@ type KafkaTopicParameters_2 struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// The name of the topic.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Number) The number of the topic's partitions.
 	// The number of the topic's partitions.
 	// +kubebuilder:validation:Optional
 	Partitions *float64 `json:"partitions,omitempty" tf:"partitions,omitempty"`
 
+	// (Number) Amount of data copies (replicas) for the topic in the cluster.
 	// Amount of data copies (replicas) for the topic in the cluster.
 	// +kubebuilder:validation:Optional
 	ReplicationFactor *float64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
 
-	// User-defined settings for the topic. The structure is documented below.
+	// defined settings for the topic. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+	// User-defined settings for the topic. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/settings-list#topic-settings) and [the Kafka documentation](https://kafka.apache.org/documentation/#topicconfigs).
 	// +kubebuilder:validation:Optional
 	TopicConfig []KafkaTopicTopicConfigParameters `json:"topicConfig,omitempty" tf:"topic_config,omitempty"`
 }
 
 type KafkaTopicTopicConfigInitParameters struct {
 
-	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
+	// (String) Retention policy to use on log segments.
+	// Retention policy to use on log segments.
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
+	// (String) Compression type of kafka topic.
+	// Compression type of kafka topic.
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
+	// (String) The amount of time to retain delete tombstone markers for log compacted topics.
+	// The amount of time to retain delete tombstone markers for log compacted topics.
 	DeleteRetentionMs *string `json:"deleteRetentionMs,omitempty" tf:"delete_retention_ms,omitempty"`
 
+	// (String) The time to wait before deleting a file from the filesystem.
+	// The time to wait before deleting a file from the filesystem.
 	FileDeleteDelayMs *string `json:"fileDeleteDelayMs,omitempty" tf:"file_delete_delay_ms,omitempty"`
 
+	// (String) This setting allows specifying an interval at which we will force an fsync of data written to the log.
+	// This setting allows specifying an interval at which we will force an fsync of data written to the log.
 	FlushMessages *string `json:"flushMessages,omitempty" tf:"flush_messages,omitempty"`
 
+	// (String) This setting allows specifying a time interval at which we will force an fsync of data written to the log.
+	// This setting allows specifying a time interval at which we will force an fsync of data written to the log.
 	FlushMs *string `json:"flushMs,omitempty" tf:"flush_ms,omitempty"`
 
+	// (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+	// The largest record batch size allowed by Kafka (after compression if compression is enabled).
 	MaxMessageBytes *string `json:"maxMessageBytes,omitempty" tf:"max_message_bytes,omitempty"`
 
+	// (String) The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
+	// The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
 	MinCompactionLagMs *string `json:"minCompactionLagMs,omitempty" tf:"min_compaction_lag_ms,omitempty"`
 
+	// 1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
+	// When a producer sets acks to "all" (or "-1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
 	MinInsyncReplicas *string `json:"minInsyncReplicas,omitempty" tf:"min_insync_replicas,omitempty"`
 
+	// (Boolean, Deprecated) True if we should preallocate the file on disk when creating a new log segment.
+	// True if we should preallocate the file on disk when creating a new log segment.
 	Preallocate *bool `json:"preallocate,omitempty" tf:"preallocate,omitempty"`
 
+	// (String) This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
+	// This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
 	RetentionBytes *string `json:"retentionBytes,omitempty" tf:"retention_bytes,omitempty"`
 
+	// (String) This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
+	// This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
 	RetentionMs *string `json:"retentionMs,omitempty" tf:"retention_ms,omitempty"`
 
+	// (String) This configuration controls the segment file size for the log.
+	// This configuration controls the segment file size for the log.
 	SegmentBytes *string `json:"segmentBytes,omitempty" tf:"segment_bytes,omitempty"`
 }
 
 type KafkaTopicTopicConfigObservation struct {
 
-	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
+	// (String) Retention policy to use on log segments.
+	// Retention policy to use on log segments.
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
+	// (String) Compression type of kafka topic.
+	// Compression type of kafka topic.
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
+	// (String) The amount of time to retain delete tombstone markers for log compacted topics.
+	// The amount of time to retain delete tombstone markers for log compacted topics.
 	DeleteRetentionMs *string `json:"deleteRetentionMs,omitempty" tf:"delete_retention_ms,omitempty"`
 
+	// (String) The time to wait before deleting a file from the filesystem.
+	// The time to wait before deleting a file from the filesystem.
 	FileDeleteDelayMs *string `json:"fileDeleteDelayMs,omitempty" tf:"file_delete_delay_ms,omitempty"`
 
+	// (String) This setting allows specifying an interval at which we will force an fsync of data written to the log.
+	// This setting allows specifying an interval at which we will force an fsync of data written to the log.
 	FlushMessages *string `json:"flushMessages,omitempty" tf:"flush_messages,omitempty"`
 
+	// (String) This setting allows specifying a time interval at which we will force an fsync of data written to the log.
+	// This setting allows specifying a time interval at which we will force an fsync of data written to the log.
 	FlushMs *string `json:"flushMs,omitempty" tf:"flush_ms,omitempty"`
 
+	// (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+	// The largest record batch size allowed by Kafka (after compression if compression is enabled).
 	MaxMessageBytes *string `json:"maxMessageBytes,omitempty" tf:"max_message_bytes,omitempty"`
 
+	// (String) The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
+	// The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
 	MinCompactionLagMs *string `json:"minCompactionLagMs,omitempty" tf:"min_compaction_lag_ms,omitempty"`
 
+	// 1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
+	// When a producer sets acks to "all" (or "-1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
 	MinInsyncReplicas *string `json:"minInsyncReplicas,omitempty" tf:"min_insync_replicas,omitempty"`
 
+	// (Boolean, Deprecated) True if we should preallocate the file on disk when creating a new log segment.
+	// True if we should preallocate the file on disk when creating a new log segment.
 	Preallocate *bool `json:"preallocate,omitempty" tf:"preallocate,omitempty"`
 
+	// (String) This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
+	// This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
 	RetentionBytes *string `json:"retentionBytes,omitempty" tf:"retention_bytes,omitempty"`
 
+	// (String) This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
+	// This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
 	RetentionMs *string `json:"retentionMs,omitempty" tf:"retention_ms,omitempty"`
 
+	// (String) This configuration controls the segment file size for the log.
+	// This configuration controls the segment file size for the log.
 	SegmentBytes *string `json:"segmentBytes,omitempty" tf:"segment_bytes,omitempty"`
 }
 
 type KafkaTopicTopicConfigParameters struct {
 
-	// Kafka topic settings. For more information, see the official documentation and the Kafka documentation.
+	// (String) Retention policy to use on log segments.
+	// Retention policy to use on log segments.
 	// +kubebuilder:validation:Optional
 	CleanupPolicy *string `json:"cleanupPolicy,omitempty" tf:"cleanup_policy,omitempty"`
 
+	// (String) Compression type of kafka topic.
+	// Compression type of kafka topic.
 	// +kubebuilder:validation:Optional
 	CompressionType *string `json:"compressionType,omitempty" tf:"compression_type,omitempty"`
 
+	// (String) The amount of time to retain delete tombstone markers for log compacted topics.
+	// The amount of time to retain delete tombstone markers for log compacted topics.
 	// +kubebuilder:validation:Optional
 	DeleteRetentionMs *string `json:"deleteRetentionMs,omitempty" tf:"delete_retention_ms,omitempty"`
 
+	// (String) The time to wait before deleting a file from the filesystem.
+	// The time to wait before deleting a file from the filesystem.
 	// +kubebuilder:validation:Optional
 	FileDeleteDelayMs *string `json:"fileDeleteDelayMs,omitempty" tf:"file_delete_delay_ms,omitempty"`
 
+	// (String) This setting allows specifying an interval at which we will force an fsync of data written to the log.
+	// This setting allows specifying an interval at which we will force an fsync of data written to the log.
 	// +kubebuilder:validation:Optional
 	FlushMessages *string `json:"flushMessages,omitempty" tf:"flush_messages,omitempty"`
 
+	// (String) This setting allows specifying a time interval at which we will force an fsync of data written to the log.
+	// This setting allows specifying a time interval at which we will force an fsync of data written to the log.
 	// +kubebuilder:validation:Optional
 	FlushMs *string `json:"flushMs,omitempty" tf:"flush_ms,omitempty"`
 
+	// (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+	// The largest record batch size allowed by Kafka (after compression if compression is enabled).
 	// +kubebuilder:validation:Optional
 	MaxMessageBytes *string `json:"maxMessageBytes,omitempty" tf:"max_message_bytes,omitempty"`
 
+	// (String) The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
+	// The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
 	// +kubebuilder:validation:Optional
 	MinCompactionLagMs *string `json:"minCompactionLagMs,omitempty" tf:"min_compaction_lag_ms,omitempty"`
 
+	// 1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
+	// When a producer sets acks to "all" (or "-1"), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful.
 	// +kubebuilder:validation:Optional
 	MinInsyncReplicas *string `json:"minInsyncReplicas,omitempty" tf:"min_insync_replicas,omitempty"`
 
+	// (Boolean, Deprecated) True if we should preallocate the file on disk when creating a new log segment.
+	// True if we should preallocate the file on disk when creating a new log segment.
 	// +kubebuilder:validation:Optional
 	Preallocate *bool `json:"preallocate,omitempty" tf:"preallocate,omitempty"`
 
+	// (String) This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
+	// This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
 	// +kubebuilder:validation:Optional
 	RetentionBytes *string `json:"retentionBytes,omitempty" tf:"retention_bytes,omitempty"`
 
+	// (String) This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
+	// This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
 	// +kubebuilder:validation:Optional
 	RetentionMs *string `json:"retentionMs,omitempty" tf:"retention_ms,omitempty"`
 
+	// (String) This configuration controls the segment file size for the log.
+	// This configuration controls the segment file size for the log.
 	// +kubebuilder:validation:Optional
 	SegmentBytes *string `json:"segmentBytes,omitempty" tf:"segment_bytes,omitempty"`
 }
@@ -232,7 +327,7 @@ type KafkaTopicStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// KafkaTopic is the Schema for the KafkaTopics API. Manages a topic of a Kafka cluster within Yandex.Cloud.
+// KafkaTopic is the Schema for the KafkaTopics API. Manages a topic of a Kafka cluster within Yandex Cloud.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

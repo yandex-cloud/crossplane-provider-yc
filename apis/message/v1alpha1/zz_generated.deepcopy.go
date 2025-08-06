@@ -127,6 +127,22 @@ func (in *QueueInitParameters) DeepCopyInto(out *QueueInitParameters) {
 		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
+	if in.Tags != nil {
+		in, out := &in.Tags, &out.Tags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
 	if in.VisibilityTimeoutSeconds != nil {
 		in, out := &in.VisibilityTimeoutSeconds, &out.VisibilityTimeoutSeconds
 		*out = new(float64)
@@ -244,6 +260,22 @@ func (in *QueueObservation) DeepCopyInto(out *QueueObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Tags != nil {
+		in, out := &in.Tags, &out.Tags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
+	}
 	if in.VisibilityTimeoutSeconds != nil {
 		in, out := &in.VisibilityTimeoutSeconds, &out.VisibilityTimeoutSeconds
 		*out = new(float64)
@@ -333,6 +365,22 @@ func (in *QueueParameters) DeepCopyInto(out *QueueParameters) {
 		in, out := &in.SecretKeySecretRef, &out.SecretKeySecretRef
 		*out = new(v1.SecretKeySelector)
 		**out = **in
+	}
+	if in.Tags != nil {
+		in, out := &in.Tags, &out.Tags
+		*out = make(map[string]*string, len(*in))
+		for key, val := range *in {
+			var outVal *string
+			if val == nil {
+				(*out)[key] = nil
+			} else {
+				inVal := (*in)[key]
+				in, out := &inVal, &outVal
+				*out = new(string)
+				**out = **in
+			}
+			(*out)[key] = outVal
+		}
 	}
 	if in.VisibilityTimeoutSeconds != nil {
 		in, out := &in.VisibilityTimeoutSeconds, &out.VisibilityTimeoutSeconds

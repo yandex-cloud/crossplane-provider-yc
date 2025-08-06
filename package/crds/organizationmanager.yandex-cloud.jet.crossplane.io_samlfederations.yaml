@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: SAMLFederation is the Schema for the SAMLFederations API. Allows
-          management of a single SAML Federation within an existing Yandex.Cloud Organization.
+          management of a single SAML Federation within an existing Yandex Cloud Organization.
         properties:
           apiVersion:
             description: |-
@@ -74,61 +74,75 @@ spec:
               forProvider:
                 properties:
                   autoCreateAccountOnLogin:
-                    description: Add new users automatically on successful authentication.
-                      The user will get the resource-manager.clouds.member role automatically,
-                      but you need to grant other roles to them. If the value is false,
-                      users who aren't added to the cloud can't log in, even if they
-                      have authenticated on your server.
+                    description: |-
+                      manager.clouds.member role automatically, but you need to grant other roles to them. If the value is false, users who aren't added to the cloud can't log in, even if they have authenticated on your server.
+                      Add new users automatically on successful authentication. The user will get the `resource-manager.clouds.member` role automatically, but you need to grant other roles to them. If the value is `false`, users who aren't added to the cloud can't log in, even if they have authenticated on your server.
                     type: boolean
                   caseInsensitiveNameIds:
-                    description: Use case-insensitive name ids.
+                    description: |-
+                      insensitive name IDs.
+                      Use case-insensitive name IDs.
                     type: boolean
                   cookieMaxAge:
-                    description: The lifetime of a Browser cookie in seconds. If the
-                      cookie is still valid, the management console authenticates
-                      the user immediately and redirects them to the home page. The
-                      default value is 8h.
+                    description: |-
+                      (String) The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is 8h.
+                      The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is `8h`.
                     type: string
                   description:
-                    description: The description of the SAML Federation.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   issuer:
-                    description: The ID of the IdP server to be used for authentication.
-                      The IdP server also responds to IAM with this ID after the user
-                      authenticates.
+                    description: |-
+                      (String) The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
+                      The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs assigned to the SAML
-                      Federation.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: The name of the SAML Federation.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   organizationId:
-                    description: The organization to attach this SAML Federation to.
+                    description: |-
+                      (String) The organization to attach this SAML Federation to.
+                      The organization to attach this SAML Federation to.
                     type: string
                   securitySettings:
-                    description: Federation security settings, structure is documented
-                      below.
+                    description: |-
+                      (Block List, Max: 1) Federation security settings. (see below for nested schema)
+                      Federation security settings.
                     items:
                       properties:
                         encryptedAssertions:
-                          description: Enable encrypted assertions.
+                          description: |-
+                            (Boolean) Enable encrypted assertions.
+                            Enable encrypted assertions.
+                          type: boolean
+                        forceAuthn:
+                          description: |-
+                            (Boolean) Force authentication on session expiration
+                            Force authentication on session expiration
                           type: boolean
                       type: object
                     type: array
                   ssoBinding:
-                    description: Single sign-on endpoint binding type. Most Identity
-                      Providers support the POST binding type. SAML Binding is a mapping
-                      of a SAML protocol message onto standard messaging formats and/or
-                      communications protocols.
+                    description: |-
+                      on endpoint binding type. Most Identity Providers support the POST binding type. SAML Binding is a mapping of a SAML protocol message onto standard messaging formats and/or communications protocols.
+                      Single sign-on endpoint binding type. Most Identity Providers support the `POST` binding type. SAML Binding is a mapping of a SAML protocol message onto standard messaging formats and/or communications protocols.
                     type: string
                   ssoUrl:
-                    description: Single sign-on endpoint URL. Specify the link to
-                      the IdP login page here.
+                    description: |-
+                      on (SSO) endpoint URL. Specify the link to the IdP login page here.
+                      Single sign-on (SSO) endpoint URL. Specify the link to the IdP login page here.
                     type: string
                 type: object
               initProvider:
@@ -145,61 +159,75 @@ spec:
                   autoscaler.
                 properties:
                   autoCreateAccountOnLogin:
-                    description: Add new users automatically on successful authentication.
-                      The user will get the resource-manager.clouds.member role automatically,
-                      but you need to grant other roles to them. If the value is false,
-                      users who aren't added to the cloud can't log in, even if they
-                      have authenticated on your server.
+                    description: |-
+                      manager.clouds.member role automatically, but you need to grant other roles to them. If the value is false, users who aren't added to the cloud can't log in, even if they have authenticated on your server.
+                      Add new users automatically on successful authentication. The user will get the `resource-manager.clouds.member` role automatically, but you need to grant other roles to them. If the value is `false`, users who aren't added to the cloud can't log in, even if they have authenticated on your server.
                     type: boolean
                   caseInsensitiveNameIds:
-                    description: Use case-insensitive name ids.
+                    description: |-
+                      insensitive name IDs.
+                      Use case-insensitive name IDs.
                     type: boolean
                   cookieMaxAge:
-                    description: The lifetime of a Browser cookie in seconds. If the
-                      cookie is still valid, the management console authenticates
-                      the user immediately and redirects them to the home page. The
-                      default value is 8h.
+                    description: |-
+                      (String) The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is 8h.
+                      The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is `8h`.
                     type: string
                   description:
-                    description: The description of the SAML Federation.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   issuer:
-                    description: The ID of the IdP server to be used for authentication.
-                      The IdP server also responds to IAM with this ID after the user
-                      authenticates.
+                    description: |-
+                      (String) The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
+                      The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs assigned to the SAML
-                      Federation.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: The name of the SAML Federation.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   organizationId:
-                    description: The organization to attach this SAML Federation to.
+                    description: |-
+                      (String) The organization to attach this SAML Federation to.
+                      The organization to attach this SAML Federation to.
                     type: string
                   securitySettings:
-                    description: Federation security settings, structure is documented
-                      below.
+                    description: |-
+                      (Block List, Max: 1) Federation security settings. (see below for nested schema)
+                      Federation security settings.
                     items:
                       properties:
                         encryptedAssertions:
-                          description: Enable encrypted assertions.
+                          description: |-
+                            (Boolean) Enable encrypted assertions.
+                            Enable encrypted assertions.
+                          type: boolean
+                        forceAuthn:
+                          description: |-
+                            (Boolean) Force authentication on session expiration
+                            Force authentication on session expiration
                           type: boolean
                       type: object
                     type: array
                   ssoBinding:
-                    description: Single sign-on endpoint binding type. Most Identity
-                      Providers support the POST binding type. SAML Binding is a mapping
-                      of a SAML protocol message onto standard messaging formats and/or
-                      communications protocols.
+                    description: |-
+                      on endpoint binding type. Most Identity Providers support the POST binding type. SAML Binding is a mapping of a SAML protocol message onto standard messaging formats and/or communications protocols.
+                      Single sign-on endpoint binding type. Most Identity Providers support the `POST` binding type. SAML Binding is a mapping of a SAML protocol message onto standard messaging formats and/or communications protocols.
                     type: string
                   ssoUrl:
-                    description: Single sign-on endpoint URL. Specify the link to
-                      the IdP login page here.
+                    description: |-
+                      on (SSO) endpoint URL. Specify the link to the IdP login page here.
+                      Single sign-on (SSO) endpoint URL. Specify the link to the IdP login page here.
                     type: string
                 type: object
               managementPolicies:
@@ -396,66 +424,83 @@ spec:
               atProvider:
                 properties:
                   autoCreateAccountOnLogin:
-                    description: Add new users automatically on successful authentication.
-                      The user will get the resource-manager.clouds.member role automatically,
-                      but you need to grant other roles to them. If the value is false,
-                      users who aren't added to the cloud can't log in, even if they
-                      have authenticated on your server.
+                    description: |-
+                      manager.clouds.member role automatically, but you need to grant other roles to them. If the value is false, users who aren't added to the cloud can't log in, even if they have authenticated on your server.
+                      Add new users automatically on successful authentication. The user will get the `resource-manager.clouds.member` role automatically, but you need to grant other roles to them. If the value is `false`, users who aren't added to the cloud can't log in, even if they have authenticated on your server.
                     type: boolean
                   caseInsensitiveNameIds:
-                    description: Use case-insensitive name ids.
+                    description: |-
+                      insensitive name IDs.
+                      Use case-insensitive name IDs.
                     type: boolean
                   cookieMaxAge:
-                    description: The lifetime of a Browser cookie in seconds. If the
-                      cookie is still valid, the management console authenticates
-                      the user immediately and redirects them to the home page. The
-                      default value is 8h.
+                    description: |-
+                      (String) The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is 8h.
+                      The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is `8h`.
                     type: string
                   createdAt:
-                    description: (Computed) The SAML Federation creation timestamp.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   description:
-                    description: The description of the SAML Federation.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   issuer:
-                    description: The ID of the IdP server to be used for authentication.
-                      The IdP server also responds to IAM with this ID after the user
-                      authenticates.
+                    description: |-
+                      (String) The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
+                      The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: A set of key/value label pairs assigned to the SAML
-                      Federation.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: The name of the SAML Federation.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   organizationId:
-                    description: The organization to attach this SAML Federation to.
+                    description: |-
+                      (String) The organization to attach this SAML Federation to.
+                      The organization to attach this SAML Federation to.
                     type: string
                   securitySettings:
-                    description: Federation security settings, structure is documented
-                      below.
+                    description: |-
+                      (Block List, Max: 1) Federation security settings. (see below for nested schema)
+                      Federation security settings.
                     items:
                       properties:
                         encryptedAssertions:
-                          description: Enable encrypted assertions.
+                          description: |-
+                            (Boolean) Enable encrypted assertions.
+                            Enable encrypted assertions.
+                          type: boolean
+                        forceAuthn:
+                          description: |-
+                            (Boolean) Force authentication on session expiration
+                            Force authentication on session expiration
                           type: boolean
                       type: object
                     type: array
                   ssoBinding:
-                    description: Single sign-on endpoint binding type. Most Identity
-                      Providers support the POST binding type. SAML Binding is a mapping
-                      of a SAML protocol message onto standard messaging formats and/or
-                      communications protocols.
+                    description: |-
+                      on endpoint binding type. Most Identity Providers support the POST binding type. SAML Binding is a mapping of a SAML protocol message onto standard messaging formats and/or communications protocols.
+                      Single sign-on endpoint binding type. Most Identity Providers support the `POST` binding type. SAML Binding is a mapping of a SAML protocol message onto standard messaging formats and/or communications protocols.
                     type: string
                   ssoUrl:
-                    description: Single sign-on endpoint URL. Specify the link to
-                      the IdP login page here.
+                    description: |-
+                      on (SSO) endpoint URL. Specify the link to the IdP login page here.
+                      Single sign-on (SSO) endpoint URL. Specify the link to the IdP login page here.
                     type: string
                 type: object
               conditions:

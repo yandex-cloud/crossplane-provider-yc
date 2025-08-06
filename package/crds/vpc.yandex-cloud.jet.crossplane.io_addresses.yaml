@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Address is the Schema for the Addresss API. Manages a VPC address
-          within Yandex.Cloud.
+          within Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -74,49 +74,76 @@ spec:
               forProvider:
                 properties:
                   deletionProtection:
-                    description: Flag that protects the address from accidental deletion.
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: An optional description of this resource. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   dnsRecord:
-                    description: DNS record specification of address
+                    description: |-
+                      (Block List) DNS record specification of address. (see below for nested schema)
+                      DNS record specification of address.
                     items:
                       properties:
                         dnsZoneId:
-                          description: DNS zone id to create record at.
+                          description: |-
+                            (String) DNS zone id to create record at.
+                            DNS zone id to create record at.
                           type: string
                         fqdn:
-                          description: FQDN for record to address
+                          description: |-
+                            (String) FQDN for record to address.
+                            FQDN for record to address.
                           type: string
                         ptr:
-                          description: If PTR record is needed
+                          description: |-
+                            (Boolean) If PTR record is needed.
+                            If PTR record is needed.
                           type: boolean
                         ttl:
-                          description: TTL of DNS record
+                          description: |-
+                            (Number) TTL of DNS record.
+                            TTL of DNS record.
                           type: number
                       type: object
                     type: array
                   externalIpv4Address:
-                    description: spec of IP v4 address
+                    description: |-
+                      (Block List, Max: 1) Specification of IPv4 address.
+                      Specification of IPv4 address.
+
+                      ~> Either one `address` or `zone_id` arguments can be specified.
+
+                      ~> Either one `ddos_protection_provider` or `outgoing_smtp_capability` arguments can be specified.
+
+                      ~> Change any argument in `external_ipv4_address` will cause an address recreate.
                     items:
                       properties:
                         ddosProtectionProvider:
-                          description: 'Enable DDOS protection. Possible values are:
-                            "qrator"'
+                          description: |-
+                            (String) Enable DDOS protection. Possible values are: qrator
+                            Enable DDOS protection. Possible values are: `qrator`
                           type: string
                         outgoingSmtpCapability:
-                          description: Wanted outgoing smtp capability.
+                          description: |-
+                            (String) Wanted outgoing smtp capability.
+                            Wanted outgoing smtp capability.
                           type: string
                         zoneId:
-                          description: Zone for allocating address.
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                           type: string
                       type: object
                     type: array
                   folderId:
-                    description: ID of the folder that the resource belongs to. If
-                      it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -197,13 +224,15 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to apply to this resource. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the address. Provided by the client when
-                      the address is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                 type: object
               initProvider:
@@ -220,49 +249,76 @@ spec:
                   autoscaler.
                 properties:
                   deletionProtection:
-                    description: Flag that protects the address from accidental deletion.
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: An optional description of this resource. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   dnsRecord:
-                    description: DNS record specification of address
+                    description: |-
+                      (Block List) DNS record specification of address. (see below for nested schema)
+                      DNS record specification of address.
                     items:
                       properties:
                         dnsZoneId:
-                          description: DNS zone id to create record at.
+                          description: |-
+                            (String) DNS zone id to create record at.
+                            DNS zone id to create record at.
                           type: string
                         fqdn:
-                          description: FQDN for record to address
+                          description: |-
+                            (String) FQDN for record to address.
+                            FQDN for record to address.
                           type: string
                         ptr:
-                          description: If PTR record is needed
+                          description: |-
+                            (Boolean) If PTR record is needed.
+                            If PTR record is needed.
                           type: boolean
                         ttl:
-                          description: TTL of DNS record
+                          description: |-
+                            (Number) TTL of DNS record.
+                            TTL of DNS record.
                           type: number
                       type: object
                     type: array
                   externalIpv4Address:
-                    description: spec of IP v4 address
+                    description: |-
+                      (Block List, Max: 1) Specification of IPv4 address.
+                      Specification of IPv4 address.
+
+                      ~> Either one `address` or `zone_id` arguments can be specified.
+
+                      ~> Either one `ddos_protection_provider` or `outgoing_smtp_capability` arguments can be specified.
+
+                      ~> Change any argument in `external_ipv4_address` will cause an address recreate.
                     items:
                       properties:
                         ddosProtectionProvider:
-                          description: 'Enable DDOS protection. Possible values are:
-                            "qrator"'
+                          description: |-
+                            (String) Enable DDOS protection. Possible values are: qrator
+                            Enable DDOS protection. Possible values are: `qrator`
                           type: string
                         outgoingSmtpCapability:
-                          description: Wanted outgoing smtp capability.
+                          description: |-
+                            (String) Wanted outgoing smtp capability.
+                            Wanted outgoing smtp capability.
                           type: string
                         zoneId:
-                          description: Zone for allocating address.
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                           type: string
                       type: object
                     type: array
                   folderId:
-                    description: ID of the folder that the resource belongs to. If
-                      it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -343,13 +399,15 @@ spec:
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to apply to this resource. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the address. Provided by the client when
-                      the address is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                 type: object
               managementPolicies:
@@ -525,74 +583,112 @@ spec:
               atProvider:
                 properties:
                   createdAt:
-                    description: Creation timestamp of the key.
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
                     type: string
                   deletionProtection:
-                    description: Flag that protects the address from accidental deletion.
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
-                    description: An optional description of this resource. Provide
-                      this property when you create the resource.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   dnsRecord:
-                    description: DNS record specification of address
+                    description: |-
+                      (Block List) DNS record specification of address. (see below for nested schema)
+                      DNS record specification of address.
                     items:
                       properties:
                         dnsZoneId:
-                          description: DNS zone id to create record at.
+                          description: |-
+                            (String) DNS zone id to create record at.
+                            DNS zone id to create record at.
                           type: string
                         fqdn:
-                          description: FQDN for record to address
+                          description: |-
+                            (String) FQDN for record to address.
+                            FQDN for record to address.
                           type: string
                         ptr:
-                          description: If PTR record is needed
+                          description: |-
+                            (Boolean) If PTR record is needed.
+                            If PTR record is needed.
                           type: boolean
                         ttl:
-                          description: TTL of DNS record
+                          description: |-
+                            (Number) TTL of DNS record.
+                            TTL of DNS record.
                           type: number
                       type: object
                     type: array
                   externalIpv4Address:
-                    description: spec of IP v4 address
+                    description: |-
+                      (Block List, Max: 1) Specification of IPv4 address.
+                      Specification of IPv4 address.
+
+                      ~> Either one `address` or `zone_id` arguments can be specified.
+
+                      ~> Either one `ddos_protection_provider` or `outgoing_smtp_capability` arguments can be specified.
+
+                      ~> Change any argument in `external_ipv4_address` will cause an address recreate.
                     items:
                       properties:
                         address:
-                          description: Allocated IP address.
+                          description: |-
+                            (String) Allocated IP address.
+                            Allocated IP address.
                           type: string
                         ddosProtectionProvider:
-                          description: 'Enable DDOS protection. Possible values are:
-                            "qrator"'
+                          description: |-
+                            (String) Enable DDOS protection. Possible values are: qrator
+                            Enable DDOS protection. Possible values are: `qrator`
                           type: string
                         outgoingSmtpCapability:
-                          description: Wanted outgoing smtp capability.
+                          description: |-
+                            (String) Wanted outgoing smtp capability.
+                            Wanted outgoing smtp capability.
                           type: string
                         zoneId:
-                          description: Zone for allocating address.
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                           type: string
                       type: object
                     type: array
                   folderId:
-                    description: ID of the folder that the resource belongs to. If
-                      it is not provided, the default provider folder is used.
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to apply to this resource. A list of key/value
-                      pairs.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
-                    description: Name of the address. Provided by the client when
-                      the address is created.
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
                     type: string
                   reserved:
-                    description: false means that address is ephemeral.
+                    description: |-
+                      (Boolean) false means that address is ephemeral.
+                      `false` means that address is ephemeral.
                     type: boolean
                   used:
-                    description: true if address is used.
+                    description: |-
+                      (Boolean) true if address is used.
+                      `true` if address is used.
                     type: boolean
                 type: object
               conditions:

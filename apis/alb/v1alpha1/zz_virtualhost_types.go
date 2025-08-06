@@ -27,40 +27,84 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AllRequestsInitParameters struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type AllRequestsObservation struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type AllRequestsParameters struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	// +kubebuilder:validation:Optional
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	// +kubebuilder:validation:Optional
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
 type AndPrincipalsHeaderValueInitParameters struct {
 
+	// (String) Match exactly.
 	// Match exactly.
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
 	// Match prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
 	// Match regex.
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type AndPrincipalsHeaderValueObservation struct {
 
+	// (String) Match exactly.
 	// Match exactly.
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
 	// Match prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
 	// Match regex.
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type AndPrincipalsHeaderValueParameters struct {
 
+	// (String) Match exactly.
 	// Match exactly.
 	// +kubebuilder:validation:Optional
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
 	// Match prefix.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
 	// Match regex.
 	// +kubebuilder:validation:Optional
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
@@ -68,67 +112,82 @@ type AndPrincipalsHeaderValueParameters struct {
 
 type DirectResponseActionInitParameters struct {
 
+	// (String) Response body text.
 	// Response body text.
 	Body *string `json:"body,omitempty" tf:"body,omitempty"`
 
-	// The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+	// (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+	// HTTP response status. Should be between `100` and `599`.
 	Status *float64 `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type DirectResponseActionObservation struct {
 
+	// (String) Response body text.
 	// Response body text.
 	Body *string `json:"body,omitempty" tf:"body,omitempty"`
 
-	// The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+	// (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+	// HTTP response status. Should be between `100` and `599`.
 	Status *float64 `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type DirectResponseActionParameters struct {
 
+	// (String) Response body text.
 	// Response body text.
 	// +kubebuilder:validation:Optional
 	Body *string `json:"body,omitempty" tf:"body,omitempty"`
 
-	// The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+	// (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+	// HTTP response status. Should be between `100` and `599`.
 	// +kubebuilder:validation:Optional
 	Status *float64 `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type FqmnInitParameters struct {
 
+	// (String) Match exactly.
 	// Match exactly.
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
 	// Match prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
 	// Match regex.
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type FqmnObservation struct {
 
+	// (String) Match exactly.
 	// Match exactly.
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
 	// Match prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
 	// Match regex.
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type FqmnParameters struct {
 
+	// (String) Match exactly.
 	// Match exactly.
 	// +kubebuilder:validation:Optional
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
 	// Match prefix.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
 	// Match regex.
 	// +kubebuilder:validation:Optional
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
@@ -136,28 +195,39 @@ type FqmnParameters struct {
 
 type GRPCMatchInitParameters struct {
 
-	// If not set, all services/methods are assumed. The structure is documented below.
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	Fqmn []FqmnInitParameters `json:"fqmn,omitempty" tf:"fqmn,omitempty"`
 }
 
 type GRPCMatchObservation struct {
 
-	// If not set, all services/methods are assumed. The structure is documented below.
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	Fqmn []FqmnObservation `json:"fqmn,omitempty" tf:"fqmn,omitempty"`
 }
 
 type GRPCMatchParameters struct {
 
-	// If not set, all services/methods are assumed. The structure is documented below.
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	// +kubebuilder:validation:Optional
 	Fqmn []FqmnParameters `json:"fqmn,omitempty" tf:"fqmn,omitempty"`
 }
 
 type GRPCRouteActionInitParameters struct {
 
+	// (Boolean) If set, will automatically rewrite host.
 	// If set, will automatically rewrite host.
 	AutoHostRewrite *bool `json:"autoHostRewrite,omitempty" tf:"auto_host_rewrite,omitempty"`
 
+	// (String) Backend group to route requests.
 	// Backend group to route requests.
 	// +crossplane:generate:reference:type=BackendGroup
 	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
@@ -170,40 +240,58 @@ type GRPCRouteActionInitParameters struct {
 	// +kubebuilder:validation:Optional
 	BackendGroupIDSelector *v1.Selector `json:"backendGroupIdSelector,omitempty" tf:"-"`
 
+	// (String) Host rewrite specifier.
 	// Host rewrite specifier.
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
-	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+	// one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios - one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
+	// timeout header). If not set, default is 60 seconds.
 	// Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is 60 seconds.
 	MaxTimeout *string `json:"maxTimeout,omitempty" tf:"max_timeout,omitempty"`
+
+	// (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+	// Rate limit configuration applied for a whole virtual host
+	RateLimit []GRPCRouteActionRateLimitInitParameters `json:"rateLimit,omitempty" tf:"rate_limit,omitempty"`
 }
 
 type GRPCRouteActionObservation struct {
 
+	// (Boolean) If set, will automatically rewrite host.
 	// If set, will automatically rewrite host.
 	AutoHostRewrite *bool `json:"autoHostRewrite,omitempty" tf:"auto_host_rewrite,omitempty"`
 
+	// (String) Backend group to route requests.
 	// Backend group to route requests.
 	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
 
+	// (String) Host rewrite specifier.
 	// Host rewrite specifier.
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
-	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+	// one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios - one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
+	// timeout header). If not set, default is 60 seconds.
 	// Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is 60 seconds.
 	MaxTimeout *string `json:"maxTimeout,omitempty" tf:"max_timeout,omitempty"`
+
+	// (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+	// Rate limit configuration applied for a whole virtual host
+	RateLimit []GRPCRouteActionRateLimitObservation `json:"rateLimit,omitempty" tf:"rate_limit,omitempty"`
 }
 
 type GRPCRouteActionParameters struct {
 
+	// (Boolean) If set, will automatically rewrite host.
 	// If set, will automatically rewrite host.
 	// +kubebuilder:validation:Optional
 	AutoHostRewrite *bool `json:"autoHostRewrite,omitempty" tf:"auto_host_rewrite,omitempty"`
 
+	// (String) Backend group to route requests.
 	// Backend group to route requests.
 	// +crossplane:generate:reference:type=BackendGroup
 	// +kubebuilder:validation:Optional
@@ -217,72 +305,133 @@ type GRPCRouteActionParameters struct {
 	// +kubebuilder:validation:Optional
 	BackendGroupIDSelector *v1.Selector `json:"backendGroupIdSelector,omitempty" tf:"-"`
 
+	// (String) Host rewrite specifier.
 	// Host rewrite specifier.
 	// +kubebuilder:validation:Optional
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
-	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+	// one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios - one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	// +kubebuilder:validation:Optional
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
+	// timeout header). If not set, default is 60 seconds.
 	// Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is 60 seconds.
 	// +kubebuilder:validation:Optional
 	MaxTimeout *string `json:"maxTimeout,omitempty" tf:"max_timeout,omitempty"`
+
+	// (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+	// Rate limit configuration applied for a whole virtual host
+	// +kubebuilder:validation:Optional
+	RateLimit []GRPCRouteActionRateLimitParameters `json:"rateLimit,omitempty" tf:"rate_limit,omitempty"`
+}
+
+type GRPCRouteActionRateLimitInitParameters struct {
+
+	// (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+	// Rate limit configuration applied to all incoming requests
+	AllRequests []RateLimitAllRequestsInitParameters `json:"allRequests,omitempty" tf:"all_requests,omitempty"`
+
+	// (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+	// Rate limit configuration applied separately for each set of requests grouped by client IP address
+	RequestsPerIP []RateLimitRequestsPerIPInitParameters `json:"requestsPerIp,omitempty" tf:"requests_per_ip,omitempty"`
+}
+
+type GRPCRouteActionRateLimitObservation struct {
+
+	// (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+	// Rate limit configuration applied to all incoming requests
+	AllRequests []RateLimitAllRequestsObservation `json:"allRequests,omitempty" tf:"all_requests,omitempty"`
+
+	// (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+	// Rate limit configuration applied separately for each set of requests grouped by client IP address
+	RequestsPerIP []RateLimitRequestsPerIPObservation `json:"requestsPerIp,omitempty" tf:"requests_per_ip,omitempty"`
+}
+
+type GRPCRouteActionRateLimitParameters struct {
+
+	// (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+	// Rate limit configuration applied to all incoming requests
+	// +kubebuilder:validation:Optional
+	AllRequests []RateLimitAllRequestsParameters `json:"allRequests,omitempty" tf:"all_requests,omitempty"`
+
+	// (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+	// Rate limit configuration applied separately for each set of requests grouped by client IP address
+	// +kubebuilder:validation:Optional
+	RequestsPerIP []RateLimitRequestsPerIPParameters `json:"requestsPerIp,omitempty" tf:"requests_per_ip,omitempty"`
 }
 
 type GRPCRouteInitParameters struct {
 
-	// Checks "/" prefix by default. The structure is documented below.
+	// (Block List) Checks / prefix by default. (see below for nested schema)
+	// Checks `/` prefix by default.
 	GRPCMatch []GRPCMatchInitParameters `json:"grpcMatch,omitempty" tf:"grpc_match,omitempty"`
 
-	// GRPC route action resource. The structure is documented below.
+	// (Block List, Max: 1) gRPC route action resource.
+	// gRPC route action resource.
+	//
+	// ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
 	GRPCRouteAction []GRPCRouteActionInitParameters `json:"grpcRouteAction,omitempty" tf:"grpc_route_action,omitempty"`
 
-	// GRPC status response action resource. The structure is documented below.
+	// (Block List, Max: 1) gRPC status response action resource. (see below for nested schema)
+	// gRPC status response action resource.
 	GRPCStatusResponseAction []GRPCStatusResponseActionInitParameters `json:"grpcStatusResponseAction,omitempty" tf:"grpc_status_response_action,omitempty"`
 }
 
 type GRPCRouteObservation struct {
 
-	// Checks "/" prefix by default. The structure is documented below.
+	// (Block List) Checks / prefix by default. (see below for nested schema)
+	// Checks `/` prefix by default.
 	GRPCMatch []GRPCMatchObservation `json:"grpcMatch,omitempty" tf:"grpc_match,omitempty"`
 
-	// GRPC route action resource. The structure is documented below.
+	// (Block List, Max: 1) gRPC route action resource.
+	// gRPC route action resource.
+	//
+	// ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
 	GRPCRouteAction []GRPCRouteActionObservation `json:"grpcRouteAction,omitempty" tf:"grpc_route_action,omitempty"`
 
-	// GRPC status response action resource. The structure is documented below.
+	// (Block List, Max: 1) gRPC status response action resource. (see below for nested schema)
+	// gRPC status response action resource.
 	GRPCStatusResponseAction []GRPCStatusResponseActionObservation `json:"grpcStatusResponseAction,omitempty" tf:"grpc_status_response_action,omitempty"`
 }
 
 type GRPCRouteParameters struct {
 
-	// Checks "/" prefix by default. The structure is documented below.
+	// (Block List) Checks / prefix by default. (see below for nested schema)
+	// Checks `/` prefix by default.
 	// +kubebuilder:validation:Optional
 	GRPCMatch []GRPCMatchParameters `json:"grpcMatch,omitempty" tf:"grpc_match,omitempty"`
 
-	// GRPC route action resource. The structure is documented below.
+	// (Block List, Max: 1) gRPC route action resource.
+	// gRPC route action resource.
+	//
+	// ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
 	// +kubebuilder:validation:Optional
 	GRPCRouteAction []GRPCRouteActionParameters `json:"grpcRouteAction,omitempty" tf:"grpc_route_action,omitempty"`
 
-	// GRPC status response action resource. The structure is documented below.
+	// (Block List, Max: 1) gRPC status response action resource. (see below for nested schema)
+	// gRPC status response action resource.
 	// +kubebuilder:validation:Optional
 	GRPCStatusResponseAction []GRPCStatusResponseActionParameters `json:"grpcStatusResponseAction,omitempty" tf:"grpc_status_response_action,omitempty"`
 }
 
 type GRPCStatusResponseActionInitParameters struct {
 
+	// (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	// The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type GRPCStatusResponseActionObservation struct {
 
+	// (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	// The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type GRPCStatusResponseActionParameters struct {
 
+	// (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	// The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
 	// +kubebuilder:validation:Optional
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
@@ -290,41 +439,55 @@ type GRPCStatusResponseActionParameters struct {
 
 type HTTPMatchInitParameters struct {
 
-	// List of methods(strings).
+	// (Set of String) List of methods (strings).
+	// List of methods (strings).
 	// +listType=set
 	HTTPMethod []*string `json:"httpMethod,omitempty" tf:"http_method,omitempty"`
 
-	// If not set, '/' is assumed. The structure is documented below.
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	Path []PathInitParameters `json:"path,omitempty" tf:"path,omitempty"`
 }
 
 type HTTPMatchObservation struct {
 
-	// List of methods(strings).
+	// (Set of String) List of methods (strings).
+	// List of methods (strings).
 	// +listType=set
 	HTTPMethod []*string `json:"httpMethod,omitempty" tf:"http_method,omitempty"`
 
-	// If not set, '/' is assumed. The structure is documented below.
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	Path []PathObservation `json:"path,omitempty" tf:"path,omitempty"`
 }
 
 type HTTPMatchParameters struct {
 
-	// List of methods(strings).
+	// (Set of String) List of methods (strings).
+	// List of methods (strings).
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	HTTPMethod []*string `json:"httpMethod,omitempty" tf:"http_method,omitempty"`
 
-	// If not set, '/' is assumed. The structure is documented below.
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	// +kubebuilder:validation:Optional
 	Path []PathParameters `json:"path,omitempty" tf:"path,omitempty"`
 }
 
 type HTTPRouteActionInitParameters struct {
 
+	// (Boolean) If set, will automatically rewrite host.
 	// If set, will automatically rewrite host.
 	AutoHostRewrite *bool `json:"autoHostRewrite,omitempty" tf:"auto_host_rewrite,omitempty"`
 
+	// (String) Backend group to route requests.
 	// Backend group to route requests.
 	// +crossplane:generate:reference:type=BackendGroup
 	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
@@ -337,54 +500,84 @@ type HTTPRouteActionInitParameters struct {
 	// +kubebuilder:validation:Optional
 	BackendGroupIDSelector *v1.Selector `json:"backendGroupIdSelector,omitempty" tf:"-"`
 
+	// (String) Host rewrite specifier.
 	// Host rewrite specifier.
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
+	// one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
+	// (String) If not empty, matched path prefix will be replaced by this value.
 	// If not empty, matched path prefix will be replaced by this value.
 	PrefixRewrite *string `json:"prefixRewrite,omitempty" tf:"prefix_rewrite,omitempty"`
 
+	// (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+	// Rate limit configuration applied for a whole virtual host
+	RateLimit []HTTPRouteActionRateLimitInitParameters `json:"rateLimit,omitempty" tf:"rate_limit,omitempty"`
+
+	// (Block List, Max: 1) Replacement for path substrings that match the pattern (see below for nested schema)
+	// Replacement for path substrings that match the pattern
+	RegexRewrite []RegexRewriteInitParameters `json:"regexRewrite,omitempty" tf:"regex_rewrite,omitempty"`
+
+	// (String) Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
 	// Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
 	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// List of upgrade types. Only specified upgrade types will be allowed. For example, "websocket".
+	// (Set of String) List of upgrade types. Only specified upgrade types will be allowed. For example, websocket.
+	// List of upgrade types. Only specified upgrade types will be allowed. For example, `websocket`.
 	// +listType=set
 	UpgradeTypes []*string `json:"upgradeTypes,omitempty" tf:"upgrade_types,omitempty"`
 }
 
 type HTTPRouteActionObservation struct {
 
+	// (Boolean) If set, will automatically rewrite host.
 	// If set, will automatically rewrite host.
 	AutoHostRewrite *bool `json:"autoHostRewrite,omitempty" tf:"auto_host_rewrite,omitempty"`
 
+	// (String) Backend group to route requests.
 	// Backend group to route requests.
 	BackendGroupID *string `json:"backendGroupId,omitempty" tf:"backend_group_id,omitempty"`
 
+	// (String) Host rewrite specifier.
 	// Host rewrite specifier.
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
+	// one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
+	// (String) If not empty, matched path prefix will be replaced by this value.
 	// If not empty, matched path prefix will be replaced by this value.
 	PrefixRewrite *string `json:"prefixRewrite,omitempty" tf:"prefix_rewrite,omitempty"`
 
+	// (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+	// Rate limit configuration applied for a whole virtual host
+	RateLimit []HTTPRouteActionRateLimitObservation `json:"rateLimit,omitempty" tf:"rate_limit,omitempty"`
+
+	// (Block List, Max: 1) Replacement for path substrings that match the pattern (see below for nested schema)
+	// Replacement for path substrings that match the pattern
+	RegexRewrite []RegexRewriteObservation `json:"regexRewrite,omitempty" tf:"regex_rewrite,omitempty"`
+
+	// (String) Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
 	// Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
 	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// List of upgrade types. Only specified upgrade types will be allowed. For example, "websocket".
+	// (Set of String) List of upgrade types. Only specified upgrade types will be allowed. For example, websocket.
+	// List of upgrade types. Only specified upgrade types will be allowed. For example, `websocket`.
 	// +listType=set
 	UpgradeTypes []*string `json:"upgradeTypes,omitempty" tf:"upgrade_types,omitempty"`
 }
 
 type HTTPRouteActionParameters struct {
 
+	// (Boolean) If set, will automatically rewrite host.
 	// If set, will automatically rewrite host.
 	// +kubebuilder:validation:Optional
 	AutoHostRewrite *bool `json:"autoHostRewrite,omitempty" tf:"auto_host_rewrite,omitempty"`
 
+	// (String) Backend group to route requests.
 	// Backend group to route requests.
 	// +crossplane:generate:reference:type=BackendGroup
 	// +kubebuilder:validation:Optional
@@ -398,111 +591,264 @@ type HTTPRouteActionParameters struct {
 	// +kubebuilder:validation:Optional
 	BackendGroupIDSelector *v1.Selector `json:"backendGroupIdSelector,omitempty" tf:"-"`
 
+	// (String) Host rewrite specifier.
 	// Host rewrite specifier.
 	// +kubebuilder:validation:Optional
 	HostRewrite *string `json:"hostRewrite,omitempty" tf:"host_rewrite,omitempty"`
 
+	// one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	// Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
 	// +kubebuilder:validation:Optional
 	IdleTimeout *string `json:"idleTimeout,omitempty" tf:"idle_timeout,omitempty"`
 
+	// (String) If not empty, matched path prefix will be replaced by this value.
 	// If not empty, matched path prefix will be replaced by this value.
 	// +kubebuilder:validation:Optional
 	PrefixRewrite *string `json:"prefixRewrite,omitempty" tf:"prefix_rewrite,omitempty"`
 
+	// (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+	// Rate limit configuration applied for a whole virtual host
+	// +kubebuilder:validation:Optional
+	RateLimit []HTTPRouteActionRateLimitParameters `json:"rateLimit,omitempty" tf:"rate_limit,omitempty"`
+
+	// (Block List, Max: 1) Replacement for path substrings that match the pattern (see below for nested schema)
+	// Replacement for path substrings that match the pattern
+	// +kubebuilder:validation:Optional
+	RegexRewrite []RegexRewriteParameters `json:"regexRewrite,omitempty" tf:"regex_rewrite,omitempty"`
+
+	// (String) Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
 	// Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
 	// +kubebuilder:validation:Optional
 	Timeout *string `json:"timeout,omitempty" tf:"timeout,omitempty"`
 
-	// List of upgrade types. Only specified upgrade types will be allowed. For example, "websocket".
+	// (Set of String) List of upgrade types. Only specified upgrade types will be allowed. For example, websocket.
+	// List of upgrade types. Only specified upgrade types will be allowed. For example, `websocket`.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	UpgradeTypes []*string `json:"upgradeTypes,omitempty" tf:"upgrade_types,omitempty"`
 }
 
+type HTTPRouteActionRateLimitAllRequestsInitParameters struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type HTTPRouteActionRateLimitAllRequestsObservation struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type HTTPRouteActionRateLimitAllRequestsParameters struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	// +kubebuilder:validation:Optional
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	// +kubebuilder:validation:Optional
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type HTTPRouteActionRateLimitInitParameters struct {
+
+	// (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+	// Rate limit configuration applied to all incoming requests
+	AllRequests []HTTPRouteActionRateLimitAllRequestsInitParameters `json:"allRequests,omitempty" tf:"all_requests,omitempty"`
+
+	// (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+	// Rate limit configuration applied separately for each set of requests grouped by client IP address
+	RequestsPerIP []HTTPRouteActionRateLimitRequestsPerIPInitParameters `json:"requestsPerIp,omitempty" tf:"requests_per_ip,omitempty"`
+}
+
+type HTTPRouteActionRateLimitObservation struct {
+
+	// (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+	// Rate limit configuration applied to all incoming requests
+	AllRequests []HTTPRouteActionRateLimitAllRequestsObservation `json:"allRequests,omitempty" tf:"all_requests,omitempty"`
+
+	// (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+	// Rate limit configuration applied separately for each set of requests grouped by client IP address
+	RequestsPerIP []HTTPRouteActionRateLimitRequestsPerIPObservation `json:"requestsPerIp,omitempty" tf:"requests_per_ip,omitempty"`
+}
+
+type HTTPRouteActionRateLimitParameters struct {
+
+	// (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+	// Rate limit configuration applied to all incoming requests
+	// +kubebuilder:validation:Optional
+	AllRequests []HTTPRouteActionRateLimitAllRequestsParameters `json:"allRequests,omitempty" tf:"all_requests,omitempty"`
+
+	// (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+	// Rate limit configuration applied separately for each set of requests grouped by client IP address
+	// +kubebuilder:validation:Optional
+	RequestsPerIP []HTTPRouteActionRateLimitRequestsPerIPParameters `json:"requestsPerIp,omitempty" tf:"requests_per_ip,omitempty"`
+}
+
+type HTTPRouteActionRateLimitRequestsPerIPInitParameters struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type HTTPRouteActionRateLimitRequestsPerIPObservation struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type HTTPRouteActionRateLimitRequestsPerIPParameters struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	// +kubebuilder:validation:Optional
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	// +kubebuilder:validation:Optional
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
 type HTTPRouteInitParameters struct {
 
-	// Direct response action resource. The structure is documented below.
+	// (Block List, Max: 1) Direct response action resource. (see below for nested schema)
+	// Direct response action resource.
 	DirectResponseAction []DirectResponseActionInitParameters `json:"directResponseAction,omitempty" tf:"direct_response_action,omitempty"`
 
-	// Checks "/" prefix by default. The structure is documented below.
+	// (Block List) Checks / prefix by default. (see below for nested schema)
+	// Checks `/` prefix by default.
 	HTTPMatch []HTTPMatchInitParameters `json:"httpMatch,omitempty" tf:"http_match,omitempty"`
 
-	// HTTP route action resource. The structure is documented below.
+	// (Block List, Max: 1) HTTP route action resource.
+	// HTTP route action resource.
+	//
+	// ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
 	HTTPRouteAction []HTTPRouteActionInitParameters `json:"httpRouteAction,omitempty" tf:"http_route_action,omitempty"`
 
-	// Redirect action resource. The structure is documented below.
+	// (Block List, Max: 1) Redirect action resource.
+	// Redirect action resource.
+	//
+	// ~> Only one type of paths `replace_path` or `replace_prefix` should be specified.
 	RedirectAction []RedirectActionInitParameters `json:"redirectAction,omitempty" tf:"redirect_action,omitempty"`
 }
 
 type HTTPRouteObservation struct {
 
-	// Direct response action resource. The structure is documented below.
+	// (Block List, Max: 1) Direct response action resource. (see below for nested schema)
+	// Direct response action resource.
 	DirectResponseAction []DirectResponseActionObservation `json:"directResponseAction,omitempty" tf:"direct_response_action,omitempty"`
 
-	// Checks "/" prefix by default. The structure is documented below.
+	// (Block List) Checks / prefix by default. (see below for nested schema)
+	// Checks `/` prefix by default.
 	HTTPMatch []HTTPMatchObservation `json:"httpMatch,omitempty" tf:"http_match,omitempty"`
 
-	// HTTP route action resource. The structure is documented below.
+	// (Block List, Max: 1) HTTP route action resource.
+	// HTTP route action resource.
+	//
+	// ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
 	HTTPRouteAction []HTTPRouteActionObservation `json:"httpRouteAction,omitempty" tf:"http_route_action,omitempty"`
 
-	// Redirect action resource. The structure is documented below.
+	// (Block List, Max: 1) Redirect action resource.
+	// Redirect action resource.
+	//
+	// ~> Only one type of paths `replace_path` or `replace_prefix` should be specified.
 	RedirectAction []RedirectActionObservation `json:"redirectAction,omitempty" tf:"redirect_action,omitempty"`
 }
 
 type HTTPRouteParameters struct {
 
-	// Direct response action resource. The structure is documented below.
+	// (Block List, Max: 1) Direct response action resource. (see below for nested schema)
+	// Direct response action resource.
 	// +kubebuilder:validation:Optional
 	DirectResponseAction []DirectResponseActionParameters `json:"directResponseAction,omitempty" tf:"direct_response_action,omitempty"`
 
-	// Checks "/" prefix by default. The structure is documented below.
+	// (Block List) Checks / prefix by default. (see below for nested schema)
+	// Checks `/` prefix by default.
 	// +kubebuilder:validation:Optional
 	HTTPMatch []HTTPMatchParameters `json:"httpMatch,omitempty" tf:"http_match,omitempty"`
 
-	// HTTP route action resource. The structure is documented below.
+	// (Block List, Max: 1) HTTP route action resource.
+	// HTTP route action resource.
+	//
+	// ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
 	// +kubebuilder:validation:Optional
 	HTTPRouteAction []HTTPRouteActionParameters `json:"httpRouteAction,omitempty" tf:"http_route_action,omitempty"`
 
-	// Redirect action resource. The structure is documented below.
+	// (Block List, Max: 1) Redirect action resource.
+	// Redirect action resource.
+	//
+	// ~> Only one type of paths `replace_path` or `replace_prefix` should be specified.
 	// +kubebuilder:validation:Optional
 	RedirectAction []RedirectActionParameters `json:"redirectAction,omitempty" tf:"redirect_action,omitempty"`
 }
 
 type HeaderValueInitParameters struct {
 
+	// (String) Match exactly.
 	// Match exactly.
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
 	// Match prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
 	// Match regex.
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type HeaderValueObservation struct {
 
+	// (String) Match exactly.
 	// Match exactly.
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
 	// Match prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
 	// Match regex.
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type HeaderValueParameters struct {
 
+	// (String) Match exactly.
 	// Match exactly.
 	// +kubebuilder:validation:Optional
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
 	// Match prefix.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
 	// Match regex.
 	// +kubebuilder:validation:Optional
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
@@ -510,136 +856,169 @@ type HeaderValueParameters struct {
 
 type ModifyRequestHeadersInitParameters struct {
 
+	// (String) Append string to the header value.
 	// Append string to the header value.
 	Append *string `json:"append,omitempty" tf:"append,omitempty"`
 
-	// name of the header to modify.
+	// (String) The resource name.
+	// Name of the header to modify.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Boolean) If set, remove the header.
 	// If set, remove the header.
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
-	// New value for a header. Header values support the following formatters.
+	// (String) New value for a header. Header values support the following formatters.
+	// New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
 
 type ModifyRequestHeadersObservation struct {
 
+	// (String) Append string to the header value.
 	// Append string to the header value.
 	Append *string `json:"append,omitempty" tf:"append,omitempty"`
 
-	// name of the header to modify.
+	// (String) The resource name.
+	// Name of the header to modify.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Boolean) If set, remove the header.
 	// If set, remove the header.
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
-	// New value for a header. Header values support the following formatters.
+	// (String) New value for a header. Header values support the following formatters.
+	// New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
 
 type ModifyRequestHeadersParameters struct {
 
+	// (String) Append string to the header value.
 	// Append string to the header value.
 	// +kubebuilder:validation:Optional
 	Append *string `json:"append,omitempty" tf:"append,omitempty"`
 
-	// name of the header to modify.
+	// (String) The resource name.
+	// Name of the header to modify.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// (Boolean) If set, remove the header.
 	// If set, remove the header.
 	// +kubebuilder:validation:Optional
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
-	// New value for a header. Header values support the following formatters.
+	// (String) New value for a header. Header values support the following formatters.
+	// New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
 	// +kubebuilder:validation:Optional
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
 
 type ModifyResponseHeadersInitParameters struct {
 
+	// (String) Append string to the header value.
 	// Append string to the header value.
 	Append *string `json:"append,omitempty" tf:"append,omitempty"`
 
-	// name of the route.
+	// (String) The resource name.
+	// Name of the header to modify.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Boolean) If set, remove the header.
 	// If set, remove the header.
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
-	// New value for a header. Header values support the following formatters.
+	// (String) New value for a header. Header values support the following formatters.
+	// New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
 
 type ModifyResponseHeadersObservation struct {
 
+	// (String) Append string to the header value.
 	// Append string to the header value.
 	Append *string `json:"append,omitempty" tf:"append,omitempty"`
 
-	// name of the route.
+	// (String) The resource name.
+	// Name of the header to modify.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Boolean) If set, remove the header.
 	// If set, remove the header.
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
-	// New value for a header. Header values support the following formatters.
+	// (String) New value for a header. Header values support the following formatters.
+	// New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
 
 type ModifyResponseHeadersParameters struct {
 
+	// (String) Append string to the header value.
 	// Append string to the header value.
 	// +kubebuilder:validation:Optional
 	Append *string `json:"append,omitempty" tf:"append,omitempty"`
 
-	// name of the route.
+	// (String) The resource name.
+	// Name of the header to modify.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// (Boolean) If set, remove the header.
 	// If set, remove the header.
 	// +kubebuilder:validation:Optional
 	Remove *bool `json:"remove,omitempty" tf:"remove,omitempty"`
 
-	// New value for a header. Header values support the following formatters.
+	// (String) New value for a header. Header values support the following formatters.
+	// New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
 	// +kubebuilder:validation:Optional
 	Replace *string `json:"replace,omitempty" tf:"replace,omitempty"`
 }
 
 type PathInitParameters struct {
 
+	// (String) Match exactly.
 	// Match exactly.
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
 	// Match prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
 	// Match regex.
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type PathObservation struct {
 
+	// (String) Match exactly.
 	// Match exactly.
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
 	// Match prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
 	// Match regex.
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type PathParameters struct {
 
+	// (String) Match exactly.
 	// Match exactly.
 	// +kubebuilder:validation:Optional
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
 	// Match prefix.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
 	// Match regex.
 	// +kubebuilder:validation:Optional
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
@@ -647,308 +1026,603 @@ type PathParameters struct {
 
 type PrincipalsAndPrincipalsHeaderInitParameters struct {
 
-	// name of the route.
+	// (String) The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	Value []HeaderValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type PrincipalsAndPrincipalsHeaderObservation struct {
 
-	// name of the route.
+	// (String) The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	Value []HeaderValueObservation `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type PrincipalsAndPrincipalsHeaderParameters struct {
 
-	// name of the route.
+	// (String) The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	// +kubebuilder:validation:Optional
 	Value []HeaderValueParameters `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type PrincipalsAndPrincipalsInitParameters struct {
+
+	// (Boolean)
 	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
 
+	// (Block List, Max: 1) (see below for nested schema)
 	Header []PrincipalsAndPrincipalsHeaderInitParameters `json:"header,omitempty" tf:"header,omitempty"`
 
+	// (String)
 	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
 }
 
 type PrincipalsAndPrincipalsObservation struct {
+
+	// (Boolean)
 	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
 
+	// (Block List, Max: 1) (see below for nested schema)
 	Header []PrincipalsAndPrincipalsHeaderObservation `json:"header,omitempty" tf:"header,omitempty"`
 
+	// (String)
 	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
 }
 
 type PrincipalsAndPrincipalsParameters struct {
 
+	// (Boolean)
 	// +kubebuilder:validation:Optional
 	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
 
+	// (Block List, Max: 1) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Header []PrincipalsAndPrincipalsHeaderParameters `json:"header,omitempty" tf:"header,omitempty"`
 
+	// (String)
 	// +kubebuilder:validation:Optional
 	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
 }
 
+type RateLimitAllRequestsInitParameters struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type RateLimitAllRequestsObservation struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type RateLimitAllRequestsParameters struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	// +kubebuilder:validation:Optional
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	// +kubebuilder:validation:Optional
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type RateLimitInitParameters struct {
+
+	// (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+	// Rate limit configuration applied to all incoming requests
+	AllRequests []AllRequestsInitParameters `json:"allRequests,omitempty" tf:"all_requests,omitempty"`
+
+	// (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+	// Rate limit configuration applied separately for each set of requests grouped by client IP address
+	RequestsPerIP []RequestsPerIPInitParameters `json:"requestsPerIp,omitempty" tf:"requests_per_ip,omitempty"`
+}
+
+type RateLimitObservation struct {
+
+	// (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+	// Rate limit configuration applied to all incoming requests
+	AllRequests []AllRequestsObservation `json:"allRequests,omitempty" tf:"all_requests,omitempty"`
+
+	// (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+	// Rate limit configuration applied separately for each set of requests grouped by client IP address
+	RequestsPerIP []RequestsPerIPObservation `json:"requestsPerIp,omitempty" tf:"requests_per_ip,omitempty"`
+}
+
+type RateLimitParameters struct {
+
+	// (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+	// Rate limit configuration applied to all incoming requests
+	// +kubebuilder:validation:Optional
+	AllRequests []AllRequestsParameters `json:"allRequests,omitempty" tf:"all_requests,omitempty"`
+
+	// (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+	// Rate limit configuration applied separately for each set of requests grouped by client IP address
+	// +kubebuilder:validation:Optional
+	RequestsPerIP []RequestsPerIPParameters `json:"requestsPerIp,omitempty" tf:"requests_per_ip,omitempty"`
+}
+
+type RateLimitRequestsPerIPInitParameters struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type RateLimitRequestsPerIPObservation struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type RateLimitRequestsPerIPParameters struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	// +kubebuilder:validation:Optional
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	// +kubebuilder:validation:Optional
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
 type RbacPrincipalsAndPrincipalsHeaderInitParameters struct {
 
-	// name of the route.
+	// (String) The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	Value []AndPrincipalsHeaderValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type RbacPrincipalsAndPrincipalsHeaderObservation struct {
 
-	// name of the route.
+	// (String) The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	Value []AndPrincipalsHeaderValueObservation `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type RbacPrincipalsAndPrincipalsHeaderParameters struct {
 
-	// name of the route.
+	// (String) The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	// +kubebuilder:validation:Optional
 	Value []AndPrincipalsHeaderValueParameters `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type RbacPrincipalsAndPrincipalsInitParameters struct {
+
+	// (Boolean)
 	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
 
+	// (Block List, Max: 1) (see below for nested schema)
 	Header []RbacPrincipalsAndPrincipalsHeaderInitParameters `json:"header,omitempty" tf:"header,omitempty"`
 
+	// (String)
 	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
 }
 
 type RbacPrincipalsAndPrincipalsObservation struct {
+
+	// (Boolean)
 	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
 
+	// (Block List, Max: 1) (see below for nested schema)
 	Header []RbacPrincipalsAndPrincipalsHeaderObservation `json:"header,omitempty" tf:"header,omitempty"`
 
+	// (String)
 	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
 }
 
 type RbacPrincipalsAndPrincipalsParameters struct {
 
+	// (Boolean)
 	// +kubebuilder:validation:Optional
 	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
 
+	// (Block List, Max: 1) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Header []RbacPrincipalsAndPrincipalsHeaderParameters `json:"header,omitempty" tf:"header,omitempty"`
 
+	// (String)
 	// +kubebuilder:validation:Optional
 	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
 }
 
 type RbacPrincipalsInitParameters struct {
+
+	// (Block List, Min: 1) (see below for nested schema)
 	AndPrincipals []PrincipalsAndPrincipalsInitParameters `json:"andPrincipals,omitempty" tf:"and_principals,omitempty"`
 }
 
 type RbacPrincipalsObservation struct {
+
+	// (Block List, Min: 1) (see below for nested schema)
 	AndPrincipals []PrincipalsAndPrincipalsObservation `json:"andPrincipals,omitempty" tf:"and_principals,omitempty"`
 }
 
 type RbacPrincipalsParameters struct {
 
+	// (Block List, Min: 1) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	AndPrincipals []PrincipalsAndPrincipalsParameters `json:"andPrincipals" tf:"and_principals,omitempty"`
 }
 
 type RedirectActionInitParameters struct {
+
+	// (Boolean) If set, remove query part.
+	// If set, remove query part.
 	RemoveQuery *bool `json:"removeQuery,omitempty" tf:"remove_query,omitempty"`
 
+	// (String) Replaces hostname.
 	// Replaces hostname.
 	ReplaceHost *string `json:"replaceHost,omitempty" tf:"replace_host,omitempty"`
 
+	// (String) Replace path.
 	// Replace path.
 	ReplacePath *string `json:"replacePath,omitempty" tf:"replace_path,omitempty"`
 
+	// (Number) Replaces port.
 	// Replaces port.
 	ReplacePort *float64 `json:"replacePort,omitempty" tf:"replace_port,omitempty"`
 
-	// Replace only matched prefix. Example: match:{ prefix_match: "/some" }  redirect: { replace_prefix: "/other" }  will redirect "/something" to "/otherthing".
+	// (String) Replace only matched prefix. Example: match:{ prefix_match: /some }  redirect: { replace_prefix: /other }  will redirect /something to /otherthing.
+	// Replace only matched prefix. Example:<br/> match:{ prefix_match: `/some` } <br/> redirect: { replace_prefix: `/other` } <br/> will redirect `/something` to `/otherthing`.
 	ReplacePrefix *string `json:"replacePrefix,omitempty" tf:"replace_prefix,omitempty"`
 
-	// Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
+	// (String) Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
+	// Replaces scheme. If the original scheme is `http` or `https`, will also remove the 80 or 443 port, if present.
 	ReplaceScheme *string `json:"replaceScheme,omitempty" tf:"replace_scheme,omitempty"`
 
-	// The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
+	// (String) The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
+	// The HTTP status code to use in the redirect response. Supported values are: `moved_permanently`, `found`, `see_other`, `temporary_redirect`, `permanent_redirect`.
 	ResponseCode *string `json:"responseCode,omitempty" tf:"response_code,omitempty"`
 }
 
 type RedirectActionObservation struct {
+
+	// (Boolean) If set, remove query part.
+	// If set, remove query part.
 	RemoveQuery *bool `json:"removeQuery,omitempty" tf:"remove_query,omitempty"`
 
+	// (String) Replaces hostname.
 	// Replaces hostname.
 	ReplaceHost *string `json:"replaceHost,omitempty" tf:"replace_host,omitempty"`
 
+	// (String) Replace path.
 	// Replace path.
 	ReplacePath *string `json:"replacePath,omitempty" tf:"replace_path,omitempty"`
 
+	// (Number) Replaces port.
 	// Replaces port.
 	ReplacePort *float64 `json:"replacePort,omitempty" tf:"replace_port,omitempty"`
 
-	// Replace only matched prefix. Example: match:{ prefix_match: "/some" }  redirect: { replace_prefix: "/other" }  will redirect "/something" to "/otherthing".
+	// (String) Replace only matched prefix. Example: match:{ prefix_match: /some }  redirect: { replace_prefix: /other }  will redirect /something to /otherthing.
+	// Replace only matched prefix. Example:<br/> match:{ prefix_match: `/some` } <br/> redirect: { replace_prefix: `/other` } <br/> will redirect `/something` to `/otherthing`.
 	ReplacePrefix *string `json:"replacePrefix,omitempty" tf:"replace_prefix,omitempty"`
 
-	// Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
+	// (String) Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
+	// Replaces scheme. If the original scheme is `http` or `https`, will also remove the 80 or 443 port, if present.
 	ReplaceScheme *string `json:"replaceScheme,omitempty" tf:"replace_scheme,omitempty"`
 
-	// The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
+	// (String) The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
+	// The HTTP status code to use in the redirect response. Supported values are: `moved_permanently`, `found`, `see_other`, `temporary_redirect`, `permanent_redirect`.
 	ResponseCode *string `json:"responseCode,omitempty" tf:"response_code,omitempty"`
 }
 
 type RedirectActionParameters struct {
 
+	// (Boolean) If set, remove query part.
+	// If set, remove query part.
 	// +kubebuilder:validation:Optional
 	RemoveQuery *bool `json:"removeQuery,omitempty" tf:"remove_query,omitempty"`
 
+	// (String) Replaces hostname.
 	// Replaces hostname.
 	// +kubebuilder:validation:Optional
 	ReplaceHost *string `json:"replaceHost,omitempty" tf:"replace_host,omitempty"`
 
+	// (String) Replace path.
 	// Replace path.
 	// +kubebuilder:validation:Optional
 	ReplacePath *string `json:"replacePath,omitempty" tf:"replace_path,omitempty"`
 
+	// (Number) Replaces port.
 	// Replaces port.
 	// +kubebuilder:validation:Optional
 	ReplacePort *float64 `json:"replacePort,omitempty" tf:"replace_port,omitempty"`
 
-	// Replace only matched prefix. Example: match:{ prefix_match: "/some" }  redirect: { replace_prefix: "/other" }  will redirect "/something" to "/otherthing".
+	// (String) Replace only matched prefix. Example: match:{ prefix_match: /some }  redirect: { replace_prefix: /other }  will redirect /something to /otherthing.
+	// Replace only matched prefix. Example:<br/> match:{ prefix_match: `/some` } <br/> redirect: { replace_prefix: `/other` } <br/> will redirect `/something` to `/otherthing`.
 	// +kubebuilder:validation:Optional
 	ReplacePrefix *string `json:"replacePrefix,omitempty" tf:"replace_prefix,omitempty"`
 
-	// Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
+	// (String) Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
+	// Replaces scheme. If the original scheme is `http` or `https`, will also remove the 80 or 443 port, if present.
 	// +kubebuilder:validation:Optional
 	ReplaceScheme *string `json:"replaceScheme,omitempty" tf:"replace_scheme,omitempty"`
 
-	// The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
+	// (String) The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
+	// The HTTP status code to use in the redirect response. Supported values are: `moved_permanently`, `found`, `see_other`, `temporary_redirect`, `permanent_redirect`.
 	// +kubebuilder:validation:Optional
 	ResponseCode *string `json:"responseCode,omitempty" tf:"response_code,omitempty"`
 }
 
+type RegexRewriteInitParameters struct {
+
+	// (String) Match regex.
+	// RE2 regular expression
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
+
+	// (String) The string which should be used to substitute matched substrings
+	// The string which should be used to substitute matched substrings
+	Substitute *string `json:"substitute,omitempty" tf:"substitute,omitempty"`
+}
+
+type RegexRewriteObservation struct {
+
+	// (String) Match regex.
+	// RE2 regular expression
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
+
+	// (String) The string which should be used to substitute matched substrings
+	// The string which should be used to substitute matched substrings
+	Substitute *string `json:"substitute,omitempty" tf:"substitute,omitempty"`
+}
+
+type RegexRewriteParameters struct {
+
+	// (String) Match regex.
+	// RE2 regular expression
+	// +kubebuilder:validation:Optional
+	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
+
+	// (String) The string which should be used to substitute matched substrings
+	// The string which should be used to substitute matched substrings
+	// +kubebuilder:validation:Optional
+	Substitute *string `json:"substitute,omitempty" tf:"substitute,omitempty"`
+}
+
+type RequestsPerIPInitParameters struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type RequestsPerIPObservation struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
+type RequestsPerIPParameters struct {
+
+	// (Number) Limit value specified with per minute time unit
+	// Limit value specified with per minute time unit
+	// +kubebuilder:validation:Optional
+	PerMinute *float64 `json:"perMinute,omitempty" tf:"per_minute,omitempty"`
+
+	// (Number) Limit value specified with per second time unit
+	// Limit value specified with per second time unit
+	// +kubebuilder:validation:Optional
+	PerSecond *float64 `json:"perSecond,omitempty" tf:"per_second,omitempty"`
+}
+
 type RouteInitParameters struct {
 
-	// GRPC route resource. The structure is documented below.
+	// (Block List, Max: 1) gRPC route resource.
+	// gRPC route resource.
+	//
+	// ~> Exactly one type of actions `grpc_route_action` or `grpc_status_response_action` should be specified.
 	GRPCRoute []GRPCRouteInitParameters `json:"grpcRoute,omitempty" tf:"grpc_route,omitempty"`
 
-	// HTTP route resource. The structure is documented below.
+	// (Block List, Max: 1) HTTP route resource.
+	// HTTP route resource.
+	//
+	// ~> Exactly one type of actions `http_route_action` or `redirect_action` or `direct_response_action` should be specified.
 	HTTPRoute []HTTPRouteInitParameters `json:"httpRoute,omitempty" tf:"http_route,omitempty"`
 
-	// name of the route.
+	// (String) The resource name.
+	// Name of the route.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Route options for the virtual host. The structure is documented below.
+	// (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+	// Route options for the virtual host.
 	RouteOptions []RouteRouteOptionsInitParameters `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
 }
 
 type RouteObservation struct {
 
-	// GRPC route resource. The structure is documented below.
+	// (Block List, Max: 1) gRPC route resource.
+	// gRPC route resource.
+	//
+	// ~> Exactly one type of actions `grpc_route_action` or `grpc_status_response_action` should be specified.
 	GRPCRoute []GRPCRouteObservation `json:"grpcRoute,omitempty" tf:"grpc_route,omitempty"`
 
-	// HTTP route resource. The structure is documented below.
+	// (Block List, Max: 1) HTTP route resource.
+	// HTTP route resource.
+	//
+	// ~> Exactly one type of actions `http_route_action` or `redirect_action` or `direct_response_action` should be specified.
 	HTTPRoute []HTTPRouteObservation `json:"httpRoute,omitempty" tf:"http_route,omitempty"`
 
-	// name of the route.
+	// (String) The resource name.
+	// Name of the route.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Route options for the virtual host. The structure is documented below.
+	// (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+	// Route options for the virtual host.
 	RouteOptions []RouteRouteOptionsObservation `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
 }
 
 type RouteOptionsRbacInitParameters struct {
+
+	// (String)
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
+	// (Block List, Min: 1) (see below for nested schema)
 	Principals []RbacPrincipalsInitParameters `json:"principals,omitempty" tf:"principals,omitempty"`
 }
 
 type RouteOptionsRbacObservation struct {
+
+	// (String)
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
+	// (Block List, Min: 1) (see below for nested schema)
 	Principals []RbacPrincipalsObservation `json:"principals,omitempty" tf:"principals,omitempty"`
 }
 
 type RouteOptionsRbacParameters struct {
 
+	// (String)
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
+	// (Block List, Min: 1) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Principals []RbacPrincipalsParameters `json:"principals" tf:"principals,omitempty"`
 }
 
 type RouteOptionsRbacPrincipalsInitParameters struct {
+
+	// (Block List, Min: 1) (see below for nested schema)
 	AndPrincipals []RbacPrincipalsAndPrincipalsInitParameters `json:"andPrincipals,omitempty" tf:"and_principals,omitempty"`
 }
 
 type RouteOptionsRbacPrincipalsObservation struct {
+
+	// (Block List, Min: 1) (see below for nested schema)
 	AndPrincipals []RbacPrincipalsAndPrincipalsObservation `json:"andPrincipals,omitempty" tf:"and_principals,omitempty"`
 }
 
 type RouteOptionsRbacPrincipalsParameters struct {
 
+	// (Block List, Min: 1) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	AndPrincipals []RbacPrincipalsAndPrincipalsParameters `json:"andPrincipals" tf:"and_principals,omitempty"`
 }
 
 type RouteParameters struct {
 
-	// GRPC route resource. The structure is documented below.
+	// (Block List, Max: 1) gRPC route resource.
+	// gRPC route resource.
+	//
+	// ~> Exactly one type of actions `grpc_route_action` or `grpc_status_response_action` should be specified.
 	// +kubebuilder:validation:Optional
 	GRPCRoute []GRPCRouteParameters `json:"grpcRoute,omitempty" tf:"grpc_route,omitempty"`
 
-	// HTTP route resource. The structure is documented below.
+	// (Block List, Max: 1) HTTP route resource.
+	// HTTP route resource.
+	//
+	// ~> Exactly one type of actions `http_route_action` or `redirect_action` or `direct_response_action` should be specified.
 	// +kubebuilder:validation:Optional
 	HTTPRoute []HTTPRouteParameters `json:"httpRoute,omitempty" tf:"http_route,omitempty"`
 
-	// name of the route.
+	// (String) The resource name.
+	// Name of the route.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// Route options for the virtual host. The structure is documented below.
+	// (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+	// Route options for the virtual host.
 	// +kubebuilder:validation:Optional
 	RouteOptions []RouteRouteOptionsParameters `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
 }
 
 type RouteRouteOptionsInitParameters struct {
 
+	// (Block List, Max: 1) RBAC configuration. (see below for nested schema)
 	// RBAC configuration.
 	Rbac []RouteOptionsRbacInitParameters `json:"rbac,omitempty" tf:"rbac,omitempty"`
 
+	// (String) SWS profile ID.
 	// SWS profile ID.
 	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type RouteRouteOptionsObservation struct {
 
+	// (Block List, Max: 1) RBAC configuration. (see below for nested schema)
 	// RBAC configuration.
 	Rbac []RouteOptionsRbacObservation `json:"rbac,omitempty" tf:"rbac,omitempty"`
 
+	// (String) SWS profile ID.
 	// SWS profile ID.
 	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type RouteRouteOptionsParameters struct {
 
+	// (Block List, Max: 1) RBAC configuration. (see below for nested schema)
 	// RBAC configuration.
 	// +kubebuilder:validation:Optional
 	Rbac []RouteOptionsRbacParameters `json:"rbac,omitempty" tf:"rbac,omitempty"`
 
+	// (String) SWS profile ID.
 	// SWS profile ID.
 	// +kubebuilder:validation:Optional
 	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
@@ -956,10 +1630,12 @@ type RouteRouteOptionsParameters struct {
 
 type VirtualHostInitParameters struct {
 
-	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard hosts are supported in the form of '.foo.com' or '-bar.foo.com'. If not specified, all domains will be matched.
+	// bar.foo.com'. If not specified, all domains will be matched.
+	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard hosts are supported in the form of '*.foo.com' or '*-bar.foo.com'. If not specified, all domains will be matched.
 	// +listType=set
 	Authority []*string `json:"authority,omitempty" tf:"authority,omitempty"`
 
+	// (String) The ID of the HTTP router to which the virtual host belongs.
 	// The ID of the HTTP router to which the virtual host belongs.
 	// +crossplane:generate:reference:type=HTTPRouter
 	HTTPRouterID *string `json:"httpRouterId,omitempty" tf:"http_router_id,omitempty"`
@@ -972,57 +1648,91 @@ type VirtualHostInitParameters struct {
 	// +kubebuilder:validation:Optional
 	HTTPRouterIDSelector *v1.Selector `json:"httpRouterIdSelector,omitempty" tf:"-"`
 
-	// Apply the following modifications to the request headers. The structure is documented below.
+	// (Block List) Apply the following modifications to the Request/Response header.
+	// Apply the following modifications to the Request/Response header.
+	//
+	// ~> Only one type of actions `append` or `replace` or `remove` should be specified.
 	ModifyRequestHeaders []ModifyRequestHeadersInitParameters `json:"modifyRequestHeaders,omitempty" tf:"modify_request_headers,omitempty"`
 
-	// Apply the following modifications to the response headers. The structure is documented below.
+	// (Block List) Apply the following modifications to the Request/Response header.
+	// Apply the following modifications to the Request/Response header.
+	//
+	// ~> Only one type of actions `append` or `replace` or `remove` should be specified.
 	ModifyResponseHeaders []ModifyResponseHeadersInitParameters `json:"modifyResponseHeaders,omitempty" tf:"modify_response_headers,omitempty"`
 
-	// Name of the virtual host. Provided by the client when the virtual host is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// A Route resource. Routes are matched in-order. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused. The structure is documented below.
+	// (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+	// Rate limit configuration applied for a whole virtual host
+	RateLimit []RateLimitInitParameters `json:"rateLimit,omitempty" tf:"rate_limit,omitempty"`
+
+	// order. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused.
+	// A Route resource. Routes are matched *in-order*. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused.
+	//
+	// ~> Exactly one type of routes `http_route` or `grpc_route` should be specified.
 	Route []RouteInitParameters `json:"route,omitempty" tf:"route,omitempty"`
 
-	// Route options for the virtual host. The structure is documented below.
+	// (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+	// Route options for the virtual host.
 	RouteOptions []VirtualHostRouteOptionsInitParameters `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
 }
 
 type VirtualHostObservation struct {
 
-	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard hosts are supported in the form of '.foo.com' or '-bar.foo.com'. If not specified, all domains will be matched.
+	// bar.foo.com'. If not specified, all domains will be matched.
+	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard hosts are supported in the form of '*.foo.com' or '*-bar.foo.com'. If not specified, all domains will be matched.
 	// +listType=set
 	Authority []*string `json:"authority,omitempty" tf:"authority,omitempty"`
 
+	// (String) The ID of the HTTP router to which the virtual host belongs.
 	// The ID of the HTTP router to which the virtual host belongs.
 	HTTPRouterID *string `json:"httpRouterId,omitempty" tf:"http_router_id,omitempty"`
 
-	// The ID of the virtual host.
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Apply the following modifications to the request headers. The structure is documented below.
+	// (Block List) Apply the following modifications to the Request/Response header.
+	// Apply the following modifications to the Request/Response header.
+	//
+	// ~> Only one type of actions `append` or `replace` or `remove` should be specified.
 	ModifyRequestHeaders []ModifyRequestHeadersObservation `json:"modifyRequestHeaders,omitempty" tf:"modify_request_headers,omitempty"`
 
-	// Apply the following modifications to the response headers. The structure is documented below.
+	// (Block List) Apply the following modifications to the Request/Response header.
+	// Apply the following modifications to the Request/Response header.
+	//
+	// ~> Only one type of actions `append` or `replace` or `remove` should be specified.
 	ModifyResponseHeaders []ModifyResponseHeadersObservation `json:"modifyResponseHeaders,omitempty" tf:"modify_response_headers,omitempty"`
 
-	// Name of the virtual host. Provided by the client when the virtual host is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// A Route resource. Routes are matched in-order. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused. The structure is documented below.
+	// (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+	// Rate limit configuration applied for a whole virtual host
+	RateLimit []RateLimitObservation `json:"rateLimit,omitempty" tf:"rate_limit,omitempty"`
+
+	// order. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused.
+	// A Route resource. Routes are matched *in-order*. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused.
+	//
+	// ~> Exactly one type of routes `http_route` or `grpc_route` should be specified.
 	Route []RouteObservation `json:"route,omitempty" tf:"route,omitempty"`
 
-	// Route options for the virtual host. The structure is documented below.
+	// (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+	// Route options for the virtual host.
 	RouteOptions []VirtualHostRouteOptionsObservation `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
 }
 
 type VirtualHostParameters struct {
 
-	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard hosts are supported in the form of '.foo.com' or '-bar.foo.com'. If not specified, all domains will be matched.
+	// bar.foo.com'. If not specified, all domains will be matched.
+	// A list of domains (host/authority header) that will be matched to this virtual host. Wildcard hosts are supported in the form of '*.foo.com' or '*-bar.foo.com'. If not specified, all domains will be matched.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Authority []*string `json:"authority,omitempty" tf:"authority,omitempty"`
 
+	// (String) The ID of the HTTP router to which the virtual host belongs.
 	// The ID of the HTTP router to which the virtual host belongs.
 	// +crossplane:generate:reference:type=HTTPRouter
 	// +kubebuilder:validation:Optional
@@ -1036,73 +1746,103 @@ type VirtualHostParameters struct {
 	// +kubebuilder:validation:Optional
 	HTTPRouterIDSelector *v1.Selector `json:"httpRouterIdSelector,omitempty" tf:"-"`
 
-	// Apply the following modifications to the request headers. The structure is documented below.
+	// (Block List) Apply the following modifications to the Request/Response header.
+	// Apply the following modifications to the Request/Response header.
+	//
+	// ~> Only one type of actions `append` or `replace` or `remove` should be specified.
 	// +kubebuilder:validation:Optional
 	ModifyRequestHeaders []ModifyRequestHeadersParameters `json:"modifyRequestHeaders,omitempty" tf:"modify_request_headers,omitempty"`
 
-	// Apply the following modifications to the response headers. The structure is documented below.
+	// (Block List) Apply the following modifications to the Request/Response header.
+	// Apply the following modifications to the Request/Response header.
+	//
+	// ~> Only one type of actions `append` or `replace` or `remove` should be specified.
 	// +kubebuilder:validation:Optional
 	ModifyResponseHeaders []ModifyResponseHeadersParameters `json:"modifyResponseHeaders,omitempty" tf:"modify_response_headers,omitempty"`
 
-	// Name of the virtual host. Provided by the client when the virtual host is created.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// A Route resource. Routes are matched in-order. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused. The structure is documented below.
+	// (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+	// Rate limit configuration applied for a whole virtual host
+	// +kubebuilder:validation:Optional
+	RateLimit []RateLimitParameters `json:"rateLimit,omitempty" tf:"rate_limit,omitempty"`
+
+	// order. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused.
+	// A Route resource. Routes are matched *in-order*. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused.
+	//
+	// ~> Exactly one type of routes `http_route` or `grpc_route` should be specified.
 	// +kubebuilder:validation:Optional
 	Route []RouteParameters `json:"route,omitempty" tf:"route,omitempty"`
 
-	// Route options for the virtual host. The structure is documented below.
+	// (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+	// Route options for the virtual host.
 	// +kubebuilder:validation:Optional
 	RouteOptions []VirtualHostRouteOptionsParameters `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
 }
 
 type VirtualHostRouteOptionsInitParameters struct {
 
+	// (Block List, Max: 1) RBAC configuration. (see below for nested schema)
 	// RBAC configuration.
 	Rbac []VirtualHostRouteOptionsRbacInitParameters `json:"rbac,omitempty" tf:"rbac,omitempty"`
 
+	// (String) SWS profile ID.
 	// SWS profile ID.
 	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type VirtualHostRouteOptionsObservation struct {
 
+	// (Block List, Max: 1) RBAC configuration. (see below for nested schema)
 	// RBAC configuration.
 	Rbac []VirtualHostRouteOptionsRbacObservation `json:"rbac,omitempty" tf:"rbac,omitempty"`
 
+	// (String) SWS profile ID.
 	// SWS profile ID.
 	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type VirtualHostRouteOptionsParameters struct {
 
+	// (Block List, Max: 1) RBAC configuration. (see below for nested schema)
 	// RBAC configuration.
 	// +kubebuilder:validation:Optional
 	Rbac []VirtualHostRouteOptionsRbacParameters `json:"rbac,omitempty" tf:"rbac,omitempty"`
 
+	// (String) SWS profile ID.
 	// SWS profile ID.
 	// +kubebuilder:validation:Optional
 	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type VirtualHostRouteOptionsRbacInitParameters struct {
+
+	// (String)
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
+	// (Block List, Min: 1) (see below for nested schema)
 	Principals []RouteOptionsRbacPrincipalsInitParameters `json:"principals,omitempty" tf:"principals,omitempty"`
 }
 
 type VirtualHostRouteOptionsRbacObservation struct {
+
+	// (String)
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
+	// (Block List, Min: 1) (see below for nested schema)
 	Principals []RouteOptionsRbacPrincipalsObservation `json:"principals,omitempty" tf:"principals,omitempty"`
 }
 
 type VirtualHostRouteOptionsRbacParameters struct {
 
+	// (String)
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
+	// (Block List, Min: 1) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Principals []RouteOptionsRbacPrincipalsParameters `json:"principals" tf:"principals,omitempty"`
 }

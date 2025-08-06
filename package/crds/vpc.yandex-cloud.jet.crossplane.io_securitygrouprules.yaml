@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: SecurityGroupRule is the Schema for the SecurityGroupRules API.
-          Yandex VPC Security Group Rule.
+          Manages a VPC Security Group Rule within Yandex Cloud.
         properties:
           apiVersion:
             description: |-
@@ -74,33 +74,47 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: Description of the rule.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   direction:
-                    description: direction of the rule. Can be ingress (inbound) or
-                      egress (outbound).
+                    description: |-
+                      (String) Direction of the Security group rule. Can be ingress (inbound network traffic to the VPC network) or egress (outbound network traffic from the VPC network).
+                      Direction of the Security group rule. Can be `ingress` (inbound network traffic to the VPC network) or `egress` (outbound network traffic from the VPC network).
                     type: string
                   fromPort:
-                    description: Minimum port number.
+                    description: |-
+                      (Number) Minimum port number. Applicable for TCP and UDP protocols.
+                      Minimum port number. Applicable for TCP and UDP protocols.
                     type: number
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this rule.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   port:
-                    description: Port number (if applied to a single port).
+                    description: |-
+                      (Number) Port number (if applied to a single port).
+                      Port number (if applied to a single port).
                     type: number
                   predefinedTarget:
-                    description: Special-purpose targets such as "self_security_group".
-                      See docs for possible options.
+                    description: |-
+                      purpose targets. The self_security_group target refers to this particular security group. The loadbalancer_healthchecks target represents NLB health check nodes.
+                      Special-purpose targets. The `self_security_group` target refers to this particular security group. The `loadbalancer_healthchecks` target represents [NLB health check nodes](https://yandex.cloud/docs/network-load-balancer/concepts/health-check).
                     type: string
                   protocol:
-                    description: One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+                    description: |-
+                      (String) Specific network protocol. Can be one of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+                      Specific network protocol. Can be one of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
                     type: string
                   securityGroupBinding:
-                    description: ID of the security group this rule belongs to.
+                    description: |-
+                      (String) The id of target security group which rule belongs to.
+                      The id of target security group which rule belongs to.
                     type: string
                   securityGroupBindingRef:
                     description: Reference to a SecurityGroup to populate securityGroupBinding.
@@ -177,7 +191,9 @@ spec:
                         type: object
                     type: object
                   securityGroupId:
-                    description: Target security group ID for this rule.
+                    description: |-
+                      (String) Target security group ID for this Security group rule.
+                      Target security group ID for this Security group rule.
                     type: string
                   securityGroupIdRef:
                     description: Reference to a SecurityGroup to populate securityGroupId.
@@ -254,17 +270,21 @@ spec:
                         type: object
                     type: object
                   toPort:
-                    description: Maximum port number.
+                    description: |-
+                      (Number) Maximum port number. Applicable for TCP and UDP protocols.
+                      Maximum port number. Applicable for TCP and UDP protocols.
                     type: number
                   v4CidrBlocks:
-                    description: The blocks of IPv4 addresses for this rule.
+                    description: |-
+                      (List of String) The list of IPv4 CIDR prefixes for this Security group rule.
+                      The list of IPv4 CIDR prefixes for this Security group rule.
                     items:
                       type: string
                     type: array
                   v6CidrBlocks:
-                    description: The blocks of IPv6 addresses for this rule. v6_cidr_blocks
-                      argument is currently not supported. It will be available in
-                      the future.
+                    description: |-
+                      (List of String) The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
+                      The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
                     items:
                       type: string
                     type: array
@@ -283,33 +303,47 @@ spec:
                   autoscaler.
                 properties:
                   description:
-                    description: Description of the rule.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   direction:
-                    description: direction of the rule. Can be ingress (inbound) or
-                      egress (outbound).
+                    description: |-
+                      (String) Direction of the Security group rule. Can be ingress (inbound network traffic to the VPC network) or egress (outbound network traffic from the VPC network).
+                      Direction of the Security group rule. Can be `ingress` (inbound network traffic to the VPC network) or `egress` (outbound network traffic from the VPC network).
                     type: string
                   fromPort:
-                    description: Minimum port number.
+                    description: |-
+                      (Number) Minimum port number. Applicable for TCP and UDP protocols.
+                      Minimum port number. Applicable for TCP and UDP protocols.
                     type: number
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this rule.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   port:
-                    description: Port number (if applied to a single port).
+                    description: |-
+                      (Number) Port number (if applied to a single port).
+                      Port number (if applied to a single port).
                     type: number
                   predefinedTarget:
-                    description: Special-purpose targets such as "self_security_group".
-                      See docs for possible options.
+                    description: |-
+                      purpose targets. The self_security_group target refers to this particular security group. The loadbalancer_healthchecks target represents NLB health check nodes.
+                      Special-purpose targets. The `self_security_group` target refers to this particular security group. The `loadbalancer_healthchecks` target represents [NLB health check nodes](https://yandex.cloud/docs/network-load-balancer/concepts/health-check).
                     type: string
                   protocol:
-                    description: One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+                    description: |-
+                      (String) Specific network protocol. Can be one of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+                      Specific network protocol. Can be one of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
                     type: string
                   securityGroupBinding:
-                    description: ID of the security group this rule belongs to.
+                    description: |-
+                      (String) The id of target security group which rule belongs to.
+                      The id of target security group which rule belongs to.
                     type: string
                   securityGroupBindingRef:
                     description: Reference to a SecurityGroup to populate securityGroupBinding.
@@ -386,7 +420,9 @@ spec:
                         type: object
                     type: object
                   securityGroupId:
-                    description: Target security group ID for this rule.
+                    description: |-
+                      (String) Target security group ID for this Security group rule.
+                      Target security group ID for this Security group rule.
                     type: string
                   securityGroupIdRef:
                     description: Reference to a SecurityGroup to populate securityGroupId.
@@ -463,17 +499,21 @@ spec:
                         type: object
                     type: object
                   toPort:
-                    description: Maximum port number.
+                    description: |-
+                      (Number) Maximum port number. Applicable for TCP and UDP protocols.
+                      Maximum port number. Applicable for TCP and UDP protocols.
                     type: number
                   v4CidrBlocks:
-                    description: The blocks of IPv4 addresses for this rule.
+                    description: |-
+                      (List of String) The list of IPv4 CIDR prefixes for this Security group rule.
+                      The list of IPv4 CIDR prefixes for this Security group rule.
                     items:
                       type: string
                     type: array
                   v6CidrBlocks:
-                    description: The blocks of IPv6 addresses for this rule. v6_cidr_blocks
-                      argument is currently not supported. It will be available in
-                      the future.
+                    description: |-
+                      (List of String) The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
+                      The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
                     items:
                       type: string
                     type: array
@@ -656,52 +696,72 @@ spec:
               atProvider:
                 properties:
                   description:
-                    description: Description of the rule.
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
                     type: string
                   direction:
-                    description: direction of the rule. Can be ingress (inbound) or
-                      egress (outbound).
+                    description: |-
+                      (String) Direction of the Security group rule. Can be ingress (inbound network traffic to the VPC network) or egress (outbound network traffic from the VPC network).
+                      Direction of the Security group rule. Can be `ingress` (inbound network traffic to the VPC network) or `egress` (outbound network traffic from the VPC network).
                     type: string
                   fromPort:
-                    description: Minimum port number.
+                    description: |-
+                      (Number) Minimum port number. Applicable for TCP and UDP protocols.
+                      Minimum port number. Applicable for TCP and UDP protocols.
                     type: number
                   id:
-                    description: Id of the rule.
+                    description: (String) The resource identifier.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
-                    description: Labels to assign to this rule.
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   port:
-                    description: Port number (if applied to a single port).
+                    description: |-
+                      (Number) Port number (if applied to a single port).
+                      Port number (if applied to a single port).
                     type: number
                   predefinedTarget:
-                    description: Special-purpose targets such as "self_security_group".
-                      See docs for possible options.
+                    description: |-
+                      purpose targets. The self_security_group target refers to this particular security group. The loadbalancer_healthchecks target represents NLB health check nodes.
+                      Special-purpose targets. The `self_security_group` target refers to this particular security group. The `loadbalancer_healthchecks` target represents [NLB health check nodes](https://yandex.cloud/docs/network-load-balancer/concepts/health-check).
                     type: string
                   protocol:
-                    description: One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+                    description: |-
+                      (String) Specific network protocol. Can be one of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+                      Specific network protocol. Can be one of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
                     type: string
                   securityGroupBinding:
-                    description: ID of the security group this rule belongs to.
+                    description: |-
+                      (String) The id of target security group which rule belongs to.
+                      The id of target security group which rule belongs to.
                     type: string
                   securityGroupId:
-                    description: Target security group ID for this rule.
+                    description: |-
+                      (String) Target security group ID for this Security group rule.
+                      Target security group ID for this Security group rule.
                     type: string
                   toPort:
-                    description: Maximum port number.
+                    description: |-
+                      (Number) Maximum port number. Applicable for TCP and UDP protocols.
+                      Maximum port number. Applicable for TCP and UDP protocols.
                     type: number
                   v4CidrBlocks:
-                    description: The blocks of IPv4 addresses for this rule.
+                    description: |-
+                      (List of String) The list of IPv4 CIDR prefixes for this Security group rule.
+                      The list of IPv4 CIDR prefixes for this Security group rule.
                     items:
                       type: string
                     type: array
                   v6CidrBlocks:
-                    description: The blocks of IPv6 addresses for this rule. v6_cidr_blocks
-                      argument is currently not supported. It will be available in
-                      the future.
+                    description: |-
+                      (List of String) The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
+                      The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
                     items:
                       type: string
                     type: array

@@ -29,64 +29,89 @@ import (
 
 type AndPrincipalsHeaderInitParameters struct {
 
-	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
+	// (String) The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	Value []ValueInitParameters `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type AndPrincipalsHeaderObservation struct {
 
-	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
+	// (String) The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	Value []ValueObservation `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type AndPrincipalsHeaderParameters struct {
 
-	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
+	// (String) The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) The path and fqmn blocks.
+	// The `path` and `fqmn` blocks.
+	//
+	// ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
 	// +kubebuilder:validation:Optional
 	Value []ValueParameters `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type AndPrincipalsInitParameters struct {
+
+	// (Boolean)
 	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
 
+	// (Block List, Max: 1) (see below for nested schema)
 	Header []AndPrincipalsHeaderInitParameters `json:"header,omitempty" tf:"header,omitempty"`
 
+	// (String)
 	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
 }
 
 type AndPrincipalsObservation struct {
+
+	// (Boolean)
 	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
 
+	// (Block List, Max: 1) (see below for nested schema)
 	Header []AndPrincipalsHeaderObservation `json:"header,omitempty" tf:"header,omitempty"`
 
+	// (String)
 	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
 }
 
 type AndPrincipalsParameters struct {
 
+	// (Boolean)
 	// +kubebuilder:validation:Optional
 	Any *bool `json:"any,omitempty" tf:"any,omitempty"`
 
+	// (Block List, Max: 1) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Header []AndPrincipalsHeaderParameters `json:"header,omitempty" tf:"header,omitempty"`
 
+	// (String)
 	// +kubebuilder:validation:Optional
 	RemoteIP *string `json:"remoteIp,omitempty" tf:"remote_ip,omitempty"`
 }
 
 type HTTPRouterInitParameters struct {
 
-	// An optional description of the HTTP Router. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -98,47 +123,60 @@ type HTTPRouterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Labels to assign to this HTTP Router. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+	// Route options for the virtual host.
 	RouteOptions []RouteOptionsInitParameters `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
 }
 
 type HTTPRouterObservation struct {
 
-	// The HTTP Router creation timestamp.
+	// (String) The creation timestamp of the resource.
+	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// An optional description of the HTTP Router. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// The ID of the HTTP Router.
+	// (String) The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Labels to assign to this HTTP Router. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
+	// (String) The resource name.
+	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+	// Route options for the virtual host.
 	RouteOptions []RouteOptionsObservation `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
 }
 
 type HTTPRouterParameters struct {
 
-	// An optional description of the HTTP Router. Provide this property when you create the resource.
+	// (String) The resource description.
+	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// The ID of the folder to which the resource belongs. If omitted, the provider folder is used.
+	// id is used.
+	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -151,102 +189,150 @@ type HTTPRouterParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// Labels to assign to this HTTP Router. A list of key/value pairs.
+	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// Name of the HTTP Router. Provided by the client when the HTTP Router is created.
+	// (String) The resource name.
+	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+	// Route options for the virtual host.
 	// +kubebuilder:validation:Optional
 	RouteOptions []RouteOptionsParameters `json:"routeOptions,omitempty" tf:"route_options,omitempty"`
 }
 
 type PrincipalsInitParameters struct {
+
+	// (Block List, Min: 1) (see below for nested schema)
 	AndPrincipals []AndPrincipalsInitParameters `json:"andPrincipals,omitempty" tf:"and_principals,omitempty"`
 }
 
 type PrincipalsObservation struct {
+
+	// (Block List, Min: 1) (see below for nested schema)
 	AndPrincipals []AndPrincipalsObservation `json:"andPrincipals,omitempty" tf:"and_principals,omitempty"`
 }
 
 type PrincipalsParameters struct {
 
+	// (Block List, Min: 1) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	AndPrincipals []AndPrincipalsParameters `json:"andPrincipals" tf:"and_principals,omitempty"`
 }
 
 type RbacInitParameters struct {
+
+	// (String)
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
+	// (Block List, Min: 1) (see below for nested schema)
 	Principals []PrincipalsInitParameters `json:"principals,omitempty" tf:"principals,omitempty"`
 }
 
 type RbacObservation struct {
+
+	// (String)
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
+	// (Block List, Min: 1) (see below for nested schema)
 	Principals []PrincipalsObservation `json:"principals,omitempty" tf:"principals,omitempty"`
 }
 
 type RbacParameters struct {
 
+	// (String)
 	// +kubebuilder:validation:Optional
 	Action *string `json:"action,omitempty" tf:"action,omitempty"`
 
+	// (Block List, Min: 1) (see below for nested schema)
 	// +kubebuilder:validation:Optional
 	Principals []PrincipalsParameters `json:"principals" tf:"principals,omitempty"`
 }
 
 type RouteOptionsInitParameters struct {
+
+	// (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+	// RBAC configuration.
 	Rbac []RbacInitParameters `json:"rbac,omitempty" tf:"rbac,omitempty"`
 
-	// The ID of the HTTP Router.
+	// (String) SWS profile ID.
+	// SWS profile ID.
 	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type RouteOptionsObservation struct {
+
+	// (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+	// RBAC configuration.
 	Rbac []RbacObservation `json:"rbac,omitempty" tf:"rbac,omitempty"`
 
-	// The ID of the HTTP Router.
+	// (String) SWS profile ID.
+	// SWS profile ID.
 	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type RouteOptionsParameters struct {
 
+	// (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+	// RBAC configuration.
 	// +kubebuilder:validation:Optional
 	Rbac []RbacParameters `json:"rbac,omitempty" tf:"rbac,omitempty"`
 
-	// The ID of the HTTP Router.
+	// (String) SWS profile ID.
+	// SWS profile ID.
 	// +kubebuilder:validation:Optional
 	SecurityProfileID *string `json:"securityProfileId,omitempty" tf:"security_profile_id,omitempty"`
 }
 
 type ValueInitParameters struct {
+
+	// (String) Match exactly.
+	// Match exactly.
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
+	// Match prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
+	// Match regex.
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type ValueObservation struct {
+
+	// (String) Match exactly.
+	// Match exactly.
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
+	// Match prefix.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
+	// Match regex.
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }
 
 type ValueParameters struct {
 
+	// (String) Match exactly.
+	// Match exactly.
 	// +kubebuilder:validation:Optional
 	Exact *string `json:"exact,omitempty" tf:"exact,omitempty"`
 
+	// (String) Match prefix.
+	// Match prefix.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
+	// (String) Match regex.
+	// Match regex.
 	// +kubebuilder:validation:Optional
 	Regex *string `json:"regex,omitempty" tf:"regex,omitempty"`
 }

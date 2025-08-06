@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Object is the Schema for the Objects API. Allows management of
-          a Yandex.Cloud Storage Object.
+          a Yandex Cloud Storage Object.
         properties:
           apiVersion:
             description: |-
@@ -74,10 +74,9 @@ spec:
               forProvider:
                 properties:
                   accessKey:
-                    description: The access key to use when applying changes. This
-                      value can also be provided as storage_access_key specified in
-                      provider config (explicitly or within shared_credentials_file)
-                      is used.
+                    description: |-
+                      (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     type: string
                   accessKeyRef:
                     description: Reference to a ServiceAccountStaticAccessKey in iam
@@ -156,10 +155,16 @@ spec:
                         type: object
                     type: object
                   acl:
-                    description: The predefined ACL to apply. Defaults to private.
+                    description: |-
+                      (String) The predefined ACL to apply. Defaults to private.
+                      The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`.
+
+                      ~> To change ACL after creation, the service account to which used access and secret keys correspond should have `storage.admin` role, though this role is not necessary to be able to create an object with any ACL.
                     type: string
                   bucket:
-                    description: The name of the containing bucket.
+                    description: |-
+                      (String) The name of the containing bucket.
+                      The name of the containing bucket.
                     type: string
                   bucketRef:
                     description: Reference to a Bucket to populate bucket.
@@ -236,45 +241,44 @@ spec:
                         type: object
                     type: object
                   content:
-                    description: Literal string value to use as the object content,
-                      which will be uploaded as UTF-8-encoded text.
+                    description: |-
+                      8-encoded text. Conflicts with source and content_base64.
+                      Literal string value to use as the object content, which will be uploaded as UTF-8-encoded text. Conflicts with `source` and `content_base64`.
                     type: string
                   contentBase64:
-                    description: Base64-encoded data that will be decoded and uploaded
-                      as raw bytes for the object content. This allows safely uploading
-                      non-UTF8 binary data, but is recommended only for small content
-                      such as the result of the gzipbase64 function with small text
-                      strings. For larger objects, use source to stream the content
-                      from a disk file.
+                    description: |-
+                      encoded data that will be decoded and uploaded as raw bytes for the object content. This allows safely uploading non-UTF8 binary data, but is recommended only for small content such as the result of the gzipbase64 function with small text strings. For larger objects, use source to stream the content from a disk file. Conflicts with source and content.
+                      Base64-encoded data that will be decoded and uploaded as raw bytes for the object content. This allows safely uploading non-UTF8 binary data, but is recommended only for small content such as the result of the `gzipbase64` function with small text strings. For larger objects, use `source` to stream the content from a disk file. Conflicts with `source` and `content`.
                     type: string
                   contentType:
-                    description: A standard MIME type describing the format of the
-                      object data, e.g. application/octet-stream. All Valid MIME Types
-                      are valid for this input.
+                    description: |-
+                      stream. All Valid MIME Types are valid for this input.
+                      A standard MIME type describing the format of the object data, e.g. `application/octet-stream`. All Valid MIME Types are valid for this input.
                     type: string
                   key:
-                    description: The name of the object once it is in the bucket.
+                    description: |-
+                      (String) The name of the object once it is in the bucket.
+                      The name of the object once it is in the bucket.
                     type: string
                   objectLockLegalHoldStatus:
-                    description: Specifies a legal hold status of an object. Requires
-                      object_lock_configuration to be enabled on a bucket.
+                    description: |-
+                      (String) Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
+                      Specifies a [legal hold status](https://yandex.cloud/docs/storage/concepts/object-lock#types) of an object. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   objectLockMode:
-                    description: Specifies a type of object lock. One of ["GOVERNANCE",
-                      "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date.
-                      Requires object_lock_configuration to be enabled on a bucket.
+                    description: |-
+                      (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
+                      Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`. It must be set simultaneously with `object_lock_retain_until_date`. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   objectLockRetainUntilDate:
-                    description: Specifies date and time in RTC3339 format until which
-                      an object is to be locked. It must be set simultaneously with
-                      object_lock_mode. Requires object_lock_configuration to be enabled
-                      on a bucket.
+                    description: |-
+                      (String) Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
+                      Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with `object_lock_mode`. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   secretKeySecretRef:
-                    description: The secret key to use when applying changes. This
-                      value can also be provided as storage_secret_key specified in
-                      provider config (explicitly or within shared_credentials_file)
-                      is used.
+                    description: |-
+                      (String, Sensitive) The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      The secret key to use when applying changes. This value can also be provided as `storage_secret_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     properties:
                       key:
                         description: The key to select.
@@ -291,18 +295,21 @@ spec:
                     - namespace
                     type: object
                   source:
-                    description: The path to a file that will be read and uploaded
-                      as raw bytes for the object content.
+                    description: |-
+                      (String) The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
+                      The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with `content` and `content_base64`.
                     type: string
                   sourceHash:
-                    description: Used to trigger object update when the source content
-                      changes. So the only meaningful value is filemd5("path/to/source")
-                      (The value is only stored in state and not saved by Yandex Storage).
+                    description: |-
+                      (String) Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
+                      Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: Specifies an object tags.
+                    description: |-
+                      (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+                      The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
                     type: object
                     x-kubernetes-map-type: granular
                 type: object
@@ -320,10 +327,9 @@ spec:
                   autoscaler.
                 properties:
                   accessKey:
-                    description: The access key to use when applying changes. This
-                      value can also be provided as storage_access_key specified in
-                      provider config (explicitly or within shared_credentials_file)
-                      is used.
+                    description: |-
+                      (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     type: string
                   accessKeyRef:
                     description: Reference to a ServiceAccountStaticAccessKey in iam
@@ -402,10 +408,16 @@ spec:
                         type: object
                     type: object
                   acl:
-                    description: The predefined ACL to apply. Defaults to private.
+                    description: |-
+                      (String) The predefined ACL to apply. Defaults to private.
+                      The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`.
+
+                      ~> To change ACL after creation, the service account to which used access and secret keys correspond should have `storage.admin` role, though this role is not necessary to be able to create an object with any ACL.
                     type: string
                   bucket:
-                    description: The name of the containing bucket.
+                    description: |-
+                      (String) The name of the containing bucket.
+                      The name of the containing bucket.
                     type: string
                   bucketRef:
                     description: Reference to a Bucket to populate bucket.
@@ -482,45 +494,44 @@ spec:
                         type: object
                     type: object
                   content:
-                    description: Literal string value to use as the object content,
-                      which will be uploaded as UTF-8-encoded text.
+                    description: |-
+                      8-encoded text. Conflicts with source and content_base64.
+                      Literal string value to use as the object content, which will be uploaded as UTF-8-encoded text. Conflicts with `source` and `content_base64`.
                     type: string
                   contentBase64:
-                    description: Base64-encoded data that will be decoded and uploaded
-                      as raw bytes for the object content. This allows safely uploading
-                      non-UTF8 binary data, but is recommended only for small content
-                      such as the result of the gzipbase64 function with small text
-                      strings. For larger objects, use source to stream the content
-                      from a disk file.
+                    description: |-
+                      encoded data that will be decoded and uploaded as raw bytes for the object content. This allows safely uploading non-UTF8 binary data, but is recommended only for small content such as the result of the gzipbase64 function with small text strings. For larger objects, use source to stream the content from a disk file. Conflicts with source and content.
+                      Base64-encoded data that will be decoded and uploaded as raw bytes for the object content. This allows safely uploading non-UTF8 binary data, but is recommended only for small content such as the result of the `gzipbase64` function with small text strings. For larger objects, use `source` to stream the content from a disk file. Conflicts with `source` and `content`.
                     type: string
                   contentType:
-                    description: A standard MIME type describing the format of the
-                      object data, e.g. application/octet-stream. All Valid MIME Types
-                      are valid for this input.
+                    description: |-
+                      stream. All Valid MIME Types are valid for this input.
+                      A standard MIME type describing the format of the object data, e.g. `application/octet-stream`. All Valid MIME Types are valid for this input.
                     type: string
                   key:
-                    description: The name of the object once it is in the bucket.
+                    description: |-
+                      (String) The name of the object once it is in the bucket.
+                      The name of the object once it is in the bucket.
                     type: string
                   objectLockLegalHoldStatus:
-                    description: Specifies a legal hold status of an object. Requires
-                      object_lock_configuration to be enabled on a bucket.
+                    description: |-
+                      (String) Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
+                      Specifies a [legal hold status](https://yandex.cloud/docs/storage/concepts/object-lock#types) of an object. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   objectLockMode:
-                    description: Specifies a type of object lock. One of ["GOVERNANCE",
-                      "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date.
-                      Requires object_lock_configuration to be enabled on a bucket.
+                    description: |-
+                      (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
+                      Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`. It must be set simultaneously with `object_lock_retain_until_date`. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   objectLockRetainUntilDate:
-                    description: Specifies date and time in RTC3339 format until which
-                      an object is to be locked. It must be set simultaneously with
-                      object_lock_mode. Requires object_lock_configuration to be enabled
-                      on a bucket.
+                    description: |-
+                      (String) Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
+                      Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with `object_lock_mode`. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   secretKeySecretRef:
-                    description: The secret key to use when applying changes. This
-                      value can also be provided as storage_secret_key specified in
-                      provider config (explicitly or within shared_credentials_file)
-                      is used.
+                    description: |-
+                      (String, Sensitive) The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      The secret key to use when applying changes. This value can also be provided as `storage_secret_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     properties:
                       key:
                         description: The key to select.
@@ -537,18 +548,21 @@ spec:
                     - namespace
                     type: object
                   source:
-                    description: The path to a file that will be read and uploaded
-                      as raw bytes for the object content.
+                    description: |-
+                      (String) The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
+                      The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with `content` and `content_base64`.
                     type: string
                   sourceHash:
-                    description: Used to trigger object update when the source content
-                      changes. So the only meaningful value is filemd5("path/to/source")
-                      (The value is only stored in state and not saved by Yandex Storage).
+                    description: |-
+                      (String) Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
+                      Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: Specifies an object tags.
+                    description: |-
+                      (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+                      The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
                     type: object
                     x-kubernetes-map-type: granular
                 type: object
@@ -730,68 +744,76 @@ spec:
               atProvider:
                 properties:
                   accessKey:
-                    description: The access key to use when applying changes. This
-                      value can also be provided as storage_access_key specified in
-                      provider config (explicitly or within shared_credentials_file)
-                      is used.
+                    description: |-
+                      (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     type: string
                   acl:
-                    description: The predefined ACL to apply. Defaults to private.
+                    description: |-
+                      (String) The predefined ACL to apply. Defaults to private.
+                      The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`.
+
+                      ~> To change ACL after creation, the service account to which used access and secret keys correspond should have `storage.admin` role, though this role is not necessary to be able to create an object with any ACL.
                     type: string
                   bucket:
-                    description: The name of the containing bucket.
+                    description: |-
+                      (String) The name of the containing bucket.
+                      The name of the containing bucket.
                     type: string
                   content:
-                    description: Literal string value to use as the object content,
-                      which will be uploaded as UTF-8-encoded text.
+                    description: |-
+                      8-encoded text. Conflicts with source and content_base64.
+                      Literal string value to use as the object content, which will be uploaded as UTF-8-encoded text. Conflicts with `source` and `content_base64`.
                     type: string
                   contentBase64:
-                    description: Base64-encoded data that will be decoded and uploaded
-                      as raw bytes for the object content. This allows safely uploading
-                      non-UTF8 binary data, but is recommended only for small content
-                      such as the result of the gzipbase64 function with small text
-                      strings. For larger objects, use source to stream the content
-                      from a disk file.
+                    description: |-
+                      encoded data that will be decoded and uploaded as raw bytes for the object content. This allows safely uploading non-UTF8 binary data, but is recommended only for small content such as the result of the gzipbase64 function with small text strings. For larger objects, use source to stream the content from a disk file. Conflicts with source and content.
+                      Base64-encoded data that will be decoded and uploaded as raw bytes for the object content. This allows safely uploading non-UTF8 binary data, but is recommended only for small content such as the result of the `gzipbase64` function with small text strings. For larger objects, use `source` to stream the content from a disk file. Conflicts with `source` and `content`.
                     type: string
                   contentType:
-                    description: A standard MIME type describing the format of the
-                      object data, e.g. application/octet-stream. All Valid MIME Types
-                      are valid for this input.
+                    description: |-
+                      stream. All Valid MIME Types are valid for this input.
+                      A standard MIME type describing the format of the object data, e.g. `application/octet-stream`. All Valid MIME Types are valid for this input.
                     type: string
                   id:
-                    description: The key of the resource.
+                    description: (String) The ID of this resource.
                     type: string
                   key:
-                    description: The name of the object once it is in the bucket.
+                    description: |-
+                      (String) The name of the object once it is in the bucket.
+                      The name of the object once it is in the bucket.
                     type: string
                   objectLockLegalHoldStatus:
-                    description: Specifies a legal hold status of an object. Requires
-                      object_lock_configuration to be enabled on a bucket.
+                    description: |-
+                      (String) Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
+                      Specifies a [legal hold status](https://yandex.cloud/docs/storage/concepts/object-lock#types) of an object. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   objectLockMode:
-                    description: Specifies a type of object lock. One of ["GOVERNANCE",
-                      "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date.
-                      Requires object_lock_configuration to be enabled on a bucket.
+                    description: |-
+                      (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
+                      Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`. It must be set simultaneously with `object_lock_retain_until_date`. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   objectLockRetainUntilDate:
-                    description: Specifies date and time in RTC3339 format until which
-                      an object is to be locked. It must be set simultaneously with
-                      object_lock_mode. Requires object_lock_configuration to be enabled
-                      on a bucket.
+                    description: |-
+                      (String) Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
+                      Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with `object_lock_mode`. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   source:
-                    description: The path to a file that will be read and uploaded
-                      as raw bytes for the object content.
+                    description: |-
+                      (String) The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
+                      The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with `content` and `content_base64`.
                     type: string
                   sourceHash:
-                    description: Used to trigger object update when the source content
-                      changes. So the only meaningful value is filemd5("path/to/source")
-                      (The value is only stored in state and not saved by Yandex Storage).
+                    description: |-
+                      (String) Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
+                      Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
-                    description: Specifies an object tags.
+                    description: |-
+                      (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+                      The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
                     type: object
                     x-kubernetes-map-type: granular
                 type: object

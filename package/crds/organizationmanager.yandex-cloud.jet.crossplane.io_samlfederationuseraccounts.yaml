@@ -36,7 +36,7 @@ spec:
       openAPIV3Schema:
         description: SAMLFederationUserAccount is the Schema for the SAMLFederationUserAccounts
           API. Allows management of a single SAML Federation user account within an
-          existing Yandex.Cloud Organization.
+          existing Yandex Cloud Organization.
         properties:
           apiVersion:
             description: |-
@@ -76,10 +76,14 @@ spec:
               forProvider:
                 properties:
                   federationId:
-                    description: ID of a SAML Federation.
+                    description: |-
+                      (String) ID of a SAML Federation.
+                      ID of a SAML Federation.
                     type: string
                   nameId:
-                    description: Name ID of the SAML federated user.
+                    description: |-
+                      (String) Name ID of the SAML federated user.
+                      Name ID of the SAML federated user.
                     type: string
                 type: object
               initProvider:
@@ -96,10 +100,14 @@ spec:
                   autoscaler.
                 properties:
                   federationId:
-                    description: ID of a SAML Federation.
+                    description: |-
+                      (String) ID of a SAML Federation.
+                      ID of a SAML Federation.
                     type: string
                   nameId:
-                    description: Name ID of the SAML federated user.
+                    description: |-
+                      (String) Name ID of the SAML federated user.
+                      Name ID of the SAML federated user.
                     type: string
                 type: object
               managementPolicies:
@@ -285,12 +293,17 @@ spec:
               atProvider:
                 properties:
                   federationId:
-                    description: ID of a SAML Federation.
+                    description: |-
+                      (String) ID of a SAML Federation.
+                      ID of a SAML Federation.
                     type: string
                   id:
+                    description: (String) The ID of this resource.
                     type: string
                   nameId:
-                    description: Name ID of the SAML federated user.
+                    description: |-
+                      (String) Name ID of the SAML federated user.
+                      Name ID of the SAML federated user.
                     type: string
                 type: object
               conditions:
