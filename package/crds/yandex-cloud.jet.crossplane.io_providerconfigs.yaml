@@ -103,6 +103,12 @@ spec:
                     - name
                     - namespace
                     type: object
+                  serviceAccountKeyFile:
+                    description: |-
+                      ServiceAccountKeyFile contains either a path to or the contents of the
+                      Service Account file in JSON format.
+                      Only one of ServiceAccountKeyFile or Token must be specified.
+                    type: string
                   source:
                     description: Source of the provider credentials.
                     enum:
@@ -111,6 +117,11 @@ spec:
                     - InjectedIdentity
                     - Environment
                     - Filesystem
+                    type: string
+                  token:
+                    description: |-
+                      Token is the security token or IAM token used for authentication in Yandex Cloud.
+                      Only one of ServiceAccountKeyFile or Token must be specified.
                     type: string
                   yq_endpoint:
                     type: string
@@ -266,6 +277,12 @@ spec:
                     - name
                     - namespace
                     type: object
+                  serviceAccountKeyFile:
+                    description: |-
+                      ServiceAccountKeyFile contains either a path to or the contents of the
+                      Service Account file in JSON format.
+                      Only one of ServiceAccountKeyFile or Token must be specified.
+                    type: string
                   source:
                     description: Source of the provider credentials.
                     enum:
@@ -274,6 +291,11 @@ spec:
                     - InjectedIdentity
                     - Environment
                     - Filesystem
+                    type: string
+                  token:
+                    description: |-
+                      Token is the security token or IAM token used for authentication in Yandex Cloud.
+                      Only one of ServiceAccountKeyFile or Token must be specified.
                     type: string
                   yq_endpoint:
                     type: string

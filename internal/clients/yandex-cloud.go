@@ -21,6 +21,7 @@ package clients
 import (
 	"context"
 	"encoding/json"
+	"strings"
 
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/crossplane/upjet/pkg/config"
@@ -39,6 +40,7 @@ const (
 	endpoint              = "endpoint"
 	yqEndpoint            = "yq_endpoint"
 	serviceAccountKeyFile = "service_account_key_file"
+	token                 = "token"
 )
 
 const (
@@ -48,6 +50,8 @@ const (
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
 	errUnmarshalCredentials = "cannot unmarshal template credentials as JSON"
+	errBothTokenAndKeyFile  = "both token and serviceAccountKeyFile are specified, only one should be provided"
+	errNoAuthMethod         = "neither token nor serviceAccountKeyFile is specified, one must be provided"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -76,22 +80,57 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 			return ps, errors.Wrap(err, errTrackUsage)
 		}
 
-		data, err := resource.CommonCredentialExtractor(ctx, pc.Spec.Credentials.Source, client, pc.Spec.Credentials.CommonCredentialSelectors)
-		if err != nil {
-			return ps, errors.Wrap(err, errExtractCredentials)
-		}
-		creds := map[string]string{}
-		if err := json.Unmarshal(data, &creds); err != nil {
-			return ps, errors.Wrap(err, errUnmarshalCredentials)
+		// Validate that only one authentication method is specified
+		if pc.Spec.Credentials.ServiceAccountKeyFile != nil && pc.Spec.Credentials.Token != nil {
+			return ps, errors.New(errBothTokenAndKeyFile)
 		}
 
 		// set provider configuration
 		ps.Configuration = map[string]interface{}{}
-		ps.Configuration[serviceAccountKeyFile] = string(data)
 		ps.Configuration[folderID] = pc.Spec.Credentials.FolderID
 		ps.Configuration[cloudID] = pc.Spec.Credentials.CloudID
 		ps.Configuration[endpoint] = pc.Spec.Credentials.Endpoint
 		ps.Configuration[yqEndpoint] = pc.Spec.Credentials.YQEndpoint
+
+		// Handle authentication based on the specified method
+		if pc.Spec.Credentials.Token != nil {
+			// Use token authentication - direct specification
+			ps.Configuration[token] = *pc.Spec.Credentials.Token
+		} else if pc.Spec.Credentials.ServiceAccountKeyFile != nil {
+			// Use service account key file authentication - direct specification
+			ps.Configuration[serviceAccountKeyFile] = *pc.Spec.Credentials.ServiceAccountKeyFile
+		} else {
+			// This handles secret references and other credential sources
+			data, err := resource.CommonCredentialExtractor(ctx, pc.Spec.Credentials.Source, client, pc.Spec.Credentials.CommonCredentialSelectors)
+			if err != nil {
+				return ps, errors.Wrap(err, errExtractCredentials)
+			}
+
+			// Try to determine if this is a token or service account key based on content
+			dataStr := string(data)
+			dataStr = strings.TrimSpace(dataStr)
+
+			if len(dataStr) == 0 {
+				return ps, errors.New("credential data is empty")
+			}
+
+			// If it looks like JSON (starts with '{'), treat it as service account key
+			if dataStr[0] == '{' {
+				// Validate it's proper JSON
+				creds := map[string]string{}
+				if err := json.Unmarshal([]byte(dataStr), &creds); err != nil {
+					return ps, errors.Wrap(err, errUnmarshalCredentials)
+				}
+				ps.Configuration[serviceAccountKeyFile] = dataStr
+			} else {
+				// Treat as token (plain string)
+				// Ensure the token is not empty after trimming
+				if len(dataStr) == 0 {
+					return ps, errors.New("token is empty")
+				}
+				ps.Configuration[token] = dataStr
+			}
+		}
 		diag := ujprovider.TerraformProvider.Configure(ctx, &sdk.ResourceConfig{
 			Config: ps.Configuration,
 		})

@@ -24,6 +24,17 @@ type ProviderCredentials struct {
 
 	xpv1.CommonCredentialSelectors `json:",inline"`
 
+	// ServiceAccountKeyFile contains either a path to or the contents of the
+	// Service Account file in JSON format.
+	// Only one of ServiceAccountKeyFile or Token must be specified.
+	// +optional
+	ServiceAccountKeyFile *string `json:"serviceAccountKeyFile,omitempty"`
+
+	// Token is the security token or IAM token used for authentication in Yandex Cloud.
+	// Only one of ServiceAccountKeyFile or Token must be specified.
+	// +optional
+	Token *string `json:"token,omitempty"`
+
 	// FolderID - id of default folder to work with.
 	// +kubebuilder:validation:Optional
 	FolderID string `json:"folderId"`

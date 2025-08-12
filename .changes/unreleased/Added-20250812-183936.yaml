@@ -1,0 +1,3 @@
+kind: Added
+body: support for IAM token auth in ProviderConfig
+time: 2025-08-12T18:39:36.255485223+03:00
