@@ -118,6 +118,14 @@ spec:
                     - Environment
                     - Filesystem
                     type: string
+                  storageAccessKey:
+                    description: StorageAccessKey is the Yandex Cloud Object Storage
+                      access key.
+                    type: string
+                  storageSecretKey:
+                    description: StorageSecretKey is the Yandex Cloud Object Storage
+                      secret key.
+                    type: string
                   token:
                     description: |-
                       Token is the security token or IAM token used for authentication in Yandex Cloud.
@@ -291,6 +299,14 @@ spec:
                     - InjectedIdentity
                     - Environment
                     - Filesystem
+                    type: string
+                  storageAccessKey:
+                    description: StorageAccessKey is the Yandex Cloud Object Storage
+                      access key.
+                    type: string
+                  storageSecretKey:
+                    description: StorageSecretKey is the Yandex Cloud Object Storage
+                      secret key.
                     type: string
                   token:
                     description: |-

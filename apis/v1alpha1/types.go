@@ -46,6 +46,14 @@ type ProviderCredentials struct {
 	// +optional
 	Token *string `json:"token,omitempty"`
 
+	// StorageAccessKey is the Yandex Cloud Object Storage access key.
+	// +optional
+	StorageAccessKey *string `json:"storageAccessKey,omitempty"`
+
+	// StorageSecretKey is the Yandex Cloud Object Storage secret key.
+	// +optional
+	StorageSecretKey *string `json:"storageSecretKey,omitempty"`
+
 	// FolderID - id of default folder to work with.
 	// +kubebuilder:validation:Optional
 	FolderID string `json:"folderId"`

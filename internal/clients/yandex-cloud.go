@@ -41,6 +41,8 @@ const (
 	yqEndpoint            = "yq_endpoint"
 	serviceAccountKeyFile = "service_account_key_file"
 	token                 = "token"
+	storageAccessKey      = "storage_access_key"
+	storageSecretKey      = "storage_secret_key"
 )
 
 const (
@@ -92,6 +94,14 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 		ps.Configuration[endpoint] = pc.Spec.Credentials.Endpoint
 		ps.Configuration[yqEndpoint] = pc.Spec.Credentials.YQEndpoint
 
+		// Handle storage credentials - direct specification
+		if pc.Spec.Credentials.StorageAccessKey != nil {
+			ps.Configuration[storageAccessKey] = *pc.Spec.Credentials.StorageAccessKey
+		}
+		if pc.Spec.Credentials.StorageSecretKey != nil {
+			ps.Configuration[storageSecretKey] = *pc.Spec.Credentials.StorageSecretKey
+		}
+
 		// Handle authentication based on the specified method
 		if pc.Spec.Credentials.Token != nil {
 			// Use token authentication - direct specification
@@ -106,31 +116,19 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 				return ps, errors.Wrap(err, errExtractCredentials)
 			}
 
-			// Try to determine if this is a token or service account key based on content
-			dataStr := string(data)
-			dataStr = strings.TrimSpace(dataStr)
-
-			if len(dataStr) == 0 {
-				return ps, errors.New("credential data is empty")
-			}
-
-			// If it looks like JSON (starts with '{'), treat it as service account key
-			if dataStr[0] == '{' {
-				// Validate it's proper JSON
-				creds := map[string]string{}
-				if err := json.Unmarshal([]byte(dataStr), &creds); err != nil {
-					return ps, errors.Wrap(err, errUnmarshalCredentials)
-				}
-				ps.Configuration[serviceAccountKeyFile] = dataStr
-			} else {
-				// Treat as token (plain string)
-				// Ensure the token is not empty after trimming
-				if len(dataStr) == 0 {
-					return ps, errors.New("token is empty")
-				}
-				ps.Configuration[token] = dataStr
+			// Handle different types of credentials from secrets
+			if err := handleCredentialsFromSecret(data, ps.Configuration); err != nil {
+				return ps, err
 			}
 		}
+
+		// Ensure we have at least one main authentication method
+		if _, hasToken := ps.Configuration[token]; !hasToken {
+			if _, hasKeyFile := ps.Configuration[serviceAccountKeyFile]; !hasKeyFile {
+				return ps, errors.New(errNoAuthMethod)
+			}
+		}
+
 		diag := ujprovider.TerraformProvider.Configure(ctx, &sdk.ResourceConfig{
 			Config: ps.Configuration,
 		})
@@ -144,4 +142,65 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 
 		return ps, nil
 	}
+}
+
+// handleCredentialsFromSecret processes credential data from secrets and populates the configuration
+func handleCredentialsFromSecret(data []byte, config map[string]interface{}) error {
+	dataStr := string(data)
+	dataStr = strings.TrimSpace(dataStr)
+
+	if len(dataStr) == 0 {
+		return errors.New("credential data is empty")
+	}
+
+	// Try to parse as JSON first - could be service account key or structured credentials
+	var creds map[string]interface{}
+	if err := json.Unmarshal([]byte(dataStr), &creds); err == nil {
+		// Successfully parsed as JSON
+
+		// Always check for and extract storage credentials first
+		if accessKey, ok := creds[storageAccessKey].(string); ok && accessKey != "" {
+			config[storageAccessKey] = accessKey
+		}
+		if secretKey, ok := creds[storageSecretKey].(string); ok && secretKey != "" {
+			config[storageSecretKey] = secretKey
+		}
+
+		// Check if it contains a service_account_key_file field (separate from service account key JSON)
+		if saKeyFile, ok := creds[serviceAccountKeyFile].(string); ok && saKeyFile != "" {
+			// Validate that the service account key file is valid JSON
+			var saKeyData map[string]interface{}
+			if err := json.Unmarshal([]byte(saKeyFile), &saKeyData); err != nil {
+				return errors.Wrap(err, "service_account_key_file contains invalid JSON")
+			}
+			config[serviceAccountKeyFile] = saKeyFile
+			return nil
+		}
+
+		// Check if it contains token
+		if tokenVal, ok := creds[token].(string); ok && tokenVal != "" {
+			config[token] = tokenVal
+			return nil
+		}
+
+		// Check if it's a service account key JSON (has specific fields)
+		if _, hasID := creds["id"]; hasID {
+			if _, hasServiceAccountID := creds["service_account_id"]; hasServiceAccountID {
+				// This looks like a service account key JSON
+				config[serviceAccountKeyFile] = dataStr
+				return nil
+			}
+		}
+
+		// If no main authentication method found in JSON, treat the whole thing as service account key
+		config[serviceAccountKeyFile] = dataStr
+		return nil
+	}
+
+	// Not valid JSON, treat as plain token
+	if len(dataStr) == 0 {
+		return errors.New("token is empty")
+	}
+	config[token] = dataStr
+	return nil
 }
