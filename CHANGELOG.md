@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.12.0 - August 13, 2025
+### Added
+* support for IAM token auth in ProviderConfig
+* support for storage credentials in ProviderConfig
+### Changed
+* update Terraform provider to version 0.148.0
+
 ## 0.11.0 - August 1, 2025
 ### Added
 * labelling of the Yandex Cloud resources that support labels
