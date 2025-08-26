@@ -19,6 +19,9 @@ spec:
       release: {{ .Release.Name }}
   strategy:
     type: {{ .Values.deploymentStrategy }}
+  {{- if .Values.revisionHistoryLimit }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  {{- end }}
   template:
     metadata:
       {{- if or .Values.metrics.enabled .Values.customAnnotations }}
@@ -44,7 +47,14 @@ spec:
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName  | quote }}
       {{- end }}
+      {{- if .Values.runtimeClassName }}
+      runtimeClassName: {{ .Values.runtimeClassName | quote }}
+      {{- end }}
+      {{- if not .Values.serviceAccount.create }}
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      {{- else }}
       serviceAccountName: {{ template "crossplane.name" . }}
+      {{- end }}
       hostNetwork: {{ .Values.hostNetwork }}
       initContainers:
         - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default (printf "v%s" .Chart.AppVersion) }}"
@@ -57,6 +67,10 @@ spec:
           {{- end }}
           {{- range $arg := .Values.configuration.packages }}
           - --configuration
+          - "{{ $arg }}"
+          {{- end }}
+          {{- range $arg := .Values.function.packages }}
+          - --function
           - "{{ $arg }}"
           {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -98,7 +112,7 @@ spec:
           - name: "WEBHOOK_SERVICE_PORT"
             value: "9443"
           {{- else }}
-          - name: "WEBHOOK_ENABLED"
+          - name: "ENABLE_WEBHOOKS"
             value: "false"
           {{- end }}
           {{- if $externalSecretStoresEnabled }}
@@ -130,14 +144,14 @@ spec:
             port: readyz
         ports:
         - name: readyz
-          containerPort: 8081
+          containerPort: {{ .Values.readiness.port | default 8081 }}
         {{- if .Values.metrics.enabled }}
         - name: metrics
-          containerPort: 8080
+          containerPort: {{ .Values.metrics.port | default 8080 }}
         {{- end }}
         {{- if .Values.webhooks.enabled }}
         - name: webhooks
-          containerPort: 9443
+          containerPort: {{ .Values.webhooks.port | default 9443 }}
         {{- end }}
         {{- with .Values.securityContextCrossplane }}
         securityContext:
@@ -149,11 +163,13 @@ spec:
               resourceFieldRef:
                 containerName: {{ .Chart.Name }}
                 resource: limits.cpu
+                divisor: "1"
           - name: GOMEMLIMIT
             valueFrom:
               resourceFieldRef:
                 containerName: {{ .Chart.Name }}
                 resource: limits.memory
+                divisor: "1"
           - name: POD_NAMESPACE
             valueFrom:
               fieldRef:
@@ -169,9 +185,21 @@ spec:
             value: "/certs/{{ .Values.registryCaBundleConfig.key }}"
           {{- end}}
           {{- if not .Values.webhooks.enabled }}
-          - name: "WEBHOOK_ENABLED"
+          - name: "ENABLE_WEBHOOKS"
             value: "false"
           {{- end }}
+          {{- if and .Values.webhooks.enabled .Values.webhooks.port }}
+          - name: "WEBHOOK_PORT"
+            value: "{{ .Values.webhooks.port }}"
+          {{- end}}
+          {{- if and .Values.metrics.enabled .Values.metrics.port }}
+          - name: "METRICS_PORT"
+            value: "{{ .Values.metrics.port }}"
+          {{- end}}
+          {{- if .Values.readiness.port }}
+          - name: "HEALTH_PROBE_PORT"
+            value: "{{ .Values.readiness.port }}"
+          {{- end}}
           - name: "TLS_SERVER_SECRET_NAME"
             value: crossplane-tls-server
           - name: "TLS_SERVER_CERTS_DIR"
@@ -185,8 +213,10 @@ spec:
             value: {{ $value | quote }}
         {{- end}}
         volumeMounts:
-          - mountPath: /cache
+          - mountPath: /cache/xpkg
             name: package-cache
+          - mountPath: /cache/xfn
+            name: function-cache
           {{- if .Values.registryCaBundleConfig.name }}
           - mountPath: /certs
             name: ca-certs
@@ -210,6 +240,15 @@ spec:
         emptyDir:
           medium: {{ .Values.packageCache.medium }}
           sizeLimit: {{ .Values.packageCache.sizeLimit }}
+        {{- end }}
+      - name: function-cache
+        {{- if .Values.functionCache.pvc }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.functionCache.pvc }}
+        {{- else }}
+        emptyDir:
+          medium: {{ .Values.functionCache.medium }}
+          sizeLimit: {{ .Values.functionCache.sizeLimit }}
         {{- end }}
       {{- if .Values.registryCaBundleConfig.name }}
       - name: ca-certs
@@ -236,4 +275,10 @@ spec:
       {{- end }}
       {{- if .Values.affinity }}
       affinity: {{ toYaml .Values.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.topologySpreadConstraints }}
+      topologySpreadConstraints: {{ toYaml .Values.topologySpreadConstraints | nindent 8 }}
+      {{- end }}
+      {{- with .Values.dnsPolicy }}
+      dnsPolicy: {{ . }}
       {{- end }}

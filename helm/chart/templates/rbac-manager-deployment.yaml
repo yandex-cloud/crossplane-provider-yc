@@ -8,6 +8,9 @@ metadata:
     app: {{ template "crossplane.name" . }}-rbac-manager
     release: {{ .Release.Name }}
     {{- include "crossplane.labels" . | indent 4 }}
+  {{- with .Values.customAnnotations }}
+  annotations: {{ toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.rbacManager.replicas }}
   selector:
@@ -16,6 +19,9 @@ spec:
       release: {{ .Release.Name }}
   strategy:
     type: {{ .Values.deploymentStrategy }}
+  {{- if .Values.rbacManager.revisionHistoryLimit }}
+  revisionHistoryLimit: {{ .Values.rbacManager.revisionHistoryLimit }}
+  {{- end }}
   template:
     metadata:
       {{- if or .Values.metrics.enabled .Values.customAnnotations }}
@@ -42,6 +48,9 @@ spec:
       priorityClassName: {{ .Values.priorityClassName | quote }}
       {{- end }}
       serviceAccountName: rbac-manager
+      {{- if .Values.runtimeClassName }}
+      runtimeClassName: {{ .Values.runtimeClassName | quote }}
+      {{- end }}
       initContainers:
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default (printf "v%s" .Chart.AppVersion) }}"
         args:
@@ -61,11 +70,13 @@ spec:
               resourceFieldRef:
                 containerName: {{ .Chart.Name }}-init
                 resource: limits.cpu
+                divisor: "1"
           - name: GOMEMLIMIT
             valueFrom:
               resourceFieldRef:
                 containerName: {{ .Chart.Name }}-init
                 resource: limits.memory
+                divisor: "1"
       containers:
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default (printf "v%s" .Chart.AppVersion) }}"
         args:
@@ -94,11 +105,13 @@ spec:
               resourceFieldRef:
                 containerName: {{ .Chart.Name }}
                 resource: limits.cpu
+                divisor: "1"
           - name: GOMEMLIMIT
             valueFrom:
               resourceFieldRef:
                 containerName: {{ .Chart.Name }}
                 resource: limits.memory
+                divisor: "1"
           - name: LEADER_ELECTION
             value: "{{ .Values.rbacManager.leaderElection }}"
         {{- range $key, $value := .Values.extraEnvVarsRBACManager }}
@@ -110,6 +123,9 @@ spec:
       {{- end }}
       {{- if .Values.rbacManager.tolerations }}
       tolerations: {{ toYaml .Values.rbacManager.tolerations | nindent 6 }}
+      {{- end }}
+      {{- if .Values.rbacManager.topologySpreadConstraints }}
+      topologySpreadConstraints: {{ toYaml .Values.rbacManager.topologySpreadConstraints | nindent 6 }}
       {{- end }}
       {{- if .Values.rbacManager.affinity }}
       affinity: {{ toYaml .Values.rbacManager.affinity | nindent 8 }}
