@@ -4,6 +4,7 @@ kind: Resource
 metadata:
   annotations:
     meta.upbound.io/example-id: cdn/v1alpha1/resource
+    upjet.upbound.io/manual-intervention: "CLOUD-242012"
   labels:
     testing.upbound.io/example-name: my_resource
   name: my-resource
