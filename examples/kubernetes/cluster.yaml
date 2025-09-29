@@ -11,7 +11,7 @@ spec:
     networkIdRef:
       name: example-net
     master:
-      - version: "1.29"
+      - version: "1.32"
         zonal:
           - zone: ru-central1-a
             subnetIdRef:

@@ -8,7 +8,7 @@ spec:
       name: example-cluster
     name: example-cluster
     description: crossplane-provider-yc nodegroup
-    version: "1.29"
+    version: "1.32"
     instanceTemplate:
       - platformId: "standard-v2"
         networkInterface:
