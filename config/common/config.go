@@ -115,3 +115,17 @@ func setYCLabelsWithPaved(paved *fieldpath.Paved, fieldName string) ([]byte, err
 	}
 	return pavedByte, nil
 }
+
+// SingletonMergeStrategy is useful to avoid passing an empty object during
+// server-side apply.
+var SingletonMergeStrategy = config.MergeStrategy{
+	ListMergeStrategy: config.ListMergeStrategy{
+		ListMapKeys: config.ListMapKeys{
+			InjectedKey: config.InjectedKey{
+				Key:          "index",
+				DefaultValue: "default",
+			},
+		},
+		MergeStrategy: config.ListTypeMap,
+	},
+}

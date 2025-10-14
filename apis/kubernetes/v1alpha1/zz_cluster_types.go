@@ -96,6 +96,8 @@ type ClusterInitParameters struct {
 
 	// (Block List, Min: 1, Max: 1) Kubernetes master configuration options. (see below for nested schema)
 	// Kubernetes master configuration options.
+	// +listType=map
+	// +listMapKey=index
 	Master []MasterInitParameters `json:"master,omitempty" tf:"master,omitempty"`
 
 	// (String) The resource name.
@@ -210,6 +212,8 @@ type ClusterObservation struct {
 
 	// (Block List, Min: 1, Max: 1) Kubernetes master configuration options. (see below for nested schema)
 	// Kubernetes master configuration options.
+	// +listType=map
+	// +listMapKey=index
 	Master []MasterObservation `json:"master,omitempty" tf:"master,omitempty"`
 
 	// (String) The resource name.
@@ -302,6 +306,8 @@ type ClusterParameters struct {
 	// (Block List, Min: 1, Max: 1) Kubernetes master configuration options. (see below for nested schema)
 	// Kubernetes master configuration options.
 	// +kubebuilder:validation:Optional
+	// +listType=map
+	// +listMapKey=index
 	Master []MasterParameters `json:"master,omitempty" tf:"master,omitempty"`
 
 	// (String) The resource name.
@@ -574,6 +580,10 @@ type MasterInitParameters struct {
 	// An IPv6 external network address that is assigned to the master.
 	ExternalV6Address *string `json:"externalV6Address,omitempty" tf:"external_v6_address,omitempty"`
 
+	// This is an injected field with a default value for being able to merge items of the parent object list.
+	// +kubebuilder:default:=default
+	Index *string `json:"index,omitempty" tf:"-"`
+
 	// >1.30) should be performed manually. (see below for nested schema)
 	// Maintenance policy for Kubernetes master. If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.29. Minor version upgrades (e.g. 1.29->1.30) should be performed manually.
 	MaintenancePolicy []MaintenancePolicyInitParameters `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
@@ -788,6 +798,10 @@ type MasterObservation struct {
 	// External IPv6 endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
 	ExternalV6Endpoint *string `json:"externalV6Endpoint,omitempty" tf:"external_v6_endpoint,omitempty"`
 
+	// This is an injected field with a default value for being able to merge items of the parent object list.
+	// +kubebuilder:default:=default
+	Index *string `json:"index,omitempty" tf:"-"`
+
 	// (String) An IPv4 internal network address that is assigned to the master.
 	// An IPv4 internal network address that is assigned to the master.
 	InternalV4Address *string `json:"internalV4Address,omitempty" tf:"internal_v4_address,omitempty"`
@@ -849,6 +863,11 @@ type MasterParameters struct {
 	// An IPv6 external network address that is assigned to the master.
 	// +kubebuilder:validation:Optional
 	ExternalV6Address *string `json:"externalV6Address,omitempty" tf:"external_v6_address,omitempty"`
+
+	// This is an injected field with a default value for being able to merge items of the parent object list.
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default:=default
+	Index *string `json:"index" tf:"-"`
 
 	// >1.30) should be performed manually. (see below for nested schema)
 	// Maintenance policy for Kubernetes master. If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.29. Minor version upgrades (e.g. 1.29->1.30) should be performed manually.

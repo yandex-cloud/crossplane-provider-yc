@@ -725,6 +725,8 @@ type InstanceGroupInitParameters struct {
 
 	// (Block List, Min: 1, Max: 1) The template for creating new instances. (see below for nested schema)
 	// The template for creating new instances.
+	// +listType=map
+	// +listMapKey=index
 	InstanceTemplate []InstanceTemplateInitParameters `json:"instanceTemplate,omitempty" tf:"instance_template,omitempty"`
 
 	// (Map of String) A set of key/value label pairs which assigned to resource.
@@ -808,6 +810,8 @@ type InstanceGroupObservation struct {
 
 	// (Block List, Min: 1, Max: 1) The template for creating new instances. (see below for nested schema)
 	// The template for creating new instances.
+	// +listType=map
+	// +listMapKey=index
 	InstanceTemplate []InstanceTemplateObservation `json:"instanceTemplate,omitempty" tf:"instance_template,omitempty"`
 
 	// (List of Object) Instances block. (see below for nested schema)
@@ -900,6 +904,8 @@ type InstanceGroupParameters struct {
 	// (Block List, Min: 1, Max: 1) The template for creating new instances. (see below for nested schema)
 	// The template for creating new instances.
 	// +kubebuilder:validation:Optional
+	// +listType=map
+	// +listMapKey=index
 	InstanceTemplate []InstanceTemplateParameters `json:"instanceTemplate,omitempty" tf:"instance_template,omitempty"`
 
 	// (Map of String) A set of key/value label pairs which assigned to resource.
@@ -1173,6 +1179,11 @@ type InstanceTemplateInitParameters struct {
 	// * combination of `{instance.zone_id}` and `{instance.index_in_zone}`
 	// Example: `my-instance-{instance.index}`. If hostname is not set, `name` value will be used. It may also contain another placeholders, see `metadata` doc for full list.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// (Number)
+	// This is an injected field with a default value for being able to merge items of the parent object list.
+	// +kubebuilder:default:=default
+	Index *string `json:"index,omitempty" tf:"-"`
 
 	// (Map of String) A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs to assign to the instance.
@@ -1540,6 +1551,11 @@ type InstanceTemplateObservation struct {
 	// Example: `my-instance-{instance.index}`. If hostname is not set, `name` value will be used. It may also contain another placeholders, see `metadata` doc for full list.
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
 
+	// (Number)
+	// This is an injected field with a default value for being able to merge items of the parent object list.
+	// +kubebuilder:default:=default
+	Index *string `json:"index,omitempty" tf:"-"`
+
 	// (Map of String) A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs to assign to the instance.
 	// +mapType=granular
@@ -1623,6 +1639,12 @@ type InstanceTemplateParameters struct {
 	// Example: `my-instance-{instance.index}`. If hostname is not set, `name` value will be used. It may also contain another placeholders, see `metadata` doc for full list.
 	// +kubebuilder:validation:Optional
 	Hostname *string `json:"hostname,omitempty" tf:"hostname,omitempty"`
+
+	// (Number)
+	// This is an injected field with a default value for being able to merge items of the parent object list.
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default:=default
+	Index *string `json:"index" tf:"-"`
 
 	// (Map of String) A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs to assign to the instance.

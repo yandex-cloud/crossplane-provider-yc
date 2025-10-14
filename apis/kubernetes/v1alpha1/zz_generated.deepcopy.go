@@ -1489,6 +1489,11 @@ func (in *InstanceTemplateInitParameters) DeepCopyInto(out *InstanceTemplateInit
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Index != nil {
+		in, out := &in.Index, &out.Index
+		*out = new(string)
+		**out = **in
+	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -1612,6 +1617,11 @@ func (in *InstanceTemplateObservation) DeepCopyInto(out *InstanceTemplateObserva
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Index != nil {
+		in, out := &in.Index, &out.Index
+		*out = new(string)
+		**out = **in
+	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -1734,6 +1744,11 @@ func (in *InstanceTemplateParameters) DeepCopyInto(out *InstanceTemplateParamete
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.Index != nil {
+		in, out := &in.Index, &out.Index
+		*out = new(string)
+		**out = **in
 	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
@@ -2276,6 +2291,11 @@ func (in *MasterInitParameters) DeepCopyInto(out *MasterInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Index != nil {
+		in, out := &in.Index, &out.Index
+		*out = new(string)
+		**out = **in
+	}
 	if in.MaintenancePolicy != nil {
 		in, out := &in.MaintenancePolicy, &out.MaintenancePolicy
 		*out = make([]MaintenancePolicyInitParameters, len(*in))
@@ -2621,6 +2641,11 @@ func (in *MasterObservation) DeepCopyInto(out *MasterObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Index != nil {
+		in, out := &in.Index, &out.Index
+		*out = new(string)
+		**out = **in
+	}
 	if in.InternalV4Address != nil {
 		in, out := &in.InternalV4Address, &out.InternalV4Address
 		*out = new(string)
@@ -2723,6 +2748,11 @@ func (in *MasterParameters) DeepCopyInto(out *MasterParameters) {
 	}
 	if in.ExternalV6Address != nil {
 		in, out := &in.ExternalV6Address, &out.ExternalV6Address
+		*out = new(string)
+		**out = **in
+	}
+	if in.Index != nil {
+		in, out := &in.Index, &out.Index
 		*out = new(string)
 		**out = **in
 	}

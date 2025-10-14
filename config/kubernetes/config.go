@@ -23,6 +23,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/config"
 
+	"github.com/yandex-cloud/crossplane-provider-yc/config/common"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/iam"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/kms"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/vpc"
@@ -52,6 +53,9 @@ func Configure(p *config.Provider) {
 		r.References["kms_provider.key_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", kms.ApisPackagePath, "SymmetricKey"),
 		}
+
+		r.ServerSideApplyMergeStrategies["master"] = common.SingletonMergeStrategy
+
 		r.UseAsync = true
 	})
 	p.AddResourceConfigurator("yandex_kubernetes_node_group", func(r *config.Resource) {
@@ -67,6 +71,9 @@ func Configure(p *config.Provider) {
 		r.References["instance_template.network_interface.security_group_ids"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", vpc.ApisPackagePath, "SecurityGroup"),
 		}
+
+		r.ServerSideApplyMergeStrategies["instance_template"] = common.SingletonMergeStrategy
+
 		r.UseAsync = true
 	})
 }

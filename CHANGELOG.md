@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.1 - October 14, 2025
+### Fixed
+* errors produced when applying changes to Kubernetes NodeGroup
+* errors produced when applying changes to Kubernetes Cluster
+* errors produced when applying changes to Compute InstanceGroup
+
 ## 0.12.0 - August 13, 2025
 ### Added
 * support for IAM token auth in ProviderConfig

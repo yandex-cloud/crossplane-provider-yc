@@ -23,6 +23,7 @@ import (
 
 	"github.com/crossplane/upjet/pkg/config"
 
+	"github.com/yandex-cloud/crossplane-provider-yc/config/common"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/iam"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/vpc"
 )
@@ -114,6 +115,8 @@ func Configure(p *config.Provider) {
 		r.References["instance_template.secondary_disk.disk_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "Disk"),
 		}
+
+		r.ServerSideApplyMergeStrategies["instance_template"] = common.SingletonMergeStrategy
 	})
 
 	p.AddResourceConfigurator("yandex_compute_snapshot", func(r *config.Resource) {

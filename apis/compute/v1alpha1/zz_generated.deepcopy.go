@@ -5881,6 +5881,11 @@ func (in *InstanceTemplateInitParameters) DeepCopyInto(out *InstanceTemplateInit
 		*out = new(string)
 		**out = **in
 	}
+	if in.Index != nil {
+		in, out := &in.Index, &out.Index
+		*out = new(string)
+		**out = **in
+	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -6468,6 +6473,11 @@ func (in *InstanceTemplateObservation) DeepCopyInto(out *InstanceTemplateObserva
 		*out = new(string)
 		**out = **in
 	}
+	if in.Index != nil {
+		in, out := &in.Index, &out.Index
+		*out = new(string)
+		**out = **in
+	}
 	if in.Labels != nil {
 		in, out := &in.Labels, &out.Labels
 		*out = make(map[string]*string, len(*in))
@@ -6600,6 +6610,11 @@ func (in *InstanceTemplateParameters) DeepCopyInto(out *InstanceTemplateParamete
 	}
 	if in.Hostname != nil {
 		in, out := &in.Hostname, &out.Hostname
+		*out = new(string)
+		**out = **in
+	}
+	if in.Index != nil {
+		in, out := &in.Index, &out.Index
 		*out = new(string)
 		**out = **in
 	}

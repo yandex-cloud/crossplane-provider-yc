@@ -282,6 +282,11 @@ spec:
                             (String) An IPv6 external network address that is assigned to the master.
                             An IPv6 external network address that is assigned to the master.
                           type: string
+                        index:
+                          default: default
+                          description: This is an injected field with a default value
+                            for being able to merge items of the parent object list.
+                          type: string
                         maintenancePolicy:
                           description: |-
                             >1.30) should be performed manually. (see below for nested schema)
@@ -704,6 +709,9 @@ spec:
                           type: array
                       type: object
                     type: array
+                    x-kubernetes-list-map-keys:
+                    - index
+                    x-kubernetes-list-type: map
                   name:
                     description: |-
                       (String) The resource name.
@@ -1213,6 +1221,11 @@ spec:
                             (String) An IPv6 external network address that is assigned to the master.
                             An IPv6 external network address that is assigned to the master.
                           type: string
+                        index:
+                          default: default
+                          description: This is an injected field with a default value
+                            for being able to merge items of the parent object list.
+                          type: string
                         maintenancePolicy:
                           description: |-
                             >1.30) should be performed manually. (see below for nested schema)
@@ -1635,6 +1648,9 @@ spec:
                           type: array
                       type: object
                     type: array
+                    x-kubernetes-list-map-keys:
+                    - index
+                    x-kubernetes-list-type: map
                   name:
                     description: |-
                       (String) The resource name.
@@ -2194,6 +2210,11 @@ spec:
                             (String) External IPv6 endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
                             External IPv6 endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
                           type: string
+                        index:
+                          default: default
+                          description: This is an injected field with a default value
+                            for being able to merge items of the parent object list.
+                          type: string
                         internalV4Address:
                           description: |-
                             (String) An IPv4 internal network address that is assigned to the master.
@@ -2415,6 +2436,9 @@ spec:
                           type: array
                       type: object
                     type: array
+                    x-kubernetes-list-map-keys:
+                    - index
+                    x-kubernetes-list-type: map
                   name:
                     description: |-
                       (String) The resource name.

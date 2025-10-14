@@ -593,6 +593,12 @@ spec:
                             * combination of `{instance.zone_id}` and `{instance.index_in_zone}`
                             Example: `my-instance-{instance.index}`. If hostname is not set, `name` value will be used. It may also contain another placeholders, see `metadata` doc for full list.
                           type: string
+                        index:
+                          default: default
+                          description: |-
+                            (Number)
+                            This is an injected field with a default value for being able to merge items of the parent object list.
+                          type: string
                         labels:
                           additionalProperties:
                             type: string
@@ -1318,6 +1324,9 @@ spec:
                           type: string
                       type: object
                     type: array
+                    x-kubernetes-list-map-keys:
+                    - index
+                    x-kubernetes-list-type: map
                   labels:
                     additionalProperties:
                       type: string
@@ -2206,6 +2215,12 @@ spec:
                             * combination of `{instance.zone_id}` and `{instance.index_in_zone}`
                             Example: `my-instance-{instance.index}`. If hostname is not set, `name` value will be used. It may also contain another placeholders, see `metadata` doc for full list.
                           type: string
+                        index:
+                          default: default
+                          description: |-
+                            (Number)
+                            This is an injected field with a default value for being able to merge items of the parent object list.
+                          type: string
                         labels:
                           additionalProperties:
                             type: string
@@ -2931,6 +2946,9 @@ spec:
                           type: string
                       type: object
                     type: array
+                    x-kubernetes-list-map-keys:
+                    - index
+                    x-kubernetes-list-type: map
                   labels:
                     additionalProperties:
                       type: string
@@ -3785,6 +3803,12 @@ spec:
                             * combination of `{instance.zone_id}` and `{instance.index_in_zone}`
                             Example: `my-instance-{instance.index}`. If hostname is not set, `name` value will be used. It may also contain another placeholders, see `metadata` doc for full list.
                           type: string
+                        index:
+                          default: default
+                          description: |-
+                            (Number)
+                            This is an injected field with a default value for being able to merge items of the parent object list.
+                          type: string
                         labels:
                           additionalProperties:
                             type: string
@@ -4124,6 +4148,9 @@ spec:
                           type: string
                       type: object
                     type: array
+                    x-kubernetes-list-map-keys:
+                    - index
+                    x-kubernetes-list-type: map
                   instances:
                     description: |-
                       (List of Object) Instances block. (see below for nested schema)

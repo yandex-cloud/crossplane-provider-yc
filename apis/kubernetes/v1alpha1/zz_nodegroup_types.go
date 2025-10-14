@@ -413,6 +413,10 @@ type InstanceTemplateInitParameters struct {
 	// GPU settings.
 	GpuSettings []GpuSettingsInitParameters `json:"gpuSettings,omitempty" tf:"gpu_settings,omitempty"`
 
+	// This is an injected field with a default value for being able to merge items of the parent object list.
+	// +kubebuilder:default:=default
+	Index *string `json:"index,omitempty" tf:"-"`
+
 	// (Map of String) A set of key/value label pairs which assigned to resource.
 	// Labels that will be assigned to compute nodes (instances), created by the Node Group.
 	// +mapType=granular
@@ -478,6 +482,10 @@ type InstanceTemplateObservation struct {
 	// (Block List, Max: 1) GPU settings. (see below for nested schema)
 	// GPU settings.
 	GpuSettings []GpuSettingsObservation `json:"gpuSettings,omitempty" tf:"gpu_settings,omitempty"`
+
+	// This is an injected field with a default value for being able to merge items of the parent object list.
+	// +kubebuilder:default:=default
+	Index *string `json:"index,omitempty" tf:"-"`
 
 	// (Map of String) A set of key/value label pairs which assigned to resource.
 	// Labels that will be assigned to compute nodes (instances), created by the Node Group.
@@ -548,6 +556,11 @@ type InstanceTemplateParameters struct {
 	// GPU settings.
 	// +kubebuilder:validation:Optional
 	GpuSettings []GpuSettingsParameters `json:"gpuSettings,omitempty" tf:"gpu_settings,omitempty"`
+
+	// This is an injected field with a default value for being able to merge items of the parent object list.
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default:=default
+	Index *string `json:"index" tf:"-"`
 
 	// (Map of String) A set of key/value label pairs which assigned to resource.
 	// Labels that will be assigned to compute nodes (instances), created by the Node Group.
@@ -821,6 +834,8 @@ type NodeGroupInitParameters struct {
 
 	// (Block List, Min: 1, Max: 1) Template used to create compute instances in this Kubernetes node group. (see below for nested schema)
 	// Template used to create compute instances in this Kubernetes node group.
+	// +listType=map
+	// +listMapKey=index
 	InstanceTemplate []InstanceTemplateInitParameters `json:"instanceTemplate,omitempty" tf:"instance_template,omitempty"`
 
 	// (Map of String) A set of key/value label pairs which assigned to resource.
@@ -949,6 +964,8 @@ type NodeGroupObservation struct {
 
 	// (Block List, Min: 1, Max: 1) Template used to create compute instances in this Kubernetes node group. (see below for nested schema)
 	// Template used to create compute instances in this Kubernetes node group.
+	// +listType=map
+	// +listMapKey=index
 	InstanceTemplate []InstanceTemplateObservation `json:"instanceTemplate,omitempty" tf:"instance_template,omitempty"`
 
 	// (Map of String) A set of key/value label pairs which assigned to resource.
@@ -1029,6 +1046,8 @@ type NodeGroupParameters struct {
 	// (Block List, Min: 1, Max: 1) Template used to create compute instances in this Kubernetes node group. (see below for nested schema)
 	// Template used to create compute instances in this Kubernetes node group.
 	// +kubebuilder:validation:Optional
+	// +listType=map
+	// +listMapKey=index
 	InstanceTemplate []InstanceTemplateParameters `json:"instanceTemplate,omitempty" tf:"instance_template,omitempty"`
 
 	// (Map of String) A set of key/value label pairs which assigned to resource.
