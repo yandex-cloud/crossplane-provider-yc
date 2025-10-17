@@ -23,6 +23,7 @@ limitations under the License.
 package v1beta1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -197,6 +198,21 @@ func (in *ProviderCredentials) DeepCopyInto(out *ProviderCredentials) {
 	if in.StorageSecretKey != nil {
 		in, out := &in.StorageSecretKey, &out.StorageSecretKey
 		*out = new(string)
+		**out = **in
+	}
+	if in.ServiceAccountKeySecretRef != nil {
+		in, out := &in.ServiceAccountKeySecretRef, &out.ServiceAccountKeySecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.StorageAccessKeySecretRef != nil {
+		in, out := &in.StorageAccessKeySecretRef, &out.StorageAccessKeySecretRef
+		*out = new(v1.SecretKeySelector)
+		**out = **in
+	}
+	if in.StorageSecretKeySecretRef != nil {
+		in, out := &in.StorageSecretKeySecretRef, &out.StorageSecretKeySecretRef
+		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
 }

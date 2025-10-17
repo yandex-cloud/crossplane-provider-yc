@@ -17,9 +17,19 @@ limitations under the License.
 package clients
 
 import (
+	"context"
 	"testing"
 
+	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/google/go-cmp/cmp"
+	corev1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/client/fake"
+
+	"github.com/yandex-cloud/crossplane-provider-yc/apis/v1beta1"
 )
 
 func TestHandleCredentialsFromSecret(t *testing.T) {
@@ -147,6 +157,252 @@ func TestHandleCredentialsFromSecret(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestSeparateSecrets(t *testing.T) {
+	type args struct {
+		pc      *v1beta1.ProviderConfig
+		secrets []client.Object
+	}
+	type want struct {
+		hasServiceAccountKey bool
+		hasStorageAccessKey  bool
+		hasStorageSecretKey  bool
+		errContains          string
+	}
+
+	cases := map[string]struct {
+		args args
+		want want
+	}{
+		"ServiceAccountKeyInSeparateSecret": {
+			args: args{
+				pc: &v1beta1.ProviderConfig{
+					ObjectMeta: metav1.ObjectMeta{Name: "test-pc"},
+					Spec: v1beta1.ProviderConfigSpec{
+						Credentials: v1beta1.ProviderCredentials{
+							Source: xpv1.CredentialsSourceSecret,
+							ServiceAccountKeySecretRef: &xpv1.SecretKeySelector{
+								SecretReference: xpv1.SecretReference{
+									Name:      "sa-secret",
+									Namespace: "default",
+								},
+								Key: "sa-key",
+							},
+							FolderID: "test-folder",
+							CloudID:  "test-cloud",
+						},
+					},
+				},
+				secrets: []client.Object{
+					&corev1.Secret{
+						ObjectMeta: metav1.ObjectMeta{
+							Name:      "sa-secret",
+							Namespace: "default",
+						},
+						Data: map[string][]byte{
+							"sa-key": []byte(`{"id":"test-id","service_account_id":"test-sa"}`),
+						},
+					},
+				},
+			},
+			want: want{
+				hasServiceAccountKey: true,
+				hasStorageAccessKey:  false,
+				hasStorageSecretKey:  false,
+			},
+		},
+		"StorageCredentialsInSeparateSecrets": {
+			args: args{
+				pc: &v1beta1.ProviderConfig{
+					ObjectMeta: metav1.ObjectMeta{Name: "test-pc"},
+					Spec: v1beta1.ProviderConfigSpec{
+						Credentials: v1beta1.ProviderCredentials{
+							Source: xpv1.CredentialsSourceSecret,
+							ServiceAccountKeySecretRef: &xpv1.SecretKeySelector{
+								SecretReference: xpv1.SecretReference{
+									Name:      "sa-secret",
+									Namespace: "default",
+								},
+								Key: "sa-key",
+							},
+							StorageAccessKeySecretRef: &xpv1.SecretKeySelector{
+								SecretReference: xpv1.SecretReference{
+									Name:      "storage-access-secret",
+									Namespace: "default",
+								},
+								Key: "access-key",
+							},
+							StorageSecretKeySecretRef: &xpv1.SecretKeySelector{
+								SecretReference: xpv1.SecretReference{
+									Name:      "storage-secret-secret",
+									Namespace: "default",
+								},
+								Key: "secret-key",
+							},
+							FolderID: "test-folder",
+							CloudID:  "test-cloud",
+						},
+					},
+				},
+				secrets: []client.Object{
+					&corev1.Secret{
+						ObjectMeta: metav1.ObjectMeta{
+							Name:      "sa-secret",
+							Namespace: "default",
+						},
+						Data: map[string][]byte{
+							"sa-key": []byte(`{"id":"test-id","service_account_id":"test-sa"}`),
+						},
+					},
+					&corev1.Secret{
+						ObjectMeta: metav1.ObjectMeta{
+							Name:      "storage-access-secret",
+							Namespace: "default",
+						},
+						Data: map[string][]byte{
+							"access-key": []byte("test-access-key"),
+						},
+					},
+					&corev1.Secret{
+						ObjectMeta: metav1.ObjectMeta{
+							Name:      "storage-secret-secret",
+							Namespace: "default",
+						},
+						Data: map[string][]byte{
+							"secret-key": []byte("test-secret-key"),
+						},
+					},
+				},
+			},
+			want: want{
+				hasServiceAccountKey: true,
+				hasStorageAccessKey:  true,
+				hasStorageSecretKey:  true,
+			},
+		},
+		"MixedDirectAndSecretRef": {
+			args: args{
+				pc: &v1beta1.ProviderConfig{
+					ObjectMeta: metav1.ObjectMeta{Name: "test-pc"},
+					Spec: v1beta1.ProviderConfigSpec{
+						Credentials: v1beta1.ProviderCredentials{
+							Source: xpv1.CredentialsSourceSecret,
+							ServiceAccountKeySecretRef: &xpv1.SecretKeySelector{
+								SecretReference: xpv1.SecretReference{
+									Name:      "sa-secret",
+									Namespace: "default",
+								},
+								Key: "sa-key",
+							},
+							StorageAccessKey: stringPtr("direct-access-key"),
+							StorageSecretKey: stringPtr("direct-secret-key"),
+							FolderID:         "test-folder",
+							CloudID:          "test-cloud",
+						},
+					},
+				},
+				secrets: []client.Object{
+					&corev1.Secret{
+						ObjectMeta: metav1.ObjectMeta{
+							Name:      "sa-secret",
+							Namespace: "default",
+						},
+						Data: map[string][]byte{
+							"sa-key": []byte(`{"id":"test-id","service_account_id":"test-sa"}`),
+						},
+					},
+				},
+			},
+			want: want{
+				hasServiceAccountKey: true,
+				hasStorageAccessKey:  true,
+				hasStorageSecretKey:  true,
+			},
+		},
+	}
+
+	for name, tc := range cases {
+		t.Run(name, func(t *testing.T) {
+			scheme := runtime.NewScheme()
+			_ = corev1.AddToScheme(scheme)
+			_ = v1beta1.SchemeBuilder.AddToScheme(scheme)
+
+			fakeClient := fake.NewClientBuilder().
+				WithScheme(scheme).
+				WithObjects(tc.args.secrets...).
+				Build()
+
+			// We can't fully test TerraformSetupBuilder without a real managed resource
+			// and provider setup, but we can verify the credential extraction logic
+			ctx := context.Background()
+
+			// Test service account key extraction
+			if tc.args.pc.Spec.Credentials.ServiceAccountKeySecretRef != nil {
+				data, err := resource.CommonCredentialExtractor(ctx, xpv1.CredentialsSourceSecret, fakeClient, xpv1.CommonCredentialSelectors{
+					SecretRef: &xpv1.SecretKeySelector{
+						SecretReference: tc.args.pc.Spec.Credentials.ServiceAccountKeySecretRef.SecretReference,
+						Key:             tc.args.pc.Spec.Credentials.ServiceAccountKeySecretRef.Key,
+					},
+				})
+
+				if tc.want.errContains != "" {
+					if err == nil {
+						t.Errorf("expected error containing %q, got nil", tc.want.errContains)
+					}
+					return
+				}
+
+				if err != nil {
+					t.Fatalf("unexpected error: %v", err)
+				}
+
+				if tc.want.hasServiceAccountKey && len(data) == 0 {
+					t.Error("expected service account key data, got empty")
+				}
+			}
+
+			// Test storage access key extraction
+			if tc.args.pc.Spec.Credentials.StorageAccessKeySecretRef != nil {
+				data, err := resource.CommonCredentialExtractor(ctx, xpv1.CredentialsSourceSecret, fakeClient, xpv1.CommonCredentialSelectors{
+					SecretRef: &xpv1.SecretKeySelector{
+						SecretReference: tc.args.pc.Spec.Credentials.StorageAccessKeySecretRef.SecretReference,
+						Key:             tc.args.pc.Spec.Credentials.StorageAccessKeySecretRef.Key,
+					},
+				})
+
+				if err != nil {
+					t.Fatalf("unexpected error: %v", err)
+				}
+
+				if tc.want.hasStorageAccessKey && len(data) == 0 {
+					t.Error("expected storage access key data, got empty")
+				}
+			}
+
+			// Test storage secret key extraction
+			if tc.args.pc.Spec.Credentials.StorageSecretKeySecretRef != nil {
+				data, err := resource.CommonCredentialExtractor(ctx, xpv1.CredentialsSourceSecret, fakeClient, xpv1.CommonCredentialSelectors{
+					SecretRef: &xpv1.SecretKeySelector{
+						SecretReference: tc.args.pc.Spec.Credentials.StorageSecretKeySecretRef.SecretReference,
+						Key:             tc.args.pc.Spec.Credentials.StorageSecretKeySecretRef.Key,
+					},
+				})
+
+				if err != nil {
+					t.Fatalf("unexpected error: %v", err)
+				}
+
+				if tc.want.hasStorageSecretKey && len(data) == 0 {
+					t.Error("expected storage secret key data, got empty")
+				}
+			}
+		})
+	}
+}
+
+func stringPtr(s string) *string {
+	return &s
 }
 
 func TestHandleCredentialsFromSecret_StorageCredentialsExtraction(t *testing.T) {

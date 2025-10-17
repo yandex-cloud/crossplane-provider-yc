@@ -291,6 +291,26 @@ spec:
                       Service Account file in JSON format.
                       Only one of ServiceAccountKeyFile or Token must be specified.
                     type: string
+                  serviceAccountKeySecretRef:
+                    description: |-
+                      ServiceAccountKeySecretRef references a specific secret key containing
+                      the service account key JSON file. This allows storing the service account
+                      key in a separate secret from other credentials.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   source:
                     description: Source of the provider credentials.
                     enum:
@@ -304,10 +324,50 @@ spec:
                     description: StorageAccessKey is the Yandex Cloud Object Storage
                       access key.
                     type: string
+                  storageAccessKeySecretRef:
+                    description: |-
+                      StorageAccessKeySecretRef references a specific secret key containing
+                      the storage access key. This allows storing the storage access key
+                      in a separate secret from other credentials.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   storageSecretKey:
                     description: StorageSecretKey is the Yandex Cloud Object Storage
                       secret key.
                     type: string
+                  storageSecretKeySecretRef:
+                    description: |-
+                      StorageSecretKeySecretRef references a specific secret key containing
+                      the storage secret key. This allows storing the storage secret key
+                      in a separate secret from other credentials.
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   token:
                     description: |-
                       Token is the security token or IAM token used for authentication in Yandex Cloud.

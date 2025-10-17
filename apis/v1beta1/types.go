@@ -43,6 +43,24 @@ type ProviderCredentials struct {
 	// +optional
 	StorageSecretKey *string `json:"storageSecretKey,omitempty"`
 
+	// ServiceAccountKeySecretRef references a specific secret key containing
+	// the service account key JSON file. This allows storing the service account
+	// key in a separate secret from other credentials.
+	// +optional
+	ServiceAccountKeySecretRef *xpv1.SecretKeySelector `json:"serviceAccountKeySecretRef,omitempty"`
+
+	// StorageAccessKeySecretRef references a specific secret key containing
+	// the storage access key. This allows storing the storage access key
+	// in a separate secret from other credentials.
+	// +optional
+	StorageAccessKeySecretRef *xpv1.SecretKeySelector `json:"storageAccessKeySecretRef,omitempty"`
+
+	// StorageSecretKeySecretRef references a specific secret key containing
+	// the storage secret key. This allows storing the storage secret key
+	// in a separate secret from other credentials.
+	// +optional
+	StorageSecretKeySecretRef *xpv1.SecretKeySelector `json:"storageSecretKeySecretRef,omitempty"`
+
 	// FolderID - id of default folder to work with.
 	// +kubebuilder:validation:Optional
 	FolderID string `json:"folderId"`

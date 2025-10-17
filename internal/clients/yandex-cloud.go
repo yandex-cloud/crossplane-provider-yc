@@ -23,6 +23,7 @@ import (
 	"encoding/json"
 	"strings"
 
+	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/crossplane/upjet/pkg/config"
 	"github.com/crossplane/upjet/pkg/terraform"
@@ -102,6 +103,33 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 			ps.Configuration[storageSecretKey] = *pc.Spec.Credentials.StorageSecretKey
 		}
 
+		// Handle storage credentials from separate secrets
+		if pc.Spec.Credentials.StorageAccessKeySecretRef != nil {
+			data, err := resource.CommonCredentialExtractor(ctx, xpv1.CredentialsSourceSecret, client, xpv1.CommonCredentialSelectors{
+				SecretRef: &xpv1.SecretKeySelector{
+					SecretReference: pc.Spec.Credentials.StorageAccessKeySecretRef.SecretReference,
+					Key:             pc.Spec.Credentials.StorageAccessKeySecretRef.Key,
+				},
+			})
+			if err != nil {
+				return ps, errors.Wrap(err, "cannot extract storage access key from secret")
+			}
+			ps.Configuration[storageAccessKey] = string(data)
+		}
+
+		if pc.Spec.Credentials.StorageSecretKeySecretRef != nil {
+			data, err := resource.CommonCredentialExtractor(ctx, xpv1.CredentialsSourceSecret, client, xpv1.CommonCredentialSelectors{
+				SecretRef: &xpv1.SecretKeySelector{
+					SecretReference: pc.Spec.Credentials.StorageSecretKeySecretRef.SecretReference,
+					Key:             pc.Spec.Credentials.StorageSecretKeySecretRef.Key,
+				},
+			})
+			if err != nil {
+				return ps, errors.Wrap(err, "cannot extract storage secret key from secret")
+			}
+			ps.Configuration[storageSecretKey] = string(data)
+		}
+
 		// Handle authentication based on the specified method
 		if pc.Spec.Credentials.Token != nil {
 			// Use token authentication - direct specification
@@ -109,8 +137,20 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 		} else if pc.Spec.Credentials.ServiceAccountKeyFile != nil {
 			// Use service account key file authentication - direct specification
 			ps.Configuration[serviceAccountKeyFile] = *pc.Spec.Credentials.ServiceAccountKeyFile
+		} else if pc.Spec.Credentials.ServiceAccountKeySecretRef != nil {
+			// Use service account key from separate secret
+			data, err := resource.CommonCredentialExtractor(ctx, xpv1.CredentialsSourceSecret, client, xpv1.CommonCredentialSelectors{
+				SecretRef: &xpv1.SecretKeySelector{
+					SecretReference: pc.Spec.Credentials.ServiceAccountKeySecretRef.SecretReference,
+					Key:             pc.Spec.Credentials.ServiceAccountKeySecretRef.Key,
+				},
+			})
+			if err != nil {
+				return ps, errors.Wrap(err, "cannot extract service account key from secret")
+			}
+			ps.Configuration[serviceAccountKeyFile] = string(data)
 		} else {
-			// This handles secret references and other credential sources
+			// This handles secret references and other credential sources (backward compatibility)
 			data, err := resource.CommonCredentialExtractor(ctx, pc.Spec.Credentials.Source, client, pc.Spec.Credentials.CommonCredentialSelectors)
 			if err != nil {
 				return ps, errors.Wrap(err, errExtractCredentials)
