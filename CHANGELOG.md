@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.13.0 - October 20, 2025
+### Added
+* handling credentials in separate secrets
+### Changed
+* update Terraform provider to version 0.150.0
+### Fixed
+* storage bucket issues due to non-forking processing
+
 ## 0.12.1 - October 14, 2025
 ### Fixed
 * errors produced when applying changes to Kubernetes NodeGroup

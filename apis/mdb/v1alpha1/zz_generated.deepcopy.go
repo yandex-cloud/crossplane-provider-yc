@@ -407,6 +407,11 @@ func (in *ClickhouseClusterInitParameters) DeepCopyInto(out *ClickhouseClusterIn
 		*out = new(string)
 		**out = **in
 	}
+	if in.DiskEncryptionKeyID != nil {
+		in, out := &in.DiskEncryptionKeyID, &out.DiskEncryptionKeyID
+		*out = new(string)
+		**out = **in
+	}
 	if in.EmbeddedKeeper != nil {
 		in, out := &in.EmbeddedKeeper, &out.EmbeddedKeeper
 		*out = new(bool)
@@ -677,6 +682,11 @@ func (in *ClickhouseClusterObservation) DeepCopyInto(out *ClickhouseClusterObser
 		*out = new(string)
 		**out = **in
 	}
+	if in.DiskEncryptionKeyID != nil {
+		in, out := &in.DiskEncryptionKeyID, &out.DiskEncryptionKeyID
+		*out = new(string)
+		**out = **in
+	}
 	if in.EmbeddedKeeper != nil {
 		in, out := &in.EmbeddedKeeper, &out.EmbeddedKeeper
 		*out = new(bool)
@@ -897,6 +907,11 @@ func (in *ClickhouseClusterParameters) DeepCopyInto(out *ClickhouseClusterParame
 	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
+		*out = new(string)
+		**out = **in
+	}
+	if in.DiskEncryptionKeyID != nil {
+		in, out := &in.DiskEncryptionKeyID, &out.DiskEncryptionKeyID
 		*out = new(string)
 		**out = **in
 	}
@@ -16587,6 +16602,11 @@ func (in *PostgresqlClusterInitParameters) DeepCopyInto(out *PostgresqlClusterIn
 		*out = new(string)
 		**out = **in
 	}
+	if in.DiskEncryptionKeyID != nil {
+		in, out := &in.DiskEncryptionKeyID, &out.DiskEncryptionKeyID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Environment != nil {
 		in, out := &in.Environment, &out.Environment
 		*out = new(string)
@@ -16876,6 +16896,11 @@ func (in *PostgresqlClusterObservation) DeepCopyInto(out *PostgresqlClusterObser
 		*out = new(string)
 		**out = **in
 	}
+	if in.DiskEncryptionKeyID != nil {
+		in, out := &in.DiskEncryptionKeyID, &out.DiskEncryptionKeyID
+		*out = new(string)
+		**out = **in
+	}
 	if in.Environment != nil {
 		in, out := &in.Environment, &out.Environment
 		*out = new(string)
@@ -17018,6 +17043,11 @@ func (in *PostgresqlClusterParameters) DeepCopyInto(out *PostgresqlClusterParame
 	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
+		*out = new(string)
+		**out = **in
+	}
+	if in.DiskEncryptionKeyID != nil {
+		in, out := &in.DiskEncryptionKeyID, &out.DiskEncryptionKeyID
 		*out = new(string)
 		**out = **in
 	}

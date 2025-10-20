@@ -195,6 +195,10 @@ type ClickhouseClusterInitParameters struct {
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) The ID of this resource.
+	// ID of the KMS key for cluster disk encryption.
+	DiskEncryptionKeyID *string `json:"diskEncryptionKeyId,omitempty" tf:"disk_encryption_key_id,omitempty"`
+
 	// (Boolean) Whether to use ClickHouse Keeper as a coordination system and place it on the same hosts with ClickHouse. If not, it's used ZooKeeper with placement on separate hosts.
 	// Whether to use ClickHouse Keeper as a coordination system and place it on the same hosts with ClickHouse. If not, it's used ZooKeeper with placement on separate hosts.
 	EmbeddedKeeper *bool `json:"embeddedKeeper,omitempty" tf:"embedded_keeper,omitempty"`
@@ -346,6 +350,10 @@ type ClickhouseClusterObservation struct {
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) The ID of this resource.
+	// ID of the KMS key for cluster disk encryption.
+	DiskEncryptionKeyID *string `json:"diskEncryptionKeyId,omitempty" tf:"disk_encryption_key_id,omitempty"`
+
 	// (Boolean) Whether to use ClickHouse Keeper as a coordination system and place it on the same hosts with ClickHouse. If not, it's used ZooKeeper with placement on separate hosts.
 	// Whether to use ClickHouse Keeper as a coordination system and place it on the same hosts with ClickHouse. If not, it's used ZooKeeper with placement on separate hosts.
 	EmbeddedKeeper *bool `json:"embeddedKeeper,omitempty" tf:"embedded_keeper,omitempty"`
@@ -491,6 +499,11 @@ type ClickhouseClusterParameters struct {
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (String) The ID of this resource.
+	// ID of the KMS key for cluster disk encryption.
+	// +kubebuilder:validation:Optional
+	DiskEncryptionKeyID *string `json:"diskEncryptionKeyId,omitempty" tf:"disk_encryption_key_id,omitempty"`
 
 	// (Boolean) Whether to use ClickHouse Keeper as a coordination system and place it on the same hosts with ClickHouse. If not, it's used ZooKeeper with placement on separate hosts.
 	// Whether to use ClickHouse Keeper as a coordination system and place it on the same hosts with ClickHouse. If not, it's used ZooKeeper with placement on separate hosts.

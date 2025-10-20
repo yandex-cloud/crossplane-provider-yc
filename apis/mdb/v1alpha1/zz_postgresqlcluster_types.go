@@ -377,7 +377,7 @@ type PostgresqlClusterConfigInitParameters struct {
 	Resources []ConfigResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
 	// 1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
-	// Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
+	// Version of the PostgreSQL cluster. (allowed versions are: 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -421,7 +421,7 @@ type PostgresqlClusterConfigObservation struct {
 	Resources []ConfigResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
 	// 1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
-	// Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
+	// Version of the PostgreSQL cluster. (allowed versions are: 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
@@ -474,7 +474,7 @@ type PostgresqlClusterConfigParameters struct {
 	Resources []ConfigResourcesParameters `json:"resources" tf:"resources,omitempty"`
 
 	// 1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
-	// Version of the PostgreSQL cluster. (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
+	// Version of the PostgreSQL cluster. (allowed versions are: 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version" tf:"version,omitempty"`
 }
@@ -701,6 +701,10 @@ type PostgresqlClusterInitParameters struct {
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) The ID of this resource.
+	// ID of the KMS key for cluster disk encryption. Restoring without an encryption key will disable encryption if any exists.
+	DiskEncryptionKeyID *string `json:"diskEncryptionKeyId,omitempty" tf:"disk_encryption_key_id,omitempty"`
+
 	// (String) Deployment environment of the PostgreSQL cluster.
 	// Deployment environment of the PostgreSQL cluster.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
@@ -850,6 +854,10 @@ type PostgresqlClusterObservation struct {
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// (String) The ID of this resource.
+	// ID of the KMS key for cluster disk encryption. Restoring without an encryption key will disable encryption if any exists.
+	DiskEncryptionKeyID *string `json:"diskEncryptionKeyId,omitempty" tf:"disk_encryption_key_id,omitempty"`
+
 	// (String) Deployment environment of the PostgreSQL cluster.
 	// Deployment environment of the PostgreSQL cluster.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
@@ -934,6 +942,11 @@ type PostgresqlClusterParameters struct {
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (String) The ID of this resource.
+	// ID of the KMS key for cluster disk encryption. Restoring without an encryption key will disable encryption if any exists.
+	// +kubebuilder:validation:Optional
+	DiskEncryptionKeyID *string `json:"diskEncryptionKeyId,omitempty" tf:"disk_encryption_key_id,omitempty"`
 
 	// (String) Deployment environment of the PostgreSQL cluster.
 	// Deployment environment of the PostgreSQL cluster.

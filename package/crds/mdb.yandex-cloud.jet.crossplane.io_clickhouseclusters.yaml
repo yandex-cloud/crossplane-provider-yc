@@ -1046,6 +1046,11 @@ spec:
                       (String) The resource description.
                       The resource description.
                     type: string
+                  diskEncryptionKeyId:
+                    description: |-
+                      (String) The ID of this resource.
+                      ID of the KMS key for cluster disk encryption.
+                    type: string
                   embeddedKeeper:
                     description: |-
                       (Boolean) Whether to use ClickHouse Keeper as a coordination system and place it on the same hosts with ClickHouse. If not, it's used ZooKeeper with placement on separate hosts.
@@ -3424,6 +3429,11 @@ spec:
                     description: |-
                       (String) The resource description.
                       The resource description.
+                    type: string
+                  diskEncryptionKeyId:
+                    description: |-
+                      (String) The ID of this resource.
+                      ID of the KMS key for cluster disk encryption.
                     type: string
                   embeddedKeeper:
                     description: |-
@@ -5904,6 +5914,11 @@ spec:
                     description: |-
                       (String) The resource description.
                       The resource description.
+                    type: string
+                  diskEncryptionKeyId:
+                    description: |-
+                      (String) The ID of this resource.
+                      ID of the KMS key for cluster disk encryption.
                     type: string
                   embeddedKeeper:
                     description: |-

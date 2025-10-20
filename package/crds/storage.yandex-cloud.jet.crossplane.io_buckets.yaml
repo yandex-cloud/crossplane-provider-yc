@@ -232,8 +232,7 @@ spec:
                           description: |-
                             (Number) Specifies time in seconds that browser can cache the response for a preflight request.
                             Specifies time in seconds that browser can cache the response for a preflight request.
-                          format: int64
-                          type: integer
+                          type: number
                       type: object
                     type: array
                   defaultStorageClass:
@@ -461,8 +460,7 @@ spec:
                           description: |-
                             (Number) Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
                             Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
-                          format: int64
-                          type: integer
+                          type: number
                         enabled:
                           description: |-
                             (Boolean) Specifies lifecycle rule status.
@@ -483,8 +481,7 @@ spec:
                                 description: |-
                                   (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                   Specifies the number of days after object creation when the specific rule action takes effect.
-                                format: int64
-                                type: integer
+                                type: number
                               expiredObjectDeleteMarker:
                                 description: |-
                                   enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
@@ -510,14 +507,12 @@ spec:
                                       description: |-
                                         (Number) Minimum object size to which the rule applies.
                                         Minimum object size to which the rule applies.
-                                      format: int64
-                                      type: integer
+                                      type: number
                                     objectSizeLessThan:
                                       description: |-
                                         (Number) Maximum object size to which the rule applies.
                                         Maximum object size to which the rule applies.
-                                      format: int64
-                                      type: integer
+                                      type: number
                                     prefix:
                                       description: |-
                                         (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
@@ -537,14 +532,12 @@ spec:
                                 description: |-
                                   (Number) Minimum object size to which the rule applies.
                                   Minimum object size to which the rule applies.
-                                format: int64
-                                type: integer
+                                type: number
                               objectSizeLessThan:
                                 description: |-
                                   (Number) Maximum object size to which the rule applies.
                                   Maximum object size to which the rule applies.
-                                format: int64
-                                type: integer
+                                type: number
                               prefix:
                                 description: |-
                                   (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
@@ -585,8 +578,7 @@ spec:
                                 description: |-
                                   (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                   Specifies the number of days noncurrent object versions expire.
-                                format: int64
-                                type: integer
+                                type: number
                             type: object
                           type: array
                         noncurrentVersionTransition:
@@ -599,8 +591,7 @@ spec:
                                 description: |-
                                   (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                   Specifies the number of days noncurrent object versions transition.
-                                format: int64
-                                type: integer
+                                type: number
                               storageClass:
                                 description: |-
                                   (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
@@ -628,8 +619,7 @@ spec:
                                 description: |-
                                   (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                   Specifies the number of days after object creation when the specific rule action takes effect.
-                                format: int64
-                                type: integer
+                                type: number
                               storageClass:
                                 description: |-
                                   (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
@@ -661,8 +651,7 @@ spec:
                     description: |-
                       (Number) The size of bucket, in bytes. See Size Limiting for more information.
                       The size of bucket, in bytes. See [Size Limiting](https://yandex.cloud/docs/storage/operations/buckets/limit-max-volume) for more information.
-                    format: int64
-                    type: integer
+                    type: number
                   objectLockConfiguration:
                     description: |-
                       (Block List, Max: 1) A configuration of object lock management. (see below for nested schema)
@@ -690,8 +679,7 @@ spec:
                                       description: |-
                                         (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                         Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with `years`.
-                                      format: int64
-                                      type: integer
+                                      type: number
                                     mode:
                                       description: |-
                                         (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
@@ -701,8 +689,7 @@ spec:
                                       description: |-
                                         (Number) Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
                                         Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with `days`.
-                                      format: int64
-                                      type: integer
+                                      type: number
                                   type: object
                                 type: array
                             type: object
@@ -1001,8 +988,7 @@ spec:
                           description: |-
                             (Number) Specifies time in seconds that browser can cache the response for a preflight request.
                             Specifies time in seconds that browser can cache the response for a preflight request.
-                          format: int64
-                          type: integer
+                          type: number
                       type: object
                     type: array
                   defaultStorageClass:
@@ -1230,8 +1216,7 @@ spec:
                           description: |-
                             (Number) Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
                             Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
-                          format: int64
-                          type: integer
+                          type: number
                         enabled:
                           description: |-
                             (Boolean) Specifies lifecycle rule status.
@@ -1252,8 +1237,7 @@ spec:
                                 description: |-
                                   (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                   Specifies the number of days after object creation when the specific rule action takes effect.
-                                format: int64
-                                type: integer
+                                type: number
                               expiredObjectDeleteMarker:
                                 description: |-
                                   enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
@@ -1279,14 +1263,12 @@ spec:
                                       description: |-
                                         (Number) Minimum object size to which the rule applies.
                                         Minimum object size to which the rule applies.
-                                      format: int64
-                                      type: integer
+                                      type: number
                                     objectSizeLessThan:
                                       description: |-
                                         (Number) Maximum object size to which the rule applies.
                                         Maximum object size to which the rule applies.
-                                      format: int64
-                                      type: integer
+                                      type: number
                                     prefix:
                                       description: |-
                                         (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
@@ -1306,14 +1288,12 @@ spec:
                                 description: |-
                                   (Number) Minimum object size to which the rule applies.
                                   Minimum object size to which the rule applies.
-                                format: int64
-                                type: integer
+                                type: number
                               objectSizeLessThan:
                                 description: |-
                                   (Number) Maximum object size to which the rule applies.
                                   Maximum object size to which the rule applies.
-                                format: int64
-                                type: integer
+                                type: number
                               prefix:
                                 description: |-
                                   (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
@@ -1354,8 +1334,7 @@ spec:
                                 description: |-
                                   (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                   Specifies the number of days noncurrent object versions expire.
-                                format: int64
-                                type: integer
+                                type: number
                             type: object
                           type: array
                         noncurrentVersionTransition:
@@ -1368,8 +1347,7 @@ spec:
                                 description: |-
                                   (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                   Specifies the number of days noncurrent object versions transition.
-                                format: int64
-                                type: integer
+                                type: number
                               storageClass:
                                 description: |-
                                   (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
@@ -1397,8 +1375,7 @@ spec:
                                 description: |-
                                   (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                   Specifies the number of days after object creation when the specific rule action takes effect.
-                                format: int64
-                                type: integer
+                                type: number
                               storageClass:
                                 description: |-
                                   (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
@@ -1430,8 +1407,7 @@ spec:
                     description: |-
                       (Number) The size of bucket, in bytes. See Size Limiting for more information.
                       The size of bucket, in bytes. See [Size Limiting](https://yandex.cloud/docs/storage/operations/buckets/limit-max-volume) for more information.
-                    format: int64
-                    type: integer
+                    type: number
                   objectLockConfiguration:
                     description: |-
                       (Block List, Max: 1) A configuration of object lock management. (see below for nested schema)
@@ -1459,8 +1435,7 @@ spec:
                                       description: |-
                                         (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                         Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with `years`.
-                                      format: int64
-                                      type: integer
+                                      type: number
                                     mode:
                                       description: |-
                                         (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
@@ -1470,8 +1445,7 @@ spec:
                                       description: |-
                                         (Number) Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
                                         Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with `days`.
-                                      format: int64
-                                      type: integer
+                                      type: number
                                   type: object
                                 type: array
                             type: object
@@ -1858,8 +1832,7 @@ spec:
                           description: |-
                             (Number) Specifies time in seconds that browser can cache the response for a preflight request.
                             Specifies time in seconds that browser can cache the response for a preflight request.
-                          format: int64
-                          type: integer
+                          type: number
                       type: object
                     type: array
                   defaultStorageClass:
@@ -1938,8 +1911,7 @@ spec:
                           description: |-
                             (Number) Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
                             Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
-                          format: int64
-                          type: integer
+                          type: number
                         enabled:
                           description: |-
                             (Boolean) Specifies lifecycle rule status.
@@ -1960,8 +1932,7 @@ spec:
                                 description: |-
                                   (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                   Specifies the number of days after object creation when the specific rule action takes effect.
-                                format: int64
-                                type: integer
+                                type: number
                               expiredObjectDeleteMarker:
                                 description: |-
                                   enabled or versioning-suspended bucket), you can add this element in the lifecycle configuration to direct Object Storage to delete expired object delete markers.
@@ -1987,14 +1958,12 @@ spec:
                                       description: |-
                                         (Number) Minimum object size to which the rule applies.
                                         Minimum object size to which the rule applies.
-                                      format: int64
-                                      type: integer
+                                      type: number
                                     objectSizeLessThan:
                                       description: |-
                                         (Number) Maximum object size to which the rule applies.
                                         Maximum object size to which the rule applies.
-                                      format: int64
-                                      type: integer
+                                      type: number
                                     prefix:
                                       description: |-
                                         (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
@@ -2014,14 +1983,12 @@ spec:
                                 description: |-
                                   (Number) Minimum object size to which the rule applies.
                                   Minimum object size to which the rule applies.
-                                format: int64
-                                type: integer
+                                type: number
                               objectSizeLessThan:
                                 description: |-
                                   (Number) Maximum object size to which the rule applies.
                                   Maximum object size to which the rule applies.
-                                format: int64
-                                type: integer
+                                type: number
                               prefix:
                                 description: |-
                                   (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
@@ -2062,8 +2029,7 @@ spec:
                                 description: |-
                                   (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                   Specifies the number of days noncurrent object versions expire.
-                                format: int64
-                                type: integer
+                                type: number
                             type: object
                           type: array
                         noncurrentVersionTransition:
@@ -2076,8 +2042,7 @@ spec:
                                 description: |-
                                   (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                   Specifies the number of days noncurrent object versions transition.
-                                format: int64
-                                type: integer
+                                type: number
                               storageClass:
                                 description: |-
                                   (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
@@ -2105,8 +2070,7 @@ spec:
                                 description: |-
                                   (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                   Specifies the number of days after object creation when the specific rule action takes effect.
-                                format: int64
-                                type: integer
+                                type: number
                               storageClass:
                                 description: |-
                                   (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
@@ -2138,8 +2102,7 @@ spec:
                     description: |-
                       (Number) The size of bucket, in bytes. See Size Limiting for more information.
                       The size of bucket, in bytes. See [Size Limiting](https://yandex.cloud/docs/storage/operations/buckets/limit-max-volume) for more information.
-                    format: int64
-                    type: integer
+                    type: number
                   objectLockConfiguration:
                     description: |-
                       (Block List, Max: 1) A configuration of object lock management. (see below for nested schema)
@@ -2167,8 +2130,7 @@ spec:
                                       description: |-
                                         (Number) Specifies the number of days after object creation when the specific rule action takes effect.
                                         Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with `years`.
-                                      format: int64
-                                      type: integer
+                                      type: number
                                     mode:
                                       description: |-
                                         (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
@@ -2178,8 +2140,7 @@ spec:
                                       description: |-
                                         (Number) Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
                                         Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with `days`.
-                                      format: int64
-                                      type: integer
+                                      type: number
                                   type: object
                                 type: array
                             type: object

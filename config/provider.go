@@ -71,7 +71,6 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_mdb_kafka_cluster$",
 			"yandex_mdb_kafka_connector$",
 
-			"yandex_storage_bucket$",
 			"yandex_storage_object$",
 		}),
 		tjconfig.WithTerraformPluginFrameworkProvider(framework.NewFrameworkProvider()),
@@ -172,6 +171,8 @@ func GetProvider() *tjconfig.Provider {
 			"yandex_ydb_database_dedicated$",
 			"yandex_message_queue$",
 			"yandex_ydb_database_serverless$",
+
+			"yandex_storage_bucket$",
 		}),
 	)
 
