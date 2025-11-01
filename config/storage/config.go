@@ -40,6 +40,13 @@ func Configure(p *config.Provider) {
 		r.References["grant.id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccount"),
 		}
+		// Ignore credentials during late initialization to allow fallback to provider-level credentials.
+		// This prevents the issue where removing accessKeyRef/secretKeySecretRef from spec causes
+		// reconciliation to fail because access_key gets late-initialized from Terraform state
+		// but secret_key remains nil, violating the "both or neither" requirement.
+		r.LateInitializer = config.LateInitializer{
+			IgnoredFields: []string{"access_key", "secret_key"},
+		}
 	})
 	p.AddResourceConfigurator("yandex_storage_object", func(r *config.Resource) {
 		r.References["access_key"] = config.Reference{
@@ -48,6 +55,10 @@ func Configure(p *config.Provider) {
 		}
 		r.References["bucket"] = config.Reference{
 			Type: "Bucket",
+		}
+		// Ignore credentials during late initialization for the same reason as bucket.
+		r.LateInitializer = config.LateInitializer{
+			IgnoredFields: []string{"access_key", "secret_key"},
 		}
 	})
 }
