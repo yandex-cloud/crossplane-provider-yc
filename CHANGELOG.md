@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.1 - November 5, 2025
+### Fixed
+* secrets handling in storage resources
+
 ## 0.13.0 - October 20, 2025
 ### Added
 * handling credentials in separate secrets
