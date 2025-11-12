@@ -1,0 +1,1117 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: networkloadbalancers.lb.yandex-cloud.m.jet.crossplane.io
+spec:
+  group: lb.yandex-cloud.m.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - yandex-cloud
+    kind: NetworkLoadBalancer
+    listKind: NetworkLoadBalancerList
+    plural: networkloadbalancers
+    singular: networkloadbalancer
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: NetworkLoadBalancer is the Schema for the NetworkLoadBalancers
+          API. A network load balancer is used to evenly distribute the load across
+          cloud resources.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: NetworkLoadBalancerSpec defines the desired state of NetworkLoadBalancer
+            properties:
+              forProvider:
+                properties:
+                  allowZonalShift:
+                    description: |-
+                      (Boolean) Flag that marks the network load balancer as available to zonal shift.
+                      Flag that marks the network load balancer as available to zonal shift.
+                    type: boolean
+                  attachedTargetGroup:
+                    description: |-
+                      (Block Set) An AttachedTargetGroup resource. (see below for nested schema)
+                      An AttachedTargetGroup resource.
+                    items:
+                      properties:
+                        healthcheck:
+                          description: |-
+                            (Block List, Min: 1) A HealthCheck resource.
+                            A HealthCheck resource.
+
+                            ~> One of `http_options` or `tcp_options` should be specified.
+                          items:
+                            properties:
+                              healthyThreshold:
+                                description: |-
+                                  (Number) Number of successful health checks required in order to set the HEALTHY status for the target.
+                                  Number of successful health checks required in order to set the `HEALTHY` status for the target.
+                                type: number
+                              httpOptions:
+                                description: |-
+                                  (Block List, Max: 1) Options for HTTP health check. (see below for nested schema)
+                                  Options for HTTP health check.
+                                items:
+                                  properties:
+                                    path:
+                                      description: |-
+                                        (String) URL path to set for health checking requests for every target in the target group. For example /ping. The default path is /.
+                                        URL path to set for health checking requests for every target in the target group. For example `/ping`. The default path is `/`.
+                                      type: string
+                                    port:
+                                      description: |-
+                                        (Number) Port to use for HTTP health checks.
+                                        Port to use for HTTP health checks.
+                                      type: number
+                                  type: object
+                                type: array
+                              interval:
+                                description: |-
+                                  (Number) The interval between health checks. The default is 2 seconds.
+                                  The interval between health checks. The default is 2 seconds.
+                                type: number
+                              name:
+                                description: |-
+                                  (String) The resource name.
+                                  Name of the health check. The name must be unique for each target group that attached to a single load balancer.
+                                type: string
+                              tcpOptions:
+                                description: |-
+                                  (Block List, Max: 1) Options for TCP health check. (see below for nested schema)
+                                  Options for TCP health check.
+                                items:
+                                  properties:
+                                    port:
+                                      description: |-
+                                        (Number) Port to use for HTTP health checks.
+                                        Port to use for TCP health checks.
+                                      type: number
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (Number) Timeout for a target to return a response for the health check. The default is 1 second.
+                                  Timeout for a target to return a response for the health check. The default is 1 second.
+                                type: number
+                              unhealthyThreshold:
+                                description: |-
+                                  (Number) Number of failed health checks before changing the status to UNHEALTHY. The default is 2.
+                                  Number of failed health checks before changing the status to `UNHEALTHY`. The default is 2.
+                                type: number
+                            type: object
+                          type: array
+                        targetGroupId:
+                          description: |-
+                            (String) ID of the target group.
+                            ID of the target group.
+                          type: string
+                        targetGroupIdRef:
+                          description: Reference to a TargetGroup in lb to populate
+                            targetGroupId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        targetGroupIdSelector:
+                          description: Selector for a TargetGroup in lb to populate
+                            targetGroupId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
+                    type: boolean
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  listener:
+                    description: |-
+                      (Block Set) Listener specification that will be used by a network load balancer.
+                      Listener specification that will be used by a network load balancer.
+
+                      ~> One of `external_address_spec` or `internal_address_spec` should be specified.
+                    items:
+                      properties:
+                        externalAddressSpec:
+                          description: |-
+                            (Block Set, Max: 1) External IP address specification. (see below for nested schema)
+                            External IP address specification.
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (String) External IP address for a listener. IP address will be allocated if it wasn't been set.
+                                  External IP address for a listener. IP address will be allocated if it wasn't been set.
+                                type: string
+                              ipVersion:
+                                description: |-
+                                  (String) IP version of the external addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+                                  IP version of the external addresses that the load balancer works with. Must be one of `ipv4` or `ipv6`. The default is `ipv4`.
+                                type: string
+                            type: object
+                          type: array
+                        internalAddressSpec:
+                          description: |-
+                            (Block Set, Max: 1) Internal IP address specification. (see below for nested schema)
+                            Internal IP address specification.
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (String) External IP address for a listener. IP address will be allocated if it wasn't been set.
+                                  Internal IP address for a listener. Must belong to the subnet that is referenced in subnet_id. IP address will be allocated if it wasn't been set.
+                                type: string
+                              ipVersion:
+                                description: |-
+                                  (String) IP version of the external addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+                                  IP version of the external addresses that the load balancer works with. Must be one of `ipv4` or `ipv6`. The default is `ipv4`.
+                                type: string
+                              subnetId:
+                                description: |-
+                                  (String) ID of the subnet to which the internal IP address belongs.
+                                  ID of the subnet to which the internal IP address belongs.
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the listener. The name must be unique for each listener on a single load balancer.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) Port to use for HTTP health checks.
+                            Port for incoming traffic.
+                          type: number
+                        protocol:
+                          description: |-
+                            (String) Protocol for incoming traffic. TCP or UDP and the default is TCP.
+                            Protocol for incoming traffic. TCP or UDP and the default is TCP.
+                          type: string
+                        targetPort:
+                          description: |-
+                            (Number) Port of a target. The default is the same as listener's port.
+                            Port of a target. The default is the same as listener's port.
+                          type: number
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  regionId:
+                    description: |-
+                      (String) ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
+                      ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
+                    type: string
+                  type:
+                    description: |-
+                      (String) Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
+                      Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  allowZonalShift:
+                    description: |-
+                      (Boolean) Flag that marks the network load balancer as available to zonal shift.
+                      Flag that marks the network load balancer as available to zonal shift.
+                    type: boolean
+                  attachedTargetGroup:
+                    description: |-
+                      (Block Set) An AttachedTargetGroup resource. (see below for nested schema)
+                      An AttachedTargetGroup resource.
+                    items:
+                      properties:
+                        healthcheck:
+                          description: |-
+                            (Block List, Min: 1) A HealthCheck resource.
+                            A HealthCheck resource.
+
+                            ~> One of `http_options` or `tcp_options` should be specified.
+                          items:
+                            properties:
+                              healthyThreshold:
+                                description: |-
+                                  (Number) Number of successful health checks required in order to set the HEALTHY status for the target.
+                                  Number of successful health checks required in order to set the `HEALTHY` status for the target.
+                                type: number
+                              httpOptions:
+                                description: |-
+                                  (Block List, Max: 1) Options for HTTP health check. (see below for nested schema)
+                                  Options for HTTP health check.
+                                items:
+                                  properties:
+                                    path:
+                                      description: |-
+                                        (String) URL path to set for health checking requests for every target in the target group. For example /ping. The default path is /.
+                                        URL path to set for health checking requests for every target in the target group. For example `/ping`. The default path is `/`.
+                                      type: string
+                                    port:
+                                      description: |-
+                                        (Number) Port to use for HTTP health checks.
+                                        Port to use for HTTP health checks.
+                                      type: number
+                                  type: object
+                                type: array
+                              interval:
+                                description: |-
+                                  (Number) The interval between health checks. The default is 2 seconds.
+                                  The interval between health checks. The default is 2 seconds.
+                                type: number
+                              name:
+                                description: |-
+                                  (String) The resource name.
+                                  Name of the health check. The name must be unique for each target group that attached to a single load balancer.
+                                type: string
+                              tcpOptions:
+                                description: |-
+                                  (Block List, Max: 1) Options for TCP health check. (see below for nested schema)
+                                  Options for TCP health check.
+                                items:
+                                  properties:
+                                    port:
+                                      description: |-
+                                        (Number) Port to use for HTTP health checks.
+                                        Port to use for TCP health checks.
+                                      type: number
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (Number) Timeout for a target to return a response for the health check. The default is 1 second.
+                                  Timeout for a target to return a response for the health check. The default is 1 second.
+                                type: number
+                              unhealthyThreshold:
+                                description: |-
+                                  (Number) Number of failed health checks before changing the status to UNHEALTHY. The default is 2.
+                                  Number of failed health checks before changing the status to `UNHEALTHY`. The default is 2.
+                                type: number
+                            type: object
+                          type: array
+                        targetGroupId:
+                          description: |-
+                            (String) ID of the target group.
+                            ID of the target group.
+                          type: string
+                        targetGroupIdRef:
+                          description: Reference to a TargetGroup in lb to populate
+                            targetGroupId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        targetGroupIdSelector:
+                          description: Selector for a TargetGroup in lb to populate
+                            targetGroupId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
+                    type: boolean
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  listener:
+                    description: |-
+                      (Block Set) Listener specification that will be used by a network load balancer.
+                      Listener specification that will be used by a network load balancer.
+
+                      ~> One of `external_address_spec` or `internal_address_spec` should be specified.
+                    items:
+                      properties:
+                        externalAddressSpec:
+                          description: |-
+                            (Block Set, Max: 1) External IP address specification. (see below for nested schema)
+                            External IP address specification.
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (String) External IP address for a listener. IP address will be allocated if it wasn't been set.
+                                  External IP address for a listener. IP address will be allocated if it wasn't been set.
+                                type: string
+                              ipVersion:
+                                description: |-
+                                  (String) IP version of the external addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+                                  IP version of the external addresses that the load balancer works with. Must be one of `ipv4` or `ipv6`. The default is `ipv4`.
+                                type: string
+                            type: object
+                          type: array
+                        internalAddressSpec:
+                          description: |-
+                            (Block Set, Max: 1) Internal IP address specification. (see below for nested schema)
+                            Internal IP address specification.
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (String) External IP address for a listener. IP address will be allocated if it wasn't been set.
+                                  Internal IP address for a listener. Must belong to the subnet that is referenced in subnet_id. IP address will be allocated if it wasn't been set.
+                                type: string
+                              ipVersion:
+                                description: |-
+                                  (String) IP version of the external addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+                                  IP version of the external addresses that the load balancer works with. Must be one of `ipv4` or `ipv6`. The default is `ipv4`.
+                                type: string
+                              subnetId:
+                                description: |-
+                                  (String) ID of the subnet to which the internal IP address belongs.
+                                  ID of the subnet to which the internal IP address belongs.
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the listener. The name must be unique for each listener on a single load balancer.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) Port to use for HTTP health checks.
+                            Port for incoming traffic.
+                          type: number
+                        protocol:
+                          description: |-
+                            (String) Protocol for incoming traffic. TCP or UDP and the default is TCP.
+                            Protocol for incoming traffic. TCP or UDP and the default is TCP.
+                          type: string
+                        targetPort:
+                          description: |-
+                            (Number) Port of a target. The default is the same as listener's port.
+                            Port of a target. The default is the same as listener's port.
+                          type: number
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  regionId:
+                    description: |-
+                      (String) ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
+                      ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
+                    type: string
+                  type:
+                    description: |-
+                      (String) Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
+                      Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: NetworkLoadBalancerStatus defines the observed state of NetworkLoadBalancer.
+            properties:
+              atProvider:
+                properties:
+                  allowZonalShift:
+                    description: |-
+                      (Boolean) Flag that marks the network load balancer as available to zonal shift.
+                      Flag that marks the network load balancer as available to zonal shift.
+                    type: boolean
+                  attachedTargetGroup:
+                    description: |-
+                      (Block Set) An AttachedTargetGroup resource. (see below for nested schema)
+                      An AttachedTargetGroup resource.
+                    items:
+                      properties:
+                        healthcheck:
+                          description: |-
+                            (Block List, Min: 1) A HealthCheck resource.
+                            A HealthCheck resource.
+
+                            ~> One of `http_options` or `tcp_options` should be specified.
+                          items:
+                            properties:
+                              healthyThreshold:
+                                description: |-
+                                  (Number) Number of successful health checks required in order to set the HEALTHY status for the target.
+                                  Number of successful health checks required in order to set the `HEALTHY` status for the target.
+                                type: number
+                              httpOptions:
+                                description: |-
+                                  (Block List, Max: 1) Options for HTTP health check. (see below for nested schema)
+                                  Options for HTTP health check.
+                                items:
+                                  properties:
+                                    path:
+                                      description: |-
+                                        (String) URL path to set for health checking requests for every target in the target group. For example /ping. The default path is /.
+                                        URL path to set for health checking requests for every target in the target group. For example `/ping`. The default path is `/`.
+                                      type: string
+                                    port:
+                                      description: |-
+                                        (Number) Port to use for HTTP health checks.
+                                        Port to use for HTTP health checks.
+                                      type: number
+                                  type: object
+                                type: array
+                              interval:
+                                description: |-
+                                  (Number) The interval between health checks. The default is 2 seconds.
+                                  The interval between health checks. The default is 2 seconds.
+                                type: number
+                              name:
+                                description: |-
+                                  (String) The resource name.
+                                  Name of the health check. The name must be unique for each target group that attached to a single load balancer.
+                                type: string
+                              tcpOptions:
+                                description: |-
+                                  (Block List, Max: 1) Options for TCP health check. (see below for nested schema)
+                                  Options for TCP health check.
+                                items:
+                                  properties:
+                                    port:
+                                      description: |-
+                                        (Number) Port to use for HTTP health checks.
+                                        Port to use for TCP health checks.
+                                      type: number
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (Number) Timeout for a target to return a response for the health check. The default is 1 second.
+                                  Timeout for a target to return a response for the health check. The default is 1 second.
+                                type: number
+                              unhealthyThreshold:
+                                description: |-
+                                  (Number) Number of failed health checks before changing the status to UNHEALTHY. The default is 2.
+                                  Number of failed health checks before changing the status to `UNHEALTHY`. The default is 2.
+                                type: number
+                            type: object
+                          type: array
+                        targetGroupId:
+                          description: |-
+                            (String) ID of the target group.
+                            ID of the target group.
+                          type: string
+                      type: object
+                    type: array
+                  createdAt:
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
+                    type: string
+                  deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
+                    type: boolean
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  listener:
+                    description: |-
+                      (Block Set) Listener specification that will be used by a network load balancer.
+                      Listener specification that will be used by a network load balancer.
+
+                      ~> One of `external_address_spec` or `internal_address_spec` should be specified.
+                    items:
+                      properties:
+                        externalAddressSpec:
+                          description: |-
+                            (Block Set, Max: 1) External IP address specification. (see below for nested schema)
+                            External IP address specification.
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (String) External IP address for a listener. IP address will be allocated if it wasn't been set.
+                                  External IP address for a listener. IP address will be allocated if it wasn't been set.
+                                type: string
+                              ipVersion:
+                                description: |-
+                                  (String) IP version of the external addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+                                  IP version of the external addresses that the load balancer works with. Must be one of `ipv4` or `ipv6`. The default is `ipv4`.
+                                type: string
+                            type: object
+                          type: array
+                        internalAddressSpec:
+                          description: |-
+                            (Block Set, Max: 1) Internal IP address specification. (see below for nested schema)
+                            Internal IP address specification.
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (String) External IP address for a listener. IP address will be allocated if it wasn't been set.
+                                  Internal IP address for a listener. Must belong to the subnet that is referenced in subnet_id. IP address will be allocated if it wasn't been set.
+                                type: string
+                              ipVersion:
+                                description: |-
+                                  (String) IP version of the external addresses that the load balancer works with. Must be one of ipv4 or ipv6. The default is ipv4.
+                                  IP version of the external addresses that the load balancer works with. Must be one of `ipv4` or `ipv6`. The default is `ipv4`.
+                                type: string
+                              subnetId:
+                                description: |-
+                                  (String) ID of the subnet to which the internal IP address belongs.
+                                  ID of the subnet to which the internal IP address belongs.
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the listener. The name must be unique for each listener on a single load balancer.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) Port to use for HTTP health checks.
+                            Port for incoming traffic.
+                          type: number
+                        protocol:
+                          description: |-
+                            (String) Protocol for incoming traffic. TCP or UDP and the default is TCP.
+                            Protocol for incoming traffic. TCP or UDP and the default is TCP.
+                          type: string
+                        targetPort:
+                          description: |-
+                            (Number) Port of a target. The default is the same as listener's port.
+                            Port of a target. The default is the same as listener's port.
+                          type: number
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  regionId:
+                    description: |-
+                      (String) ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
+                      ID of the availability zone where the network load balancer resides. If omitted, default region is being used.
+                    type: string
+                  type:
+                    description: |-
+                      (String) Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
+                      Type of the network load balancer. Must be one of 'external' or 'internal'. The default is 'external'.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

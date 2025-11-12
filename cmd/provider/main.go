@@ -1,5 +1,5 @@
 /*
-Copyright 2024 YANDEX LLC
+Copyright 2022 YANDEX LLC
 This is modified version of the software, made by the Crossplane Authors
 and available at: https://github.com/crossplane-contrib/provider-jet-template
 
@@ -24,27 +24,32 @@ import (
 	"path/filepath"
 	"time"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	xpcontroller "github.com/crossplane/crossplane-runtime/pkg/controller"
-	"github.com/crossplane/crossplane-runtime/pkg/feature"
-	"github.com/crossplane/crossplane-runtime/pkg/logging"
-	"github.com/crossplane/crossplane-runtime/pkg/ratelimiter"
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
-	tjcontroller "github.com/crossplane/upjet/pkg/controller"
-	"github.com/crossplane/upjet/pkg/terraform"
-	"gopkg.in/alecthomas/kingpin.v2"
-	kerrors "k8s.io/apimachinery/pkg/api/errors"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	authv1 "k8s.io/api/authorization/v1"
+	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
+	"sigs.k8s.io/controller-runtime/pkg/manager"
 
-	"github.com/yandex-cloud/crossplane-provider-yc/apis"
-	"github.com/yandex-cloud/crossplane-provider-yc/apis/v1alpha1"
+	xpcontroller "github.com/crossplane/crossplane-runtime/v2/pkg/controller"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/feature"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/gate"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/logging"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/ratelimiter"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/customresourcesgate"
+	tjcontroller "github.com/crossplane/upjet/v2/pkg/controller"
+	"github.com/crossplane/upjet/v2/pkg/terraform"
+	"gopkg.in/alecthomas/kingpin.v2"
+
+	apisCluster "github.com/yandex-cloud/crossplane-provider-yc/apis/cluster"
+	apisNamespaced "github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced"
 	"github.com/yandex-cloud/crossplane-provider-yc/config"
 	"github.com/yandex-cloud/crossplane-provider-yc/internal/clients"
-	"github.com/yandex-cloud/crossplane-provider-yc/internal/controller"
+	controllerCluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster"
+	controllerNamespaced "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/namespaced"
 	"github.com/yandex-cloud/crossplane-provider-yc/internal/features"
 )
 
@@ -61,9 +66,7 @@ func main() {
 		providerSource   = app.Flag("terraform-provider-source", "Terraform provider source.").Required().Envar("TERRAFORM_PROVIDER_SOURCE").String()
 		providerVersion  = app.Flag("terraform-provider-version", "Terraform provider version.").Required().Envar("TERRAFORM_PROVIDER_VERSION").String()
 
-		namespace                  = app.Flag("namespace", "Namespace used to set as default scope in default secret store config.").Default("crossplane-system").Envar("POD_NAMESPACE").String()
-		enableExternalSecretStores = app.Flag("enable-external-secret-stores", "Enable support for ExternalSecretStores.").Default("false").Envar("ENABLE_EXTERNAL_SECRET_STORES").Bool()
-		enableManagementPolicies   = app.Flag("enable-management-policies", "Enable support for Management Policies.").Default("true").Envar("ENABLE_MANAGEMENT_POLICIES").Bool()
+		enableManagementPolicies = app.Flag("enable-management-policies", "Enable support for Management Policies.").Default("true").Envar("ENABLE_MANAGEMENT_POLICIES").Bool()
 	)
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 
@@ -92,9 +95,19 @@ func main() {
 		RenewDeadline:              func() *time.Duration { d := 50 * time.Second; return &d }(),
 	})
 	kingpin.FatalIfError(err, "Cannot create controller manager")
-	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add Template APIs to scheme")
-	provider := config.GetProvider()
-	o := tjcontroller.Options{
+
+	// Add both cluster and namespaced APIs to scheme
+	kingpin.FatalIfError(apisCluster.AddToScheme(mgr.GetScheme()), "Cannot add cluster APIs to scheme")
+	kingpin.FatalIfError(apisNamespaced.AddToScheme(mgr.GetScheme()), "Cannot add namespaced APIs to scheme")
+	kingpin.FatalIfError(apiextensionsv1.AddToScheme(mgr.GetScheme()), "Cannot add api-extensions APIs to scheme")
+	kingpin.FatalIfError(authv1.AddToScheme(mgr.GetScheme()), "Cannot add k8s authorization APIs to scheme")
+
+	// Get both cluster and namespaced providers
+	clusterProvider := config.GetProvider()
+	namespacedProvider := config.GetProviderNamespaced()
+
+	// Create controller options for cluster-scoped resources
+	clusterOpts := tjcontroller.Options{
 		Options: xpcontroller.Options{
 			Logger:                  log,
 			GlobalRateLimiter:       ratelimiter.NewGlobal(*maxReconcileRate),
@@ -102,41 +115,91 @@ func main() {
 			MaxConcurrentReconciles: *maxReconcileRate,
 			Features:                &feature.Flags{},
 		},
-		Provider: provider,
-		// use the following WorkspaceStoreOption to enable the shared gRPC mode
-		// terraform.WithProviderRunner(terraform.NewSharedProvider(log, os.Getenv("TERRAFORM_NATIVE_PROVIDER_PATH"), terraform.WithNativeProviderArgs("-debuggable")))
-		WorkspaceStore: terraform.NewWorkspaceStore(log),
-		SetupFn:        clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion, provider),
-		// This seems to be required to make the no-fork architecture work.
+		Provider:              clusterProvider,
+		WorkspaceStore:        terraform.NewWorkspaceStore(log),
+		SetupFn:               clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion, clusterProvider),
 		OperationTrackerStore: tjcontroller.NewOperationStore(log),
 	}
 
-	if *enableExternalSecretStores {
-		o.SecretStoreConfigGVK = &v1alpha1.StoreConfigGroupVersionKind
-		log.Info("Alpha feature enabled", "flag", features.EnableAlphaExternalSecretStores)
-
-		// Ensure default store config exists.
-		kingpin.FatalIfError(resource.Ignore(kerrors.IsAlreadyExists, mgr.GetClient().Create(context.Background(), &v1alpha1.StoreConfig{
-			TypeMeta: metav1.TypeMeta{},
-			ObjectMeta: metav1.ObjectMeta{
-				Name: "default",
-			},
-			Spec: v1alpha1.StoreConfigSpec{
-				// NOTE(turkenh): We only set required spec and expect optional
-				// ones to properly be initialized with CRD level default values.
-				SecretStoreConfig: xpv1.SecretStoreConfig{
-					DefaultScope: *namespace,
-				},
-			},
-			Status: v1alpha1.StoreConfigStatus{},
-		})), "cannot create default store config")
+	// Create controller options for namespaced resources
+	namespacedOpts := tjcontroller.Options{
+		Options: xpcontroller.Options{
+			Logger:                  log,
+			GlobalRateLimiter:       ratelimiter.NewGlobal(*maxReconcileRate),
+			PollInterval:            *pollInterval,
+			MaxConcurrentReconciles: *maxReconcileRate,
+			Features:                &feature.Flags{},
+		},
+		Provider:              namespacedProvider,
+		WorkspaceStore:        terraform.NewWorkspaceStore(log),
+		SetupFn:               clients.TerraformSetupBuilder(*terraformVersion, *providerSource, *providerVersion, namespacedProvider),
+		OperationTrackerStore: tjcontroller.NewOperationStore(log),
 	}
 
+	// Apply feature flags to both controller options
 	if *enableManagementPolicies {
-		o.Features.Enable(features.EnableBetaManagementPolicies)
+		clusterOpts.Features.Enable(features.EnableBetaManagementPolicies)
+		namespacedOpts.Features.Enable(features.EnableBetaManagementPolicies)
 		log.Info("Beta feature enabled", "flag", features.EnableBetaManagementPolicies)
 	}
 
-	kingpin.FatalIfError(controller.Setup(mgr, o), "Cannot setup YC controllers")
+	// Check if SafeStart capability is available
+	canSafeStart, err := canWatchCRD(context.TODO(), mgr)
+	kingpin.FatalIfError(err, "SafeStart precheck failed")
+
+	if canSafeStart {
+		log.Info("SafeStart capability enabled - controllers will start after CRDs are available")
+
+		// Create CRD gate for SafeStart
+		crdGate := new(gate.Gate[schema.GroupVersionKind])
+		clusterOpts.Gate = crdGate
+		namespacedOpts.Gate = crdGate
+
+		// Setup CRD gate controller
+		kingpin.FatalIfError(customresourcesgate.Setup(mgr, xpcontroller.Options{
+			Logger:                  log,
+			Gate:                    crdGate,
+			MaxConcurrentReconciles: 1,
+		}), "Cannot setup CRD gate")
+
+		// Setup gated controllers
+		kingpin.FatalIfError(controllerCluster.SetupGated(mgr, clusterOpts),
+			"Cannot setup cluster-scoped controllers")
+		kingpin.FatalIfError(controllerNamespaced.SetupGated(mgr, namespacedOpts),
+			"Cannot setup namespaced controllers")
+	} else {
+		log.Info("Provider has missing RBAC permissions for watching CRDs, controller SafeStart capability will be disabled")
+
+		// Setup regular controllers without SafeStart
+		kingpin.FatalIfError(controllerCluster.Setup(mgr, clusterOpts),
+			"Cannot setup cluster-scoped controllers")
+		kingpin.FatalIfError(controllerNamespaced.Setup(mgr, namespacedOpts),
+			"Cannot setup namespaced controllers")
+	}
+
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
+}
+
+// canWatchCRD checks if the provider has RBAC permissions to watch CRDs
+// This is required for SafeStart capability
+func canWatchCRD(ctx context.Context, mgr manager.Manager) (bool, error) {
+	verbs := []string{"get", "list", "watch"}
+	for _, verb := range verbs {
+		sar := &authv1.SelfSubjectAccessReview{
+			Spec: authv1.SelfSubjectAccessReviewSpec{
+				ResourceAttributes: &authv1.ResourceAttributes{
+					Group:    "apiextensions.k8s.io",
+					Resource: "customresourcedefinitions",
+					Verb:     verb,
+				},
+			},
+		}
+		if err := mgr.GetClient().Create(ctx, sar); err != nil {
+			return false, errors.Wrapf(err, "unable to perform RBAC check for verb %s on CustomResourceDefinitions", verb)
+		}
+		if !sar.Status.Allowed {
+			return false, nil
+		}
+	}
+	return true, nil
 }

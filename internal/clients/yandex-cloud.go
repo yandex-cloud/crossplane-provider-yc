@@ -23,16 +23,17 @@ import (
 	"encoding/json"
 	"strings"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
-	"github.com/crossplane/upjet/pkg/config"
-	"github.com/crossplane/upjet/pkg/terraform"
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	"github.com/crossplane/upjet/v2/pkg/config"
+	"github.com/crossplane/upjet/v2/pkg/terraform"
 	sdk "github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	"github.com/yandex-cloud/crossplane-provider-yc/apis/v1beta1"
+	clusterv1beta1 "github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/v1beta1"
+	namespacedv1beta1 "github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/v1beta1"
 )
 
 const (
@@ -55,6 +56,10 @@ const (
 	errUnmarshalCredentials = "cannot unmarshal template credentials as JSON"
 	errBothTokenAndKeyFile  = "both token and serviceAccountKeyFile are specified, only one should be provided"
 	errNoAuthMethod         = "neither token nor serviceAccountKeyFile is specified, one must be provided"
+	errUnknownPCType        = "unknown provider config type"
+	errUnknownGVK           = "unknown GVK for ProviderConfig"
+	errNotAnObject          = "provider config is not an Object"
+	errNotManagedResource   = "resource is not a managed resource"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -69,46 +74,38 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 			},
 		}
 
-		configRef := mg.GetProviderConfigReference()
-		if configRef == nil {
-			return ps, errors.New(errNoProviderConfig)
-		}
-		pc := &v1beta1.ProviderConfig{}
-		if err := client.Get(ctx, types.NamespacedName{Name: configRef.Name}, pc); err != nil {
-			return ps, errors.Wrap(err, errGetProviderConfig)
-		}
-
-		t := resource.NewProviderConfigUsageTracker(client, &v1beta1.ProviderConfigUsage{})
-		if err := t.Track(ctx, mg); err != nil {
-			return ps, errors.Wrap(err, errTrackUsage)
+		// Resolve the appropriate ProviderConfig based on MR type (cluster vs namespaced)
+		pcSpec, err := resolveProviderConfig(ctx, client, mg)
+		if err != nil {
+			return terraform.Setup{}, errors.Wrap(err, "cannot resolve provider config")
 		}
 
 		// Validate that only one authentication method is specified
-		if pc.Spec.Credentials.ServiceAccountKeyFile != nil && pc.Spec.Credentials.Token != nil {
+		if pcSpec.Credentials.ServiceAccountKeyFile != nil && pcSpec.Credentials.Token != nil {
 			return ps, errors.New(errBothTokenAndKeyFile)
 		}
 
 		// set provider configuration
 		ps.Configuration = map[string]interface{}{}
-		ps.Configuration[folderID] = pc.Spec.Credentials.FolderID
-		ps.Configuration[cloudID] = pc.Spec.Credentials.CloudID
-		ps.Configuration[endpoint] = pc.Spec.Credentials.Endpoint
-		ps.Configuration[yqEndpoint] = pc.Spec.Credentials.YQEndpoint
+		ps.Configuration[folderID] = pcSpec.Credentials.FolderID
+		ps.Configuration[cloudID] = pcSpec.Credentials.CloudID
+		ps.Configuration[endpoint] = pcSpec.Credentials.Endpoint
+		ps.Configuration[yqEndpoint] = pcSpec.Credentials.YQEndpoint
 
 		// Handle storage credentials - direct specification
-		if pc.Spec.Credentials.StorageAccessKey != nil {
-			ps.Configuration[storageAccessKey] = *pc.Spec.Credentials.StorageAccessKey
+		if pcSpec.Credentials.StorageAccessKey != nil {
+			ps.Configuration[storageAccessKey] = *pcSpec.Credentials.StorageAccessKey
 		}
-		if pc.Spec.Credentials.StorageSecretKey != nil {
-			ps.Configuration[storageSecretKey] = *pc.Spec.Credentials.StorageSecretKey
+		if pcSpec.Credentials.StorageSecretKey != nil {
+			ps.Configuration[storageSecretKey] = *pcSpec.Credentials.StorageSecretKey
 		}
 
 		// Handle storage credentials from separate secrets
-		if pc.Spec.Credentials.StorageAccessKeySecretRef != nil {
+		if pcSpec.Credentials.StorageAccessKeySecretRef != nil {
 			data, err := resource.CommonCredentialExtractor(ctx, xpv1.CredentialsSourceSecret, client, xpv1.CommonCredentialSelectors{
 				SecretRef: &xpv1.SecretKeySelector{
-					SecretReference: pc.Spec.Credentials.StorageAccessKeySecretRef.SecretReference,
-					Key:             pc.Spec.Credentials.StorageAccessKeySecretRef.Key,
+					SecretReference: pcSpec.Credentials.StorageAccessKeySecretRef.SecretReference,
+					Key:             pcSpec.Credentials.StorageAccessKeySecretRef.Key,
 				},
 			})
 			if err != nil {
@@ -117,11 +114,11 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 			ps.Configuration[storageAccessKey] = string(data)
 		}
 
-		if pc.Spec.Credentials.StorageSecretKeySecretRef != nil {
+		if pcSpec.Credentials.StorageSecretKeySecretRef != nil {
 			data, err := resource.CommonCredentialExtractor(ctx, xpv1.CredentialsSourceSecret, client, xpv1.CommonCredentialSelectors{
 				SecretRef: &xpv1.SecretKeySelector{
-					SecretReference: pc.Spec.Credentials.StorageSecretKeySecretRef.SecretReference,
-					Key:             pc.Spec.Credentials.StorageSecretKeySecretRef.Key,
+					SecretReference: pcSpec.Credentials.StorageSecretKeySecretRef.SecretReference,
+					Key:             pcSpec.Credentials.StorageSecretKeySecretRef.Key,
 				},
 			})
 			if err != nil {
@@ -131,18 +128,18 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 		}
 
 		// Handle authentication based on the specified method
-		if pc.Spec.Credentials.Token != nil {
+		if pcSpec.Credentials.Token != nil {
 			// Use token authentication - direct specification
-			ps.Configuration[token] = *pc.Spec.Credentials.Token
-		} else if pc.Spec.Credentials.ServiceAccountKeyFile != nil {
+			ps.Configuration[token] = *pcSpec.Credentials.Token
+		} else if pcSpec.Credentials.ServiceAccountKeyFile != nil {
 			// Use service account key file authentication - direct specification
-			ps.Configuration[serviceAccountKeyFile] = *pc.Spec.Credentials.ServiceAccountKeyFile
-		} else if pc.Spec.Credentials.ServiceAccountKeySecretRef != nil {
+			ps.Configuration[serviceAccountKeyFile] = *pcSpec.Credentials.ServiceAccountKeyFile
+		} else if pcSpec.Credentials.ServiceAccountKeySecretRef != nil {
 			// Use service account key from separate secret
 			data, err := resource.CommonCredentialExtractor(ctx, xpv1.CredentialsSourceSecret, client, xpv1.CommonCredentialSelectors{
 				SecretRef: &xpv1.SecretKeySelector{
-					SecretReference: pc.Spec.Credentials.ServiceAccountKeySecretRef.SecretReference,
-					Key:             pc.Spec.Credentials.ServiceAccountKeySecretRef.Key,
+					SecretReference: pcSpec.Credentials.ServiceAccountKeySecretRef.SecretReference,
+					Key:             pcSpec.Credentials.ServiceAccountKeySecretRef.Key,
 				},
 			})
 			if err != nil {
@@ -151,7 +148,7 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 			ps.Configuration[serviceAccountKeyFile] = string(data)
 		} else {
 			// This handles secret references and other credential sources (backward compatibility)
-			data, err := resource.CommonCredentialExtractor(ctx, pc.Spec.Credentials.Source, client, pc.Spec.Credentials.CommonCredentialSelectors)
+			data, err := resource.CommonCredentialExtractor(ctx, pcSpec.Credentials.Source, client, pcSpec.Credentials.CommonCredentialSelectors)
 			if err != nil {
 				return ps, errors.Wrap(err, errExtractCredentials)
 			}
@@ -182,6 +179,106 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 
 		return ps, nil
 	}
+}
+
+// toSharedPCSpec converts cluster-scoped ProviderConfig to the shared namespaced spec type
+func toSharedPCSpec(pc *clusterv1beta1.ProviderConfig) (*namespacedv1beta1.ProviderConfigSpec, error) {
+	if pc == nil {
+		return nil, nil
+	}
+	data, err := json.Marshal(pc.Spec)
+	if err != nil {
+		return nil, err
+	}
+
+	var mSpec namespacedv1beta1.ProviderConfigSpec
+	err = json.Unmarshal(data, &mSpec)
+	return &mSpec, err
+}
+
+// resolveProviderConfig resolves the appropriate ProviderConfig based on the MR type
+func resolveProviderConfig(ctx context.Context, crClient client.Client, mg resource.Managed) (*namespacedv1beta1.ProviderConfigSpec, error) {
+	switch managed := mg.(type) {
+	case resource.LegacyManaged:
+		return resolveLegacy(ctx, crClient, managed)
+	case resource.ModernManaged:
+		return resolveModern(ctx, crClient, managed)
+	default:
+		return nil, errors.New(errNotManagedResource)
+	}
+}
+
+// resolveLegacy resolves cluster-scoped ProviderConfig for legacy cluster-scoped MRs
+func resolveLegacy(ctx context.Context, client client.Client, mg resource.LegacyManaged) (*namespacedv1beta1.ProviderConfigSpec, error) {
+	configRef := mg.GetProviderConfigReference()
+	if configRef == nil {
+		return nil, errors.New(errNoProviderConfig)
+	}
+	pc := &clusterv1beta1.ProviderConfig{}
+	if err := client.Get(ctx, types.NamespacedName{Name: configRef.Name}, pc); err != nil {
+		return nil, errors.Wrap(err, errGetProviderConfig)
+	}
+
+	t := resource.NewLegacyProviderConfigUsageTracker(client, &clusterv1beta1.ProviderConfigUsage{})
+	if err := t.Track(ctx, mg); err != nil {
+		return nil, errors.Wrap(err, errTrackUsage)
+	}
+
+	return toSharedPCSpec(pc)
+}
+
+// resolveModern resolves ProviderConfig for modern namespaced MRs
+// It handles both namespaced ProviderConfig and cluster-scoped ClusterProviderConfig
+func resolveModern(ctx context.Context, crClient client.Client, mg resource.ModernManaged) (*namespacedv1beta1.ProviderConfigSpec, error) {
+	configRef := mg.GetProviderConfigReference()
+	if configRef == nil {
+		return nil, errors.New(errNoProviderConfig)
+	}
+
+	pcRuntimeObj, err := crClient.Scheme().New(namespacedv1beta1.SchemeGroupVersion.WithKind(configRef.Kind))
+	if err != nil {
+		return nil, errors.Wrap(err, errUnknownGVK)
+	}
+	pcObj, ok := pcRuntimeObj.(client.Object)
+	if !ok {
+		// This indicates a programming error, types are not properly generated
+		return nil, errors.New(errNotAnObject)
+	}
+
+	// Namespace will be ignored if the PC is a cluster-scoped type (ClusterProviderConfig)
+	if err := crClient.Get(ctx, types.NamespacedName{Name: configRef.Name, Namespace: mg.GetNamespace()}, pcObj); err != nil {
+		return nil, errors.Wrap(err, errGetProviderConfig)
+	}
+
+	var pcSpec namespacedv1beta1.ProviderConfigSpec
+	pcu := &namespacedv1beta1.ProviderConfigUsage{}
+	switch pc := pcObj.(type) {
+	case *namespacedv1beta1.ProviderConfig:
+		pcSpec = pc.Spec
+		// For namespaced ProviderConfig, override secret namespace to MR namespace
+		if pcSpec.Credentials.SecretRef != nil {
+			pcSpec.Credentials.SecretRef.Namespace = mg.GetNamespace()
+		}
+		if pcSpec.Credentials.ServiceAccountKeySecretRef != nil {
+			pcSpec.Credentials.ServiceAccountKeySecretRef.Namespace = mg.GetNamespace()
+		}
+		if pcSpec.Credentials.StorageAccessKeySecretRef != nil {
+			pcSpec.Credentials.StorageAccessKeySecretRef.Namespace = mg.GetNamespace()
+		}
+		if pcSpec.Credentials.StorageSecretKeySecretRef != nil {
+			pcSpec.Credentials.StorageSecretKeySecretRef.Namespace = mg.GetNamespace()
+		}
+	case *namespacedv1beta1.ClusterProviderConfig:
+		pcSpec = pc.Spec
+		// ClusterProviderConfig secrets are already cluster-scoped, no namespace override needed
+	default:
+		return nil, errors.New(errUnknownPCType)
+	}
+	t := resource.NewProviderConfigUsageTracker(crClient, pcu)
+	if err := t.Track(ctx, mg); err != nil {
+		return nil, errors.Wrap(err, errTrackUsage)
+	}
+	return &pcSpec, nil
 }
 
 // handleCredentialsFromSecret processes credential data from secrets and populates the configuration

@@ -1,0 +1,2669 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: virtualhosts.alb.yandex-cloud.m.jet.crossplane.io
+spec:
+  group: alb.yandex-cloud.m.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - yandex-cloud
+    kind: VirtualHost
+    listKind: VirtualHostList
+    plural: virtualhosts
+    singular: virtualhost
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: VirtualHost is the Schema for the VirtualHosts API. Virtual hosts
+          combine routes belonging to the same set of domains.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: VirtualHostSpec defines the desired state of VirtualHost
+            properties:
+              forProvider:
+                properties:
+                  authority:
+                    description: |-
+                      bar.foo.com'. If not specified, all domains will be matched.
+                      A list of domains (host/authority header) that will be matched to this virtual host. Wildcard hosts are supported in the form of '*.foo.com' or '*-bar.foo.com'. If not specified, all domains will be matched.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  httpRouterId:
+                    description: |-
+                      (String) The ID of the HTTP router to which the virtual host belongs.
+                      The ID of the HTTP router to which the virtual host belongs.
+                    type: string
+                  httpRouterIdRef:
+                    description: Reference to a HTTPRouter to populate httpRouterId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  httpRouterIdSelector:
+                    description: Selector for a HTTPRouter to populate httpRouterId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  modifyRequestHeaders:
+                    description: |-
+                      (Block List) Apply the following modifications to the Request/Response header.
+                      Apply the following modifications to the Request/Response header.
+
+                      ~> Only one type of actions `append` or `replace` or `remove` should be specified.
+                    items:
+                      properties:
+                        append:
+                          description: |-
+                            (String) Append string to the header value.
+                            Append string to the header value.
+                          type: string
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the header to modify.
+                          type: string
+                        remove:
+                          description: |-
+                            (Boolean) If set, remove the header.
+                            If set, remove the header.
+                          type: boolean
+                        replace:
+                          description: |-
+                            (String) New value for a header. Header values support the following formatters.
+                            New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
+                          type: string
+                      type: object
+                    type: array
+                  modifyResponseHeaders:
+                    description: |-
+                      (Block List) Apply the following modifications to the Request/Response header.
+                      Apply the following modifications to the Request/Response header.
+
+                      ~> Only one type of actions `append` or `replace` or `remove` should be specified.
+                    items:
+                      properties:
+                        append:
+                          description: |-
+                            (String) Append string to the header value.
+                            Append string to the header value.
+                          type: string
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the header to modify.
+                          type: string
+                        remove:
+                          description: |-
+                            (Boolean) If set, remove the header.
+                            If set, remove the header.
+                          type: boolean
+                        replace:
+                          description: |-
+                            (String) New value for a header. Header values support the following formatters.
+                            New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  rateLimit:
+                    description: |-
+                      (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                      Rate limit configuration applied for a whole virtual host
+                    items:
+                      properties:
+                        allRequests:
+                          description: |-
+                            (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                            Rate limit configuration applied to all incoming requests
+                          items:
+                            properties:
+                              perMinute:
+                                description: |-
+                                  (Number) Limit value specified with per minute time unit
+                                  Limit value specified with per minute time unit
+                                type: number
+                              perSecond:
+                                description: |-
+                                  (Number) Limit value specified with per second time unit
+                                  Limit value specified with per second time unit
+                                type: number
+                            type: object
+                          type: array
+                        requestsPerIp:
+                          description: |-
+                            (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                            Rate limit configuration applied separately for each set of requests grouped by client IP address
+                          items:
+                            properties:
+                              perMinute:
+                                description: |-
+                                  (Number) Limit value specified with per minute time unit
+                                  Limit value specified with per minute time unit
+                                type: number
+                              perSecond:
+                                description: |-
+                                  (Number) Limit value specified with per second time unit
+                                  Limit value specified with per second time unit
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  route:
+                    description: |-
+                      order. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused.
+                      A Route resource. Routes are matched *in-order*. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused.
+
+                      ~> Exactly one type of routes `http_route` or `grpc_route` should be specified.
+                    items:
+                      properties:
+                        grpcRoute:
+                          description: |-
+                            (Block List, Max: 1) gRPC route resource.
+                            gRPC route resource.
+
+                            ~> Exactly one type of actions `grpc_route_action` or `grpc_status_response_action` should be specified.
+                          items:
+                            properties:
+                              grpcMatch:
+                                description: |-
+                                  (Block List) Checks / prefix by default. (see below for nested schema)
+                                  Checks `/` prefix by default.
+                                items:
+                                  properties:
+                                    fqmn:
+                                      description: |-
+                                        (Block List, Max: 1) The path and fqmn blocks.
+                                        The `path` and `fqmn` blocks.
+
+                                        ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
+                                      items:
+                                        properties:
+                                          exact:
+                                            description: |-
+                                              (String) Match exactly.
+                                              Match exactly.
+                                            type: string
+                                          prefix:
+                                            description: |-
+                                              (String) Match prefix.
+                                              Match prefix.
+                                            type: string
+                                          regex:
+                                            description: |-
+                                              (String) Match regex.
+                                              Match regex.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              grpcRouteAction:
+                                description: |-
+                                  (Block List, Max: 1) gRPC route action resource.
+                                  gRPC route action resource.
+
+                                  ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
+                                items:
+                                  properties:
+                                    autoHostRewrite:
+                                      description: |-
+                                        (Boolean) If set, will automatically rewrite host.
+                                        If set, will automatically rewrite host.
+                                      type: boolean
+                                    backendGroupId:
+                                      description: |-
+                                        (String) Backend group to route requests.
+                                        Backend group to route requests.
+                                      type: string
+                                    backendGroupIdRef:
+                                      description: Reference to a BackendGroup to
+                                        populate backendGroupId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the referenced
+                                            object
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    backendGroupIdSelector:
+                                      description: Selector for a BackendGroup to
+                                        populate backendGroupId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        namespace:
+                                          description: Namespace for the selector
+                                          type: string
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                    hostRewrite:
+                                      description: |-
+                                        (String) Host rewrite specifier.
+                                        Host rewrite specifier.
+                                      type: string
+                                    idleTimeout:
+                                      description: |-
+                                        one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                        Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios - one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                      type: string
+                                    maxTimeout:
+                                      description: |-
+                                        timeout header). If not set, default is 60 seconds.
+                                        Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is 60 seconds.
+                                      type: string
+                                    rateLimit:
+                                      description: |-
+                                        (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                                        Rate limit configuration applied for a whole virtual host
+                                      items:
+                                        properties:
+                                          allRequests:
+                                            description: |-
+                                              (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                                              Rate limit configuration applied to all incoming requests
+                                            items:
+                                              properties:
+                                                perMinute:
+                                                  description: |-
+                                                    (Number) Limit value specified with per minute time unit
+                                                    Limit value specified with per minute time unit
+                                                  type: number
+                                                perSecond:
+                                                  description: |-
+                                                    (Number) Limit value specified with per second time unit
+                                                    Limit value specified with per second time unit
+                                                  type: number
+                                              type: object
+                                            type: array
+                                          requestsPerIp:
+                                            description: |-
+                                              (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                                              Rate limit configuration applied separately for each set of requests grouped by client IP address
+                                            items:
+                                              properties:
+                                                perMinute:
+                                                  description: |-
+                                                    (Number) Limit value specified with per minute time unit
+                                                    Limit value specified with per minute time unit
+                                                  type: number
+                                                perSecond:
+                                                  description: |-
+                                                    (Number) Limit value specified with per second time unit
+                                                    Limit value specified with per second time unit
+                                                  type: number
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              grpcStatusResponseAction:
+                                description: |-
+                                  (Block List, Max: 1) gRPC status response action resource. (see below for nested schema)
+                                  gRPC status response action resource.
+                                items:
+                                  properties:
+                                    status:
+                                      description: |-
+                                        (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+                                        The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        httpRoute:
+                          description: |-
+                            (Block List, Max: 1) HTTP route resource.
+                            HTTP route resource.
+
+                            ~> Exactly one type of actions `http_route_action` or `redirect_action` or `direct_response_action` should be specified.
+                          items:
+                            properties:
+                              directResponseAction:
+                                description: |-
+                                  (Block List, Max: 1) Direct response action resource. (see below for nested schema)
+                                  Direct response action resource.
+                                items:
+                                  properties:
+                                    body:
+                                      description: |-
+                                        (String) Response body text.
+                                        Response body text.
+                                      type: string
+                                    status:
+                                      description: |-
+                                        (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+                                        HTTP response status. Should be between `100` and `599`.
+                                      type: number
+                                  type: object
+                                type: array
+                              httpMatch:
+                                description: |-
+                                  (Block List) Checks / prefix by default. (see below for nested schema)
+                                  Checks `/` prefix by default.
+                                items:
+                                  properties:
+                                    httpMethod:
+                                      description: |-
+                                        (Set of String) List of methods (strings).
+                                        List of methods (strings).
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    path:
+                                      description: |-
+                                        (Block List, Max: 1) The path and fqmn blocks.
+                                        The `path` and `fqmn` blocks.
+
+                                        ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
+                                      items:
+                                        properties:
+                                          exact:
+                                            description: |-
+                                              (String) Match exactly.
+                                              Match exactly.
+                                            type: string
+                                          prefix:
+                                            description: |-
+                                              (String) Match prefix.
+                                              Match prefix.
+                                            type: string
+                                          regex:
+                                            description: |-
+                                              (String) Match regex.
+                                              Match regex.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              httpRouteAction:
+                                description: |-
+                                  (Block List, Max: 1) HTTP route action resource.
+                                  HTTP route action resource.
+
+                                  ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
+                                items:
+                                  properties:
+                                    autoHostRewrite:
+                                      description: |-
+                                        (Boolean) If set, will automatically rewrite host.
+                                        If set, will automatically rewrite host.
+                                      type: boolean
+                                    backendGroupId:
+                                      description: |-
+                                        (String) Backend group to route requests.
+                                        Backend group to route requests.
+                                      type: string
+                                    backendGroupIdRef:
+                                      description: Reference to a BackendGroup to
+                                        populate backendGroupId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the referenced
+                                            object
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    backendGroupIdSelector:
+                                      description: Selector for a BackendGroup to
+                                        populate backendGroupId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        namespace:
+                                          description: Namespace for the selector
+                                          type: string
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                    hostRewrite:
+                                      description: |-
+                                        (String) Host rewrite specifier.
+                                        Host rewrite specifier.
+                                      type: string
+                                    idleTimeout:
+                                      description: |-
+                                        one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                        Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                      type: string
+                                    prefixRewrite:
+                                      description: |-
+                                        (String) If not empty, matched path prefix will be replaced by this value.
+                                        If not empty, matched path prefix will be replaced by this value.
+                                      type: string
+                                    rateLimit:
+                                      description: |-
+                                        (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                                        Rate limit configuration applied for a whole virtual host
+                                      items:
+                                        properties:
+                                          allRequests:
+                                            description: |-
+                                              (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                                              Rate limit configuration applied to all incoming requests
+                                            items:
+                                              properties:
+                                                perMinute:
+                                                  description: |-
+                                                    (Number) Limit value specified with per minute time unit
+                                                    Limit value specified with per minute time unit
+                                                  type: number
+                                                perSecond:
+                                                  description: |-
+                                                    (Number) Limit value specified with per second time unit
+                                                    Limit value specified with per second time unit
+                                                  type: number
+                                              type: object
+                                            type: array
+                                          requestsPerIp:
+                                            description: |-
+                                              (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                                              Rate limit configuration applied separately for each set of requests grouped by client IP address
+                                            items:
+                                              properties:
+                                                perMinute:
+                                                  description: |-
+                                                    (Number) Limit value specified with per minute time unit
+                                                    Limit value specified with per minute time unit
+                                                  type: number
+                                                perSecond:
+                                                  description: |-
+                                                    (Number) Limit value specified with per second time unit
+                                                    Limit value specified with per second time unit
+                                                  type: number
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    regexRewrite:
+                                      description: |-
+                                        (Block List, Max: 1) Replacement for path substrings that match the pattern (see below for nested schema)
+                                        Replacement for path substrings that match the pattern
+                                      items:
+                                        properties:
+                                          regex:
+                                            description: |-
+                                              (String) Match regex.
+                                              RE2 regular expression
+                                            type: string
+                                          substitute:
+                                            description: |-
+                                              (String) The string which should be used to substitute matched substrings
+                                              The string which should be used to substitute matched substrings
+                                            type: string
+                                        type: object
+                                      type: array
+                                    timeout:
+                                      description: |-
+                                        (String) Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
+                                        Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
+                                      type: string
+                                    upgradeTypes:
+                                      description: |-
+                                        (Set of String) List of upgrade types. Only specified upgrade types will be allowed. For example, websocket.
+                                        List of upgrade types. Only specified upgrade types will be allowed. For example, `websocket`.
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                  type: object
+                                type: array
+                              redirectAction:
+                                description: |-
+                                  (Block List, Max: 1) Redirect action resource.
+                                  Redirect action resource.
+
+                                  ~> Only one type of paths `replace_path` or `replace_prefix` should be specified.
+                                items:
+                                  properties:
+                                    removeQuery:
+                                      description: |-
+                                        (Boolean) If set, remove query part.
+                                        If set, remove query part.
+                                      type: boolean
+                                    replaceHost:
+                                      description: |-
+                                        (String) Replaces hostname.
+                                        Replaces hostname.
+                                      type: string
+                                    replacePath:
+                                      description: |-
+                                        (String) Replace path.
+                                        Replace path.
+                                      type: string
+                                    replacePort:
+                                      description: |-
+                                        (Number) Replaces port.
+                                        Replaces port.
+                                      type: number
+                                    replacePrefix:
+                                      description: |-
+                                        (String) Replace only matched prefix. Example: match:{ prefix_match: /some }  redirect: { replace_prefix: /other }  will redirect /something to /otherthing.
+                                        Replace only matched prefix. Example:<br/> match:{ prefix_match: `/some` } <br/> redirect: { replace_prefix: `/other` } <br/> will redirect `/something` to `/otherthing`.
+                                      type: string
+                                    replaceScheme:
+                                      description: |-
+                                        (String) Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
+                                        Replaces scheme. If the original scheme is `http` or `https`, will also remove the 80 or 443 port, if present.
+                                      type: string
+                                    responseCode:
+                                      description: |-
+                                        (String) The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
+                                        The HTTP status code to use in the redirect response. Supported values are: `moved_permanently`, `found`, `see_other`, `temporary_redirect`, `permanent_redirect`.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the route.
+                          type: string
+                        routeOptions:
+                          description: |-
+                            (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                            Route options for the virtual host.
+                          items:
+                            properties:
+                              rbac:
+                                description: |-
+                                  (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                                  RBAC configuration.
+                                items:
+                                  properties:
+                                    action:
+                                      description: (String)
+                                      type: string
+                                    principals:
+                                      description: '(Block List, Min: 1) (see below
+                                        for nested schema)'
+                                      items:
+                                        properties:
+                                          andPrincipals:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                any:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                header:
+                                                  description: '(Block List, Max:
+                                                    1) (see below for nested schema)'
+                                                  items:
+                                                    properties:
+                                                      name:
+                                                        description: (String) The
+                                                          resource name.
+                                                        type: string
+                                                      value:
+                                                        description: |-
+                                                          (Block List, Max: 1) The path and fqmn blocks.
+                                                          The `path` and `fqmn` blocks.
+
+                                                          ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
+                                                        items:
+                                                          properties:
+                                                            exact:
+                                                              description: |-
+                                                                (String) Match exactly.
+                                                                Match exactly.
+                                                              type: string
+                                                            prefix:
+                                                              description: |-
+                                                                (String) Match prefix.
+                                                                Match prefix.
+                                                              type: string
+                                                            regex:
+                                                              description: |-
+                                                                (String) Match regex.
+                                                                Match regex.
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                                remoteIp:
+                                                  description: (String)
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              securityProfileId:
+                                description: |-
+                                  (String) SWS profile ID.
+                                  SWS profile ID.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  routeOptions:
+                    description: |-
+                      (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                      Route options for the virtual host.
+                    items:
+                      properties:
+                        rbac:
+                          description: |-
+                            (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                            RBAC configuration.
+                          items:
+                            properties:
+                              action:
+                                description: (String)
+                                type: string
+                              principals:
+                                description: '(Block List, Min: 1) (see below for
+                                  nested schema)'
+                                items:
+                                  properties:
+                                    andPrincipals:
+                                      description: '(Block List, Min: 1) (see below
+                                        for nested schema)'
+                                      items:
+                                        properties:
+                                          any:
+                                            description: (Boolean)
+                                            type: boolean
+                                          header:
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: (String) The resource
+                                                    name.
+                                                  type: string
+                                                value:
+                                                  description: |-
+                                                    (Block List, Max: 1) The path and fqmn blocks.
+                                                    The `path` and `fqmn` blocks.
+
+                                                    ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
+                                                  items:
+                                                    properties:
+                                                      exact:
+                                                        description: |-
+                                                          (String) Match exactly.
+                                                          Match exactly.
+                                                        type: string
+                                                      prefix:
+                                                        description: |-
+                                                          (String) Match prefix.
+                                                          Match prefix.
+                                                        type: string
+                                                      regex:
+                                                        description: |-
+                                                          (String) Match regex.
+                                                          Match regex.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          remoteIp:
+                                            description: (String)
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        securityProfileId:
+                          description: |-
+                            (String) SWS profile ID.
+                            SWS profile ID.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  authority:
+                    description: |-
+                      bar.foo.com'. If not specified, all domains will be matched.
+                      A list of domains (host/authority header) that will be matched to this virtual host. Wildcard hosts are supported in the form of '*.foo.com' or '*-bar.foo.com'. If not specified, all domains will be matched.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  httpRouterId:
+                    description: |-
+                      (String) The ID of the HTTP router to which the virtual host belongs.
+                      The ID of the HTTP router to which the virtual host belongs.
+                    type: string
+                  httpRouterIdRef:
+                    description: Reference to a HTTPRouter to populate httpRouterId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  httpRouterIdSelector:
+                    description: Selector for a HTTPRouter to populate httpRouterId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  modifyRequestHeaders:
+                    description: |-
+                      (Block List) Apply the following modifications to the Request/Response header.
+                      Apply the following modifications to the Request/Response header.
+
+                      ~> Only one type of actions `append` or `replace` or `remove` should be specified.
+                    items:
+                      properties:
+                        append:
+                          description: |-
+                            (String) Append string to the header value.
+                            Append string to the header value.
+                          type: string
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the header to modify.
+                          type: string
+                        remove:
+                          description: |-
+                            (Boolean) If set, remove the header.
+                            If set, remove the header.
+                          type: boolean
+                        replace:
+                          description: |-
+                            (String) New value for a header. Header values support the following formatters.
+                            New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
+                          type: string
+                      type: object
+                    type: array
+                  modifyResponseHeaders:
+                    description: |-
+                      (Block List) Apply the following modifications to the Request/Response header.
+                      Apply the following modifications to the Request/Response header.
+
+                      ~> Only one type of actions `append` or `replace` or `remove` should be specified.
+                    items:
+                      properties:
+                        append:
+                          description: |-
+                            (String) Append string to the header value.
+                            Append string to the header value.
+                          type: string
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the header to modify.
+                          type: string
+                        remove:
+                          description: |-
+                            (Boolean) If set, remove the header.
+                            If set, remove the header.
+                          type: boolean
+                        replace:
+                          description: |-
+                            (String) New value for a header. Header values support the following formatters.
+                            New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  rateLimit:
+                    description: |-
+                      (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                      Rate limit configuration applied for a whole virtual host
+                    items:
+                      properties:
+                        allRequests:
+                          description: |-
+                            (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                            Rate limit configuration applied to all incoming requests
+                          items:
+                            properties:
+                              perMinute:
+                                description: |-
+                                  (Number) Limit value specified with per minute time unit
+                                  Limit value specified with per minute time unit
+                                type: number
+                              perSecond:
+                                description: |-
+                                  (Number) Limit value specified with per second time unit
+                                  Limit value specified with per second time unit
+                                type: number
+                            type: object
+                          type: array
+                        requestsPerIp:
+                          description: |-
+                            (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                            Rate limit configuration applied separately for each set of requests grouped by client IP address
+                          items:
+                            properties:
+                              perMinute:
+                                description: |-
+                                  (Number) Limit value specified with per minute time unit
+                                  Limit value specified with per minute time unit
+                                type: number
+                              perSecond:
+                                description: |-
+                                  (Number) Limit value specified with per second time unit
+                                  Limit value specified with per second time unit
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  route:
+                    description: |-
+                      order. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused.
+                      A Route resource. Routes are matched *in-order*. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused.
+
+                      ~> Exactly one type of routes `http_route` or `grpc_route` should be specified.
+                    items:
+                      properties:
+                        grpcRoute:
+                          description: |-
+                            (Block List, Max: 1) gRPC route resource.
+                            gRPC route resource.
+
+                            ~> Exactly one type of actions `grpc_route_action` or `grpc_status_response_action` should be specified.
+                          items:
+                            properties:
+                              grpcMatch:
+                                description: |-
+                                  (Block List) Checks / prefix by default. (see below for nested schema)
+                                  Checks `/` prefix by default.
+                                items:
+                                  properties:
+                                    fqmn:
+                                      description: |-
+                                        (Block List, Max: 1) The path and fqmn blocks.
+                                        The `path` and `fqmn` blocks.
+
+                                        ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
+                                      items:
+                                        properties:
+                                          exact:
+                                            description: |-
+                                              (String) Match exactly.
+                                              Match exactly.
+                                            type: string
+                                          prefix:
+                                            description: |-
+                                              (String) Match prefix.
+                                              Match prefix.
+                                            type: string
+                                          regex:
+                                            description: |-
+                                              (String) Match regex.
+                                              Match regex.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              grpcRouteAction:
+                                description: |-
+                                  (Block List, Max: 1) gRPC route action resource.
+                                  gRPC route action resource.
+
+                                  ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
+                                items:
+                                  properties:
+                                    autoHostRewrite:
+                                      description: |-
+                                        (Boolean) If set, will automatically rewrite host.
+                                        If set, will automatically rewrite host.
+                                      type: boolean
+                                    backendGroupId:
+                                      description: |-
+                                        (String) Backend group to route requests.
+                                        Backend group to route requests.
+                                      type: string
+                                    backendGroupIdRef:
+                                      description: Reference to a BackendGroup to
+                                        populate backendGroupId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the referenced
+                                            object
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    backendGroupIdSelector:
+                                      description: Selector for a BackendGroup to
+                                        populate backendGroupId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        namespace:
+                                          description: Namespace for the selector
+                                          type: string
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                    hostRewrite:
+                                      description: |-
+                                        (String) Host rewrite specifier.
+                                        Host rewrite specifier.
+                                      type: string
+                                    idleTimeout:
+                                      description: |-
+                                        one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                        Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios - one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                      type: string
+                                    maxTimeout:
+                                      description: |-
+                                        timeout header). If not set, default is 60 seconds.
+                                        Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is 60 seconds.
+                                      type: string
+                                    rateLimit:
+                                      description: |-
+                                        (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                                        Rate limit configuration applied for a whole virtual host
+                                      items:
+                                        properties:
+                                          allRequests:
+                                            description: |-
+                                              (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                                              Rate limit configuration applied to all incoming requests
+                                            items:
+                                              properties:
+                                                perMinute:
+                                                  description: |-
+                                                    (Number) Limit value specified with per minute time unit
+                                                    Limit value specified with per minute time unit
+                                                  type: number
+                                                perSecond:
+                                                  description: |-
+                                                    (Number) Limit value specified with per second time unit
+                                                    Limit value specified with per second time unit
+                                                  type: number
+                                              type: object
+                                            type: array
+                                          requestsPerIp:
+                                            description: |-
+                                              (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                                              Rate limit configuration applied separately for each set of requests grouped by client IP address
+                                            items:
+                                              properties:
+                                                perMinute:
+                                                  description: |-
+                                                    (Number) Limit value specified with per minute time unit
+                                                    Limit value specified with per minute time unit
+                                                  type: number
+                                                perSecond:
+                                                  description: |-
+                                                    (Number) Limit value specified with per second time unit
+                                                    Limit value specified with per second time unit
+                                                  type: number
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              grpcStatusResponseAction:
+                                description: |-
+                                  (Block List, Max: 1) gRPC status response action resource. (see below for nested schema)
+                                  gRPC status response action resource.
+                                items:
+                                  properties:
+                                    status:
+                                      description: |-
+                                        (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+                                        The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        httpRoute:
+                          description: |-
+                            (Block List, Max: 1) HTTP route resource.
+                            HTTP route resource.
+
+                            ~> Exactly one type of actions `http_route_action` or `redirect_action` or `direct_response_action` should be specified.
+                          items:
+                            properties:
+                              directResponseAction:
+                                description: |-
+                                  (Block List, Max: 1) Direct response action resource. (see below for nested schema)
+                                  Direct response action resource.
+                                items:
+                                  properties:
+                                    body:
+                                      description: |-
+                                        (String) Response body text.
+                                        Response body text.
+                                      type: string
+                                    status:
+                                      description: |-
+                                        (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+                                        HTTP response status. Should be between `100` and `599`.
+                                      type: number
+                                  type: object
+                                type: array
+                              httpMatch:
+                                description: |-
+                                  (Block List) Checks / prefix by default. (see below for nested schema)
+                                  Checks `/` prefix by default.
+                                items:
+                                  properties:
+                                    httpMethod:
+                                      description: |-
+                                        (Set of String) List of methods (strings).
+                                        List of methods (strings).
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    path:
+                                      description: |-
+                                        (Block List, Max: 1) The path and fqmn blocks.
+                                        The `path` and `fqmn` blocks.
+
+                                        ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
+                                      items:
+                                        properties:
+                                          exact:
+                                            description: |-
+                                              (String) Match exactly.
+                                              Match exactly.
+                                            type: string
+                                          prefix:
+                                            description: |-
+                                              (String) Match prefix.
+                                              Match prefix.
+                                            type: string
+                                          regex:
+                                            description: |-
+                                              (String) Match regex.
+                                              Match regex.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              httpRouteAction:
+                                description: |-
+                                  (Block List, Max: 1) HTTP route action resource.
+                                  HTTP route action resource.
+
+                                  ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
+                                items:
+                                  properties:
+                                    autoHostRewrite:
+                                      description: |-
+                                        (Boolean) If set, will automatically rewrite host.
+                                        If set, will automatically rewrite host.
+                                      type: boolean
+                                    backendGroupId:
+                                      description: |-
+                                        (String) Backend group to route requests.
+                                        Backend group to route requests.
+                                      type: string
+                                    backendGroupIdRef:
+                                      description: Reference to a BackendGroup to
+                                        populate backendGroupId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the referenced
+                                            object
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    backendGroupIdSelector:
+                                      description: Selector for a BackendGroup to
+                                        populate backendGroupId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        namespace:
+                                          description: Namespace for the selector
+                                          type: string
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                    hostRewrite:
+                                      description: |-
+                                        (String) Host rewrite specifier.
+                                        Host rewrite specifier.
+                                      type: string
+                                    idleTimeout:
+                                      description: |-
+                                        one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                        Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                      type: string
+                                    prefixRewrite:
+                                      description: |-
+                                        (String) If not empty, matched path prefix will be replaced by this value.
+                                        If not empty, matched path prefix will be replaced by this value.
+                                      type: string
+                                    rateLimit:
+                                      description: |-
+                                        (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                                        Rate limit configuration applied for a whole virtual host
+                                      items:
+                                        properties:
+                                          allRequests:
+                                            description: |-
+                                              (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                                              Rate limit configuration applied to all incoming requests
+                                            items:
+                                              properties:
+                                                perMinute:
+                                                  description: |-
+                                                    (Number) Limit value specified with per minute time unit
+                                                    Limit value specified with per minute time unit
+                                                  type: number
+                                                perSecond:
+                                                  description: |-
+                                                    (Number) Limit value specified with per second time unit
+                                                    Limit value specified with per second time unit
+                                                  type: number
+                                              type: object
+                                            type: array
+                                          requestsPerIp:
+                                            description: |-
+                                              (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                                              Rate limit configuration applied separately for each set of requests grouped by client IP address
+                                            items:
+                                              properties:
+                                                perMinute:
+                                                  description: |-
+                                                    (Number) Limit value specified with per minute time unit
+                                                    Limit value specified with per minute time unit
+                                                  type: number
+                                                perSecond:
+                                                  description: |-
+                                                    (Number) Limit value specified with per second time unit
+                                                    Limit value specified with per second time unit
+                                                  type: number
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    regexRewrite:
+                                      description: |-
+                                        (Block List, Max: 1) Replacement for path substrings that match the pattern (see below for nested schema)
+                                        Replacement for path substrings that match the pattern
+                                      items:
+                                        properties:
+                                          regex:
+                                            description: |-
+                                              (String) Match regex.
+                                              RE2 regular expression
+                                            type: string
+                                          substitute:
+                                            description: |-
+                                              (String) The string which should be used to substitute matched substrings
+                                              The string which should be used to substitute matched substrings
+                                            type: string
+                                        type: object
+                                      type: array
+                                    timeout:
+                                      description: |-
+                                        (String) Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
+                                        Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
+                                      type: string
+                                    upgradeTypes:
+                                      description: |-
+                                        (Set of String) List of upgrade types. Only specified upgrade types will be allowed. For example, websocket.
+                                        List of upgrade types. Only specified upgrade types will be allowed. For example, `websocket`.
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                  type: object
+                                type: array
+                              redirectAction:
+                                description: |-
+                                  (Block List, Max: 1) Redirect action resource.
+                                  Redirect action resource.
+
+                                  ~> Only one type of paths `replace_path` or `replace_prefix` should be specified.
+                                items:
+                                  properties:
+                                    removeQuery:
+                                      description: |-
+                                        (Boolean) If set, remove query part.
+                                        If set, remove query part.
+                                      type: boolean
+                                    replaceHost:
+                                      description: |-
+                                        (String) Replaces hostname.
+                                        Replaces hostname.
+                                      type: string
+                                    replacePath:
+                                      description: |-
+                                        (String) Replace path.
+                                        Replace path.
+                                      type: string
+                                    replacePort:
+                                      description: |-
+                                        (Number) Replaces port.
+                                        Replaces port.
+                                      type: number
+                                    replacePrefix:
+                                      description: |-
+                                        (String) Replace only matched prefix. Example: match:{ prefix_match: /some }  redirect: { replace_prefix: /other }  will redirect /something to /otherthing.
+                                        Replace only matched prefix. Example:<br/> match:{ prefix_match: `/some` } <br/> redirect: { replace_prefix: `/other` } <br/> will redirect `/something` to `/otherthing`.
+                                      type: string
+                                    replaceScheme:
+                                      description: |-
+                                        (String) Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
+                                        Replaces scheme. If the original scheme is `http` or `https`, will also remove the 80 or 443 port, if present.
+                                      type: string
+                                    responseCode:
+                                      description: |-
+                                        (String) The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
+                                        The HTTP status code to use in the redirect response. Supported values are: `moved_permanently`, `found`, `see_other`, `temporary_redirect`, `permanent_redirect`.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the route.
+                          type: string
+                        routeOptions:
+                          description: |-
+                            (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                            Route options for the virtual host.
+                          items:
+                            properties:
+                              rbac:
+                                description: |-
+                                  (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                                  RBAC configuration.
+                                items:
+                                  properties:
+                                    action:
+                                      description: (String)
+                                      type: string
+                                    principals:
+                                      description: '(Block List, Min: 1) (see below
+                                        for nested schema)'
+                                      items:
+                                        properties:
+                                          andPrincipals:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                any:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                header:
+                                                  description: '(Block List, Max:
+                                                    1) (see below for nested schema)'
+                                                  items:
+                                                    properties:
+                                                      name:
+                                                        description: (String) The
+                                                          resource name.
+                                                        type: string
+                                                      value:
+                                                        description: |-
+                                                          (Block List, Max: 1) The path and fqmn blocks.
+                                                          The `path` and `fqmn` blocks.
+
+                                                          ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
+                                                        items:
+                                                          properties:
+                                                            exact:
+                                                              description: |-
+                                                                (String) Match exactly.
+                                                                Match exactly.
+                                                              type: string
+                                                            prefix:
+                                                              description: |-
+                                                                (String) Match prefix.
+                                                                Match prefix.
+                                                              type: string
+                                                            regex:
+                                                              description: |-
+                                                                (String) Match regex.
+                                                                Match regex.
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                                remoteIp:
+                                                  description: (String)
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              securityProfileId:
+                                description: |-
+                                  (String) SWS profile ID.
+                                  SWS profile ID.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  routeOptions:
+                    description: |-
+                      (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                      Route options for the virtual host.
+                    items:
+                      properties:
+                        rbac:
+                          description: |-
+                            (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                            RBAC configuration.
+                          items:
+                            properties:
+                              action:
+                                description: (String)
+                                type: string
+                              principals:
+                                description: '(Block List, Min: 1) (see below for
+                                  nested schema)'
+                                items:
+                                  properties:
+                                    andPrincipals:
+                                      description: '(Block List, Min: 1) (see below
+                                        for nested schema)'
+                                      items:
+                                        properties:
+                                          any:
+                                            description: (Boolean)
+                                            type: boolean
+                                          header:
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: (String) The resource
+                                                    name.
+                                                  type: string
+                                                value:
+                                                  description: |-
+                                                    (Block List, Max: 1) The path and fqmn blocks.
+                                                    The `path` and `fqmn` blocks.
+
+                                                    ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
+                                                  items:
+                                                    properties:
+                                                      exact:
+                                                        description: |-
+                                                          (String) Match exactly.
+                                                          Match exactly.
+                                                        type: string
+                                                      prefix:
+                                                        description: |-
+                                                          (String) Match prefix.
+                                                          Match prefix.
+                                                        type: string
+                                                      regex:
+                                                        description: |-
+                                                          (String) Match regex.
+                                                          Match regex.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          remoteIp:
+                                            description: (String)
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        securityProfileId:
+                          description: |-
+                            (String) SWS profile ID.
+                            SWS profile ID.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: VirtualHostStatus defines the observed state of VirtualHost.
+            properties:
+              atProvider:
+                properties:
+                  authority:
+                    description: |-
+                      bar.foo.com'. If not specified, all domains will be matched.
+                      A list of domains (host/authority header) that will be matched to this virtual host. Wildcard hosts are supported in the form of '*.foo.com' or '*-bar.foo.com'. If not specified, all domains will be matched.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  httpRouterId:
+                    description: |-
+                      (String) The ID of the HTTP router to which the virtual host belongs.
+                      The ID of the HTTP router to which the virtual host belongs.
+                    type: string
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  modifyRequestHeaders:
+                    description: |-
+                      (Block List) Apply the following modifications to the Request/Response header.
+                      Apply the following modifications to the Request/Response header.
+
+                      ~> Only one type of actions `append` or `replace` or `remove` should be specified.
+                    items:
+                      properties:
+                        append:
+                          description: |-
+                            (String) Append string to the header value.
+                            Append string to the header value.
+                          type: string
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the header to modify.
+                          type: string
+                        remove:
+                          description: |-
+                            (Boolean) If set, remove the header.
+                            If set, remove the header.
+                          type: boolean
+                        replace:
+                          description: |-
+                            (String) New value for a header. Header values support the following formatters.
+                            New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
+                          type: string
+                      type: object
+                    type: array
+                  modifyResponseHeaders:
+                    description: |-
+                      (Block List) Apply the following modifications to the Request/Response header.
+                      Apply the following modifications to the Request/Response header.
+
+                      ~> Only one type of actions `append` or `replace` or `remove` should be specified.
+                    items:
+                      properties:
+                        append:
+                          description: |-
+                            (String) Append string to the header value.
+                            Append string to the header value.
+                          type: string
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the header to modify.
+                          type: string
+                        remove:
+                          description: |-
+                            (Boolean) If set, remove the header.
+                            If set, remove the header.
+                          type: boolean
+                        replace:
+                          description: |-
+                            (String) New value for a header. Header values support the following formatters.
+                            New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  rateLimit:
+                    description: |-
+                      (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                      Rate limit configuration applied for a whole virtual host
+                    items:
+                      properties:
+                        allRequests:
+                          description: |-
+                            (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                            Rate limit configuration applied to all incoming requests
+                          items:
+                            properties:
+                              perMinute:
+                                description: |-
+                                  (Number) Limit value specified with per minute time unit
+                                  Limit value specified with per minute time unit
+                                type: number
+                              perSecond:
+                                description: |-
+                                  (Number) Limit value specified with per second time unit
+                                  Limit value specified with per second time unit
+                                type: number
+                            type: object
+                          type: array
+                        requestsPerIp:
+                          description: |-
+                            (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                            Rate limit configuration applied separately for each set of requests grouped by client IP address
+                          items:
+                            properties:
+                              perMinute:
+                                description: |-
+                                  (Number) Limit value specified with per minute time unit
+                                  Limit value specified with per minute time unit
+                                type: number
+                              perSecond:
+                                description: |-
+                                  (Number) Limit value specified with per second time unit
+                                  Limit value specified with per second time unit
+                                type: number
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  route:
+                    description: |-
+                      order. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused.
+                      A Route resource. Routes are matched *in-order*. Be careful when adding them to the end. For instance, having http '/' match first makes all other routes unused.
+
+                      ~> Exactly one type of routes `http_route` or `grpc_route` should be specified.
+                    items:
+                      properties:
+                        grpcRoute:
+                          description: |-
+                            (Block List, Max: 1) gRPC route resource.
+                            gRPC route resource.
+
+                            ~> Exactly one type of actions `grpc_route_action` or `grpc_status_response_action` should be specified.
+                          items:
+                            properties:
+                              grpcMatch:
+                                description: |-
+                                  (Block List) Checks / prefix by default. (see below for nested schema)
+                                  Checks `/` prefix by default.
+                                items:
+                                  properties:
+                                    fqmn:
+                                      description: |-
+                                        (Block List, Max: 1) The path and fqmn blocks.
+                                        The `path` and `fqmn` blocks.
+
+                                        ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
+                                      items:
+                                        properties:
+                                          exact:
+                                            description: |-
+                                              (String) Match exactly.
+                                              Match exactly.
+                                            type: string
+                                          prefix:
+                                            description: |-
+                                              (String) Match prefix.
+                                              Match prefix.
+                                            type: string
+                                          regex:
+                                            description: |-
+                                              (String) Match regex.
+                                              Match regex.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              grpcRouteAction:
+                                description: |-
+                                  (Block List, Max: 1) gRPC route action resource.
+                                  gRPC route action resource.
+
+                                  ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
+                                items:
+                                  properties:
+                                    autoHostRewrite:
+                                      description: |-
+                                        (Boolean) If set, will automatically rewrite host.
+                                        If set, will automatically rewrite host.
+                                      type: boolean
+                                    backendGroupId:
+                                      description: |-
+                                        (String) Backend group to route requests.
+                                        Backend group to route requests.
+                                      type: string
+                                    hostRewrite:
+                                      description: |-
+                                        (String) Host rewrite specifier.
+                                        Host rewrite specifier.
+                                      type: string
+                                    idleTimeout:
+                                      description: |-
+                                        one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                        Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios - one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                      type: string
+                                    maxTimeout:
+                                      description: |-
+                                        timeout header). If not set, default is 60 seconds.
+                                        Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is 60 seconds.
+                                      type: string
+                                    rateLimit:
+                                      description: |-
+                                        (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                                        Rate limit configuration applied for a whole virtual host
+                                      items:
+                                        properties:
+                                          allRequests:
+                                            description: |-
+                                              (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                                              Rate limit configuration applied to all incoming requests
+                                            items:
+                                              properties:
+                                                perMinute:
+                                                  description: |-
+                                                    (Number) Limit value specified with per minute time unit
+                                                    Limit value specified with per minute time unit
+                                                  type: number
+                                                perSecond:
+                                                  description: |-
+                                                    (Number) Limit value specified with per second time unit
+                                                    Limit value specified with per second time unit
+                                                  type: number
+                                              type: object
+                                            type: array
+                                          requestsPerIp:
+                                            description: |-
+                                              (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                                              Rate limit configuration applied separately for each set of requests grouped by client IP address
+                                            items:
+                                              properties:
+                                                perMinute:
+                                                  description: |-
+                                                    (Number) Limit value specified with per minute time unit
+                                                    Limit value specified with per minute time unit
+                                                  type: number
+                                                perSecond:
+                                                  description: |-
+                                                    (Number) Limit value specified with per second time unit
+                                                    Limit value specified with per second time unit
+                                                  type: number
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              grpcStatusResponseAction:
+                                description: |-
+                                  (Block List, Max: 1) gRPC status response action resource. (see below for nested schema)
+                                  gRPC status response action resource.
+                                items:
+                                  properties:
+                                    status:
+                                      description: |-
+                                        (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+                                        The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        httpRoute:
+                          description: |-
+                            (Block List, Max: 1) HTTP route resource.
+                            HTTP route resource.
+
+                            ~> Exactly one type of actions `http_route_action` or `redirect_action` or `direct_response_action` should be specified.
+                          items:
+                            properties:
+                              directResponseAction:
+                                description: |-
+                                  (Block List, Max: 1) Direct response action resource. (see below for nested schema)
+                                  Direct response action resource.
+                                items:
+                                  properties:
+                                    body:
+                                      description: |-
+                                        (String) Response body text.
+                                        Response body text.
+                                      type: string
+                                    status:
+                                      description: |-
+                                        (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+                                        HTTP response status. Should be between `100` and `599`.
+                                      type: number
+                                  type: object
+                                type: array
+                              httpMatch:
+                                description: |-
+                                  (Block List) Checks / prefix by default. (see below for nested schema)
+                                  Checks `/` prefix by default.
+                                items:
+                                  properties:
+                                    httpMethod:
+                                      description: |-
+                                        (Set of String) List of methods (strings).
+                                        List of methods (strings).
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    path:
+                                      description: |-
+                                        (Block List, Max: 1) The path and fqmn blocks.
+                                        The `path` and `fqmn` blocks.
+
+                                        ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
+                                      items:
+                                        properties:
+                                          exact:
+                                            description: |-
+                                              (String) Match exactly.
+                                              Match exactly.
+                                            type: string
+                                          prefix:
+                                            description: |-
+                                              (String) Match prefix.
+                                              Match prefix.
+                                            type: string
+                                          regex:
+                                            description: |-
+                                              (String) Match regex.
+                                              Match regex.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              httpRouteAction:
+                                description: |-
+                                  (Block List, Max: 1) HTTP route action resource.
+                                  HTTP route action resource.
+
+                                  ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
+                                items:
+                                  properties:
+                                    autoHostRewrite:
+                                      description: |-
+                                        (Boolean) If set, will automatically rewrite host.
+                                        If set, will automatically rewrite host.
+                                      type: boolean
+                                    backendGroupId:
+                                      description: |-
+                                        (String) Backend group to route requests.
+                                        Backend group to route requests.
+                                      type: string
+                                    hostRewrite:
+                                      description: |-
+                                        (String) Host rewrite specifier.
+                                        Host rewrite specifier.
+                                      type: string
+                                    idleTimeout:
+                                      description: |-
+                                        one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                        Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                      type: string
+                                    prefixRewrite:
+                                      description: |-
+                                        (String) If not empty, matched path prefix will be replaced by this value.
+                                        If not empty, matched path prefix will be replaced by this value.
+                                      type: string
+                                    rateLimit:
+                                      description: |-
+                                        (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                                        Rate limit configuration applied for a whole virtual host
+                                      items:
+                                        properties:
+                                          allRequests:
+                                            description: |-
+                                              (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                                              Rate limit configuration applied to all incoming requests
+                                            items:
+                                              properties:
+                                                perMinute:
+                                                  description: |-
+                                                    (Number) Limit value specified with per minute time unit
+                                                    Limit value specified with per minute time unit
+                                                  type: number
+                                                perSecond:
+                                                  description: |-
+                                                    (Number) Limit value specified with per second time unit
+                                                    Limit value specified with per second time unit
+                                                  type: number
+                                              type: object
+                                            type: array
+                                          requestsPerIp:
+                                            description: |-
+                                              (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                                              Rate limit configuration applied separately for each set of requests grouped by client IP address
+                                            items:
+                                              properties:
+                                                perMinute:
+                                                  description: |-
+                                                    (Number) Limit value specified with per minute time unit
+                                                    Limit value specified with per minute time unit
+                                                  type: number
+                                                perSecond:
+                                                  description: |-
+                                                    (Number) Limit value specified with per second time unit
+                                                    Limit value specified with per second time unit
+                                                  type: number
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    regexRewrite:
+                                      description: |-
+                                        (Block List, Max: 1) Replacement for path substrings that match the pattern (see below for nested schema)
+                                        Replacement for path substrings that match the pattern
+                                      items:
+                                        properties:
+                                          regex:
+                                            description: |-
+                                              (String) Match regex.
+                                              RE2 regular expression
+                                            type: string
+                                          substitute:
+                                            description: |-
+                                              (String) The string which should be used to substitute matched substrings
+                                              The string which should be used to substitute matched substrings
+                                            type: string
+                                        type: object
+                                      type: array
+                                    timeout:
+                                      description: |-
+                                        (String) Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
+                                        Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
+                                      type: string
+                                    upgradeTypes:
+                                      description: |-
+                                        (Set of String) List of upgrade types. Only specified upgrade types will be allowed. For example, websocket.
+                                        List of upgrade types. Only specified upgrade types will be allowed. For example, `websocket`.
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                  type: object
+                                type: array
+                              redirectAction:
+                                description: |-
+                                  (Block List, Max: 1) Redirect action resource.
+                                  Redirect action resource.
+
+                                  ~> Only one type of paths `replace_path` or `replace_prefix` should be specified.
+                                items:
+                                  properties:
+                                    removeQuery:
+                                      description: |-
+                                        (Boolean) If set, remove query part.
+                                        If set, remove query part.
+                                      type: boolean
+                                    replaceHost:
+                                      description: |-
+                                        (String) Replaces hostname.
+                                        Replaces hostname.
+                                      type: string
+                                    replacePath:
+                                      description: |-
+                                        (String) Replace path.
+                                        Replace path.
+                                      type: string
+                                    replacePort:
+                                      description: |-
+                                        (Number) Replaces port.
+                                        Replaces port.
+                                      type: number
+                                    replacePrefix:
+                                      description: |-
+                                        (String) Replace only matched prefix. Example: match:{ prefix_match: /some }  redirect: { replace_prefix: /other }  will redirect /something to /otherthing.
+                                        Replace only matched prefix. Example:<br/> match:{ prefix_match: `/some` } <br/> redirect: { replace_prefix: `/other` } <br/> will redirect `/something` to `/otherthing`.
+                                      type: string
+                                    replaceScheme:
+                                      description: |-
+                                        (String) Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
+                                        Replaces scheme. If the original scheme is `http` or `https`, will also remove the 80 or 443 port, if present.
+                                      type: string
+                                    responseCode:
+                                      description: |-
+                                        (String) The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
+                                        The HTTP status code to use in the redirect response. Supported values are: `moved_permanently`, `found`, `see_other`, `temporary_redirect`, `permanent_redirect`.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the route.
+                          type: string
+                        routeOptions:
+                          description: |-
+                            (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                            Route options for the virtual host.
+                          items:
+                            properties:
+                              rbac:
+                                description: |-
+                                  (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                                  RBAC configuration.
+                                items:
+                                  properties:
+                                    action:
+                                      description: (String)
+                                      type: string
+                                    principals:
+                                      description: '(Block List, Min: 1) (see below
+                                        for nested schema)'
+                                      items:
+                                        properties:
+                                          andPrincipals:
+                                            description: '(Block List, Min: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                any:
+                                                  description: (Boolean)
+                                                  type: boolean
+                                                header:
+                                                  description: '(Block List, Max:
+                                                    1) (see below for nested schema)'
+                                                  items:
+                                                    properties:
+                                                      name:
+                                                        description: (String) The
+                                                          resource name.
+                                                        type: string
+                                                      value:
+                                                        description: |-
+                                                          (Block List, Max: 1) The path and fqmn blocks.
+                                                          The `path` and `fqmn` blocks.
+
+                                                          ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
+                                                        items:
+                                                          properties:
+                                                            exact:
+                                                              description: |-
+                                                                (String) Match exactly.
+                                                                Match exactly.
+                                                              type: string
+                                                            prefix:
+                                                              description: |-
+                                                                (String) Match prefix.
+                                                                Match prefix.
+                                                              type: string
+                                                            regex:
+                                                              description: |-
+                                                                (String) Match regex.
+                                                                Match regex.
+                                                              type: string
+                                                          type: object
+                                                        type: array
+                                                    type: object
+                                                  type: array
+                                                remoteIp:
+                                                  description: (String)
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              securityProfileId:
+                                description: |-
+                                  (String) SWS profile ID.
+                                  SWS profile ID.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  routeOptions:
+                    description: |-
+                      (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                      Route options for the virtual host.
+                    items:
+                      properties:
+                        rbac:
+                          description: |-
+                            (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                            RBAC configuration.
+                          items:
+                            properties:
+                              action:
+                                description: (String)
+                                type: string
+                              principals:
+                                description: '(Block List, Min: 1) (see below for
+                                  nested schema)'
+                                items:
+                                  properties:
+                                    andPrincipals:
+                                      description: '(Block List, Min: 1) (see below
+                                        for nested schema)'
+                                      items:
+                                        properties:
+                                          any:
+                                            description: (Boolean)
+                                            type: boolean
+                                          header:
+                                            description: '(Block List, Max: 1) (see
+                                              below for nested schema)'
+                                            items:
+                                              properties:
+                                                name:
+                                                  description: (String) The resource
+                                                    name.
+                                                  type: string
+                                                value:
+                                                  description: |-
+                                                    (Block List, Max: 1) The path and fqmn blocks.
+                                                    The `path` and `fqmn` blocks.
+
+                                                    ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
+                                                  items:
+                                                    properties:
+                                                      exact:
+                                                        description: |-
+                                                          (String) Match exactly.
+                                                          Match exactly.
+                                                        type: string
+                                                      prefix:
+                                                        description: |-
+                                                          (String) Match prefix.
+                                                          Match prefix.
+                                                        type: string
+                                                      regex:
+                                                        description: |-
+                                                          (String) Match regex.
+                                                          Match regex.
+                                                        type: string
+                                                    type: object
+                                                  type: array
+                                              type: object
+                                            type: array
+                                          remoteIp:
+                                            description: (String)
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        securityProfileId:
+                          description: |-
+                            (String) SWS profile ID.
+                            SWS profile ID.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

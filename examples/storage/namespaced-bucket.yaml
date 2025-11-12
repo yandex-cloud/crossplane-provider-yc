@@ -1,0 +1,18 @@
+# Example namespaced Bucket for Crossplane v2
+# This demonstrates a namespace-scoped MR using the new API group
+apiVersion: storage.yandex-cloud.m.jet.crossplane.io/v1alpha1
+kind: Bucket
+metadata:
+  name: example-namespaced-bucket
+  namespace: default
+  annotations:
+    uptest.upbound.io/conditions: 'Ready,Synced'
+  labels:
+    testing.upbound.io/example-name: storage-namespaced
+spec:
+  forProvider:
+    bucket: example-namespaced-bucket-${data.randomId}
+  # ProviderConfigRef can reference either ClusterProviderConfig or namespaced ProviderConfig
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: default

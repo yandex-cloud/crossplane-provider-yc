@@ -1,0 +1,18 @@
+# Example namespaced ProviderConfig for Crossplane v2
+# This is a namespace-scoped ProviderConfig that can be used by namespaced MRs
+apiVersion: yandex-cloud.m.jet.crossplane.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: default
+  namespace: crossplane-system
+  annotations:
+    upjet.upbound.io/manual-intervention: "Namespaced ProviderConfig for Crossplane v2 with local secret references."
+spec:
+  credentials:
+    cloudId: ${data.cloudId}
+    folderId: ${data.folderId}
+    source: Secret
+    # Secret reference is local to the namespace (no namespace field)
+    secretRef:
+      name: yc-creds
+      key: credentials.json

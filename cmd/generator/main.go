@@ -1,5 +1,5 @@
 /*
-Copyright 2024 YANDEX LLC
+Copyright 2022 YANDEX LLC
 This is modified version of the software, made by the Crossplane Authors
 and available at: https://github.com/crossplane-contrib/provider-jet-template
 
@@ -23,7 +23,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/crossplane/upjet/pkg/pipeline"
+	"github.com/crossplane/upjet/v2/pkg/pipeline"
 
 	"github.com/yandex-cloud/crossplane-provider-yc/config"
 )
@@ -37,5 +37,6 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("cannot calculate the absolute path with %s", rootDir))
 	}
-	pipeline.Run(config.GetProvider(), absRootDir)
+	// Run pipeline with both cluster-scoped and namespaced providers
+	pipeline.Run(config.GetProvider(), config.GetProviderNamespaced(), absRootDir)
 }

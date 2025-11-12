@@ -12,7 +12,7 @@ spec:
       name: example-sa-static-key
     secretKeySecretRef:
       name: sa-key-conn
-      namespace: upbound-system
+      namespace: crossplane-system
       key: attribute.secret_key
     bucket: example-bucket-${data.randomId}
     # acl: "public-read"

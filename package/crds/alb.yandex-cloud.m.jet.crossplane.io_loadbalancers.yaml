@@ -1,0 +1,2652 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: loadbalancers.alb.yandex-cloud.m.jet.crossplane.io
+spec:
+  group: alb.yandex-cloud.m.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - yandex-cloud
+    kind: LoadBalancer
+    listKind: LoadBalancerList
+    plural: loadbalancers
+    singular: loadbalancer
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: LoadBalancer is the Schema for the LoadBalancers API. A Load
+          Balancer is used for receiving incoming traffic and transmitting it to the
+          backend endpoints specified in the ALB Target Groups.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: LoadBalancerSpec defines the desired state of LoadBalancer
+            properties:
+              forProvider:
+                properties:
+                  allocationPolicy:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Allocation zones for the Load Balancer instance. (see below for nested schema)
+                      Allocation zones for the Load Balancer instance.
+                    items:
+                      properties:
+                        location:
+                          description: |-
+                            (Block Set, Min: 1) Unique set of locations. (see below for nested schema)
+                            Unique set of locations.
+                          items:
+                            properties:
+                              disableTraffic:
+                                description: |-
+                                  (Boolean) If set, will disable all L7 instances in the zone for request handling.
+                                  If set, will disable all L7 instances in the zone for request handling.
+                                type: boolean
+                              subnetId:
+                                description: |-
+                                  (String) ID of the subnet that location is located at.
+                                  ID of the subnet that location is located at.
+                                type: string
+                              subnetIdRef:
+                                description: Reference to a Subnet in vpc to populate
+                                  subnetId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the referenced object
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              subnetIdSelector:
+                                description: Selector for a Subnet in vpc to populate
+                                  subnetId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  namespace:
+                                    description: Namespace for the selector
+                                    type: string
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              zoneId:
+                                description: |-
+                                  (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                                  The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  allowZonalShift:
+                    description: |-
+                      (Boolean) Specifies whether application load balancer is available to zonal shift
+                      Specifies whether application load balancer is available to zonal shift
+                    type: boolean
+                  autoScalePolicy:
+                    description: |-
+                      (Block List, Max: 1) Scaling settings of the application load balancer. (see below for nested schema)
+                      Scaling settings of the application load balancer.
+                    items:
+                      properties:
+                        maxSize:
+                          description: |-
+                            (Number) Upper limit for total instance count (across all zones)
+                            Upper limit for total instance count (across all zones)
+                          type: number
+                        minZoneSize:
+                          description: |-
+                            (Number) Lower limit for instance count in each zone.
+                            Lower limit for instance count in each zone.
+                          type: number
+                      type: object
+                    type: array
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  listener:
+                    description: |-
+                      (Block List) List of listeners for the Load Balancer. (see below for nested schema)
+                      List of listeners for the Load Balancer.
+                    items:
+                      properties:
+                        endpoint:
+                          description: |-
+                            (Block List) Network endpoint (addresses and ports) of the listener. (see below for nested schema)
+                            Network endpoint (addresses and ports) of the listener.
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                  One or more addresses to listen on.
+                                items:
+                                  properties:
+                                    externalIpv4Address:
+                                      description: |-
+                                        (Block List, Max: 1) External IPv4 address. (see below for nested schema)
+                                        External IPv4 address.
+                                      items:
+                                        properties:
+                                          address:
+                                            description: |-
+                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              Provided by the client or computed automatically.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    externalIpv6Address:
+                                      description: |-
+                                        (Block List, Max: 1) External IPv6 address. (see below for nested schema)
+                                        External IPv6 address.
+                                      items:
+                                        properties:
+                                          address:
+                                            description: |-
+                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              Provided by the client or computed automatically.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    internalIpv4Address:
+                                      description: |-
+                                        (Block List, Max: 1) Internal IPv4 address. (see below for nested schema)
+                                        Internal IPv4 address.
+                                      items:
+                                        properties:
+                                          address:
+                                            description: |-
+                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              Provided by the client or computed automatically.
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String) ID of the subnet that location is located at.
+                                              ID of the subnet that the address belongs to.
+                                            type: string
+                                          subnetIdRef:
+                                            description: Reference to a Subnet in
+                                              vpc to populate subnetId.
+                                            properties:
+                                              name:
+                                                description: Name of the referenced
+                                                  object.
+                                                type: string
+                                              namespace:
+                                                description: Namespace of the referenced
+                                                  object
+                                                type: string
+                                              policy:
+                                                description: Policies for referencing.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            required:
+                                            - name
+                                            type: object
+                                          subnetIdSelector:
+                                            description: Selector for a Subnet in
+                                              vpc to populate subnetId.
+                                            properties:
+                                              matchControllerRef:
+                                                description: |-
+                                                  MatchControllerRef ensures an object with the same controller reference
+                                                  as the selecting object is selected.
+                                                type: boolean
+                                              matchLabels:
+                                                additionalProperties:
+                                                  type: string
+                                                description: MatchLabels ensures an
+                                                  object with matching labels is selected.
+                                                type: object
+                                              namespace:
+                                                description: Namespace for the selector
+                                                type: string
+                                              policy:
+                                                description: Policies for selection.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            type: object
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              ports:
+                                description: |-
+                                  (List of Number) One or more ports to listen on.
+                                  One or more ports to listen on.
+                                items:
+                                  type: number
+                                type: array
+                            type: object
+                          type: array
+                        http:
+                          description: |-
+                            (Block List, Max: 1) HTTP handler that sets plain text HTTP router. (see below for nested schema)
+                            HTTP handler that sets plain text HTTP router.
+                          items:
+                            properties:
+                              handler:
+                                description: |-
+                                  (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                  HTTP handler.
+                                items:
+                                  properties:
+                                    allowHttp10:
+                                      description: |-
+                                        (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                        If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                      type: boolean
+                                    http2Options:
+                                      description: |-
+                                        (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                        If set, will enable HTTP2 protocol for the handler.
+                                      items:
+                                        properties:
+                                          maxConcurrentStreams:
+                                            description: |-
+                                              (Number) Maximum number of concurrent streams.
+                                              Maximum number of concurrent streams.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    httpRouterId:
+                                      description: |-
+                                        (String) HTTP router id.
+                                        HTTP router id.
+                                      type: string
+                                    httpRouterIdRef:
+                                      description: Reference to a HTTPRouter to populate
+                                        httpRouterId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the referenced
+                                            object
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    httpRouterIdSelector:
+                                      description: Selector for a HTTPRouter to populate
+                                        httpRouterId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        namespace:
+                                          description: Namespace for the selector
+                                          type: string
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                    rewriteRequestId:
+                                      description: |-
+                                        request-id header, otherwise would rewrite it with a new value.
+                                        When unset, will preserve the incoming `x-request-id` header, otherwise would rewrite it with a new value.
+                                      type: boolean
+                                  type: object
+                                type: array
+                              redirects:
+                                description: |-
+                                  > https redirects. (see below for nested schema)
+                                  Shortcut for adding http -> https redirects.
+                                items:
+                                  properties:
+                                    httpToHttps:
+                                      description: |-
+                                        (Boolean) If set redirects all unencrypted HTTP requests to the same URI with scheme changed to https.
+                                        If set redirects all unencrypted HTTP requests to the same URI with scheme changed to `https`.
+                                      type: boolean
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the listener.
+                          type: string
+                        stream:
+                          description: |-
+                            (Block List, Max: 1) Stream configuration (see below for nested schema)
+                            Stream configuration
+                          items:
+                            properties:
+                              handler:
+                                description: |-
+                                  (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                  Stream handler resource.
+                                items:
+                                  properties:
+                                    backendGroupId:
+                                      description: |-
+                                        (String) Backend Group ID.
+                                        Backend Group ID.
+                                      type: string
+                                    idleTimeout:
+                                      description: |-
+                                        (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                        The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        tls:
+                          description: |-
+                            (Block List, Max: 1) TLS configuration (see below for nested schema)
+                            TLS configuration
+                          items:
+                            properties:
+                              defaultHandler:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) TLS handler resource. (see below for nested schema)
+                                  TLS handler resource.
+                                items:
+                                  properties:
+                                    certificateIds:
+                                      description: |-
+                                        (Set of String) Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                        Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    httpHandler:
+                                      description: |-
+                                        (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                        HTTP handler.
+                                      items:
+                                        properties:
+                                          allowHttp10:
+                                            description: |-
+                                              (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                              If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                            type: boolean
+                                          http2Options:
+                                            description: |-
+                                              (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                              If set, will enable HTTP2 protocol for the handler.
+                                            items:
+                                              properties:
+                                                maxConcurrentStreams:
+                                                  description: |-
+                                                    (Number) Maximum number of concurrent streams.
+                                                    Maximum number of concurrent streams.
+                                                  type: number
+                                              type: object
+                                            type: array
+                                          httpRouterId:
+                                            description: |-
+                                              (String) HTTP router id.
+                                              HTTP router id.
+                                            type: string
+                                          rewriteRequestId:
+                                            description: |-
+                                              request-id header, otherwise would rewrite it with a new value.
+                                              When unset, will preserve the incoming `x-request-id` header, otherwise would rewrite it with a new value.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    streamHandler:
+                                      description: |-
+                                        (Block List, Max: 1) Stream handler resource. (see below for nested schema)
+                                        Stream handler resource.
+                                      items:
+                                        properties:
+                                          backendGroupId:
+                                            description: |-
+                                              (String) Backend Group ID.
+                                              Backend Group ID.
+                                            type: string
+                                          idleTimeout:
+                                            description: |-
+                                              (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                              The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              sniHandler:
+                                description: |-
+                                  (Block List) Settings for handling requests with Server Name Indication (SNI) (see below for nested schema)
+                                  Settings for handling requests with Server Name Indication (SNI)
+                                items:
+                                  properties:
+                                    handler:
+                                      description: |-
+                                        (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                        TLS handler resource.
+                                      items:
+                                        properties:
+                                          certificateIds:
+                                            description: |-
+                                              (Set of String) Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                              Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                            items:
+                                              type: string
+                                            type: array
+                                            x-kubernetes-list-type: set
+                                          httpHandler:
+                                            description: |-
+                                              (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                              HTTP handler.
+                                            items:
+                                              properties:
+                                                allowHttp10:
+                                                  description: |-
+                                                    (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                                    If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                                  type: boolean
+                                                http2Options:
+                                                  description: |-
+                                                    (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                                    If set, will enable HTTP2 protocol for the handler.
+                                                  items:
+                                                    properties:
+                                                      maxConcurrentStreams:
+                                                        description: |-
+                                                          (Number) Maximum number of concurrent streams.
+                                                          Maximum number of concurrent streams.
+                                                        type: number
+                                                    type: object
+                                                  type: array
+                                                httpRouterId:
+                                                  description: |-
+                                                    (String) HTTP router id.
+                                                    HTTP router id.
+                                                  type: string
+                                                rewriteRequestId:
+                                                  description: |-
+                                                    request-id header, otherwise would rewrite it with a new value.
+                                                    When unset, will preserve the incoming `x-request-id` header, otherwise would rewrite it with a new value.
+                                                  type: boolean
+                                              type: object
+                                            type: array
+                                          streamHandler:
+                                            description: |-
+                                              (Block List, Max: 1) Stream handler resource. (see below for nested schema)
+                                              Stream handler resource.
+                                            items:
+                                              properties:
+                                                backendGroupId:
+                                                  description: |-
+                                                    (String) Backend Group ID.
+                                                    Backend Group ID.
+                                                  type: string
+                                                idleTimeout:
+                                                  description: |-
+                                                    (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                                    The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    name:
+                                      description: |-
+                                        (String) The resource name.
+                                        Name of the SNI handler
+                                      type: string
+                                    serverNames:
+                                      description: |-
+                                        (Set of String) Server names that are matched by the SNI handler
+                                        Server names that are matched by the SNI handler
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  logOptions:
+                    description: |-
+                      (Block List, Max: 1) Cloud Logging settings. (see below for nested schema)
+                      Cloud Logging settings.
+                    items:
+                      properties:
+                        disable:
+                          description: |-
+                            (Boolean) Set to true to disable Cloud Logging for the balancer.
+                            Set to `true` to disable Cloud Logging for the balancer.
+                          type: boolean
+                        discardRule:
+                          description: |-
+                            (Block List) List of rules to discard a fraction of logs. (see below for nested schema)
+                            List of rules to discard a fraction of logs.
+                          items:
+                            properties:
+                              discardPercent:
+                                description: |-
+                                  (Number) The percent of logs which will be discarded.
+                                  The percent of logs which will be discarded.
+                                type: number
+                              grpcCodes:
+                                description: |-
+                                  (List of String) list of grpc codes by name, e.g, [NOT_FOUND, RESOURCE_EXHAUSTED].
+                                  list of grpc codes by name, e.g, [**NOT_FOUND**, **RESOURCE_EXHAUSTED**].
+                                items:
+                                  type: string
+                                type: array
+                              httpCodeIntervals:
+                                description: |-
+                                  5XX or ALL
+                                  List of http code intervals *1XX*-*5XX* or *ALL*
+                                items:
+                                  type: string
+                                type: array
+                              httpCodes:
+                                description: |-
+                                  599.
+                                  List of http codes *100*-*599*.
+                                items:
+                                  type: number
+                                type: array
+                            type: object
+                          type: array
+                        logGroupId:
+                          description: |-
+                            (String) Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+                            Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  networkId:
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
+                    type: string
+                  networkIdRef:
+                    description: Reference to a Network in vpc to populate networkId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: Selector for a Network in vpc to populate networkId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  regionId:
+                    description: |-
+                      (String) The region ID where Load Balancer is located at.
+                      The region ID where Load Balancer is located at.
+                    type: string
+                  securityGroupIds:
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  securityGroupIdsRefs:
+                    description: References to SecurityGroup in vpc to populate securityGroupIds.
+                    items:
+                      description: A NamespacedReference to a named object.
+                      properties:
+                        name:
+                          description: Name of the referenced object.
+                          type: string
+                        namespace:
+                          description: Namespace of the referenced object
+                          type: string
+                        policy:
+                          description: Policies for referencing.
+                          properties:
+                            resolution:
+                              default: Required
+                              description: |-
+                                Resolution specifies whether resolution of this reference is required.
+                                The default is 'Required', which means the reconcile will fail if the
+                                reference cannot be resolved. 'Optional' means this reference will be
+                                a no-op if it cannot be resolved.
+                              enum:
+                              - Required
+                              - Optional
+                              type: string
+                            resolve:
+                              description: |-
+                                Resolve specifies when this reference should be resolved. The default
+                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                the corresponding field is not present. Use 'Always' to resolve the
+                                reference on every reconcile.
+                              enum:
+                              - Always
+                              - IfNotPresent
+                              type: string
+                          type: object
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  securityGroupIdsSelector:
+                    description: Selector for a list of SecurityGroup in vpc to populate
+                      securityGroupIds.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  allocationPolicy:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Allocation zones for the Load Balancer instance. (see below for nested schema)
+                      Allocation zones for the Load Balancer instance.
+                    items:
+                      properties:
+                        location:
+                          description: |-
+                            (Block Set, Min: 1) Unique set of locations. (see below for nested schema)
+                            Unique set of locations.
+                          items:
+                            properties:
+                              disableTraffic:
+                                description: |-
+                                  (Boolean) If set, will disable all L7 instances in the zone for request handling.
+                                  If set, will disable all L7 instances in the zone for request handling.
+                                type: boolean
+                              subnetId:
+                                description: |-
+                                  (String) ID of the subnet that location is located at.
+                                  ID of the subnet that location is located at.
+                                type: string
+                              subnetIdRef:
+                                description: Reference to a Subnet in vpc to populate
+                                  subnetId.
+                                properties:
+                                  name:
+                                    description: Name of the referenced object.
+                                    type: string
+                                  namespace:
+                                    description: Namespace of the referenced object
+                                    type: string
+                                  policy:
+                                    description: Policies for referencing.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                required:
+                                - name
+                                type: object
+                              subnetIdSelector:
+                                description: Selector for a Subnet in vpc to populate
+                                  subnetId.
+                                properties:
+                                  matchControllerRef:
+                                    description: |-
+                                      MatchControllerRef ensures an object with the same controller reference
+                                      as the selecting object is selected.
+                                    type: boolean
+                                  matchLabels:
+                                    additionalProperties:
+                                      type: string
+                                    description: MatchLabels ensures an object with
+                                      matching labels is selected.
+                                    type: object
+                                  namespace:
+                                    description: Namespace for the selector
+                                    type: string
+                                  policy:
+                                    description: Policies for selection.
+                                    properties:
+                                      resolution:
+                                        default: Required
+                                        description: |-
+                                          Resolution specifies whether resolution of this reference is required.
+                                          The default is 'Required', which means the reconcile will fail if the
+                                          reference cannot be resolved. 'Optional' means this reference will be
+                                          a no-op if it cannot be resolved.
+                                        enum:
+                                        - Required
+                                        - Optional
+                                        type: string
+                                      resolve:
+                                        description: |-
+                                          Resolve specifies when this reference should be resolved. The default
+                                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                                          the corresponding field is not present. Use 'Always' to resolve the
+                                          reference on every reconcile.
+                                        enum:
+                                        - Always
+                                        - IfNotPresent
+                                        type: string
+                                    type: object
+                                type: object
+                              zoneId:
+                                description: |-
+                                  (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                                  The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  allowZonalShift:
+                    description: |-
+                      (Boolean) Specifies whether application load balancer is available to zonal shift
+                      Specifies whether application load balancer is available to zonal shift
+                    type: boolean
+                  autoScalePolicy:
+                    description: |-
+                      (Block List, Max: 1) Scaling settings of the application load balancer. (see below for nested schema)
+                      Scaling settings of the application load balancer.
+                    items:
+                      properties:
+                        maxSize:
+                          description: |-
+                            (Number) Upper limit for total instance count (across all zones)
+                            Upper limit for total instance count (across all zones)
+                          type: number
+                        minZoneSize:
+                          description: |-
+                            (Number) Lower limit for instance count in each zone.
+                            Lower limit for instance count in each zone.
+                          type: number
+                      type: object
+                    type: array
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  listener:
+                    description: |-
+                      (Block List) List of listeners for the Load Balancer. (see below for nested schema)
+                      List of listeners for the Load Balancer.
+                    items:
+                      properties:
+                        endpoint:
+                          description: |-
+                            (Block List) Network endpoint (addresses and ports) of the listener. (see below for nested schema)
+                            Network endpoint (addresses and ports) of the listener.
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                  One or more addresses to listen on.
+                                items:
+                                  properties:
+                                    externalIpv4Address:
+                                      description: |-
+                                        (Block List, Max: 1) External IPv4 address. (see below for nested schema)
+                                        External IPv4 address.
+                                      items:
+                                        properties:
+                                          address:
+                                            description: |-
+                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              Provided by the client or computed automatically.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    externalIpv6Address:
+                                      description: |-
+                                        (Block List, Max: 1) External IPv6 address. (see below for nested schema)
+                                        External IPv6 address.
+                                      items:
+                                        properties:
+                                          address:
+                                            description: |-
+                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              Provided by the client or computed automatically.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    internalIpv4Address:
+                                      description: |-
+                                        (Block List, Max: 1) Internal IPv4 address. (see below for nested schema)
+                                        Internal IPv4 address.
+                                      items:
+                                        properties:
+                                          address:
+                                            description: |-
+                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              Provided by the client or computed automatically.
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String) ID of the subnet that location is located at.
+                                              ID of the subnet that the address belongs to.
+                                            type: string
+                                          subnetIdRef:
+                                            description: Reference to a Subnet in
+                                              vpc to populate subnetId.
+                                            properties:
+                                              name:
+                                                description: Name of the referenced
+                                                  object.
+                                                type: string
+                                              namespace:
+                                                description: Namespace of the referenced
+                                                  object
+                                                type: string
+                                              policy:
+                                                description: Policies for referencing.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            required:
+                                            - name
+                                            type: object
+                                          subnetIdSelector:
+                                            description: Selector for a Subnet in
+                                              vpc to populate subnetId.
+                                            properties:
+                                              matchControllerRef:
+                                                description: |-
+                                                  MatchControllerRef ensures an object with the same controller reference
+                                                  as the selecting object is selected.
+                                                type: boolean
+                                              matchLabels:
+                                                additionalProperties:
+                                                  type: string
+                                                description: MatchLabels ensures an
+                                                  object with matching labels is selected.
+                                                type: object
+                                              namespace:
+                                                description: Namespace for the selector
+                                                type: string
+                                              policy:
+                                                description: Policies for selection.
+                                                properties:
+                                                  resolution:
+                                                    default: Required
+                                                    description: |-
+                                                      Resolution specifies whether resolution of this reference is required.
+                                                      The default is 'Required', which means the reconcile will fail if the
+                                                      reference cannot be resolved. 'Optional' means this reference will be
+                                                      a no-op if it cannot be resolved.
+                                                    enum:
+                                                    - Required
+                                                    - Optional
+                                                    type: string
+                                                  resolve:
+                                                    description: |-
+                                                      Resolve specifies when this reference should be resolved. The default
+                                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                      the corresponding field is not present. Use 'Always' to resolve the
+                                                      reference on every reconcile.
+                                                    enum:
+                                                    - Always
+                                                    - IfNotPresent
+                                                    type: string
+                                                type: object
+                                            type: object
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              ports:
+                                description: |-
+                                  (List of Number) One or more ports to listen on.
+                                  One or more ports to listen on.
+                                items:
+                                  type: number
+                                type: array
+                            type: object
+                          type: array
+                        http:
+                          description: |-
+                            (Block List, Max: 1) HTTP handler that sets plain text HTTP router. (see below for nested schema)
+                            HTTP handler that sets plain text HTTP router.
+                          items:
+                            properties:
+                              handler:
+                                description: |-
+                                  (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                  HTTP handler.
+                                items:
+                                  properties:
+                                    allowHttp10:
+                                      description: |-
+                                        (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                        If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                      type: boolean
+                                    http2Options:
+                                      description: |-
+                                        (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                        If set, will enable HTTP2 protocol for the handler.
+                                      items:
+                                        properties:
+                                          maxConcurrentStreams:
+                                            description: |-
+                                              (Number) Maximum number of concurrent streams.
+                                              Maximum number of concurrent streams.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    httpRouterId:
+                                      description: |-
+                                        (String) HTTP router id.
+                                        HTTP router id.
+                                      type: string
+                                    httpRouterIdRef:
+                                      description: Reference to a HTTPRouter to populate
+                                        httpRouterId.
+                                      properties:
+                                        name:
+                                          description: Name of the referenced object.
+                                          type: string
+                                        namespace:
+                                          description: Namespace of the referenced
+                                            object
+                                          type: string
+                                        policy:
+                                          description: Policies for referencing.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      required:
+                                      - name
+                                      type: object
+                                    httpRouterIdSelector:
+                                      description: Selector for a HTTPRouter to populate
+                                        httpRouterId.
+                                      properties:
+                                        matchControllerRef:
+                                          description: |-
+                                            MatchControllerRef ensures an object with the same controller reference
+                                            as the selecting object is selected.
+                                          type: boolean
+                                        matchLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: MatchLabels ensures an object
+                                            with matching labels is selected.
+                                          type: object
+                                        namespace:
+                                          description: Namespace for the selector
+                                          type: string
+                                        policy:
+                                          description: Policies for selection.
+                                          properties:
+                                            resolution:
+                                              default: Required
+                                              description: |-
+                                                Resolution specifies whether resolution of this reference is required.
+                                                The default is 'Required', which means the reconcile will fail if the
+                                                reference cannot be resolved. 'Optional' means this reference will be
+                                                a no-op if it cannot be resolved.
+                                              enum:
+                                              - Required
+                                              - Optional
+                                              type: string
+                                            resolve:
+                                              description: |-
+                                                Resolve specifies when this reference should be resolved. The default
+                                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                                the corresponding field is not present. Use 'Always' to resolve the
+                                                reference on every reconcile.
+                                              enum:
+                                              - Always
+                                              - IfNotPresent
+                                              type: string
+                                          type: object
+                                      type: object
+                                    rewriteRequestId:
+                                      description: |-
+                                        request-id header, otherwise would rewrite it with a new value.
+                                        When unset, will preserve the incoming `x-request-id` header, otherwise would rewrite it with a new value.
+                                      type: boolean
+                                  type: object
+                                type: array
+                              redirects:
+                                description: |-
+                                  > https redirects. (see below for nested schema)
+                                  Shortcut for adding http -> https redirects.
+                                items:
+                                  properties:
+                                    httpToHttps:
+                                      description: |-
+                                        (Boolean) If set redirects all unencrypted HTTP requests to the same URI with scheme changed to https.
+                                        If set redirects all unencrypted HTTP requests to the same URI with scheme changed to `https`.
+                                      type: boolean
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the listener.
+                          type: string
+                        stream:
+                          description: |-
+                            (Block List, Max: 1) Stream configuration (see below for nested schema)
+                            Stream configuration
+                          items:
+                            properties:
+                              handler:
+                                description: |-
+                                  (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                  Stream handler resource.
+                                items:
+                                  properties:
+                                    backendGroupId:
+                                      description: |-
+                                        (String) Backend Group ID.
+                                        Backend Group ID.
+                                      type: string
+                                    idleTimeout:
+                                      description: |-
+                                        (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                        The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        tls:
+                          description: |-
+                            (Block List, Max: 1) TLS configuration (see below for nested schema)
+                            TLS configuration
+                          items:
+                            properties:
+                              defaultHandler:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) TLS handler resource. (see below for nested schema)
+                                  TLS handler resource.
+                                items:
+                                  properties:
+                                    certificateIds:
+                                      description: |-
+                                        (Set of String) Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                        Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    httpHandler:
+                                      description: |-
+                                        (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                        HTTP handler.
+                                      items:
+                                        properties:
+                                          allowHttp10:
+                                            description: |-
+                                              (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                              If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                            type: boolean
+                                          http2Options:
+                                            description: |-
+                                              (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                              If set, will enable HTTP2 protocol for the handler.
+                                            items:
+                                              properties:
+                                                maxConcurrentStreams:
+                                                  description: |-
+                                                    (Number) Maximum number of concurrent streams.
+                                                    Maximum number of concurrent streams.
+                                                  type: number
+                                              type: object
+                                            type: array
+                                          httpRouterId:
+                                            description: |-
+                                              (String) HTTP router id.
+                                              HTTP router id.
+                                            type: string
+                                          rewriteRequestId:
+                                            description: |-
+                                              request-id header, otherwise would rewrite it with a new value.
+                                              When unset, will preserve the incoming `x-request-id` header, otherwise would rewrite it with a new value.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    streamHandler:
+                                      description: |-
+                                        (Block List, Max: 1) Stream handler resource. (see below for nested schema)
+                                        Stream handler resource.
+                                      items:
+                                        properties:
+                                          backendGroupId:
+                                            description: |-
+                                              (String) Backend Group ID.
+                                              Backend Group ID.
+                                            type: string
+                                          idleTimeout:
+                                            description: |-
+                                              (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                              The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              sniHandler:
+                                description: |-
+                                  (Block List) Settings for handling requests with Server Name Indication (SNI) (see below for nested schema)
+                                  Settings for handling requests with Server Name Indication (SNI)
+                                items:
+                                  properties:
+                                    handler:
+                                      description: |-
+                                        (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                        TLS handler resource.
+                                      items:
+                                        properties:
+                                          certificateIds:
+                                            description: |-
+                                              (Set of String) Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                              Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                            items:
+                                              type: string
+                                            type: array
+                                            x-kubernetes-list-type: set
+                                          httpHandler:
+                                            description: |-
+                                              (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                              HTTP handler.
+                                            items:
+                                              properties:
+                                                allowHttp10:
+                                                  description: |-
+                                                    (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                                    If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                                  type: boolean
+                                                http2Options:
+                                                  description: |-
+                                                    (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                                    If set, will enable HTTP2 protocol for the handler.
+                                                  items:
+                                                    properties:
+                                                      maxConcurrentStreams:
+                                                        description: |-
+                                                          (Number) Maximum number of concurrent streams.
+                                                          Maximum number of concurrent streams.
+                                                        type: number
+                                                    type: object
+                                                  type: array
+                                                httpRouterId:
+                                                  description: |-
+                                                    (String) HTTP router id.
+                                                    HTTP router id.
+                                                  type: string
+                                                rewriteRequestId:
+                                                  description: |-
+                                                    request-id header, otherwise would rewrite it with a new value.
+                                                    When unset, will preserve the incoming `x-request-id` header, otherwise would rewrite it with a new value.
+                                                  type: boolean
+                                              type: object
+                                            type: array
+                                          streamHandler:
+                                            description: |-
+                                              (Block List, Max: 1) Stream handler resource. (see below for nested schema)
+                                              Stream handler resource.
+                                            items:
+                                              properties:
+                                                backendGroupId:
+                                                  description: |-
+                                                    (String) Backend Group ID.
+                                                    Backend Group ID.
+                                                  type: string
+                                                idleTimeout:
+                                                  description: |-
+                                                    (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                                    The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    name:
+                                      description: |-
+                                        (String) The resource name.
+                                        Name of the SNI handler
+                                      type: string
+                                    serverNames:
+                                      description: |-
+                                        (Set of String) Server names that are matched by the SNI handler
+                                        Server names that are matched by the SNI handler
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  logOptions:
+                    description: |-
+                      (Block List, Max: 1) Cloud Logging settings. (see below for nested schema)
+                      Cloud Logging settings.
+                    items:
+                      properties:
+                        disable:
+                          description: |-
+                            (Boolean) Set to true to disable Cloud Logging for the balancer.
+                            Set to `true` to disable Cloud Logging for the balancer.
+                          type: boolean
+                        discardRule:
+                          description: |-
+                            (Block List) List of rules to discard a fraction of logs. (see below for nested schema)
+                            List of rules to discard a fraction of logs.
+                          items:
+                            properties:
+                              discardPercent:
+                                description: |-
+                                  (Number) The percent of logs which will be discarded.
+                                  The percent of logs which will be discarded.
+                                type: number
+                              grpcCodes:
+                                description: |-
+                                  (List of String) list of grpc codes by name, e.g, [NOT_FOUND, RESOURCE_EXHAUSTED].
+                                  list of grpc codes by name, e.g, [**NOT_FOUND**, **RESOURCE_EXHAUSTED**].
+                                items:
+                                  type: string
+                                type: array
+                              httpCodeIntervals:
+                                description: |-
+                                  5XX or ALL
+                                  List of http code intervals *1XX*-*5XX* or *ALL*
+                                items:
+                                  type: string
+                                type: array
+                              httpCodes:
+                                description: |-
+                                  599.
+                                  List of http codes *100*-*599*.
+                                items:
+                                  type: number
+                                type: array
+                            type: object
+                          type: array
+                        logGroupId:
+                          description: |-
+                            (String) Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+                            Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  networkId:
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
+                    type: string
+                  networkIdRef:
+                    description: Reference to a Network in vpc to populate networkId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: Selector for a Network in vpc to populate networkId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  regionId:
+                    description: |-
+                      (String) The region ID where Load Balancer is located at.
+                      The region ID where Load Balancer is located at.
+                    type: string
+                  securityGroupIds:
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  securityGroupIdsRefs:
+                    description: References to SecurityGroup in vpc to populate securityGroupIds.
+                    items:
+                      description: A NamespacedReference to a named object.
+                      properties:
+                        name:
+                          description: Name of the referenced object.
+                          type: string
+                        namespace:
+                          description: Namespace of the referenced object
+                          type: string
+                        policy:
+                          description: Policies for referencing.
+                          properties:
+                            resolution:
+                              default: Required
+                              description: |-
+                                Resolution specifies whether resolution of this reference is required.
+                                The default is 'Required', which means the reconcile will fail if the
+                                reference cannot be resolved. 'Optional' means this reference will be
+                                a no-op if it cannot be resolved.
+                              enum:
+                              - Required
+                              - Optional
+                              type: string
+                            resolve:
+                              description: |-
+                                Resolve specifies when this reference should be resolved. The default
+                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                the corresponding field is not present. Use 'Always' to resolve the
+                                reference on every reconcile.
+                              enum:
+                              - Always
+                              - IfNotPresent
+                              type: string
+                          type: object
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  securityGroupIdsSelector:
+                    description: Selector for a list of SecurityGroup in vpc to populate
+                      securityGroupIds.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.allocationPolicy is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.allocationPolicy)
+                || (has(self.initProvider) && has(self.initProvider.allocationPolicy))'
+          status:
+            description: LoadBalancerStatus defines the observed state of LoadBalancer.
+            properties:
+              atProvider:
+                properties:
+                  allocationPolicy:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Allocation zones for the Load Balancer instance. (see below for nested schema)
+                      Allocation zones for the Load Balancer instance.
+                    items:
+                      properties:
+                        location:
+                          description: |-
+                            (Block Set, Min: 1) Unique set of locations. (see below for nested schema)
+                            Unique set of locations.
+                          items:
+                            properties:
+                              disableTraffic:
+                                description: |-
+                                  (Boolean) If set, will disable all L7 instances in the zone for request handling.
+                                  If set, will disable all L7 instances in the zone for request handling.
+                                type: boolean
+                              subnetId:
+                                description: |-
+                                  (String) ID of the subnet that location is located at.
+                                  ID of the subnet that location is located at.
+                                type: string
+                              zoneId:
+                                description: |-
+                                  (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                                  The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  allowZonalShift:
+                    description: |-
+                      (Boolean) Specifies whether application load balancer is available to zonal shift
+                      Specifies whether application load balancer is available to zonal shift
+                    type: boolean
+                  autoScalePolicy:
+                    description: |-
+                      (Block List, Max: 1) Scaling settings of the application load balancer. (see below for nested schema)
+                      Scaling settings of the application load balancer.
+                    items:
+                      properties:
+                        maxSize:
+                          description: |-
+                            (Number) Upper limit for total instance count (across all zones)
+                            Upper limit for total instance count (across all zones)
+                          type: number
+                        minZoneSize:
+                          description: |-
+                            (Number) Lower limit for instance count in each zone.
+                            Lower limit for instance count in each zone.
+                          type: number
+                      type: object
+                    type: array
+                  createdAt:
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
+                    type: string
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  listener:
+                    description: |-
+                      (Block List) List of listeners for the Load Balancer. (see below for nested schema)
+                      List of listeners for the Load Balancer.
+                    items:
+                      properties:
+                        endpoint:
+                          description: |-
+                            (Block List) Network endpoint (addresses and ports) of the listener. (see below for nested schema)
+                            Network endpoint (addresses and ports) of the listener.
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                  One or more addresses to listen on.
+                                items:
+                                  properties:
+                                    externalIpv4Address:
+                                      description: |-
+                                        (Block List, Max: 1) External IPv4 address. (see below for nested schema)
+                                        External IPv4 address.
+                                      items:
+                                        properties:
+                                          address:
+                                            description: |-
+                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              Provided by the client or computed automatically.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    externalIpv6Address:
+                                      description: |-
+                                        (Block List, Max: 1) External IPv6 address. (see below for nested schema)
+                                        External IPv6 address.
+                                      items:
+                                        properties:
+                                          address:
+                                            description: |-
+                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              Provided by the client or computed automatically.
+                                            type: string
+                                        type: object
+                                      type: array
+                                    internalIpv4Address:
+                                      description: |-
+                                        (Block List, Max: 1) Internal IPv4 address. (see below for nested schema)
+                                        Internal IPv4 address.
+                                      items:
+                                        properties:
+                                          address:
+                                            description: |-
+                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              Provided by the client or computed automatically.
+                                            type: string
+                                          subnetId:
+                                            description: |-
+                                              (String) ID of the subnet that location is located at.
+                                              ID of the subnet that the address belongs to.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              ports:
+                                description: |-
+                                  (List of Number) One or more ports to listen on.
+                                  One or more ports to listen on.
+                                items:
+                                  type: number
+                                type: array
+                            type: object
+                          type: array
+                        http:
+                          description: |-
+                            (Block List, Max: 1) HTTP handler that sets plain text HTTP router. (see below for nested schema)
+                            HTTP handler that sets plain text HTTP router.
+                          items:
+                            properties:
+                              handler:
+                                description: |-
+                                  (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                  HTTP handler.
+                                items:
+                                  properties:
+                                    allowHttp10:
+                                      description: |-
+                                        (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                        If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                      type: boolean
+                                    http2Options:
+                                      description: |-
+                                        (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                        If set, will enable HTTP2 protocol for the handler.
+                                      items:
+                                        properties:
+                                          maxConcurrentStreams:
+                                            description: |-
+                                              (Number) Maximum number of concurrent streams.
+                                              Maximum number of concurrent streams.
+                                            type: number
+                                        type: object
+                                      type: array
+                                    httpRouterId:
+                                      description: |-
+                                        (String) HTTP router id.
+                                        HTTP router id.
+                                      type: string
+                                    rewriteRequestId:
+                                      description: |-
+                                        request-id header, otherwise would rewrite it with a new value.
+                                        When unset, will preserve the incoming `x-request-id` header, otherwise would rewrite it with a new value.
+                                      type: boolean
+                                  type: object
+                                type: array
+                              redirects:
+                                description: |-
+                                  > https redirects. (see below for nested schema)
+                                  Shortcut for adding http -> https redirects.
+                                items:
+                                  properties:
+                                    httpToHttps:
+                                      description: |-
+                                        (Boolean) If set redirects all unencrypted HTTP requests to the same URI with scheme changed to https.
+                                        If set redirects all unencrypted HTTP requests to the same URI with scheme changed to `https`.
+                                      type: boolean
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the listener.
+                          type: string
+                        stream:
+                          description: |-
+                            (Block List, Max: 1) Stream configuration (see below for nested schema)
+                            Stream configuration
+                          items:
+                            properties:
+                              handler:
+                                description: |-
+                                  (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                  Stream handler resource.
+                                items:
+                                  properties:
+                                    backendGroupId:
+                                      description: |-
+                                        (String) Backend Group ID.
+                                        Backend Group ID.
+                                      type: string
+                                    idleTimeout:
+                                      description: |-
+                                        (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                        The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        tls:
+                          description: |-
+                            (Block List, Max: 1) TLS configuration (see below for nested schema)
+                            TLS configuration
+                          items:
+                            properties:
+                              defaultHandler:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) TLS handler resource. (see below for nested schema)
+                                  TLS handler resource.
+                                items:
+                                  properties:
+                                    certificateIds:
+                                      description: |-
+                                        (Set of String) Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                        Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                    httpHandler:
+                                      description: |-
+                                        (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                        HTTP handler.
+                                      items:
+                                        properties:
+                                          allowHttp10:
+                                            description: |-
+                                              (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                              If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                            type: boolean
+                                          http2Options:
+                                            description: |-
+                                              (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                              If set, will enable HTTP2 protocol for the handler.
+                                            items:
+                                              properties:
+                                                maxConcurrentStreams:
+                                                  description: |-
+                                                    (Number) Maximum number of concurrent streams.
+                                                    Maximum number of concurrent streams.
+                                                  type: number
+                                              type: object
+                                            type: array
+                                          httpRouterId:
+                                            description: |-
+                                              (String) HTTP router id.
+                                              HTTP router id.
+                                            type: string
+                                          rewriteRequestId:
+                                            description: |-
+                                              request-id header, otherwise would rewrite it with a new value.
+                                              When unset, will preserve the incoming `x-request-id` header, otherwise would rewrite it with a new value.
+                                            type: boolean
+                                        type: object
+                                      type: array
+                                    streamHandler:
+                                      description: |-
+                                        (Block List, Max: 1) Stream handler resource. (see below for nested schema)
+                                        Stream handler resource.
+                                      items:
+                                        properties:
+                                          backendGroupId:
+                                            description: |-
+                                              (String) Backend Group ID.
+                                              Backend Group ID.
+                                            type: string
+                                          idleTimeout:
+                                            description: |-
+                                              (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                              The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                            type: string
+                                        type: object
+                                      type: array
+                                  type: object
+                                type: array
+                              sniHandler:
+                                description: |-
+                                  (Block List) Settings for handling requests with Server Name Indication (SNI) (see below for nested schema)
+                                  Settings for handling requests with Server Name Indication (SNI)
+                                items:
+                                  properties:
+                                    handler:
+                                      description: |-
+                                        (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                        TLS handler resource.
+                                      items:
+                                        properties:
+                                          certificateIds:
+                                            description: |-
+                                              (Set of String) Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                              Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                            items:
+                                              type: string
+                                            type: array
+                                            x-kubernetes-list-type: set
+                                          httpHandler:
+                                            description: |-
+                                              (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                              HTTP handler.
+                                            items:
+                                              properties:
+                                                allowHttp10:
+                                                  description: |-
+                                                    (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                                    If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                                  type: boolean
+                                                http2Options:
+                                                  description: |-
+                                                    (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                                    If set, will enable HTTP2 protocol for the handler.
+                                                  items:
+                                                    properties:
+                                                      maxConcurrentStreams:
+                                                        description: |-
+                                                          (Number) Maximum number of concurrent streams.
+                                                          Maximum number of concurrent streams.
+                                                        type: number
+                                                    type: object
+                                                  type: array
+                                                httpRouterId:
+                                                  description: |-
+                                                    (String) HTTP router id.
+                                                    HTTP router id.
+                                                  type: string
+                                                rewriteRequestId:
+                                                  description: |-
+                                                    request-id header, otherwise would rewrite it with a new value.
+                                                    When unset, will preserve the incoming `x-request-id` header, otherwise would rewrite it with a new value.
+                                                  type: boolean
+                                              type: object
+                                            type: array
+                                          streamHandler:
+                                            description: |-
+                                              (Block List, Max: 1) Stream handler resource. (see below for nested schema)
+                                              Stream handler resource.
+                                            items:
+                                              properties:
+                                                backendGroupId:
+                                                  description: |-
+                                                    (String) Backend Group ID.
+                                                    Backend Group ID.
+                                                  type: string
+                                                idleTimeout:
+                                                  description: |-
+                                                    (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                                    The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                                  type: string
+                                              type: object
+                                            type: array
+                                        type: object
+                                      type: array
+                                    name:
+                                      description: |-
+                                        (String) The resource name.
+                                        Name of the SNI handler
+                                      type: string
+                                    serverNames:
+                                      description: |-
+                                        (Set of String) Server names that are matched by the SNI handler
+                                        Server names that are matched by the SNI handler
+                                      items:
+                                        type: string
+                                      type: array
+                                      x-kubernetes-list-type: set
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  logGroupId:
+                    description: |-
+                      (String) Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+                      Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+                    type: string
+                  logOptions:
+                    description: |-
+                      (Block List, Max: 1) Cloud Logging settings. (see below for nested schema)
+                      Cloud Logging settings.
+                    items:
+                      properties:
+                        disable:
+                          description: |-
+                            (Boolean) Set to true to disable Cloud Logging for the balancer.
+                            Set to `true` to disable Cloud Logging for the balancer.
+                          type: boolean
+                        discardRule:
+                          description: |-
+                            (Block List) List of rules to discard a fraction of logs. (see below for nested schema)
+                            List of rules to discard a fraction of logs.
+                          items:
+                            properties:
+                              discardPercent:
+                                description: |-
+                                  (Number) The percent of logs which will be discarded.
+                                  The percent of logs which will be discarded.
+                                type: number
+                              grpcCodes:
+                                description: |-
+                                  (List of String) list of grpc codes by name, e.g, [NOT_FOUND, RESOURCE_EXHAUSTED].
+                                  list of grpc codes by name, e.g, [**NOT_FOUND**, **RESOURCE_EXHAUSTED**].
+                                items:
+                                  type: string
+                                type: array
+                              httpCodeIntervals:
+                                description: |-
+                                  5XX or ALL
+                                  List of http code intervals *1XX*-*5XX* or *ALL*
+                                items:
+                                  type: string
+                                type: array
+                              httpCodes:
+                                description: |-
+                                  599.
+                                  List of http codes *100*-*599*.
+                                items:
+                                  type: number
+                                type: array
+                            type: object
+                          type: array
+                        logGroupId:
+                          description: |-
+                            (String) Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+                            Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  networkId:
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
+                    type: string
+                  regionId:
+                    description: |-
+                      (String) The region ID where Load Balancer is located at.
+                      The region ID where Load Balancer is located at.
+                    type: string
+                  securityGroupIds:
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  status:
+                    description: |-
+                      (String) Status of the Load Balancer.
+                      Status of the Load Balancer.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

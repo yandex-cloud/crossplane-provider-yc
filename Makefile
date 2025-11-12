@@ -1,3 +1,19 @@
+# Copyright 2022 YANDEX LLC
+# This is modified version of the software, made by the Crossplane Authors
+# and available at: https://github.com/crossplane-contrib/provider-jet-template
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # ====================================================================================
 # Setup Project
 
@@ -52,7 +68,7 @@ NPROCS ?= 1
 # to half the number of CPU cores.
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
-GO_REQUIRED_VERSION ?= 1.21
+GO_REQUIRED_VERSION ?= 1.24
 GOLANGCILINT_VERSION ?= 1.55.1
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
@@ -63,11 +79,11 @@ GO111MODULE = on
 # ====================================================================================
 # Setup Kubernetes tools
 
-KIND_VERSION = v0.19.0
-UP_VERSION = v0.28.0
+KIND_VERSION = v0.30.0
+UP_VERSION = v0.41.0
 UP_CHANNEL = stable
-UPTEST_VERSION = v1.1.2
--include build/makelib/k8s_tools.mk
+UPTEST_VERSION = v2.2.0
+-include build/k8s_tools.mk
 
 # ====================================================================================
 # Setup Images
@@ -106,7 +122,7 @@ xpkg.build.crossplane-provider-yc: do.build.images
 
 # NOTE(hasheddan): we ensure up is installed prior to running platform-specific
 # build steps in parallel to avoid encountering an installation race condition.
-build.init: $(UP)
+build.init: $(UP) $(CROSSPLANE_CLI)
 
 # ====================================================================================
 # Setup Terraform for fetching provider schema
@@ -207,9 +223,10 @@ run: go.build
 
 # ====================================================================================
 # End to End Testing
-CROSSPLANE_NAMESPACE = upbound-system
--include build/makelib/local.xpkg.mk
--include build/makelib/controlplane.mk
+CROSSPLANE_NAMESPACE = crossplane-system
+# CROSSPLANE_VERSION = 2.1.0
+-include build/local.xpkg.mk
+-include build/controlplane.mk
 
 # This target requires the following environment variables to be set:
 UPTEST_EXAMPLE_LIST ?= $(shell ./hack/examples.sh ./examples)
@@ -253,15 +270,15 @@ uptest: $(CROSSPLANE_UPTEST) $(KUBECTL) $(CHAINSAW) $(CROSSPLANE_CLI)
 controlplane.up-cloud:$(UP) $(KUBECTL)
 	@echo "##teamcity[blockOpened name='crossplane' description='set up Crossplane']"
 	@$(INFO) setting up controlplane
-	@$(KUBECTL) -n upbound-system get cm universal-crossplane-config >/dev/null 2>&1 || $(UP) uxp install
-	@$(KUBECTL) -n upbound-system wait deploy crossplane --for condition=Available --timeout=120s
+	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) get cm universal-crossplane-config >/dev/null 2>&1 || $(UP) uxp install
+	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) wait deploy crossplane --for condition=Available --timeout=120s
 	@$(OK) setting up controlplane
 	@echo "##teamcity[blockClosed name='crossplane']"
 
 local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
 	@$(INFO) running locally built provider
 	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
-	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
+	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) wait --for=condition=Available deployment --all --timeout=5m
 	@$(OK) running locally built provider
 
 cloud-reg:
@@ -287,7 +304,7 @@ cloud-deploy: tc-build controlplane.up-cloud cloud.xpkg.deploy.provider
 	$(eval export PATH=$(PATH):$(TOOLS_HOST_DIR))
 	@ln -s $(KUBECTL) $(TOOLS_HOST_DIR)/kubectl
 	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
-	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
+	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) wait --for=condition=Available deployment --all --timeout=5m
 	@$(OK) running locally built provider
 	@echo "##teamcity[blockClosed name='deploy']"
 

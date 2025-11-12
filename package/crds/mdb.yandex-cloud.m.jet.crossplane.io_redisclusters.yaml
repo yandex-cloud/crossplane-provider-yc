@@ -1,0 +1,1962 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: redisclusters.mdb.yandex-cloud.m.jet.crossplane.io
+spec:
+  group: mdb.yandex-cloud.m.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - yandex-cloud
+    kind: RedisCluster
+    listKind: RedisClusterList
+    plural: redisclusters
+    singular: rediscluster
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: RedisCluster is the Schema for the RedisClusters API. Manages
+          a Redis cluster within Yandex Cloud.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: RedisClusterSpec defines the desired state of RedisCluster
+            properties:
+              forProvider:
+                properties:
+                  access:
+                    description: |-
+                      (Block List, Max: 1) Access policy to the Redis cluster. (see below for nested schema)
+                      Access policy to the Redis cluster.
+                    items:
+                      properties:
+                        dataLens:
+                          description: |-
+                            (Boolean) Allow access for DataLens. Can be either true or false.
+                            Allow access for DataLens. Can be either `true` or `false`.
+                          type: boolean
+                        webSql:
+                          description: |-
+                            (Boolean) Allow access for Web SQL. Can be either true or false.
+                            Allow access for Web SQL. Can be either `true` or `false`.
+                          type: boolean
+                      type: object
+                    type: array
+                  announceHostnames:
+                    description: |-
+                      (Boolean) Announce fqdn instead of ip address.
+                      Announce fqdn instead of ip address.
+                    type: boolean
+                  authSentinel:
+                    description: |-
+                      (Boolean) Allows to use ACL users to auth in sentinel
+                      Allows to use ACL users to auth in sentinel
+                    type: boolean
+                  config:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the Redis cluster. (see below for nested schema)
+                      Configuration of the Redis cluster.
+                    items:
+                      properties:
+                        allowDataLoss:
+                          description: |-
+                            (Boolean) Allows some data to be lost in favor of faster switchover/restart by RDSync.
+                            Allows some data to be lost in favor of faster switchover/restart by RDSync.
+                          type: boolean
+                        backupWindowStart:
+                          description: |-
+                            (Block List, Max: 1) Time to start the daily backup, in the UTC timezone. (see below for nested schema)
+                            Time to start the daily backup, in the UTC timezone.
+                          items:
+                            properties:
+                              hours:
+                                description: |-
+                                  (Number) The hour at which backup will be started.
+                                  The hour at which backup will be started.
+                                format: int64
+                                type: integer
+                              minutes:
+                                description: |-
+                                  (Number) The minute at which backup will be started.
+                                  The minute at which backup will be started.
+                                format: int64
+                                type: integer
+                            type: object
+                          type: array
+                        clientOutputBufferLimitNormal:
+                          description: |-
+                            (String) Normal clients output buffer limits. See redis config file.
+                            Normal clients output buffer limits. See [redis config file](https://github.com/redis/redis/blob/6.2/redis.conf#L1841).
+                          type: string
+                        clientOutputBufferLimitPubsub:
+                          description: |-
+                            (String) Pubsub clients output buffer limits. See redis config file.
+                            Pubsub clients output buffer limits. See [redis config file](https://github.com/redis/redis/blob/6.2/redis.conf#L1843).
+                          type: string
+                        clusterAllowPubsubshardWhenDown:
+                          description: |-
+                            (Boolean) Permits Pub/Sub shard operations when cluster is down.
+                            Permits Pub/Sub shard operations when cluster is down.
+                          type: boolean
+                        clusterAllowReadsWhenDown:
+                          description: |-
+                            (Boolean) Allows read operations when cluster is down.
+                            Allows read operations when cluster is down.
+                          type: boolean
+                        clusterRequireFullCoverage:
+                          description: |-
+                            (Boolean) Controls whether all hash slots must be covered by nodes.
+                            Controls whether all hash slots must be covered by nodes.
+                          type: boolean
+                        databases:
+                          description: |-
+                            server restart).
+                            Number of databases (changing requires redis-server restart).
+                          format: int64
+                          type: integer
+                        ioThreadsAllowed:
+                          description: |-
+                            threads.
+                            Allow Redis to use io-threads.
+                          type: boolean
+                        lfuDecayTime:
+                          description: |-
+                            (Number) The time, in minutes, that must elapse in order for the key counter to be divided by two (or decremented if it has a value less <= 10).
+                            The time, in minutes, that must elapse in order for the key counter to be divided by two (or decremented if it has a value less <= 10).
+                          format: int64
+                          type: integer
+                        lfuLogFactor:
+                          description: |-
+                            (Number) Determines how the frequency counter represents key hits.
+                            Determines how the frequency counter represents key hits.
+                          format: int64
+                          type: integer
+                        luaTimeLimit:
+                          description: |-
+                            (Number) Maximum time in milliseconds for Lua scripts.
+                            Maximum time in milliseconds for Lua scripts.
+                          format: int64
+                          type: integer
+                        maxmemoryPercent:
+                          description: |-
+                            (Number) Redis maxmemory usage in percent
+                            Redis maxmemory usage in percent
+                          format: int64
+                          type: integer
+                        maxmemoryPolicy:
+                          description: |-
+                            (String) Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in the official RedisDB documentation.
+                            Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in [the official RedisDB documentation](https://docs.redislabs.com/latest/rs/administering/database-operations/eviction-policy/).
+                          type: string
+                        notifyKeyspaceEvents:
+                          description: |-
+                            (String) Select the events that Redis will notify among a set of classes.
+                            Select the events that Redis will notify among a set of classes.
+                          type: string
+                        passwordSecretRef:
+                          description: |-
+                            (String, Sensitive) Password for the Redis cluster.
+                            Password for the Redis cluster.
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                        replBacklogSizePercent:
+                          description: |-
+                            (Number) Replication backlog size as a percentage of flavor maxmemory.
+                            Replication backlog size as a percentage of flavor maxmemory.
+                          format: int64
+                          type: integer
+                        slowlogLogSlowerThan:
+                          description: |-
+                            (Number) Log slow queries below this number in microseconds.
+                            Log slow queries below this number in microseconds.
+                          format: int64
+                          type: integer
+                        slowlogMaxLen:
+                          description: |-
+                            (Number) Slow queries log length.
+                            Slow queries log length.
+                          format: int64
+                          type: integer
+                        timeout:
+                          description: |-
+                            (Number) Close the connection after a client is idle for N seconds.
+                            Close the connection after a client is idle for N seconds.
+                          format: int64
+                          type: integer
+                        turnBeforeSwitchover:
+                          description: |-
+                            (Boolean) Allows to turn before switchover in RDSync.
+                            Allows to turn before switchover in RDSync.
+                          type: boolean
+                        useLuajit:
+                          description: |-
+                            (Boolean) Use JIT for lua scripts and functions.
+                            Use JIT for lua scripts and functions.
+                          type: boolean
+                        version:
+                          description: |-
+                            (String) Version of Redis.
+                            Version of Redis.
+                          type: string
+                        zsetMaxListpackEntries:
+                          description: |-
+                            efficient listpack to CPU-efficient hash table and skiplist
+                            Controls max number of entries in zset before conversion from memory-efficient listpack to CPU-efficient hash table and skiplist
+                          format: int64
+                          type: integer
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
+                    type: boolean
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  diskSizeAutoscaling:
+                    description: |-
+                      (Block List, Max: 1) Disk size autoscaling settings. (see below for nested schema)
+                      Disk size autoscaling settings.
+                    items:
+                      properties:
+                        diskSizeLimit:
+                          description: |-
+                            (Number) Limit of disk size after autoscaling (GiB).
+                            Limit of disk size after autoscaling (GiB).
+                          format: int64
+                          type: integer
+                        emergencyUsageThreshold:
+                          description: |-
+                            (Number) Immediate autoscaling disk usage (percent).
+                            Immediate autoscaling disk usage (percent).
+                          format: int64
+                          type: integer
+                        plannedUsageThreshold:
+                          description: |-
+                            (Number) Maintenance window autoscaling disk usage (percent).
+                            Maintenance window autoscaling disk usage (percent).
+                          format: int64
+                          type: integer
+                      type: object
+                    type: array
+                  environment:
+                    description: |-
+                      (String) Deployment environment of the Redis cluster. Can be either PRESTABLE or PRODUCTION.
+                      Deployment environment of the Redis cluster. Can be either `PRESTABLE` or `PRODUCTION`.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  host:
+                    description: |-
+                      (Block List, Min: 1) A host of the Redis cluster. (see below for nested schema)
+                      A host of the Redis cluster.
+                    items:
+                      properties:
+                        assignPublicIp:
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address or not.
+                            Sets whether the host should get a public IP address or not.
+                          type: boolean
+                        replicaPriority:
+                          description: |-
+                            sharded only).
+                            Replica priority of a current replica (usable for non-sharded only).
+                          format: int64
+                          type: integer
+                        shardName:
+                          description: |-
+                            (String) The name of the shard to which the host belongs.
+                            The name of the shard to which the host belongs.
+                          type: string
+                        subnetId:
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in vpc to populate subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in vpc to populate subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        zone:
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                          type: string
+                      type: object
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  maintenanceWindow:
+                    description: |-
+                      (Block List, Max: 1) Maintenance window settings. (see below for nested schema)
+                      Maintenance window settings.
+                    items:
+                      properties:
+                        day:
+                          description: |-
+                            (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+                            Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
+                          type: string
+                        hour:
+                          description: |-
+                            24) for maintenance window if window type is weekly.
+                            Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
+                          format: int64
+                          type: integer
+                        type:
+                          description: |-
+                            (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  networkId:
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
+                    type: string
+                  networkIdRef:
+                    description: Reference to a Network in vpc to populate networkId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: Selector for a Network in vpc to populate networkId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  persistenceMode:
+                    description: |-
+                      (String) Persistence mode. Possible values: ON, OFF.
+                      Persistence mode. Possible values: `ON`, `OFF`.
+                    type: string
+                  resources:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Redis cluster. (see below for nested schema)
+                      Resources allocated to hosts of the Redis cluster.
+                    items:
+                      properties:
+                        diskSize:
+                          description: |-
+                            (Number) Volume of the storage available to a host, in gigabytes.
+                            Volume of the storage available to a host, in gigabytes.
+                          format: int64
+                          type: integer
+                        diskTypeId:
+                          description: |-
+                            environment default is used if missing.
+                            Type of the storage of Redis hosts - environment default is used if missing.
+                          type: string
+                        resourcePresetId:
+                          description: |-
+                            (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                            The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-redis/concepts).
+                          type: string
+                      type: object
+                    type: array
+                  securityGroupIds:
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  securityGroupIdsRefs:
+                    description: References to SecurityGroup in vpc to populate securityGroupIds.
+                    items:
+                      description: A NamespacedReference to a named object.
+                      properties:
+                        name:
+                          description: Name of the referenced object.
+                          type: string
+                        namespace:
+                          description: Namespace of the referenced object
+                          type: string
+                        policy:
+                          description: Policies for referencing.
+                          properties:
+                            resolution:
+                              default: Required
+                              description: |-
+                                Resolution specifies whether resolution of this reference is required.
+                                The default is 'Required', which means the reconcile will fail if the
+                                reference cannot be resolved. 'Optional' means this reference will be
+                                a no-op if it cannot be resolved.
+                              enum:
+                              - Required
+                              - Optional
+                              type: string
+                            resolve:
+                              description: |-
+                                Resolve specifies when this reference should be resolved. The default
+                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                the corresponding field is not present. Use 'Always' to resolve the
+                                reference on every reconcile.
+                              enum:
+                              - Always
+                              - IfNotPresent
+                              type: string
+                          type: object
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  securityGroupIdsSelector:
+                    description: Selector for a list of SecurityGroup in vpc to populate
+                      securityGroupIds.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  sharded:
+                    description: |-
+                      sharded. If cluster is sharded - disabling is not allowed.
+                      Redis Cluster mode enabled/disabled. Enables sharding when cluster non-sharded. If cluster is sharded - disabling is not allowed.
+                    type: boolean
+                  tlsEnabled:
+                    description: |-
+                      (Boolean) TLS support mode enabled/disabled.
+                      TLS support mode enabled/disabled.
+                    type: boolean
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  access:
+                    description: |-
+                      (Block List, Max: 1) Access policy to the Redis cluster. (see below for nested schema)
+                      Access policy to the Redis cluster.
+                    items:
+                      properties:
+                        dataLens:
+                          description: |-
+                            (Boolean) Allow access for DataLens. Can be either true or false.
+                            Allow access for DataLens. Can be either `true` or `false`.
+                          type: boolean
+                        webSql:
+                          description: |-
+                            (Boolean) Allow access for Web SQL. Can be either true or false.
+                            Allow access for Web SQL. Can be either `true` or `false`.
+                          type: boolean
+                      type: object
+                    type: array
+                  announceHostnames:
+                    description: |-
+                      (Boolean) Announce fqdn instead of ip address.
+                      Announce fqdn instead of ip address.
+                    type: boolean
+                  authSentinel:
+                    description: |-
+                      (Boolean) Allows to use ACL users to auth in sentinel
+                      Allows to use ACL users to auth in sentinel
+                    type: boolean
+                  config:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the Redis cluster. (see below for nested schema)
+                      Configuration of the Redis cluster.
+                    items:
+                      properties:
+                        allowDataLoss:
+                          description: |-
+                            (Boolean) Allows some data to be lost in favor of faster switchover/restart by RDSync.
+                            Allows some data to be lost in favor of faster switchover/restart by RDSync.
+                          type: boolean
+                        backupWindowStart:
+                          description: |-
+                            (Block List, Max: 1) Time to start the daily backup, in the UTC timezone. (see below for nested schema)
+                            Time to start the daily backup, in the UTC timezone.
+                          items:
+                            properties:
+                              hours:
+                                description: |-
+                                  (Number) The hour at which backup will be started.
+                                  The hour at which backup will be started.
+                                format: int64
+                                type: integer
+                              minutes:
+                                description: |-
+                                  (Number) The minute at which backup will be started.
+                                  The minute at which backup will be started.
+                                format: int64
+                                type: integer
+                            type: object
+                          type: array
+                        clientOutputBufferLimitNormal:
+                          description: |-
+                            (String) Normal clients output buffer limits. See redis config file.
+                            Normal clients output buffer limits. See [redis config file](https://github.com/redis/redis/blob/6.2/redis.conf#L1841).
+                          type: string
+                        clientOutputBufferLimitPubsub:
+                          description: |-
+                            (String) Pubsub clients output buffer limits. See redis config file.
+                            Pubsub clients output buffer limits. See [redis config file](https://github.com/redis/redis/blob/6.2/redis.conf#L1843).
+                          type: string
+                        clusterAllowPubsubshardWhenDown:
+                          description: |-
+                            (Boolean) Permits Pub/Sub shard operations when cluster is down.
+                            Permits Pub/Sub shard operations when cluster is down.
+                          type: boolean
+                        clusterAllowReadsWhenDown:
+                          description: |-
+                            (Boolean) Allows read operations when cluster is down.
+                            Allows read operations when cluster is down.
+                          type: boolean
+                        clusterRequireFullCoverage:
+                          description: |-
+                            (Boolean) Controls whether all hash slots must be covered by nodes.
+                            Controls whether all hash slots must be covered by nodes.
+                          type: boolean
+                        databases:
+                          description: |-
+                            server restart).
+                            Number of databases (changing requires redis-server restart).
+                          format: int64
+                          type: integer
+                        ioThreadsAllowed:
+                          description: |-
+                            threads.
+                            Allow Redis to use io-threads.
+                          type: boolean
+                        lfuDecayTime:
+                          description: |-
+                            (Number) The time, in minutes, that must elapse in order for the key counter to be divided by two (or decremented if it has a value less <= 10).
+                            The time, in minutes, that must elapse in order for the key counter to be divided by two (or decremented if it has a value less <= 10).
+                          format: int64
+                          type: integer
+                        lfuLogFactor:
+                          description: |-
+                            (Number) Determines how the frequency counter represents key hits.
+                            Determines how the frequency counter represents key hits.
+                          format: int64
+                          type: integer
+                        luaTimeLimit:
+                          description: |-
+                            (Number) Maximum time in milliseconds for Lua scripts.
+                            Maximum time in milliseconds for Lua scripts.
+                          format: int64
+                          type: integer
+                        maxmemoryPercent:
+                          description: |-
+                            (Number) Redis maxmemory usage in percent
+                            Redis maxmemory usage in percent
+                          format: int64
+                          type: integer
+                        maxmemoryPolicy:
+                          description: |-
+                            (String) Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in the official RedisDB documentation.
+                            Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in [the official RedisDB documentation](https://docs.redislabs.com/latest/rs/administering/database-operations/eviction-policy/).
+                          type: string
+                        notifyKeyspaceEvents:
+                          description: |-
+                            (String) Select the events that Redis will notify among a set of classes.
+                            Select the events that Redis will notify among a set of classes.
+                          type: string
+                        passwordSecretRef:
+                          description: |-
+                            (String, Sensitive) Password for the Redis cluster.
+                            Password for the Redis cluster.
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                        replBacklogSizePercent:
+                          description: |-
+                            (Number) Replication backlog size as a percentage of flavor maxmemory.
+                            Replication backlog size as a percentage of flavor maxmemory.
+                          format: int64
+                          type: integer
+                        slowlogLogSlowerThan:
+                          description: |-
+                            (Number) Log slow queries below this number in microseconds.
+                            Log slow queries below this number in microseconds.
+                          format: int64
+                          type: integer
+                        slowlogMaxLen:
+                          description: |-
+                            (Number) Slow queries log length.
+                            Slow queries log length.
+                          format: int64
+                          type: integer
+                        timeout:
+                          description: |-
+                            (Number) Close the connection after a client is idle for N seconds.
+                            Close the connection after a client is idle for N seconds.
+                          format: int64
+                          type: integer
+                        turnBeforeSwitchover:
+                          description: |-
+                            (Boolean) Allows to turn before switchover in RDSync.
+                            Allows to turn before switchover in RDSync.
+                          type: boolean
+                        useLuajit:
+                          description: |-
+                            (Boolean) Use JIT for lua scripts and functions.
+                            Use JIT for lua scripts and functions.
+                          type: boolean
+                        version:
+                          description: |-
+                            (String) Version of Redis.
+                            Version of Redis.
+                          type: string
+                        zsetMaxListpackEntries:
+                          description: |-
+                            efficient listpack to CPU-efficient hash table and skiplist
+                            Controls max number of entries in zset before conversion from memory-efficient listpack to CPU-efficient hash table and skiplist
+                          format: int64
+                          type: integer
+                      required:
+                      - passwordSecretRef
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
+                    type: boolean
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  diskSizeAutoscaling:
+                    description: |-
+                      (Block List, Max: 1) Disk size autoscaling settings. (see below for nested schema)
+                      Disk size autoscaling settings.
+                    items:
+                      properties:
+                        diskSizeLimit:
+                          description: |-
+                            (Number) Limit of disk size after autoscaling (GiB).
+                            Limit of disk size after autoscaling (GiB).
+                          format: int64
+                          type: integer
+                        emergencyUsageThreshold:
+                          description: |-
+                            (Number) Immediate autoscaling disk usage (percent).
+                            Immediate autoscaling disk usage (percent).
+                          format: int64
+                          type: integer
+                        plannedUsageThreshold:
+                          description: |-
+                            (Number) Maintenance window autoscaling disk usage (percent).
+                            Maintenance window autoscaling disk usage (percent).
+                          format: int64
+                          type: integer
+                      type: object
+                    type: array
+                  environment:
+                    description: |-
+                      (String) Deployment environment of the Redis cluster. Can be either PRESTABLE or PRODUCTION.
+                      Deployment environment of the Redis cluster. Can be either `PRESTABLE` or `PRODUCTION`.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  host:
+                    description: |-
+                      (Block List, Min: 1) A host of the Redis cluster. (see below for nested schema)
+                      A host of the Redis cluster.
+                    items:
+                      properties:
+                        assignPublicIp:
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address or not.
+                            Sets whether the host should get a public IP address or not.
+                          type: boolean
+                        replicaPriority:
+                          description: |-
+                            sharded only).
+                            Replica priority of a current replica (usable for non-sharded only).
+                          format: int64
+                          type: integer
+                        shardName:
+                          description: |-
+                            (String) The name of the shard to which the host belongs.
+                            The name of the shard to which the host belongs.
+                          type: string
+                        subnetId:
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in vpc to populate subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in vpc to populate subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        zone:
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                          type: string
+                      type: object
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  maintenanceWindow:
+                    description: |-
+                      (Block List, Max: 1) Maintenance window settings. (see below for nested schema)
+                      Maintenance window settings.
+                    items:
+                      properties:
+                        day:
+                          description: |-
+                            (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+                            Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
+                          type: string
+                        hour:
+                          description: |-
+                            24) for maintenance window if window type is weekly.
+                            Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
+                          format: int64
+                          type: integer
+                        type:
+                          description: |-
+                            (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  networkId:
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
+                    type: string
+                  networkIdRef:
+                    description: Reference to a Network in vpc to populate networkId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: Selector for a Network in vpc to populate networkId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  persistenceMode:
+                    description: |-
+                      (String) Persistence mode. Possible values: ON, OFF.
+                      Persistence mode. Possible values: `ON`, `OFF`.
+                    type: string
+                  resources:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Redis cluster. (see below for nested schema)
+                      Resources allocated to hosts of the Redis cluster.
+                    items:
+                      properties:
+                        diskSize:
+                          description: |-
+                            (Number) Volume of the storage available to a host, in gigabytes.
+                            Volume of the storage available to a host, in gigabytes.
+                          format: int64
+                          type: integer
+                        diskTypeId:
+                          description: |-
+                            environment default is used if missing.
+                            Type of the storage of Redis hosts - environment default is used if missing.
+                          type: string
+                        resourcePresetId:
+                          description: |-
+                            (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                            The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-redis/concepts).
+                          type: string
+                      type: object
+                    type: array
+                  securityGroupIds:
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  securityGroupIdsRefs:
+                    description: References to SecurityGroup in vpc to populate securityGroupIds.
+                    items:
+                      description: A NamespacedReference to a named object.
+                      properties:
+                        name:
+                          description: Name of the referenced object.
+                          type: string
+                        namespace:
+                          description: Namespace of the referenced object
+                          type: string
+                        policy:
+                          description: Policies for referencing.
+                          properties:
+                            resolution:
+                              default: Required
+                              description: |-
+                                Resolution specifies whether resolution of this reference is required.
+                                The default is 'Required', which means the reconcile will fail if the
+                                reference cannot be resolved. 'Optional' means this reference will be
+                                a no-op if it cannot be resolved.
+                              enum:
+                              - Required
+                              - Optional
+                              type: string
+                            resolve:
+                              description: |-
+                                Resolve specifies when this reference should be resolved. The default
+                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                the corresponding field is not present. Use 'Always' to resolve the
+                                reference on every reconcile.
+                              enum:
+                              - Always
+                              - IfNotPresent
+                              type: string
+                          type: object
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  securityGroupIdsSelector:
+                    description: Selector for a list of SecurityGroup in vpc to populate
+                      securityGroupIds.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  sharded:
+                    description: |-
+                      sharded. If cluster is sharded - disabling is not allowed.
+                      Redis Cluster mode enabled/disabled. Enables sharding when cluster non-sharded. If cluster is sharded - disabling is not allowed.
+                    type: boolean
+                  tlsEnabled:
+                    description: |-
+                      (Boolean) TLS support mode enabled/disabled.
+                      TLS support mode enabled/disabled.
+                    type: boolean
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.config is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.config)
+                || (has(self.initProvider) && has(self.initProvider.config))'
+            - message: spec.forProvider.environment is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.environment)
+                || (has(self.initProvider) && has(self.initProvider.environment))'
+            - message: spec.forProvider.host is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.host)
+                || (has(self.initProvider) && has(self.initProvider.host))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.resources is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.resources)
+                || (has(self.initProvider) && has(self.initProvider.resources))'
+          status:
+            description: RedisClusterStatus defines the observed state of RedisCluster.
+            properties:
+              atProvider:
+                properties:
+                  access:
+                    description: |-
+                      (Block List, Max: 1) Access policy to the Redis cluster. (see below for nested schema)
+                      Access policy to the Redis cluster.
+                    items:
+                      properties:
+                        dataLens:
+                          description: |-
+                            (Boolean) Allow access for DataLens. Can be either true or false.
+                            Allow access for DataLens. Can be either `true` or `false`.
+                          type: boolean
+                        webSql:
+                          description: |-
+                            (Boolean) Allow access for Web SQL. Can be either true or false.
+                            Allow access for Web SQL. Can be either `true` or `false`.
+                          type: boolean
+                      type: object
+                    type: array
+                  announceHostnames:
+                    description: |-
+                      (Boolean) Announce fqdn instead of ip address.
+                      Announce fqdn instead of ip address.
+                    type: boolean
+                  authSentinel:
+                    description: |-
+                      (Boolean) Allows to use ACL users to auth in sentinel
+                      Allows to use ACL users to auth in sentinel
+                    type: boolean
+                  config:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the Redis cluster. (see below for nested schema)
+                      Configuration of the Redis cluster.
+                    items:
+                      properties:
+                        allowDataLoss:
+                          description: |-
+                            (Boolean) Allows some data to be lost in favor of faster switchover/restart by RDSync.
+                            Allows some data to be lost in favor of faster switchover/restart by RDSync.
+                          type: boolean
+                        backupWindowStart:
+                          description: |-
+                            (Block List, Max: 1) Time to start the daily backup, in the UTC timezone. (see below for nested schema)
+                            Time to start the daily backup, in the UTC timezone.
+                          items:
+                            properties:
+                              hours:
+                                description: |-
+                                  (Number) The hour at which backup will be started.
+                                  The hour at which backup will be started.
+                                format: int64
+                                type: integer
+                              minutes:
+                                description: |-
+                                  (Number) The minute at which backup will be started.
+                                  The minute at which backup will be started.
+                                format: int64
+                                type: integer
+                            type: object
+                          type: array
+                        clientOutputBufferLimitNormal:
+                          description: |-
+                            (String) Normal clients output buffer limits. See redis config file.
+                            Normal clients output buffer limits. See [redis config file](https://github.com/redis/redis/blob/6.2/redis.conf#L1841).
+                          type: string
+                        clientOutputBufferLimitPubsub:
+                          description: |-
+                            (String) Pubsub clients output buffer limits. See redis config file.
+                            Pubsub clients output buffer limits. See [redis config file](https://github.com/redis/redis/blob/6.2/redis.conf#L1843).
+                          type: string
+                        clusterAllowPubsubshardWhenDown:
+                          description: |-
+                            (Boolean) Permits Pub/Sub shard operations when cluster is down.
+                            Permits Pub/Sub shard operations when cluster is down.
+                          type: boolean
+                        clusterAllowReadsWhenDown:
+                          description: |-
+                            (Boolean) Allows read operations when cluster is down.
+                            Allows read operations when cluster is down.
+                          type: boolean
+                        clusterRequireFullCoverage:
+                          description: |-
+                            (Boolean) Controls whether all hash slots must be covered by nodes.
+                            Controls whether all hash slots must be covered by nodes.
+                          type: boolean
+                        databases:
+                          description: |-
+                            server restart).
+                            Number of databases (changing requires redis-server restart).
+                          format: int64
+                          type: integer
+                        ioThreadsAllowed:
+                          description: |-
+                            threads.
+                            Allow Redis to use io-threads.
+                          type: boolean
+                        lfuDecayTime:
+                          description: |-
+                            (Number) The time, in minutes, that must elapse in order for the key counter to be divided by two (or decremented if it has a value less <= 10).
+                            The time, in minutes, that must elapse in order for the key counter to be divided by two (or decremented if it has a value less <= 10).
+                          format: int64
+                          type: integer
+                        lfuLogFactor:
+                          description: |-
+                            (Number) Determines how the frequency counter represents key hits.
+                            Determines how the frequency counter represents key hits.
+                          format: int64
+                          type: integer
+                        luaTimeLimit:
+                          description: |-
+                            (Number) Maximum time in milliseconds for Lua scripts.
+                            Maximum time in milliseconds for Lua scripts.
+                          format: int64
+                          type: integer
+                        maxmemoryPercent:
+                          description: |-
+                            (Number) Redis maxmemory usage in percent
+                            Redis maxmemory usage in percent
+                          format: int64
+                          type: integer
+                        maxmemoryPolicy:
+                          description: |-
+                            (String) Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in the official RedisDB documentation.
+                            Redis key eviction policy for a dataset that reaches maximum memory. Can be any of the listed in [the official RedisDB documentation](https://docs.redislabs.com/latest/rs/administering/database-operations/eviction-policy/).
+                          type: string
+                        notifyKeyspaceEvents:
+                          description: |-
+                            (String) Select the events that Redis will notify among a set of classes.
+                            Select the events that Redis will notify among a set of classes.
+                          type: string
+                        replBacklogSizePercent:
+                          description: |-
+                            (Number) Replication backlog size as a percentage of flavor maxmemory.
+                            Replication backlog size as a percentage of flavor maxmemory.
+                          format: int64
+                          type: integer
+                        slowlogLogSlowerThan:
+                          description: |-
+                            (Number) Log slow queries below this number in microseconds.
+                            Log slow queries below this number in microseconds.
+                          format: int64
+                          type: integer
+                        slowlogMaxLen:
+                          description: |-
+                            (Number) Slow queries log length.
+                            Slow queries log length.
+                          format: int64
+                          type: integer
+                        timeout:
+                          description: |-
+                            (Number) Close the connection after a client is idle for N seconds.
+                            Close the connection after a client is idle for N seconds.
+                          format: int64
+                          type: integer
+                        turnBeforeSwitchover:
+                          description: |-
+                            (Boolean) Allows to turn before switchover in RDSync.
+                            Allows to turn before switchover in RDSync.
+                          type: boolean
+                        useLuajit:
+                          description: |-
+                            (Boolean) Use JIT for lua scripts and functions.
+                            Use JIT for lua scripts and functions.
+                          type: boolean
+                        version:
+                          description: |-
+                            (String) Version of Redis.
+                            Version of Redis.
+                          type: string
+                        zsetMaxListpackEntries:
+                          description: |-
+                            efficient listpack to CPU-efficient hash table and skiplist
+                            Controls max number of entries in zset before conversion from memory-efficient listpack to CPU-efficient hash table and skiplist
+                          format: int64
+                          type: integer
+                      type: object
+                    type: array
+                  createdAt:
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
+                    type: string
+                  deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
+                    type: boolean
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  diskSizeAutoscaling:
+                    description: |-
+                      (Block List, Max: 1) Disk size autoscaling settings. (see below for nested schema)
+                      Disk size autoscaling settings.
+                    items:
+                      properties:
+                        diskSizeLimit:
+                          description: |-
+                            (Number) Limit of disk size after autoscaling (GiB).
+                            Limit of disk size after autoscaling (GiB).
+                          format: int64
+                          type: integer
+                        emergencyUsageThreshold:
+                          description: |-
+                            (Number) Immediate autoscaling disk usage (percent).
+                            Immediate autoscaling disk usage (percent).
+                          format: int64
+                          type: integer
+                        plannedUsageThreshold:
+                          description: |-
+                            (Number) Maintenance window autoscaling disk usage (percent).
+                            Maintenance window autoscaling disk usage (percent).
+                          format: int64
+                          type: integer
+                      type: object
+                    type: array
+                  environment:
+                    description: |-
+                      (String) Deployment environment of the Redis cluster. Can be either PRESTABLE or PRODUCTION.
+                      Deployment environment of the Redis cluster. Can be either `PRESTABLE` or `PRODUCTION`.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  health:
+                    description: |-
+                      (String) Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
+                      Aggregated health of the cluster. Can be either `ALIVE`, `DEGRADED`, `DEAD` or `HEALTH_UNKNOWN`. For more information see `health` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-redis/api-ref/Cluster/).
+                    type: string
+                  host:
+                    description: |-
+                      (Block List, Min: 1) A host of the Redis cluster. (see below for nested schema)
+                      A host of the Redis cluster.
+                    items:
+                      properties:
+                        assignPublicIp:
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address or not.
+                            Sets whether the host should get a public IP address or not.
+                          type: boolean
+                        fqdn:
+                          description: |-
+                            (String) The fully qualified domain name of the host.
+                            The fully qualified domain name of the host.
+                          type: string
+                        replicaPriority:
+                          description: |-
+                            sharded only).
+                            Replica priority of a current replica (usable for non-sharded only).
+                          format: int64
+                          type: integer
+                        shardName:
+                          description: |-
+                            (String) The name of the shard to which the host belongs.
+                            The name of the shard to which the host belongs.
+                          type: string
+                        subnetId:
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                          type: string
+                        zone:
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                          type: string
+                      type: object
+                    type: array
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  maintenanceWindow:
+                    description: |-
+                      (Block List, Max: 1) Maintenance window settings. (see below for nested schema)
+                      Maintenance window settings.
+                    items:
+                      properties:
+                        day:
+                          description: |-
+                            (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+                            Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
+                          type: string
+                        hour:
+                          description: |-
+                            24) for maintenance window if window type is weekly.
+                            Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
+                          format: int64
+                          type: integer
+                        type:
+                          description: |-
+                            (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  networkId:
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
+                    type: string
+                  persistenceMode:
+                    description: |-
+                      (String) Persistence mode. Possible values: ON, OFF.
+                      Persistence mode. Possible values: `ON`, `OFF`.
+                    type: string
+                  resources:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Redis cluster. (see below for nested schema)
+                      Resources allocated to hosts of the Redis cluster.
+                    items:
+                      properties:
+                        diskSize:
+                          description: |-
+                            (Number) Volume of the storage available to a host, in gigabytes.
+                            Volume of the storage available to a host, in gigabytes.
+                          format: int64
+                          type: integer
+                        diskTypeId:
+                          description: |-
+                            environment default is used if missing.
+                            Type of the storage of Redis hosts - environment default is used if missing.
+                          type: string
+                        resourcePresetId:
+                          description: |-
+                            (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                            The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-redis/concepts).
+                          type: string
+                      type: object
+                    type: array
+                  securityGroupIds:
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  sharded:
+                    description: |-
+                      sharded. If cluster is sharded - disabling is not allowed.
+                      Redis Cluster mode enabled/disabled. Enables sharding when cluster non-sharded. If cluster is sharded - disabling is not allowed.
+                    type: boolean
+                  status:
+                    description: |-
+                      (String) Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
+                      Status of the cluster. Can be either `CREATING`, `STARTING`, `RUNNING`, `UPDATING`, `STOPPING`, `STOPPED`, `ERROR` or `STATUS_UNKNOWN`. For more information see `status` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-redis/api-ref/Cluster/).
+                    type: string
+                  tlsEnabled:
+                    description: |-
+                      (Boolean) TLS support mode enabled/disabled.
+                      TLS support mode enabled/disabled.
+                    type: boolean
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

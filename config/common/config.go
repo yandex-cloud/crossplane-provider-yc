@@ -22,15 +22,13 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/crossplane/crossplane-runtime/pkg/fieldpath"
-	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
-	xpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
-	"github.com/crossplane/upjet/pkg/config"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/fieldpath"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
+	xpresource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	"github.com/crossplane/upjet/v2/pkg/config"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"k8s.io/utils/ptr"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-
-	"github.com/yandex-cloud/crossplane-provider-yc/config/resourcemanager"
 )
 
 // Provider version. Will be re-defined upon build.
@@ -38,10 +36,13 @@ var Version = "0.0.0-dev"
 
 // DefaultResourceOverrides returns a default resource configuration to be used while
 // building resource configurations.
-func DefaultResourceOverrides() config.ResourceOption {
+// folderAPIPath should be the full API path to the Folder type, e.g.:
+// - "github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/resourcemanager/v1alpha1.Folder"
+// - "github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/resourcemanager/v1alpha1.Folder"
+func DefaultResourceOverrides(folderAPIPath string) config.ResourceOption {
 	return func(r *config.Resource) {
 		r.ExternalName = config.IdentifierFromProvider
-		defaultFolderIDFn(r)
+		defaultFolderIDFn(r, folderAPIPath)
 
 		if s, ok := r.TerraformResource.Schema["labels"]; ok && s.Type == schema.TypeMap {
 			r.InitializerFns = append(r.InitializerFns, func(client client.Client) managed.Initializer {
@@ -51,17 +52,20 @@ func DefaultResourceOverrides() config.ResourceOption {
 	}
 }
 
-func defaultFolderIDFn(r *config.Resource) {
-	if r.ShortGroup != "resourcemanager" ||
-		// Fix for group change from "resourcemanager" to "iam"
-		r.Name == "yandex_resourcemanager_folder_iam_member" ||
-		r.Name == "yandex_resourcemanager_folder_iam_binding" {
-		r.References["folder_id"] = config.Reference{
-			Type: fmt.Sprintf("%s.%s", resourcemanager.ApisPackagePath, "Folder"),
-		}
-	} else {
+func defaultFolderIDFn(r *config.Resource, folderAPIPath string) {
+	// Skip adding folder_id reference for resourcemanager resources themselves
+	// except for IAM binding resources that were moved from resourcemanager group
+	if r.ShortGroup == "resourcemanager" &&
+		r.Name != "yandex_resourcemanager_folder_iam_member" &&
+		r.Name != "yandex_resourcemanager_folder_iam_binding" {
+		// For resourcemanager group resources, use local Folder type
 		r.References["folder_id"] = config.Reference{
 			Type: "Folder",
+		}
+	} else if folderAPIPath != "" {
+		// For all other resources, use the provided folder API path
+		r.References["folder_id"] = config.Reference{
+			Type: folderAPIPath,
 		}
 	}
 }

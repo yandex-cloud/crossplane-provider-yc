@@ -9790,12 +9790,12 @@ resources:
                     }
                   ],
                   "environment": "PRESTABLE",
-                  "host": [
-                    {
+                  "hosts": {
+                    "host1d": {
                       "subnet_id": "${yandex_vpc_subnet.foo.id}",
                       "zone": "ru-central1-d"
                     }
-                  ],
+                  },
                   "maintenance_window": [
                     {
                       "day": "SAT",
@@ -9807,7 +9807,6 @@ resources:
                   "network_id": "${yandex_vpc_network.foo.id}"
                 }
               references:
-                host.subnet_id: yandex_vpc_subnet.foo.id
                 network_id: yandex_vpc_network.foo.id
               dependencies:
                 yandex_vpc_network.foo: '{}'
@@ -12269,7 +12268,6 @@ resources:
             enabled: '(Boolean) Enable Spark History Server. Default: true.'
             executor: (Attributes) Computational resources for the executor pool. (see below for nested schema)
             folder_id: (String) ID of the cloud folder that the cluster belongs to.
-            health: (String) Aggregated health of the cluster.
             history_server: (Attributes) History Server configuration. (see below for nested schema)
             hour: (Number) Hour of day in UTC time zone (1-24) for maintenance window.
             id: (String) Unique ID of the cluster.

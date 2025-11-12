@@ -1,0 +1,2888 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: backendgroups.alb.yandex-cloud.m.jet.crossplane.io
+spec:
+  group: alb.yandex-cloud.m.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - yandex-cloud
+    kind: BackendGroup
+    listKind: BackendGroupList
+    plural: backendgroups
+    singular: backendgroup
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: BackendGroup is the Schema for the BackendGroups API. An application
+          load balancer distributes the load across cloud resources that are combined
+          into a backend group.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: BackendGroupSpec defines the desired state of BackendGroup
+            properties:
+              forProvider:
+                properties:
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  grpcBackend:
+                    description: |-
+                      (Block List) gRPC backend specification that will be used by the ALB Backend Group. (see below for nested schema)
+                      gRPC backend specification that will be used by the ALB Backend Group.
+                    items:
+                      properties:
+                        healthcheck:
+                          description: |-
+                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            Healthcheck specification that will be used by this backend.
+
+                            ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
+                          items:
+                            properties:
+                              grpcHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  gRPC Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    serviceName:
+                                      description: |-
+                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        Service name for `grpc.health.v1.HealthCheckRequest` message.
+                                      type: string
+                                  type: object
+                                type: array
+                              healthcheckPort:
+                                description: |-
+                                  (Number) Optional alternative port for health checking.
+                                  Optional alternative port for health checking.
+                                type: number
+                              healthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                type: number
+                              httpHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  HTTP Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    expectedStatuses:
+                                      description: |-
+                                        (List of Number) A list of HTTP response statuses considered healthy.
+                                        A list of HTTP response statuses considered healthy.
+                                      items:
+                                        type: number
+                                      type: array
+                                    host:
+                                      description: |-
+                                        (String) Host HTTP header value.
+                                        `Host` HTTP header value.
+                                      type: string
+                                    http2:
+                                      description: |-
+                                        (Boolean) If set, health checks will use HTTP2.
+                                        If set, health checks will use HTTP2.
+                                      type: boolean
+                                    path:
+                                      description: |-
+                                        (String) HTTP path.
+                                        HTTP path.
+                                      type: string
+                                  type: object
+                                type: array
+                              interval:
+                                description: |-
+                                  (String) Interval between health checks.
+                                  Interval between health checks.
+                                type: string
+                              intervalJitterPercent:
+                                description: |-
+                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                type: number
+                              streamHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  Stream Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    receive:
+                                      description: |-
+                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      type: string
+                                    send:
+                                      description: |-
+                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      type: string
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (String) Time to wait for a health check response.
+                                  Time to wait for a health check response.
+                                type: string
+                              unhealthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                type: number
+                            type: object
+                          type: array
+                        loadBalancingConfig:
+                          description: |-
+                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            Load Balancing Config specification that will be used by this backend.
+                          items:
+                            properties:
+                              localityAwareRoutingPercent:
+                                description: |-
+                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                type: number
+                              mode:
+                                description: |-
+                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
+                                type: string
+                              panicThreshold:
+                                description: |-
+                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                type: number
+                              strictLocality:
+                                description: |-
+                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                type: boolean
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the backend.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) Port for incoming traffic.
+                            Port for incoming traffic.
+                          type: number
+                        targetGroupIds:
+                          description: |-
+                            (List of String) References target groups for the backend.
+                            References target groups for the backend.
+                          items:
+                            type: string
+                          type: array
+                        targetGroupIdsRefs:
+                          description: References to TargetGroup to populate targetGroupIds.
+                          items:
+                            description: A NamespacedReference to a named object.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              namespace:
+                                description: Namespace of the referenced object
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          type: array
+                        targetGroupIdsSelector:
+                          description: Selector for a list of TargetGroup to populate
+                            targetGroupIds.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        tls:
+                          description: |-
+                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            TLS specification that will be used by this backend.
+
+                            ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                          items:
+                            properties:
+                              sni:
+                                description: |-
+                                  (String) SNI string for TLS connections.
+                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                type: string
+                              validationContext:
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
+                                items:
+                                  properties:
+                                    trustedCaBytes:
+                                      description: |-
+                                        encoded trusted CA certificate chain.
+                                        PEM-encoded trusted CA certificate chain.
+                                      type: string
+                                    trustedCaId:
+                                      description: |-
+                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        Trusted CA certificate ID in the Certificate Manager.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        weight:
+                          description: |-
+                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                          type: number
+                      type: object
+                    type: array
+                  httpBackend:
+                    description: |-
+                      (Block List) HTTP backend specification that will be used by the ALB Backend Group.
+                      HTTP backend specification that will be used by the ALB Backend Group.
+
+                      ~> Only one of `target_group_ids` or `storage_bucket` should be specified.
+                    items:
+                      properties:
+                        healthcheck:
+                          description: |-
+                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            Healthcheck specification that will be used by this backend.
+
+                            ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
+                          items:
+                            properties:
+                              grpcHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  gRPC Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    serviceName:
+                                      description: |-
+                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        Service name for `grpc.health.v1.HealthCheckRequest` message.
+                                      type: string
+                                  type: object
+                                type: array
+                              healthcheckPort:
+                                description: |-
+                                  (Number) Optional alternative port for health checking.
+                                  Optional alternative port for health checking.
+                                type: number
+                              healthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                type: number
+                              httpHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  HTTP Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    expectedStatuses:
+                                      description: |-
+                                        (List of Number) A list of HTTP response statuses considered healthy.
+                                        A list of HTTP response statuses considered healthy.
+                                      items:
+                                        type: number
+                                      type: array
+                                    host:
+                                      description: |-
+                                        (String) Host HTTP header value.
+                                        `Host` HTTP header value.
+                                      type: string
+                                    http2:
+                                      description: |-
+                                        (Boolean) If set, health checks will use HTTP2.
+                                        If set, health checks will use HTTP2.
+                                      type: boolean
+                                    path:
+                                      description: |-
+                                        (String) HTTP path.
+                                        HTTP path.
+                                      type: string
+                                  type: object
+                                type: array
+                              interval:
+                                description: |-
+                                  (String) Interval between health checks.
+                                  Interval between health checks.
+                                type: string
+                              intervalJitterPercent:
+                                description: |-
+                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                type: number
+                              streamHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  Stream Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    receive:
+                                      description: |-
+                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      type: string
+                                    send:
+                                      description: |-
+                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      type: string
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (String) Time to wait for a health check response.
+                                  Time to wait for a health check response.
+                                type: string
+                              unhealthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                type: number
+                            type: object
+                          type: array
+                        http2:
+                          description: |-
+                            (Boolean) If set, health checks will use HTTP2.
+                            Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
+                          type: boolean
+                        loadBalancingConfig:
+                          description: |-
+                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            Load Balancing Config specification that will be used by this backend.
+                          items:
+                            properties:
+                              localityAwareRoutingPercent:
+                                description: |-
+                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                type: number
+                              mode:
+                                description: |-
+                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
+                                type: string
+                              panicThreshold:
+                                description: |-
+                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                type: number
+                              strictLocality:
+                                description: |-
+                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                type: boolean
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the backend.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) Port for incoming traffic.
+                            Port for incoming traffic.
+                          type: number
+                        storageBucket:
+                          description: |-
+                            (String) Name of bucket which should be used as a backend.
+                            Name of bucket which should be used as a backend.
+                          type: string
+                        targetGroupIds:
+                          description: |-
+                            (List of String) References target groups for the backend.
+                            References target groups for the backend.
+                          items:
+                            type: string
+                          type: array
+                        targetGroupIdsRefs:
+                          description: References to TargetGroup to populate targetGroupIds.
+                          items:
+                            description: A NamespacedReference to a named object.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              namespace:
+                                description: Namespace of the referenced object
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          type: array
+                        targetGroupIdsSelector:
+                          description: Selector for a list of TargetGroup to populate
+                            targetGroupIds.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        tls:
+                          description: |-
+                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            TLS specification that will be used by this backend.
+
+                            ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                          items:
+                            properties:
+                              sni:
+                                description: |-
+                                  (String) SNI string for TLS connections.
+                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                type: string
+                              validationContext:
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
+                                items:
+                                  properties:
+                                    trustedCaBytes:
+                                      description: |-
+                                        encoded trusted CA certificate chain.
+                                        PEM-encoded trusted CA certificate chain.
+                                      type: string
+                                    trustedCaId:
+                                      description: |-
+                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        Trusted CA certificate ID in the Certificate Manager.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        weight:
+                          description: |-
+                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                          type: number
+                      type: object
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  sessionAffinity:
+                    description: |-
+                      (Block List, Max: 1) Session affinity mode determines how incoming requests are grouped into one session.
+                      Session affinity mode determines how incoming requests are grouped into one session.
+
+                      ~> Only one type(`connection` or `cookie` or `header`) of session affinity should be specified.
+                    items:
+                      properties:
+                        connection:
+                          description: |-
+                            (Block List, Max: 1) Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address. (see below for nested schema)
+                            Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address.
+                          items:
+                            properties:
+                              sourceIp:
+                                description: |-
+                                  (Boolean) Source IP address to use with affinity.
+                                  Source IP address to use with affinity.
+                                type: boolean
+                            type: object
+                          type: array
+                        cookie:
+                          description: |-
+                            (Block List, Max: 1) Requests with the same cookie value and the specified file name are combined into a session. Allowed only for HTTP and gRPC backend groups. (see below for nested schema)
+                            Requests with the same cookie value and the specified file name are combined into a session. Allowed only for `HTTP` and `gRPC` backend groups.
+                          items:
+                            properties:
+                              name:
+                                description: |-
+                                  (String) The resource name.
+                                  Name of the HTTP cookie to use with affinity.
+                                type: string
+                              ttl:
+                                description: |-
+                                  (String) TTL for the cookie (if not set, session cookie will be used).
+                                  TTL for the cookie (if not set, session cookie will be used).
+                                type: string
+                            type: object
+                          type: array
+                        header:
+                          description: |-
+                            (Block List, Max: 1) Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for HTTP and gRPC backend groups. (see below for nested schema)
+                            Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for `HTTP` and `gRPC` backend groups.
+                          items:
+                            properties:
+                              headerName:
+                                description: |-
+                                  (String) The name of the request header that will be used with affinity.
+                                  The name of the request header that will be used with affinity.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  streamBackend:
+                    description: |-
+                      (Block List) Stream backend specification that will be used by the ALB Backend Group. (see below for nested schema)
+                      Stream backend specification that will be used by the ALB Backend Group.
+                    items:
+                      properties:
+                        enableProxyProtocol:
+                          description: (Boolean)
+                          type: boolean
+                        healthcheck:
+                          description: |-
+                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            Healthcheck specification that will be used by this backend.
+
+                            ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
+                          items:
+                            properties:
+                              grpcHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  gRPC Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    serviceName:
+                                      description: |-
+                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        Service name for `grpc.health.v1.HealthCheckRequest` message.
+                                      type: string
+                                  type: object
+                                type: array
+                              healthcheckPort:
+                                description: |-
+                                  (Number) Optional alternative port for health checking.
+                                  Optional alternative port for health checking.
+                                type: number
+                              healthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                type: number
+                              httpHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  HTTP Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    expectedStatuses:
+                                      description: |-
+                                        (List of Number) A list of HTTP response statuses considered healthy.
+                                        A list of HTTP response statuses considered healthy.
+                                      items:
+                                        type: number
+                                      type: array
+                                    host:
+                                      description: |-
+                                        (String) Host HTTP header value.
+                                        `Host` HTTP header value.
+                                      type: string
+                                    http2:
+                                      description: |-
+                                        (Boolean) If set, health checks will use HTTP2.
+                                        If set, health checks will use HTTP2.
+                                      type: boolean
+                                    path:
+                                      description: |-
+                                        (String) HTTP path.
+                                        HTTP path.
+                                      type: string
+                                  type: object
+                                type: array
+                              interval:
+                                description: |-
+                                  (String) Interval between health checks.
+                                  Interval between health checks.
+                                type: string
+                              intervalJitterPercent:
+                                description: |-
+                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                type: number
+                              streamHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  Stream Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    receive:
+                                      description: |-
+                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      type: string
+                                    send:
+                                      description: |-
+                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      type: string
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (String) Time to wait for a health check response.
+                                  Time to wait for a health check response.
+                                type: string
+                              unhealthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                type: number
+                            type: object
+                          type: array
+                        keepConnectionsOnHostHealthFailure:
+                          description: |-
+                            (Boolean) If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
+                            If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
+                          type: boolean
+                        loadBalancingConfig:
+                          description: |-
+                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            Load Balancing Config specification that will be used by this backend.
+                          items:
+                            properties:
+                              localityAwareRoutingPercent:
+                                description: |-
+                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                type: number
+                              mode:
+                                description: |-
+                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
+                                type: string
+                              panicThreshold:
+                                description: |-
+                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                type: number
+                              strictLocality:
+                                description: |-
+                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                type: boolean
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the backend.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) Port for incoming traffic.
+                            Port for incoming traffic.
+                          type: number
+                        targetGroupIds:
+                          description: |-
+                            (List of String) References target groups for the backend.
+                            References target groups for the backend.
+                          items:
+                            type: string
+                          type: array
+                        targetGroupIdsRefs:
+                          description: References to TargetGroup to populate targetGroupIds.
+                          items:
+                            description: A NamespacedReference to a named object.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              namespace:
+                                description: Namespace of the referenced object
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          type: array
+                        targetGroupIdsSelector:
+                          description: Selector for a list of TargetGroup to populate
+                            targetGroupIds.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        tls:
+                          description: |-
+                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            TLS specification that will be used by this backend.
+
+                            ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                          items:
+                            properties:
+                              sni:
+                                description: |-
+                                  (String) SNI string for TLS connections.
+                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                type: string
+                              validationContext:
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
+                                items:
+                                  properties:
+                                    trustedCaBytes:
+                                      description: |-
+                                        encoded trusted CA certificate chain.
+                                        PEM-encoded trusted CA certificate chain.
+                                      type: string
+                                    trustedCaId:
+                                      description: |-
+                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        Trusted CA certificate ID in the Certificate Manager.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        weight:
+                          description: |-
+                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  grpcBackend:
+                    description: |-
+                      (Block List) gRPC backend specification that will be used by the ALB Backend Group. (see below for nested schema)
+                      gRPC backend specification that will be used by the ALB Backend Group.
+                    items:
+                      properties:
+                        healthcheck:
+                          description: |-
+                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            Healthcheck specification that will be used by this backend.
+
+                            ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
+                          items:
+                            properties:
+                              grpcHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  gRPC Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    serviceName:
+                                      description: |-
+                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        Service name for `grpc.health.v1.HealthCheckRequest` message.
+                                      type: string
+                                  type: object
+                                type: array
+                              healthcheckPort:
+                                description: |-
+                                  (Number) Optional alternative port for health checking.
+                                  Optional alternative port for health checking.
+                                type: number
+                              healthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                type: number
+                              httpHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  HTTP Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    expectedStatuses:
+                                      description: |-
+                                        (List of Number) A list of HTTP response statuses considered healthy.
+                                        A list of HTTP response statuses considered healthy.
+                                      items:
+                                        type: number
+                                      type: array
+                                    host:
+                                      description: |-
+                                        (String) Host HTTP header value.
+                                        `Host` HTTP header value.
+                                      type: string
+                                    http2:
+                                      description: |-
+                                        (Boolean) If set, health checks will use HTTP2.
+                                        If set, health checks will use HTTP2.
+                                      type: boolean
+                                    path:
+                                      description: |-
+                                        (String) HTTP path.
+                                        HTTP path.
+                                      type: string
+                                  type: object
+                                type: array
+                              interval:
+                                description: |-
+                                  (String) Interval between health checks.
+                                  Interval between health checks.
+                                type: string
+                              intervalJitterPercent:
+                                description: |-
+                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                type: number
+                              streamHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  Stream Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    receive:
+                                      description: |-
+                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      type: string
+                                    send:
+                                      description: |-
+                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      type: string
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (String) Time to wait for a health check response.
+                                  Time to wait for a health check response.
+                                type: string
+                              unhealthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                type: number
+                            type: object
+                          type: array
+                        loadBalancingConfig:
+                          description: |-
+                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            Load Balancing Config specification that will be used by this backend.
+                          items:
+                            properties:
+                              localityAwareRoutingPercent:
+                                description: |-
+                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                type: number
+                              mode:
+                                description: |-
+                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
+                                type: string
+                              panicThreshold:
+                                description: |-
+                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                type: number
+                              strictLocality:
+                                description: |-
+                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                type: boolean
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the backend.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) Port for incoming traffic.
+                            Port for incoming traffic.
+                          type: number
+                        targetGroupIds:
+                          description: |-
+                            (List of String) References target groups for the backend.
+                            References target groups for the backend.
+                          items:
+                            type: string
+                          type: array
+                        targetGroupIdsRefs:
+                          description: References to TargetGroup to populate targetGroupIds.
+                          items:
+                            description: A NamespacedReference to a named object.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              namespace:
+                                description: Namespace of the referenced object
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          type: array
+                        targetGroupIdsSelector:
+                          description: Selector for a list of TargetGroup to populate
+                            targetGroupIds.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        tls:
+                          description: |-
+                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            TLS specification that will be used by this backend.
+
+                            ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                          items:
+                            properties:
+                              sni:
+                                description: |-
+                                  (String) SNI string for TLS connections.
+                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                type: string
+                              validationContext:
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
+                                items:
+                                  properties:
+                                    trustedCaBytes:
+                                      description: |-
+                                        encoded trusted CA certificate chain.
+                                        PEM-encoded trusted CA certificate chain.
+                                      type: string
+                                    trustedCaId:
+                                      description: |-
+                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        Trusted CA certificate ID in the Certificate Manager.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        weight:
+                          description: |-
+                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                          type: number
+                      type: object
+                    type: array
+                  httpBackend:
+                    description: |-
+                      (Block List) HTTP backend specification that will be used by the ALB Backend Group.
+                      HTTP backend specification that will be used by the ALB Backend Group.
+
+                      ~> Only one of `target_group_ids` or `storage_bucket` should be specified.
+                    items:
+                      properties:
+                        healthcheck:
+                          description: |-
+                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            Healthcheck specification that will be used by this backend.
+
+                            ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
+                          items:
+                            properties:
+                              grpcHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  gRPC Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    serviceName:
+                                      description: |-
+                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        Service name for `grpc.health.v1.HealthCheckRequest` message.
+                                      type: string
+                                  type: object
+                                type: array
+                              healthcheckPort:
+                                description: |-
+                                  (Number) Optional alternative port for health checking.
+                                  Optional alternative port for health checking.
+                                type: number
+                              healthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                type: number
+                              httpHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  HTTP Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    expectedStatuses:
+                                      description: |-
+                                        (List of Number) A list of HTTP response statuses considered healthy.
+                                        A list of HTTP response statuses considered healthy.
+                                      items:
+                                        type: number
+                                      type: array
+                                    host:
+                                      description: |-
+                                        (String) Host HTTP header value.
+                                        `Host` HTTP header value.
+                                      type: string
+                                    http2:
+                                      description: |-
+                                        (Boolean) If set, health checks will use HTTP2.
+                                        If set, health checks will use HTTP2.
+                                      type: boolean
+                                    path:
+                                      description: |-
+                                        (String) HTTP path.
+                                        HTTP path.
+                                      type: string
+                                  type: object
+                                type: array
+                              interval:
+                                description: |-
+                                  (String) Interval between health checks.
+                                  Interval between health checks.
+                                type: string
+                              intervalJitterPercent:
+                                description: |-
+                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                type: number
+                              streamHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  Stream Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    receive:
+                                      description: |-
+                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      type: string
+                                    send:
+                                      description: |-
+                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      type: string
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (String) Time to wait for a health check response.
+                                  Time to wait for a health check response.
+                                type: string
+                              unhealthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                type: number
+                            type: object
+                          type: array
+                        http2:
+                          description: |-
+                            (Boolean) If set, health checks will use HTTP2.
+                            Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
+                          type: boolean
+                        loadBalancingConfig:
+                          description: |-
+                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            Load Balancing Config specification that will be used by this backend.
+                          items:
+                            properties:
+                              localityAwareRoutingPercent:
+                                description: |-
+                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                type: number
+                              mode:
+                                description: |-
+                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
+                                type: string
+                              panicThreshold:
+                                description: |-
+                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                type: number
+                              strictLocality:
+                                description: |-
+                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                type: boolean
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the backend.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) Port for incoming traffic.
+                            Port for incoming traffic.
+                          type: number
+                        storageBucket:
+                          description: |-
+                            (String) Name of bucket which should be used as a backend.
+                            Name of bucket which should be used as a backend.
+                          type: string
+                        targetGroupIds:
+                          description: |-
+                            (List of String) References target groups for the backend.
+                            References target groups for the backend.
+                          items:
+                            type: string
+                          type: array
+                        targetGroupIdsRefs:
+                          description: References to TargetGroup to populate targetGroupIds.
+                          items:
+                            description: A NamespacedReference to a named object.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              namespace:
+                                description: Namespace of the referenced object
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          type: array
+                        targetGroupIdsSelector:
+                          description: Selector for a list of TargetGroup to populate
+                            targetGroupIds.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        tls:
+                          description: |-
+                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            TLS specification that will be used by this backend.
+
+                            ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                          items:
+                            properties:
+                              sni:
+                                description: |-
+                                  (String) SNI string for TLS connections.
+                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                type: string
+                              validationContext:
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
+                                items:
+                                  properties:
+                                    trustedCaBytes:
+                                      description: |-
+                                        encoded trusted CA certificate chain.
+                                        PEM-encoded trusted CA certificate chain.
+                                      type: string
+                                    trustedCaId:
+                                      description: |-
+                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        Trusted CA certificate ID in the Certificate Manager.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        weight:
+                          description: |-
+                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                          type: number
+                      type: object
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  sessionAffinity:
+                    description: |-
+                      (Block List, Max: 1) Session affinity mode determines how incoming requests are grouped into one session.
+                      Session affinity mode determines how incoming requests are grouped into one session.
+
+                      ~> Only one type(`connection` or `cookie` or `header`) of session affinity should be specified.
+                    items:
+                      properties:
+                        connection:
+                          description: |-
+                            (Block List, Max: 1) Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address. (see below for nested schema)
+                            Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address.
+                          items:
+                            properties:
+                              sourceIp:
+                                description: |-
+                                  (Boolean) Source IP address to use with affinity.
+                                  Source IP address to use with affinity.
+                                type: boolean
+                            type: object
+                          type: array
+                        cookie:
+                          description: |-
+                            (Block List, Max: 1) Requests with the same cookie value and the specified file name are combined into a session. Allowed only for HTTP and gRPC backend groups. (see below for nested schema)
+                            Requests with the same cookie value and the specified file name are combined into a session. Allowed only for `HTTP` and `gRPC` backend groups.
+                          items:
+                            properties:
+                              name:
+                                description: |-
+                                  (String) The resource name.
+                                  Name of the HTTP cookie to use with affinity.
+                                type: string
+                              ttl:
+                                description: |-
+                                  (String) TTL for the cookie (if not set, session cookie will be used).
+                                  TTL for the cookie (if not set, session cookie will be used).
+                                type: string
+                            type: object
+                          type: array
+                        header:
+                          description: |-
+                            (Block List, Max: 1) Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for HTTP and gRPC backend groups. (see below for nested schema)
+                            Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for `HTTP` and `gRPC` backend groups.
+                          items:
+                            properties:
+                              headerName:
+                                description: |-
+                                  (String) The name of the request header that will be used with affinity.
+                                  The name of the request header that will be used with affinity.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  streamBackend:
+                    description: |-
+                      (Block List) Stream backend specification that will be used by the ALB Backend Group. (see below for nested schema)
+                      Stream backend specification that will be used by the ALB Backend Group.
+                    items:
+                      properties:
+                        enableProxyProtocol:
+                          description: (Boolean)
+                          type: boolean
+                        healthcheck:
+                          description: |-
+                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            Healthcheck specification that will be used by this backend.
+
+                            ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
+                          items:
+                            properties:
+                              grpcHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  gRPC Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    serviceName:
+                                      description: |-
+                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        Service name for `grpc.health.v1.HealthCheckRequest` message.
+                                      type: string
+                                  type: object
+                                type: array
+                              healthcheckPort:
+                                description: |-
+                                  (Number) Optional alternative port for health checking.
+                                  Optional alternative port for health checking.
+                                type: number
+                              healthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                type: number
+                              httpHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  HTTP Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    expectedStatuses:
+                                      description: |-
+                                        (List of Number) A list of HTTP response statuses considered healthy.
+                                        A list of HTTP response statuses considered healthy.
+                                      items:
+                                        type: number
+                                      type: array
+                                    host:
+                                      description: |-
+                                        (String) Host HTTP header value.
+                                        `Host` HTTP header value.
+                                      type: string
+                                    http2:
+                                      description: |-
+                                        (Boolean) If set, health checks will use HTTP2.
+                                        If set, health checks will use HTTP2.
+                                      type: boolean
+                                    path:
+                                      description: |-
+                                        (String) HTTP path.
+                                        HTTP path.
+                                      type: string
+                                  type: object
+                                type: array
+                              interval:
+                                description: |-
+                                  (String) Interval between health checks.
+                                  Interval between health checks.
+                                type: string
+                              intervalJitterPercent:
+                                description: |-
+                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                type: number
+                              streamHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  Stream Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    receive:
+                                      description: |-
+                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      type: string
+                                    send:
+                                      description: |-
+                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      type: string
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (String) Time to wait for a health check response.
+                                  Time to wait for a health check response.
+                                type: string
+                              unhealthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                type: number
+                            type: object
+                          type: array
+                        keepConnectionsOnHostHealthFailure:
+                          description: |-
+                            (Boolean) If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
+                            If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
+                          type: boolean
+                        loadBalancingConfig:
+                          description: |-
+                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            Load Balancing Config specification that will be used by this backend.
+                          items:
+                            properties:
+                              localityAwareRoutingPercent:
+                                description: |-
+                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                type: number
+                              mode:
+                                description: |-
+                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
+                                type: string
+                              panicThreshold:
+                                description: |-
+                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                type: number
+                              strictLocality:
+                                description: |-
+                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                type: boolean
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the backend.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) Port for incoming traffic.
+                            Port for incoming traffic.
+                          type: number
+                        targetGroupIds:
+                          description: |-
+                            (List of String) References target groups for the backend.
+                            References target groups for the backend.
+                          items:
+                            type: string
+                          type: array
+                        targetGroupIdsRefs:
+                          description: References to TargetGroup to populate targetGroupIds.
+                          items:
+                            description: A NamespacedReference to a named object.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              namespace:
+                                description: Namespace of the referenced object
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          type: array
+                        targetGroupIdsSelector:
+                          description: Selector for a list of TargetGroup to populate
+                            targetGroupIds.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        tls:
+                          description: |-
+                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            TLS specification that will be used by this backend.
+
+                            ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                          items:
+                            properties:
+                              sni:
+                                description: |-
+                                  (String) SNI string for TLS connections.
+                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                type: string
+                              validationContext:
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
+                                items:
+                                  properties:
+                                    trustedCaBytes:
+                                      description: |-
+                                        encoded trusted CA certificate chain.
+                                        PEM-encoded trusted CA certificate chain.
+                                      type: string
+                                    trustedCaId:
+                                      description: |-
+                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        Trusted CA certificate ID in the Certificate Manager.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        weight:
+                          description: |-
+                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: BackendGroupStatus defines the observed state of BackendGroup.
+            properties:
+              atProvider:
+                properties:
+                  createdAt:
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
+                    type: string
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  grpcBackend:
+                    description: |-
+                      (Block List) gRPC backend specification that will be used by the ALB Backend Group. (see below for nested schema)
+                      gRPC backend specification that will be used by the ALB Backend Group.
+                    items:
+                      properties:
+                        healthcheck:
+                          description: |-
+                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            Healthcheck specification that will be used by this backend.
+
+                            ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
+                          items:
+                            properties:
+                              grpcHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  gRPC Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    serviceName:
+                                      description: |-
+                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        Service name for `grpc.health.v1.HealthCheckRequest` message.
+                                      type: string
+                                  type: object
+                                type: array
+                              healthcheckPort:
+                                description: |-
+                                  (Number) Optional alternative port for health checking.
+                                  Optional alternative port for health checking.
+                                type: number
+                              healthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                type: number
+                              httpHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  HTTP Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    expectedStatuses:
+                                      description: |-
+                                        (List of Number) A list of HTTP response statuses considered healthy.
+                                        A list of HTTP response statuses considered healthy.
+                                      items:
+                                        type: number
+                                      type: array
+                                    host:
+                                      description: |-
+                                        (String) Host HTTP header value.
+                                        `Host` HTTP header value.
+                                      type: string
+                                    http2:
+                                      description: |-
+                                        (Boolean) If set, health checks will use HTTP2.
+                                        If set, health checks will use HTTP2.
+                                      type: boolean
+                                    path:
+                                      description: |-
+                                        (String) HTTP path.
+                                        HTTP path.
+                                      type: string
+                                  type: object
+                                type: array
+                              interval:
+                                description: |-
+                                  (String) Interval between health checks.
+                                  Interval between health checks.
+                                type: string
+                              intervalJitterPercent:
+                                description: |-
+                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                type: number
+                              streamHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  Stream Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    receive:
+                                      description: |-
+                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      type: string
+                                    send:
+                                      description: |-
+                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      type: string
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (String) Time to wait for a health check response.
+                                  Time to wait for a health check response.
+                                type: string
+                              unhealthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                type: number
+                            type: object
+                          type: array
+                        loadBalancingConfig:
+                          description: |-
+                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            Load Balancing Config specification that will be used by this backend.
+                          items:
+                            properties:
+                              localityAwareRoutingPercent:
+                                description: |-
+                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                type: number
+                              mode:
+                                description: |-
+                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
+                                type: string
+                              panicThreshold:
+                                description: |-
+                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                type: number
+                              strictLocality:
+                                description: |-
+                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                type: boolean
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the backend.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) Port for incoming traffic.
+                            Port for incoming traffic.
+                          type: number
+                        targetGroupIds:
+                          description: |-
+                            (List of String) References target groups for the backend.
+                            References target groups for the backend.
+                          items:
+                            type: string
+                          type: array
+                        tls:
+                          description: |-
+                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            TLS specification that will be used by this backend.
+
+                            ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                          items:
+                            properties:
+                              sni:
+                                description: |-
+                                  (String) SNI string for TLS connections.
+                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                type: string
+                              validationContext:
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
+                                items:
+                                  properties:
+                                    trustedCaBytes:
+                                      description: |-
+                                        encoded trusted CA certificate chain.
+                                        PEM-encoded trusted CA certificate chain.
+                                      type: string
+                                    trustedCaId:
+                                      description: |-
+                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        Trusted CA certificate ID in the Certificate Manager.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        weight:
+                          description: |-
+                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                          type: number
+                      type: object
+                    type: array
+                  httpBackend:
+                    description: |-
+                      (Block List) HTTP backend specification that will be used by the ALB Backend Group.
+                      HTTP backend specification that will be used by the ALB Backend Group.
+
+                      ~> Only one of `target_group_ids` or `storage_bucket` should be specified.
+                    items:
+                      properties:
+                        healthcheck:
+                          description: |-
+                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            Healthcheck specification that will be used by this backend.
+
+                            ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
+                          items:
+                            properties:
+                              grpcHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  gRPC Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    serviceName:
+                                      description: |-
+                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        Service name for `grpc.health.v1.HealthCheckRequest` message.
+                                      type: string
+                                  type: object
+                                type: array
+                              healthcheckPort:
+                                description: |-
+                                  (Number) Optional alternative port for health checking.
+                                  Optional alternative port for health checking.
+                                type: number
+                              healthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                type: number
+                              httpHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  HTTP Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    expectedStatuses:
+                                      description: |-
+                                        (List of Number) A list of HTTP response statuses considered healthy.
+                                        A list of HTTP response statuses considered healthy.
+                                      items:
+                                        type: number
+                                      type: array
+                                    host:
+                                      description: |-
+                                        (String) Host HTTP header value.
+                                        `Host` HTTP header value.
+                                      type: string
+                                    http2:
+                                      description: |-
+                                        (Boolean) If set, health checks will use HTTP2.
+                                        If set, health checks will use HTTP2.
+                                      type: boolean
+                                    path:
+                                      description: |-
+                                        (String) HTTP path.
+                                        HTTP path.
+                                      type: string
+                                  type: object
+                                type: array
+                              interval:
+                                description: |-
+                                  (String) Interval between health checks.
+                                  Interval between health checks.
+                                type: string
+                              intervalJitterPercent:
+                                description: |-
+                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                type: number
+                              streamHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  Stream Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    receive:
+                                      description: |-
+                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      type: string
+                                    send:
+                                      description: |-
+                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      type: string
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (String) Time to wait for a health check response.
+                                  Time to wait for a health check response.
+                                type: string
+                              unhealthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                type: number
+                            type: object
+                          type: array
+                        http2:
+                          description: |-
+                            (Boolean) If set, health checks will use HTTP2.
+                            Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
+                          type: boolean
+                        loadBalancingConfig:
+                          description: |-
+                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            Load Balancing Config specification that will be used by this backend.
+                          items:
+                            properties:
+                              localityAwareRoutingPercent:
+                                description: |-
+                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                type: number
+                              mode:
+                                description: |-
+                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
+                                type: string
+                              panicThreshold:
+                                description: |-
+                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                type: number
+                              strictLocality:
+                                description: |-
+                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                type: boolean
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the backend.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) Port for incoming traffic.
+                            Port for incoming traffic.
+                          type: number
+                        storageBucket:
+                          description: |-
+                            (String) Name of bucket which should be used as a backend.
+                            Name of bucket which should be used as a backend.
+                          type: string
+                        targetGroupIds:
+                          description: |-
+                            (List of String) References target groups for the backend.
+                            References target groups for the backend.
+                          items:
+                            type: string
+                          type: array
+                        tls:
+                          description: |-
+                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            TLS specification that will be used by this backend.
+
+                            ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                          items:
+                            properties:
+                              sni:
+                                description: |-
+                                  (String) SNI string for TLS connections.
+                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                type: string
+                              validationContext:
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
+                                items:
+                                  properties:
+                                    trustedCaBytes:
+                                      description: |-
+                                        encoded trusted CA certificate chain.
+                                        PEM-encoded trusted CA certificate chain.
+                                      type: string
+                                    trustedCaId:
+                                      description: |-
+                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        Trusted CA certificate ID in the Certificate Manager.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        weight:
+                          description: |-
+                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                          type: number
+                      type: object
+                    type: array
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  sessionAffinity:
+                    description: |-
+                      (Block List, Max: 1) Session affinity mode determines how incoming requests are grouped into one session.
+                      Session affinity mode determines how incoming requests are grouped into one session.
+
+                      ~> Only one type(`connection` or `cookie` or `header`) of session affinity should be specified.
+                    items:
+                      properties:
+                        connection:
+                          description: |-
+                            (Block List, Max: 1) Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address. (see below for nested schema)
+                            Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address.
+                          items:
+                            properties:
+                              sourceIp:
+                                description: |-
+                                  (Boolean) Source IP address to use with affinity.
+                                  Source IP address to use with affinity.
+                                type: boolean
+                            type: object
+                          type: array
+                        cookie:
+                          description: |-
+                            (Block List, Max: 1) Requests with the same cookie value and the specified file name are combined into a session. Allowed only for HTTP and gRPC backend groups. (see below for nested schema)
+                            Requests with the same cookie value and the specified file name are combined into a session. Allowed only for `HTTP` and `gRPC` backend groups.
+                          items:
+                            properties:
+                              name:
+                                description: |-
+                                  (String) The resource name.
+                                  Name of the HTTP cookie to use with affinity.
+                                type: string
+                              ttl:
+                                description: |-
+                                  (String) TTL for the cookie (if not set, session cookie will be used).
+                                  TTL for the cookie (if not set, session cookie will be used).
+                                type: string
+                            type: object
+                          type: array
+                        header:
+                          description: |-
+                            (Block List, Max: 1) Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for HTTP and gRPC backend groups. (see below for nested schema)
+                            Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for `HTTP` and `gRPC` backend groups.
+                          items:
+                            properties:
+                              headerName:
+                                description: |-
+                                  (String) The name of the request header that will be used with affinity.
+                                  The name of the request header that will be used with affinity.
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  streamBackend:
+                    description: |-
+                      (Block List) Stream backend specification that will be used by the ALB Backend Group. (see below for nested schema)
+                      Stream backend specification that will be used by the ALB Backend Group.
+                    items:
+                      properties:
+                        enableProxyProtocol:
+                          description: (Boolean)
+                          type: boolean
+                        healthcheck:
+                          description: |-
+                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            Healthcheck specification that will be used by this backend.
+
+                            ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
+                          items:
+                            properties:
+                              grpcHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  gRPC Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    serviceName:
+                                      description: |-
+                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        Service name for `grpc.health.v1.HealthCheckRequest` message.
+                                      type: string
+                                  type: object
+                                type: array
+                              healthcheckPort:
+                                description: |-
+                                  (Number) Optional alternative port for health checking.
+                                  Optional alternative port for health checking.
+                                type: number
+                              healthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                type: number
+                              httpHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  HTTP Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    expectedStatuses:
+                                      description: |-
+                                        (List of Number) A list of HTTP response statuses considered healthy.
+                                        A list of HTTP response statuses considered healthy.
+                                      items:
+                                        type: number
+                                      type: array
+                                    host:
+                                      description: |-
+                                        (String) Host HTTP header value.
+                                        `Host` HTTP header value.
+                                      type: string
+                                    http2:
+                                      description: |-
+                                        (Boolean) If set, health checks will use HTTP2.
+                                        If set, health checks will use HTTP2.
+                                      type: boolean
+                                    path:
+                                      description: |-
+                                        (String) HTTP path.
+                                        HTTP path.
+                                      type: string
+                                  type: object
+                                type: array
+                              interval:
+                                description: |-
+                                  (String) Interval between health checks.
+                                  Interval between health checks.
+                                type: string
+                              intervalJitterPercent:
+                                description: |-
+                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                type: number
+                              streamHealthcheck:
+                                description: |-
+                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  Stream Healthcheck specification that will be used by this healthcheck.
+                                items:
+                                  properties:
+                                    receive:
+                                      description: |-
+                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      type: string
+                                    send:
+                                      description: |-
+                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      type: string
+                                  type: object
+                                type: array
+                              timeout:
+                                description: |-
+                                  (String) Time to wait for a health check response.
+                                  Time to wait for a health check response.
+                                type: string
+                              unhealthyThreshold:
+                                description: |-
+                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                type: number
+                            type: object
+                          type: array
+                        keepConnectionsOnHostHealthFailure:
+                          description: |-
+                            (Boolean) If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
+                            If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
+                          type: boolean
+                        loadBalancingConfig:
+                          description: |-
+                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            Load Balancing Config specification that will be used by this backend.
+                          items:
+                            properties:
+                              localityAwareRoutingPercent:
+                                description: |-
+                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                type: number
+                              mode:
+                                description: |-
+                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
+                                type: string
+                              panicThreshold:
+                                description: |-
+                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                type: number
+                              strictLocality:
+                                description: |-
+                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                type: boolean
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Name of the backend.
+                          type: string
+                        port:
+                          description: |-
+                            (Number) Port for incoming traffic.
+                            Port for incoming traffic.
+                          type: number
+                        targetGroupIds:
+                          description: |-
+                            (List of String) References target groups for the backend.
+                            References target groups for the backend.
+                          items:
+                            type: string
+                          type: array
+                        tls:
+                          description: |-
+                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            TLS specification that will be used by this backend.
+
+                            ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
+                          items:
+                            properties:
+                              sni:
+                                description: |-
+                                  (String) SNI string for TLS connections.
+                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                type: string
+                              validationContext:
+                                description: '(Block List, Max: 1) (see below for
+                                  nested schema)'
+                                items:
+                                  properties:
+                                    trustedCaBytes:
+                                      description: |-
+                                        encoded trusted CA certificate chain.
+                                        PEM-encoded trusted CA certificate chain.
+                                      type: string
+                                    trustedCaId:
+                                      description: |-
+                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        Trusted CA certificate ID in the Certificate Manager.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        weight:
+                          description: |-
+                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                          type: number
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

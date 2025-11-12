@@ -1,0 +1,2307 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: postgresqlclusters.mdb.yandex-cloud.m.jet.crossplane.io
+spec:
+  group: mdb.yandex-cloud.m.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - yandex-cloud
+    kind: PostgresqlCluster
+    listKind: PostgresqlClusterList
+    plural: postgresqlclusters
+    singular: postgresqlcluster
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: PostgresqlCluster is the Schema for the PostgresqlClusters API.
+          Manages a PostgreSQL cluster within Yandex Cloud.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: PostgresqlClusterSpec defines the desired state of PostgresqlCluster
+            properties:
+              forProvider:
+                properties:
+                  config:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the PostgreSQL cluster. (see below for nested schema)
+                      Configuration of the PostgreSQL cluster.
+                    items:
+                      properties:
+                        access:
+                          description: |-
+                            (Block List, Max: 1) Access policy to the PostgreSQL cluster. (see below for nested schema)
+                            Access policy to the PostgreSQL cluster.
+                          items:
+                            properties:
+                              dataLens:
+                                description: |-
+                                  (Boolean) Allow access for Yandex DataLens.
+                                  Allow access for [Yandex DataLens](https://yandex.cloud/services/datalens).
+                                type: boolean
+                              dataTransfer:
+                                description: |-
+                                  (Boolean) Allow access for DataTransfer.
+                                  Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
+                                type: boolean
+                              serverless:
+                                description: |-
+                                  (Boolean) Allow access for connection to managed databases from functions.
+                                  Allow access for [connection to managed databases from functions](https://yandex.cloud/docs/functions/operations/database-connection).
+                                type: boolean
+                              webSql:
+                                description: |-
+                                  (Boolean) Allow access for SQL queries in the management console.
+                                  Allow access for [SQL queries in the management console](https://yandex.cloud/docs/managed-postgresql/operations/web-sql-query).
+                                type: boolean
+                            type: object
+                          type: array
+                        autofailover:
+                          description: |-
+                            (Boolean) Configuration setting which enables/disables autofailover in cluster.
+                            Configuration setting which enables/disables autofailover in cluster.
+                          type: boolean
+                        backupRetainPeriodDays:
+                          description: |-
+                            (Number) The period in days during which backups are stored.
+                            The period in days during which backups are stored.
+                          type: number
+                        backupWindowStart:
+                          description: |-
+                            (Block List, Max: 1) Time to start the daily backup, in the UTC timezone. (see below for nested schema)
+                            Time to start the daily backup, in the UTC timezone.
+                          items:
+                            properties:
+                              hours:
+                                description: |-
+                                  (Number) The hour at which backup will be started (UTC).
+                                  The hour at which backup will be started (UTC).
+                                type: number
+                              minutes:
+                                description: |-
+                                  (Number) The hour at which backup will be started (UTC).
+                                  The hour at which backup will be started (UTC).
+                                type: number
+                            type: object
+                          type: array
+                        diskSizeAutoscaling:
+                          description: |-
+                            (Block List, Max: 1) Cluster disk size autoscaling settings. (see below for nested schema)
+                            Cluster disk size autoscaling settings.
+                          items:
+                            properties:
+                              diskSizeLimit:
+                                description: |-
+                                  (Number) Limit of disk size after autoscaling (GiB).
+                                  Limit of disk size after autoscaling (GiB).
+                                type: number
+                              emergencyUsageThreshold:
+                                description: |-
+                                  (Number) Immediate autoscaling disk usage (percent).
+                                  Immediate autoscaling disk usage (percent).
+                                type: number
+                              plannedUsageThreshold:
+                                description: |-
+                                  (Number) Maintenance window autoscaling disk usage (percent).
+                                  Maintenance window autoscaling disk usage (percent).
+                                type: number
+                            type: object
+                          type: array
+                        performanceDiagnostics:
+                          description: |-
+                            (Block List, Max: 1) Cluster performance diagnostics settings. YC Documentation. (see below for nested schema)
+                            Cluster performance diagnostics settings. [YC Documentation](https://yandex.cloud/docs/managed-postgresql/api-ref/grpc/cluster_service#PerformanceDiagnostics).
+                          items:
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean) Enable performance diagnostics.
+                                  Enable performance diagnostics.
+                                type: boolean
+                              sessionsSamplingInterval:
+                                description: |-
+                                  (Number) Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+                                  Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+                                type: number
+                              statementsSamplingInterval:
+                                description: |-
+                                  (Number) Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+                                  Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+                                type: number
+                            type: object
+                          type: array
+                        poolerConfig:
+                          description: |-
+                            (Block List, Max: 1) Configuration of the connection pooler. (see below for nested schema)
+                            Configuration of the connection pooler.
+                          items:
+                            properties:
+                              poolDiscard:
+                                description: |-
+                                  (Boolean) Setting pool_discard parameter in Odyssey.
+                                  Setting `pool_discard` [parameter in Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool_discard-yesno).
+                                type: boolean
+                              poolingMode:
+                                description: |-
+                                  string.
+                                  Mode that the connection pooler is working in. See descriptions of all modes in the [documentation for Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool-string.
+                                type: string
+                            type: object
+                          type: array
+                        postgresqlConfig:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            (Map of String) PostgreSQL cluster configuration. For detailed information specific to your PostgreSQL version, please refer to the API proto specifications.
+                            PostgreSQL cluster configuration. For detailed information specific to your PostgreSQL version, please refer to the [API proto specifications](https://github.com/yandex-cloud/cloudapi/tree/master/yandex/cloud/mdb/postgresql/v1/config).
+                          type: object
+                          x-kubernetes-map-type: granular
+                        resources:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Resources allocated to hosts of the PostgreSQL cluster. (see below for nested schema)
+                            Resources allocated to hosts of the PostgreSQL cluster.
+                          items:
+                            properties:
+                              diskSize:
+                                description: |-
+                                  (Number) Volume of the storage available to a PostgreSQL host, in gigabytes.
+                                  Volume of the storage available to a PostgreSQL host, in gigabytes.
+                                type: number
+                              diskTypeId:
+                                description: |-
+                                  (String) Type of the storage of PostgreSQL hosts.
+                                  Type of the storage of PostgreSQL hosts.
+                                type: string
+                              resourcePresetId:
+                                description: |-
+                                  (String) The ID of the preset for computational resources available to a PostgreSQL host (CPU, memory etc.). For more information, see the official documentation.
+                                  The ID of the preset for computational resources available to a PostgreSQL host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-postgresql/concepts/instance-types).
+                                type: string
+                            type: object
+                          type: array
+                        version:
+                          description: |-
+                            1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
+                            Version of the PostgreSQL cluster. (allowed versions are: 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
+                          type: string
+                      type: object
+                    type: array
+                  database:
+                    description: |-
+                      (Block List, Deprecated) ~> Deprecated! To manage databases, please switch to using a separate resource type yandex_mdb_postgresql_database. (see below for nested schema)
+                      ~> Deprecated! To manage databases, please switch to using a separate resource type `yandex_mdb_postgresql_database`.
+                    items:
+                      properties:
+                        extension:
+                          description: |-
+                            (Block Set) Set of database extensions. (see below for nested schema)
+                            Set of database extensions.
+                          items:
+                            properties:
+                              name:
+                                description: |-
+                                  (String) The resource name.
+                                  Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
+                                type: string
+                              version:
+                                description: |-
+                                  1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
+                                  Version of the extension.
+                                type: string
+                            type: object
+                          type: array
+                        lcCollate:
+                          description: |-
+                            (String) POSIX locale for string sorting order. Forbidden to change in an existing database.
+                            POSIX locale for string sorting order. Forbidden to change in an existing database.
+                          type: string
+                        lcType:
+                          description: |-
+                            (String) POSIX locale for character classification. Forbidden to change in an existing database.
+                            POSIX locale for character classification. Forbidden to change in an existing database.
+                          type: string
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            The resource name.
+                          type: string
+                        owner:
+                          description: |-
+                            (String) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                            Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                          type: string
+                        templateDb:
+                          description: |-
+                            (String) Name of the template database.
+                            Name of the template database.
+                          type: string
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
+                    type: boolean
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  diskEncryptionKeyId:
+                    description: |-
+                      (String) The ID of this resource.
+                      ID of the KMS key for cluster disk encryption. Restoring without an encryption key will disable encryption if any exists.
+                    type: string
+                  environment:
+                    description: |-
+                      (String) Deployment environment of the PostgreSQL cluster.
+                      Deployment environment of the PostgreSQL cluster.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  host:
+                    description: |-
+                      (Block List, Min: 1) A host of the PostgreSQL cluster. (see below for nested schema)
+                      A host of the PostgreSQL cluster.
+                    items:
+                      properties:
+                        assignPublicIp:
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address on creation. It can be changed on the fly only when name is set.
+                            Sets whether the host should get a public IP address on creation. It can be changed on the fly only when `name` is set.
+                          type: boolean
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Host state name. It should be set for all hosts or unset for all hosts. This field can be used by another host, to select which host will be its replication source. Please see `replication_source_name` parameter.
+                          type: string
+                        priority:
+                          description: |-
+                            (Number, Deprecated) Host priority in HA group. It works only when name is set.
+                            Host priority in HA group. It works only when `name` is set.
+                          type: number
+                        replicationSourceName:
+                          description: |-
+                            (String) Host replication source name points to host's name from which this host should replicate. When not set then host in HA group. It works only when name is set.
+                            Host replication source name points to host's `name` from which this host should replicate. When not set then host in HA group. It works only when `name` is set.
+                          type: string
+                        subnetId:
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in vpc to populate subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in vpc to populate subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        zone:
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                          type: string
+                      type: object
+                    type: array
+                  hostGroupIds:
+                    description: |-
+                      (Set of String) Host Group IDs.
+                      Host Group IDs.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  hostMasterName:
+                    description: |-
+                      (String, Deprecated) Deprecated field. Will be removed in future versions.
+                      Deprecated field. Will be removed in future versions.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  maintenanceWindow:
+                    description: |-
+                      (Block List, Max: 1) Maintenance policy of the PostgreSQL cluster. (see below for nested schema)
+                      Maintenance policy of the PostgreSQL cluster.
+                    items:
+                      properties:
+                        day:
+                          description: |-
+                            (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN
+                            Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`
+                          type: string
+                        hour:
+                          description: |-
+                            (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+                            Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
+                          type: number
+                        type:
+                          description: |-
+                            (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  networkId:
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
+                    type: string
+                  networkIdRef:
+                    description: Reference to a Network in vpc to populate networkId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: Selector for a Network in vpc to populate networkId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  restore:
+                    description: |-
+                      (Block List, Max: 1) The cluster will be created from the specified backup. (see below for nested schema)
+                      The cluster will be created from the specified backup.
+                    items:
+                      properties:
+                        backupId:
+                          description: |-
+                            (String) Backup ID. The cluster will be created from the specified backup. How to get a list of PostgreSQL backups.
+                            Backup ID. The cluster will be created from the specified backup. [How to get a list of PostgreSQL backups](https://yandex.cloud/docs/managed-postgresql/operations/cluster-backups).
+                          type: string
+                        time:
+                          description: |-
+                            01-02T15:04:05 - UTC). When not set, current time is used.
+                            Timestamp of the moment to which the PostgreSQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). When not set, current time is used.
+                          type: string
+                        timeInclusive:
+                          description: |-
+                            (Boolean) Flag that indicates whether a database should be restored to the first backup point available just after the timestamp specified in the [time] field instead of just before. Possible values:
+                            Flag that indicates whether a database should be restored to the first backup point available just after the timestamp specified in the [time] field instead of just before. Possible values:
+                            * `false` (default) — the restore point refers to the first backup moment before [time].
+                            * `true` — the restore point refers to the first backup point after [time].
+                          type: boolean
+                      type: object
+                    type: array
+                  securityGroupIds:
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  securityGroupIdsRefs:
+                    description: References to SecurityGroup in vpc to populate securityGroupIds.
+                    items:
+                      description: A NamespacedReference to a named object.
+                      properties:
+                        name:
+                          description: Name of the referenced object.
+                          type: string
+                        namespace:
+                          description: Namespace of the referenced object
+                          type: string
+                        policy:
+                          description: Policies for referencing.
+                          properties:
+                            resolution:
+                              default: Required
+                              description: |-
+                                Resolution specifies whether resolution of this reference is required.
+                                The default is 'Required', which means the reconcile will fail if the
+                                reference cannot be resolved. 'Optional' means this reference will be
+                                a no-op if it cannot be resolved.
+                              enum:
+                              - Required
+                              - Optional
+                              type: string
+                            resolve:
+                              description: |-
+                                Resolve specifies when this reference should be resolved. The default
+                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                the corresponding field is not present. Use 'Always' to resolve the
+                                reference on every reconcile.
+                              enum:
+                              - Always
+                              - IfNotPresent
+                              type: string
+                          type: object
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  securityGroupIdsSelector:
+                    description: Selector for a list of SecurityGroup in vpc to populate
+                      securityGroupIds.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  user:
+                    description: |-
+                      (Block List, Deprecated) ~> Deprecated! To manage users, please switch to using a separate resource type yandex_mdb_postgresql_user. (see below for nested schema)
+                      ~> Deprecated! To manage users, please switch to using a separate resource type `yandex_mdb_postgresql_user`.
+                    items:
+                      properties:
+                        connLimit:
+                          description: |-
+                            (Number) The maximum number of connections per user. (Default 50).
+                            The maximum number of connections per user. (Default 50).
+                          type: number
+                        grants:
+                          description: |-
+                            (List of String) List of the user's grants.
+                            List of the user's grants.
+                          items:
+                            type: string
+                          type: array
+                        login:
+                          description: |-
+                            (Boolean) User's ability to login.
+                            User's ability to login.
+                          type: boolean
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            The name of the user.
+                          type: string
+                        passwordSecretRef:
+                          description: |-
+                            (String, Sensitive) The password of the user.
+                            The password of the user.
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                        permission:
+                          description: |-
+                            (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                            Set of permissions granted to the user.
+                          items:
+                            properties:
+                              databaseName:
+                                description: |-
+                                  (String) The name of the database that the permission grants access to.
+                                  The name of the database that the permission grants access to.
+                                type: string
+                            type: object
+                          type: array
+                        settings:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            (Map of String) Map of user settings. Full description.
+                            Map of user settings. [Full description](https://yandex.cloud/docs/managed-postgresql/api-ref/grpc/Cluster/create#yandex.cloud.mdb.postgresql.v1.UserSettings).
+
+                            * `default_transaction_isolation` - defines the default isolation level to be set for all new SQL transactions. One of:  - 0: `unspecified`
+                            - 1: `read uncommitted`
+                            - 2: `read committed`
+                            - 3: `repeatable read`
+                            - 4: `serializable`
+
+                            * `lock_timeout` - The maximum time (in milliseconds) for any statement to wait for acquiring a lock on an table, index, row or other database object (default 0)
+
+                            * `log_min_duration_statement` - This setting controls logging of the duration of statements. (default -1 disables logging of the duration of statements.)
+
+                            * `synchronous_commit` - This setting defines whether DBMS will commit transaction in a synchronous way. One of:
+                            - 0: `unspecified`
+                            - 1: `on`
+                            - 2: `off`
+                            - 3: `local`
+                            - 4: `remote write`
+                            - 5: `remote apply`
+
+                            * `temp_file_limit` - The maximum storage space size (in kilobytes) that a single process can use to create temporary files.
+
+                            * `log_statement` - This setting specifies which SQL statements should be logged (on the user level). One of:
+                            - 0: `unspecified`
+                            - 1: `none`
+                            - 2: `ddl`
+                            - 3: `mod`
+                            - 4: `all`
+
+                            * `pool_mode` - Mode that the connection pooler is working in with specified user. One of:
+                            - 1: `session`
+                            - 2: `transaction`
+                            - 3: `statement`
+
+                            * `prepared_statements_pooling` - This setting allows user to use prepared statements with transaction pooling. Boolean.
+
+                            * `catchup_timeout` - The connection pooler setting. It determines the maximum allowed replication lag (in seconds). Pooler will reject connections to the replica with a lag above this threshold. Default value is 0, which disables this feature. Integer.
+
+                            * `wal_sender_timeout` - The maximum time (in milliseconds) to wait for WAL replication (can be set only for PostgreSQL 12+). Terminate replication connections that are inactive for longer than this amount of time. Integer.
+
+                            * `idle_in_transaction_session_timeout` - Sets the maximum allowed idle time (in milliseconds) between queries, when in a transaction. Value of 0 (default) disables the timeout. Integer.
+
+                            * `statement_timeout` - The maximum time (in milliseconds) to wait for statement. Value of 0 (default) disables the timeout. Integer
+                          type: object
+                          x-kubernetes-map-type: granular
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  config:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the PostgreSQL cluster. (see below for nested schema)
+                      Configuration of the PostgreSQL cluster.
+                    items:
+                      properties:
+                        access:
+                          description: |-
+                            (Block List, Max: 1) Access policy to the PostgreSQL cluster. (see below for nested schema)
+                            Access policy to the PostgreSQL cluster.
+                          items:
+                            properties:
+                              dataLens:
+                                description: |-
+                                  (Boolean) Allow access for Yandex DataLens.
+                                  Allow access for [Yandex DataLens](https://yandex.cloud/services/datalens).
+                                type: boolean
+                              dataTransfer:
+                                description: |-
+                                  (Boolean) Allow access for DataTransfer.
+                                  Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
+                                type: boolean
+                              serverless:
+                                description: |-
+                                  (Boolean) Allow access for connection to managed databases from functions.
+                                  Allow access for [connection to managed databases from functions](https://yandex.cloud/docs/functions/operations/database-connection).
+                                type: boolean
+                              webSql:
+                                description: |-
+                                  (Boolean) Allow access for SQL queries in the management console.
+                                  Allow access for [SQL queries in the management console](https://yandex.cloud/docs/managed-postgresql/operations/web-sql-query).
+                                type: boolean
+                            type: object
+                          type: array
+                        autofailover:
+                          description: |-
+                            (Boolean) Configuration setting which enables/disables autofailover in cluster.
+                            Configuration setting which enables/disables autofailover in cluster.
+                          type: boolean
+                        backupRetainPeriodDays:
+                          description: |-
+                            (Number) The period in days during which backups are stored.
+                            The period in days during which backups are stored.
+                          type: number
+                        backupWindowStart:
+                          description: |-
+                            (Block List, Max: 1) Time to start the daily backup, in the UTC timezone. (see below for nested schema)
+                            Time to start the daily backup, in the UTC timezone.
+                          items:
+                            properties:
+                              hours:
+                                description: |-
+                                  (Number) The hour at which backup will be started (UTC).
+                                  The hour at which backup will be started (UTC).
+                                type: number
+                              minutes:
+                                description: |-
+                                  (Number) The hour at which backup will be started (UTC).
+                                  The hour at which backup will be started (UTC).
+                                type: number
+                            type: object
+                          type: array
+                        diskSizeAutoscaling:
+                          description: |-
+                            (Block List, Max: 1) Cluster disk size autoscaling settings. (see below for nested schema)
+                            Cluster disk size autoscaling settings.
+                          items:
+                            properties:
+                              diskSizeLimit:
+                                description: |-
+                                  (Number) Limit of disk size after autoscaling (GiB).
+                                  Limit of disk size after autoscaling (GiB).
+                                type: number
+                              emergencyUsageThreshold:
+                                description: |-
+                                  (Number) Immediate autoscaling disk usage (percent).
+                                  Immediate autoscaling disk usage (percent).
+                                type: number
+                              plannedUsageThreshold:
+                                description: |-
+                                  (Number) Maintenance window autoscaling disk usage (percent).
+                                  Maintenance window autoscaling disk usage (percent).
+                                type: number
+                            type: object
+                          type: array
+                        performanceDiagnostics:
+                          description: |-
+                            (Block List, Max: 1) Cluster performance diagnostics settings. YC Documentation. (see below for nested schema)
+                            Cluster performance diagnostics settings. [YC Documentation](https://yandex.cloud/docs/managed-postgresql/api-ref/grpc/cluster_service#PerformanceDiagnostics).
+                          items:
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean) Enable performance diagnostics.
+                                  Enable performance diagnostics.
+                                type: boolean
+                              sessionsSamplingInterval:
+                                description: |-
+                                  (Number) Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+                                  Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+                                type: number
+                              statementsSamplingInterval:
+                                description: |-
+                                  (Number) Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+                                  Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+                                type: number
+                            type: object
+                          type: array
+                        poolerConfig:
+                          description: |-
+                            (Block List, Max: 1) Configuration of the connection pooler. (see below for nested schema)
+                            Configuration of the connection pooler.
+                          items:
+                            properties:
+                              poolDiscard:
+                                description: |-
+                                  (Boolean) Setting pool_discard parameter in Odyssey.
+                                  Setting `pool_discard` [parameter in Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool_discard-yesno).
+                                type: boolean
+                              poolingMode:
+                                description: |-
+                                  string.
+                                  Mode that the connection pooler is working in. See descriptions of all modes in the [documentation for Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool-string.
+                                type: string
+                            type: object
+                          type: array
+                        postgresqlConfig:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            (Map of String) PostgreSQL cluster configuration. For detailed information specific to your PostgreSQL version, please refer to the API proto specifications.
+                            PostgreSQL cluster configuration. For detailed information specific to your PostgreSQL version, please refer to the [API proto specifications](https://github.com/yandex-cloud/cloudapi/tree/master/yandex/cloud/mdb/postgresql/v1/config).
+                          type: object
+                          x-kubernetes-map-type: granular
+                        resources:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Resources allocated to hosts of the PostgreSQL cluster. (see below for nested schema)
+                            Resources allocated to hosts of the PostgreSQL cluster.
+                          items:
+                            properties:
+                              diskSize:
+                                description: |-
+                                  (Number) Volume of the storage available to a PostgreSQL host, in gigabytes.
+                                  Volume of the storage available to a PostgreSQL host, in gigabytes.
+                                type: number
+                              diskTypeId:
+                                description: |-
+                                  (String) Type of the storage of PostgreSQL hosts.
+                                  Type of the storage of PostgreSQL hosts.
+                                type: string
+                              resourcePresetId:
+                                description: |-
+                                  (String) The ID of the preset for computational resources available to a PostgreSQL host (CPU, memory etc.). For more information, see the official documentation.
+                                  The ID of the preset for computational resources available to a PostgreSQL host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-postgresql/concepts/instance-types).
+                                type: string
+                            type: object
+                          type: array
+                        version:
+                          description: |-
+                            1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
+                            Version of the PostgreSQL cluster. (allowed versions are: 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
+                          type: string
+                      type: object
+                    type: array
+                  database:
+                    description: |-
+                      (Block List, Deprecated) ~> Deprecated! To manage databases, please switch to using a separate resource type yandex_mdb_postgresql_database. (see below for nested schema)
+                      ~> Deprecated! To manage databases, please switch to using a separate resource type `yandex_mdb_postgresql_database`.
+                    items:
+                      properties:
+                        extension:
+                          description: |-
+                            (Block Set) Set of database extensions. (see below for nested schema)
+                            Set of database extensions.
+                          items:
+                            properties:
+                              name:
+                                description: |-
+                                  (String) The resource name.
+                                  Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
+                                type: string
+                              version:
+                                description: |-
+                                  1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
+                                  Version of the extension.
+                                type: string
+                            type: object
+                          type: array
+                        lcCollate:
+                          description: |-
+                            (String) POSIX locale for string sorting order. Forbidden to change in an existing database.
+                            POSIX locale for string sorting order. Forbidden to change in an existing database.
+                          type: string
+                        lcType:
+                          description: |-
+                            (String) POSIX locale for character classification. Forbidden to change in an existing database.
+                            POSIX locale for character classification. Forbidden to change in an existing database.
+                          type: string
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            The resource name.
+                          type: string
+                        owner:
+                          description: |-
+                            (String) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                            Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                          type: string
+                        templateDb:
+                          description: |-
+                            (String) Name of the template database.
+                            Name of the template database.
+                          type: string
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
+                    type: boolean
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  diskEncryptionKeyId:
+                    description: |-
+                      (String) The ID of this resource.
+                      ID of the KMS key for cluster disk encryption. Restoring without an encryption key will disable encryption if any exists.
+                    type: string
+                  environment:
+                    description: |-
+                      (String) Deployment environment of the PostgreSQL cluster.
+                      Deployment environment of the PostgreSQL cluster.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  host:
+                    description: |-
+                      (Block List, Min: 1) A host of the PostgreSQL cluster. (see below for nested schema)
+                      A host of the PostgreSQL cluster.
+                    items:
+                      properties:
+                        assignPublicIp:
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address on creation. It can be changed on the fly only when name is set.
+                            Sets whether the host should get a public IP address on creation. It can be changed on the fly only when `name` is set.
+                          type: boolean
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Host state name. It should be set for all hosts or unset for all hosts. This field can be used by another host, to select which host will be its replication source. Please see `replication_source_name` parameter.
+                          type: string
+                        priority:
+                          description: |-
+                            (Number, Deprecated) Host priority in HA group. It works only when name is set.
+                            Host priority in HA group. It works only when `name` is set.
+                          type: number
+                        replicationSourceName:
+                          description: |-
+                            (String) Host replication source name points to host's name from which this host should replicate. When not set then host in HA group. It works only when name is set.
+                            Host replication source name points to host's `name` from which this host should replicate. When not set then host in HA group. It works only when `name` is set.
+                          type: string
+                        subnetId:
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in vpc to populate subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in vpc to populate subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        zone:
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                          type: string
+                      type: object
+                    type: array
+                  hostGroupIds:
+                    description: |-
+                      (Set of String) Host Group IDs.
+                      Host Group IDs.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  hostMasterName:
+                    description: |-
+                      (String, Deprecated) Deprecated field. Will be removed in future versions.
+                      Deprecated field. Will be removed in future versions.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  maintenanceWindow:
+                    description: |-
+                      (Block List, Max: 1) Maintenance policy of the PostgreSQL cluster. (see below for nested schema)
+                      Maintenance policy of the PostgreSQL cluster.
+                    items:
+                      properties:
+                        day:
+                          description: |-
+                            (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN
+                            Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`
+                          type: string
+                        hour:
+                          description: |-
+                            (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+                            Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
+                          type: number
+                        type:
+                          description: |-
+                            (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  networkId:
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
+                    type: string
+                  networkIdRef:
+                    description: Reference to a Network in vpc to populate networkId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: Selector for a Network in vpc to populate networkId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  restore:
+                    description: |-
+                      (Block List, Max: 1) The cluster will be created from the specified backup. (see below for nested schema)
+                      The cluster will be created from the specified backup.
+                    items:
+                      properties:
+                        backupId:
+                          description: |-
+                            (String) Backup ID. The cluster will be created from the specified backup. How to get a list of PostgreSQL backups.
+                            Backup ID. The cluster will be created from the specified backup. [How to get a list of PostgreSQL backups](https://yandex.cloud/docs/managed-postgresql/operations/cluster-backups).
+                          type: string
+                        time:
+                          description: |-
+                            01-02T15:04:05 - UTC). When not set, current time is used.
+                            Timestamp of the moment to which the PostgreSQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). When not set, current time is used.
+                          type: string
+                        timeInclusive:
+                          description: |-
+                            (Boolean) Flag that indicates whether a database should be restored to the first backup point available just after the timestamp specified in the [time] field instead of just before. Possible values:
+                            Flag that indicates whether a database should be restored to the first backup point available just after the timestamp specified in the [time] field instead of just before. Possible values:
+                            * `false` (default) — the restore point refers to the first backup moment before [time].
+                            * `true` — the restore point refers to the first backup point after [time].
+                          type: boolean
+                      type: object
+                    type: array
+                  securityGroupIds:
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  securityGroupIdsRefs:
+                    description: References to SecurityGroup in vpc to populate securityGroupIds.
+                    items:
+                      description: A NamespacedReference to a named object.
+                      properties:
+                        name:
+                          description: Name of the referenced object.
+                          type: string
+                        namespace:
+                          description: Namespace of the referenced object
+                          type: string
+                        policy:
+                          description: Policies for referencing.
+                          properties:
+                            resolution:
+                              default: Required
+                              description: |-
+                                Resolution specifies whether resolution of this reference is required.
+                                The default is 'Required', which means the reconcile will fail if the
+                                reference cannot be resolved. 'Optional' means this reference will be
+                                a no-op if it cannot be resolved.
+                              enum:
+                              - Required
+                              - Optional
+                              type: string
+                            resolve:
+                              description: |-
+                                Resolve specifies when this reference should be resolved. The default
+                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                the corresponding field is not present. Use 'Always' to resolve the
+                                reference on every reconcile.
+                              enum:
+                              - Always
+                              - IfNotPresent
+                              type: string
+                          type: object
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  securityGroupIdsSelector:
+                    description: Selector for a list of SecurityGroup in vpc to populate
+                      securityGroupIds.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  user:
+                    description: |-
+                      (Block List, Deprecated) ~> Deprecated! To manage users, please switch to using a separate resource type yandex_mdb_postgresql_user. (see below for nested schema)
+                      ~> Deprecated! To manage users, please switch to using a separate resource type `yandex_mdb_postgresql_user`.
+                    items:
+                      properties:
+                        connLimit:
+                          description: |-
+                            (Number) The maximum number of connections per user. (Default 50).
+                            The maximum number of connections per user. (Default 50).
+                          type: number
+                        grants:
+                          description: |-
+                            (List of String) List of the user's grants.
+                            List of the user's grants.
+                          items:
+                            type: string
+                          type: array
+                        login:
+                          description: |-
+                            (Boolean) User's ability to login.
+                            User's ability to login.
+                          type: boolean
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            The name of the user.
+                          type: string
+                        passwordSecretRef:
+                          description: |-
+                            (String, Sensitive) The password of the user.
+                            The password of the user.
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                        permission:
+                          description: |-
+                            (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                            Set of permissions granted to the user.
+                          items:
+                            properties:
+                              databaseName:
+                                description: |-
+                                  (String) The name of the database that the permission grants access to.
+                                  The name of the database that the permission grants access to.
+                                type: string
+                            type: object
+                          type: array
+                        settings:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            (Map of String) Map of user settings. Full description.
+                            Map of user settings. [Full description](https://yandex.cloud/docs/managed-postgresql/api-ref/grpc/Cluster/create#yandex.cloud.mdb.postgresql.v1.UserSettings).
+
+                            * `default_transaction_isolation` - defines the default isolation level to be set for all new SQL transactions. One of:  - 0: `unspecified`
+                            - 1: `read uncommitted`
+                            - 2: `read committed`
+                            - 3: `repeatable read`
+                            - 4: `serializable`
+
+                            * `lock_timeout` - The maximum time (in milliseconds) for any statement to wait for acquiring a lock on an table, index, row or other database object (default 0)
+
+                            * `log_min_duration_statement` - This setting controls logging of the duration of statements. (default -1 disables logging of the duration of statements.)
+
+                            * `synchronous_commit` - This setting defines whether DBMS will commit transaction in a synchronous way. One of:
+                            - 0: `unspecified`
+                            - 1: `on`
+                            - 2: `off`
+                            - 3: `local`
+                            - 4: `remote write`
+                            - 5: `remote apply`
+
+                            * `temp_file_limit` - The maximum storage space size (in kilobytes) that a single process can use to create temporary files.
+
+                            * `log_statement` - This setting specifies which SQL statements should be logged (on the user level). One of:
+                            - 0: `unspecified`
+                            - 1: `none`
+                            - 2: `ddl`
+                            - 3: `mod`
+                            - 4: `all`
+
+                            * `pool_mode` - Mode that the connection pooler is working in with specified user. One of:
+                            - 1: `session`
+                            - 2: `transaction`
+                            - 3: `statement`
+
+                            * `prepared_statements_pooling` - This setting allows user to use prepared statements with transaction pooling. Boolean.
+
+                            * `catchup_timeout` - The connection pooler setting. It determines the maximum allowed replication lag (in seconds). Pooler will reject connections to the replica with a lag above this threshold. Default value is 0, which disables this feature. Integer.
+
+                            * `wal_sender_timeout` - The maximum time (in milliseconds) to wait for WAL replication (can be set only for PostgreSQL 12+). Terminate replication connections that are inactive for longer than this amount of time. Integer.
+
+                            * `idle_in_transaction_session_timeout` - Sets the maximum allowed idle time (in milliseconds) between queries, when in a transaction. Value of 0 (default) disables the timeout. Integer.
+
+                            * `statement_timeout` - The maximum time (in milliseconds) to wait for statement. Value of 0 (default) disables the timeout. Integer
+                          type: object
+                          x-kubernetes-map-type: granular
+                      required:
+                      - passwordSecretRef
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.config is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.config)
+                || (has(self.initProvider) && has(self.initProvider.config))'
+            - message: spec.forProvider.environment is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.environment)
+                || (has(self.initProvider) && has(self.initProvider.environment))'
+            - message: spec.forProvider.host is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.host)
+                || (has(self.initProvider) && has(self.initProvider.host))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: PostgresqlClusterStatus defines the observed state of PostgresqlCluster.
+            properties:
+              atProvider:
+                properties:
+                  config:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the PostgreSQL cluster. (see below for nested schema)
+                      Configuration of the PostgreSQL cluster.
+                    items:
+                      properties:
+                        access:
+                          description: |-
+                            (Block List, Max: 1) Access policy to the PostgreSQL cluster. (see below for nested schema)
+                            Access policy to the PostgreSQL cluster.
+                          items:
+                            properties:
+                              dataLens:
+                                description: |-
+                                  (Boolean) Allow access for Yandex DataLens.
+                                  Allow access for [Yandex DataLens](https://yandex.cloud/services/datalens).
+                                type: boolean
+                              dataTransfer:
+                                description: |-
+                                  (Boolean) Allow access for DataTransfer.
+                                  Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
+                                type: boolean
+                              serverless:
+                                description: |-
+                                  (Boolean) Allow access for connection to managed databases from functions.
+                                  Allow access for [connection to managed databases from functions](https://yandex.cloud/docs/functions/operations/database-connection).
+                                type: boolean
+                              webSql:
+                                description: |-
+                                  (Boolean) Allow access for SQL queries in the management console.
+                                  Allow access for [SQL queries in the management console](https://yandex.cloud/docs/managed-postgresql/operations/web-sql-query).
+                                type: boolean
+                            type: object
+                          type: array
+                        autofailover:
+                          description: |-
+                            (Boolean) Configuration setting which enables/disables autofailover in cluster.
+                            Configuration setting which enables/disables autofailover in cluster.
+                          type: boolean
+                        backupRetainPeriodDays:
+                          description: |-
+                            (Number) The period in days during which backups are stored.
+                            The period in days during which backups are stored.
+                          type: number
+                        backupWindowStart:
+                          description: |-
+                            (Block List, Max: 1) Time to start the daily backup, in the UTC timezone. (see below for nested schema)
+                            Time to start the daily backup, in the UTC timezone.
+                          items:
+                            properties:
+                              hours:
+                                description: |-
+                                  (Number) The hour at which backup will be started (UTC).
+                                  The hour at which backup will be started (UTC).
+                                type: number
+                              minutes:
+                                description: |-
+                                  (Number) The hour at which backup will be started (UTC).
+                                  The hour at which backup will be started (UTC).
+                                type: number
+                            type: object
+                          type: array
+                        diskSizeAutoscaling:
+                          description: |-
+                            (Block List, Max: 1) Cluster disk size autoscaling settings. (see below for nested schema)
+                            Cluster disk size autoscaling settings.
+                          items:
+                            properties:
+                              diskSizeLimit:
+                                description: |-
+                                  (Number) Limit of disk size after autoscaling (GiB).
+                                  Limit of disk size after autoscaling (GiB).
+                                type: number
+                              emergencyUsageThreshold:
+                                description: |-
+                                  (Number) Immediate autoscaling disk usage (percent).
+                                  Immediate autoscaling disk usage (percent).
+                                type: number
+                              plannedUsageThreshold:
+                                description: |-
+                                  (Number) Maintenance window autoscaling disk usage (percent).
+                                  Maintenance window autoscaling disk usage (percent).
+                                type: number
+                            type: object
+                          type: array
+                        performanceDiagnostics:
+                          description: |-
+                            (Block List, Max: 1) Cluster performance diagnostics settings. YC Documentation. (see below for nested schema)
+                            Cluster performance diagnostics settings. [YC Documentation](https://yandex.cloud/docs/managed-postgresql/api-ref/grpc/cluster_service#PerformanceDiagnostics).
+                          items:
+                            properties:
+                              enabled:
+                                description: |-
+                                  (Boolean) Enable performance diagnostics.
+                                  Enable performance diagnostics.
+                                type: boolean
+                              sessionsSamplingInterval:
+                                description: |-
+                                  (Number) Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+                                  Interval (in seconds) for pg_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+                                type: number
+                              statementsSamplingInterval:
+                                description: |-
+                                  (Number) Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+                                  Interval (in seconds) for pg_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+                                type: number
+                            type: object
+                          type: array
+                        poolerConfig:
+                          description: |-
+                            (Block List, Max: 1) Configuration of the connection pooler. (see below for nested schema)
+                            Configuration of the connection pooler.
+                          items:
+                            properties:
+                              poolDiscard:
+                                description: |-
+                                  (Boolean) Setting pool_discard parameter in Odyssey.
+                                  Setting `pool_discard` [parameter in Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool_discard-yesno).
+                                type: boolean
+                              poolingMode:
+                                description: |-
+                                  string.
+                                  Mode that the connection pooler is working in. See descriptions of all modes in the [documentation for Odyssey](https://github.com/yandex/odyssey/blob/master/documentation/configuration.md#pool-string.
+                                type: string
+                            type: object
+                          type: array
+                        postgresqlConfig:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            (Map of String) PostgreSQL cluster configuration. For detailed information specific to your PostgreSQL version, please refer to the API proto specifications.
+                            PostgreSQL cluster configuration. For detailed information specific to your PostgreSQL version, please refer to the [API proto specifications](https://github.com/yandex-cloud/cloudapi/tree/master/yandex/cloud/mdb/postgresql/v1/config).
+                          type: object
+                          x-kubernetes-map-type: granular
+                        resources:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Resources allocated to hosts of the PostgreSQL cluster. (see below for nested schema)
+                            Resources allocated to hosts of the PostgreSQL cluster.
+                          items:
+                            properties:
+                              diskSize:
+                                description: |-
+                                  (Number) Volume of the storage available to a PostgreSQL host, in gigabytes.
+                                  Volume of the storage available to a PostgreSQL host, in gigabytes.
+                                type: number
+                              diskTypeId:
+                                description: |-
+                                  (String) Type of the storage of PostgreSQL hosts.
+                                  Type of the storage of PostgreSQL hosts.
+                                type: string
+                              resourcePresetId:
+                                description: |-
+                                  (String) The ID of the preset for computational resources available to a PostgreSQL host (CPU, memory etc.). For more information, see the official documentation.
+                                  The ID of the preset for computational resources available to a PostgreSQL host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-postgresql/concepts/instance-types).
+                                type: string
+                            type: object
+                          type: array
+                        version:
+                          description: |-
+                            1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
+                            Version of the PostgreSQL cluster. (allowed versions are: 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
+                          type: string
+                      type: object
+                    type: array
+                  createdAt:
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
+                    type: string
+                  database:
+                    description: |-
+                      (Block List, Deprecated) ~> Deprecated! To manage databases, please switch to using a separate resource type yandex_mdb_postgresql_database. (see below for nested schema)
+                      ~> Deprecated! To manage databases, please switch to using a separate resource type `yandex_mdb_postgresql_database`.
+                    items:
+                      properties:
+                        extension:
+                          description: |-
+                            (Block Set) Set of database extensions. (see below for nested schema)
+                            Set of database extensions.
+                          items:
+                            properties:
+                              name:
+                                description: |-
+                                  (String) The resource name.
+                                  Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
+                                type: string
+                              version:
+                                description: |-
+                                  1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c, 15, 15-1c, 16, 17).
+                                  Version of the extension.
+                                type: string
+                            type: object
+                          type: array
+                        lcCollate:
+                          description: |-
+                            (String) POSIX locale for string sorting order. Forbidden to change in an existing database.
+                            POSIX locale for string sorting order. Forbidden to change in an existing database.
+                          type: string
+                        lcType:
+                          description: |-
+                            (String) POSIX locale for character classification. Forbidden to change in an existing database.
+                            POSIX locale for character classification. Forbidden to change in an existing database.
+                          type: string
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            The resource name.
+                          type: string
+                        owner:
+                          description: |-
+                            (String) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                            Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                          type: string
+                        templateDb:
+                          description: |-
+                            (String) Name of the template database.
+                            Name of the template database.
+                          type: string
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
+                    type: boolean
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  diskEncryptionKeyId:
+                    description: |-
+                      (String) The ID of this resource.
+                      ID of the KMS key for cluster disk encryption. Restoring without an encryption key will disable encryption if any exists.
+                    type: string
+                  environment:
+                    description: |-
+                      (String) Deployment environment of the PostgreSQL cluster.
+                      Deployment environment of the PostgreSQL cluster.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  health:
+                    description: |-
+                      (String) Aggregated health of the cluster.
+                      Aggregated health of the cluster.
+                    type: string
+                  host:
+                    description: |-
+                      (Block List, Min: 1) A host of the PostgreSQL cluster. (see below for nested schema)
+                      A host of the PostgreSQL cluster.
+                    items:
+                      properties:
+                        assignPublicIp:
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address on creation. It can be changed on the fly only when name is set.
+                            Sets whether the host should get a public IP address on creation. It can be changed on the fly only when `name` is set.
+                          type: boolean
+                        fqdn:
+                          description: |-
+                            (String) The fully qualified domain name of the host.
+                            The fully qualified domain name of the host.
+                          type: string
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            Host state name. It should be set for all hosts or unset for all hosts. This field can be used by another host, to select which host will be its replication source. Please see `replication_source_name` parameter.
+                          type: string
+                        priority:
+                          description: |-
+                            (Number, Deprecated) Host priority in HA group. It works only when name is set.
+                            Host priority in HA group. It works only when `name` is set.
+                          type: number
+                        replicationSource:
+                          description: |-
+                            (String) Host replication source (fqdn), when replication_source is empty then host is in HA group.
+                            Host replication source (fqdn), when replication_source is empty then host is in HA group.
+                          type: string
+                        replicationSourceName:
+                          description: |-
+                            (String) Host replication source name points to host's name from which this host should replicate. When not set then host in HA group. It works only when name is set.
+                            Host replication source name points to host's `name` from which this host should replicate. When not set then host in HA group. It works only when `name` is set.
+                          type: string
+                        role:
+                          description: |-
+                            (String) Host's role (replica|primary), computed by server.
+                            Host's role (replica|primary), computed by server.
+                          type: string
+                        subnetId:
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                          type: string
+                        zone:
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                          type: string
+                      type: object
+                    type: array
+                  hostGroupIds:
+                    description: |-
+                      (Set of String) Host Group IDs.
+                      Host Group IDs.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  hostMasterName:
+                    description: |-
+                      (String, Deprecated) Deprecated field. Will be removed in future versions.
+                      Deprecated field. Will be removed in future versions.
+                    type: string
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  maintenanceWindow:
+                    description: |-
+                      (Block List, Max: 1) Maintenance policy of the PostgreSQL cluster. (see below for nested schema)
+                      Maintenance policy of the PostgreSQL cluster.
+                    items:
+                      properties:
+                        day:
+                          description: |-
+                            (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN
+                            Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`
+                          type: string
+                        hour:
+                          description: |-
+                            (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+                            Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
+                          type: number
+                        type:
+                          description: |-
+                            (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  networkId:
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
+                    type: string
+                  restore:
+                    description: |-
+                      (Block List, Max: 1) The cluster will be created from the specified backup. (see below for nested schema)
+                      The cluster will be created from the specified backup.
+                    items:
+                      properties:
+                        backupId:
+                          description: |-
+                            (String) Backup ID. The cluster will be created from the specified backup. How to get a list of PostgreSQL backups.
+                            Backup ID. The cluster will be created from the specified backup. [How to get a list of PostgreSQL backups](https://yandex.cloud/docs/managed-postgresql/operations/cluster-backups).
+                          type: string
+                        time:
+                          description: |-
+                            01-02T15:04:05 - UTC). When not set, current time is used.
+                            Timestamp of the moment to which the PostgreSQL cluster should be restored. (Format: `2006-01-02T15:04:05` - UTC). When not set, current time is used.
+                          type: string
+                        timeInclusive:
+                          description: |-
+                            (Boolean) Flag that indicates whether a database should be restored to the first backup point available just after the timestamp specified in the [time] field instead of just before. Possible values:
+                            Flag that indicates whether a database should be restored to the first backup point available just after the timestamp specified in the [time] field instead of just before. Possible values:
+                            * `false` (default) — the restore point refers to the first backup moment before [time].
+                            * `true` — the restore point refers to the first backup point after [time].
+                          type: boolean
+                      type: object
+                    type: array
+                  securityGroupIds:
+                    description: |-
+                      (Set of String) The list of security groups applied to resource or their components.
+                      The list of security groups applied to resource or their components.
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  status:
+                    description: |-
+                      (String) Status of the cluster.
+                      Status of the cluster.
+                    type: string
+                  user:
+                    description: |-
+                      (Block List, Deprecated) ~> Deprecated! To manage users, please switch to using a separate resource type yandex_mdb_postgresql_user. (see below for nested schema)
+                      ~> Deprecated! To manage users, please switch to using a separate resource type `yandex_mdb_postgresql_user`.
+                    items:
+                      properties:
+                        connLimit:
+                          description: |-
+                            (Number) The maximum number of connections per user. (Default 50).
+                            The maximum number of connections per user. (Default 50).
+                          type: number
+                        grants:
+                          description: |-
+                            (List of String) List of the user's grants.
+                            List of the user's grants.
+                          items:
+                            type: string
+                          type: array
+                        login:
+                          description: |-
+                            (Boolean) User's ability to login.
+                            User's ability to login.
+                          type: boolean
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            The name of the user.
+                          type: string
+                        permission:
+                          description: |-
+                            (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                            Set of permissions granted to the user.
+                          items:
+                            properties:
+                              databaseName:
+                                description: |-
+                                  (String) The name of the database that the permission grants access to.
+                                  The name of the database that the permission grants access to.
+                                type: string
+                            type: object
+                          type: array
+                        settings:
+                          additionalProperties:
+                            type: string
+                          description: |-
+                            (Map of String) Map of user settings. Full description.
+                            Map of user settings. [Full description](https://yandex.cloud/docs/managed-postgresql/api-ref/grpc/Cluster/create#yandex.cloud.mdb.postgresql.v1.UserSettings).
+
+                            * `default_transaction_isolation` - defines the default isolation level to be set for all new SQL transactions. One of:  - 0: `unspecified`
+                            - 1: `read uncommitted`
+                            - 2: `read committed`
+                            - 3: `repeatable read`
+                            - 4: `serializable`
+
+                            * `lock_timeout` - The maximum time (in milliseconds) for any statement to wait for acquiring a lock on an table, index, row or other database object (default 0)
+
+                            * `log_min_duration_statement` - This setting controls logging of the duration of statements. (default -1 disables logging of the duration of statements.)
+
+                            * `synchronous_commit` - This setting defines whether DBMS will commit transaction in a synchronous way. One of:
+                            - 0: `unspecified`
+                            - 1: `on`
+                            - 2: `off`
+                            - 3: `local`
+                            - 4: `remote write`
+                            - 5: `remote apply`
+
+                            * `temp_file_limit` - The maximum storage space size (in kilobytes) that a single process can use to create temporary files.
+
+                            * `log_statement` - This setting specifies which SQL statements should be logged (on the user level). One of:
+                            - 0: `unspecified`
+                            - 1: `none`
+                            - 2: `ddl`
+                            - 3: `mod`
+                            - 4: `all`
+
+                            * `pool_mode` - Mode that the connection pooler is working in with specified user. One of:
+                            - 1: `session`
+                            - 2: `transaction`
+                            - 3: `statement`
+
+                            * `prepared_statements_pooling` - This setting allows user to use prepared statements with transaction pooling. Boolean.
+
+                            * `catchup_timeout` - The connection pooler setting. It determines the maximum allowed replication lag (in seconds). Pooler will reject connections to the replica with a lag above this threshold. Default value is 0, which disables this feature. Integer.
+
+                            * `wal_sender_timeout` - The maximum time (in milliseconds) to wait for WAL replication (can be set only for PostgreSQL 12+). Terminate replication connections that are inactive for longer than this amount of time. Integer.
+
+                            * `idle_in_transaction_session_timeout` - Sets the maximum allowed idle time (in milliseconds) between queries, when in a transaction. Value of 0 (default) disables the timeout. Integer.
+
+                            * `statement_timeout` - The maximum time (in milliseconds) to wait for statement. Value of 0 (default) disables the timeout. Integer
+                          type: object
+                          x-kubernetes-map-type: granular
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

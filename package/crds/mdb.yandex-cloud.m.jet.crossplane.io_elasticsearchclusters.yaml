@@ -1,0 +1,1663 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: elasticsearchclusters.mdb.yandex-cloud.m.jet.crossplane.io
+spec:
+  group: mdb.yandex-cloud.m.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - yandex-cloud
+    kind: ElasticsearchCluster
+    listKind: ElasticsearchClusterList
+    plural: elasticsearchclusters
+    singular: elasticsearchcluster
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ElasticsearchCluster is the Schema for the ElasticsearchClusters
+          API. Manages a Elasticsearch cluster within Yandex Cloud.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ElasticsearchClusterSpec defines the desired state of ElasticsearchCluster
+            properties:
+              forProvider:
+                properties:
+                  config:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the Elasticsearch cluster. (see below for nested schema)
+                      Configuration of the Elasticsearch cluster.
+                    items:
+                      properties:
+                        adminPasswordSecretRef:
+                          description: |-
+                            (String, Sensitive) Password for admin user of Elasticsearch.
+                            Password for admin user of Elasticsearch.
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                        dataNode:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Configuration for Elasticsearch data nodes subcluster. (see below for nested schema)
+                            Configuration for Elasticsearch data nodes subcluster.
+                          items:
+                            properties:
+                              resources:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Elasticsearch data nodes subcluster.
+                                items:
+                                  properties:
+                                    diskSize:
+                                      description: |-
+                                        (Number) Volume of the storage available to a host, in gigabytes.
+                                        Volume of the storage available to a host, in gigabytes.
+                                      type: number
+                                    diskTypeId:
+                                      description: |-
+                                        (String) Type of the storage of Elasticsearch hosts.
+                                        Type of the storage of Elasticsearch hosts.
+                                      type: string
+                                    resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        edition:
+                          description: |-
+                            (String) Edition of Elasticsearch. For more information, see the official documentation.
+                            Edition of Elasticsearch. For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts/es-editions).
+                          type: string
+                        masterNode:
+                          description: |-
+                            (Block List, Max: 1) Configuration for Elasticsearch master nodes subcluster. (see below for nested schema)
+                            Configuration for Elasticsearch master nodes subcluster.
+                          items:
+                            properties:
+                              resources:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Elasticsearch master nodes subcluster.
+                                items:
+                                  properties:
+                                    diskSize:
+                                      description: |-
+                                        (Number) Volume of the storage available to a host, in gigabytes.
+                                        Volume of the storage available to a host, in gigabytes.
+                                      type: number
+                                    diskTypeId:
+                                      description: |-
+                                        (String) Type of the storage of Elasticsearch hosts.
+                                        Type of the storage of Elasticsearch hosts.
+                                      type: string
+                                    resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        plugins:
+                          description: |-
+                            (Set of String) A set of Elasticsearch plugins to install.
+                            A set of Elasticsearch plugins to install.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        version:
+                          description: |-
+                            (String) Version of Elasticsearch.
+                            Version of Elasticsearch.
+                          type: string
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
+                    type: boolean
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  environment:
+                    description: |-
+                      (String) Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+                      Deployment environment of the Elasticsearch cluster. Can be either `PRESTABLE` or `PRODUCTION`.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  host:
+                    description: |-
+                      (Block Set) A host of the Elasticsearch cluster. (see below for nested schema)
+                      A host of the Elasticsearch cluster.
+                    items:
+                      properties:
+                        assignPublicIp:
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address on creation. Can be either true or false.
+                            Sets whether the host should get a public IP address on creation. Can be either `true` or `false`.
+                          type: boolean
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            User defined host name.
+                          type: string
+                        subnetId:
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in vpc to populate subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in vpc to populate subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        type:
+                          description: |-
+                            (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+                            The type of the host to be deployed. Can be either `DATA_NODE` or `MASTER_NODE`.
+                          type: string
+                        zone:
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                          type: string
+                      type: object
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  maintenanceWindow:
+                    description: |-
+                      (Block List, Max: 1) Elasticsearch cluster maintenance window. (see below for nested schema)
+                      Elasticsearch cluster maintenance window.
+                    items:
+                      properties:
+                        day:
+                          description: |-
+                            (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+                            Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
+                          type: string
+                        hour:
+                          description: |-
+                            24) for maintenance window if window type is weekly.
+                            Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
+                          type: number
+                        type:
+                          description: |-
+                            (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  networkId:
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
+                    type: string
+                  networkIdRef:
+                    description: Reference to a Network in vpc to populate networkId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: Selector for a Network in vpc to populate networkId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  securityGroupIds:
+                    description: (Set of String)
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  securityGroupIdsRefs:
+                    description: References to SecurityGroup in vpc to populate securityGroupIds.
+                    items:
+                      description: A NamespacedReference to a named object.
+                      properties:
+                        name:
+                          description: Name of the referenced object.
+                          type: string
+                        namespace:
+                          description: Namespace of the referenced object
+                          type: string
+                        policy:
+                          description: Policies for referencing.
+                          properties:
+                            resolution:
+                              default: Required
+                              description: |-
+                                Resolution specifies whether resolution of this reference is required.
+                                The default is 'Required', which means the reconcile will fail if the
+                                reference cannot be resolved. 'Optional' means this reference will be
+                                a no-op if it cannot be resolved.
+                              enum:
+                              - Required
+                              - Optional
+                              type: string
+                            resolve:
+                              description: |-
+                                Resolve specifies when this reference should be resolved. The default
+                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                the corresponding field is not present. Use 'Always' to resolve the
+                                reference on every reconcile.
+                              enum:
+                              - Always
+                              - IfNotPresent
+                              type: string
+                          type: object
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  securityGroupIdsSelector:
+                    description: Selector for a list of SecurityGroup in vpc to populate
+                      securityGroupIds.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  serviceAccountId:
+                    description: |-
+                      (String) Service account which linked to the resource.
+                      [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
+                    type: string
+                  serviceAccountIdRef:
+                    description: Reference to a ServiceAccount in iam to populate
+                      serviceAccountId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  serviceAccountIdSelector:
+                    description: Selector for a ServiceAccount in iam to populate
+                      serviceAccountId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  config:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the Elasticsearch cluster. (see below for nested schema)
+                      Configuration of the Elasticsearch cluster.
+                    items:
+                      properties:
+                        adminPasswordSecretRef:
+                          description: |-
+                            (String, Sensitive) Password for admin user of Elasticsearch.
+                            Password for admin user of Elasticsearch.
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                        dataNode:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Configuration for Elasticsearch data nodes subcluster. (see below for nested schema)
+                            Configuration for Elasticsearch data nodes subcluster.
+                          items:
+                            properties:
+                              resources:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Elasticsearch data nodes subcluster.
+                                items:
+                                  properties:
+                                    diskSize:
+                                      description: |-
+                                        (Number) Volume of the storage available to a host, in gigabytes.
+                                        Volume of the storage available to a host, in gigabytes.
+                                      type: number
+                                    diskTypeId:
+                                      description: |-
+                                        (String) Type of the storage of Elasticsearch hosts.
+                                        Type of the storage of Elasticsearch hosts.
+                                      type: string
+                                    resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        edition:
+                          description: |-
+                            (String) Edition of Elasticsearch. For more information, see the official documentation.
+                            Edition of Elasticsearch. For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts/es-editions).
+                          type: string
+                        masterNode:
+                          description: |-
+                            (Block List, Max: 1) Configuration for Elasticsearch master nodes subcluster. (see below for nested schema)
+                            Configuration for Elasticsearch master nodes subcluster.
+                          items:
+                            properties:
+                              resources:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Elasticsearch master nodes subcluster.
+                                items:
+                                  properties:
+                                    diskSize:
+                                      description: |-
+                                        (Number) Volume of the storage available to a host, in gigabytes.
+                                        Volume of the storage available to a host, in gigabytes.
+                                      type: number
+                                    diskTypeId:
+                                      description: |-
+                                        (String) Type of the storage of Elasticsearch hosts.
+                                        Type of the storage of Elasticsearch hosts.
+                                      type: string
+                                    resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        plugins:
+                          description: |-
+                            (Set of String) A set of Elasticsearch plugins to install.
+                            A set of Elasticsearch plugins to install.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        version:
+                          description: |-
+                            (String) Version of Elasticsearch.
+                            Version of Elasticsearch.
+                          type: string
+                      required:
+                      - adminPasswordSecretRef
+                      type: object
+                    type: array
+                  deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
+                    type: boolean
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  environment:
+                    description: |-
+                      (String) Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+                      Deployment environment of the Elasticsearch cluster. Can be either `PRESTABLE` or `PRODUCTION`.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  folderIdRef:
+                    description: Reference to a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  folderIdSelector:
+                    description: Selector for a Folder in resourcemanager to populate
+                      folderId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  host:
+                    description: |-
+                      (Block Set) A host of the Elasticsearch cluster. (see below for nested schema)
+                      A host of the Elasticsearch cluster.
+                    items:
+                      properties:
+                        assignPublicIp:
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address on creation. Can be either true or false.
+                            Sets whether the host should get a public IP address on creation. Can be either `true` or `false`.
+                          type: boolean
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            User defined host name.
+                          type: string
+                        subnetId:
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                          type: string
+                        subnetIdRef:
+                          description: Reference to a Subnet in vpc to populate subnetId.
+                          properties:
+                            name:
+                              description: Name of the referenced object.
+                              type: string
+                            namespace:
+                              description: Namespace of the referenced object
+                              type: string
+                            policy:
+                              description: Policies for referencing.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          required:
+                          - name
+                          type: object
+                        subnetIdSelector:
+                          description: Selector for a Subnet in vpc to populate subnetId.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            namespace:
+                              description: Namespace for the selector
+                              type: string
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
+                        type:
+                          description: |-
+                            (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+                            The type of the host to be deployed. Can be either `DATA_NODE` or `MASTER_NODE`.
+                          type: string
+                        zone:
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                          type: string
+                      type: object
+                    type: array
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  maintenanceWindow:
+                    description: |-
+                      (Block List, Max: 1) Elasticsearch cluster maintenance window. (see below for nested schema)
+                      Elasticsearch cluster maintenance window.
+                    items:
+                      properties:
+                        day:
+                          description: |-
+                            (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+                            Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
+                          type: string
+                        hour:
+                          description: |-
+                            24) for maintenance window if window type is weekly.
+                            Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
+                          type: number
+                        type:
+                          description: |-
+                            (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  networkId:
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
+                    type: string
+                  networkIdRef:
+                    description: Reference to a Network in vpc to populate networkId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  networkIdSelector:
+                    description: Selector for a Network in vpc to populate networkId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  securityGroupIds:
+                    description: (Set of String)
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  securityGroupIdsRefs:
+                    description: References to SecurityGroup in vpc to populate securityGroupIds.
+                    items:
+                      description: A NamespacedReference to a named object.
+                      properties:
+                        name:
+                          description: Name of the referenced object.
+                          type: string
+                        namespace:
+                          description: Namespace of the referenced object
+                          type: string
+                        policy:
+                          description: Policies for referencing.
+                          properties:
+                            resolution:
+                              default: Required
+                              description: |-
+                                Resolution specifies whether resolution of this reference is required.
+                                The default is 'Required', which means the reconcile will fail if the
+                                reference cannot be resolved. 'Optional' means this reference will be
+                                a no-op if it cannot be resolved.
+                              enum:
+                              - Required
+                              - Optional
+                              type: string
+                            resolve:
+                              description: |-
+                                Resolve specifies when this reference should be resolved. The default
+                                is 'IfNotPresent', which will attempt to resolve the reference only when
+                                the corresponding field is not present. Use 'Always' to resolve the
+                                reference on every reconcile.
+                              enum:
+                              - Always
+                              - IfNotPresent
+                              type: string
+                          type: object
+                      required:
+                      - name
+                      type: object
+                    type: array
+                  securityGroupIdsSelector:
+                    description: Selector for a list of SecurityGroup in vpc to populate
+                      securityGroupIds.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  serviceAccountId:
+                    description: |-
+                      (String) Service account which linked to the resource.
+                      [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
+                    type: string
+                  serviceAccountIdRef:
+                    description: Reference to a ServiceAccount in iam to populate
+                      serviceAccountId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  serviceAccountIdSelector:
+                    description: Selector for a ServiceAccount in iam to populate
+                      serviceAccountId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.config is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.config)
+                || (has(self.initProvider) && has(self.initProvider.config))'
+            - message: spec.forProvider.environment is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.environment)
+                || (has(self.initProvider) && has(self.initProvider.environment))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: ElasticsearchClusterStatus defines the observed state of
+              ElasticsearchCluster.
+            properties:
+              atProvider:
+                properties:
+                  config:
+                    description: |-
+                      (Block List, Min: 1, Max: 1) Configuration of the Elasticsearch cluster. (see below for nested schema)
+                      Configuration of the Elasticsearch cluster.
+                    items:
+                      properties:
+                        dataNode:
+                          description: |-
+                            (Block List, Min: 1, Max: 1) Configuration for Elasticsearch data nodes subcluster. (see below for nested schema)
+                            Configuration for Elasticsearch data nodes subcluster.
+                          items:
+                            properties:
+                              resources:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Elasticsearch data nodes subcluster.
+                                items:
+                                  properties:
+                                    diskSize:
+                                      description: |-
+                                        (Number) Volume of the storage available to a host, in gigabytes.
+                                        Volume of the storage available to a host, in gigabytes.
+                                      type: number
+                                    diskTypeId:
+                                      description: |-
+                                        (String) Type of the storage of Elasticsearch hosts.
+                                        Type of the storage of Elasticsearch hosts.
+                                      type: string
+                                    resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        edition:
+                          description: |-
+                            (String) Edition of Elasticsearch. For more information, see the official documentation.
+                            Edition of Elasticsearch. For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts/es-editions).
+                          type: string
+                        masterNode:
+                          description: |-
+                            (Block List, Max: 1) Configuration for Elasticsearch master nodes subcluster. (see below for nested schema)
+                            Configuration for Elasticsearch master nodes subcluster.
+                          items:
+                            properties:
+                              resources:
+                                description: |-
+                                  (Block List, Min: 1, Max: 1) Resources allocated to hosts of the Elasticsearch data nodes subcluster. (see below for nested schema)
+                                  Resources allocated to hosts of the Elasticsearch master nodes subcluster.
+                                items:
+                                  properties:
+                                    diskSize:
+                                      description: |-
+                                        (Number) Volume of the storage available to a host, in gigabytes.
+                                        Volume of the storage available to a host, in gigabytes.
+                                      type: number
+                                    diskTypeId:
+                                      description: |-
+                                        (String) Type of the storage of Elasticsearch hosts.
+                                        Type of the storage of Elasticsearch hosts.
+                                      type: string
+                                    resourcePresetId:
+                                      description: |-
+                                        (String) The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see the official documentation.
+                                        The ID of the preset for computational resources available to a host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/concepts).
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        plugins:
+                          description: |-
+                            (Set of String) A set of Elasticsearch plugins to install.
+                            A set of Elasticsearch plugins to install.
+                          items:
+                            type: string
+                          type: array
+                          x-kubernetes-list-type: set
+                        version:
+                          description: |-
+                            (String) Version of Elasticsearch.
+                            Version of Elasticsearch.
+                          type: string
+                      type: object
+                    type: array
+                  createdAt:
+                    description: |-
+                      (String) The creation timestamp of the resource.
+                      The creation timestamp of the resource.
+                    type: string
+                  deletionProtection:
+                    description: |-
+                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      The `true` value means that resource is protected from accidental deletion.
+                    type: boolean
+                  description:
+                    description: |-
+                      (String) The resource description.
+                      The resource description.
+                    type: string
+                  environment:
+                    description: |-
+                      (String) Deployment environment of the Elasticsearch cluster. Can be either PRESTABLE or PRODUCTION.
+                      Deployment environment of the Elasticsearch cluster. Can be either `PRESTABLE` or `PRODUCTION`.
+                    type: string
+                  folderId:
+                    description: |-
+                      id is used.
+                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                    type: string
+                  health:
+                    description: |-
+                      (String) Aggregated health of the cluster. Can be either ALIVE, DEGRADED, DEAD or HEALTH_UNKNOWN. For more information see health field of JSON representation in the official documentation.
+                      Aggregated health of the cluster. Can be either `ALIVE`, `DEGRADED`, `DEAD` or `HEALTH_UNKNOWN`. For more information see `health` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/api-ref/Cluster/).
+                    type: string
+                  host:
+                    description: |-
+                      (Block Set) A host of the Elasticsearch cluster. (see below for nested schema)
+                      A host of the Elasticsearch cluster.
+                    items:
+                      properties:
+                        assignPublicIp:
+                          description: |-
+                            (Boolean) Sets whether the host should get a public IP address on creation. Can be either true or false.
+                            Sets whether the host should get a public IP address on creation. Can be either `true` or `false`.
+                          type: boolean
+                        fqdn:
+                          description: |-
+                            (String) The fully qualified domain name of the host.
+                            The fully qualified domain name of the host.
+                          type: string
+                        name:
+                          description: |-
+                            (String) The resource name.
+                            User defined host name.
+                          type: string
+                        subnetId:
+                          description: |-
+                            (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                            The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+                          type: string
+                        type:
+                          description: |-
+                            (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+                            The type of the host to be deployed. Can be either `DATA_NODE` or `MASTER_NODE`.
+                          type: string
+                        zone:
+                          description: |-
+                            (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                            The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                          type: string
+                      type: object
+                    type: array
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      A set of key/value label pairs which assigned to resource.
+                    type: object
+                    x-kubernetes-map-type: granular
+                  maintenanceWindow:
+                    description: |-
+                      (Block List, Max: 1) Elasticsearch cluster maintenance window. (see below for nested schema)
+                      Elasticsearch cluster maintenance window.
+                    items:
+                      properties:
+                        day:
+                          description: |-
+                            (String) Day of week for maintenance window if window type is weekly. Possible values: MON, TUE, WED, THU, FRI, SAT, SUN.
+                            Day of week for maintenance window if window type is weekly. Possible values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`.
+                          type: string
+                        hour:
+                          description: |-
+                            24) for maintenance window if window type is weekly.
+                            Hour of day in UTC time zone (1-24) for maintenance window if window type is weekly.
+                          type: number
+                        type:
+                          description: |-
+                            (String) The type of the host to be deployed. Can be either DATA_NODE or MASTER_NODE.
+                            Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) The resource name.
+                      The resource name.
+                    type: string
+                  networkId:
+                    description: |-
+                      (String) The VPC Network ID of subnets which resource attached to.
+                      The `VPC Network ID` of subnets which resource attached to.
+                    type: string
+                  securityGroupIds:
+                    description: (Set of String)
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  serviceAccountId:
+                    description: |-
+                      (String) Service account which linked to the resource.
+                      [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
+                    type: string
+                  status:
+                    description: |-
+                      (String) Status of the cluster. Can be either CREATING, STARTING, RUNNING, UPDATING, STOPPING, STOPPED, ERROR or STATUS_UNKNOWN. For more information see status field of JSON representation in the official documentation.
+                      Status of the cluster. Can be either `CREATING`, `STARTING`, `RUNNING`, `UPDATING`, `STOPPING`, `STOPPED`, `ERROR` or `STATUS_UNKNOWN`. For more information see `status` field of JSON representation in [the official documentation](https://yandex.cloud/docs/managed-elasticsearch/api-ref/Cluster/).
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

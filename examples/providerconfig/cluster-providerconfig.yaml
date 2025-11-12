@@ -1,0 +1,18 @@
+# Example ClusterProviderConfig for Crossplane v2
+# This is a cluster-scoped ProviderConfig in the new API group that can be referenced by namespaced MRs
+apiVersion: yandex-cloud.m.jet.crossplane.io/v1beta1
+kind: ClusterProviderConfig
+metadata:
+  name: default
+  annotations:
+    upjet.upbound.io/manual-intervention: "ClusterProviderConfig for Crossplane v2 - cluster-scoped config in new API group."
+spec:
+  credentials:
+    cloudId: ${data.cloudId}
+    folderId: ${data.folderId}
+    source: Secret
+    # Secret reference includes namespace since this is cluster-scoped
+    secretRef:
+      name: yc-creds
+      namespace: crossplane-system
+      key: credentials.json

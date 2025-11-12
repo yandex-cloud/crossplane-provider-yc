@@ -2,7 +2,9 @@
 // +build generate
 
 /*
-Copyright 2021 The Crossplane Authors.
+Copyright 2022 YANDEX LLC
+This is modified version of the software, made by the Crossplane Authors
+and available at: https://github.com/crossplane-contrib/provider-jet-template
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,19 +27,23 @@ limitations under the License.
 
 // Remove generated files
 //go:generate bash -c "find . -iname 'zz_*' -delete"
-//go:generate bash -c "find . -type d -empty -delete"
+//go:generate bash -c "find . -depth -type d -empty -delete"
 //go:generate bash -c "find ../internal/controller -iname 'zz_*' -delete"
-//go:generate bash -c "find ../internal/controller -type d -empty -delete"
+//go:generate bash -c "find ../internal/controller -depth -type d -empty -delete"
 //go:generate rm -rf ../examples-generated
 
 // Generate documentation from Terraform docs.
-//go:generate go run github.com/crossplane/upjet/cmd/scraper -n ${TERRAFORM_PROVIDER_SOURCE} -r ../.work/terraform-provider-yandex/docs/resources -o ../config/provider-metadata.yaml
+//go:generate go run github.com/crossplane/upjet/v2/cmd/scraper -n ${TERRAFORM_PROVIDER_SOURCE} -r ../.work/terraform-provider-yandex/docs/resources -o ../config/provider-metadata.yaml
 
 // Run Upjet generator
 //go:generate go run ../cmd/generator/main.go ..
 
 // Generate deepcopy methodsets and CRD manifests
 //go:generate go run -tags generate sigs.k8s.io/controller-tools/cmd/controller-gen object:headerFile=../hack/boilerplate.go.txt paths=./... crd:allowDangerousTypes=true,crdVersions=v1 output:artifacts:config=../package/crds
+
+// Post-process CRDs to inject custom validations that controller-gen removes
+// See: https://github.com/crossplane/upjet/issues/78
+//go:generate go run -tags generate ../hack/post-generate-crds/main.go
 
 // Generate crossplane-runtime methodsets (resource.Claim, etc)
 //go:generate go run -tags generate github.com/crossplane/crossplane-tools/cmd/angryjet generate-methodsets --header-file=../hack/boilerplate.go.txt ./...
@@ -48,5 +54,5 @@ import (
 	_ "sigs.k8s.io/controller-tools/cmd/controller-gen" //nolint:typecheck
 
 	_ "github.com/crossplane/crossplane-tools/cmd/angryjet" //nolint:typecheck
-	_ "github.com/crossplane/upjet/cmd/scraper"
+	_ "github.com/crossplane/upjet/v2/cmd/scraper"
 )

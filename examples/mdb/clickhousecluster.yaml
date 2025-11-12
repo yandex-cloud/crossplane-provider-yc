@@ -92,7 +92,7 @@ spec:
         passwordSecretRef:
           key: example-key
           name: clickhouse-secret
-          namespace: upbound-system
+          namespace: crossplane-system
         permission:
           - databaseName: db_name
         quota:
@@ -113,7 +113,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: clickhouse-secret
-  namespace: upbound-system
+  namespace: crossplane-system
 type: Opaque
 data:
   example-key: cGFzc3dvcmQ=  # Здесь 'cGFzc3dvcmQ=' — это base64-закодированная строка "password".
