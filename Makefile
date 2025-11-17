@@ -301,7 +301,7 @@ cloud.xpkg.deploy.provider: xpkg.push
 xpkg.push: $(UP) 
 	@echo "##teamcity[blockOpened name='push' description='push provider image']"
 	@$(INFO) pushing provider package $(PROJECT_NAME) $(VERSION)
-	@$(UP) xpkg push $(REGISTRY)/$(PROJECT_NAME) -f $(XPKG_OUTPUT_DIR)/$(PLATFORM)/$(PROJECT_NAME)-$(VERSION).xpkg || $(FAIL)
+	@$(UP) xpkg push $(REGISTRY)/$(PROJECT_NAME):$(VERSION) -f $(XPKG_OUTPUT_DIR)/$(PLATFORM)/$(PROJECT_NAME)-$(VERSION).xpkg || $(FAIL)
 	@echo $(REGISTRY)
 	@$(OK) pushing provider package $(PROJECT_NAME) $(VERSION)
 	@echo "##teamcity[blockClosed name='push']"
