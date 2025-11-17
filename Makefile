@@ -267,11 +267,18 @@ uptest: $(CROSSPLANE_UPTEST) $(KUBECTL) $(CHAINSAW) $(CROSSPLANE_CLI)
 
 
 
-controlplane.up-cloud:$(UP) $(KUBECTL)
+controlplane.up-cloud: $(KUBECTL) $(HELM)
 	@echo "##teamcity[blockOpened name='crossplane' description='set up Crossplane']"
 	@$(INFO) setting up controlplane
-	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) get cm universal-crossplane-config >/dev/null 2>&1 || $(UP) uxp install
-	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) wait deploy crossplane --for condition=Available --timeout=120s
+	@$(HELM) repo add crossplane-build-module $(CROSSPLANE_CHART_REPO) --force-update
+	@$(HELM) repo update
+ifndef CROSSPLANE_ARGS
+	@$(INFO) setting up crossplane core without args
+	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) crossplane-build-module/$(CROSSPLANE_CHART_NAME)
+else
+	@$(INFO) setting up crossplane core with args $(CROSSPLANE_ARGS)
+	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) --set "args={${CROSSPLANE_ARGS}}" crossplane-build-module/$(CROSSPLANE_CHART_NAME)
+endif
 	@$(OK) setting up controlplane
 	@echo "##teamcity[blockClosed name='crossplane']"
 
