@@ -294,6 +294,10 @@ cloud-reg:
 cloud.xpkg.deploy.provider: xpkg.push
 	@echo "##teamcity[blockOpened name='deploy' description='deploy provider']"
 	@$(INFO) deploying provider package $(PROJECT_NAME) $(VERSION)
+	@$(INFO) waiting for Crossplane CRDs to be established
+	@$(KUBECTL) wait --for condition=established --timeout=120s crd/deploymentruntimeconfigs.pkg.crossplane.io || $(FAIL)
+	@$(KUBECTL) wait --for condition=established --timeout=120s crd/providers.pkg.crossplane.io || $(FAIL)
+	@$(OK) Crossplane CRDs are ready
 	@echo '{"apiVersion":"pkg.crossplane.io/v1beta1","kind":"DeploymentRuntimeConfig","metadata":{"name":"runtimeconfig"},"spec":{"deploymentTemplate":{"spec":{"selector":{},"strategy":{},"template":{"spec":{"containers":[{"args":["--debug"],"image":"$(REGISTRY)/$(PROJECT_NAME):$(VERSION)","name":"package-runtime"}]}}}}}}' | $(KUBECTL) apply -f -
 	@echo '{"apiVersion":"pkg.crossplane.io/v1","kind":"Provider","metadata":{"name":"$(PROJECT_NAME)"},"spec":{"package":"$(REGISTRY)/$(PROJECT_NAME):$(VERSION)","skipDependencyResolution": $(XPKG_SKIP_DEP_RESOLUTION), "runtimeConfigRef":{"name":"runtimeconfig"}}}' | $(KUBECTL) apply -f -
 	@$(OK) deploying provider package $(PROJECT_NAME) $(VERSION)
