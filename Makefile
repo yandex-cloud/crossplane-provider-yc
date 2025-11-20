@@ -295,6 +295,8 @@ cloud.xpkg.deploy.provider: xpkg.push
 	@echo "##teamcity[blockOpened name='deploy' description='deploy provider']"
 	@$(INFO) deploying provider package $(PROJECT_NAME) $(VERSION)
 	@$(INFO) waiting for Crossplane CRDs to be established
+	@$(KUBECTL) wait --for create --timeout=120s crd/deploymentruntimeconfigs.pkg.crossplane.io || $(FAIL)
+	@$(KUBECTL) wait --for create --timeout=120s crd/providers.pkg.crossplane.io || $(FAIL)
 	@$(KUBECTL) wait --for condition=established --timeout=120s crd/deploymentruntimeconfigs.pkg.crossplane.io || $(FAIL)
 	@$(KUBECTL) wait --for condition=established --timeout=120s crd/providers.pkg.crossplane.io || $(FAIL)
 	@$(OK) Crossplane CRDs are ready
