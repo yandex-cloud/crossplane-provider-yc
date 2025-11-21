@@ -47,3 +47,7 @@ EOF
 
 ${KUBECTL} wait provider.pkg --all --for condition=Healthy --timeout 5m
 ${KUBECTL} -n crossplane-system wait --for=condition=Available deployment --all --timeout=5m
+
+for crd in $(${KUBECTL} get crds -o jsonpath='{.items[*].metadata.name}'); do
+  ${KUBECTL} wait --for=condition=established --timeout=5m "crd/$crd"
+done
