@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.14.0 - November 25, 2025
+### Changed
+* use Upjet v2 for generation  
+  This removes support for External Secrets Store-related API, introduces namespaced MRs, and also enables SafeStart capability (when used with Crossplane v.2).
+
 ## 0.13.1 - November 5, 2025
 ### Fixed
 * secrets handling in storage resources
