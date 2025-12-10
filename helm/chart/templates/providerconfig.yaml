@@ -59,8 +59,8 @@ spec:
               mountPath: /etc/ssl/certs
               readOnly: true
             {{ end }}
+          {{ if .Values.internalRootCaSecretName }}
           volumes:
-            {{ if .Values.internalRootCaSecretName }}
             - name: internal-root-ca
               secret:
               defaultMode: 420
