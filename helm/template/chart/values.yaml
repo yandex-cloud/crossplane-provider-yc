@@ -12,7 +12,7 @@ deploymentStrategy: RollingUpdate
 
 image:
   # -- Repository for the Crossplane pod image.
-  repository: xpkg.crossplane.io/crossplane/crossplane
+  repository: ${REGISTRY}/${IMAGE_PATH}/crossplane
   # -- The Crossplane image tag. Defaults to the value of `appVersion` in `Chart.yaml`.
   tag: ""
   # -- The image pull policy used for Crossplane and RBAC Manager pods.
@@ -61,6 +61,8 @@ provider:
   # -- Define entries for the default managed resource activation policy. If defined, a default MRAP will contain these activations.
   defaultActivations: ["*"]
   config:
+    # Use new version api for ProviderConfig
+    new_api: false
     # Provider name
     providerName: yandexcloud-crossplane-provider-yc
     # Secret name
@@ -265,3 +267,7 @@ providerJetYc:
   creds: ""
   # Endpoint to yandex cloud api
   endpoint: ${YC_API_ENDPOINT}
+  # Cloud ID your cloud in YC
+  cloudId: ""
+  # Folder ID your folder in YC
+  folderId: ""

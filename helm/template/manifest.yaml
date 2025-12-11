@@ -10,12 +10,12 @@ requirements:
 images:
   - name_with_registry: image.repository
     tag: image.tag
-  - full: provider.package
+  - full: providerJetYc.package
 
 # Configurable parameters that might be changed by end user during installation of product. Should be presented in values.yaml
 # Supported types: integer, boolean, string, string selector, integer selector.
 user_values:
-  - name: provider.config.creds
+  - name: providerJetYc.creds
     title:
       en: Service account key
       ru: Ключ сервисного аккаунта

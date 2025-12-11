@@ -62,6 +62,7 @@ rules:
   - ops.crossplane.io
   - pkg.crossplane.io
   # secrets.crossplane.io removed in 2.0
+  - secrets.crossplane.io
   - protection.crossplane.io
   resources:
   - "*"
