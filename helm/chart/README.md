@@ -162,4 +162,3 @@ image:
 [Kubernetes cluster]: https://kubernetes.io/docs/setup/
 [Minikube]: https://kubernetes.io/docs/tasks/tools/install-minikube/
 [Helm]: https://docs.helm.sh/using_helm/
-
