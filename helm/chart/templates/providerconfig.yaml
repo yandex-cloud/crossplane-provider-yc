@@ -1,38 +1,30 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ .Values.providerJetYc.secretName }}
+  name: {{ .Values.provider.config.secretName }}
   namespace: {{ .Release.Namespace }}
 type: Opaque
 data:
-  credentials: {{ .Values.providerJetYc.creds | default "" | b64enc }}
+  credentials: {{ .Values.provider.config.creds | default "" | b64enc }}
 ---
-apiVersion: yandex-cloud.jet.crossplane.io/v1alpha1
+apiVersion: yandex-cloud.m.jet.crossplane.io/v1beta1
 kind: ProviderConfig
 metadata:
-  name: {{ .Values.providerJetYc.providerName }}
   annotations:
-    "helm.sh/resource-policy": keep
+    upjet.upbound.io/manual-intervention: Namespaced ProviderConfig for Crossplane v2 with local secret references.
+  name: {{ .Values.provider.config.providerName }}
 spec:
   credentials:
-    source: Secret
+    cloudId: {{ .Values.provider.config.cloudId }}
+    folderId: {{ .Values.provider.config.folderId }}
+    endpoint: {{ .Values.provider.config.endpoint }}
     secretRef:
-      name: {{ .Values.providerJetYc.secretName }}
-      namespace: {{ .Release.Namespace }}
       key: credentials
-    endpoint: {{ .Values.providerJetYc.endpoint }}
----
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: provider-jet-yc
-  namespace: {{ .Release.Namespace }}
-  annotations:
-    "helm.sh/resource-policy": keep
-spec:
-  package: {{ .Values.providerJetYc.package }}
-  runtimeConfigRef:
-    name: yc-pod-security
+      name: {{ .Values.provider.config.secretName }}
+      namespace: {{ .Release.Namespace }}
+    source: Secret
+
+# ! Delete provider because value .Values.provider.packages can install it
 ---
 apiVersion: pkg.crossplane.io/v1beta1
 kind: DeploymentRuntimeConfig
@@ -63,10 +55,9 @@ spec:
           volumes:
             - name: internal-root-ca
               secret:
-              defaultMode: 420
-              secretName: {{ .Values.internalRootCaSecretName }}
-              items:
-                - key: internal-root-ca
-                  path: ca-certificates.crt
+                defaultMode: 420
+                secretName: {{ .Values.internalRootCaSecretName }}
+                items:
+                  - key: internal-root-ca
+                    path: ca-certificates.crt
             {{ end }}
-

@@ -12,11 +12,13 @@ deploymentStrategy: RollingUpdate
 
 image:
   # -- Repository for the Crossplane pod image.
-  repository: ${REGISTRY}/${IMAGE_PATH}/crossplane
+  repository: xpkg.crossplane.io/crossplane/crossplane
   # -- The Crossplane image tag. Defaults to the value of `appVersion` in `Chart.yaml`.
-  tag: 1.20.1
+  tag: ""
   # -- The image pull policy used for Crossplane and RBAC Manager pods.
   pullPolicy: IfNotPresent
+  # -- Do not use the {{ .image.tag }} value to compute the image uri.
+  ignoreTag: false
 
 # -- Add `nodeSelectors` to the Crossplane pod deployment.
 nodeSelector: {}
@@ -54,7 +56,23 @@ args: []
 
 provider:
   # -- A list of Provider packages to install.
-  packages: []
+  packages:
+    - xpkg.upbound.io/yandexcloud/crossplane-provider-yc:v0.14.0 # with this dont need template for provider
+  # -- Define entries for the default managed resource activation policy. If defined, a default MRAP will contain these activations.
+  defaultActivations: ["*"]
+  config:
+    # Provider name
+    providerName: yandexcloud-crossplane-provider-yc
+    # Secret name
+    secretName: yc-creds
+    # Credentials to store
+    creds: ""
+    # Endpoint to yandex cloud api
+    endpoint: api.cloud.yandex.net:443
+    # Cloud ID your cloud in YC
+    cloudId: ""
+    # Folder ID your folder in YC
+    folderId: ""
 
 configuration:
   # -- A list of Configuration packages to install.
@@ -195,7 +213,11 @@ readiness:
   # -- The port the readyz server listens on.
   port: ""
 
-# -- Add custom environmental variables to the Crossplane pod deployment.
+# -- Add custom environmental variables to the Crossplane pod deployment init container.
+# Replaces any `.` in a variable name with `_`. For example, `SAMPLE.KEY=value1` becomes `SAMPLE_KEY=value1`.
+extraEnvVarsCrossplaneInit: {}
+
+# -- Add custom environmental variables to the Crossplane pod deployment application container.
 # Replaces any `.` in a variable name with `_`. For example, `SAMPLE.KEY=value1` becomes `SAMPLE_KEY=value1`.
 extraEnvVarsCrossplane: {}
 
@@ -232,6 +254,7 @@ extraObjects: []
 internalRootCaSecretName: ""
 
 # -- Settings for provider-jet-yc
+# saved for old installations
 providerJetYc:
   package: ${REGISTRY}/${IMAGE_PATH}/${IMAGE_NAME}:${IMAGE_TAG}
   # Provider name
