@@ -12,6 +12,7 @@ metadata:
 spec:
   forProvider:
     bucket: example-namespaced-bucket-${data.randomId}
+    folderId: ${data.folderId}
   # ProviderConfigRef can reference either ClusterProviderConfig or namespaced ProviderConfig
   providerConfigRef:
     kind: ClusterProviderConfig
