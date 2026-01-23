@@ -4,6 +4,8 @@
 ### Changed
 * use Upjet v2 for generation  
   This removes support for External Secrets Store-related API, introduces namespaced MRs, and also enables SafeStart capability (when used with Crossplane v.2).
+### Removed
+* support for CDN Resource
 
 ## 0.13.1 - November 5, 2025
 ### Fixed
