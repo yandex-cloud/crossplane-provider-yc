@@ -7,6 +7,7 @@ require (
 	github.com/crossplane/crossplane-runtime/v2 v2.0.0-20250730220209-c306b1c8b181
 	github.com/crossplane/crossplane-tools v0.0.0-20250731192036-00d407d8b7ec
 	github.com/crossplane/upjet/v2 v2.1.0
+	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
 	github.com/google/go-cmp v0.7.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.37.0
 	github.com/pkg/errors v0.9.1
@@ -46,7 +47,6 @@ require (
 	github.com/frankban/quicktest v1.14.6 // indirect
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
 	github.com/fxamacker/cbor/v2 v2.7.0 // indirect
-	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/zapr v1.3.0 // indirect
 	github.com/go-openapi/jsonpointer v0.21.0 // indirect

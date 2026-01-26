@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.14.1 - January 27, 2026
+### Fixed
+* empty secret with connection information for kubernetes cluster
+
 ## 0.14.0 - November 25, 2025
 ### Changed
 * use Upjet v2 for generation  

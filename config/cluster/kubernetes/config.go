@@ -23,10 +23,10 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/config"
 
-	"github.com/yandex-cloud/crossplane-provider-yc/config/common"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/cluster/iam"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/cluster/kms"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/cluster/vpc"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/common"
 )
 
 // Configure adds configurations for kubernetes group.
@@ -57,6 +57,11 @@ func Configure(p *config.Provider) {
 		r.ServerSideApplyMergeStrategies["master"] = common.SingletonMergeStrategy
 
 		r.UseAsync = true
+
+		// Add connection details function to extract cluster connection information
+		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]any) (map[string][]byte, error) {
+			return common.KubernetesClusterConnectionDetails(attr), nil
+		}
 	})
 	p.AddResourceConfigurator("yandex_kubernetes_node_group", func(r *config.Resource) {
 		r.References["cluster_id"] = config.Reference{
