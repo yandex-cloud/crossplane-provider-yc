@@ -16,7 +16,7 @@
 
 KIND_CLUSTER_NAME ?= local-dev
 CROSSPLANE_NAMESPACE ?= crossplane-system
-# CROSSPLANE_VERSION ?= 2.0.2
+CROSSPLANE_VERSION ?=
 CROSSPLANE_CHART_REPO ?= https://charts.crossplane.io/stable
 CROSSPLANE_CHART_NAME ?= crossplane
 
@@ -31,10 +31,10 @@ controlplane.up: $(HELM) $(KUBECTL) $(KIND)
 	@$(HELM) repo update
 ifndef CROSSPLANE_ARGS
 	@$(INFO) setting up crossplane core without args
-	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) crossplane-build-module/$(CROSSPLANE_CHART_NAME)
+	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) crossplane-build-module/$(CROSSPLANE_CHART_NAME) --version $(CROSSPLANE_VERSION)
 else
 	@$(INFO) setting up crossplane core with args $(CROSSPLANE_ARGS)
-	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) --set "args={${CROSSPLANE_ARGS}}" crossplane-build-module/$(CROSSPLANE_CHART_NAME)
+	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) --set "args={${CROSSPLANE_ARGS}}" crossplane-build-module/$(CROSSPLANE_CHART_NAME) --version $(CROSSPLANE_VERSION)
 endif
 
 controlplane.down: $(KIND)

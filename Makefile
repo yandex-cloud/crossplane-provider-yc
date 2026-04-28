@@ -38,7 +38,6 @@ export TERRAFORM_DOCS_PATH ?= docs/resources
 export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-yandex_$(TERRAFORM_PROVIDER_VERSION)_x5
 # the version of chainsaw to use
 export CHAINSAW_VERSION ?= 0.2.0
-export CROSSPLANE_CLI_VERSION ?= current
 export CROSSPLANE_CLI_CHANNEL ?= stable
 
 
@@ -83,6 +82,8 @@ KIND_VERSION = v0.30.0
 UP_VERSION = v0.41.0
 UP_CHANNEL = stable
 UPTEST_VERSION = v2.2.0
+CROSSPLANE_VERSION = 2.1.3
+CROSSPLANE_CLI_VERSION = v2.1.3
 -include build/k8s_tools.mk
 
 # ====================================================================================
