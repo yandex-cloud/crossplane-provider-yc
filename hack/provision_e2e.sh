@@ -1,10 +1,67 @@
 #!/bin/bash
 
-CLUSTER_IPV4_RANGE=${CLUSTER_IPV4_RANGE:-"10.120.0.0/16"}
-CLUSTER_IPV6_RANGE=${CLUSTER_IPV6_RANGE:-"fc1e::/112"}
-SERVICE_IPV4_RANGE=${SERVICE_IPV4_RANGE:-"10.121.0.0/16"}
-SERVICE_IPV6_RANGE=${SERVICE_IPV6_RANGE:-"fc1f::/112"}
 NODEGROUP_ZONE=${COMPUTE_DEFAULT_ZONE:-"ru-central1-d"}
+
+# Find a free 10.X.0.0/16 IPv4 CIDR not already present in the used list.
+# Usage: find_free_ipv4 <used_cidrs_newline_separated>
+find_free_ipv4() {
+    local used="$1"
+    for _ in $(seq 100); do
+        local octet=$(( RANDOM % 256 ))
+        local cidr="10.${octet}.0.0/16"
+        if ! echo "${used}" | grep -qxF "${cidr}"; then
+            echo "${cidr}"
+            return 0
+        fi
+    done
+    echo "ERROR: could not find a free IPv4 CIDR after 100 attempts" >&2
+    return 1
+}
+
+# Find a free fcXY::/PREFIX IPv6 CIDR not already present in the used list.
+# Usage: find_free_ipv6 <used_cidrs_newline_separated> <prefix_len>
+find_free_ipv6() {
+    local used="$1"
+    local prefix="$2"
+    local hex="0123456789abcdef"
+    for _ in $(seq 100); do
+        local a="${hex:$(( RANDOM % 16 )):1}"
+        local b="${hex:$(( RANDOM % 16 )):1}"
+        local cidr="fc${a}${b}::/${prefix}"
+        if ! echo "${used}" | grep -qxF "${cidr}"; then
+            echo "${cidr}"
+            return 0
+        fi
+    done
+    echo "ERROR: could not find a free IPv6 CIDR after 100 attempts" >&2
+    return 1
+}
+
+echo "Provisioning e2e infrastructure..."
+
+echo "Collecting existing subnet CIDRs from network ${NETWORK_ID}..."
+SUBNET_JSON=$(yc vpc network list-subnets --id "${NETWORK_ID}" --format json)
+
+USED_IPV4=$(echo "${SUBNET_JSON}" | jq -r '.[].v4_cidr_blocks[]')
+USED_IPV6=$(echo "${SUBNET_JSON}" | jq -r '.[].v6_cidr_blocks[]')
+
+echo "Finding free cluster IPv4 range..."
+CLUSTER_IPV4_RANGE=$(find_free_ipv4 "${USED_IPV4}")
+echo "  -> ${CLUSTER_IPV4_RANGE}"
+
+echo "Finding free service IPv4 range..."
+SERVICE_IPV4_RANGE=$(find_free_ipv4 "${USED_IPV4}
+${CLUSTER_IPV4_RANGE}")
+echo "  -> ${SERVICE_IPV4_RANGE}"
+
+echo "Finding free cluster IPv6 range..."
+CLUSTER_IPV6_RANGE=$(find_free_ipv6 "${USED_IPV6}" "112")
+echo "  -> ${CLUSTER_IPV6_RANGE}"
+
+echo "Finding free service IPv6 range..."
+SERVICE_IPV6_RANGE=$(find_free_ipv6 "${USED_IPV6}
+${CLUSTER_IPV6_RANGE}" "112")
+echo "  -> ${SERVICE_IPV6_RANGE}"
 
 echo "Provisioning e2e infrastructure..."
 
