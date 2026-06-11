@@ -2,39 +2,33 @@
 
 NODEGROUP_ZONE=${COMPUTE_DEFAULT_ZONE:-"ru-central1-d"}
 
-# Find a free 10.X.0.0/16 IPv4 CIDR not already present in the used list.
+# Find a free 10.X.0.0/16 IPv4 CIDR not overlapping any in the used list.
 # Usage: find_free_ipv4 <used_cidrs_newline_separated>
 find_free_ipv4() {
-    local used="$1"
-    for _ in $(seq 100); do
-        local octet=$(( RANDOM % 256 ))
-        local cidr="10.${octet}.0.0/16"
-        if ! echo "${used}" | grep -qxF "${cidr}"; then
-            echo "${cidr}"
-            return 0
-        fi
-    done
-    echo "ERROR: could not find a free IPv4 CIDR after 100 attempts" >&2
-    return 1
+    python3 -c '
+import sys, random, ipaddress
+used = [ipaddress.ip_network(c) for c in sys.argv[1].split()]
+for _ in range(100):
+    cand = ipaddress.ip_network(f"10.{random.randint(0, 255)}.0.0/16")
+    if not any(cand.overlaps(u) for u in used):
+        print(cand)
+        sys.exit(0)
+sys.exit("ERROR: could not find a free IPv4 CIDR after 100 attempts")' "$1"
 }
 
-# Find a free fcXY::/PREFIX IPv6 CIDR not already present in the used list.
+# Find a free fcXY::/PREFIX IPv6 CIDR not overlapping any in the used list.
 # Usage: find_free_ipv6 <used_cidrs_newline_separated> <prefix_len>
 find_free_ipv6() {
-    local used="$1"
-    local prefix="$2"
-    local hex="0123456789abcdef"
-    for _ in $(seq 100); do
-        local a="${hex:$(( RANDOM % 16 )):1}"
-        local b="${hex:$(( RANDOM % 16 )):1}"
-        local cidr="fc${a}${b}::/${prefix}"
-        if ! echo "${used}" | grep -qxF "${cidr}"; then
-            echo "${cidr}"
-            return 0
-        fi
-    done
-    echo "ERROR: could not find a free IPv6 CIDR after 100 attempts" >&2
-    return 1
+    python3 -c '
+import sys, random, ipaddress
+used = [ipaddress.ip_network(c) for c in sys.argv[1].split()]
+prefix = sys.argv[2]
+for _ in range(100):
+    cand = ipaddress.ip_network(f"fc{random.randint(0, 255):02x}::/{prefix}")
+    if not any(cand.overlaps(u) for u in used):
+        print(cand)
+        sys.exit(0)
+sys.exit("ERROR: could not find a free IPv6 CIDR after 100 attempts")' "$1" "$2"
 }
 
 echo "Provisioning e2e infrastructure..."
