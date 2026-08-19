@@ -273,6 +273,7 @@ controlplane.up-cloud: $(KUBECTL) $(HELM)
 	@$(INFO) setting up controlplane
 	@$(HELM) repo add crossplane-build-module $(CROSSPLANE_CHART_REPO) --force-update
 	@$(HELM) repo update
+	@# Deliberately omit --version: cloud E2E is a compatibility canary for the latest stable Crossplane chart.
 ifndef CROSSPLANE_ARGS
 	@$(INFO) setting up crossplane core without args
 	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) crossplane-build-module/$(CROSSPLANE_CHART_NAME)
@@ -280,7 +281,17 @@ else
 	@$(INFO) setting up crossplane core with args $(CROSSPLANE_ARGS)
 	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) --set "args={${CROSSPLANE_ARGS}}" crossplane-build-module/$(CROSSPLANE_CHART_NAME)
 endif
-	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) wait --for=condition=Available deployment --all --timeout=5m || $(FAIL)
+	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) wait --for=condition=Available deployment --all --timeout=5m || { \
+		echo "Crossplane deployments did not become available; dumping workload diagnostics"; \
+		$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) get pods,deployments,replicasets -o wide || true; \
+		$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) get events --sort-by=.lastTimestamp || true; \
+		for pod in $$($(KUBECTL) -n $(CROSSPLANE_NAMESPACE) get pods -o name); do \
+			$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) describe "$${pod}" || true; \
+			$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) logs "$${pod}" --all-containers=true --prefix=true || true; \
+			$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) logs "$${pod}" --all-containers=true --prefix=true --previous || true; \
+		done; \
+		exit 1; \
+	}
 	@$(OK) setting up controlplane
 	@echo "##teamcity[blockClosed name='crossplane']"
 

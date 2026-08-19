@@ -59,6 +59,8 @@ echo "  -> ${SERVICE_IPV6_RANGE}"
 
 echo "Provisioning e2e infrastructure..."
 
+# Deliberately omit --version for the cluster and node group: this E2E job is a
+# compatibility canary for the current default Managed Kubernetes version.
 echo "Creating cluster..."
 yc managed-kubernetes cluster create \
     --name e2e-controlplane --network-id ${NETWORK_ID} \
