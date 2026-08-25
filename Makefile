@@ -225,6 +225,8 @@ run: go.build
 # ====================================================================================
 # End to End Testing
 CROSSPLANE_NAMESPACE = crossplane-system
+CROSSPLANE_CHART = crossplane-build-module/$(CROSSPLANE_CHART_NAME)
+CROSSPLANE_MIRROR_VALUES = $(WORK_DIR)/crossplane-mirror-values.yaml
 # CROSSPLANE_VERSION = 2.1.0
 -include build/local.xpkg.mk
 -include build/controlplane.mk
@@ -268,18 +270,19 @@ uptest: $(CROSSPLANE_UPTEST) $(KUBECTL) $(CHAINSAW) $(CROSSPLANE_CLI)
 
 
 
-controlplane.up-cloud: $(KUBECTL) $(HELM)
+controlplane.up-cloud: $(KUBECTL) $(HELM) $(YQ)
 	@echo "##teamcity[blockOpened name='crossplane' description='set up Crossplane']"
 	@$(INFO) setting up controlplane
 	@$(HELM) repo add crossplane-build-module $(CROSSPLANE_CHART_REPO) --force-update
 	@$(HELM) repo update
 	@# Deliberately omit --version: cloud E2E is a compatibility canary for the latest stable Crossplane chart.
+	@./hack/mirror_crossplane_image.sh "$(HELM)" "$(YQ)" "$(CROSSPLANE_CHART)" "$(REGISTRY)" "$(CROSSPLANE_MIRROR_VALUES)"
 ifndef CROSSPLANE_ARGS
 	@$(INFO) setting up crossplane core without args
-	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) crossplane-build-module/$(CROSSPLANE_CHART_NAME)
+	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) --values "$(CROSSPLANE_MIRROR_VALUES)" "$(CROSSPLANE_CHART)"
 else
 	@$(INFO) setting up crossplane core with args $(CROSSPLANE_ARGS)
-	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) --set "args={${CROSSPLANE_ARGS}}" crossplane-build-module/$(CROSSPLANE_CHART_NAME)
+	@$(HELM) get notes -n $(CROSSPLANE_NAMESPACE) crossplane >/dev/null 2>&1 || $(HELM) install crossplane --create-namespace --namespace=$(CROSSPLANE_NAMESPACE) --values "$(CROSSPLANE_MIRROR_VALUES)" --set "args={${CROSSPLANE_ARGS}}" "$(CROSSPLANE_CHART)"
 endif
 	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) wait --for=condition=Available deployment --all --timeout=5m || { \
 		echo "Crossplane deployments did not become available; dumping workload diagnostics"; \

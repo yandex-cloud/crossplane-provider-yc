@@ -729,6 +729,7 @@
   "hack/e2e.sh":"opensource/crossplane-provider-yc/hack/e2e.sh",
   "hack/examples.sh":"opensource/crossplane-provider-yc/hack/examples.sh",
   "hack/folder_cleanup.sh":"opensource/crossplane-provider-yc/hack/folder_cleanup.sh",
+  "hack/mirror_crossplane_image.sh":"opensource/crossplane-provider-yc/hack/mirror_crossplane_image.sh",
   "hack/post-generate-crds/README.md":"opensource/crossplane-provider-yc/hack/post-generate-crds/README.md",
   "hack/post-generate-crds/main.go":"opensource/crossplane-provider-yc/hack/post-generate-crds/main.go",
   "hack/provision_e2e.sh":"opensource/crossplane-provider-yc/hack/provision_e2e.sh",
