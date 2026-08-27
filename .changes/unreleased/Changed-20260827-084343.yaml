@@ -1,3 +1,0 @@
-kind: Changed
-body: Migrate resources implemented by the upstream Terraform Plugin Framework to the provider's Framework path.
-time: 2026-08-27T08:43:43+03:00

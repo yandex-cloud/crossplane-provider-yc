@@ -1,3 +1,0 @@
-kind: Changed
-body: Update the project to Go 1.26.7 and refresh its Upjet, Crossplane, and Kubernetes dependencies.
-time: 2026-08-27T08:43:42+03:00

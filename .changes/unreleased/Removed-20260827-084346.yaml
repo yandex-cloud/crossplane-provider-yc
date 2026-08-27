@@ -1,3 +1,0 @@
-kind: Removed
-body: Remove the ElasticsearchCluster managed resource because it is no longer supported by terraform-provider-yandex.
-time: 2026-08-27T08:43:46+03:00

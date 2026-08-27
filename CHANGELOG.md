@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.15.0 - August 27, 2026
+### Added
+* Add DiskIAMBinding and CertificateIAMMember managed resources.
+### Changed
+* Upgrade terraform-provider-yandex to v0.222.0.
+* Update the project to Go 1.26.7 and refresh its Upjet, Crossplane, and Kubernetes dependencies.
+* Migrate resources implemented by the upstream Terraform Plugin Framework to the provider's Framework path.
+### Removed
+* Remove the ElasticsearchCluster managed resource because it is no longer supported by terraform-provider-yandex.
+
 ## 0.14.1 - January 27, 2026
 ### Fixed
 * empty secret with connection information for kubernetes cluster
