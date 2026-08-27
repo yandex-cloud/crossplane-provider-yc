@@ -29,7 +29,7 @@ import (
 
 type SchedulePolicyInitParameters struct {
 
-	// (String) Cron expression to schedule snapshots (in cron format " * ****").
+	// (String). Cron expression to schedule snapshots (in cron format " * ****").
 	// Cron expression to schedule snapshots (in cron format `" * ****"`).
 	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
 
@@ -40,7 +40,7 @@ type SchedulePolicyInitParameters struct {
 
 type SchedulePolicyObservation struct {
 
-	// (String) Cron expression to schedule snapshots (in cron format " * ****").
+	// (String). Cron expression to schedule snapshots (in cron format " * ****").
 	// Cron expression to schedule snapshots (in cron format `" * ****"`).
 	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
 
@@ -51,7 +51,7 @@ type SchedulePolicyObservation struct {
 
 type SchedulePolicyParameters struct {
 
-	// (String) Cron expression to schedule snapshots (in cron format " * ****").
+	// (String). Cron expression to schedule snapshots (in cron format " * ****").
 	// Cron expression to schedule snapshots (in cron format `" * ****"`).
 	// +kubebuilder:validation:Optional
 	Expression *string `json:"expression,omitempty" tf:"expression,omitempty"`
@@ -64,11 +64,11 @@ type SchedulePolicyParameters struct {
 
 type SnapshotScheduleInitParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Set of String) IDs of the disk for snapshot schedule.
+	// (Set Of String). IDs of the disk for snapshot schedule.
 	// IDs of the disk for snapshot schedule.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/compute/v1alpha1.Disk
 	// +listType=set
@@ -95,43 +95,43 @@ type SnapshotScheduleInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are ns, us (or µs), ms, s, m, h. Examples: 300ms, 1.5h or 2h45m.
+	// (String). Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are ns, us (or µs), ms, s, m, h. Examples: 300ms, 1.5h or 2h45m.
 	// Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`. Examples: `300ms`, `1.5h` or `2h45m`.
 	RetentionPeriod *string `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
 
-	// (Block List, Max: 1) Schedule policy of the snapshot schedule. (see below for nested schema)
+	// [Block]. Schedule policy of the snapshot schedule.
 	// Schedule policy of the snapshot schedule.
 	SchedulePolicy []SchedulePolicyInitParameters `json:"schedulePolicy,omitempty" tf:"schedule_policy,omitempty"`
 
-	// (Number) Maximum number of snapshots for every disk of the snapshot schedule.
+	// (Number). Maximum number of snapshots for every disk of the snapshot schedule.
 	// Maximum number of snapshots for every disk of the snapshot schedule.
 	SnapshotCount *float64 `json:"snapshotCount,omitempty" tf:"snapshot_count,omitempty"`
 
-	// (Block List, Max: 1) Additional attributes for snapshots created by this snapshot schedule. (see below for nested schema)
+	// [Block]. Additional attributes for snapshots created by this snapshot schedule.
 	// Additional attributes for snapshots created by this snapshot schedule.
 	SnapshotSpec []SnapshotSpecInitParameters `json:"snapshotSpec,omitempty" tf:"snapshot_spec,omitempty"`
 }
 
 type SnapshotScheduleObservation struct {
 
-	// (String) The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
 	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Set of String) IDs of the disk for snapshot schedule.
+	// (Set Of String). IDs of the disk for snapshot schedule.
 	// IDs of the disk for snapshot schedule.
 	// +listType=set
 	DiskIds []*string `json:"diskIds,omitempty" tf:"disk_ids,omitempty"`
@@ -140,47 +140,47 @@ type SnapshotScheduleObservation struct {
 	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are ns, us (or µs), ms, s, m, h. Examples: 300ms, 1.5h or 2h45m.
+	// (String). Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are ns, us (or µs), ms, s, m, h. Examples: 300ms, 1.5h or 2h45m.
 	// Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`. Examples: `300ms`, `1.5h` or `2h45m`.
 	RetentionPeriod *string `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
 
-	// (Block List, Max: 1) Schedule policy of the snapshot schedule. (see below for nested schema)
+	// [Block]. Schedule policy of the snapshot schedule.
 	// Schedule policy of the snapshot schedule.
 	SchedulePolicy []SchedulePolicyObservation `json:"schedulePolicy,omitempty" tf:"schedule_policy,omitempty"`
 
-	// (Number) Maximum number of snapshots for every disk of the snapshot schedule.
+	// (Number). Maximum number of snapshots for every disk of the snapshot schedule.
 	// Maximum number of snapshots for every disk of the snapshot schedule.
 	SnapshotCount *float64 `json:"snapshotCount,omitempty" tf:"snapshot_count,omitempty"`
 
-	// (Block List, Max: 1) Additional attributes for snapshots created by this snapshot schedule. (see below for nested schema)
+	// [Block]. Additional attributes for snapshots created by this snapshot schedule.
 	// Additional attributes for snapshots created by this snapshot schedule.
 	SnapshotSpec []SnapshotSpecObservation `json:"snapshotSpec,omitempty" tf:"snapshot_spec,omitempty"`
 
-	// (String) The status of the snapshot schedule.
+	// Only) (String). The status of the snapshot schedule.
 	// The status of the snapshot schedule.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type SnapshotScheduleParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Set of String) IDs of the disk for snapshot schedule.
+	// (Set Of String). IDs of the disk for snapshot schedule.
 	// IDs of the disk for snapshot schedule.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/compute/v1alpha1.Disk
 	// +kubebuilder:validation:Optional
@@ -209,33 +209,33 @@ type SnapshotScheduleParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are ns, us (or µs), ms, s, m, h. Examples: 300ms, 1.5h or 2h45m.
+	// (String). Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are ns, us (or µs), ms, s, m, h. Examples: 300ms, 1.5h or 2h45m.
 	// Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`. Examples: `300ms`, `1.5h` or `2h45m`.
 	// +kubebuilder:validation:Optional
 	RetentionPeriod *string `json:"retentionPeriod,omitempty" tf:"retention_period,omitempty"`
 
-	// (Block List, Max: 1) Schedule policy of the snapshot schedule. (see below for nested schema)
+	// [Block]. Schedule policy of the snapshot schedule.
 	// Schedule policy of the snapshot schedule.
 	// +kubebuilder:validation:Optional
 	SchedulePolicy []SchedulePolicyParameters `json:"schedulePolicy,omitempty" tf:"schedule_policy,omitempty"`
 
-	// (Number) Maximum number of snapshots for every disk of the snapshot schedule.
+	// (Number). Maximum number of snapshots for every disk of the snapshot schedule.
 	// Maximum number of snapshots for every disk of the snapshot schedule.
 	// +kubebuilder:validation:Optional
 	SnapshotCount *float64 `json:"snapshotCount,omitempty" tf:"snapshot_count,omitempty"`
 
-	// (Block List, Max: 1) Additional attributes for snapshots created by this snapshot schedule. (see below for nested schema)
+	// [Block]. Additional attributes for snapshots created by this snapshot schedule.
 	// Additional attributes for snapshots created by this snapshot schedule.
 	// +kubebuilder:validation:Optional
 	SnapshotSpec []SnapshotSpecParameters `json:"snapshotSpec,omitempty" tf:"snapshot_spec,omitempty"`
@@ -243,11 +243,11 @@ type SnapshotScheduleParameters struct {
 
 type SnapshotSpecInitParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// Description to assign to snapshots created by this snapshot schedule.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs to assign to snapshots created by this snapshot schedule.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -255,11 +255,11 @@ type SnapshotSpecInitParameters struct {
 
 type SnapshotSpecObservation struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// Description to assign to snapshots created by this snapshot schedule.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs to assign to snapshots created by this snapshot schedule.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
@@ -267,12 +267,12 @@ type SnapshotSpecObservation struct {
 
 type SnapshotSpecParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// Description to assign to snapshots created by this snapshot schedule.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs to assign to snapshots created by this snapshot schedule.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
@@ -306,7 +306,7 @@ type SnapshotScheduleStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SnapshotSchedule is the Schema for the SnapshotSchedules API. Creates a new snapshot schedule.
+// SnapshotSchedule is the Schema for the SnapshotSchedules API. Manages the yandex_compute_snapshot_schedule resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

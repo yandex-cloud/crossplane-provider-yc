@@ -31,7 +31,7 @@ export TERRAFORM_PROVIDER_HOST ?= terraform-mirror.yandexcloud.net/registry.terr
 export TERRAFORM_MIRROR_HOST ?= hashicorp-releases.yandexcloud.net
 export TERRAFORM_PROVIDER_SOURCE := yandex-cloud/yandex
 export TERRAFORM_PROVIDER_REPO ?= https://github.com/yandex-cloud/terraform-provider-yandex
-export TERRAFORM_PROVIDER_VERSION := 0.150.0
+export TERRAFORM_PROVIDER_VERSION := 0.222.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-yandex
 export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://$(TERRAFORM_PROVIDER_HOST)/$(TERRAFORM_PROVIDER_SOURCE)
 export TERRAFORM_DOCS_PATH ?= docs/resources
@@ -67,13 +67,18 @@ NPROCS ?= 1
 # to half the number of CPU cores.
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
-GO_REQUIRED_VERSION ?= 1.24
-GOLANGCILINT_VERSION ?= 1.55.1
+GO_REQUIRED_VERSION ?= 1.26
+GOLANGCILINT_VERSION ?= 2.13.1
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
 GO_SUBDIRS += cmd internal apis
 GO111MODULE = on
 -include build/makelib/golang.mk
+
+# golangci-lint v2 replaced --out-format with per-format output paths.
+ifeq ($(RUNNING_IN_CI),true)
+GO_LINT_ARGS := --timeout 10m0s --output.checkstyle.path=$(GO_LINT_OUTPUT)/checkstyle.xml
+endif
 
 # ====================================================================================
 # Setup Kubernetes tools
@@ -82,8 +87,8 @@ KIND_VERSION = v0.30.0
 UP_VERSION = v0.41.0
 UP_CHANNEL = stable
 UPTEST_VERSION = v2.2.0
-CROSSPLANE_VERSION = 2.1.3
-CROSSPLANE_CLI_VERSION = v2.1.3
+CROSSPLANE_VERSION = 2.4.0
+CROSSPLANE_CLI_VERSION = v2.4.0
 -include build/k8s_tools.mk
 
 # ====================================================================================
@@ -165,7 +170,7 @@ $(CHAINSAW):
 # Crossplane CLI download and install
 $(CROSSPLANE_CLI):
 	@$(INFO) installing Crossplane CLI $(CROSSPLANE_CLI_VERSION)
-	@curl -fsSLo $(CROSSPLANE_CLI) --create-dirs https://releases.crossplane.io/$(CROSSPLANE_CLI_CHANNEL)/$(CROSSPLANE_CLI_VERSION)/bin/$(SAFEHOST_PLATFORM)/crank?source=build || $(FAIL)
+	@curl -fsSLo $(CROSSPLANE_CLI) --create-dirs https://cli.crossplane.io/$(CROSSPLANE_CLI_CHANNEL)/$(CROSSPLANE_CLI_VERSION)/bin/$(SAFEHOST_PLATFORM)/crossplane || $(FAIL)
 	@chmod +x $(CROSSPLANE_CLI)
 	@$(OK) installing Crossplane CLI $(CROSSPLANE_CLI_VERSION)
 
@@ -182,7 +187,10 @@ $(TERRAFORM_PROVIDER_SCHEMA): $(TERRAFORM)
 pull-docs:
 	@if [ ! -d "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))" ]; then \
 		git clone -c advice.detachedHead=false --depth 1 --filter=blob:none --branch "v$(TERRAFORM_PROVIDER_VERSION)" --sparse "$(TERRAFORM_PROVIDER_REPO)" "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))"; \
+	else \
+		git -C "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))" fetch --depth 1 origin "refs/tags/v$(TERRAFORM_PROVIDER_VERSION):refs/tags/v$(TERRAFORM_PROVIDER_VERSION)"; \
 	fi
+	@git -C "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))" checkout --detach --force "v$(TERRAFORM_PROVIDER_VERSION)"
 	@git -C "$(WORK_DIR)/$(notdir $(TERRAFORM_PROVIDER_REPO))" sparse-checkout set "$(TERRAFORM_DOCS_PATH)"
 	@./scripts/add_subcategory_html.sh
 
@@ -231,6 +239,34 @@ CROSSPLANE_MIRROR_VALUES = $(WORK_DIR)/crossplane-mirror-values.yaml
 -include build/local.xpkg.mk
 -include build/controlplane.mk
 
+# Crossplane 2.4 resolves tagged package references to a digest even when their
+# pull policy is Never. Populate the cache under its digest-based key and use a
+# digest-qualified source so local development never contacts a registry.
+LOCAL_XPKG_SOURCE := xpkg.crossplane.internal/dev/$(PROJECT_NAME)
+LOCAL_XPKG_FILE := $(XPKG_OUTPUT_DIR)/$(PLATFORM)/$(PROJECT_NAME)-$(VERSION).xpkg
+CRANE_VERSION ?= v0.20.6
+
+local.xpkg.sync.current: local.xpkg.init $(CROSSPLANE_CLI)
+	@$(INFO) copying local xpkg cache to Crossplane pod
+	@mkdir -p $(XPKG_OUTPUT_DIR)/cache
+	@digest=$$(go run github.com/google/go-containerregistry/cmd/crane@$(CRANE_VERSION) digest --tarball $(LOCAL_XPKG_FILE)); \
+		cache_id="$(LOCAL_XPKG_SOURCE)"; \
+		cache_id="$${cache_id:0:50}-$${digest:0:12}"; \
+		cache_id=$$(printf '%s' "$$cache_id" | tr './:' '-' | cut -c1-63); \
+		cache_file="$(XPKG_OUTPUT_DIR)/cache/$$cache_id.gz"; \
+		$(CROSSPLANE_CLI) xpkg extract --from-xpkg $(LOCAL_XPKG_FILE) -o "$$cache_file"; \
+		XPPOD=$$($(KUBECTL) -n $(CROSSPLANE_NAMESPACE) get pod -l app=crossplane,patched=true -o jsonpath="{.items[0].metadata.name}"); \
+		$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) cp "$$cache_file" -c dev "$$XPPOD:/tmp/cache/$$cache_id.gz"
+	@$(OK) copying local xpkg cache to Crossplane pod
+
+local.xpkg.deploy.current: $(KIND) local.xpkg.sync.current
+	@$(INFO) deploying provider package $(PROJECT_NAME) $(VERSION)
+	@$(KIND) load docker-image $(BUILD_REGISTRY)/$(PROJECT_NAME)-$(ARCH) -n $(KIND_CLUSTER_NAME)
+	@echo '{"apiVersion":"pkg.crossplane.io/v1beta1","kind":"DeploymentRuntimeConfig","metadata":{"name":"runtimeconfig-$(PROJECT_NAME)"},"spec":{"deploymentTemplate":{"spec":{"selector":{},"strategy":{},"template":{"spec":{"containers":[{"args":["--debug"],"image":"$(BUILD_REGISTRY)/$(PROJECT_NAME)-$(ARCH)","name":"package-runtime"}]}}}}}}' | $(KUBECTL) apply -f -
+	@digest=$$(go run github.com/google/go-containerregistry/cmd/crane@$(CRANE_VERSION) digest --tarball $(LOCAL_XPKG_FILE)); \
+		echo '{"apiVersion":"pkg.crossplane.io/v1","kind":"Provider","metadata":{"name":"$(PROJECT_NAME)"},"spec":{"package":"$(LOCAL_XPKG_SOURCE)@'"$$digest"'","skipDependencyResolution": $(XPKG_SKIP_DEP_RESOLUTION),"packagePullPolicy":"Never","runtimeConfigRef":{"name":"runtimeconfig-$(PROJECT_NAME)"}}}' | $(KUBECTL) apply -f -
+	@$(OK) deploying provider package $(PROJECT_NAME) $(VERSION)
+
 # This target requires the following environment variables to be set:
 UPTEST_EXAMPLE_LIST ?= $(shell ./hack/examples.sh ./examples)
 # - UPTEST_EXAMPLE_LIST, a comma-separated list of examples to test
@@ -248,7 +284,9 @@ UPTEST_CLOUD_CREDENTIALS ?= $(shell cat ${SA_KEY_FILE})
 #   aws_secret_access_key = REDACTED'
 #   The associated `ProviderConfig`s will be named as `default` and `peer`.
 UPTEST_DATASOURCE_PATH ?= $(shell ./hack/uptest_data.sh)
+UPTEST_DEFAULT_TIMEOUT ?= 3600s
 # - UPTEST_DATASOURCE_PATH (optional), see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
+# - UPTEST_DEFAULT_TIMEOUT must accommodate Kubernetes cluster and node group provisioning.
 # - CLOUD_ID and FOLDER_ID need to be the IDs of YC cloud and folder, respectively, where tests will be run.
 
 
@@ -257,14 +295,15 @@ uptest: $(CROSSPLANE_UPTEST) $(KUBECTL) $(CHAINSAW) $(CROSSPLANE_CLI)
 	@echo "##teamcity[blockOpened name='uptest' description='run automated e2e tests']"
 	@$(INFO) running automated tests
 	@rm -f uptest.log
-	@(KUBECTL=$(KUBECTL) CHAINSAW=$(CHAINSAW) CROSSPLANE_CLI=$(CROSSPLANE_CLI) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) CREDENTIALS='$(UPTEST_CLOUD_CREDENTIALS)' $(CROSSPLANE_UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test") 2>&1 | tee uptest.log || true
-	@grep -qE 'Failed\s+tests\s+[1-9][0-9]*' uptest.log; \
-	if [ $$? -eq 0 ]; then \
-	 echo "Tests failed"; \
-	 $(FAIL) \
+	@set -o pipefail; \
+	(KUBECTL=$(KUBECTL) CHAINSAW=$(CHAINSAW) CROSSPLANE_CLI=$(CROSSPLANE_CLI) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) CREDENTIALS='$(UPTEST_CLOUD_CREDENTIALS)' $(CROSSPLANE_UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" --default-timeout="$(UPTEST_DEFAULT_TIMEOUT)") 2>&1 | tee uptest.log; \
+	exitcode=$${PIPESTATUS[0]}; \
+	if [ $$exitcode -ne 0 ] || grep -qE 'Failed\s+tests\s+[1-9][0-9]*' uptest.log; then \
+	  echo "Tests failed"; \
+	  $(FAIL) \
 	else \
 	  touch passed; \
-	 $(OK) running automated tests; \
+	  $(OK) running automated tests; \
 	fi
 	@echo "##teamcity[blockClosed name='uptest']"
 
@@ -298,7 +337,7 @@ endif
 	@$(OK) setting up controlplane
 	@echo "##teamcity[blockClosed name='crossplane']"
 
-local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
+local-deploy: build controlplane.up local.xpkg.deploy.current
 	@$(INFO) running locally built provider
 	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
 	@$(KUBECTL) -n $(CROSSPLANE_NAMESPACE) wait --for=condition=Available deployment --all --timeout=5m

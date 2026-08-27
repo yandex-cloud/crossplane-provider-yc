@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: nodegroups.kubernetes.yandex-cloud.m.jet.crossplane.io
 spec:
   group: kubernetes.yandex-cloud.m.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: NodeGroup is the Schema for the NodeGroups API. Allows management
-          of Yandex Kubernetes Node Group.
+        description: NodeGroup is the Schema for the NodeGroups API. Manages the yandex_kubernetes_node_group
+          resource.
         properties:
           apiVersion:
             description: |-
@@ -61,19 +61,19 @@ spec:
                 properties:
                   allocationPolicy:
                     description: |-
-                      (Block List, Max: 1) This argument specify subnets (zones), that will be used by node group compute instances. (see below for nested schema)
+                      [Block]. This argument specify subnets (zones), that will be used by node group compute instances.
                       This argument specify subnets (zones), that will be used by node group compute instances.
                     items:
                       properties:
                         location:
                           description: |-
-                            (Block List) Repeated field, that specify subnets (zones), that will be used by node group compute instances. Subnet specified by subnet_id should be allocated in zone specified by 'zone' argument. (see below for nested schema)
+                            [Block]. Repeated field, that specify subnets (zones), that will be used by node group compute instances. Subnet specified by subnet_id should be allocated in zone specified by 'zone' argument.
                             Repeated field, that specify subnets (zones), that will be used by node group compute instances. Subnet specified by `subnet_id` should be allocated in zone specified by 'zone' argument.
                           items:
                             properties:
                               subnetId:
                                 description: |-
-                                  (String, Deprecated) ID of the subnet, that will be used by one compute instance in node group.
+                                  (String). ID of the subnet, that will be used by one compute instance in node group.
                                   ID of the subnet, that will be used by one compute instance in node group.
                                 type: string
                               subnetIdRef:
@@ -160,7 +160,7 @@ spec:
                                 type: object
                               zone:
                                 description: |-
-                                  (String) ID of the availability zone where for one compute instance in node group.
+                                  (String). ID of the availability zone where for one compute instance in node group.
                                   ID of the availability zone where for one compute instance in node group.
                                 type: string
                             type: object
@@ -169,14 +169,14 @@ spec:
                     type: array
                   allowedUnsafeSysctls:
                     description: |-
-                      (List of String) A list of allowed unsafe sysctl parameters for this node group. For more details see documentation.
+                      (List Of String). A list of allowed unsafe sysctl parameters for this node group. For more details see documentation.
                       A list of allowed unsafe `sysctl` parameters for this node group. For more details see [documentation](https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster).
                     items:
                       type: string
                     type: array
                   clusterId:
                     description: |-
-                      (String) The ID of the Kubernetes cluster that this node group belongs to.
+                      (String). The ID of the Kubernetes cluster that this node group belongs to.
                       The ID of the Kubernetes cluster that this node group belongs to.
                     type: string
                   clusterIdRef:
@@ -261,91 +261,91 @@ spec:
                     type: object
                   deployPolicy:
                     description: |-
-                      (Block List, Max: 1) Deploy policy of the node group. (see below for nested schema)
+                      [Block]. Deploy policy of the node group.
                       Deploy policy of the node group.
                     items:
                       properties:
                         maxExpansion:
                           description: |-
-                            (Number) The maximum number of instances that can be temporarily allocated above the group's target size during the update.
+                            (Number). The maximum number of instances that can be temporarily allocated above the group's target size during the update.
                             The maximum number of instances that can be temporarily allocated above the group's target size during the update.
                           type: number
                         maxUnavailable:
                           description: |-
-                            (Number) The maximum number of running instances that can be taken offline during update.
+                            (Number). The maximum number of running instances that can be taken offline during update.
                             The maximum number of running instances that can be taken offline during update.
                           type: number
                       type: object
                     type: array
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   instanceTemplate:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Template used to create compute instances in this Kubernetes node group. (see below for nested schema)
+                      [Block]. Template used to create compute instances in this Kubernetes node group.
                       Template used to create compute instances in this Kubernetes node group.
                     items:
                       properties:
                         bootDisk:
                           description: |-
-                            (Block List, Max: 1) The specifications for boot disks that will be attached to the instance. (see below for nested schema)
+                            [Block]. The specifications for boot disks that will be attached to the instance.
                             The specifications for boot disks that will be attached to the instance.
                           items:
                             properties:
                               size:
                                 description: |-
-                                  (Number) The size of the disk in GB. Allowed minimal size: 64 GB.
+                                  (Number). The number of instances in the node group.
                                   The size of the disk in GB. Allowed minimal size: 64 GB.
                                 type: number
                               type:
                                 description: |-
-                                  (String) The disk type.
+                                  (String). Type of container runtime. Values: docker, containerd.
                                   The disk type.
                                 type: string
                             type: object
                           type: array
                         containerNetwork:
                           description: |-
-                            (Block List, Max: 1) Container network configuration. (see below for nested schema)
+                            [Block]. Container network configuration.
                             Container network configuration.
                           items:
                             properties:
                               podMtu:
                                 description: |-
-                                  (Number) MTU for pods.
+                                  (Number). MTU for pods.
                                   MTU for pods.
                                 type: number
                             type: object
                           type: array
                         containerRuntime:
                           description: |-
-                            (Block List, Max: 1) Container runtime configuration. (see below for nested schema)
+                            [Block]. Container runtime configuration.
                             Container runtime configuration.
                           items:
                             properties:
                               type:
                                 description: |-
-                                  (String) The disk type.
+                                  (String). Type of container runtime. Values: docker, containerd.
                                   Type of container runtime. Values: `docker`, `containerd`.
                                 type: string
                             type: object
                           type: array
                         gpuSettings:
                           description: |-
-                            (Block List, Max: 1) GPU settings. (see below for nested schema)
+                            [Block]. GPU settings.
                             GPU settings.
                           items:
                             properties:
                               gpuClusterId:
                                 description: |-
-                                  (String) GPU cluster id.
+                                  (String). GPU cluster id.
                                   GPU cluster id.
                                 type: string
                               gpuEnvironment:
                                 description: |-
-                                  (String) GPU environment. Values: runc, runc_drivers_cuda.
+                                  (String). GPU environment. Values: runc, runc_drivers_cuda.
                                   GPU environment. Values: `runc`, `runc_drivers_cuda`.
                                 type: string
                             type: object
@@ -359,7 +359,7 @@ spec:
                           additionalProperties:
                             type: string
                           description: |-
-                            (Map of String) A set of key/value label pairs which assigned to resource.
+                            (Map Of String). A set of key/value label pairs which assigned to resource.
                             Labels that will be assigned to compute nodes (instances), created by the Node Group.
                           type: object
                           x-kubernetes-map-type: granular
@@ -373,105 +373,106 @@ spec:
                           x-kubernetes-map-type: granular
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name template of the instance. In order to be unique it must contain at least one of instance unique placeholders:
-                            * `{instance.short_id}
+                            * `{instance.short_id}`
                             * `{instance.index}`
                             * combination of `{instance.zone_id}` and `{instance.index_in_zone}`
 
                             Example: `my-instance-{instance.index}`.
+
                             If not set, default is used: `{instance_group.id}-{instance.short_id}`. It may also contain another placeholders, see [Compute Instance group metadata doc](https://yandex.cloud/docs/compute/instancegroup/api-ref/grpc/InstanceGroup) for full list.
                           type: string
                         nat:
                           description: |-
-                            (Boolean, Deprecated) Enables NAT for node group compute instances.
+                            (Bool). A public address that can be used to access the internet over NAT.
                             Enables NAT for node group compute instances.
                           type: boolean
                         networkAccelerationType:
                           description: |-
-                            (String) Type of network acceleration. Values: standard, software_accelerated.
+                            (String). Type of network acceleration. Values: standard, software_accelerated.
                             Type of network acceleration. Values: `standard`, `software_accelerated`.
                           type: string
                         networkInterface:
                           description: |-
-                            (Block List) An array with the network interfaces that will be attached to the instance. (see below for nested schema)
+                            [Block]. An array with the network interfaces that will be attached to the instance.
                             An array with the network interfaces that will be attached to the instance.
                           items:
                             properties:
                               ipv4:
                                 description: |-
-                                  (Boolean) Allocate an IPv4 address for the interface. The default value is true.
+                                  (Bool). Allocate an IPv4 address for the interface. The default value is true.
                                   Allocate an IPv4 address for the interface. The default value is `true`.
                                 type: boolean
                               ipv4DnsRecords:
                                 description: |-
-                                  (Block List) List of configurations for creating ipv4 DNS records. (see below for nested schema)
+                                  [Block]. List of configurations for creating ipv4 DNS records.
                                   List of configurations for creating ipv4 DNS records.
                                 items:
                                   properties:
                                     dnsZoneId:
                                       description: |-
-                                        (String) DNS zone ID (if not set, private zone is used).
+                                        (String). DNS zone ID (if not set, private zone is used).
                                         DNS zone ID (if not set, private zone is used).
                                       type: string
                                     fqdn:
                                       description: |-
-                                        (String) DNS record FQDN.
+                                        (String). DNS record FQDN.
                                         DNS record FQDN.
                                       type: string
                                     ptr:
                                       description: |-
-                                        (Boolean) When set to true, also create a PTR DNS record.
+                                        (Bool). When set to true, also create a PTR DNS record.
                                         When set to `true`, also create a PTR DNS record.
                                       type: boolean
                                     ttl:
                                       description: |-
-                                        (Number) DNS record TTL (in seconds).
+                                        (Number). DNS record TTL (in seconds).
                                         DNS record TTL (in seconds).
                                       type: number
                                   type: object
                                 type: array
                               ipv6:
                                 description: |-
-                                  (Boolean) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+                                  (Bool). If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
                                   If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
                                 type: boolean
                               ipv6DnsRecords:
                                 description: |-
-                                  (Block List) List of configurations for creating ipv6 DNS records. (see below for nested schema)
+                                  [Block]. List of configurations for creating ipv6 DNS records.
                                   List of configurations for creating ipv6 DNS records.
                                 items:
                                   properties:
                                     dnsZoneId:
                                       description: |-
-                                        (String) DNS zone ID (if not set, private zone is used).
+                                        (String). DNS zone ID (if not set, private zone is used).
                                         DNS zone ID (if not set, private zone is used).
                                       type: string
                                     fqdn:
                                       description: |-
-                                        (String) DNS record FQDN.
+                                        (String). DNS record FQDN.
                                         DNS record FQDN.
                                       type: string
                                     ptr:
                                       description: |-
-                                        (Boolean) When set to true, also create a PTR DNS record.
+                                        (Bool). When set to true, also create a PTR DNS record.
                                         When set to `true`, also create a PTR DNS record.
                                       type: boolean
                                     ttl:
                                       description: |-
-                                        (Number) DNS record TTL (in seconds).
+                                        (Number). DNS record TTL (in seconds).
                                         DNS record TTL (in seconds).
                                       type: number
                                   type: object
                                 type: array
                               nat:
                                 description: |-
-                                  (Boolean, Deprecated) Enables NAT for node group compute instances.
+                                  (Bool). A public address that can be used to access the internet over NAT.
                                   A public address that can be used to access the internet over NAT.
                                 type: boolean
                               securityGroupIds:
                                 description: |-
-                                  (Set of String) Security group IDs for network interface.
+                                  (Set Of String). Security group IDs for network interface.
                                   Security group IDs for network interface.
                                 items:
                                   type: string
@@ -564,7 +565,7 @@ spec:
                                 type: object
                               subnetIds:
                                 description: |-
-                                  (Set of String) The IDs of the subnets.
+                                  (Set Of String). The IDs of the subnets.
                                   The IDs of the subnets.
                                 items:
                                   type: string
@@ -659,58 +660,64 @@ spec:
                           type: array
                         placementPolicy:
                           description: |-
-                            (Block List, Max: 1) The placement policy configuration. (see below for nested schema)
+                            [Block]. The placement policy configuration.
                             The placement policy configuration.
                           items:
                             properties:
                               placementGroupId:
                                 description: |-
-                                  (String) Specifies the id of the Placement Group to assign to the instances.
+                                  (String). Specifies the id of the Placement Group to assign to the instances.
                                   Specifies the id of the Placement Group to assign to the instances.
                                 type: string
                             type: object
                           type: array
                         platformId:
                           description: |-
-                            (String) The ID of the hardware platform configuration for the node group compute instances.
+                            (String). The ID of the hardware platform configuration for the node group compute instances.
                             The ID of the hardware platform configuration for the node group compute instances.
                           type: string
+                        reservedInstancePoolId:
+                          description: |-
+                            (String). ID of the reserved instance pool.
+                            ID of the reserved instance pool.
+                          type: string
                         resources:
-                          description: '(Block List, Max: 1) (see below for nested
-                            schema)'
+                          description: |-
+                            [Block]. Instance resource configuration.
+                            Instance resource configuration.
                           items:
                             properties:
                               coreFraction:
                                 description: |-
-                                  (Number) Baseline core performance as a percent.
+                                  (Number). Baseline core performance as a percent.
                                   Baseline core performance as a percent.
                                 type: number
                               cores:
                                 description: |-
-                                  (Number) Number of CPU cores allocated to the instance.
+                                  (Number). Number of CPU cores allocated to the instance.
                                   Number of CPU cores allocated to the instance.
                                 type: number
                               gpus:
                                 description: |-
-                                  (Number) Number of GPU cores allocated to the instance.
+                                  (Number). Number of GPU cores allocated to the instance.
                                   Number of GPU cores allocated to the instance.
                                 type: number
                               memory:
                                 description: |-
-                                  (Number) The memory size allocated to the instance.
+                                  (Number). The memory size allocated to the instance.
                                   The memory size allocated to the instance.
                                 type: number
                             type: object
                           type: array
                         schedulingPolicy:
                           description: |-
-                            (Block List, Max: 1) The scheduling policy for the instances in node group. (see below for nested schema)
+                            [Block]. The scheduling policy for the instances in node group.
                             The scheduling policy for the instances in node group.
                           items:
                             properties:
                               preemptible:
                                 description: |-
-                                  (Boolean) Specifies if the instance is preemptible. Defaults to false.
+                                  (Bool). Specifies if the instance is preemptible. Defaults to false.
                                   Specifies if the instance is preemptible. Defaults to `false`.
                                 type: boolean
                             type: object
@@ -724,29 +731,29 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   maintenancePolicy:
                     description: |-
-                      >1.30) should be performed manually. (see below for nested schema)
+                      >1.30) should be performed manually.
                       Maintenance policy for this Kubernetes node group. If policy is omitted, automatic revision upgrades are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. `1.29`. Minor version upgrades (e.g. `1.29`->`1.30`) should be performed manually.
                     items:
                       properties:
                         autoRepair:
                           description: |-
-                            (Boolean) Flag that specifies if node group can be repaired automatically. When omitted, default value is true.
+                            (Bool). Flag that specifies if node group can be repaired automatically. When omitted, default value is true.
                             Flag that specifies if node group can be repaired automatically. When omitted, default value is `true`.
                           type: boolean
                         autoUpgrade:
                           description: |-
-                            (Boolean) Flag specifies if node group can be upgraded automatically. When omitted, default value is true.
+                            (Bool). Flag specifies if node group can be upgraded automatically. When omitted, default value is true.
                             Flag specifies if node group can be upgraded automatically. When omitted, default value is `true`.
                           type: boolean
                         maintenanceWindow:
                           description: |-
-                            (Block Set) Set of day intervals, when maintenance is allowed for this node group. When omitted, it defaults to any time.
+                            [Block]. Set of day intervals, when maintenance is allowed for this node group. When omitted, it defaults to any time.
                             Set of day intervals, when maintenance is allowed for this node group. When omitted, it defaults to any time.
 
                             To specify time of day interval, for all days, one element should be provided, with two fields set, `start_time` and `duration`.
@@ -755,13 +762,19 @@ spec:
                           items:
                             properties:
                               day:
-                                description: (String)
+                                description: |-
+                                  (String). Day of week, on which maintenance is allowed.
+                                  Day of week, on which maintenance is allowed.
                                 type: string
                               duration:
-                                description: (String)
+                                description: |-
+                                  (String). Duration of maintenance from start_time.
+                                  Duration of maintenance from start_time.
                                 type: string
                               startTime:
-                                description: (String)
+                                description: |-
+                                  and duration.
+                                  Start time of maintenance in day.
                                 type: string
                             type: object
                           type: array
@@ -769,73 +782,94 @@ spec:
                     type: array
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   nodeLabels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs, that are assigned to all the nodes of this Kubernetes node group.
+                      (Map Of String). A set of key/value label pairs, that are assigned to all the nodes of this Kubernetes node group.
                       A set of key/value label pairs, that are assigned to all the nodes of this Kubernetes node group.
                     type: object
                     x-kubernetes-map-type: granular
                   nodeTaints:
                     description: |-
-                      (List of String) A list of Kubernetes taints, that are applied to all the nodes of this Kubernetes node group.
+                      (List Of String). A list of Kubernetes taints, that are applied to all the nodes of this Kubernetes node group.
                       A list of Kubernetes taints, that are applied to all the nodes of this Kubernetes node group.
                     items:
                       type: string
                     type: array
                   scalePolicy:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Scale policy of the node group. (see below for nested schema)
+                      [Block]. Scale policy of the node group.
                       Scale policy of the node group.
                     items:
                       properties:
                         autoScale:
                           description: |-
-                            (Block List, Max: 1) Scale policy for an autoscaled node group. (see below for nested schema)
+                            [Block]. Scale policy for an autoscaled node group.
                             Scale policy for an autoscaled node group.
                           items:
                             properties:
                               initial:
                                 description: |-
-                                  (Number) Initial number of instances in the node group.
+                                  (Number). Initial number of instances in the node group.
                                   Initial number of instances in the node group.
                                 type: number
                               max:
                                 description: |-
-                                  (Number) Maximum number of instances in the node group.
+                                  (Number). Maximum number of instances in the node group.
                                   Maximum number of instances in the node group.
                                 type: number
                               min:
                                 description: |-
-                                  (Number) Minimum number of instances in the node group.
+                                  (Number). Minimum number of instances in the node group.
                                   Minimum number of instances in the node group.
                                 type: number
                             type: object
                           type: array
                         fixedScale:
                           description: |-
-                            (Block List, Max: 1) Scale policy for a fixed scale node group. (see below for nested schema)
+                            [Block]. Scale policy for a fixed scale node group.
                             Scale policy for a fixed scale node group.
                           items:
                             properties:
                               size:
                                 description: |-
-                                  (Number) The size of the disk in GB. Allowed minimal size: 64 GB.
+                                  (Number). The number of instances in the node group.
                                   The number of instances in the node group.
                                 type: number
                             type: object
                           type: array
                       type: object
                     type: array
+                  variables:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map Of String). Variables for templating as key/value pairs.
+                      Variables for templating as key/value pairs.
+                    type: object
+                    x-kubernetes-map-type: granular
                   version:
                     description: |-
-                      (String) Version of Kubernetes that will be used for Kubernetes node group.
+                      (String). Version of Kubernetes that will be used for Kubernetes node group.
                       Version of Kubernetes that will be used for Kubernetes node group.
                     type: string
+                  workloadIdentityFederation:
+                    description: |-
+                      [Block]. Workload Identity Federation configuration.
+                      Workload Identity Federation configuration.
+                    items:
+                      properties:
+                        enabled:
+                          description: |-
+                            (Bool). Identifies whether Workload Identity Federation is enabled.
+                            Identifies whether Workload Identity Federation is enabled.
+                          type: boolean
+                      type: object
+                    type: array
                 type: object
               initProvider:
                 description: |-
@@ -852,19 +886,19 @@ spec:
                 properties:
                   allocationPolicy:
                     description: |-
-                      (Block List, Max: 1) This argument specify subnets (zones), that will be used by node group compute instances. (see below for nested schema)
+                      [Block]. This argument specify subnets (zones), that will be used by node group compute instances.
                       This argument specify subnets (zones), that will be used by node group compute instances.
                     items:
                       properties:
                         location:
                           description: |-
-                            (Block List) Repeated field, that specify subnets (zones), that will be used by node group compute instances. Subnet specified by subnet_id should be allocated in zone specified by 'zone' argument. (see below for nested schema)
+                            [Block]. Repeated field, that specify subnets (zones), that will be used by node group compute instances. Subnet specified by subnet_id should be allocated in zone specified by 'zone' argument.
                             Repeated field, that specify subnets (zones), that will be used by node group compute instances. Subnet specified by `subnet_id` should be allocated in zone specified by 'zone' argument.
                           items:
                             properties:
                               subnetId:
                                 description: |-
-                                  (String, Deprecated) ID of the subnet, that will be used by one compute instance in node group.
+                                  (String). ID of the subnet, that will be used by one compute instance in node group.
                                   ID of the subnet, that will be used by one compute instance in node group.
                                 type: string
                               subnetIdRef:
@@ -951,7 +985,7 @@ spec:
                                 type: object
                               zone:
                                 description: |-
-                                  (String) ID of the availability zone where for one compute instance in node group.
+                                  (String). ID of the availability zone where for one compute instance in node group.
                                   ID of the availability zone where for one compute instance in node group.
                                 type: string
                             type: object
@@ -960,14 +994,14 @@ spec:
                     type: array
                   allowedUnsafeSysctls:
                     description: |-
-                      (List of String) A list of allowed unsafe sysctl parameters for this node group. For more details see documentation.
+                      (List Of String). A list of allowed unsafe sysctl parameters for this node group. For more details see documentation.
                       A list of allowed unsafe `sysctl` parameters for this node group. For more details see [documentation](https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster).
                     items:
                       type: string
                     type: array
                   clusterId:
                     description: |-
-                      (String) The ID of the Kubernetes cluster that this node group belongs to.
+                      (String). The ID of the Kubernetes cluster that this node group belongs to.
                       The ID of the Kubernetes cluster that this node group belongs to.
                     type: string
                   clusterIdRef:
@@ -1052,91 +1086,91 @@ spec:
                     type: object
                   deployPolicy:
                     description: |-
-                      (Block List, Max: 1) Deploy policy of the node group. (see below for nested schema)
+                      [Block]. Deploy policy of the node group.
                       Deploy policy of the node group.
                     items:
                       properties:
                         maxExpansion:
                           description: |-
-                            (Number) The maximum number of instances that can be temporarily allocated above the group's target size during the update.
+                            (Number). The maximum number of instances that can be temporarily allocated above the group's target size during the update.
                             The maximum number of instances that can be temporarily allocated above the group's target size during the update.
                           type: number
                         maxUnavailable:
                           description: |-
-                            (Number) The maximum number of running instances that can be taken offline during update.
+                            (Number). The maximum number of running instances that can be taken offline during update.
                             The maximum number of running instances that can be taken offline during update.
                           type: number
                       type: object
                     type: array
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   instanceTemplate:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Template used to create compute instances in this Kubernetes node group. (see below for nested schema)
+                      [Block]. Template used to create compute instances in this Kubernetes node group.
                       Template used to create compute instances in this Kubernetes node group.
                     items:
                       properties:
                         bootDisk:
                           description: |-
-                            (Block List, Max: 1) The specifications for boot disks that will be attached to the instance. (see below for nested schema)
+                            [Block]. The specifications for boot disks that will be attached to the instance.
                             The specifications for boot disks that will be attached to the instance.
                           items:
                             properties:
                               size:
                                 description: |-
-                                  (Number) The size of the disk in GB. Allowed minimal size: 64 GB.
+                                  (Number). The number of instances in the node group.
                                   The size of the disk in GB. Allowed minimal size: 64 GB.
                                 type: number
                               type:
                                 description: |-
-                                  (String) The disk type.
+                                  (String). Type of container runtime. Values: docker, containerd.
                                   The disk type.
                                 type: string
                             type: object
                           type: array
                         containerNetwork:
                           description: |-
-                            (Block List, Max: 1) Container network configuration. (see below for nested schema)
+                            [Block]. Container network configuration.
                             Container network configuration.
                           items:
                             properties:
                               podMtu:
                                 description: |-
-                                  (Number) MTU for pods.
+                                  (Number). MTU for pods.
                                   MTU for pods.
                                 type: number
                             type: object
                           type: array
                         containerRuntime:
                           description: |-
-                            (Block List, Max: 1) Container runtime configuration. (see below for nested schema)
+                            [Block]. Container runtime configuration.
                             Container runtime configuration.
                           items:
                             properties:
                               type:
                                 description: |-
-                                  (String) The disk type.
+                                  (String). Type of container runtime. Values: docker, containerd.
                                   Type of container runtime. Values: `docker`, `containerd`.
                                 type: string
                             type: object
                           type: array
                         gpuSettings:
                           description: |-
-                            (Block List, Max: 1) GPU settings. (see below for nested schema)
+                            [Block]. GPU settings.
                             GPU settings.
                           items:
                             properties:
                               gpuClusterId:
                                 description: |-
-                                  (String) GPU cluster id.
+                                  (String). GPU cluster id.
                                   GPU cluster id.
                                 type: string
                               gpuEnvironment:
                                 description: |-
-                                  (String) GPU environment. Values: runc, runc_drivers_cuda.
+                                  (String). GPU environment. Values: runc, runc_drivers_cuda.
                                   GPU environment. Values: `runc`, `runc_drivers_cuda`.
                                 type: string
                             type: object
@@ -1150,7 +1184,7 @@ spec:
                           additionalProperties:
                             type: string
                           description: |-
-                            (Map of String) A set of key/value label pairs which assigned to resource.
+                            (Map Of String). A set of key/value label pairs which assigned to resource.
                             Labels that will be assigned to compute nodes (instances), created by the Node Group.
                           type: object
                           x-kubernetes-map-type: granular
@@ -1164,105 +1198,106 @@ spec:
                           x-kubernetes-map-type: granular
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name template of the instance. In order to be unique it must contain at least one of instance unique placeholders:
-                            * `{instance.short_id}
+                            * `{instance.short_id}`
                             * `{instance.index}`
                             * combination of `{instance.zone_id}` and `{instance.index_in_zone}`
 
                             Example: `my-instance-{instance.index}`.
+
                             If not set, default is used: `{instance_group.id}-{instance.short_id}`. It may also contain another placeholders, see [Compute Instance group metadata doc](https://yandex.cloud/docs/compute/instancegroup/api-ref/grpc/InstanceGroup) for full list.
                           type: string
                         nat:
                           description: |-
-                            (Boolean, Deprecated) Enables NAT for node group compute instances.
+                            (Bool). A public address that can be used to access the internet over NAT.
                             Enables NAT for node group compute instances.
                           type: boolean
                         networkAccelerationType:
                           description: |-
-                            (String) Type of network acceleration. Values: standard, software_accelerated.
+                            (String). Type of network acceleration. Values: standard, software_accelerated.
                             Type of network acceleration. Values: `standard`, `software_accelerated`.
                           type: string
                         networkInterface:
                           description: |-
-                            (Block List) An array with the network interfaces that will be attached to the instance. (see below for nested schema)
+                            [Block]. An array with the network interfaces that will be attached to the instance.
                             An array with the network interfaces that will be attached to the instance.
                           items:
                             properties:
                               ipv4:
                                 description: |-
-                                  (Boolean) Allocate an IPv4 address for the interface. The default value is true.
+                                  (Bool). Allocate an IPv4 address for the interface. The default value is true.
                                   Allocate an IPv4 address for the interface. The default value is `true`.
                                 type: boolean
                               ipv4DnsRecords:
                                 description: |-
-                                  (Block List) List of configurations for creating ipv4 DNS records. (see below for nested schema)
+                                  [Block]. List of configurations for creating ipv4 DNS records.
                                   List of configurations for creating ipv4 DNS records.
                                 items:
                                   properties:
                                     dnsZoneId:
                                       description: |-
-                                        (String) DNS zone ID (if not set, private zone is used).
+                                        (String). DNS zone ID (if not set, private zone is used).
                                         DNS zone ID (if not set, private zone is used).
                                       type: string
                                     fqdn:
                                       description: |-
-                                        (String) DNS record FQDN.
+                                        (String). DNS record FQDN.
                                         DNS record FQDN.
                                       type: string
                                     ptr:
                                       description: |-
-                                        (Boolean) When set to true, also create a PTR DNS record.
+                                        (Bool). When set to true, also create a PTR DNS record.
                                         When set to `true`, also create a PTR DNS record.
                                       type: boolean
                                     ttl:
                                       description: |-
-                                        (Number) DNS record TTL (in seconds).
+                                        (Number). DNS record TTL (in seconds).
                                         DNS record TTL (in seconds).
                                       type: number
                                   type: object
                                 type: array
                               ipv6:
                                 description: |-
-                                  (Boolean) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+                                  (Bool). If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
                                   If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
                                 type: boolean
                               ipv6DnsRecords:
                                 description: |-
-                                  (Block List) List of configurations for creating ipv6 DNS records. (see below for nested schema)
+                                  [Block]. List of configurations for creating ipv6 DNS records.
                                   List of configurations for creating ipv6 DNS records.
                                 items:
                                   properties:
                                     dnsZoneId:
                                       description: |-
-                                        (String) DNS zone ID (if not set, private zone is used).
+                                        (String). DNS zone ID (if not set, private zone is used).
                                         DNS zone ID (if not set, private zone is used).
                                       type: string
                                     fqdn:
                                       description: |-
-                                        (String) DNS record FQDN.
+                                        (String). DNS record FQDN.
                                         DNS record FQDN.
                                       type: string
                                     ptr:
                                       description: |-
-                                        (Boolean) When set to true, also create a PTR DNS record.
+                                        (Bool). When set to true, also create a PTR DNS record.
                                         When set to `true`, also create a PTR DNS record.
                                       type: boolean
                                     ttl:
                                       description: |-
-                                        (Number) DNS record TTL (in seconds).
+                                        (Number). DNS record TTL (in seconds).
                                         DNS record TTL (in seconds).
                                       type: number
                                   type: object
                                 type: array
                               nat:
                                 description: |-
-                                  (Boolean, Deprecated) Enables NAT for node group compute instances.
+                                  (Bool). A public address that can be used to access the internet over NAT.
                                   A public address that can be used to access the internet over NAT.
                                 type: boolean
                               securityGroupIds:
                                 description: |-
-                                  (Set of String) Security group IDs for network interface.
+                                  (Set Of String). Security group IDs for network interface.
                                   Security group IDs for network interface.
                                 items:
                                   type: string
@@ -1355,7 +1390,7 @@ spec:
                                 type: object
                               subnetIds:
                                 description: |-
-                                  (Set of String) The IDs of the subnets.
+                                  (Set Of String). The IDs of the subnets.
                                   The IDs of the subnets.
                                 items:
                                   type: string
@@ -1450,58 +1485,64 @@ spec:
                           type: array
                         placementPolicy:
                           description: |-
-                            (Block List, Max: 1) The placement policy configuration. (see below for nested schema)
+                            [Block]. The placement policy configuration.
                             The placement policy configuration.
                           items:
                             properties:
                               placementGroupId:
                                 description: |-
-                                  (String) Specifies the id of the Placement Group to assign to the instances.
+                                  (String). Specifies the id of the Placement Group to assign to the instances.
                                   Specifies the id of the Placement Group to assign to the instances.
                                 type: string
                             type: object
                           type: array
                         platformId:
                           description: |-
-                            (String) The ID of the hardware platform configuration for the node group compute instances.
+                            (String). The ID of the hardware platform configuration for the node group compute instances.
                             The ID of the hardware platform configuration for the node group compute instances.
                           type: string
+                        reservedInstancePoolId:
+                          description: |-
+                            (String). ID of the reserved instance pool.
+                            ID of the reserved instance pool.
+                          type: string
                         resources:
-                          description: '(Block List, Max: 1) (see below for nested
-                            schema)'
+                          description: |-
+                            [Block]. Instance resource configuration.
+                            Instance resource configuration.
                           items:
                             properties:
                               coreFraction:
                                 description: |-
-                                  (Number) Baseline core performance as a percent.
+                                  (Number). Baseline core performance as a percent.
                                   Baseline core performance as a percent.
                                 type: number
                               cores:
                                 description: |-
-                                  (Number) Number of CPU cores allocated to the instance.
+                                  (Number). Number of CPU cores allocated to the instance.
                                   Number of CPU cores allocated to the instance.
                                 type: number
                               gpus:
                                 description: |-
-                                  (Number) Number of GPU cores allocated to the instance.
+                                  (Number). Number of GPU cores allocated to the instance.
                                   Number of GPU cores allocated to the instance.
                                 type: number
                               memory:
                                 description: |-
-                                  (Number) The memory size allocated to the instance.
+                                  (Number). The memory size allocated to the instance.
                                   The memory size allocated to the instance.
                                 type: number
                             type: object
                           type: array
                         schedulingPolicy:
                           description: |-
-                            (Block List, Max: 1) The scheduling policy for the instances in node group. (see below for nested schema)
+                            [Block]. The scheduling policy for the instances in node group.
                             The scheduling policy for the instances in node group.
                           items:
                             properties:
                               preemptible:
                                 description: |-
-                                  (Boolean) Specifies if the instance is preemptible. Defaults to false.
+                                  (Bool). Specifies if the instance is preemptible. Defaults to false.
                                   Specifies if the instance is preemptible. Defaults to `false`.
                                 type: boolean
                             type: object
@@ -1515,29 +1556,29 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   maintenancePolicy:
                     description: |-
-                      >1.30) should be performed manually. (see below for nested schema)
+                      >1.30) should be performed manually.
                       Maintenance policy for this Kubernetes node group. If policy is omitted, automatic revision upgrades are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. `1.29`. Minor version upgrades (e.g. `1.29`->`1.30`) should be performed manually.
                     items:
                       properties:
                         autoRepair:
                           description: |-
-                            (Boolean) Flag that specifies if node group can be repaired automatically. When omitted, default value is true.
+                            (Bool). Flag that specifies if node group can be repaired automatically. When omitted, default value is true.
                             Flag that specifies if node group can be repaired automatically. When omitted, default value is `true`.
                           type: boolean
                         autoUpgrade:
                           description: |-
-                            (Boolean) Flag specifies if node group can be upgraded automatically. When omitted, default value is true.
+                            (Bool). Flag specifies if node group can be upgraded automatically. When omitted, default value is true.
                             Flag specifies if node group can be upgraded automatically. When omitted, default value is `true`.
                           type: boolean
                         maintenanceWindow:
                           description: |-
-                            (Block Set) Set of day intervals, when maintenance is allowed for this node group. When omitted, it defaults to any time.
+                            [Block]. Set of day intervals, when maintenance is allowed for this node group. When omitted, it defaults to any time.
                             Set of day intervals, when maintenance is allowed for this node group. When omitted, it defaults to any time.
 
                             To specify time of day interval, for all days, one element should be provided, with two fields set, `start_time` and `duration`.
@@ -1546,13 +1587,19 @@ spec:
                           items:
                             properties:
                               day:
-                                description: (String)
+                                description: |-
+                                  (String). Day of week, on which maintenance is allowed.
+                                  Day of week, on which maintenance is allowed.
                                 type: string
                               duration:
-                                description: (String)
+                                description: |-
+                                  (String). Duration of maintenance from start_time.
+                                  Duration of maintenance from start_time.
                                 type: string
                               startTime:
-                                description: (String)
+                                description: |-
+                                  and duration.
+                                  Start time of maintenance in day.
                                 type: string
                             type: object
                           type: array
@@ -1560,73 +1607,94 @@ spec:
                     type: array
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   nodeLabels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs, that are assigned to all the nodes of this Kubernetes node group.
+                      (Map Of String). A set of key/value label pairs, that are assigned to all the nodes of this Kubernetes node group.
                       A set of key/value label pairs, that are assigned to all the nodes of this Kubernetes node group.
                     type: object
                     x-kubernetes-map-type: granular
                   nodeTaints:
                     description: |-
-                      (List of String) A list of Kubernetes taints, that are applied to all the nodes of this Kubernetes node group.
+                      (List Of String). A list of Kubernetes taints, that are applied to all the nodes of this Kubernetes node group.
                       A list of Kubernetes taints, that are applied to all the nodes of this Kubernetes node group.
                     items:
                       type: string
                     type: array
                   scalePolicy:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Scale policy of the node group. (see below for nested schema)
+                      [Block]. Scale policy of the node group.
                       Scale policy of the node group.
                     items:
                       properties:
                         autoScale:
                           description: |-
-                            (Block List, Max: 1) Scale policy for an autoscaled node group. (see below for nested schema)
+                            [Block]. Scale policy for an autoscaled node group.
                             Scale policy for an autoscaled node group.
                           items:
                             properties:
                               initial:
                                 description: |-
-                                  (Number) Initial number of instances in the node group.
+                                  (Number). Initial number of instances in the node group.
                                   Initial number of instances in the node group.
                                 type: number
                               max:
                                 description: |-
-                                  (Number) Maximum number of instances in the node group.
+                                  (Number). Maximum number of instances in the node group.
                                   Maximum number of instances in the node group.
                                 type: number
                               min:
                                 description: |-
-                                  (Number) Minimum number of instances in the node group.
+                                  (Number). Minimum number of instances in the node group.
                                   Minimum number of instances in the node group.
                                 type: number
                             type: object
                           type: array
                         fixedScale:
                           description: |-
-                            (Block List, Max: 1) Scale policy for a fixed scale node group. (see below for nested schema)
+                            [Block]. Scale policy for a fixed scale node group.
                             Scale policy for a fixed scale node group.
                           items:
                             properties:
                               size:
                                 description: |-
-                                  (Number) The size of the disk in GB. Allowed minimal size: 64 GB.
+                                  (Number). The number of instances in the node group.
                                   The number of instances in the node group.
                                 type: number
                             type: object
                           type: array
                       type: object
                     type: array
+                  variables:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map Of String). Variables for templating as key/value pairs.
+                      Variables for templating as key/value pairs.
+                    type: object
+                    x-kubernetes-map-type: granular
                   version:
                     description: |-
-                      (String) Version of Kubernetes that will be used for Kubernetes node group.
+                      (String). Version of Kubernetes that will be used for Kubernetes node group.
                       Version of Kubernetes that will be used for Kubernetes node group.
                     type: string
+                  workloadIdentityFederation:
+                    description: |-
+                      [Block]. Workload Identity Federation configuration.
+                      Workload Identity Federation configuration.
+                    items:
+                      properties:
+                        enabled:
+                          description: |-
+                            (Bool). Identifies whether Workload Identity Federation is enabled.
+                            Identifies whether Workload Identity Federation is enabled.
+                          type: boolean
+                      type: object
+                    type: array
                 type: object
               managementPolicies:
                 default:
@@ -1702,24 +1770,24 @@ spec:
                 properties:
                   allocationPolicy:
                     description: |-
-                      (Block List, Max: 1) This argument specify subnets (zones), that will be used by node group compute instances. (see below for nested schema)
+                      [Block]. This argument specify subnets (zones), that will be used by node group compute instances.
                       This argument specify subnets (zones), that will be used by node group compute instances.
                     items:
                       properties:
                         location:
                           description: |-
-                            (Block List) Repeated field, that specify subnets (zones), that will be used by node group compute instances. Subnet specified by subnet_id should be allocated in zone specified by 'zone' argument. (see below for nested schema)
+                            [Block]. Repeated field, that specify subnets (zones), that will be used by node group compute instances. Subnet specified by subnet_id should be allocated in zone specified by 'zone' argument.
                             Repeated field, that specify subnets (zones), that will be used by node group compute instances. Subnet specified by `subnet_id` should be allocated in zone specified by 'zone' argument.
                           items:
                             properties:
                               subnetId:
                                 description: |-
-                                  (String, Deprecated) ID of the subnet, that will be used by one compute instance in node group.
+                                  (String). ID of the subnet, that will be used by one compute instance in node group.
                                   ID of the subnet, that will be used by one compute instance in node group.
                                 type: string
                               zone:
                                 description: |-
-                                  (String) ID of the availability zone where for one compute instance in node group.
+                                  (String). ID of the availability zone where for one compute instance in node group.
                                   ID of the availability zone where for one compute instance in node group.
                                 type: string
                             type: object
@@ -1728,122 +1796,121 @@ spec:
                     type: array
                   allowedUnsafeSysctls:
                     description: |-
-                      (List of String) A list of allowed unsafe sysctl parameters for this node group. For more details see documentation.
+                      (List Of String). A list of allowed unsafe sysctl parameters for this node group. For more details see documentation.
                       A list of allowed unsafe `sysctl` parameters for this node group. For more details see [documentation](https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster).
                     items:
                       type: string
                     type: array
                   clusterId:
                     description: |-
-                      (String) The ID of the Kubernetes cluster that this node group belongs to.
+                      (String). The ID of the Kubernetes cluster that this node group belongs to.
                       The ID of the Kubernetes cluster that this node group belongs to.
                     type: string
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
                       The creation timestamp of the resource.
                     type: string
                   deployPolicy:
                     description: |-
-                      (Block List, Max: 1) Deploy policy of the node group. (see below for nested schema)
+                      [Block]. Deploy policy of the node group.
                       Deploy policy of the node group.
                     items:
                       properties:
                         maxExpansion:
                           description: |-
-                            (Number) The maximum number of instances that can be temporarily allocated above the group's target size during the update.
+                            (Number). The maximum number of instances that can be temporarily allocated above the group's target size during the update.
                             The maximum number of instances that can be temporarily allocated above the group's target size during the update.
                           type: number
                         maxUnavailable:
                           description: |-
-                            (Number) The maximum number of running instances that can be taken offline during update.
+                            (Number). The maximum number of running instances that can be taken offline during update.
                             The maximum number of running instances that can be taken offline during update.
                           type: number
                       type: object
                     type: array
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   instanceGroupId:
                     description: |-
-                      (String) ID of instance group that is used to manage this Kubernetes node group.
+                      Only) (String). ID of instance group that is used to manage this Kubernetes node group.
                       ID of instance group that is used to manage this Kubernetes node group.
                     type: string
                   instanceTemplate:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Template used to create compute instances in this Kubernetes node group. (see below for nested schema)
+                      [Block]. Template used to create compute instances in this Kubernetes node group.
                       Template used to create compute instances in this Kubernetes node group.
                     items:
                       properties:
                         bootDisk:
                           description: |-
-                            (Block List, Max: 1) The specifications for boot disks that will be attached to the instance. (see below for nested schema)
+                            [Block]. The specifications for boot disks that will be attached to the instance.
                             The specifications for boot disks that will be attached to the instance.
                           items:
                             properties:
                               size:
                                 description: |-
-                                  (Number) The size of the disk in GB. Allowed minimal size: 64 GB.
+                                  (Number). The number of instances in the node group.
                                   The size of the disk in GB. Allowed minimal size: 64 GB.
                                 type: number
                               type:
                                 description: |-
-                                  (String) The disk type.
+                                  (String). Type of container runtime. Values: docker, containerd.
                                   The disk type.
                                 type: string
                             type: object
                           type: array
                         containerNetwork:
                           description: |-
-                            (Block List, Max: 1) Container network configuration. (see below for nested schema)
+                            [Block]. Container network configuration.
                             Container network configuration.
                           items:
                             properties:
                               podMtu:
                                 description: |-
-                                  (Number) MTU for pods.
+                                  (Number). MTU for pods.
                                   MTU for pods.
                                 type: number
                             type: object
                           type: array
                         containerRuntime:
                           description: |-
-                            (Block List, Max: 1) Container runtime configuration. (see below for nested schema)
+                            [Block]. Container runtime configuration.
                             Container runtime configuration.
                           items:
                             properties:
                               type:
                                 description: |-
-                                  (String) The disk type.
+                                  (String). Type of container runtime. Values: docker, containerd.
                                   Type of container runtime. Values: `docker`, `containerd`.
                                 type: string
                             type: object
                           type: array
                         gpuSettings:
                           description: |-
-                            (Block List, Max: 1) GPU settings. (see below for nested schema)
+                            [Block]. GPU settings.
                             GPU settings.
                           items:
                             properties:
                               gpuClusterId:
                                 description: |-
-                                  (String) GPU cluster id.
+                                  (String). GPU cluster id.
                                   GPU cluster id.
                                 type: string
                               gpuEnvironment:
                                 description: |-
-                                  (String) GPU environment. Values: runc, runc_drivers_cuda.
+                                  (String). GPU environment. Values: runc, runc_drivers_cuda.
                                   GPU environment. Values: `runc`, `runc_drivers_cuda`.
                                 type: string
                             type: object
                           type: array
                         index:
-                          default: default
                           description: This is an injected field with a default value
                             for being able to merge items of the parent object list.
                           type: string
@@ -1851,7 +1918,7 @@ spec:
                           additionalProperties:
                             type: string
                           description: |-
-                            (Map of String) A set of key/value label pairs which assigned to resource.
+                            (Map Of String). A set of key/value label pairs which assigned to resource.
                             Labels that will be assigned to compute nodes (instances), created by the Node Group.
                           type: object
                           x-kubernetes-map-type: granular
@@ -1865,105 +1932,106 @@ spec:
                           x-kubernetes-map-type: granular
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name template of the instance. In order to be unique it must contain at least one of instance unique placeholders:
-                            * `{instance.short_id}
+                            * `{instance.short_id}`
                             * `{instance.index}`
                             * combination of `{instance.zone_id}` and `{instance.index_in_zone}`
 
                             Example: `my-instance-{instance.index}`.
+
                             If not set, default is used: `{instance_group.id}-{instance.short_id}`. It may also contain another placeholders, see [Compute Instance group metadata doc](https://yandex.cloud/docs/compute/instancegroup/api-ref/grpc/InstanceGroup) for full list.
                           type: string
                         nat:
                           description: |-
-                            (Boolean, Deprecated) Enables NAT for node group compute instances.
+                            (Bool). A public address that can be used to access the internet over NAT.
                             Enables NAT for node group compute instances.
                           type: boolean
                         networkAccelerationType:
                           description: |-
-                            (String) Type of network acceleration. Values: standard, software_accelerated.
+                            (String). Type of network acceleration. Values: standard, software_accelerated.
                             Type of network acceleration. Values: `standard`, `software_accelerated`.
                           type: string
                         networkInterface:
                           description: |-
-                            (Block List) An array with the network interfaces that will be attached to the instance. (see below for nested schema)
+                            [Block]. An array with the network interfaces that will be attached to the instance.
                             An array with the network interfaces that will be attached to the instance.
                           items:
                             properties:
                               ipv4:
                                 description: |-
-                                  (Boolean) Allocate an IPv4 address for the interface. The default value is true.
+                                  (Bool). Allocate an IPv4 address for the interface. The default value is true.
                                   Allocate an IPv4 address for the interface. The default value is `true`.
                                 type: boolean
                               ipv4DnsRecords:
                                 description: |-
-                                  (Block List) List of configurations for creating ipv4 DNS records. (see below for nested schema)
+                                  [Block]. List of configurations for creating ipv4 DNS records.
                                   List of configurations for creating ipv4 DNS records.
                                 items:
                                   properties:
                                     dnsZoneId:
                                       description: |-
-                                        (String) DNS zone ID (if not set, private zone is used).
+                                        (String). DNS zone ID (if not set, private zone is used).
                                         DNS zone ID (if not set, private zone is used).
                                       type: string
                                     fqdn:
                                       description: |-
-                                        (String) DNS record FQDN.
+                                        (String). DNS record FQDN.
                                         DNS record FQDN.
                                       type: string
                                     ptr:
                                       description: |-
-                                        (Boolean) When set to true, also create a PTR DNS record.
+                                        (Bool). When set to true, also create a PTR DNS record.
                                         When set to `true`, also create a PTR DNS record.
                                       type: boolean
                                     ttl:
                                       description: |-
-                                        (Number) DNS record TTL (in seconds).
+                                        (Number). DNS record TTL (in seconds).
                                         DNS record TTL (in seconds).
                                       type: number
                                   type: object
                                 type: array
                               ipv6:
                                 description: |-
-                                  (Boolean) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+                                  (Bool). If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
                                   If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
                                 type: boolean
                               ipv6DnsRecords:
                                 description: |-
-                                  (Block List) List of configurations for creating ipv6 DNS records. (see below for nested schema)
+                                  [Block]. List of configurations for creating ipv6 DNS records.
                                   List of configurations for creating ipv6 DNS records.
                                 items:
                                   properties:
                                     dnsZoneId:
                                       description: |-
-                                        (String) DNS zone ID (if not set, private zone is used).
+                                        (String). DNS zone ID (if not set, private zone is used).
                                         DNS zone ID (if not set, private zone is used).
                                       type: string
                                     fqdn:
                                       description: |-
-                                        (String) DNS record FQDN.
+                                        (String). DNS record FQDN.
                                         DNS record FQDN.
                                       type: string
                                     ptr:
                                       description: |-
-                                        (Boolean) When set to true, also create a PTR DNS record.
+                                        (Bool). When set to true, also create a PTR DNS record.
                                         When set to `true`, also create a PTR DNS record.
                                       type: boolean
                                     ttl:
                                       description: |-
-                                        (Number) DNS record TTL (in seconds).
+                                        (Number). DNS record TTL (in seconds).
                                         DNS record TTL (in seconds).
                                       type: number
                                   type: object
                                 type: array
                               nat:
                                 description: |-
-                                  (Boolean, Deprecated) Enables NAT for node group compute instances.
+                                  (Bool). A public address that can be used to access the internet over NAT.
                                   A public address that can be used to access the internet over NAT.
                                 type: boolean
                               securityGroupIds:
                                 description: |-
-                                  (Set of String) Security group IDs for network interface.
+                                  (Set Of String). Security group IDs for network interface.
                                   Security group IDs for network interface.
                                 items:
                                   type: string
@@ -1971,7 +2039,7 @@ spec:
                                 x-kubernetes-list-type: set
                               subnetIds:
                                 description: |-
-                                  (Set of String) The IDs of the subnets.
+                                  (Set Of String). The IDs of the subnets.
                                   The IDs of the subnets.
                                 items:
                                   type: string
@@ -1981,94 +2049,97 @@ spec:
                           type: array
                         placementPolicy:
                           description: |-
-                            (Block List, Max: 1) The placement policy configuration. (see below for nested schema)
+                            [Block]. The placement policy configuration.
                             The placement policy configuration.
                           items:
                             properties:
                               placementGroupId:
                                 description: |-
-                                  (String) Specifies the id of the Placement Group to assign to the instances.
+                                  (String). Specifies the id of the Placement Group to assign to the instances.
                                   Specifies the id of the Placement Group to assign to the instances.
                                 type: string
                             type: object
                           type: array
                         platformId:
                           description: |-
-                            (String) The ID of the hardware platform configuration for the node group compute instances.
+                            (String). The ID of the hardware platform configuration for the node group compute instances.
                             The ID of the hardware platform configuration for the node group compute instances.
                           type: string
+                        reservedInstancePoolId:
+                          description: |-
+                            (String). ID of the reserved instance pool.
+                            ID of the reserved instance pool.
+                          type: string
                         resources:
-                          description: '(Block List, Max: 1) (see below for nested
-                            schema)'
+                          description: |-
+                            [Block]. Instance resource configuration.
+                            Instance resource configuration.
                           items:
                             properties:
                               coreFraction:
                                 description: |-
-                                  (Number) Baseline core performance as a percent.
+                                  (Number). Baseline core performance as a percent.
                                   Baseline core performance as a percent.
                                 type: number
                               cores:
                                 description: |-
-                                  (Number) Number of CPU cores allocated to the instance.
+                                  (Number). Number of CPU cores allocated to the instance.
                                   Number of CPU cores allocated to the instance.
                                 type: number
                               gpus:
                                 description: |-
-                                  (Number) Number of GPU cores allocated to the instance.
+                                  (Number). Number of GPU cores allocated to the instance.
                                   Number of GPU cores allocated to the instance.
                                 type: number
                               memory:
                                 description: |-
-                                  (Number) The memory size allocated to the instance.
+                                  (Number). The memory size allocated to the instance.
                                   The memory size allocated to the instance.
                                 type: number
                             type: object
                           type: array
                         schedulingPolicy:
                           description: |-
-                            (Block List, Max: 1) The scheduling policy for the instances in node group. (see below for nested schema)
+                            [Block]. The scheduling policy for the instances in node group.
                             The scheduling policy for the instances in node group.
                           items:
                             properties:
                               preemptible:
                                 description: |-
-                                  (Boolean) Specifies if the instance is preemptible. Defaults to false.
+                                  (Bool). Specifies if the instance is preemptible. Defaults to false.
                                   Specifies if the instance is preemptible. Defaults to `false`.
                                 type: boolean
                             type: object
                           type: array
                       type: object
                     type: array
-                    x-kubernetes-list-map-keys:
-                    - index
-                    x-kubernetes-list-type: map
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   maintenancePolicy:
                     description: |-
-                      >1.30) should be performed manually. (see below for nested schema)
+                      >1.30) should be performed manually.
                       Maintenance policy for this Kubernetes node group. If policy is omitted, automatic revision upgrades are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. `1.29`. Minor version upgrades (e.g. `1.29`->`1.30`) should be performed manually.
                     items:
                       properties:
                         autoRepair:
                           description: |-
-                            (Boolean) Flag that specifies if node group can be repaired automatically. When omitted, default value is true.
+                            (Bool). Flag that specifies if node group can be repaired automatically. When omitted, default value is true.
                             Flag that specifies if node group can be repaired automatically. When omitted, default value is `true`.
                           type: boolean
                         autoUpgrade:
                           description: |-
-                            (Boolean) Flag specifies if node group can be upgraded automatically. When omitted, default value is true.
+                            (Bool). Flag specifies if node group can be upgraded automatically. When omitted, default value is true.
                             Flag specifies if node group can be upgraded automatically. When omitted, default value is `true`.
                           type: boolean
                         maintenanceWindow:
                           description: |-
-                            (Block Set) Set of day intervals, when maintenance is allowed for this node group. When omitted, it defaults to any time.
+                            [Block]. Set of day intervals, when maintenance is allowed for this node group. When omitted, it defaults to any time.
                             Set of day intervals, when maintenance is allowed for this node group. When omitted, it defaults to any time.
 
                             To specify time of day interval, for all days, one element should be provided, with two fields set, `start_time` and `duration`.
@@ -2077,13 +2148,19 @@ spec:
                           items:
                             properties:
                               day:
-                                description: (String)
+                                description: |-
+                                  (String). Day of week, on which maintenance is allowed.
+                                  Day of week, on which maintenance is allowed.
                                 type: string
                               duration:
-                                description: (String)
+                                description: |-
+                                  (String). Duration of maintenance from start_time.
+                                  Duration of maintenance from start_time.
                                 type: string
                               startTime:
-                                description: (String)
+                                description: |-
+                                  and duration.
+                                  Start time of maintenance in day.
                                 type: string
                             type: object
                           type: array
@@ -2091,62 +2168,62 @@ spec:
                     type: array
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   nodeLabels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs, that are assigned to all the nodes of this Kubernetes node group.
+                      (Map Of String). A set of key/value label pairs, that are assigned to all the nodes of this Kubernetes node group.
                       A set of key/value label pairs, that are assigned to all the nodes of this Kubernetes node group.
                     type: object
                     x-kubernetes-map-type: granular
                   nodeTaints:
                     description: |-
-                      (List of String) A list of Kubernetes taints, that are applied to all the nodes of this Kubernetes node group.
+                      (List Of String). A list of Kubernetes taints, that are applied to all the nodes of this Kubernetes node group.
                       A list of Kubernetes taints, that are applied to all the nodes of this Kubernetes node group.
                     items:
                       type: string
                     type: array
                   scalePolicy:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Scale policy of the node group. (see below for nested schema)
+                      [Block]. Scale policy of the node group.
                       Scale policy of the node group.
                     items:
                       properties:
                         autoScale:
                           description: |-
-                            (Block List, Max: 1) Scale policy for an autoscaled node group. (see below for nested schema)
+                            [Block]. Scale policy for an autoscaled node group.
                             Scale policy for an autoscaled node group.
                           items:
                             properties:
                               initial:
                                 description: |-
-                                  (Number) Initial number of instances in the node group.
+                                  (Number). Initial number of instances in the node group.
                                   Initial number of instances in the node group.
                                 type: number
                               max:
                                 description: |-
-                                  (Number) Maximum number of instances in the node group.
+                                  (Number). Maximum number of instances in the node group.
                                   Maximum number of instances in the node group.
                                 type: number
                               min:
                                 description: |-
-                                  (Number) Minimum number of instances in the node group.
+                                  (Number). Minimum number of instances in the node group.
                                   Minimum number of instances in the node group.
                                 type: number
                             type: object
                           type: array
                         fixedScale:
                           description: |-
-                            (Block List, Max: 1) Scale policy for a fixed scale node group. (see below for nested schema)
+                            [Block]. Scale policy for a fixed scale node group.
                             Scale policy for a fixed scale node group.
                           items:
                             properties:
                               size:
                                 description: |-
-                                  (Number) The size of the disk in GB. Allowed minimal size: 64 GB.
+                                  (Number). The number of instances in the node group.
                                   The number of instances in the node group.
                                 type: number
                             type: object
@@ -2155,31 +2232,52 @@ spec:
                     type: array
                   status:
                     description: |-
-                      (String) Status of the Kubernetes node group.
+                      Only) (String). Status of the Kubernetes node group.
                       Status of the Kubernetes node group.
                     type: string
+                  variables:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map Of String). Variables for templating as key/value pairs.
+                      Variables for templating as key/value pairs.
+                    type: object
+                    x-kubernetes-map-type: granular
                   version:
                     description: |-
-                      (String) Version of Kubernetes that will be used for Kubernetes node group.
+                      (String). Version of Kubernetes that will be used for Kubernetes node group.
                       Version of Kubernetes that will be used for Kubernetes node group.
                     type: string
                   versionInfo:
                     description: |-
-                      (List of Object) Information about Kubernetes node group version. (see below for nested schema)
+                      Only) (List Of Object). Information about Kubernetes node group version.
                       Information about Kubernetes node group version.
                     items:
                       properties:
                         currentVersion:
-                          description: (String)
+                          description: .
                           type: string
                         newRevisionAvailable:
-                          description: (Boolean)
+                          description: .
                           type: boolean
                         newRevisionSummary:
-                          description: (String)
+                          description: .
                           type: string
                         versionDeprecated:
-                          description: (Boolean)
+                          description: .
+                          type: boolean
+                      type: object
+                    type: array
+                  workloadIdentityFederation:
+                    description: |-
+                      [Block]. Workload Identity Federation configuration.
+                      Workload Identity Federation configuration.
+                    items:
+                      properties:
+                        enabled:
+                          description: |-
+                            (Bool). Identifies whether Workload Identity Federation is enabled.
+                            Identifies whether Workload Identity Federation is enabled.
                           type: boolean
                       type: object
                     type: array

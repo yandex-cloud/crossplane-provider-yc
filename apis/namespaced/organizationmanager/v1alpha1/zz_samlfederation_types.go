@@ -38,32 +38,32 @@ type SAMLFederationInitParameters struct {
 	// Use case-insensitive name IDs.
 	CaseInsensitiveNameIds *bool `json:"caseInsensitiveNameIds,omitempty" tf:"case_insensitive_name_ids,omitempty"`
 
-	// (String) The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is 8h.
+	// (String). The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is 8h.
 	// The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is `8h`.
 	CookieMaxAge *string `json:"cookieMaxAge,omitempty" tf:"cookie_max_age,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
+	// (String). The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
 	// The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
 	Issuer *string `json:"issuer,omitempty" tf:"issuer,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The organization to attach this SAML Federation to.
+	// (String). The organization to attach this SAML Federation to.
 	// The organization to attach this SAML Federation to.
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 
-	// (Block List, Max: 1) Federation security settings. (see below for nested schema)
+	// [Block]. Federation security settings.
 	// Federation security settings.
 	SecuritySettings []SecuritySettingsInitParameters `json:"securitySettings,omitempty" tf:"security_settings,omitempty"`
 
@@ -86,39 +86,39 @@ type SAMLFederationObservation struct {
 	// Use case-insensitive name IDs.
 	CaseInsensitiveNameIds *bool `json:"caseInsensitiveNameIds,omitempty" tf:"case_insensitive_name_ids,omitempty"`
 
-	// (String) The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is 8h.
+	// (String). The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is 8h.
 	// The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is `8h`.
 	CookieMaxAge *string `json:"cookieMaxAge,omitempty" tf:"cookie_max_age,omitempty"`
 
-	// (String) The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
 	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
+	// (String). The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
 	// The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
 	Issuer *string `json:"issuer,omitempty" tf:"issuer,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The organization to attach this SAML Federation to.
+	// (String). The organization to attach this SAML Federation to.
 	// The organization to attach this SAML Federation to.
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 
-	// (Block List, Max: 1) Federation security settings. (see below for nested schema)
+	// [Block]. Federation security settings.
 	// Federation security settings.
 	SecuritySettings []SecuritySettingsObservation `json:"securitySettings,omitempty" tf:"security_settings,omitempty"`
 
@@ -143,38 +143,38 @@ type SAMLFederationParameters struct {
 	// +kubebuilder:validation:Optional
 	CaseInsensitiveNameIds *bool `json:"caseInsensitiveNameIds,omitempty" tf:"case_insensitive_name_ids,omitempty"`
 
-	// (String) The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is 8h.
+	// (String). The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is 8h.
 	// The lifetime of a Browser cookie in seconds. If the cookie is still valid, the management console authenticates the user immediately and redirects them to the home page. The default value is `8h`.
 	// +kubebuilder:validation:Optional
 	CookieMaxAge *string `json:"cookieMaxAge,omitempty" tf:"cookie_max_age,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
+	// (String). The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
 	// The ID of the IdP server to be used for authentication. The IdP server also responds to IAM with this ID after the user authenticates.
 	// +kubebuilder:validation:Optional
 	Issuer *string `json:"issuer,omitempty" tf:"issuer,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The organization to attach this SAML Federation to.
+	// (String). The organization to attach this SAML Federation to.
 	// The organization to attach this SAML Federation to.
 	// +kubebuilder:validation:Optional
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 
-	// (Block List, Max: 1) Federation security settings. (see below for nested schema)
+	// [Block]. Federation security settings.
 	// Federation security settings.
 	// +kubebuilder:validation:Optional
 	SecuritySettings []SecuritySettingsParameters `json:"securitySettings,omitempty" tf:"security_settings,omitempty"`
@@ -192,34 +192,34 @@ type SAMLFederationParameters struct {
 
 type SecuritySettingsInitParameters struct {
 
-	// (Boolean) Enable encrypted assertions.
+	// (Bool). Enable encrypted assertions.
 	// Enable encrypted assertions.
 	EncryptedAssertions *bool `json:"encryptedAssertions,omitempty" tf:"encrypted_assertions,omitempty"`
 
-	// (Boolean) Force authentication on session expiration
+	// (Bool). Force authentication on session expiration
 	// Force authentication on session expiration
 	ForceAuthn *bool `json:"forceAuthn,omitempty" tf:"force_authn,omitempty"`
 }
 
 type SecuritySettingsObservation struct {
 
-	// (Boolean) Enable encrypted assertions.
+	// (Bool). Enable encrypted assertions.
 	// Enable encrypted assertions.
 	EncryptedAssertions *bool `json:"encryptedAssertions,omitempty" tf:"encrypted_assertions,omitempty"`
 
-	// (Boolean) Force authentication on session expiration
+	// (Bool). Force authentication on session expiration
 	// Force authentication on session expiration
 	ForceAuthn *bool `json:"forceAuthn,omitempty" tf:"force_authn,omitempty"`
 }
 
 type SecuritySettingsParameters struct {
 
-	// (Boolean) Enable encrypted assertions.
+	// (Bool). Enable encrypted assertions.
 	// Enable encrypted assertions.
 	// +kubebuilder:validation:Optional
 	EncryptedAssertions *bool `json:"encryptedAssertions,omitempty" tf:"encrypted_assertions,omitempty"`
 
-	// (Boolean) Force authentication on session expiration
+	// (Bool). Force authentication on session expiration
 	// Force authentication on session expiration
 	// +kubebuilder:validation:Optional
 	ForceAuthn *bool `json:"forceAuthn,omitempty" tf:"force_authn,omitempty"`
@@ -252,7 +252,7 @@ type SAMLFederationStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SAMLFederation is the Schema for the SAMLFederations API. Allows management of a single SAML Federation within an existing Yandex Cloud Organization.
+// SAMLFederation is the Schema for the SAMLFederations API. Manages the yandex_organizationmanager_saml_federation resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

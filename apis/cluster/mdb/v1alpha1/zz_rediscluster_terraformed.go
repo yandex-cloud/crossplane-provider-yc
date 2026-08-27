@@ -35,7 +35,7 @@ func (mg *RedisCluster) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this RedisCluster
 func (tr *RedisCluster) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"config[*].password": "config[*].passwordSecretRef"}
+	return map[string]string{"config[*].password": "config[*].passwordSecretRef", "config[*].password_wo": "config[*].passwordWoSecretRef"}
 }
 
 // GetObservation of this RedisCluster

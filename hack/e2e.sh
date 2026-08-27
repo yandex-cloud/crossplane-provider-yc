@@ -33,6 +33,23 @@ if ! ./hack/folder_cleanup.sh; then
 fi
 echo "##teamcity[blockClosed name='cleanup']"
 
+echo "##teamcity[blockOpened name='certificate' description='create Certificate Manager IAM prerequisite']"
+certificate_dir=$(mktemp -d)
+trap 'rm -f "$certificate_dir/certificate.pem" "$certificate_dir/private-key.pem"; rmdir "$certificate_dir"' EXIT
+openssl req -x509 -nodes -newkey rsa:2048 -days 1 \
+  -subj "/CN=crossplane-provider-yc-e2e.invalid" \
+  -keyout "$certificate_dir/private-key.pem" \
+  -out "$certificate_dir/certificate.pem" >/dev/null 2>&1
+CERTIFICATE_ID=$(yc certificate-manager certificate create \
+  --folder-id "${FOLDER_ID}" \
+  --name "crossplane-provider-yc-e2e-${RANDOM}" \
+  --chain "$certificate_dir/certificate.pem" \
+  --key "$certificate_dir/private-key.pem" \
+  --format json | jq -r .id)
+[ -n "${CERTIFICATE_ID}" ] || { echo Failed to create Certificate Manager prerequisite; exit 1; }
+export CERTIFICATE_ID
+echo "##teamcity[blockClosed name='certificate']"
+
 echo "##teamcity[blockOpened name='provision' description='set up cluster and CR']"
 ./hack/provision_e2e.sh
 echo "##teamcity[blockClosed name='provision']"

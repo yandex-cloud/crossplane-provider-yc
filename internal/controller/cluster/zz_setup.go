@@ -29,7 +29,9 @@ import (
 	targetgroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/alb/targetgroup"
 	virtualhost "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/alb/virtualhost"
 	origingroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/cdn/origingroup"
+	certificateiammember "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/cm/certificateiammember"
 	disk "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/compute/disk"
+	diskiambinding "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/compute/diskiambinding"
 	diskplacementgroup "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/compute/diskplacementgroup"
 	filesystem "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/compute/filesystem"
 	gpucluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/compute/gpucluster"
@@ -64,7 +66,6 @@ import (
 	networkloadbalancer "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/lb/networkloadbalancer"
 	targetgrouplb "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/lb/targetgroup"
 	clickhousecluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/mdb/clickhousecluster"
-	elasticsearchcluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/mdb/elasticsearchcluster"
 	kafkacluster "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/mdb/kafkacluster"
 	kafkaconnector "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/mdb/kafkaconnector"
 	kafkatopic "github.com/yandex-cloud/crossplane-provider-yc/internal/controller/cluster/mdb/kafkatopic"
@@ -110,7 +111,9 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		targetgroup.Setup,
 		virtualhost.Setup,
 		origingroup.Setup,
+		certificateiammember.Setup,
 		disk.Setup,
+		diskiambinding.Setup,
 		diskplacementgroup.Setup,
 		filesystem.Setup,
 		gpucluster.Setup,
@@ -145,7 +148,6 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		networkloadbalancer.Setup,
 		targetgrouplb.Setup,
 		clickhousecluster.Setup,
-		elasticsearchcluster.Setup,
 		kafkacluster.Setup,
 		kafkaconnector.Setup,
 		kafkatopic.Setup,
@@ -197,7 +199,9 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		targetgroup.SetupGated,
 		virtualhost.SetupGated,
 		origingroup.SetupGated,
+		certificateiammember.SetupGated,
 		disk.SetupGated,
+		diskiambinding.SetupGated,
 		diskplacementgroup.SetupGated,
 		filesystem.SetupGated,
 		gpucluster.SetupGated,
@@ -232,7 +236,6 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		networkloadbalancer.SetupGated,
 		targetgrouplb.SetupGated,
 		clickhousecluster.SetupGated,
-		elasticsearchcluster.SetupGated,
 		kafkacluster.SetupGated,
 		kafkaconnector.SetupGated,
 		kafkatopic.SetupGated,
@@ -268,6 +271,93 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		databaseserverless.SetupGated,
 	} {
 		if err := setup(mgr, o); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// SetupWebhookWithManager registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		backendgroup.SetupWebhookWithManager,
+		httprouter.SetupWebhookWithManager,
+		loadbalancer.SetupWebhookWithManager,
+		targetgroup.SetupWebhookWithManager,
+		virtualhost.SetupWebhookWithManager,
+		origingroup.SetupWebhookWithManager,
+		certificateiammember.SetupWebhookWithManager,
+		disk.SetupWebhookWithManager,
+		diskiambinding.SetupWebhookWithManager,
+		diskplacementgroup.SetupWebhookWithManager,
+		filesystem.SetupWebhookWithManager,
+		gpucluster.SetupWebhookWithManager,
+		image.SetupWebhookWithManager,
+		instance.SetupWebhookWithManager,
+		instancegroup.SetupWebhookWithManager,
+		placementgroup.SetupWebhookWithManager,
+		snapshot.SetupWebhookWithManager,
+		snapshotschedule.SetupWebhookWithManager,
+		registry.SetupWebhookWithManager,
+		repository.SetupWebhookWithManager,
+		endpoint.SetupWebhookWithManager,
+		transfer.SetupWebhookWithManager,
+		recordset.SetupWebhookWithManager,
+		zone.SetupWebhookWithManager,
+		cloudiambinding.SetupWebhookWithManager,
+		cloudiammember.SetupWebhookWithManager,
+		folderiambinding.SetupWebhookWithManager,
+		folderiammember.SetupWebhookWithManager,
+		groupiammember.SetupWebhookWithManager,
+		organizationiambinding.SetupWebhookWithManager,
+		serviceaccount.SetupWebhookWithManager,
+		serviceaccountapikey.SetupWebhookWithManager,
+		serviceaccountiambinding.SetupWebhookWithManager,
+		serviceaccountiammember.SetupWebhookWithManager,
+		serviceaccountkey.SetupWebhookWithManager,
+		serviceaccountstaticaccesskey.SetupWebhookWithManager,
+		symmetrickey.SetupWebhookWithManager,
+		symmetrickeyiambinding.SetupWebhookWithManager,
+		cluster.SetupWebhookWithManager,
+		nodegroup.SetupWebhookWithManager,
+		networkloadbalancer.SetupWebhookWithManager,
+		targetgrouplb.SetupWebhookWithManager,
+		clickhousecluster.SetupWebhookWithManager,
+		kafkacluster.SetupWebhookWithManager,
+		kafkaconnector.SetupWebhookWithManager,
+		kafkatopic.SetupWebhookWithManager,
+		kafkauser.SetupWebhookWithManager,
+		mongodbcluster.SetupWebhookWithManager,
+		mongodbdatabase.SetupWebhookWithManager,
+		mongodbuser.SetupWebhookWithManager,
+		mysqlcluster.SetupWebhookWithManager,
+		mysqldatabase.SetupWebhookWithManager,
+		mysqluser.SetupWebhookWithManager,
+		postgresqlcluster.SetupWebhookWithManager,
+		postgresqldatabase.SetupWebhookWithManager,
+		postgresqluser.SetupWebhookWithManager,
+		rediscluster.SetupWebhookWithManager,
+		queue.SetupWebhookWithManager,
+		group.SetupWebhookWithManager,
+		samlfederation.SetupWebhookWithManager,
+		samlfederationuseraccount.SetupWebhookWithManager,
+		providerconfig.SetupWebhookWithManager,
+		cloud.SetupWebhookWithManager,
+		folder.SetupWebhookWithManager,
+		bucket.SetupWebhookWithManager,
+		object.SetupWebhookWithManager,
+		address.SetupWebhookWithManager,
+		defaultsecuritygroup.SetupWebhookWithManager,
+		gateway.SetupWebhookWithManager,
+		network.SetupWebhookWithManager,
+		routetable.SetupWebhookWithManager,
+		securitygroup.SetupWebhookWithManager,
+		securitygrouprule.SetupWebhookWithManager,
+		subnet.SetupWebhookWithManager,
+		databasededicated.SetupWebhookWithManager,
+		databaseserverless.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
 			return err
 		}
 	}

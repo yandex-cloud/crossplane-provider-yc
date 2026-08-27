@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: samlfederationuseraccounts.organizationmanager.yandex-cloud.jet.crossplane.io
 spec:
   group: organizationmanager.yandex-cloud.jet.crossplane.io
@@ -35,8 +35,8 @@ spec:
     schema:
       openAPIV3Schema:
         description: SAMLFederationUserAccount is the Schema for the SAMLFederationUserAccounts
-          API. Allows management of a single SAML Federation user account within an
-          existing Yandex Cloud Organization.
+          API. Manages the yandex_organizationmanager_saml_federation_user_account
+          resource.
         properties:
           apiVersion:
             description: |-
@@ -77,12 +77,12 @@ spec:
                 properties:
                   federationId:
                     description: |-
-                      (String) ID of a SAML Federation.
+                      (String). ID of a SAML Federation.
                       ID of a SAML Federation.
                     type: string
                   nameId:
                     description: |-
-                      (String) Name ID of the SAML federated user.
+                      (String). Name ID of the SAML federated user.
                       Name ID of the SAML federated user.
                     type: string
                 type: object
@@ -101,12 +101,12 @@ spec:
                 properties:
                   federationId:
                     description: |-
-                      (String) ID of a SAML Federation.
+                      (String). ID of a SAML Federation.
                       ID of a SAML Federation.
                     type: string
                   nameId:
                     description: |-
-                      (String) Name ID of the SAML federated user.
+                      (String). Name ID of the SAML federated user.
                       Name ID of the SAML federated user.
                     type: string
                 type: object
@@ -213,15 +213,15 @@ spec:
                 properties:
                   federationId:
                     description: |-
-                      (String) ID of a SAML Federation.
+                      (String). ID of a SAML Federation.
                       ID of a SAML Federation.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   nameId:
                     description: |-
-                      (String) Name ID of the SAML federated user.
+                      (String). Name ID of the SAML federated user.
                       Name ID of the SAML federated user.
                     type: string
                 type: object

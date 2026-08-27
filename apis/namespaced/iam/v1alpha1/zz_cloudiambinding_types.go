@@ -30,11 +30,7 @@ import (
 
 type CloudIAMBindingInitParameters struct {
 
-	// (String) The ID of the cloud to attach the policy to.
-	// The ID of the cloud to attach the policy to.
-	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
-
-	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -54,10 +50,6 @@ type CloudIAMBindingInitParameters struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
-
 	// References to ServiceAccount to populate members.
 	// +kubebuilder:validation:Optional
 	ServiceAccountRef []v1.NamespacedReference `json:"serviceAccountRef,omitempty" tf:"-"`
@@ -66,20 +58,21 @@ type CloudIAMBindingInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountSelector *v1.NamespacedSelector `json:"serviceAccountSelector,omitempty" tf:"-"`
 
-	// (Number)
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type CloudIAMBindingObservation struct {
 
-	// (String) The ID of the cloud to attach the policy to.
-	// The ID of the cloud to attach the policy to.
+	// (String). The ID of the cloud to attach the policy to.
+	// The ID of the `cloud` to attach the policy to.
 	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String). The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -95,22 +88,23 @@ type CloudIAMBindingObservation struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
+	// (String). The role that should be assigned. Only one yandex_resourcemanager_cloud_iam_binding can be used per role.
+	// The role that should be assigned. Only one yandex_resourcemanager_cloud_iam_binding can be used per role.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
-	// (Number)
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type CloudIAMBindingParameters struct {
 
-	// (String) The ID of the cloud to attach the policy to.
-	// The ID of the cloud to attach the policy to.
-	// +kubebuilder:validation:Optional
-	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
+	// (String). The ID of the cloud to attach the policy to.
+	// The ID of the `cloud` to attach the policy to.
+	// +kubebuilder:validation:Required
+	CloudID *string `json:"cloudId" tf:"cloud_id,omitempty"`
 
-	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -131,10 +125,10 @@ type CloudIAMBindingParameters struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
-	// +kubebuilder:validation:Optional
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+	// (String). The role that should be assigned. Only one yandex_resourcemanager_cloud_iam_binding can be used per role.
+	// The role that should be assigned. Only one yandex_resourcemanager_cloud_iam_binding can be used per role.
+	// +kubebuilder:validation:Required
+	Role *string `json:"role" tf:"role,omitempty"`
 
 	// References to ServiceAccount to populate members.
 	// +kubebuilder:validation:Optional
@@ -144,7 +138,8 @@ type CloudIAMBindingParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountSelector *v1.NamespacedSelector `json:"serviceAccountSelector,omitempty" tf:"-"`
 
-	// (Number)
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	// +kubebuilder:validation:Optional
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
@@ -176,7 +171,7 @@ type CloudIAMBindingStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// CloudIAMBinding is the Schema for the CloudIAMBindings API. Allows management of a single IAM binding for a Yandex Resource Manager cloud.
+// CloudIAMBinding is the Schema for the CloudIAMBindings API. Manages the yandex_resourcemanager_cloud_iam_binding resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -185,10 +180,8 @@ type CloudIAMBindingStatus struct {
 type CloudIAMBinding struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudId) || (has(self.initProvider) && has(self.initProvider.cloudId))",message="spec.forProvider.cloudId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.role) || (has(self.initProvider) && has(self.initProvider.role))",message="spec.forProvider.role is a required parameter"
-	Spec   CloudIAMBindingSpec   `json:"spec"`
-	Status CloudIAMBindingStatus `json:"status,omitempty"`
+	Spec              CloudIAMBindingSpec   `json:"spec"`
+	Status            CloudIAMBindingStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

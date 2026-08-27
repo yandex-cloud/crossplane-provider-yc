@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: httprouters.alb.yandex-cloud.jet.crossplane.io
 spec:
   group: alb.yandex-cloud.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: HTTPRouter is the Schema for the HTTPRouters API. The HTTP router
-          defines the routing rules for HTTP requests to backend groups.
+        description: HTTPRouter is the Schema for the HTTPRouters API. Manages the
+          yandex_alb_http_router resource.
         properties:
           apiVersion:
             description: |-
@@ -75,7 +75,7 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -163,81 +163,72 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   routeOptions:
                     description: |-
-                      (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                      [Block]. Route options for the virtual host.
                       Route options for the virtual host.
                     items:
                       properties:
                         rbac:
                           description: |-
-                            (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                            [Block]. RBAC configuration.
                             RBAC configuration.
                           items:
                             properties:
                               action:
-                                description: (String)
+                                description: (String).
                                 type: string
                               principals:
-                                description: '(Block List, Min: 1) (see below for
-                                  nested schema)'
+                                description: '[Block].'
                                 items:
                                   properties:
                                     andPrincipals:
-                                      description: '(Block List, Min: 1) (see below
-                                        for nested schema)'
+                                      description: '[Block].'
                                       items:
                                         properties:
                                           any:
-                                            description: (Boolean)
+                                            description: (Bool).
                                             type: boolean
                                           header:
-                                            description: '(Block List, Max: 1) (see
-                                              below for nested schema)'
+                                            description: '[Block].'
                                             items:
                                               properties:
                                                 name:
-                                                  description: (String) The resource
+                                                  description: (String). The resource
                                                     name.
                                                   type: string
                                                 value:
                                                   description: |-
-                                                    (Block List, Max: 1) The path and fqmn blocks.
+                                                    [Block]. The path and fqmn blocks.
                                                     The `path` and `fqmn` blocks.
 
                                                     ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                                   items:
                                                     properties:
                                                       exact:
-                                                        description: |-
-                                                          (String) Match exactly.
-                                                          Match exactly.
+                                                        description: Match exactly.
                                                         type: string
                                                       prefix:
-                                                        description: |-
-                                                          (String) Match prefix.
-                                                          Match prefix.
+                                                        description: Match prefix.
                                                         type: string
                                                       regex:
-                                                        description: |-
-                                                          (String) Match regex.
-                                                          Match regex.
+                                                        description: Match regex.
                                                         type: string
                                                     type: object
                                                   type: array
                                               type: object
                                             type: array
                                           remoteIp:
-                                            description: (String)
+                                            description: (String).
                                             type: string
                                         type: object
                                       type: array
@@ -247,7 +238,7 @@ spec:
                           type: array
                         securityProfileId:
                           description: |-
-                            (String) SWS profile ID.
+                            (String). SWS profile ID.
                             SWS profile ID.
                           type: string
                       type: object
@@ -268,7 +259,7 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -356,81 +347,72 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   routeOptions:
                     description: |-
-                      (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                      [Block]. Route options for the virtual host.
                       Route options for the virtual host.
                     items:
                       properties:
                         rbac:
                           description: |-
-                            (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                            [Block]. RBAC configuration.
                             RBAC configuration.
                           items:
                             properties:
                               action:
-                                description: (String)
+                                description: (String).
                                 type: string
                               principals:
-                                description: '(Block List, Min: 1) (see below for
-                                  nested schema)'
+                                description: '[Block].'
                                 items:
                                   properties:
                                     andPrincipals:
-                                      description: '(Block List, Min: 1) (see below
-                                        for nested schema)'
+                                      description: '[Block].'
                                       items:
                                         properties:
                                           any:
-                                            description: (Boolean)
+                                            description: (Bool).
                                             type: boolean
                                           header:
-                                            description: '(Block List, Max: 1) (see
-                                              below for nested schema)'
+                                            description: '[Block].'
                                             items:
                                               properties:
                                                 name:
-                                                  description: (String) The resource
+                                                  description: (String). The resource
                                                     name.
                                                   type: string
                                                 value:
                                                   description: |-
-                                                    (Block List, Max: 1) The path and fqmn blocks.
+                                                    [Block]. The path and fqmn blocks.
                                                     The `path` and `fqmn` blocks.
 
                                                     ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                                   items:
                                                     properties:
                                                       exact:
-                                                        description: |-
-                                                          (String) Match exactly.
-                                                          Match exactly.
+                                                        description: Match exactly.
                                                         type: string
                                                       prefix:
-                                                        description: |-
-                                                          (String) Match prefix.
-                                                          Match prefix.
+                                                        description: Match prefix.
                                                         type: string
                                                       regex:
-                                                        description: |-
-                                                          (String) Match regex.
-                                                          Match regex.
+                                                        description: Match regex.
                                                         type: string
                                                     type: object
                                                   type: array
                                               type: object
                                             type: array
                                           remoteIp:
-                                            description: (String)
+                                            description: (String).
                                             type: string
                                         type: object
                                       type: array
@@ -440,7 +422,7 @@ spec:
                           type: array
                         securityProfileId:
                           description: |-
-                            (String) SWS profile ID.
+                            (String). SWS profile ID.
                             SWS profile ID.
                           type: string
                       type: object
@@ -539,12 +521,12 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
                       The creation timestamp of the resource.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -553,87 +535,78 @@ spec:
                       The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   routeOptions:
                     description: |-
-                      (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                      [Block]. Route options for the virtual host.
                       Route options for the virtual host.
                     items:
                       properties:
                         rbac:
                           description: |-
-                            (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                            [Block]. RBAC configuration.
                             RBAC configuration.
                           items:
                             properties:
                               action:
-                                description: (String)
+                                description: (String).
                                 type: string
                               principals:
-                                description: '(Block List, Min: 1) (see below for
-                                  nested schema)'
+                                description: '[Block].'
                                 items:
                                   properties:
                                     andPrincipals:
-                                      description: '(Block List, Min: 1) (see below
-                                        for nested schema)'
+                                      description: '[Block].'
                                       items:
                                         properties:
                                           any:
-                                            description: (Boolean)
+                                            description: (Bool).
                                             type: boolean
                                           header:
-                                            description: '(Block List, Max: 1) (see
-                                              below for nested schema)'
+                                            description: '[Block].'
                                             items:
                                               properties:
                                                 name:
-                                                  description: (String) The resource
+                                                  description: (String). The resource
                                                     name.
                                                   type: string
                                                 value:
                                                   description: |-
-                                                    (Block List, Max: 1) The path and fqmn blocks.
+                                                    [Block]. The path and fqmn blocks.
                                                     The `path` and `fqmn` blocks.
 
                                                     ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                                   items:
                                                     properties:
                                                       exact:
-                                                        description: |-
-                                                          (String) Match exactly.
-                                                          Match exactly.
+                                                        description: Match exactly.
                                                         type: string
                                                       prefix:
-                                                        description: |-
-                                                          (String) Match prefix.
-                                                          Match prefix.
+                                                        description: Match prefix.
                                                         type: string
                                                       regex:
-                                                        description: |-
-                                                          (String) Match regex.
-                                                          Match regex.
+                                                        description: Match regex.
                                                         type: string
                                                     type: object
                                                   type: array
                                               type: object
                                             type: array
                                           remoteIp:
-                                            description: (String)
+                                            description: (String).
                                             type: string
                                         type: object
                                       type: array
@@ -643,7 +616,7 @@ spec:
                           type: array
                         securityProfileId:
                           description: |-
-                            (String) SWS profile ID.
+                            (String). SWS profile ID.
                             SWS profile ID.
                           type: string
                       type: object

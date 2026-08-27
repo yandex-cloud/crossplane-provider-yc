@@ -27,6 +27,12 @@ import (
 	"github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/v1beta1"
 )
 
+// SetupWebhookWithManager is a no-op because ProviderConfig has a single API
+// version and does not require a conversion webhook.
+func SetupWebhookWithManager(_ ctrl.Manager) error {
+	return nil
+}
+
 // Setup adds a controller that reconciles ProviderConfigs by accounting for
 // their current usage.
 func Setup(mgr ctrl.Manager, o controller.Options) error {

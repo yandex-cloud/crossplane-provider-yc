@@ -29,21 +29,21 @@ import (
 
 type PostgresqlDatabaseExtensionInitParameters struct {
 
-	// (String) The resource name.
+	// (String). The name of the PostgreSQL database.
 	// Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type PostgresqlDatabaseExtensionObservation struct {
 
-	// (String) The resource name.
+	// (String). The name of the PostgreSQL database.
 	// Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type PostgresqlDatabaseExtensionParameters struct {
 
-	// (String) The resource name.
+	// (String). The name of the PostgreSQL database.
 	// Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
@@ -51,7 +51,7 @@ type PostgresqlDatabaseExtensionParameters struct {
 
 type PostgresqlDatabaseInitParameters struct {
 
-	// (String) The ID of the PostgreSQL cluster.
+	// (String). The ID of the PostgreSQL cluster.
 	// The ID of the PostgreSQL cluster.
 	// +crossplane:generate:reference:type=PostgresqlCluster
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
@@ -64,76 +64,76 @@ type PostgresqlDatabaseInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// (String) The true value means that resource is protected from accidental deletion.
+	// (String). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *string `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (Block Set) Set of database extensions. (see below for nested schema)
+	// [Block]. Set of database extensions.
 	// Set of database extensions.
 	Extension []PostgresqlDatabaseExtensionInitParameters `json:"extension,omitempty" tf:"extension,omitempty"`
 
-	// (String) POSIX locale for string sorting order. Forbidden to change in an existing database.
+	// (String). POSIX locale for string sorting order. Forbidden to change in an existing database.
 	// POSIX locale for string sorting order. Forbidden to change in an existing database.
 	LcCollate *string `json:"lcCollate,omitempty" tf:"lc_collate,omitempty"`
 
-	// (String) POSIX locale for character classification. Forbidden to change in an existing database.
+	// (String). POSIX locale for character classification. Forbidden to change in an existing database.
 	// POSIX locale for character classification. Forbidden to change in an existing database.
 	LcType *string `json:"lcType,omitempty" tf:"lc_type,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). The name of the PostgreSQL database.
+	// The name of the PostgreSQL database.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+	// (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	// Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	Owner *string `json:"owner,omitempty" tf:"owner,omitempty"`
 
-	// (String) Name of the template database.
+	// (String). Name of the template database.
 	// Name of the template database.
 	TemplateDB *string `json:"templateDb,omitempty" tf:"template_db,omitempty"`
 }
 
 type PostgresqlDatabaseObservation struct {
 
-	// (String) The ID of the PostgreSQL cluster.
+	// (String). The ID of the PostgreSQL cluster.
 	// The ID of the PostgreSQL cluster.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
-	// (String) The true value means that resource is protected from accidental deletion.
+	// (String). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *string `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (Block Set) Set of database extensions. (see below for nested schema)
+	// [Block]. Set of database extensions.
 	// Set of database extensions.
 	Extension []PostgresqlDatabaseExtensionObservation `json:"extension,omitempty" tf:"extension,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) POSIX locale for string sorting order. Forbidden to change in an existing database.
+	// (String). POSIX locale for string sorting order. Forbidden to change in an existing database.
 	// POSIX locale for string sorting order. Forbidden to change in an existing database.
 	LcCollate *string `json:"lcCollate,omitempty" tf:"lc_collate,omitempty"`
 
-	// (String) POSIX locale for character classification. Forbidden to change in an existing database.
+	// (String). POSIX locale for character classification. Forbidden to change in an existing database.
 	// POSIX locale for character classification. Forbidden to change in an existing database.
 	LcType *string `json:"lcType,omitempty" tf:"lc_type,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). The name of the PostgreSQL database.
+	// The name of the PostgreSQL database.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+	// (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	// Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	Owner *string `json:"owner,omitempty" tf:"owner,omitempty"`
 
-	// (String) Name of the template database.
+	// (String). Name of the template database.
 	// Name of the template database.
 	TemplateDB *string `json:"templateDb,omitempty" tf:"template_db,omitempty"`
 }
 
 type PostgresqlDatabaseParameters struct {
 
-	// (String) The ID of the PostgreSQL cluster.
+	// (String). The ID of the PostgreSQL cluster.
 	// The ID of the PostgreSQL cluster.
 	// +crossplane:generate:reference:type=PostgresqlCluster
 	// +kubebuilder:validation:Optional
@@ -147,37 +147,37 @@ type PostgresqlDatabaseParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.Selector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// (String) The true value means that resource is protected from accidental deletion.
+	// (String). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *string `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (Block Set) Set of database extensions. (see below for nested schema)
+	// [Block]. Set of database extensions.
 	// Set of database extensions.
 	// +kubebuilder:validation:Optional
 	Extension []PostgresqlDatabaseExtensionParameters `json:"extension,omitempty" tf:"extension,omitempty"`
 
-	// (String) POSIX locale for string sorting order. Forbidden to change in an existing database.
+	// (String). POSIX locale for string sorting order. Forbidden to change in an existing database.
 	// POSIX locale for string sorting order. Forbidden to change in an existing database.
 	// +kubebuilder:validation:Optional
 	LcCollate *string `json:"lcCollate,omitempty" tf:"lc_collate,omitempty"`
 
-	// (String) POSIX locale for character classification. Forbidden to change in an existing database.
+	// (String). POSIX locale for character classification. Forbidden to change in an existing database.
 	// POSIX locale for character classification. Forbidden to change in an existing database.
 	// +kubebuilder:validation:Optional
 	LcType *string `json:"lcType,omitempty" tf:"lc_type,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). The name of the PostgreSQL database.
+	// The name of the PostgreSQL database.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+	// (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	// Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
 	// +kubebuilder:validation:Optional
 	Owner *string `json:"owner,omitempty" tf:"owner,omitempty"`
 
-	// (String) Name of the template database.
+	// (String). Name of the template database.
 	// Name of the template database.
 	// +kubebuilder:validation:Optional
 	TemplateDB *string `json:"templateDb,omitempty" tf:"template_db,omitempty"`
@@ -210,7 +210,7 @@ type PostgresqlDatabaseStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// PostgresqlDatabase is the Schema for the PostgresqlDatabases API. Manages a PostgreSQL database within Yandex Cloud.
+// PostgresqlDatabase is the Schema for the PostgresqlDatabases API. Manages the yandex_mdb_postgresql_database resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

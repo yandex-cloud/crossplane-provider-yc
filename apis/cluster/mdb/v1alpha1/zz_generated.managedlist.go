@@ -30,15 +30,6 @@ func (l *ClickhouseClusterList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this ElasticsearchClusterList.
-func (l *ElasticsearchClusterList) GetItems() []resource.Managed {
-	items := make([]resource.Managed, len(l.Items))
-	for i := range l.Items {
-		items[i] = &l.Items[i]
-	}
-	return items
-}
-
 // GetItems of this KafkaClusterList.
 func (l *KafkaClusterList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))

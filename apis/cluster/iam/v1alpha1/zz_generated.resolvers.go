@@ -96,23 +96,6 @@ func (mg *CloudIAMMember) ResolveReferences(ctx context.Context, c client.Reader
 	mg.Spec.ForProvider.Member = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServiceAccountRef = rsp.ResolvedReference
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Member),
-		Extract:      iam.ServiceAccountRefValue(),
-		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.InitProvider.ServiceAccountRef,
-		Selector:     mg.Spec.InitProvider.ServiceAccountSelector,
-		To: reference.To{
-			List:    &ServiceAccountList{},
-			Managed: &ServiceAccount{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.Member")
-	}
-	mg.Spec.InitProvider.Member = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ServiceAccountRef = rsp.ResolvedReference
-
 	return nil
 }
 
@@ -157,23 +140,6 @@ func (mg *FolderIAMBinding) ResolveReferences(ctx context.Context, c client.Read
 	}
 	mg.Spec.ForProvider.Members = reference.ToPtrValues(mrsp.ResolvedValues)
 	mg.Spec.ForProvider.ServiceAccountsRef = mrsp.ResolvedReferences
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.InitProvider.FolderIDRef,
-		Selector:     mg.Spec.InitProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.FolderID")
-	}
-	mg.Spec.InitProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.FolderIDRef = rsp.ResolvedReference
 
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.Members),
@@ -236,40 +202,6 @@ func (mg *FolderIAMMember) ResolveReferences(ctx context.Context, c client.Reade
 	mg.Spec.ForProvider.Member = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServiceAccountRef = rsp.ResolvedReference
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.FolderID),
-		Extract:      reference.ExternalName(),
-		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.InitProvider.FolderIDRef,
-		Selector:     mg.Spec.InitProvider.FolderIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.FolderList{},
-			Managed: &v1alpha1.Folder{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.FolderID")
-	}
-	mg.Spec.InitProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.FolderIDRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Member),
-		Extract:      iam.ServiceAccountRefValue(),
-		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.InitProvider.ServiceAccountRef,
-		Selector:     mg.Spec.InitProvider.ServiceAccountSelector,
-		To: reference.To{
-			List:    &ServiceAccountList{},
-			Managed: &ServiceAccount{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.Member")
-	}
-	mg.Spec.InitProvider.Member = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ServiceAccountRef = rsp.ResolvedReference
-
 	return nil
 }
 
@@ -296,23 +228,6 @@ func (mg *GroupIAMMember) ResolveReferences(ctx context.Context, c client.Reader
 	}
 	mg.Spec.ForProvider.Member = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServiceAccountRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Member),
-		Extract:      iam.ServiceAccountRefValue(),
-		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.InitProvider.ServiceAccountRef,
-		Selector:     mg.Spec.InitProvider.ServiceAccountSelector,
-		To: reference.To{
-			List:    &ServiceAccountList{},
-			Managed: &ServiceAccount{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.Member")
-	}
-	mg.Spec.InitProvider.Member = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ServiceAccountRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -508,23 +423,6 @@ func (mg *ServiceAccountIAMBinding) ResolveReferences(ctx context.Context, c cli
 	mg.Spec.InitProvider.Members = reference.ToPtrValues(mrsp.ResolvedValues)
 	mg.Spec.InitProvider.ServiceAccountRef = mrsp.ResolvedReferences
 
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServiceAccountID),
-		Extract:      reference.ExternalName(),
-		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.InitProvider.ServiceAccountIDRef,
-		Selector:     mg.Spec.InitProvider.ServiceAccountIDSelector,
-		To: reference.To{
-			List:    &ServiceAccountList{},
-			Managed: &ServiceAccount{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.ServiceAccountID")
-	}
-	mg.Spec.InitProvider.ServiceAccountID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ServiceAccountIDRef = rsp.ResolvedReference
-
 	return nil
 }
 
@@ -568,40 +466,6 @@ func (mg *ServiceAccountIAMMember) ResolveReferences(ctx context.Context, c clie
 	}
 	mg.Spec.ForProvider.ServiceAccountID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServiceAccountIDRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Member),
-		Extract:      iam.ServiceAccountRefValue(),
-		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.InitProvider.ServiceAccountRef,
-		Selector:     mg.Spec.InitProvider.ServiceAccountSelector,
-		To: reference.To{
-			List:    &ServiceAccountList{},
-			Managed: &ServiceAccount{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.Member")
-	}
-	mg.Spec.InitProvider.Member = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ServiceAccountRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServiceAccountID),
-		Extract:      reference.ExternalName(),
-		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.InitProvider.ServiceAccountIDRef,
-		Selector:     mg.Spec.InitProvider.ServiceAccountIDSelector,
-		To: reference.To{
-			List:    &ServiceAccountList{},
-			Managed: &ServiceAccount{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.ServiceAccountID")
-	}
-	mg.Spec.InitProvider.ServiceAccountID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ServiceAccountIDRef = rsp.ResolvedReference
 
 	return nil
 }

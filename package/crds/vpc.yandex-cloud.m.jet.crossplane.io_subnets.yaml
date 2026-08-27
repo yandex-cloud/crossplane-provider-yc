@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: subnets.vpc.yandex-cloud.m.jet.crossplane.io
 spec:
   group: vpc.yandex-cloud.m.jet.crossplane.io
@@ -34,9 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Subnet is the Schema for the Subnets API. A VPC network is a
-          virtual version of the traditional physical networks that exist within and
-          between physical data centers.
+        description: Subnet is the Schema for the Subnets API. Manages the yandex_vpc_subnet
+          resource.
         properties:
           apiVersion:
             description: |-
@@ -62,30 +61,30 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   dhcpOptions:
                     description: |-
-                      (Block List, Max: 1) Options for DHCP client. (see below for nested schema)
+                      [Block]. Options for DHCP client.
                       Options for DHCP client.
                     items:
                       properties:
                         domainName:
                           description: |-
-                            (String) Domain name.
+                            (String). Domain name.
                             Domain name.
                           type: string
                         domainNameServers:
                           description: |-
-                            (List of String) Domain name server IP addresses.
+                            (List Of String). Domain name server IP addresses.
                             Domain name server IP addresses.
                           items:
                             type: string
                           type: array
                         ntpServers:
                           description: |-
-                            (List of String) NTP server IP addresses.
+                            (List Of String). NTP server IP addresses.
                             NTP server IP addresses.
                           items:
                             type: string
@@ -183,18 +182,18 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkId:
                     description: |-
-                      (String) ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
+                      (String). ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
                       ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
                     type: string
                   networkIdRef:
@@ -279,7 +278,7 @@ spec:
                     type: object
                   routeTableId:
                     description: |-
-                      (String) The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
+                      (String). The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
                       The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
                     type: string
                   v4CidrBlocks:
@@ -291,7 +290,7 @@ spec:
                     type: array
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
                       The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                     type: string
                 type: object
@@ -310,30 +309,30 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   dhcpOptions:
                     description: |-
-                      (Block List, Max: 1) Options for DHCP client. (see below for nested schema)
+                      [Block]. Options for DHCP client.
                       Options for DHCP client.
                     items:
                       properties:
                         domainName:
                           description: |-
-                            (String) Domain name.
+                            (String). Domain name.
                             Domain name.
                           type: string
                         domainNameServers:
                           description: |-
-                            (List of String) Domain name server IP addresses.
+                            (List Of String). Domain name server IP addresses.
                             Domain name server IP addresses.
                           items:
                             type: string
                           type: array
                         ntpServers:
                           description: |-
-                            (List of String) NTP server IP addresses.
+                            (List Of String). NTP server IP addresses.
                             NTP server IP addresses.
                           items:
                             type: string
@@ -431,18 +430,18 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkId:
                     description: |-
-                      (String) ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
+                      (String). ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
                       ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
                     type: string
                   networkIdRef:
@@ -527,7 +526,7 @@ spec:
                     type: object
                   routeTableId:
                     description: |-
-                      (String) The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
+                      (String). The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
                       The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
                     type: string
                   v4CidrBlocks:
@@ -539,7 +538,7 @@ spec:
                     type: array
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
                       The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                     type: string
                 type: object
@@ -613,35 +612,35 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
                       The creation timestamp of the resource.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   dhcpOptions:
                     description: |-
-                      (Block List, Max: 1) Options for DHCP client. (see below for nested schema)
+                      [Block]. Options for DHCP client.
                       Options for DHCP client.
                     items:
                       properties:
                         domainName:
                           description: |-
-                            (String) Domain name.
+                            (String). Domain name.
                             Domain name.
                           type: string
                         domainNameServers:
                           description: |-
-                            (List of String) Domain name server IP addresses.
+                            (List Of String). Domain name server IP addresses.
                             Domain name server IP addresses.
                           items:
                             type: string
                           type: array
                         ntpServers:
                           description: |-
-                            (List of String) NTP server IP addresses.
+                            (List Of String). NTP server IP addresses.
                             NTP server IP addresses.
                           items:
                             type: string
@@ -654,29 +653,29 @@ spec:
                       The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkId:
                     description: |-
-                      (String) ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
+                      (String). ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
                       ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
                     type: string
                   routeTableId:
                     description: |-
-                      (String) The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
+                      (String). The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
                       The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
                     type: string
                   v4CidrBlocks:
@@ -688,14 +687,14 @@ spec:
                     type: array
                   v6CidrBlocks:
                     description: |-
-                      (List of String) An optional list of blocks of IPv6 addresses that are owned by this subnet.
+                      Only) (List Of String). An optional list of blocks of IPv6 addresses that are owned by this subnet.
                       An optional list of blocks of IPv6 addresses that are owned by this subnet.
                     items:
                       type: string
                     type: array
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
                       The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                     type: string
                 type: object

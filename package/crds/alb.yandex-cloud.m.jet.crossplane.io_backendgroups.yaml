@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: backendgroups.alb.yandex-cloud.m.jet.crossplane.io
 spec:
   group: alb.yandex-cloud.m.jet.crossplane.io
@@ -34,9 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: BackendGroup is the Schema for the BackendGroups API. An application
-          load balancer distributes the load across cloud resources that are combined
-          into a backend group.
+        description: BackendGroup is the Schema for the BackendGroups API. Manages
+          the yandex_alb_backend_group resource.
         properties:
           apiVersion:
             description: |-
@@ -62,7 +61,7 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -154,13 +153,13 @@ spec:
                     type: object
                   grpcBackend:
                     description: |-
-                      (Block List) gRPC backend specification that will be used by the ALB Backend Group. (see below for nested schema)
+                      [Block]. gRPC backend specification that will be used by the ALB Backend Group.
                       gRPC backend specification that will be used by the ALB Backend Group.
                     items:
                       properties:
                         healthcheck:
                           description: |-
-                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            [Block]. Healthcheck specification that will be used by this backend.
                             Healthcheck specification that will be used by this backend.
 
                             ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
@@ -168,138 +167,137 @@ spec:
                             properties:
                               grpcHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   gRPC Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     serviceName:
                                       description: |-
-                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        (String). The resource name.
                                         Service name for `grpc.health.v1.HealthCheckRequest` message.
                                       type: string
                                   type: object
                                 type: array
                               healthcheckPort:
                                 description: |-
-                                  (Number) Optional alternative port for health checking.
+                                  (Number). Port for incoming traffic.
                                   Optional alternative port for health checking.
                                 type: number
                               healthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
-                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                description: Number of consecutive successful health
+                                  checks required to promote endpoint into the healthy
+                                  state. 0 means 1. Note that during startup, only
+                                  a single successful health check is required to
+                                  mark a host healthy.
                                 type: number
                               httpHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   HTTP Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     expectedStatuses:
-                                      description: |-
-                                        (List of Number) A list of HTTP response statuses considered healthy.
-                                        A list of HTTP response statuses considered healthy.
+                                      description: A list of HTTP response statuses
+                                        considered healthy.
                                       items:
                                         type: number
                                       type: array
                                     host:
-                                      description: |-
-                                        (String) Host HTTP header value.
-                                        `Host` HTTP header value.
+                                      description: '`Host` HTTP header value.'
                                       type: string
                                     http2:
                                       description: |-
-                                        (Boolean) If set, health checks will use HTTP2.
+                                        (Bool). Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                                         If set, health checks will use HTTP2.
                                       type: boolean
                                     path:
                                       description: |-
-                                        (String) HTTP path.
+                                        (String). Path of the HTTP cookie to use with affinity.
                                         HTTP path.
                                       type: string
                                   type: object
                                 type: array
                               interval:
-                                description: |-
-                                  (String) Interval between health checks.
-                                  Interval between health checks.
+                                description: Interval between health checks.
                                 type: string
                               intervalJitterPercent:
-                                description: |-
-                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
-                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                description: An optional jitter amount as a percentage
+                                  of interval. If specified, during every interval
+                                  value of (interval_ms * interval_jitter_percent
+                                  / 100) will be added to the wait time.
                                 type: number
                               streamHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   Stream Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     receive:
-                                      description: |-
-                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
-                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      description: Data that must be contained in
+                                        the messages received from targets for a successful
+                                        health check. If not specified, no messages
+                                        are expected from targets, and those that
+                                        are received are not checked.
                                       type: string
                                     send:
-                                      description: |-
-                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
-                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      description: Message sent to targets during
+                                        TCP data transfer. If not specified, no data
+                                        is sent to the target.
                                       type: string
                                   type: object
                                 type: array
                               timeout:
-                                description: |-
-                                  (String) Time to wait for a health check response.
-                                  Time to wait for a health check response.
+                                description: Time to wait for a health check response.
                                 type: string
                               unhealthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
-                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                description: Number of consecutive failed health checks
+                                  required to demote endpoint into the unhealthy state.
+                                  0 means 1. Note that for HTTP health checks, a single
+                                  503 immediately makes endpoint unhealthy.
                                 type: number
                             type: object
                           type: array
                         loadBalancingConfig:
                           description: |-
-                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            [Block]. Load Balancing Config specification that will be used by this backend.
                             Load Balancing Config specification that will be used by this backend.
                           items:
                             properties:
                               localityAwareRoutingPercent:
                                 description: |-
-                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  (Number). Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                   Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                 type: number
                               mode:
                                 description: |-
-                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  (String). Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
                                   Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
                                 type: string
                               panicThreshold:
                                 description: |-
-                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  (Number). If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                   If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                 type: number
                               strictLocality:
                                 description: |-
-                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  (Bool). If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                   If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                 type: boolean
                             type: object
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the backend.
                           type: string
                         port:
                           description: |-
-                            (Number) Port for incoming traffic.
+                            (Number). Port for incoming traffic.
                             Port for incoming traffic.
                           type: number
                         targetGroupIds:
                           description: |-
-                            (List of String) References target groups for the backend.
+                            (List Of String). References target groups for the backend.
                             References target groups for the backend.
                           items:
                             type: string
@@ -390,30 +388,27 @@ spec:
                           type: object
                         tls:
                           description: |-
-                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            [Block]. TLS specification that will be used by this backend.
                             TLS specification that will be used by this backend.
 
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
                               sni:
-                                description: |-
-                                  (String) SNI string for TLS connections.
-                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
+                                  string for TLS connections.'
                                 type: string
                               validationContext:
-                                description: '(Block List, Max: 1) (see below for
-                                  nested schema)'
+                                description: Validation context
                                 items:
                                   properties:
                                     trustedCaBytes:
-                                      description: |-
-                                        encoded trusted CA certificate chain.
-                                        PEM-encoded trusted CA certificate chain.
+                                      description: PEM-encoded trusted CA certificate
+                                        chain.
                                       type: string
                                     trustedCaId:
                                       description: |-
-                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        (String).
                                         Trusted CA certificate ID in the Certificate Manager.
                                       type: string
                                   type: object
@@ -422,14 +417,14 @@ spec:
                           type: array
                         weight:
                           description: |-
-                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            (Number). Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                             Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                           type: number
                       type: object
                     type: array
                   httpBackend:
                     description: |-
-                      (Block List) HTTP backend specification that will be used by the ALB Backend Group.
+                      [Block]. HTTP backend specification that will be used by the ALB Backend Group.
                       HTTP backend specification that will be used by the ALB Backend Group.
 
                       ~> Only one of `target_group_ids` or `storage_bucket` should be specified.
@@ -437,7 +432,7 @@ spec:
                       properties:
                         healthcheck:
                           description: |-
-                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            [Block]. Healthcheck specification that will be used by this backend.
                             Healthcheck specification that will be used by this backend.
 
                             ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
@@ -445,148 +440,147 @@ spec:
                             properties:
                               grpcHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   gRPC Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     serviceName:
                                       description: |-
-                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        (String). The resource name.
                                         Service name for `grpc.health.v1.HealthCheckRequest` message.
                                       type: string
                                   type: object
                                 type: array
                               healthcheckPort:
                                 description: |-
-                                  (Number) Optional alternative port for health checking.
+                                  (Number). Port for incoming traffic.
                                   Optional alternative port for health checking.
                                 type: number
                               healthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
-                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                description: Number of consecutive successful health
+                                  checks required to promote endpoint into the healthy
+                                  state. 0 means 1. Note that during startup, only
+                                  a single successful health check is required to
+                                  mark a host healthy.
                                 type: number
                               httpHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   HTTP Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     expectedStatuses:
-                                      description: |-
-                                        (List of Number) A list of HTTP response statuses considered healthy.
-                                        A list of HTTP response statuses considered healthy.
+                                      description: A list of HTTP response statuses
+                                        considered healthy.
                                       items:
                                         type: number
                                       type: array
                                     host:
-                                      description: |-
-                                        (String) Host HTTP header value.
-                                        `Host` HTTP header value.
+                                      description: '`Host` HTTP header value.'
                                       type: string
                                     http2:
                                       description: |-
-                                        (Boolean) If set, health checks will use HTTP2.
+                                        (Bool). Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                                         If set, health checks will use HTTP2.
                                       type: boolean
                                     path:
                                       description: |-
-                                        (String) HTTP path.
+                                        (String). Path of the HTTP cookie to use with affinity.
                                         HTTP path.
                                       type: string
                                   type: object
                                 type: array
                               interval:
-                                description: |-
-                                  (String) Interval between health checks.
-                                  Interval between health checks.
+                                description: Interval between health checks.
                                 type: string
                               intervalJitterPercent:
-                                description: |-
-                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
-                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                description: An optional jitter amount as a percentage
+                                  of interval. If specified, during every interval
+                                  value of (interval_ms * interval_jitter_percent
+                                  / 100) will be added to the wait time.
                                 type: number
                               streamHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   Stream Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     receive:
-                                      description: |-
-                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
-                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      description: Data that must be contained in
+                                        the messages received from targets for a successful
+                                        health check. If not specified, no messages
+                                        are expected from targets, and those that
+                                        are received are not checked.
                                       type: string
                                     send:
-                                      description: |-
-                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
-                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      description: Message sent to targets during
+                                        TCP data transfer. If not specified, no data
+                                        is sent to the target.
                                       type: string
                                   type: object
                                 type: array
                               timeout:
-                                description: |-
-                                  (String) Time to wait for a health check response.
-                                  Time to wait for a health check response.
+                                description: Time to wait for a health check response.
                                 type: string
                               unhealthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
-                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                description: Number of consecutive failed health checks
+                                  required to demote endpoint into the unhealthy state.
+                                  0 means 1. Note that for HTTP health checks, a single
+                                  503 immediately makes endpoint unhealthy.
                                 type: number
                             type: object
                           type: array
                         http2:
                           description: |-
-                            (Boolean) If set, health checks will use HTTP2.
+                            (Bool). Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                             Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                           type: boolean
                         loadBalancingConfig:
                           description: |-
-                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            [Block]. Load Balancing Config specification that will be used by this backend.
                             Load Balancing Config specification that will be used by this backend.
                           items:
                             properties:
                               localityAwareRoutingPercent:
                                 description: |-
-                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  (Number). Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                   Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                 type: number
                               mode:
                                 description: |-
-                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  (String). Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
                                   Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
                                 type: string
                               panicThreshold:
                                 description: |-
-                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  (Number). If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                   If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                 type: number
                               strictLocality:
                                 description: |-
-                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  (Bool). If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                   If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                 type: boolean
                             type: object
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the backend.
                           type: string
                         port:
                           description: |-
-                            (Number) Port for incoming traffic.
+                            (Number). Port for incoming traffic.
                             Port for incoming traffic.
                           type: number
                         storageBucket:
                           description: |-
-                            (String) Name of bucket which should be used as a backend.
+                            (String). Name of bucket which should be used as a backend.
                             Name of bucket which should be used as a backend.
                           type: string
                         targetGroupIds:
                           description: |-
-                            (List of String) References target groups for the backend.
+                            (List Of String). References target groups for the backend.
                             References target groups for the backend.
                           items:
                             type: string
@@ -677,30 +671,27 @@ spec:
                           type: object
                         tls:
                           description: |-
-                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            [Block]. TLS specification that will be used by this backend.
                             TLS specification that will be used by this backend.
 
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
                               sni:
-                                description: |-
-                                  (String) SNI string for TLS connections.
-                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
+                                  string for TLS connections.'
                                 type: string
                               validationContext:
-                                description: '(Block List, Max: 1) (see below for
-                                  nested schema)'
+                                description: Validation context
                                 items:
                                   properties:
                                     trustedCaBytes:
-                                      description: |-
-                                        encoded trusted CA certificate chain.
-                                        PEM-encoded trusted CA certificate chain.
+                                      description: PEM-encoded trusted CA certificate
+                                        chain.
                                       type: string
                                     trustedCaId:
                                       description: |-
-                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        (String).
                                         Trusted CA certificate ID in the Certificate Manager.
                                       type: string
                                   type: object
@@ -709,7 +700,7 @@ spec:
                           type: array
                         weight:
                           description: |-
-                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            (Number). Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                             Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                           type: number
                       type: object
@@ -718,18 +709,18 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   sessionAffinity:
                     description: |-
-                      (Block List, Max: 1) Session affinity mode determines how incoming requests are grouped into one session.
+                      [Block]. Session affinity mode determines how incoming requests are grouped into one session.
                       Session affinity mode determines how incoming requests are grouped into one session.
 
                       ~> Only one type(`connection` or `cookie` or `header`) of session affinity should be specified.
@@ -737,44 +728,49 @@ spec:
                       properties:
                         connection:
                           description: |-
-                            (Block List, Max: 1) Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address. (see below for nested schema)
+                            [Block]. Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address.
                             Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address.
                           items:
                             properties:
                               sourceIp:
                                 description: |-
-                                  (Boolean) Source IP address to use with affinity.
+                                  (Bool). Source IP address to use with affinity.
                                   Source IP address to use with affinity.
                                 type: boolean
                             type: object
                           type: array
                         cookie:
                           description: |-
-                            (Block List, Max: 1) Requests with the same cookie value and the specified file name are combined into a session. Allowed only for HTTP and gRPC backend groups. (see below for nested schema)
+                            [Block]. Requests with the same cookie value and the specified file name are combined into a session. Allowed only for HTTP and gRPC backend groups.
                             Requests with the same cookie value and the specified file name are combined into a session. Allowed only for `HTTP` and `gRPC` backend groups.
                           items:
                             properties:
                               name:
                                 description: |-
-                                  (String) The resource name.
+                                  (String). The resource name.
                                   Name of the HTTP cookie to use with affinity.
+                                type: string
+                              path:
+                                description: |-
+                                  (String). Path of the HTTP cookie to use with affinity.
+                                  Path of the HTTP cookie to use with affinity.
                                 type: string
                               ttl:
                                 description: |-
-                                  (String) TTL for the cookie (if not set, session cookie will be used).
+                                  (String). TTL for the cookie (if not set, session cookie will be used).
                                   TTL for the cookie (if not set, session cookie will be used).
                                 type: string
                             type: object
                           type: array
                         header:
                           description: |-
-                            (Block List, Max: 1) Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for HTTP and gRPC backend groups. (see below for nested schema)
+                            [Block]. Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for HTTP and gRPC backend groups.
                             Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for `HTTP` and `gRPC` backend groups.
                           items:
                             properties:
                               headerName:
                                 description: |-
-                                  (String) The name of the request header that will be used with affinity.
+                                  (String). The name of the request header that will be used with affinity.
                                   The name of the request header that will be used with affinity.
                                 type: string
                             type: object
@@ -783,16 +779,18 @@ spec:
                     type: array
                   streamBackend:
                     description: |-
-                      (Block List) Stream backend specification that will be used by the ALB Backend Group. (see below for nested schema)
+                      [Block]. Stream backend specification that will be used by the ALB Backend Group.
                       Stream backend specification that will be used by the ALB Backend Group.
                     items:
                       properties:
                         enableProxyProtocol:
-                          description: (Boolean)
+                          description: |-
+                            (Bool). Enables TCP proxy protocol support for upstream backend
+                            Enables TCP proxy protocol support for upstream backend
                           type: boolean
                         healthcheck:
                           description: |-
-                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            [Block]. Healthcheck specification that will be used by this backend.
                             Healthcheck specification that will be used by this backend.
 
                             ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
@@ -800,143 +798,142 @@ spec:
                             properties:
                               grpcHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   gRPC Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     serviceName:
                                       description: |-
-                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        (String). The resource name.
                                         Service name for `grpc.health.v1.HealthCheckRequest` message.
                                       type: string
                                   type: object
                                 type: array
                               healthcheckPort:
                                 description: |-
-                                  (Number) Optional alternative port for health checking.
+                                  (Number). Port for incoming traffic.
                                   Optional alternative port for health checking.
                                 type: number
                               healthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
-                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                description: Number of consecutive successful health
+                                  checks required to promote endpoint into the healthy
+                                  state. 0 means 1. Note that during startup, only
+                                  a single successful health check is required to
+                                  mark a host healthy.
                                 type: number
                               httpHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   HTTP Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     expectedStatuses:
-                                      description: |-
-                                        (List of Number) A list of HTTP response statuses considered healthy.
-                                        A list of HTTP response statuses considered healthy.
+                                      description: A list of HTTP response statuses
+                                        considered healthy.
                                       items:
                                         type: number
                                       type: array
                                     host:
-                                      description: |-
-                                        (String) Host HTTP header value.
-                                        `Host` HTTP header value.
+                                      description: '`Host` HTTP header value.'
                                       type: string
                                     http2:
                                       description: |-
-                                        (Boolean) If set, health checks will use HTTP2.
+                                        (Bool). Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                                         If set, health checks will use HTTP2.
                                       type: boolean
                                     path:
                                       description: |-
-                                        (String) HTTP path.
+                                        (String). Path of the HTTP cookie to use with affinity.
                                         HTTP path.
                                       type: string
                                   type: object
                                 type: array
                               interval:
-                                description: |-
-                                  (String) Interval between health checks.
-                                  Interval between health checks.
+                                description: Interval between health checks.
                                 type: string
                               intervalJitterPercent:
-                                description: |-
-                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
-                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                description: An optional jitter amount as a percentage
+                                  of interval. If specified, during every interval
+                                  value of (interval_ms * interval_jitter_percent
+                                  / 100) will be added to the wait time.
                                 type: number
                               streamHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   Stream Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     receive:
-                                      description: |-
-                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
-                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      description: Data that must be contained in
+                                        the messages received from targets for a successful
+                                        health check. If not specified, no messages
+                                        are expected from targets, and those that
+                                        are received are not checked.
                                       type: string
                                     send:
-                                      description: |-
-                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
-                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      description: Message sent to targets during
+                                        TCP data transfer. If not specified, no data
+                                        is sent to the target.
                                       type: string
                                   type: object
                                 type: array
                               timeout:
-                                description: |-
-                                  (String) Time to wait for a health check response.
-                                  Time to wait for a health check response.
+                                description: Time to wait for a health check response.
                                 type: string
                               unhealthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
-                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                description: Number of consecutive failed health checks
+                                  required to demote endpoint into the unhealthy state.
+                                  0 means 1. Note that for HTTP health checks, a single
+                                  503 immediately makes endpoint unhealthy.
                                 type: number
                             type: object
                           type: array
                         keepConnectionsOnHostHealthFailure:
                           description: |-
-                            (Boolean) If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
+                            (Bool). If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
                             If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
                           type: boolean
                         loadBalancingConfig:
                           description: |-
-                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            [Block]. Load Balancing Config specification that will be used by this backend.
                             Load Balancing Config specification that will be used by this backend.
                           items:
                             properties:
                               localityAwareRoutingPercent:
                                 description: |-
-                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  (Number). Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                   Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                 type: number
                               mode:
                                 description: |-
-                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  (String). Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
                                   Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
                                 type: string
                               panicThreshold:
                                 description: |-
-                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  (Number). If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                   If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                 type: number
                               strictLocality:
                                 description: |-
-                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  (Bool). If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                   If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                 type: boolean
                             type: object
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the backend.
                           type: string
                         port:
                           description: |-
-                            (Number) Port for incoming traffic.
+                            (Number). Port for incoming traffic.
                             Port for incoming traffic.
                           type: number
                         targetGroupIds:
                           description: |-
-                            (List of String) References target groups for the backend.
+                            (List Of String). References target groups for the backend.
                             References target groups for the backend.
                           items:
                             type: string
@@ -1027,30 +1024,27 @@ spec:
                           type: object
                         tls:
                           description: |-
-                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            [Block]. TLS specification that will be used by this backend.
                             TLS specification that will be used by this backend.
 
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
                               sni:
-                                description: |-
-                                  (String) SNI string for TLS connections.
-                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
+                                  string for TLS connections.'
                                 type: string
                               validationContext:
-                                description: '(Block List, Max: 1) (see below for
-                                  nested schema)'
+                                description: Validation context
                                 items:
                                   properties:
                                     trustedCaBytes:
-                                      description: |-
-                                        encoded trusted CA certificate chain.
-                                        PEM-encoded trusted CA certificate chain.
+                                      description: PEM-encoded trusted CA certificate
+                                        chain.
                                       type: string
                                     trustedCaId:
                                       description: |-
-                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        (String).
                                         Trusted CA certificate ID in the Certificate Manager.
                                       type: string
                                   type: object
@@ -1059,7 +1053,7 @@ spec:
                           type: array
                         weight:
                           description: |-
-                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            (Number). Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                             Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                           type: number
                       type: object
@@ -1080,7 +1074,7 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -1172,13 +1166,13 @@ spec:
                     type: object
                   grpcBackend:
                     description: |-
-                      (Block List) gRPC backend specification that will be used by the ALB Backend Group. (see below for nested schema)
+                      [Block]. gRPC backend specification that will be used by the ALB Backend Group.
                       gRPC backend specification that will be used by the ALB Backend Group.
                     items:
                       properties:
                         healthcheck:
                           description: |-
-                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            [Block]. Healthcheck specification that will be used by this backend.
                             Healthcheck specification that will be used by this backend.
 
                             ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
@@ -1186,138 +1180,137 @@ spec:
                             properties:
                               grpcHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   gRPC Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     serviceName:
                                       description: |-
-                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        (String). The resource name.
                                         Service name for `grpc.health.v1.HealthCheckRequest` message.
                                       type: string
                                   type: object
                                 type: array
                               healthcheckPort:
                                 description: |-
-                                  (Number) Optional alternative port for health checking.
+                                  (Number). Port for incoming traffic.
                                   Optional alternative port for health checking.
                                 type: number
                               healthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
-                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                description: Number of consecutive successful health
+                                  checks required to promote endpoint into the healthy
+                                  state. 0 means 1. Note that during startup, only
+                                  a single successful health check is required to
+                                  mark a host healthy.
                                 type: number
                               httpHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   HTTP Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     expectedStatuses:
-                                      description: |-
-                                        (List of Number) A list of HTTP response statuses considered healthy.
-                                        A list of HTTP response statuses considered healthy.
+                                      description: A list of HTTP response statuses
+                                        considered healthy.
                                       items:
                                         type: number
                                       type: array
                                     host:
-                                      description: |-
-                                        (String) Host HTTP header value.
-                                        `Host` HTTP header value.
+                                      description: '`Host` HTTP header value.'
                                       type: string
                                     http2:
                                       description: |-
-                                        (Boolean) If set, health checks will use HTTP2.
+                                        (Bool). Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                                         If set, health checks will use HTTP2.
                                       type: boolean
                                     path:
                                       description: |-
-                                        (String) HTTP path.
+                                        (String). Path of the HTTP cookie to use with affinity.
                                         HTTP path.
                                       type: string
                                   type: object
                                 type: array
                               interval:
-                                description: |-
-                                  (String) Interval between health checks.
-                                  Interval between health checks.
+                                description: Interval between health checks.
                                 type: string
                               intervalJitterPercent:
-                                description: |-
-                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
-                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                description: An optional jitter amount as a percentage
+                                  of interval. If specified, during every interval
+                                  value of (interval_ms * interval_jitter_percent
+                                  / 100) will be added to the wait time.
                                 type: number
                               streamHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   Stream Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     receive:
-                                      description: |-
-                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
-                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      description: Data that must be contained in
+                                        the messages received from targets for a successful
+                                        health check. If not specified, no messages
+                                        are expected from targets, and those that
+                                        are received are not checked.
                                       type: string
                                     send:
-                                      description: |-
-                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
-                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      description: Message sent to targets during
+                                        TCP data transfer. If not specified, no data
+                                        is sent to the target.
                                       type: string
                                   type: object
                                 type: array
                               timeout:
-                                description: |-
-                                  (String) Time to wait for a health check response.
-                                  Time to wait for a health check response.
+                                description: Time to wait for a health check response.
                                 type: string
                               unhealthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
-                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                description: Number of consecutive failed health checks
+                                  required to demote endpoint into the unhealthy state.
+                                  0 means 1. Note that for HTTP health checks, a single
+                                  503 immediately makes endpoint unhealthy.
                                 type: number
                             type: object
                           type: array
                         loadBalancingConfig:
                           description: |-
-                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            [Block]. Load Balancing Config specification that will be used by this backend.
                             Load Balancing Config specification that will be used by this backend.
                           items:
                             properties:
                               localityAwareRoutingPercent:
                                 description: |-
-                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  (Number). Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                   Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                 type: number
                               mode:
                                 description: |-
-                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  (String). Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
                                   Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
                                 type: string
                               panicThreshold:
                                 description: |-
-                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  (Number). If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                   If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                 type: number
                               strictLocality:
                                 description: |-
-                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  (Bool). If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                   If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                 type: boolean
                             type: object
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the backend.
                           type: string
                         port:
                           description: |-
-                            (Number) Port for incoming traffic.
+                            (Number). Port for incoming traffic.
                             Port for incoming traffic.
                           type: number
                         targetGroupIds:
                           description: |-
-                            (List of String) References target groups for the backend.
+                            (List Of String). References target groups for the backend.
                             References target groups for the backend.
                           items:
                             type: string
@@ -1408,30 +1401,27 @@ spec:
                           type: object
                         tls:
                           description: |-
-                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            [Block]. TLS specification that will be used by this backend.
                             TLS specification that will be used by this backend.
 
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
                               sni:
-                                description: |-
-                                  (String) SNI string for TLS connections.
-                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
+                                  string for TLS connections.'
                                 type: string
                               validationContext:
-                                description: '(Block List, Max: 1) (see below for
-                                  nested schema)'
+                                description: Validation context
                                 items:
                                   properties:
                                     trustedCaBytes:
-                                      description: |-
-                                        encoded trusted CA certificate chain.
-                                        PEM-encoded trusted CA certificate chain.
+                                      description: PEM-encoded trusted CA certificate
+                                        chain.
                                       type: string
                                     trustedCaId:
                                       description: |-
-                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        (String).
                                         Trusted CA certificate ID in the Certificate Manager.
                                       type: string
                                   type: object
@@ -1440,14 +1430,14 @@ spec:
                           type: array
                         weight:
                           description: |-
-                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            (Number). Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                             Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                           type: number
                       type: object
                     type: array
                   httpBackend:
                     description: |-
-                      (Block List) HTTP backend specification that will be used by the ALB Backend Group.
+                      [Block]. HTTP backend specification that will be used by the ALB Backend Group.
                       HTTP backend specification that will be used by the ALB Backend Group.
 
                       ~> Only one of `target_group_ids` or `storage_bucket` should be specified.
@@ -1455,7 +1445,7 @@ spec:
                       properties:
                         healthcheck:
                           description: |-
-                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            [Block]. Healthcheck specification that will be used by this backend.
                             Healthcheck specification that will be used by this backend.
 
                             ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
@@ -1463,148 +1453,147 @@ spec:
                             properties:
                               grpcHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   gRPC Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     serviceName:
                                       description: |-
-                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        (String). The resource name.
                                         Service name for `grpc.health.v1.HealthCheckRequest` message.
                                       type: string
                                   type: object
                                 type: array
                               healthcheckPort:
                                 description: |-
-                                  (Number) Optional alternative port for health checking.
+                                  (Number). Port for incoming traffic.
                                   Optional alternative port for health checking.
                                 type: number
                               healthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
-                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                description: Number of consecutive successful health
+                                  checks required to promote endpoint into the healthy
+                                  state. 0 means 1. Note that during startup, only
+                                  a single successful health check is required to
+                                  mark a host healthy.
                                 type: number
                               httpHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   HTTP Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     expectedStatuses:
-                                      description: |-
-                                        (List of Number) A list of HTTP response statuses considered healthy.
-                                        A list of HTTP response statuses considered healthy.
+                                      description: A list of HTTP response statuses
+                                        considered healthy.
                                       items:
                                         type: number
                                       type: array
                                     host:
-                                      description: |-
-                                        (String) Host HTTP header value.
-                                        `Host` HTTP header value.
+                                      description: '`Host` HTTP header value.'
                                       type: string
                                     http2:
                                       description: |-
-                                        (Boolean) If set, health checks will use HTTP2.
+                                        (Bool). Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                                         If set, health checks will use HTTP2.
                                       type: boolean
                                     path:
                                       description: |-
-                                        (String) HTTP path.
+                                        (String). Path of the HTTP cookie to use with affinity.
                                         HTTP path.
                                       type: string
                                   type: object
                                 type: array
                               interval:
-                                description: |-
-                                  (String) Interval between health checks.
-                                  Interval between health checks.
+                                description: Interval between health checks.
                                 type: string
                               intervalJitterPercent:
-                                description: |-
-                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
-                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                description: An optional jitter amount as a percentage
+                                  of interval. If specified, during every interval
+                                  value of (interval_ms * interval_jitter_percent
+                                  / 100) will be added to the wait time.
                                 type: number
                               streamHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   Stream Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     receive:
-                                      description: |-
-                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
-                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      description: Data that must be contained in
+                                        the messages received from targets for a successful
+                                        health check. If not specified, no messages
+                                        are expected from targets, and those that
+                                        are received are not checked.
                                       type: string
                                     send:
-                                      description: |-
-                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
-                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      description: Message sent to targets during
+                                        TCP data transfer. If not specified, no data
+                                        is sent to the target.
                                       type: string
                                   type: object
                                 type: array
                               timeout:
-                                description: |-
-                                  (String) Time to wait for a health check response.
-                                  Time to wait for a health check response.
+                                description: Time to wait for a health check response.
                                 type: string
                               unhealthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
-                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                description: Number of consecutive failed health checks
+                                  required to demote endpoint into the unhealthy state.
+                                  0 means 1. Note that for HTTP health checks, a single
+                                  503 immediately makes endpoint unhealthy.
                                 type: number
                             type: object
                           type: array
                         http2:
                           description: |-
-                            (Boolean) If set, health checks will use HTTP2.
+                            (Bool). Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                             Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                           type: boolean
                         loadBalancingConfig:
                           description: |-
-                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            [Block]. Load Balancing Config specification that will be used by this backend.
                             Load Balancing Config specification that will be used by this backend.
                           items:
                             properties:
                               localityAwareRoutingPercent:
                                 description: |-
-                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  (Number). Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                   Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                 type: number
                               mode:
                                 description: |-
-                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  (String). Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
                                   Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
                                 type: string
                               panicThreshold:
                                 description: |-
-                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  (Number). If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                   If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                 type: number
                               strictLocality:
                                 description: |-
-                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  (Bool). If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                   If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                 type: boolean
                             type: object
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the backend.
                           type: string
                         port:
                           description: |-
-                            (Number) Port for incoming traffic.
+                            (Number). Port for incoming traffic.
                             Port for incoming traffic.
                           type: number
                         storageBucket:
                           description: |-
-                            (String) Name of bucket which should be used as a backend.
+                            (String). Name of bucket which should be used as a backend.
                             Name of bucket which should be used as a backend.
                           type: string
                         targetGroupIds:
                           description: |-
-                            (List of String) References target groups for the backend.
+                            (List Of String). References target groups for the backend.
                             References target groups for the backend.
                           items:
                             type: string
@@ -1695,30 +1684,27 @@ spec:
                           type: object
                         tls:
                           description: |-
-                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            [Block]. TLS specification that will be used by this backend.
                             TLS specification that will be used by this backend.
 
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
                               sni:
-                                description: |-
-                                  (String) SNI string for TLS connections.
-                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
+                                  string for TLS connections.'
                                 type: string
                               validationContext:
-                                description: '(Block List, Max: 1) (see below for
-                                  nested schema)'
+                                description: Validation context
                                 items:
                                   properties:
                                     trustedCaBytes:
-                                      description: |-
-                                        encoded trusted CA certificate chain.
-                                        PEM-encoded trusted CA certificate chain.
+                                      description: PEM-encoded trusted CA certificate
+                                        chain.
                                       type: string
                                     trustedCaId:
                                       description: |-
-                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        (String).
                                         Trusted CA certificate ID in the Certificate Manager.
                                       type: string
                                   type: object
@@ -1727,7 +1713,7 @@ spec:
                           type: array
                         weight:
                           description: |-
-                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            (Number). Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                             Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                           type: number
                       type: object
@@ -1736,18 +1722,18 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   sessionAffinity:
                     description: |-
-                      (Block List, Max: 1) Session affinity mode determines how incoming requests are grouped into one session.
+                      [Block]. Session affinity mode determines how incoming requests are grouped into one session.
                       Session affinity mode determines how incoming requests are grouped into one session.
 
                       ~> Only one type(`connection` or `cookie` or `header`) of session affinity should be specified.
@@ -1755,44 +1741,49 @@ spec:
                       properties:
                         connection:
                           description: |-
-                            (Block List, Max: 1) Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address. (see below for nested schema)
+                            [Block]. Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address.
                             Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address.
                           items:
                             properties:
                               sourceIp:
                                 description: |-
-                                  (Boolean) Source IP address to use with affinity.
+                                  (Bool). Source IP address to use with affinity.
                                   Source IP address to use with affinity.
                                 type: boolean
                             type: object
                           type: array
                         cookie:
                           description: |-
-                            (Block List, Max: 1) Requests with the same cookie value and the specified file name are combined into a session. Allowed only for HTTP and gRPC backend groups. (see below for nested schema)
+                            [Block]. Requests with the same cookie value and the specified file name are combined into a session. Allowed only for HTTP and gRPC backend groups.
                             Requests with the same cookie value and the specified file name are combined into a session. Allowed only for `HTTP` and `gRPC` backend groups.
                           items:
                             properties:
                               name:
                                 description: |-
-                                  (String) The resource name.
+                                  (String). The resource name.
                                   Name of the HTTP cookie to use with affinity.
+                                type: string
+                              path:
+                                description: |-
+                                  (String). Path of the HTTP cookie to use with affinity.
+                                  Path of the HTTP cookie to use with affinity.
                                 type: string
                               ttl:
                                 description: |-
-                                  (String) TTL for the cookie (if not set, session cookie will be used).
+                                  (String). TTL for the cookie (if not set, session cookie will be used).
                                   TTL for the cookie (if not set, session cookie will be used).
                                 type: string
                             type: object
                           type: array
                         header:
                           description: |-
-                            (Block List, Max: 1) Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for HTTP and gRPC backend groups. (see below for nested schema)
+                            [Block]. Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for HTTP and gRPC backend groups.
                             Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for `HTTP` and `gRPC` backend groups.
                           items:
                             properties:
                               headerName:
                                 description: |-
-                                  (String) The name of the request header that will be used with affinity.
+                                  (String). The name of the request header that will be used with affinity.
                                   The name of the request header that will be used with affinity.
                                 type: string
                             type: object
@@ -1801,16 +1792,18 @@ spec:
                     type: array
                   streamBackend:
                     description: |-
-                      (Block List) Stream backend specification that will be used by the ALB Backend Group. (see below for nested schema)
+                      [Block]. Stream backend specification that will be used by the ALB Backend Group.
                       Stream backend specification that will be used by the ALB Backend Group.
                     items:
                       properties:
                         enableProxyProtocol:
-                          description: (Boolean)
+                          description: |-
+                            (Bool). Enables TCP proxy protocol support for upstream backend
+                            Enables TCP proxy protocol support for upstream backend
                           type: boolean
                         healthcheck:
                           description: |-
-                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            [Block]. Healthcheck specification that will be used by this backend.
                             Healthcheck specification that will be used by this backend.
 
                             ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
@@ -1818,143 +1811,142 @@ spec:
                             properties:
                               grpcHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   gRPC Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     serviceName:
                                       description: |-
-                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        (String). The resource name.
                                         Service name for `grpc.health.v1.HealthCheckRequest` message.
                                       type: string
                                   type: object
                                 type: array
                               healthcheckPort:
                                 description: |-
-                                  (Number) Optional alternative port for health checking.
+                                  (Number). Port for incoming traffic.
                                   Optional alternative port for health checking.
                                 type: number
                               healthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
-                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                description: Number of consecutive successful health
+                                  checks required to promote endpoint into the healthy
+                                  state. 0 means 1. Note that during startup, only
+                                  a single successful health check is required to
+                                  mark a host healthy.
                                 type: number
                               httpHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   HTTP Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     expectedStatuses:
-                                      description: |-
-                                        (List of Number) A list of HTTP response statuses considered healthy.
-                                        A list of HTTP response statuses considered healthy.
+                                      description: A list of HTTP response statuses
+                                        considered healthy.
                                       items:
                                         type: number
                                       type: array
                                     host:
-                                      description: |-
-                                        (String) Host HTTP header value.
-                                        `Host` HTTP header value.
+                                      description: '`Host` HTTP header value.'
                                       type: string
                                     http2:
                                       description: |-
-                                        (Boolean) If set, health checks will use HTTP2.
+                                        (Bool). Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                                         If set, health checks will use HTTP2.
                                       type: boolean
                                     path:
                                       description: |-
-                                        (String) HTTP path.
+                                        (String). Path of the HTTP cookie to use with affinity.
                                         HTTP path.
                                       type: string
                                   type: object
                                 type: array
                               interval:
-                                description: |-
-                                  (String) Interval between health checks.
-                                  Interval between health checks.
+                                description: Interval between health checks.
                                 type: string
                               intervalJitterPercent:
-                                description: |-
-                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
-                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                description: An optional jitter amount as a percentage
+                                  of interval. If specified, during every interval
+                                  value of (interval_ms * interval_jitter_percent
+                                  / 100) will be added to the wait time.
                                 type: number
                               streamHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   Stream Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     receive:
-                                      description: |-
-                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
-                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      description: Data that must be contained in
+                                        the messages received from targets for a successful
+                                        health check. If not specified, no messages
+                                        are expected from targets, and those that
+                                        are received are not checked.
                                       type: string
                                     send:
-                                      description: |-
-                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
-                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      description: Message sent to targets during
+                                        TCP data transfer. If not specified, no data
+                                        is sent to the target.
                                       type: string
                                   type: object
                                 type: array
                               timeout:
-                                description: |-
-                                  (String) Time to wait for a health check response.
-                                  Time to wait for a health check response.
+                                description: Time to wait for a health check response.
                                 type: string
                               unhealthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
-                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                description: Number of consecutive failed health checks
+                                  required to demote endpoint into the unhealthy state.
+                                  0 means 1. Note that for HTTP health checks, a single
+                                  503 immediately makes endpoint unhealthy.
                                 type: number
                             type: object
                           type: array
                         keepConnectionsOnHostHealthFailure:
                           description: |-
-                            (Boolean) If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
+                            (Bool). If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
                             If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
                           type: boolean
                         loadBalancingConfig:
                           description: |-
-                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            [Block]. Load Balancing Config specification that will be used by this backend.
                             Load Balancing Config specification that will be used by this backend.
                           items:
                             properties:
                               localityAwareRoutingPercent:
                                 description: |-
-                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  (Number). Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                   Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                 type: number
                               mode:
                                 description: |-
-                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  (String). Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
                                   Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
                                 type: string
                               panicThreshold:
                                 description: |-
-                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  (Number). If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                   If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                 type: number
                               strictLocality:
                                 description: |-
-                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  (Bool). If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                   If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                 type: boolean
                             type: object
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the backend.
                           type: string
                         port:
                           description: |-
-                            (Number) Port for incoming traffic.
+                            (Number). Port for incoming traffic.
                             Port for incoming traffic.
                           type: number
                         targetGroupIds:
                           description: |-
-                            (List of String) References target groups for the backend.
+                            (List Of String). References target groups for the backend.
                             References target groups for the backend.
                           items:
                             type: string
@@ -2045,30 +2037,27 @@ spec:
                           type: object
                         tls:
                           description: |-
-                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            [Block]. TLS specification that will be used by this backend.
                             TLS specification that will be used by this backend.
 
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
                               sni:
-                                description: |-
-                                  (String) SNI string for TLS connections.
-                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
+                                  string for TLS connections.'
                                 type: string
                               validationContext:
-                                description: '(Block List, Max: 1) (see below for
-                                  nested schema)'
+                                description: Validation context
                                 items:
                                   properties:
                                     trustedCaBytes:
-                                      description: |-
-                                        encoded trusted CA certificate chain.
-                                        PEM-encoded trusted CA certificate chain.
+                                      description: PEM-encoded trusted CA certificate
+                                        chain.
                                       type: string
                                     trustedCaId:
                                       description: |-
-                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        (String).
                                         Trusted CA certificate ID in the Certificate Manager.
                                       type: string
                                   type: object
@@ -2077,7 +2066,7 @@ spec:
                           type: array
                         weight:
                           description: |-
-                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            (Number). Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                             Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                           type: number
                       type: object
@@ -2148,12 +2137,12 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
                       The creation timestamp of the resource.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -2163,13 +2152,13 @@ spec:
                     type: string
                   grpcBackend:
                     description: |-
-                      (Block List) gRPC backend specification that will be used by the ALB Backend Group. (see below for nested schema)
+                      [Block]. gRPC backend specification that will be used by the ALB Backend Group.
                       gRPC backend specification that will be used by the ALB Backend Group.
                     items:
                       properties:
                         healthcheck:
                           description: |-
-                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            [Block]. Healthcheck specification that will be used by this backend.
                             Healthcheck specification that will be used by this backend.
 
                             ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
@@ -2177,168 +2166,164 @@ spec:
                             properties:
                               grpcHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   gRPC Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     serviceName:
                                       description: |-
-                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        (String). The resource name.
                                         Service name for `grpc.health.v1.HealthCheckRequest` message.
                                       type: string
                                   type: object
                                 type: array
                               healthcheckPort:
                                 description: |-
-                                  (Number) Optional alternative port for health checking.
+                                  (Number). Port for incoming traffic.
                                   Optional alternative port for health checking.
                                 type: number
                               healthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
-                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                description: Number of consecutive successful health
+                                  checks required to promote endpoint into the healthy
+                                  state. 0 means 1. Note that during startup, only
+                                  a single successful health check is required to
+                                  mark a host healthy.
                                 type: number
                               httpHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   HTTP Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     expectedStatuses:
-                                      description: |-
-                                        (List of Number) A list of HTTP response statuses considered healthy.
-                                        A list of HTTP response statuses considered healthy.
+                                      description: A list of HTTP response statuses
+                                        considered healthy.
                                       items:
                                         type: number
                                       type: array
                                     host:
-                                      description: |-
-                                        (String) Host HTTP header value.
-                                        `Host` HTTP header value.
+                                      description: '`Host` HTTP header value.'
                                       type: string
                                     http2:
                                       description: |-
-                                        (Boolean) If set, health checks will use HTTP2.
+                                        (Bool). Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                                         If set, health checks will use HTTP2.
                                       type: boolean
                                     path:
                                       description: |-
-                                        (String) HTTP path.
+                                        (String). Path of the HTTP cookie to use with affinity.
                                         HTTP path.
                                       type: string
                                   type: object
                                 type: array
                               interval:
-                                description: |-
-                                  (String) Interval between health checks.
-                                  Interval between health checks.
+                                description: Interval between health checks.
                                 type: string
                               intervalJitterPercent:
-                                description: |-
-                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
-                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                description: An optional jitter amount as a percentage
+                                  of interval. If specified, during every interval
+                                  value of (interval_ms * interval_jitter_percent
+                                  / 100) will be added to the wait time.
                                 type: number
                               streamHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   Stream Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     receive:
-                                      description: |-
-                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
-                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      description: Data that must be contained in
+                                        the messages received from targets for a successful
+                                        health check. If not specified, no messages
+                                        are expected from targets, and those that
+                                        are received are not checked.
                                       type: string
                                     send:
-                                      description: |-
-                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
-                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      description: Message sent to targets during
+                                        TCP data transfer. If not specified, no data
+                                        is sent to the target.
                                       type: string
                                   type: object
                                 type: array
                               timeout:
-                                description: |-
-                                  (String) Time to wait for a health check response.
-                                  Time to wait for a health check response.
+                                description: Time to wait for a health check response.
                                 type: string
                               unhealthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
-                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                description: Number of consecutive failed health checks
+                                  required to demote endpoint into the unhealthy state.
+                                  0 means 1. Note that for HTTP health checks, a single
+                                  503 immediately makes endpoint unhealthy.
                                 type: number
                             type: object
                           type: array
                         loadBalancingConfig:
                           description: |-
-                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            [Block]. Load Balancing Config specification that will be used by this backend.
                             Load Balancing Config specification that will be used by this backend.
                           items:
                             properties:
                               localityAwareRoutingPercent:
                                 description: |-
-                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  (Number). Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                   Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                 type: number
                               mode:
                                 description: |-
-                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  (String). Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
                                   Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
                                 type: string
                               panicThreshold:
                                 description: |-
-                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  (Number). If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                   If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                 type: number
                               strictLocality:
                                 description: |-
-                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  (Bool). If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                   If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                 type: boolean
                             type: object
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the backend.
                           type: string
                         port:
                           description: |-
-                            (Number) Port for incoming traffic.
+                            (Number). Port for incoming traffic.
                             Port for incoming traffic.
                           type: number
                         targetGroupIds:
                           description: |-
-                            (List of String) References target groups for the backend.
+                            (List Of String). References target groups for the backend.
                             References target groups for the backend.
                           items:
                             type: string
                           type: array
                         tls:
                           description: |-
-                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            [Block]. TLS specification that will be used by this backend.
                             TLS specification that will be used by this backend.
 
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
                               sni:
-                                description: |-
-                                  (String) SNI string for TLS connections.
-                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
+                                  string for TLS connections.'
                                 type: string
                               validationContext:
-                                description: '(Block List, Max: 1) (see below for
-                                  nested schema)'
+                                description: Validation context
                                 items:
                                   properties:
                                     trustedCaBytes:
-                                      description: |-
-                                        encoded trusted CA certificate chain.
-                                        PEM-encoded trusted CA certificate chain.
+                                      description: PEM-encoded trusted CA certificate
+                                        chain.
                                       type: string
                                     trustedCaId:
                                       description: |-
-                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        (String).
                                         Trusted CA certificate ID in the Certificate Manager.
                                       type: string
                                   type: object
@@ -2347,14 +2332,14 @@ spec:
                           type: array
                         weight:
                           description: |-
-                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            (Number). Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                             Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                           type: number
                       type: object
                     type: array
                   httpBackend:
                     description: |-
-                      (Block List) HTTP backend specification that will be used by the ALB Backend Group.
+                      [Block]. HTTP backend specification that will be used by the ALB Backend Group.
                       HTTP backend specification that will be used by the ALB Backend Group.
 
                       ~> Only one of `target_group_ids` or `storage_bucket` should be specified.
@@ -2362,7 +2347,7 @@ spec:
                       properties:
                         healthcheck:
                           description: |-
-                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            [Block]. Healthcheck specification that will be used by this backend.
                             Healthcheck specification that will be used by this backend.
 
                             ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
@@ -2370,178 +2355,174 @@ spec:
                             properties:
                               grpcHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   gRPC Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     serviceName:
                                       description: |-
-                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        (String). The resource name.
                                         Service name for `grpc.health.v1.HealthCheckRequest` message.
                                       type: string
                                   type: object
                                 type: array
                               healthcheckPort:
                                 description: |-
-                                  (Number) Optional alternative port for health checking.
+                                  (Number). Port for incoming traffic.
                                   Optional alternative port for health checking.
                                 type: number
                               healthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
-                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                description: Number of consecutive successful health
+                                  checks required to promote endpoint into the healthy
+                                  state. 0 means 1. Note that during startup, only
+                                  a single successful health check is required to
+                                  mark a host healthy.
                                 type: number
                               httpHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   HTTP Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     expectedStatuses:
-                                      description: |-
-                                        (List of Number) A list of HTTP response statuses considered healthy.
-                                        A list of HTTP response statuses considered healthy.
+                                      description: A list of HTTP response statuses
+                                        considered healthy.
                                       items:
                                         type: number
                                       type: array
                                     host:
-                                      description: |-
-                                        (String) Host HTTP header value.
-                                        `Host` HTTP header value.
+                                      description: '`Host` HTTP header value.'
                                       type: string
                                     http2:
                                       description: |-
-                                        (Boolean) If set, health checks will use HTTP2.
+                                        (Bool). Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                                         If set, health checks will use HTTP2.
                                       type: boolean
                                     path:
                                       description: |-
-                                        (String) HTTP path.
+                                        (String). Path of the HTTP cookie to use with affinity.
                                         HTTP path.
                                       type: string
                                   type: object
                                 type: array
                               interval:
-                                description: |-
-                                  (String) Interval between health checks.
-                                  Interval between health checks.
+                                description: Interval between health checks.
                                 type: string
                               intervalJitterPercent:
-                                description: |-
-                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
-                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                description: An optional jitter amount as a percentage
+                                  of interval. If specified, during every interval
+                                  value of (interval_ms * interval_jitter_percent
+                                  / 100) will be added to the wait time.
                                 type: number
                               streamHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   Stream Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     receive:
-                                      description: |-
-                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
-                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      description: Data that must be contained in
+                                        the messages received from targets for a successful
+                                        health check. If not specified, no messages
+                                        are expected from targets, and those that
+                                        are received are not checked.
                                       type: string
                                     send:
-                                      description: |-
-                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
-                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      description: Message sent to targets during
+                                        TCP data transfer. If not specified, no data
+                                        is sent to the target.
                                       type: string
                                   type: object
                                 type: array
                               timeout:
-                                description: |-
-                                  (String) Time to wait for a health check response.
-                                  Time to wait for a health check response.
+                                description: Time to wait for a health check response.
                                 type: string
                               unhealthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
-                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                description: Number of consecutive failed health checks
+                                  required to demote endpoint into the unhealthy state.
+                                  0 means 1. Note that for HTTP health checks, a single
+                                  503 immediately makes endpoint unhealthy.
                                 type: number
                             type: object
                           type: array
                         http2:
                           description: |-
-                            (Boolean) If set, health checks will use HTTP2.
+                            (Bool). Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                             Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                           type: boolean
                         loadBalancingConfig:
                           description: |-
-                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            [Block]. Load Balancing Config specification that will be used by this backend.
                             Load Balancing Config specification that will be used by this backend.
                           items:
                             properties:
                               localityAwareRoutingPercent:
                                 description: |-
-                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  (Number). Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                   Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                 type: number
                               mode:
                                 description: |-
-                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  (String). Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
                                   Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
                                 type: string
                               panicThreshold:
                                 description: |-
-                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  (Number). If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                   If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                 type: number
                               strictLocality:
                                 description: |-
-                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  (Bool). If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                   If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                 type: boolean
                             type: object
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the backend.
                           type: string
                         port:
                           description: |-
-                            (Number) Port for incoming traffic.
+                            (Number). Port for incoming traffic.
                             Port for incoming traffic.
                           type: number
                         storageBucket:
                           description: |-
-                            (String) Name of bucket which should be used as a backend.
+                            (String). Name of bucket which should be used as a backend.
                             Name of bucket which should be used as a backend.
                           type: string
                         targetGroupIds:
                           description: |-
-                            (List of String) References target groups for the backend.
+                            (List Of String). References target groups for the backend.
                             References target groups for the backend.
                           items:
                             type: string
                           type: array
                         tls:
                           description: |-
-                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            [Block]. TLS specification that will be used by this backend.
                             TLS specification that will be used by this backend.
 
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
                               sni:
-                                description: |-
-                                  (String) SNI string for TLS connections.
-                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
+                                  string for TLS connections.'
                                 type: string
                               validationContext:
-                                description: '(Block List, Max: 1) (see below for
-                                  nested schema)'
+                                description: Validation context
                                 items:
                                   properties:
                                     trustedCaBytes:
-                                      description: |-
-                                        encoded trusted CA certificate chain.
-                                        PEM-encoded trusted CA certificate chain.
+                                      description: PEM-encoded trusted CA certificate
+                                        chain.
                                       type: string
                                     trustedCaId:
                                       description: |-
-                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        (String).
                                         Trusted CA certificate ID in the Certificate Manager.
                                       type: string
                                   type: object
@@ -2550,30 +2531,30 @@ spec:
                           type: array
                         weight:
                           description: |-
-                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            (Number). Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                             Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                           type: number
                       type: object
                     type: array
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   sessionAffinity:
                     description: |-
-                      (Block List, Max: 1) Session affinity mode determines how incoming requests are grouped into one session.
+                      [Block]. Session affinity mode determines how incoming requests are grouped into one session.
                       Session affinity mode determines how incoming requests are grouped into one session.
 
                       ~> Only one type(`connection` or `cookie` or `header`) of session affinity should be specified.
@@ -2581,44 +2562,49 @@ spec:
                       properties:
                         connection:
                           description: |-
-                            (Block List, Max: 1) Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address. (see below for nested schema)
+                            [Block]. Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address.
                             Requests received from the same IP are combined into a session. Stream backend groups only support session affinity by client IP address.
                           items:
                             properties:
                               sourceIp:
                                 description: |-
-                                  (Boolean) Source IP address to use with affinity.
+                                  (Bool). Source IP address to use with affinity.
                                   Source IP address to use with affinity.
                                 type: boolean
                             type: object
                           type: array
                         cookie:
                           description: |-
-                            (Block List, Max: 1) Requests with the same cookie value and the specified file name are combined into a session. Allowed only for HTTP and gRPC backend groups. (see below for nested schema)
+                            [Block]. Requests with the same cookie value and the specified file name are combined into a session. Allowed only for HTTP and gRPC backend groups.
                             Requests with the same cookie value and the specified file name are combined into a session. Allowed only for `HTTP` and `gRPC` backend groups.
                           items:
                             properties:
                               name:
                                 description: |-
-                                  (String) The resource name.
+                                  (String). The resource name.
                                   Name of the HTTP cookie to use with affinity.
+                                type: string
+                              path:
+                                description: |-
+                                  (String). Path of the HTTP cookie to use with affinity.
+                                  Path of the HTTP cookie to use with affinity.
                                 type: string
                               ttl:
                                 description: |-
-                                  (String) TTL for the cookie (if not set, session cookie will be used).
+                                  (String). TTL for the cookie (if not set, session cookie will be used).
                                   TTL for the cookie (if not set, session cookie will be used).
                                 type: string
                             type: object
                           type: array
                         header:
                           description: |-
-                            (Block List, Max: 1) Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for HTTP and gRPC backend groups. (see below for nested schema)
+                            [Block]. Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for HTTP and gRPC backend groups.
                             Requests with the same value of the specified HTTP header, such as with user authentication data, are combined into a session. Allowed only for `HTTP` and `gRPC` backend groups.
                           items:
                             properties:
                               headerName:
                                 description: |-
-                                  (String) The name of the request header that will be used with affinity.
+                                  (String). The name of the request header that will be used with affinity.
                                   The name of the request header that will be used with affinity.
                                 type: string
                             type: object
@@ -2627,16 +2613,18 @@ spec:
                     type: array
                   streamBackend:
                     description: |-
-                      (Block List) Stream backend specification that will be used by the ALB Backend Group. (see below for nested schema)
+                      [Block]. Stream backend specification that will be used by the ALB Backend Group.
                       Stream backend specification that will be used by the ALB Backend Group.
                     items:
                       properties:
                         enableProxyProtocol:
-                          description: (Boolean)
+                          description: |-
+                            (Bool). Enables TCP proxy protocol support for upstream backend
+                            Enables TCP proxy protocol support for upstream backend
                           type: boolean
                         healthcheck:
                           description: |-
-                            (Block List, Max: 1) Healthcheck specification that will be used by this backend.
+                            [Block]. Healthcheck specification that will be used by this backend.
                             Healthcheck specification that will be used by this backend.
 
                             ~> Only one of `stream_healthcheck` or `http_healthcheck` or `grpc_healthcheck` should be specified.
@@ -2644,173 +2632,169 @@ spec:
                             properties:
                               grpcHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) gRPC Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   gRPC Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     serviceName:
                                       description: |-
-                                        (String) Service name for grpc.health.v1.HealthCheckRequest message.
+                                        (String). The resource name.
                                         Service name for `grpc.health.v1.HealthCheckRequest` message.
                                       type: string
                                   type: object
                                 type: array
                               healthcheckPort:
                                 description: |-
-                                  (Number) Optional alternative port for health checking.
+                                  (Number). Port for incoming traffic.
                                   Optional alternative port for health checking.
                                 type: number
                               healthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
-                                  Number of consecutive successful health checks required to promote endpoint into the healthy state. 0 means 1. Note that during startup, only a single successful health check is required to mark a host healthy.
+                                description: Number of consecutive successful health
+                                  checks required to promote endpoint into the healthy
+                                  state. 0 means 1. Note that during startup, only
+                                  a single successful health check is required to
+                                  mark a host healthy.
                                 type: number
                               httpHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) HTTP Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   HTTP Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     expectedStatuses:
-                                      description: |-
-                                        (List of Number) A list of HTTP response statuses considered healthy.
-                                        A list of HTTP response statuses considered healthy.
+                                      description: A list of HTTP response statuses
+                                        considered healthy.
                                       items:
                                         type: number
                                       type: array
                                     host:
-                                      description: |-
-                                        (String) Host HTTP header value.
-                                        `Host` HTTP header value.
+                                      description: '`Host` HTTP header value.'
                                       type: string
                                     http2:
                                       description: |-
-                                        (Boolean) If set, health checks will use HTTP2.
+                                        (Bool). Enables HTTP2 for upstream requests. If not set, HTTP 1.1 will be used by default.
                                         If set, health checks will use HTTP2.
                                       type: boolean
                                     path:
                                       description: |-
-                                        (String) HTTP path.
+                                        (String). Path of the HTTP cookie to use with affinity.
                                         HTTP path.
                                       type: string
                                   type: object
                                 type: array
                               interval:
-                                description: |-
-                                  (String) Interval between health checks.
-                                  Interval between health checks.
+                                description: Interval between health checks.
                                 type: string
                               intervalJitterPercent:
-                                description: |-
-                                  (Number) An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
-                                  An optional jitter amount as a percentage of interval. If specified, during every interval value of (interval_ms * interval_jitter_percent / 100) will be added to the wait time.
+                                description: An optional jitter amount as a percentage
+                                  of interval. If specified, during every interval
+                                  value of (interval_ms * interval_jitter_percent
+                                  / 100) will be added to the wait time.
                                 type: number
                               streamHealthcheck:
                                 description: |-
-                                  (Block List, Max: 1) Stream Healthcheck specification that will be used by this healthcheck. (see below for nested schema)
+                                  [Block]. Healthcheck specification that will be used by this backend.
                                   Stream Healthcheck specification that will be used by this healthcheck.
                                 items:
                                   properties:
                                     receive:
-                                      description: |-
-                                        (String) Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
-                                        Data that must be contained in the messages received from targets for a successful health check. If not specified, no messages are expected from targets, and those that are received are not checked.
+                                      description: Data that must be contained in
+                                        the messages received from targets for a successful
+                                        health check. If not specified, no messages
+                                        are expected from targets, and those that
+                                        are received are not checked.
                                       type: string
                                     send:
-                                      description: |-
-                                        (String) Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
-                                        Message sent to targets during TCP data transfer. If not specified, no data is sent to the target.
+                                      description: Message sent to targets during
+                                        TCP data transfer. If not specified, no data
+                                        is sent to the target.
                                       type: string
                                   type: object
                                 type: array
                               timeout:
-                                description: |-
-                                  (String) Time to wait for a health check response.
-                                  Time to wait for a health check response.
+                                description: Time to wait for a health check response.
                                 type: string
                               unhealthyThreshold:
-                                description: |-
-                                  (Number) Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
-                                  Number of consecutive failed health checks required to demote endpoint into the unhealthy state. 0 means 1. Note that for HTTP health checks, a single 503 immediately makes endpoint unhealthy.
+                                description: Number of consecutive failed health checks
+                                  required to demote endpoint into the unhealthy state.
+                                  0 means 1. Note that for HTTP health checks, a single
+                                  503 immediately makes endpoint unhealthy.
                                 type: number
                             type: object
                           type: array
                         keepConnectionsOnHostHealthFailure:
                           description: |-
-                            (Boolean) If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
+                            (Bool). If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
                             If set, when a backend host becomes unhealthy (as determined by the configured health checks), keep connections to the failed host.
                           type: boolean
                         loadBalancingConfig:
                           description: |-
-                            (Block List, Max: 1) Load Balancing Config specification that will be used by this backend. (see below for nested schema)
+                            [Block]. Load Balancing Config specification that will be used by this backend.
                             Load Balancing Config specification that will be used by this backend.
                           items:
                             properties:
                               localityAwareRoutingPercent:
                                 description: |-
-                                  (Number) Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
+                                  (Number). Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                   Percent of traffic to be sent to the same availability zone. The rest will be equally divided between other zones.
                                 type: number
                               mode:
                                 description: |-
-                                  (String) Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
+                                  (String). Load balancing mode for the backend. Possible values: ROUND_ROBIN, RANDOM, LEAST_REQUEST, MAGLEV_HASH.
                                   Load balancing mode for the backend. Possible values: `ROUND_ROBIN`, `RANDOM`, `LEAST_REQUEST`, `MAGLEV_HASH`.
                                 type: string
                               panicThreshold:
                                 description: |-
-                                  (Number) If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
+                                  (Number). If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                   If percentage of healthy hosts in the backend is lower than panic_threshold, traffic will be routed to all backends no matter what the health status is. This helps to avoid healthy backends overloading when everything is bad. Zero means no panic threshold.
                                 type: number
                               strictLocality:
                                 description: |-
-                                  (Boolean) If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
+                                  (Bool). If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                   If set, will route requests only to the same availability zone. Balancer won't know about endpoints in other zones.
                                 type: boolean
                             type: object
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the backend.
                           type: string
                         port:
                           description: |-
-                            (Number) Port for incoming traffic.
+                            (Number). Port for incoming traffic.
                             Port for incoming traffic.
                           type: number
                         targetGroupIds:
                           description: |-
-                            (List of String) References target groups for the backend.
+                            (List Of String). References target groups for the backend.
                             References target groups for the backend.
                           items:
                             type: string
                           type: array
                         tls:
                           description: |-
-                            (Block List, Max: 1) TLS specification that will be used by this backend.
+                            [Block]. TLS specification that will be used by this backend.
                             TLS specification that will be used by this backend.
 
                             ~> Only one of `validation_context.0.trusted_ca_id` or `validation_context.0.trusted_ca_bytes` should be specified.
                           items:
                             properties:
                               sni:
-                                description: |-
-                                  (String) SNI string for TLS connections.
-                                  [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) string for TLS connections.
+                                description: '[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
+                                  string for TLS connections.'
                                 type: string
                               validationContext:
-                                description: '(Block List, Max: 1) (see below for
-                                  nested schema)'
+                                description: Validation context
                                 items:
                                   properties:
                                     trustedCaBytes:
-                                      description: |-
-                                        encoded trusted CA certificate chain.
-                                        PEM-encoded trusted CA certificate chain.
+                                      description: PEM-encoded trusted CA certificate
+                                        chain.
                                       type: string
                                     trustedCaId:
                                       description: |-
-                                        (String) Trusted CA certificate ID in the Certificate Manager.
+                                        (String).
                                         Trusted CA certificate ID in the Certificate Manager.
                                       type: string
                                   type: object
@@ -2819,7 +2803,7 @@ spec:
                           type: array
                         weight:
                           description: |-
-                            (Number) Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
+                            (Number). Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                             Weight of the backend. Traffic will be split between backends of the same BackendGroup according to their weights.
                           type: number
                       type: object

@@ -26,6 +26,7 @@ import (
 	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
 	xpresource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	"github.com/crossplane/upjet/v2/pkg/config"
+	"github.com/hashicorp/terraform-plugin-go/tfprotov6"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"k8s.io/utils/ptr"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -33,6 +34,27 @@ import (
 
 // Provider version. Will be re-defined upon build.
 var Version = "0.0.0-dev"
+
+// MissingResourceID is a syntactically valid Yandex Cloud resource ID used
+// only for the initial read of Plugin Framework resources whose identifiers
+// are computed by the provider.
+const MissingResourceID = "aaaaaaaaaaaaaaaaaaaa"
+
+var frameworkComputedIdentifierFields = map[string]string{
+	"yandex_compute_disk_placement_group": "disk_placement_group_id",
+	"yandex_compute_filesystem":           "filesystem_id",
+	"yandex_compute_gpu_cluster":          "gpu_cluster_id",
+	"yandex_container_registry":           "registry_id",
+	"yandex_container_repository":         "repository_id",
+	"yandex_datatransfer_endpoint":        "endpoint_id",
+	"yandex_datatransfer_transfer":        "transfer_id",
+	"yandex_iam_service_account":          "service_account_id",
+	"yandex_kms_symmetric_key":            "symmetric_key_id",
+	"yandex_lb_target_group":              "target_group_id",
+	"yandex_organizationmanager_group":    "group_id",
+	"yandex_resourcemanager_cloud":        "cloud_id",
+	"yandex_resourcemanager_folder":       "folder_id",
+}
 
 // DefaultResourceOverrides returns a default resource configuration to be used while
 // building resource configurations.
@@ -42,6 +64,9 @@ var Version = "0.0.0-dev"
 func DefaultResourceOverrides(folderAPIPath string) config.ResourceOption {
 	return func(r *config.Resource) {
 		r.ExternalName = config.IdentifierFromProvider
+		if identifier, ok := frameworkComputedIdentifierFields[r.Name]; ok {
+			r.ExternalName = frameworkResourceWithComputedIdentifier(identifier)
+		}
 		defaultFolderIDFn(r, folderAPIPath)
 
 		if s, ok := r.TerraformResource.Schema["labels"]; ok && s.Type == schema.TypeMap {
@@ -50,6 +75,22 @@ func DefaultResourceOverrides(folderAPIPath string) config.ResourceOption {
 			})
 		}
 	}
+}
+
+func frameworkResourceWithComputedIdentifier(identifier string) config.ExternalName {
+	externalName := config.FrameworkResourceWithComputedIdentifier(identifier, MissingResourceID)
+	externalName.IsNotFoundDiagnosticFn = func(diagnostics []*tfprotov6.Diagnostic) bool {
+		for _, diagnostic := range diagnostics {
+			if diagnostic == nil || diagnostic.Severity != tfprotov6.DiagnosticSeverityError {
+				continue
+			}
+			if strings.Contains(diagnostic.Summary, MissingResourceID) || strings.Contains(diagnostic.Detail, MissingResourceID) {
+				return true
+			}
+		}
+		return false
+	}
+	return externalName
 }
 
 func defaultFolderIDFn(r *config.Resource, folderAPIPath string) {

@@ -29,55 +29,87 @@ import (
 
 type GroupInitParameters struct {
 
-	// (String) The resource description.
-	// The resource description.
+	// Only) (String). The resource description.
+	// Description of the group.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). ID of a Group.
+	// ID of the Group resource to return.
+	// To get the group ID, use a [GroupService.List] request.
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// (Map Of String). Resource labels as key:value pairs.
+	// Resource labels as `key:value` pairs.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// (String). The resource name.
+	// Name of the group.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The organization to attach this Group to.
-	// The organization to attach this Group to.
+	// (String). Organization that the Group belongs to. If value is omitted, the default provider organization is used.
+	// ID of the organization that the group belongs to.
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 }
 
 type GroupObservation struct {
 
-	// (String) The creation timestamp of the resource.
-	// The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
+	// Creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) The resource description.
-	// The resource description.
+	// Only) (String). The resource description.
+	// Description of the group.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String). ID of a Group.
+	// ID of the Group resource to return.
+	// To get the group ID, use a [GroupService.List] request.
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (Map Of String). Resource labels as key:value pairs.
+	// Resource labels as `key:value` pairs.
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// (String). The resource name.
+	// Name of the group.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The organization to attach this Group to.
-	// The organization to attach this Group to.
+	// (String). Organization that the Group belongs to. If value is omitted, the default provider organization is used.
+	// ID of the organization that the group belongs to.
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 }
 
 type GroupParameters struct {
 
-	// (String) The resource description.
-	// The resource description.
+	// Only) (String). The resource description.
+	// Description of the group.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). ID of a Group.
+	// ID of the Group resource to return.
+	// To get the group ID, use a [GroupService.List] request.
+	// +kubebuilder:validation:Optional
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// (Map Of String). Resource labels as key:value pairs.
+	// Resource labels as `key:value` pairs.
+	// +kubebuilder:validation:Optional
+	// +mapType=granular
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
+
+	// (String). The resource name.
+	// Name of the group.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The organization to attach this Group to.
-	// The organization to attach this Group to.
+	// (String). Organization that the Group belongs to. If value is omitted, the default provider organization is used.
+	// ID of the organization that the group belongs to.
 	// +kubebuilder:validation:Optional
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 }
@@ -109,7 +141,7 @@ type GroupStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Group is the Schema for the Groups API. Allows management of a single Group within an existing Yandex Cloud Organization.
+// Group is the Schema for the Groups API. Manages the yandex_organizationmanager_group resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

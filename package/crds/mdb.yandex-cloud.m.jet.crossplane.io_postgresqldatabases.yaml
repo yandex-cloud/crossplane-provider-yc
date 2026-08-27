@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: postgresqldatabases.mdb.yandex-cloud.m.jet.crossplane.io
 spec:
   group: mdb.yandex-cloud.m.jet.crossplane.io
@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: PostgresqlDatabase is the Schema for the PostgresqlDatabases
-          API. Manages a PostgreSQL database within Yandex Cloud.
+          API. Manages the yandex_mdb_postgresql_database resource.
         properties:
           apiVersion:
             description: |-
@@ -61,7 +61,7 @@ spec:
                 properties:
                   clusterId:
                     description: |-
-                      (String) The ID of the PostgreSQL cluster.
+                      (String). The ID of the PostgreSQL cluster.
                       The ID of the PostgreSQL cluster.
                     type: string
                   clusterIdRef:
@@ -146,45 +146,45 @@ spec:
                     type: object
                   deletionProtection:
                     description: |-
-                      (String) The true value means that resource is protected from accidental deletion.
+                      (String). The true value means that resource is protected from accidental deletion.
                       The `true` value means that resource is protected from accidental deletion.
                     type: string
                   extension:
                     description: |-
-                      (Block Set) Set of database extensions. (see below for nested schema)
+                      [Block]. Set of database extensions.
                       Set of database extensions.
                     items:
                       properties:
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The name of the PostgreSQL database.
                             Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
                           type: string
                       type: object
                     type: array
                   lcCollate:
                     description: |-
-                      (String) POSIX locale for string sorting order. Forbidden to change in an existing database.
+                      (String). POSIX locale for string sorting order. Forbidden to change in an existing database.
                       POSIX locale for string sorting order. Forbidden to change in an existing database.
                     type: string
                   lcType:
                     description: |-
-                      (String) POSIX locale for character classification. Forbidden to change in an existing database.
+                      (String). POSIX locale for character classification. Forbidden to change in an existing database.
                       POSIX locale for character classification. Forbidden to change in an existing database.
                     type: string
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The name of the PostgreSQL database.
+                      The name of the PostgreSQL database.
                     type: string
                   owner:
                     description: |-
-                      (String) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                      (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
                       Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
                     type: string
                   templateDb:
                     description: |-
-                      (String) Name of the template database.
+                      (String). Name of the template database.
                       Name of the template database.
                     type: string
                 type: object
@@ -203,7 +203,7 @@ spec:
                 properties:
                   clusterId:
                     description: |-
-                      (String) The ID of the PostgreSQL cluster.
+                      (String). The ID of the PostgreSQL cluster.
                       The ID of the PostgreSQL cluster.
                     type: string
                   clusterIdRef:
@@ -288,45 +288,45 @@ spec:
                     type: object
                   deletionProtection:
                     description: |-
-                      (String) The true value means that resource is protected from accidental deletion.
+                      (String). The true value means that resource is protected from accidental deletion.
                       The `true` value means that resource is protected from accidental deletion.
                     type: string
                   extension:
                     description: |-
-                      (Block Set) Set of database extensions. (see below for nested schema)
+                      [Block]. Set of database extensions.
                       Set of database extensions.
                     items:
                       properties:
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The name of the PostgreSQL database.
                             Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
                           type: string
                       type: object
                     type: array
                   lcCollate:
                     description: |-
-                      (String) POSIX locale for string sorting order. Forbidden to change in an existing database.
+                      (String). POSIX locale for string sorting order. Forbidden to change in an existing database.
                       POSIX locale for string sorting order. Forbidden to change in an existing database.
                     type: string
                   lcType:
                     description: |-
-                      (String) POSIX locale for character classification. Forbidden to change in an existing database.
+                      (String). POSIX locale for character classification. Forbidden to change in an existing database.
                       POSIX locale for character classification. Forbidden to change in an existing database.
                     type: string
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The name of the PostgreSQL database.
+                      The name of the PostgreSQL database.
                     type: string
                   owner:
                     description: |-
-                      (String) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                      (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
                       Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
                     type: string
                   templateDb:
                     description: |-
-                      (String) Name of the template database.
+                      (String). Name of the template database.
                       Name of the template database.
                     type: string
                 type: object
@@ -404,53 +404,53 @@ spec:
                 properties:
                   clusterId:
                     description: |-
-                      (String) The ID of the PostgreSQL cluster.
+                      (String). The ID of the PostgreSQL cluster.
                       The ID of the PostgreSQL cluster.
                     type: string
                   deletionProtection:
                     description: |-
-                      (String) The true value means that resource is protected from accidental deletion.
+                      (String). The true value means that resource is protected from accidental deletion.
                       The `true` value means that resource is protected from accidental deletion.
                     type: string
                   extension:
                     description: |-
-                      (Block Set) Set of database extensions. (see below for nested schema)
+                      [Block]. Set of database extensions.
                       Set of database extensions.
                     items:
                       properties:
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The name of the PostgreSQL database.
                             Name of the database extension. For more information on available extensions see [the official documentation](https://yandex.cloud/docs/managed-postgresql/operations/cluster-extensions).
                           type: string
                       type: object
                     type: array
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   lcCollate:
                     description: |-
-                      (String) POSIX locale for string sorting order. Forbidden to change in an existing database.
+                      (String). POSIX locale for string sorting order. Forbidden to change in an existing database.
                       POSIX locale for string sorting order. Forbidden to change in an existing database.
                     type: string
                   lcType:
                     description: |-
-                      (String) POSIX locale for character classification. Forbidden to change in an existing database.
+                      (String). POSIX locale for character classification. Forbidden to change in an existing database.
                       POSIX locale for character classification. Forbidden to change in an existing database.
                     type: string
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The name of the PostgreSQL database.
+                      The name of the PostgreSQL database.
                     type: string
                   owner:
                     description: |-
-                      (String) Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
+                      (String). Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
                       Name of the user assigned as the owner of the database. Forbidden to change in an existing database.
                     type: string
                   templateDb:
                     description: |-
-                      (String) Name of the template database.
+                      (String). Name of the template database.
                       Name of the template database.
                     type: string
                 type: object

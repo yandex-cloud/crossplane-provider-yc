@@ -30,19 +30,19 @@ import (
 
 type AddressInitParameters struct {
 
-	// (Block List) DNS record specification of address. (see below for nested schema)
+	// [Block]. DNS record specification of address.
 	// DNS record specification of address.
 	DNSRecord []DNSRecordInitParameters `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Block List, Max: 1) Specification of IPv4 address.
+	// [Block]. Specification of IPv4 address.
 	// Specification of IPv4 address.
 	//
 	// ~> Either one `address` or `zone_id` arguments can be specified.
@@ -65,35 +65,41 @@ type AddressInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// [Block]. Specification of internal IPv4 address.
+	// Specification of internal IPv4 address.
+	//
+	// ~> Change any argument in `internal_ipv4_address` will cause an address recreate.
+	InternalIPv4Address []InternalIPv4AddressInitParameters `json:"internalIpv4Address,omitempty" tf:"internal_ipv4_address,omitempty"`
+
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type AddressObservation struct {
 
-	// (String) The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
 	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Block List) DNS record specification of address. (see below for nested schema)
+	// [Block]. DNS record specification of address.
 	// DNS record specification of address.
 	DNSRecord []DNSRecordObservation `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Block List, Max: 1) Specification of IPv4 address.
+	// [Block]. Specification of IPv4 address.
 	// Specification of IPv4 address.
 	//
 	// ~> Either one `address` or `zone_id` arguments can be specified.
@@ -107,45 +113,51 @@ type AddressObservation struct {
 	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// [Block]. Specification of internal IPv4 address.
+	// Specification of internal IPv4 address.
+	//
+	// ~> Change any argument in `internal_ipv4_address` will cause an address recreate.
+	InternalIPv4Address []InternalIPv4AddressObservation `json:"internalIpv4Address,omitempty" tf:"internal_ipv4_address,omitempty"`
+
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Boolean) false means that address is ephemeral.
+	// Only) (Bool). false means that address is ephemeral.
 	// `false` means that address is ephemeral.
 	Reserved *bool `json:"reserved,omitempty" tf:"reserved,omitempty"`
 
-	// (Boolean) true if address is used.
+	// Only) (Bool). true if address is used.
 	// `true` if address is used.
 	Used *bool `json:"used,omitempty" tf:"used,omitempty"`
 }
 
 type AddressParameters struct {
 
-	// (Block List) DNS record specification of address. (see below for nested schema)
+	// [Block]. DNS record specification of address.
 	// DNS record specification of address.
 	// +kubebuilder:validation:Optional
 	DNSRecord []DNSRecordParameters `json:"dnsRecord,omitempty" tf:"dns_record,omitempty"`
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Block List, Max: 1) Specification of IPv4 address.
+	// [Block]. Specification of IPv4 address.
 	// Specification of IPv4 address.
 	//
 	// ~> Either one `address` or `zone_id` arguments can be specified.
@@ -170,13 +182,20 @@ type AddressParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// [Block]. Specification of internal IPv4 address.
+	// Specification of internal IPv4 address.
+	//
+	// ~> Change any argument in `internal_ipv4_address` will cause an address recreate.
+	// +kubebuilder:validation:Optional
+	InternalIPv4Address []InternalIPv4AddressParameters `json:"internalIpv4Address,omitempty" tf:"internal_ipv4_address,omitempty"`
+
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -184,60 +203,60 @@ type AddressParameters struct {
 
 type DNSRecordInitParameters struct {
 
-	// (String) DNS zone id to create record at.
+	// (String). DNS zone id to create record at.
 	// DNS zone id to create record at.
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
-	// (String) FQDN for record to address.
+	// (String). FQDN for record to address.
 	// FQDN for record to address.
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// (Boolean) If PTR record is needed.
+	// (Bool). If PTR record is needed.
 	// If PTR record is needed.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// (Number) TTL of DNS record.
+	// (Number). TTL of DNS record.
 	// TTL of DNS record.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type DNSRecordObservation struct {
 
-	// (String) DNS zone id to create record at.
+	// (String). DNS zone id to create record at.
 	// DNS zone id to create record at.
 	DNSZoneID *string `json:"dnsZoneId,omitempty" tf:"dns_zone_id,omitempty"`
 
-	// (String) FQDN for record to address.
+	// (String). FQDN for record to address.
 	// FQDN for record to address.
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// (Boolean) If PTR record is needed.
+	// (Bool). If PTR record is needed.
 	// If PTR record is needed.
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// (Number) TTL of DNS record.
+	// (Number). TTL of DNS record.
 	// TTL of DNS record.
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 }
 
 type DNSRecordParameters struct {
 
-	// (String) DNS zone id to create record at.
+	// (String). DNS zone id to create record at.
 	// DNS zone id to create record at.
 	// +kubebuilder:validation:Optional
 	DNSZoneID *string `json:"dnsZoneId" tf:"dns_zone_id,omitempty"`
 
-	// (String) FQDN for record to address.
+	// (String). FQDN for record to address.
 	// FQDN for record to address.
 	// +kubebuilder:validation:Optional
 	Fqdn *string `json:"fqdn" tf:"fqdn,omitempty"`
 
-	// (Boolean) If PTR record is needed.
+	// (Bool). If PTR record is needed.
 	// If PTR record is needed.
 	// +kubebuilder:validation:Optional
 	Ptr *bool `json:"ptr,omitempty" tf:"ptr,omitempty"`
 
-	// (Number) TTL of DNS record.
+	// (Number). TTL of DNS record.
 	// TTL of DNS record.
 	// +kubebuilder:validation:Optional
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
@@ -245,54 +264,89 @@ type DNSRecordParameters struct {
 
 type ExternalIPv4AddressInitParameters struct {
 
-	// (String) Enable DDOS protection. Possible values are: qrator
+	// (String). Enable DDOS protection. Possible values are: qrator
 	// Enable DDOS protection. Possible values are: `qrator`
 	DdosProtectionProvider *string `json:"ddosProtectionProvider,omitempty" tf:"ddos_protection_provider,omitempty"`
 
-	// (String) Wanted outgoing smtp capability.
+	// (String). Wanted outgoing smtp capability.
 	// Wanted outgoing smtp capability.
 	OutgoingSMTPCapability *string `json:"outgoingSmtpCapability,omitempty" tf:"outgoing_smtp_capability,omitempty"`
 
-	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
 	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 type ExternalIPv4AddressObservation struct {
 
-	// (String) Allocated IP address.
+	// Only) (String). Allocated IP address.
 	// Allocated IP address.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// (String) Enable DDOS protection. Possible values are: qrator
+	// (String). Enable DDOS protection. Possible values are: qrator
 	// Enable DDOS protection. Possible values are: `qrator`
 	DdosProtectionProvider *string `json:"ddosProtectionProvider,omitempty" tf:"ddos_protection_provider,omitempty"`
 
-	// (String) Wanted outgoing smtp capability.
+	// (String). Wanted outgoing smtp capability.
 	// Wanted outgoing smtp capability.
 	OutgoingSMTPCapability *string `json:"outgoingSmtpCapability,omitempty" tf:"outgoing_smtp_capability,omitempty"`
 
-	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
 	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 type ExternalIPv4AddressParameters struct {
 
-	// (String) Enable DDOS protection. Possible values are: qrator
+	// (String). Enable DDOS protection. Possible values are: qrator
 	// Enable DDOS protection. Possible values are: `qrator`
 	// +kubebuilder:validation:Optional
 	DdosProtectionProvider *string `json:"ddosProtectionProvider,omitempty" tf:"ddos_protection_provider,omitempty"`
 
-	// (String) Wanted outgoing smtp capability.
+	// (String). Wanted outgoing smtp capability.
 	// Wanted outgoing smtp capability.
 	// +kubebuilder:validation:Optional
 	OutgoingSMTPCapability *string `json:"outgoingSmtpCapability,omitempty" tf:"outgoing_smtp_capability,omitempty"`
 
-	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
 	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	// +kubebuilder:validation:Optional
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
+}
+
+type InternalIPv4AddressInitParameters struct {
+
+	// Only) (String). Allocated IP address.
+	// Allocated IP address. If not specified, an address will be automatically allocated from the subnet.
+	Address *string `json:"address,omitempty" tf:"address,omitempty"`
+
+	// (String). Subnet ID from which the address will be allocated.
+	// Subnet ID from which the address will be allocated.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+}
+
+type InternalIPv4AddressObservation struct {
+
+	// Only) (String). Allocated IP address.
+	// Allocated IP address. If not specified, an address will be automatically allocated from the subnet.
+	Address *string `json:"address,omitempty" tf:"address,omitempty"`
+
+	// (String). Subnet ID from which the address will be allocated.
+	// Subnet ID from which the address will be allocated.
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
+}
+
+type InternalIPv4AddressParameters struct {
+
+	// Only) (String). Allocated IP address.
+	// Allocated IP address. If not specified, an address will be automatically allocated from the subnet.
+	// +kubebuilder:validation:Optional
+	Address *string `json:"address,omitempty" tf:"address,omitempty"`
+
+	// (String). Subnet ID from which the address will be allocated.
+	// Subnet ID from which the address will be allocated.
+	// +kubebuilder:validation:Optional
+	SubnetID *string `json:"subnetId" tf:"subnet_id,omitempty"`
 }
 
 // AddressSpec defines the desired state of Address
@@ -322,7 +376,7 @@ type AddressStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Address is the Schema for the Addresss API. Manages a VPC address within Yandex Cloud.
+// Address is the Schema for the Addresss API. Manages the yandex_vpc_address resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -1,0 +1,3 @@
+kind: Added
+body: Add DiskIAMBinding and CertificateIAMMember managed resources.
+time: 2026-08-27T08:43:45+03:00

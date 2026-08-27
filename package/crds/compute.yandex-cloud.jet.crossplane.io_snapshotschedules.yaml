@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: snapshotschedules.compute.yandex-cloud.jet.crossplane.io
 spec:
   group: compute.yandex-cloud.jet.crossplane.io
@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: SnapshotSchedule is the Schema for the SnapshotSchedules API.
-          Creates a new snapshot schedule.
+          Manages the yandex_compute_snapshot_schedule resource.
         properties:
           apiVersion:
             description: |-
@@ -75,12 +75,12 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   diskIds:
                     description: |-
-                      (Set of String) IDs of the disk for snapshot schedule.
+                      (Set Of String). IDs of the disk for snapshot schedule.
                       IDs of the disk for snapshot schedule.
                     items:
                       type: string
@@ -249,29 +249,29 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   retentionPeriod:
                     description: |-
-                      (String) Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are ns, us (or µs), ms, s, m, h. Examples: 300ms, 1.5h or 2h45m.
+                      (String). Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are ns, us (or µs), ms, s, m, h. Examples: 300ms, 1.5h or 2h45m.
                       Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`. Examples: `300ms`, `1.5h` or `2h45m`.
                     type: string
                   schedulePolicy:
                     description: |-
-                      (Block List, Max: 1) Schedule policy of the snapshot schedule. (see below for nested schema)
+                      [Block]. Schedule policy of the snapshot schedule.
                       Schedule policy of the snapshot schedule.
                     items:
                       properties:
                         expression:
                           description: |-
-                            (String) Cron expression to schedule snapshots (in cron format " * ****").
+                            (String). Cron expression to schedule snapshots (in cron format " * ****").
                             Cron expression to schedule snapshots (in cron format `" * ****"`).
                           type: string
                         startAt:
@@ -283,25 +283,25 @@ spec:
                     type: array
                   snapshotCount:
                     description: |-
-                      (Number) Maximum number of snapshots for every disk of the snapshot schedule.
+                      (Number). Maximum number of snapshots for every disk of the snapshot schedule.
                       Maximum number of snapshots for every disk of the snapshot schedule.
                     type: number
                   snapshotSpec:
                     description: |-
-                      (Block List, Max: 1) Additional attributes for snapshots created by this snapshot schedule. (see below for nested schema)
+                      [Block]. Additional attributes for snapshots created by this snapshot schedule.
                       Additional attributes for snapshots created by this snapshot schedule.
                     items:
                       properties:
                         description:
                           description: |-
-                            (String) The resource description.
+                            (String). The resource description.
                             Description to assign to snapshots created by this snapshot schedule.
                           type: string
                         labels:
                           additionalProperties:
                             type: string
                           description: |-
-                            (Map of String) A set of key/value label pairs which assigned to resource.
+                            (Map Of String). A set of key/value label pairs which assigned to resource.
                             A set of key/value label pairs to assign to snapshots created by this snapshot schedule.
                           type: object
                           x-kubernetes-map-type: granular
@@ -323,12 +323,12 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   diskIds:
                     description: |-
-                      (Set of String) IDs of the disk for snapshot schedule.
+                      (Set Of String). IDs of the disk for snapshot schedule.
                       IDs of the disk for snapshot schedule.
                     items:
                       type: string
@@ -497,29 +497,29 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   retentionPeriod:
                     description: |-
-                      (String) Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are ns, us (or µs), ms, s, m, h. Examples: 300ms, 1.5h or 2h45m.
+                      (String). Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are ns, us (or µs), ms, s, m, h. Examples: 300ms, 1.5h or 2h45m.
                       Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`. Examples: `300ms`, `1.5h` or `2h45m`.
                     type: string
                   schedulePolicy:
                     description: |-
-                      (Block List, Max: 1) Schedule policy of the snapshot schedule. (see below for nested schema)
+                      [Block]. Schedule policy of the snapshot schedule.
                       Schedule policy of the snapshot schedule.
                     items:
                       properties:
                         expression:
                           description: |-
-                            (String) Cron expression to schedule snapshots (in cron format " * ****").
+                            (String). Cron expression to schedule snapshots (in cron format " * ****").
                             Cron expression to schedule snapshots (in cron format `" * ****"`).
                           type: string
                         startAt:
@@ -531,25 +531,25 @@ spec:
                     type: array
                   snapshotCount:
                     description: |-
-                      (Number) Maximum number of snapshots for every disk of the snapshot schedule.
+                      (Number). Maximum number of snapshots for every disk of the snapshot schedule.
                       Maximum number of snapshots for every disk of the snapshot schedule.
                     type: number
                   snapshotSpec:
                     description: |-
-                      (Block List, Max: 1) Additional attributes for snapshots created by this snapshot schedule. (see below for nested schema)
+                      [Block]. Additional attributes for snapshots created by this snapshot schedule.
                       Additional attributes for snapshots created by this snapshot schedule.
                     items:
                       properties:
                         description:
                           description: |-
-                            (String) The resource description.
+                            (String). The resource description.
                             Description to assign to snapshots created by this snapshot schedule.
                           type: string
                         labels:
                           additionalProperties:
                             type: string
                           description: |-
-                            (Map of String) A set of key/value label pairs which assigned to resource.
+                            (Map Of String). A set of key/value label pairs which assigned to resource.
                             A set of key/value label pairs to assign to snapshots created by this snapshot schedule.
                           type: object
                           x-kubernetes-map-type: granular
@@ -649,17 +649,17 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
                       The creation timestamp of the resource.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   diskIds:
                     description: |-
-                      (Set of String) IDs of the disk for snapshot schedule.
+                      (Set Of String). IDs of the disk for snapshot schedule.
                       IDs of the disk for snapshot schedule.
                     items:
                       type: string
@@ -671,35 +671,35 @@ spec:
                       The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   retentionPeriod:
                     description: |-
-                      (String) Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are ns, us (or µs), ms, s, m, h. Examples: 300ms, 1.5h or 2h45m.
+                      (String). Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are ns, us (or µs), ms, s, m, h. Examples: 300ms, 1.5h or 2h45m.
                       Time duration applied to snapshots created by this snapshot schedule. This is a signed sequence of decimal numbers, each with optional fraction and a unit suffix. Valid time units are `ns`, `us` (or `µs`), `ms`, `s`, `m`, `h`. Examples: `300ms`, `1.5h` or `2h45m`.
                     type: string
                   schedulePolicy:
                     description: |-
-                      (Block List, Max: 1) Schedule policy of the snapshot schedule. (see below for nested schema)
+                      [Block]. Schedule policy of the snapshot schedule.
                       Schedule policy of the snapshot schedule.
                     items:
                       properties:
                         expression:
                           description: |-
-                            (String) Cron expression to schedule snapshots (in cron format " * ****").
+                            (String). Cron expression to schedule snapshots (in cron format " * ****").
                             Cron expression to schedule snapshots (in cron format `" * ****"`).
                           type: string
                         startAt:
@@ -711,25 +711,25 @@ spec:
                     type: array
                   snapshotCount:
                     description: |-
-                      (Number) Maximum number of snapshots for every disk of the snapshot schedule.
+                      (Number). Maximum number of snapshots for every disk of the snapshot schedule.
                       Maximum number of snapshots for every disk of the snapshot schedule.
                     type: number
                   snapshotSpec:
                     description: |-
-                      (Block List, Max: 1) Additional attributes for snapshots created by this snapshot schedule. (see below for nested schema)
+                      [Block]. Additional attributes for snapshots created by this snapshot schedule.
                       Additional attributes for snapshots created by this snapshot schedule.
                     items:
                       properties:
                         description:
                           description: |-
-                            (String) The resource description.
+                            (String). The resource description.
                             Description to assign to snapshots created by this snapshot schedule.
                           type: string
                         labels:
                           additionalProperties:
                             type: string
                           description: |-
-                            (Map of String) A set of key/value label pairs which assigned to resource.
+                            (Map Of String). A set of key/value label pairs which assigned to resource.
                             A set of key/value label pairs to assign to snapshots created by this snapshot schedule.
                           type: object
                           x-kubernetes-map-type: granular
@@ -737,7 +737,7 @@ spec:
                     type: array
                   status:
                     description: |-
-                      (String) The status of the snapshot schedule.
+                      Only) (String). The status of the snapshot schedule.
                       The status of the snapshot schedule.
                     type: string
                 type: object

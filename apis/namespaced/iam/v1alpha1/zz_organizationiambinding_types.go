@@ -30,7 +30,7 @@ import (
 
 type OrganizationIAMBindingInitParameters struct {
 
-	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -50,14 +50,6 @@ type OrganizationIAMBindingInitParameters struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// (String) The ID of the organization to attach the policy to.
-	// The ID of the organization to attach the policy to.
-	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
-
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
-
 	// References to ServiceAccount to populate members.
 	// +kubebuilder:validation:Optional
 	ServiceAccountRef []v1.NamespacedReference `json:"serviceAccountRef,omitempty" tf:"-"`
@@ -66,16 +58,17 @@ type OrganizationIAMBindingInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountSelector *v1.NamespacedSelector `json:"serviceAccountSelector,omitempty" tf:"-"`
 
-	// (Number)
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type OrganizationIAMBindingObservation struct {
 
-	// (String) The ID of this resource.
+	// (String). The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -91,21 +84,22 @@ type OrganizationIAMBindingObservation struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// (String) The ID of the organization to attach the policy to.
-	// The ID of the organization to attach the policy to.
+	// (String). The ID of the organization to attach the policy to.
+	// The ID of the `organization` to attach the policy to.
 	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
 
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
+	// (String). The role that should be assigned. Only one yandex_organizationmanager_organization_iam_binding can be used per role.
+	// The role that should be assigned. Only one yandex_organizationmanager_organization_iam_binding can be used per role.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
-	// (Number)
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type OrganizationIAMBindingParameters struct {
 
-	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -126,15 +120,15 @@ type OrganizationIAMBindingParameters struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// (String) The ID of the organization to attach the policy to.
-	// The ID of the organization to attach the policy to.
-	// +kubebuilder:validation:Optional
-	OrganizationID *string `json:"organizationId,omitempty" tf:"organization_id,omitempty"`
+	// (String). The ID of the organization to attach the policy to.
+	// The ID of the `organization` to attach the policy to.
+	// +kubebuilder:validation:Required
+	OrganizationID *string `json:"organizationId" tf:"organization_id,omitempty"`
 
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
-	// +kubebuilder:validation:Optional
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+	// (String). The role that should be assigned. Only one yandex_organizationmanager_organization_iam_binding can be used per role.
+	// The role that should be assigned. Only one yandex_organizationmanager_organization_iam_binding can be used per role.
+	// +kubebuilder:validation:Required
+	Role *string `json:"role" tf:"role,omitempty"`
 
 	// References to ServiceAccount to populate members.
 	// +kubebuilder:validation:Optional
@@ -144,7 +138,8 @@ type OrganizationIAMBindingParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountSelector *v1.NamespacedSelector `json:"serviceAccountSelector,omitempty" tf:"-"`
 
-	// (Number)
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	// +kubebuilder:validation:Optional
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
@@ -176,7 +171,7 @@ type OrganizationIAMBindingStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// OrganizationIAMBinding is the Schema for the OrganizationIAMBindings API. Allows management of a single IAM binding for a Yandex Organization Manager organization.
+// OrganizationIAMBinding is the Schema for the OrganizationIAMBindings API. Manages the yandex_organizationmanager_organization_iam_binding resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -185,10 +180,8 @@ type OrganizationIAMBindingStatus struct {
 type OrganizationIAMBinding struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.organizationId) || (has(self.initProvider) && has(self.initProvider.organizationId))",message="spec.forProvider.organizationId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.role) || (has(self.initProvider) && has(self.initProvider.role))",message="spec.forProvider.role is a required parameter"
-	Spec   OrganizationIAMBindingSpec   `json:"spec"`
-	Status OrganizationIAMBindingStatus `json:"status,omitempty"`
+	Spec              OrganizationIAMBindingSpec   `json:"spec"`
+	Status            OrganizationIAMBindingStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

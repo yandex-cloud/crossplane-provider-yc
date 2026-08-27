@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: mysqlusers.mdb.yandex-cloud.jet.crossplane.io
 spec:
   group: mdb.yandex-cloud.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: MySQLUser is the Schema for the MySQLUsers API. Manages a MySQL
-          user within Yandex Cloud.
+        description: MySQLUser is the Schema for the MySQLUsers API. Manages the yandex_mdb_mysql_user
+          resource.
         properties:
           apiVersion:
             description: |-
@@ -75,12 +75,12 @@ spec:
                 properties:
                   authenticationPlugin:
                     description: |-
-                      (String) Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD)
-                      Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`)
+                      (String). Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH).
+                      Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD`, `MYSQL_NO_LOGIN`, `MDB_IAMPROXY_AUTH` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`, `MYSQL_NO_LOGIN`, `MDB_IAMPROXY_AUTH`).
                     type: string
                   clusterId:
                     description: |-
-                      (String) The ID of the MySQL cluster.
+                      (String). The ID of the MySQL cluster.
                       The ID of the MySQL cluster.
                     type: string
                   clusterIdRef:
@@ -159,55 +159,55 @@ spec:
                     type: object
                   connectionLimits:
                     description: |-
-                      1. When these parameters are set to -1, backend default values will be actually used. (see below for nested schema)
+                      1. When these parameters are set to -1, backend default values will be actually used.
                       User's connection limits. If the attribute is not specified there will be no changes. Default value is `-1`. When these parameters are set to `-1`, backend default values will be actually used.
                     items:
                       properties:
                         maxConnectionsPerHour:
                           description: |-
-                            (Number) Max connections per hour.
+                            (Number). Max connections per hour.
                             Max connections per hour.
                           type: number
                         maxQuestionsPerHour:
                           description: |-
-                            (Number) Max questions per hour.
+                            (Number). Max questions per hour.
                             Max questions per hour.
                           type: number
                         maxUpdatesPerHour:
                           description: |-
-                            (Number) Max updates per hour.
+                            (Number). Max updates per hour.
                             Max updates per hour.
                           type: number
                         maxUserConnections:
                           description: |-
-                            (Number) Max user connections.
+                            (Number). Max user connections.
                             Max user connections.
                           type: number
                       type: object
                     type: array
                   generatePassword:
                     description: |-
-                      (Boolean) Generate password using Connection Manager. Allowed values: true or false. It's used only during user creation and is ignored during updating.
+                      (Bool). Generate password using Connection Manager. Allowed values: true or false. It's used only during user creation and is ignored during updating.
                       Generate password using Connection Manager. Allowed values: `true` or `false`. It's used only during user creation and is ignored during updating.
 
                       ~> **Must specify either password or generate_password**.
                     type: boolean
                   globalPermissions:
                     description: |-
-                      (Set of String) List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
-                      List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS` for clear list use empty list. If the attribute is not specified there will be no changes.
+                      (Set Of String). List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS, FLUSH_OPTIMIZER_COSTS, SHOW_ROUTINE, MDB_ADMIN for clear list use empty list. If the attribute is not specified there will be no changes.
+                      List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS`, `FLUSH_OPTIMIZER_COSTS`, `SHOW_ROUTINE`, `MDB_ADMIN` for clear list use empty list. If the attribute is not specified there will be no changes.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   name:
                     description: |-
-                      (String) The name of the user.
+                      (String). The name of the user.
                       The name of the user.
                     type: string
                   passwordSecretRef:
                     description: |-
-                      (String, Sensitive) The password of the user.
+                      (String). The password of the user.
                       The password of the user.
                     properties:
                       key:
@@ -224,21 +224,45 @@ spec:
                     - name
                     - namespace
                     type: object
+                  passwordWoSecretRef:
+                    description: |-
+                      only and is not stored in state. Requires password_wo_version to trigger updates.11 or higher
+                      The password of the user. This attribute is write-only and is not stored in state. Requires `password_wo_version` to trigger updates.11 or higher
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  passwordWoVersion:
+                    description: |-
+                      only password. Increment this to trigger a password update.
+                      A version number for the write-only password. Increment this to trigger a password update.
+                    type: number
                   permission:
                     description: |-
-                      (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                      [Block]. Set of permissions granted to the user.
                       Set of permissions granted to the user.
                     items:
                       properties:
                         databaseName:
                           description: |-
-                            (String) The name of the database that the permission grants access to.
+                            (String). The name of the database that the permission grants access to.
                             The name of the database that the permission grants access to.
                           type: string
                         roles:
                           description: |-
-                            (List of String) List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
-                            List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`.
+                            (List Of String). List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE,REFERENCES.
+                            List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`,`REFERENCES`.
                           items:
                             type: string
                           type: array
@@ -260,12 +284,12 @@ spec:
                 properties:
                   authenticationPlugin:
                     description: |-
-                      (String) Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD)
-                      Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`)
+                      (String). Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH).
+                      Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD`, `MYSQL_NO_LOGIN`, `MDB_IAMPROXY_AUTH` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`, `MYSQL_NO_LOGIN`, `MDB_IAMPROXY_AUTH`).
                     type: string
                   clusterId:
                     description: |-
-                      (String) The ID of the MySQL cluster.
+                      (String). The ID of the MySQL cluster.
                       The ID of the MySQL cluster.
                     type: string
                   clusterIdRef:
@@ -344,55 +368,55 @@ spec:
                     type: object
                   connectionLimits:
                     description: |-
-                      1. When these parameters are set to -1, backend default values will be actually used. (see below for nested schema)
+                      1. When these parameters are set to -1, backend default values will be actually used.
                       User's connection limits. If the attribute is not specified there will be no changes. Default value is `-1`. When these parameters are set to `-1`, backend default values will be actually used.
                     items:
                       properties:
                         maxConnectionsPerHour:
                           description: |-
-                            (Number) Max connections per hour.
+                            (Number). Max connections per hour.
                             Max connections per hour.
                           type: number
                         maxQuestionsPerHour:
                           description: |-
-                            (Number) Max questions per hour.
+                            (Number). Max questions per hour.
                             Max questions per hour.
                           type: number
                         maxUpdatesPerHour:
                           description: |-
-                            (Number) Max updates per hour.
+                            (Number). Max updates per hour.
                             Max updates per hour.
                           type: number
                         maxUserConnections:
                           description: |-
-                            (Number) Max user connections.
+                            (Number). Max user connections.
                             Max user connections.
                           type: number
                       type: object
                     type: array
                   generatePassword:
                     description: |-
-                      (Boolean) Generate password using Connection Manager. Allowed values: true or false. It's used only during user creation and is ignored during updating.
+                      (Bool). Generate password using Connection Manager. Allowed values: true or false. It's used only during user creation and is ignored during updating.
                       Generate password using Connection Manager. Allowed values: `true` or `false`. It's used only during user creation and is ignored during updating.
 
                       ~> **Must specify either password or generate_password**.
                     type: boolean
                   globalPermissions:
                     description: |-
-                      (Set of String) List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
-                      List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS` for clear list use empty list. If the attribute is not specified there will be no changes.
+                      (Set Of String). List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS, FLUSH_OPTIMIZER_COSTS, SHOW_ROUTINE, MDB_ADMIN for clear list use empty list. If the attribute is not specified there will be no changes.
+                      List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS`, `FLUSH_OPTIMIZER_COSTS`, `SHOW_ROUTINE`, `MDB_ADMIN` for clear list use empty list. If the attribute is not specified there will be no changes.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   name:
                     description: |-
-                      (String) The name of the user.
+                      (String). The name of the user.
                       The name of the user.
                     type: string
                   passwordSecretRef:
                     description: |-
-                      (String, Sensitive) The password of the user.
+                      (String). The password of the user.
                       The password of the user.
                     properties:
                       key:
@@ -409,21 +433,45 @@ spec:
                     - name
                     - namespace
                     type: object
+                  passwordWoSecretRef:
+                    description: |-
+                      only and is not stored in state. Requires password_wo_version to trigger updates.11 or higher
+                      The password of the user. This attribute is write-only and is not stored in state. Requires `password_wo_version` to trigger updates.11 or higher
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                  passwordWoVersion:
+                    description: |-
+                      only password. Increment this to trigger a password update.
+                      A version number for the write-only password. Increment this to trigger a password update.
+                    type: number
                   permission:
                     description: |-
-                      (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                      [Block]. Set of permissions granted to the user.
                       Set of permissions granted to the user.
                     items:
                       properties:
                         databaseName:
                           description: |-
-                            (String) The name of the database that the permission grants access to.
+                            (String). The name of the database that the permission grants access to.
                             The name of the database that the permission grants access to.
                           type: string
                         roles:
                           description: |-
-                            (List of String) List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
-                            List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`.
+                            (List Of String). List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE,REFERENCES.
+                            List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`,`REFERENCES`.
                           items:
                             type: string
                           type: array
@@ -528,38 +576,38 @@ spec:
                 properties:
                   authenticationPlugin:
                     description: |-
-                      (String) Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD)
-                      Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`)
+                      (String). Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH).
+                      Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD`, `MYSQL_NO_LOGIN`, `MDB_IAMPROXY_AUTH` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`, `MYSQL_NO_LOGIN`, `MDB_IAMPROXY_AUTH`).
                     type: string
                   clusterId:
                     description: |-
-                      (String) The ID of the MySQL cluster.
+                      (String). The ID of the MySQL cluster.
                       The ID of the MySQL cluster.
                     type: string
                   connectionLimits:
                     description: |-
-                      1. When these parameters are set to -1, backend default values will be actually used. (see below for nested schema)
+                      1. When these parameters are set to -1, backend default values will be actually used.
                       User's connection limits. If the attribute is not specified there will be no changes. Default value is `-1`. When these parameters are set to `-1`, backend default values will be actually used.
                     items:
                       properties:
                         maxConnectionsPerHour:
                           description: |-
-                            (Number) Max connections per hour.
+                            (Number). Max connections per hour.
                             Max connections per hour.
                           type: number
                         maxQuestionsPerHour:
                           description: |-
-                            (Number) Max questions per hour.
+                            (Number). Max questions per hour.
                             Max questions per hour.
                           type: number
                         maxUpdatesPerHour:
                           description: |-
-                            (Number) Max updates per hour.
+                            (Number). Max updates per hour.
                             Max updates per hour.
                           type: number
                         maxUserConnections:
                           description: |-
-                            (Number) Max user connections.
+                            (Number). Max user connections.
                             Max user connections.
                           type: number
                       type: object
@@ -568,48 +616,53 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) Connection Manager connection configuration. Filled in by the server automatically.
+                      Only) (Map Of String). Connection Manager connection configuration. Filled in by the server automatically.
                       Connection Manager connection configuration. Filled in by the server automatically.
                     type: object
                     x-kubernetes-map-type: granular
                   generatePassword:
                     description: |-
-                      (Boolean) Generate password using Connection Manager. Allowed values: true or false. It's used only during user creation and is ignored during updating.
+                      (Bool). Generate password using Connection Manager. Allowed values: true or false. It's used only during user creation and is ignored during updating.
                       Generate password using Connection Manager. Allowed values: `true` or `false`. It's used only during user creation and is ignored during updating.
 
                       ~> **Must specify either password or generate_password**.
                     type: boolean
                   globalPermissions:
                     description: |-
-                      (Set of String) List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
-                      List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS` for clear list use empty list. If the attribute is not specified there will be no changes.
+                      (Set Of String). List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS, FLUSH_OPTIMIZER_COSTS, SHOW_ROUTINE, MDB_ADMIN for clear list use empty list. If the attribute is not specified there will be no changes.
+                      List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS`, `FLUSH_OPTIMIZER_COSTS`, `SHOW_ROUTINE`, `MDB_ADMIN` for clear list use empty list. If the attribute is not specified there will be no changes.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   name:
                     description: |-
-                      (String) The name of the user.
+                      (String). The name of the user.
                       The name of the user.
                     type: string
+                  passwordWoVersion:
+                    description: |-
+                      only password. Increment this to trigger a password update.
+                      A version number for the write-only password. Increment this to trigger a password update.
+                    type: number
                   permission:
                     description: |-
-                      (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                      [Block]. Set of permissions granted to the user.
                       Set of permissions granted to the user.
                     items:
                       properties:
                         databaseName:
                           description: |-
-                            (String) The name of the database that the permission grants access to.
+                            (String). The name of the database that the permission grants access to.
                             The name of the database that the permission grants access to.
                           type: string
                         roles:
                           description: |-
-                            (List of String) List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
-                            List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`.
+                            (List Of String). List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE,REFERENCES.
+                            List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`,`REFERENCES`.
                           items:
                             type: string
                           type: array

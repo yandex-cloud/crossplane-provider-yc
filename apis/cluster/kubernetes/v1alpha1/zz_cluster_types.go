@@ -29,21 +29,21 @@ import (
 
 type AutoScaleInitParameters struct {
 
-	// (String) Minimal resource preset ID.
+	// (String). Minimal resource preset ID.
 	// Minimal resource preset ID.
 	MinResourcePresetID *string `json:"minResourcePresetId,omitempty" tf:"min_resource_preset_id,omitempty"`
 }
 
 type AutoScaleObservation struct {
 
-	// (String) Minimal resource preset ID.
+	// (String). Minimal resource preset ID.
 	// Minimal resource preset ID.
 	MinResourcePresetID *string `json:"minResourcePresetId,omitempty" tf:"min_resource_preset_id,omitempty"`
 }
 
 type AutoScaleParameters struct {
 
-	// (String) Minimal resource preset ID.
+	// (String). Minimal resource preset ID.
 	// Minimal resource preset ID.
 	// +kubebuilder:validation:Optional
 	MinResourcePresetID *string `json:"minResourcePresetId" tf:"min_resource_preset_id,omitempty"`
@@ -60,15 +60,15 @@ type CiliumParameters struct {
 
 type ClusterInitParameters struct {
 
-	// (String) CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
+	// (String). CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
 	// CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
 	ClusterIPv4Range *string `json:"clusterIpv4Range,omitempty" tf:"cluster_ipv4_range,omitempty"`
 
-	// (String) Identical to cluster_ipv4_range but for IPv6 protocol.
+	// (String). Identical to cluster_ipv4_range but for IPv6 protocol.
 	// Identical to `cluster_ipv4_range` but for IPv6 protocol.
 	ClusterIPv6Range *string `json:"clusterIpv6Range,omitempty" tf:"cluster_ipv6_range,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -85,26 +85,26 @@ type ClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Block List, Max: 1) Cluster KMS provider parameters. (see below for nested schema)
+	// [Block]. Cluster KMS provider parameters.
 	// Cluster KMS provider parameters.
 	KMSProvider []KMSProviderInitParameters `json:"kmsProvider,omitempty" tf:"kms_provider,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Block List, Min: 1, Max: 1) Kubernetes master configuration options. (see below for nested schema)
+	// [Block]. Kubernetes master configuration options.
 	// Kubernetes master configuration options.
 	// +listType=map
 	// +listMapKey=index
 	Master []MasterInitParameters `json:"master,omitempty" tf:"master,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The ID of the cluster network.
+	// (String). The ID of the cluster network.
 	// The ID of the cluster network.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/vpc/v1alpha1.Network
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -117,19 +117,19 @@ type ClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// (Block List, Max: 1) Network Implementation options. (see below for nested schema)
+	// [Block]. Network Implementation options.
 	// Network Implementation options.
 	NetworkImplementation []NetworkImplementationInitParameters `json:"networkImplementation,omitempty" tf:"network_implementation,omitempty"`
 
-	// (String) Network policy provider for the cluster. Possible values: CALICO.
+	// (String). Network policy provider for the cluster. Possible values: CALICO.
 	// Network policy provider for the cluster. Possible values: `CALICO`.
 	NetworkPolicyProvider *string `json:"networkPolicyProvider,omitempty" tf:"network_policy_provider,omitempty"`
 
-	// (Number) Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
+	// (Number). Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
 	// Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
 	NodeIPv4CidrMaskSize *float64 `json:"nodeIpv4CidrMaskSize,omitempty" tf:"node_ipv4_cidr_mask_size,omitempty"`
 
-	// (String) Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
+	// (String). Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
 	// Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/iam/v1alpha1.ServiceAccount
 	NodeServiceAccountID *string `json:"nodeServiceAccountId,omitempty" tf:"node_service_account_id,omitempty"`
@@ -142,11 +142,11 @@ type ClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	NodeServiceAccountIDSelector *v1.Selector `json:"nodeServiceAccountIdSelector,omitempty" tf:"-"`
 
-	// (String) Cluster release channel.
+	// (String). Cluster release channel.
 	// Cluster release channel.
 	ReleaseChannel *string `json:"releaseChannel,omitempty" tf:"release_channel,omitempty"`
 
-	// (String) Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
+	// (String). Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
 	// Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have `edit` role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/iam/v1alpha1.ServiceAccount
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
@@ -159,30 +159,34 @@ type ClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
-	// (String) CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
+	// (String). CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
 	// CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
 	ServiceIPv4Range *string `json:"serviceIpv4Range,omitempty" tf:"service_ipv4_range,omitempty"`
 
-	// (String) Identical to service_ipv4_range but for IPv6 protocol.
+	// (String). Identical to service_ipv4_range but for IPv6 protocol.
 	// Identical to service_ipv4_range but for IPv6 protocol.
 	ServiceIPv6Range *string `json:"serviceIpv6Range,omitempty" tf:"service_ipv6_range,omitempty"`
+
+	// [Block]. Workload Identity Federation configuration.
+	// Workload Identity Federation configuration.
+	WorkloadIdentityFederation []WorkloadIdentityFederationInitParameters `json:"workloadIdentityFederation,omitempty" tf:"workload_identity_federation,omitempty"`
 }
 
 type ClusterObservation struct {
 
-	// (String) CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
+	// (String). CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
 	// CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
 	ClusterIPv4Range *string `json:"clusterIpv4Range,omitempty" tf:"cluster_ipv4_range,omitempty"`
 
-	// (String) Identical to cluster_ipv4_range but for IPv6 protocol.
+	// (String). Identical to cluster_ipv4_range but for IPv6 protocol.
 	// Identical to `cluster_ipv4_range` but for IPv6 protocol.
 	ClusterIPv6Range *string `json:"clusterIpv6Range,omitempty" tf:"cluster_ipv6_range,omitempty"`
 
-	// (String) The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
 	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -190,90 +194,92 @@ type ClusterObservation struct {
 	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) Health of the Kubernetes cluster.
+	// Only) (String). Health of the Kubernetes cluster.
 	// Health of the Kubernetes cluster.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Block List, Max: 1) Cluster KMS provider parameters. (see below for nested schema)
+	// [Block]. Cluster KMS provider parameters.
 	// Cluster KMS provider parameters.
 	KMSProvider []KMSProviderObservation `json:"kmsProvider,omitempty" tf:"kms_provider,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
+	// Only) (String). Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
 	// Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
 	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
 
-	// (Block List, Min: 1, Max: 1) Kubernetes master configuration options. (see below for nested schema)
+	// [Block]. Kubernetes master configuration options.
 	// Kubernetes master configuration options.
-	// +listType=map
-	// +listMapKey=index
 	Master []MasterObservation `json:"master,omitempty" tf:"master,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The ID of the cluster network.
+	// (String). The ID of the cluster network.
 	// The ID of the cluster network.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// (Block List, Max: 1) Network Implementation options. (see below for nested schema)
+	// [Block]. Network Implementation options.
 	// Network Implementation options.
 	NetworkImplementation []NetworkImplementationObservation `json:"networkImplementation,omitempty" tf:"network_implementation,omitempty"`
 
-	// (String) Network policy provider for the cluster. Possible values: CALICO.
+	// (String). Network policy provider for the cluster. Possible values: CALICO.
 	// Network policy provider for the cluster. Possible values: `CALICO`.
 	NetworkPolicyProvider *string `json:"networkPolicyProvider,omitempty" tf:"network_policy_provider,omitempty"`
 
-	// (Number) Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
+	// (Number). Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
 	// Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
 	NodeIPv4CidrMaskSize *float64 `json:"nodeIpv4CidrMaskSize,omitempty" tf:"node_ipv4_cidr_mask_size,omitempty"`
 
-	// (String) Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
+	// (String). Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
 	// Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
 	NodeServiceAccountID *string `json:"nodeServiceAccountId,omitempty" tf:"node_service_account_id,omitempty"`
 
-	// (String) Cluster release channel.
+	// (String). Cluster release channel.
 	// Cluster release channel.
 	ReleaseChannel *string `json:"releaseChannel,omitempty" tf:"release_channel,omitempty"`
 
-	// (String) Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
+	// (String). Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
 	// Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have `edit` role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 
-	// (String) CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
+	// (String). CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
 	// CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
 	ServiceIPv4Range *string `json:"serviceIpv4Range,omitempty" tf:"service_ipv4_range,omitempty"`
 
-	// (String) Identical to service_ipv4_range but for IPv6 protocol.
+	// (String). Identical to service_ipv4_range but for IPv6 protocol.
 	// Identical to service_ipv4_range but for IPv6 protocol.
 	ServiceIPv6Range *string `json:"serviceIpv6Range,omitempty" tf:"service_ipv6_range,omitempty"`
 
-	// (String) Status of the Kubernetes cluster.
+	// Only) (String). Status of the Kubernetes cluster.
 	// Status of the Kubernetes cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// [Block]. Workload Identity Federation configuration.
+	// Workload Identity Federation configuration.
+	WorkloadIdentityFederation []WorkloadIdentityFederationObservation `json:"workloadIdentityFederation,omitempty" tf:"workload_identity_federation,omitempty"`
 }
 
 type ClusterParameters struct {
 
-	// (String) CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
+	// (String). CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
 	// CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
 	// +kubebuilder:validation:Optional
 	ClusterIPv4Range *string `json:"clusterIpv4Range,omitempty" tf:"cluster_ipv4_range,omitempty"`
 
-	// (String) Identical to cluster_ipv4_range but for IPv6 protocol.
+	// (String). Identical to cluster_ipv4_range but for IPv6 protocol.
 	// Identical to `cluster_ipv4_range` but for IPv6 protocol.
 	// +kubebuilder:validation:Optional
 	ClusterIPv6Range *string `json:"clusterIpv6Range,omitempty" tf:"cluster_ipv6_range,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -292,30 +298,30 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Block List, Max: 1) Cluster KMS provider parameters. (see below for nested schema)
+	// [Block]. Cluster KMS provider parameters.
 	// Cluster KMS provider parameters.
 	// +kubebuilder:validation:Optional
 	KMSProvider []KMSProviderParameters `json:"kmsProvider,omitempty" tf:"kms_provider,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Block List, Min: 1, Max: 1) Kubernetes master configuration options. (see below for nested schema)
+	// [Block]. Kubernetes master configuration options.
 	// Kubernetes master configuration options.
 	// +kubebuilder:validation:Optional
 	// +listType=map
 	// +listMapKey=index
 	Master []MasterParameters `json:"master,omitempty" tf:"master,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The ID of the cluster network.
+	// (String). The ID of the cluster network.
 	// The ID of the cluster network.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
@@ -329,22 +335,22 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// (Block List, Max: 1) Network Implementation options. (see below for nested schema)
+	// [Block]. Network Implementation options.
 	// Network Implementation options.
 	// +kubebuilder:validation:Optional
 	NetworkImplementation []NetworkImplementationParameters `json:"networkImplementation,omitempty" tf:"network_implementation,omitempty"`
 
-	// (String) Network policy provider for the cluster. Possible values: CALICO.
+	// (String). Network policy provider for the cluster. Possible values: CALICO.
 	// Network policy provider for the cluster. Possible values: `CALICO`.
 	// +kubebuilder:validation:Optional
 	NetworkPolicyProvider *string `json:"networkPolicyProvider,omitempty" tf:"network_policy_provider,omitempty"`
 
-	// (Number) Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
+	// (Number). Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
 	// Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
 	// +kubebuilder:validation:Optional
 	NodeIPv4CidrMaskSize *float64 `json:"nodeIpv4CidrMaskSize,omitempty" tf:"node_ipv4_cidr_mask_size,omitempty"`
 
-	// (String) Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
+	// (String). Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
 	// Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
@@ -358,12 +364,12 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	NodeServiceAccountIDSelector *v1.Selector `json:"nodeServiceAccountIdSelector,omitempty" tf:"-"`
 
-	// (String) Cluster release channel.
+	// (String). Cluster release channel.
 	// Cluster release channel.
 	// +kubebuilder:validation:Optional
 	ReleaseChannel *string `json:"releaseChannel,omitempty" tf:"release_channel,omitempty"`
 
-	// (String) Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
+	// (String). Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
 	// Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have `edit` role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
@@ -377,20 +383,25 @@ type ClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountIDSelector *v1.Selector `json:"serviceAccountIdSelector,omitempty" tf:"-"`
 
-	// (String) CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
+	// (String). CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
 	// CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
 	// +kubebuilder:validation:Optional
 	ServiceIPv4Range *string `json:"serviceIpv4Range,omitempty" tf:"service_ipv4_range,omitempty"`
 
-	// (String) Identical to service_ipv4_range but for IPv6 protocol.
+	// (String). Identical to service_ipv4_range but for IPv6 protocol.
 	// Identical to service_ipv4_range but for IPv6 protocol.
 	// +kubebuilder:validation:Optional
 	ServiceIPv6Range *string `json:"serviceIpv6Range,omitempty" tf:"service_ipv6_range,omitempty"`
+
+	// [Block]. Workload Identity Federation configuration.
+	// Workload Identity Federation configuration.
+	// +kubebuilder:validation:Optional
+	WorkloadIdentityFederation []WorkloadIdentityFederationParameters `json:"workloadIdentityFederation,omitempty" tf:"workload_identity_federation,omitempty"`
 }
 
 type KMSProviderInitParameters struct {
 
-	// (String) KMS key ID.
+	// (String). KMS key ID.
 	// KMS key ID.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/kms/v1alpha1.SymmetricKey
 	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
@@ -406,14 +417,14 @@ type KMSProviderInitParameters struct {
 
 type KMSProviderObservation struct {
 
-	// (String) KMS key ID.
+	// (String). KMS key ID.
 	// KMS key ID.
 	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 }
 
 type KMSProviderParameters struct {
 
-	// (String) KMS key ID.
+	// (String). KMS key ID.
 	// KMS key ID.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/kms/v1alpha1.SymmetricKey
 	// +kubebuilder:validation:Optional
@@ -430,7 +441,7 @@ type KMSProviderParameters struct {
 
 type LocationInitParameters struct {
 
-	// (String) ID of the subnet.
+	// (String). ID of the subnet.
 	// ID of the subnet.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -443,25 +454,25 @@ type LocationInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// (String) ID of the availability zone.
+	// (String). ID of the availability zone.
 	// ID of the availability zone.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type LocationObservation struct {
 
-	// (String) ID of the subnet.
+	// (String). ID of the subnet.
 	// ID of the subnet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// (String) ID of the availability zone.
+	// (String). ID of the availability zone.
 	// ID of the availability zone.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type LocationParameters struct {
 
-	// (String) ID of the subnet.
+	// (String). ID of the subnet.
 	// ID of the subnet.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
@@ -475,7 +486,7 @@ type LocationParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// (String) ID of the availability zone.
+	// (String). ID of the availability zone.
 	// ID of the availability zone.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
@@ -483,11 +494,11 @@ type LocationParameters struct {
 
 type MaintenancePolicyInitParameters struct {
 
-	// (Boolean) Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
+	// (Bool). Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
 	// Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
 	AutoUpgrade *bool `json:"autoUpgrade,omitempty" tf:"auto_upgrade,omitempty"`
 
-	// (Block Set) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
+	// [Block]. This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
 	// This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, `start_time` and `duration`. Please see `zonal_cluster_resource_name` config example.
 	//
 	// To allow maintenance only on specific days of week, please provide list of elements, with all fields set. Only one time interval (`duration`) is allowed for each day of week. Please see `regional_cluster_resource_name` config example
@@ -496,11 +507,11 @@ type MaintenancePolicyInitParameters struct {
 
 type MaintenancePolicyObservation struct {
 
-	// (Boolean) Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
+	// (Bool). Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
 	// Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
 	AutoUpgrade *bool `json:"autoUpgrade,omitempty" tf:"auto_upgrade,omitempty"`
 
-	// (Block Set) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
+	// [Block]. This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
 	// This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, `start_time` and `duration`. Please see `zonal_cluster_resource_name` config example.
 	//
 	// To allow maintenance only on specific days of week, please provide list of elements, with all fields set. Only one time interval (`duration`) is allowed for each day of week. Please see `regional_cluster_resource_name` config example
@@ -509,12 +520,12 @@ type MaintenancePolicyObservation struct {
 
 type MaintenancePolicyParameters struct {
 
-	// (Boolean) Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
+	// (Bool). Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
 	// Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
 	// +kubebuilder:validation:Optional
 	AutoUpgrade *bool `json:"autoUpgrade" tf:"auto_upgrade,omitempty"`
 
-	// (Block Set) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
+	// [Block]. This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
 	// This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, `start_time` and `duration`. Please see `zonal_cluster_resource_name` config example.
 	//
 	// To allow maintenance only on specific days of week, please provide list of elements, with all fields set. Only one time interval (`duration`) is allowed for each day of week. Please see `regional_cluster_resource_name` config example
@@ -524,47 +535,38 @@ type MaintenancePolicyParameters struct {
 
 type MaintenanceWindowInitParameters struct {
 
-	// (String) The day of the week which you want to update.
 	// The day of the week which you want to update.
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
-	// (String) The duration of the day of week you want to update.
 	// The duration of the day of week you want to update.
 	Duration *string `json:"duration,omitempty" tf:"duration,omitempty"`
 
-	// (String) The start time of the day of week you want to update.
 	// The start time of the day of week you want to update.
 	StartTime *string `json:"startTime,omitempty" tf:"start_time,omitempty"`
 }
 
 type MaintenanceWindowObservation struct {
 
-	// (String) The day of the week which you want to update.
 	// The day of the week which you want to update.
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
-	// (String) The duration of the day of week you want to update.
 	// The duration of the day of week you want to update.
 	Duration *string `json:"duration,omitempty" tf:"duration,omitempty"`
 
-	// (String) The start time of the day of week you want to update.
 	// The start time of the day of week you want to update.
 	StartTime *string `json:"startTime,omitempty" tf:"start_time,omitempty"`
 }
 
 type MaintenanceWindowParameters struct {
 
-	// (String) The day of the week which you want to update.
 	// The day of the week which you want to update.
 	// +kubebuilder:validation:Optional
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
-	// (String) The duration of the day of week you want to update.
 	// The duration of the day of week you want to update.
 	// +kubebuilder:validation:Optional
 	Duration *string `json:"duration" tf:"duration,omitempty"`
 
-	// (String) The start time of the day of week you want to update.
 	// The start time of the day of week you want to update.
 	// +kubebuilder:validation:Optional
 	StartTime *string `json:"startTime" tf:"start_time,omitempty"`
@@ -572,11 +574,11 @@ type MaintenanceWindowParameters struct {
 
 type MasterInitParameters struct {
 
-	// (Number) Number of etcd clusters that will be used for the Kubernetes master.
+	// (Number). Number of etcd clusters that will be used for the Kubernetes master.
 	// Number of etcd clusters that will be used for the Kubernetes master.
 	EtcdClusterSize *float64 `json:"etcdClusterSize,omitempty" tf:"etcd_cluster_size,omitempty"`
 
-	// (String) An IPv6 external network address that is assigned to the master.
+	// (String). An IPv6 external network address that is assigned to the master.
 	// An IPv6 external network address that is assigned to the master.
 	ExternalV6Address *string `json:"externalV6Address,omitempty" tf:"external_v6_address,omitempty"`
 
@@ -584,31 +586,31 @@ type MasterInitParameters struct {
 	// +kubebuilder:default:=default
 	Index *string `json:"index,omitempty" tf:"-"`
 
-	// >1.30) should be performed manually. (see below for nested schema)
+	// >1.30) should be performed manually.
 	// Maintenance policy for Kubernetes master. If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.29. Minor version upgrades (e.g. 1.29->1.30) should be performed manually.
 	MaintenancePolicy []MaintenancePolicyInitParameters `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
-	// (Block List) Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated in place. When creating regional cluster (three master instances), its region will be evaluated automatically by backend. (see below for nested schema)
+	// [Block]. Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated in place. When creating regional cluster (three master instances), its region will be evaluated automatically by backend.
 	// Cluster master's instances locations array (zone and subnet). Cannot be used together with `zonal` or `regional`. Currently, supports either one, for zonal master, or three instances of `master_location`. Can be updated in place. When creating regional cluster (three master instances), its `region` will be evaluated automatically by backend.
 	MasterLocation []MasterLocationInitParameters `json:"masterLocation,omitempty" tf:"master_location,omitempty"`
 
-	// (Block List, Max: 1) Master Logging options. (see below for nested schema)
+	// [Block]. Master Logging options.
 	// Master Logging options.
 	MasterLogging []MasterLoggingInitParameters `json:"masterLogging,omitempty" tf:"master_logging,omitempty"`
 
-	// (Boolean) When true, Kubernetes master will have visible ipv4 address.
+	// (Bool). When true, Kubernetes master will have visible ipv4 address.
 	// When `true`, Kubernetes master will have visible ipv4 address.
 	PublicIP *bool `json:"publicIp,omitempty" tf:"public_ip,omitempty"`
 
-	// (Block List, Max: 1) Initialize parameters for Regional Master (highly available master). (see below for nested schema)
+	// [Block]. Initialize parameters for Regional Master (highly available master).
 	// Initialize parameters for Regional Master (highly available master).
 	Regional []RegionalInitParameters `json:"regional,omitempty" tf:"regional,omitempty"`
 
-	// (Block List, Max: 1) Scale policy of the master. (see below for nested schema)
+	// [Block]. Scale policy of the master.
 	// Scale policy of the master.
 	ScalePolicy []ScalePolicyInitParameters `json:"scalePolicy,omitempty" tf:"scale_policy,omitempty"`
 
-	// (Set of String) The list of security groups applied to resource or their components.
+	// (Set Of String). The list of security groups applied to resource or their components.
 	// The list of security groups applied to resource or their components.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/vpc/v1alpha1.SecurityGroup
 	// +listType=set
@@ -622,45 +624,45 @@ type MasterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
-	// (String) Version of Kubernetes that will be used for master.
+	// (String). Version of Kubernetes that will be used for master.
 	// Version of Kubernetes that will be used for master.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 
-	// (Block List, Max: 1) Initialize parameters for Zonal Master (single node master). (see below for nested schema)
+	// [Block]. Initialize parameters for Zonal Master (single node master).
 	// Initialize parameters for Zonal Master (single node master).
 	Zonal []ZonalInitParameters `json:"zonal,omitempty" tf:"zonal,omitempty"`
 }
 
 type MasterLocationInitParameters struct {
 
-	// (String) ID of the subnet.
+	// (String). ID of the subnet.
 	// ID of the subnet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// (String) ID of the availability zone.
+	// (String). ID of the availability zone.
 	// ID of the availability zone.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type MasterLocationObservation struct {
 
-	// (String) ID of the subnet.
+	// (String). ID of the subnet.
 	// ID of the subnet.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// (String) ID of the availability zone.
+	// (String). ID of the availability zone.
 	// ID of the availability zone.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type MasterLocationParameters struct {
 
-	// (String) ID of the subnet.
+	// (String). ID of the subnet.
 	// ID of the subnet.
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// (String) ID of the availability zone.
+	// (String). ID of the availability zone.
 	// ID of the availability zone.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
@@ -676,13 +678,13 @@ type MasterLoggingInitParameters struct {
 	// Boolean flag that specifies if cluster-autoscaler logs should be sent to Yandex Cloud Logging.
 	ClusterAutoscalerEnabled *bool `json:"clusterAutoscalerEnabled,omitempty" tf:"cluster_autoscaler_enabled,omitempty"`
 
-	// (Boolean) Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+	// (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
 	// Boolean flag that specifies if master components logs should be sent to [Yandex Cloud Logging](https://yandex.cloud/docs/logging/). The exact components that will send their logs must be configured via the options described below.
 	//
 	// ~> Only one of `log_group_id` or `folder_id` (or none) may be specified. If `log_group_id` is specified, logs will be sent to this specific Log group. If `folder_id` is specified, logs will be sent to **default** Log group of this folder. If none of two is specified, logs will be sent to **default** Log group of the **same** folder as Kubernetes cluster.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (Boolean) Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
+	// (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
 	// Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
 	EventsEnabled *bool `json:"eventsEnabled,omitempty" tf:"events_enabled,omitempty"`
 
@@ -690,11 +692,11 @@ type MasterLoggingInitParameters struct {
 	// ID of the folder default Log group of which should be used to collect logs.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// apiserver logs should be sent to Yandex Cloud Logging.
+	// (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
 	// Boolean flag that specifies if kube-apiserver logs should be sent to Yandex Cloud Logging.
 	KubeApiserverEnabled *bool `json:"kubeApiserverEnabled,omitempty" tf:"kube_apiserver_enabled,omitempty"`
 
-	// (String) Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
+	// Only) (String). Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
 	// ID of the Yandex Cloud Logging [Log group](https://yandex.cloud/docs/logging/concepts/log-group).
 	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
 }
@@ -709,13 +711,13 @@ type MasterLoggingObservation struct {
 	// Boolean flag that specifies if cluster-autoscaler logs should be sent to Yandex Cloud Logging.
 	ClusterAutoscalerEnabled *bool `json:"clusterAutoscalerEnabled,omitempty" tf:"cluster_autoscaler_enabled,omitempty"`
 
-	// (Boolean) Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+	// (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
 	// Boolean flag that specifies if master components logs should be sent to [Yandex Cloud Logging](https://yandex.cloud/docs/logging/). The exact components that will send their logs must be configured via the options described below.
 	//
 	// ~> Only one of `log_group_id` or `folder_id` (or none) may be specified. If `log_group_id` is specified, logs will be sent to this specific Log group. If `folder_id` is specified, logs will be sent to **default** Log group of this folder. If none of two is specified, logs will be sent to **default** Log group of the **same** folder as Kubernetes cluster.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (Boolean) Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
+	// (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
 	// Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
 	EventsEnabled *bool `json:"eventsEnabled,omitempty" tf:"events_enabled,omitempty"`
 
@@ -723,11 +725,11 @@ type MasterLoggingObservation struct {
 	// ID of the folder default Log group of which should be used to collect logs.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// apiserver logs should be sent to Yandex Cloud Logging.
+	// (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
 	// Boolean flag that specifies if kube-apiserver logs should be sent to Yandex Cloud Logging.
 	KubeApiserverEnabled *bool `json:"kubeApiserverEnabled,omitempty" tf:"kube_apiserver_enabled,omitempty"`
 
-	// (String) Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
+	// Only) (String). Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
 	// ID of the Yandex Cloud Logging [Log group](https://yandex.cloud/docs/logging/concepts/log-group).
 	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
 }
@@ -744,14 +746,14 @@ type MasterLoggingParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterAutoscalerEnabled *bool `json:"clusterAutoscalerEnabled,omitempty" tf:"cluster_autoscaler_enabled,omitempty"`
 
-	// (Boolean) Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+	// (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
 	// Boolean flag that specifies if master components logs should be sent to [Yandex Cloud Logging](https://yandex.cloud/docs/logging/). The exact components that will send their logs must be configured via the options described below.
 	//
 	// ~> Only one of `log_group_id` or `folder_id` (or none) may be specified. If `log_group_id` is specified, logs will be sent to this specific Log group. If `folder_id` is specified, logs will be sent to **default** Log group of this folder. If none of two is specified, logs will be sent to **default** Log group of the **same** folder as Kubernetes cluster.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (Boolean) Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
+	// (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
 	// Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
 	// +kubebuilder:validation:Optional
 	EventsEnabled *bool `json:"eventsEnabled,omitempty" tf:"events_enabled,omitempty"`
@@ -761,12 +763,12 @@ type MasterLoggingParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// apiserver logs should be sent to Yandex Cloud Logging.
+	// (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
 	// Boolean flag that specifies if kube-apiserver logs should be sent to Yandex Cloud Logging.
 	// +kubebuilder:validation:Optional
 	KubeApiserverEnabled *bool `json:"kubeApiserverEnabled,omitempty" tf:"kube_apiserver_enabled,omitempty"`
 
-	// (String) Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
+	// Only) (String). Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
 	// ID of the Yandex Cloud Logging [Log group](https://yandex.cloud/docs/logging/concepts/log-group).
 	// +kubebuilder:validation:Optional
 	LogGroupID *string `json:"logGroupId,omitempty" tf:"log_group_id,omitempty"`
@@ -774,92 +776,91 @@ type MasterLoggingParameters struct {
 
 type MasterObservation struct {
 
-	// encoded public certificate that is the root of trust for the Kubernetes cluster.
+	// Only) (String). PEM-encoded public certificate that is the root of trust for the Kubernetes cluster.
 	// PEM-encoded public certificate that is the root of trust for the Kubernetes cluster.
 	ClusterCACertificate *string `json:"clusterCaCertificate,omitempty" tf:"cluster_ca_certificate,omitempty"`
 
-	// (Number) Number of etcd clusters that will be used for the Kubernetes master.
+	// (Number). Number of etcd clusters that will be used for the Kubernetes master.
 	// Number of etcd clusters that will be used for the Kubernetes master.
 	EtcdClusterSize *float64 `json:"etcdClusterSize,omitempty" tf:"etcd_cluster_size,omitempty"`
 
-	// (String) An IPv4 external network address that is assigned to the master.
+	// Only) (String). An IPv4 external network address that is assigned to the master.
 	// An IPv4 external network address that is assigned to the master.
 	ExternalV4Address *string `json:"externalV4Address,omitempty" tf:"external_v4_address,omitempty"`
 
-	// (String) External endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
+	// Only) (String). External endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
 	// External endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
 	ExternalV4Endpoint *string `json:"externalV4Endpoint,omitempty" tf:"external_v4_endpoint,omitempty"`
 
-	// (String) An IPv6 external network address that is assigned to the master.
+	// (String). An IPv6 external network address that is assigned to the master.
 	// An IPv6 external network address that is assigned to the master.
 	ExternalV6Address *string `json:"externalV6Address,omitempty" tf:"external_v6_address,omitempty"`
 
-	// (String) External IPv6 endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
+	// Only) (String). External IPv6 endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
 	// External IPv6 endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
 	ExternalV6Endpoint *string `json:"externalV6Endpoint,omitempty" tf:"external_v6_endpoint,omitempty"`
 
 	// This is an injected field with a default value for being able to merge items of the parent object list.
-	// +kubebuilder:default:=default
 	Index *string `json:"index,omitempty" tf:"-"`
 
-	// (String) An IPv4 internal network address that is assigned to the master.
+	// Only) (String). An IPv4 internal network address that is assigned to the master.
 	// An IPv4 internal network address that is assigned to the master.
 	InternalV4Address *string `json:"internalV4Address,omitempty" tf:"internal_v4_address,omitempty"`
 
-	// (String) Internal endpoint that can be used to connect to the master from cloud networks.
+	// Only) (String). Internal endpoint that can be used to connect to the master from cloud networks.
 	// Internal endpoint that can be used to connect to the master from cloud networks.
 	InternalV4Endpoint *string `json:"internalV4Endpoint,omitempty" tf:"internal_v4_endpoint,omitempty"`
 
-	// >1.30) should be performed manually. (see below for nested schema)
+	// >1.30) should be performed manually.
 	// Maintenance policy for Kubernetes master. If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.29. Minor version upgrades (e.g. 1.29->1.30) should be performed manually.
 	MaintenancePolicy []MaintenancePolicyObservation `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
-	// (Block List) Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated in place. When creating regional cluster (three master instances), its region will be evaluated automatically by backend. (see below for nested schema)
+	// [Block]. Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated in place. When creating regional cluster (three master instances), its region will be evaluated automatically by backend.
 	// Cluster master's instances locations array (zone and subnet). Cannot be used together with `zonal` or `regional`. Currently, supports either one, for zonal master, or three instances of `master_location`. Can be updated in place. When creating regional cluster (three master instances), its `region` will be evaluated automatically by backend.
 	MasterLocation []MasterLocationObservation `json:"masterLocation,omitempty" tf:"master_location,omitempty"`
 
-	// (Block List, Max: 1) Master Logging options. (see below for nested schema)
+	// [Block]. Master Logging options.
 	// Master Logging options.
 	MasterLogging []MasterLoggingObservation `json:"masterLogging,omitempty" tf:"master_logging,omitempty"`
 
-	// (Boolean) When true, Kubernetes master will have visible ipv4 address.
+	// (Bool). When true, Kubernetes master will have visible ipv4 address.
 	// When `true`, Kubernetes master will have visible ipv4 address.
 	PublicIP *bool `json:"publicIp,omitempty" tf:"public_ip,omitempty"`
 
-	// (Block List, Max: 1) Initialize parameters for Regional Master (highly available master). (see below for nested schema)
+	// [Block]. Initialize parameters for Regional Master (highly available master).
 	// Initialize parameters for Regional Master (highly available master).
 	Regional []RegionalObservation `json:"regional,omitempty" tf:"regional,omitempty"`
 
-	// (Block List, Max: 1) Scale policy of the master. (see below for nested schema)
+	// [Block]. Scale policy of the master.
 	// Scale policy of the master.
 	ScalePolicy []ScalePolicyObservation `json:"scalePolicy,omitempty" tf:"scale_policy,omitempty"`
 
-	// (Set of String) The list of security groups applied to resource or their components.
+	// (Set Of String). The list of security groups applied to resource or their components.
 	// The list of security groups applied to resource or their components.
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// (String) Version of Kubernetes that will be used for master.
+	// (String). Version of Kubernetes that will be used for master.
 	// Version of Kubernetes that will be used for master.
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 
-	// (List of Object) Information about cluster version. (see below for nested schema)
+	// Only) (List Of Object). Information about cluster version.
 	// Information about cluster version.
 	VersionInfo []VersionInfoObservation `json:"versionInfo,omitempty" tf:"version_info,omitempty"`
 
-	// (Block List, Max: 1) Initialize parameters for Zonal Master (single node master). (see below for nested schema)
+	// [Block]. Initialize parameters for Zonal Master (single node master).
 	// Initialize parameters for Zonal Master (single node master).
 	Zonal []ZonalObservation `json:"zonal,omitempty" tf:"zonal,omitempty"`
 }
 
 type MasterParameters struct {
 
-	// (Number) Number of etcd clusters that will be used for the Kubernetes master.
+	// (Number). Number of etcd clusters that will be used for the Kubernetes master.
 	// Number of etcd clusters that will be used for the Kubernetes master.
 	// +kubebuilder:validation:Optional
 	EtcdClusterSize *float64 `json:"etcdClusterSize,omitempty" tf:"etcd_cluster_size,omitempty"`
 
-	// (String) An IPv6 external network address that is assigned to the master.
+	// (String). An IPv6 external network address that is assigned to the master.
 	// An IPv6 external network address that is assigned to the master.
 	// +kubebuilder:validation:Optional
 	ExternalV6Address *string `json:"externalV6Address,omitempty" tf:"external_v6_address,omitempty"`
@@ -869,37 +870,37 @@ type MasterParameters struct {
 	// +kubebuilder:default:=default
 	Index *string `json:"index" tf:"-"`
 
-	// >1.30) should be performed manually. (see below for nested schema)
+	// >1.30) should be performed manually.
 	// Maintenance policy for Kubernetes master. If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.29. Minor version upgrades (e.g. 1.29->1.30) should be performed manually.
 	// +kubebuilder:validation:Optional
 	MaintenancePolicy []MaintenancePolicyParameters `json:"maintenancePolicy,omitempty" tf:"maintenance_policy,omitempty"`
 
-	// (Block List) Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated in place. When creating regional cluster (three master instances), its region will be evaluated automatically by backend. (see below for nested schema)
+	// [Block]. Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated in place. When creating regional cluster (three master instances), its region will be evaluated automatically by backend.
 	// Cluster master's instances locations array (zone and subnet). Cannot be used together with `zonal` or `regional`. Currently, supports either one, for zonal master, or three instances of `master_location`. Can be updated in place. When creating regional cluster (three master instances), its `region` will be evaluated automatically by backend.
 	// +kubebuilder:validation:Optional
 	MasterLocation []MasterLocationParameters `json:"masterLocation,omitempty" tf:"master_location,omitempty"`
 
-	// (Block List, Max: 1) Master Logging options. (see below for nested schema)
+	// [Block]. Master Logging options.
 	// Master Logging options.
 	// +kubebuilder:validation:Optional
 	MasterLogging []MasterLoggingParameters `json:"masterLogging,omitempty" tf:"master_logging,omitempty"`
 
-	// (Boolean) When true, Kubernetes master will have visible ipv4 address.
+	// (Bool). When true, Kubernetes master will have visible ipv4 address.
 	// When `true`, Kubernetes master will have visible ipv4 address.
 	// +kubebuilder:validation:Optional
 	PublicIP *bool `json:"publicIp,omitempty" tf:"public_ip,omitempty"`
 
-	// (Block List, Max: 1) Initialize parameters for Regional Master (highly available master). (see below for nested schema)
+	// [Block]. Initialize parameters for Regional Master (highly available master).
 	// Initialize parameters for Regional Master (highly available master).
 	// +kubebuilder:validation:Optional
 	Regional []RegionalParameters `json:"regional,omitempty" tf:"regional,omitempty"`
 
-	// (Block List, Max: 1) Scale policy of the master. (see below for nested schema)
+	// [Block]. Scale policy of the master.
 	// Scale policy of the master.
 	// +kubebuilder:validation:Optional
 	ScalePolicy []ScalePolicyParameters `json:"scalePolicy,omitempty" tf:"scale_policy,omitempty"`
 
-	// (Set of String) The list of security groups applied to resource or their components.
+	// (Set Of String). The list of security groups applied to resource or their components.
 	// The list of security groups applied to resource or their components.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
@@ -914,12 +915,12 @@ type MasterParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.Selector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
-	// (String) Version of Kubernetes that will be used for master.
+	// (String). Version of Kubernetes that will be used for master.
 	// Version of Kubernetes that will be used for master.
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 
-	// (Block List, Max: 1) Initialize parameters for Zonal Master (single node master). (see below for nested schema)
+	// [Block]. Initialize parameters for Zonal Master (single node master).
 	// Initialize parameters for Zonal Master (single node master).
 	// +kubebuilder:validation:Optional
 	Zonal []ZonalParameters `json:"zonal,omitempty" tf:"zonal,omitempty"`
@@ -927,21 +928,21 @@ type MasterParameters struct {
 
 type NetworkImplementationInitParameters struct {
 
-	// (Block List, Max: 1) Cilium network implementation configuration. No options exist. (see below for nested schema)
+	// [Block]. Cilium network implementation configuration. No options exist.
 	// Cilium network implementation configuration. No options exist.
 	Cilium []CiliumInitParameters `json:"cilium,omitempty" tf:"cilium,omitempty"`
 }
 
 type NetworkImplementationObservation struct {
 
-	// (Block List, Max: 1) Cilium network implementation configuration. No options exist. (see below for nested schema)
+	// [Block]. Cilium network implementation configuration. No options exist.
 	// Cilium network implementation configuration. No options exist.
 	Cilium []CiliumParameters `json:"cilium,omitempty" tf:"cilium,omitempty"`
 }
 
 type NetworkImplementationParameters struct {
 
-	// (Block List, Max: 1) Cilium network implementation configuration. No options exist. (see below for nested schema)
+	// [Block]. Cilium network implementation configuration. No options exist.
 	// Cilium network implementation configuration. No options exist.
 	// +kubebuilder:validation:Optional
 	Cilium []CiliumParameters `json:"cilium,omitempty" tf:"cilium,omitempty"`
@@ -949,7 +950,7 @@ type NetworkImplementationParameters struct {
 
 type RegionalInitParameters struct {
 
-	// (Block List) Array of locations, where master instances will be allocated. (see below for nested schema)
+	// [Block]. Array of locations, where master instances will be allocated.
 	// Array of locations, where master instances will be allocated.
 	Location []LocationInitParameters `json:"location,omitempty" tf:"location,omitempty"`
 
@@ -960,7 +961,7 @@ type RegionalInitParameters struct {
 
 type RegionalObservation struct {
 
-	// (Block List) Array of locations, where master instances will be allocated. (see below for nested schema)
+	// [Block]. Array of locations, where master instances will be allocated.
 	// Array of locations, where master instances will be allocated.
 	Location []LocationObservation `json:"location,omitempty" tf:"location,omitempty"`
 
@@ -971,7 +972,7 @@ type RegionalObservation struct {
 
 type RegionalParameters struct {
 
-	// (Block List) Array of locations, where master instances will be allocated. (see below for nested schema)
+	// [Block]. Array of locations, where master instances will be allocated.
 	// Array of locations, where master instances will be allocated.
 	// +kubebuilder:validation:Optional
 	Location []LocationParameters `json:"location,omitempty" tf:"location,omitempty"`
@@ -984,21 +985,21 @@ type RegionalParameters struct {
 
 type ScalePolicyInitParameters struct {
 
-	// (Block List, Max: 1) Autoscaled master instance resources. (see below for nested schema)
+	// [Block]. Autoscaled master instance resources.
 	// Autoscaled master instance resources.
 	AutoScale []AutoScaleInitParameters `json:"autoScale,omitempty" tf:"auto_scale,omitempty"`
 }
 
 type ScalePolicyObservation struct {
 
-	// (Block List, Max: 1) Autoscaled master instance resources. (see below for nested schema)
+	// [Block]. Autoscaled master instance resources.
 	// Autoscaled master instance resources.
 	AutoScale []AutoScaleObservation `json:"autoScale,omitempty" tf:"auto_scale,omitempty"`
 }
 
 type ScalePolicyParameters struct {
 
-	// (Block List, Max: 1) Autoscaled master instance resources. (see below for nested schema)
+	// [Block]. Autoscaled master instance resources.
 	// Autoscaled master instance resources.
 	// +kubebuilder:validation:Optional
 	AutoScale []AutoScaleParameters `json:"autoScale,omitempty" tf:"auto_scale,omitempty"`
@@ -1009,25 +1010,55 @@ type VersionInfoInitParameters struct {
 
 type VersionInfoObservation struct {
 
-	// (String)
+	// .
 	CurrentVersion *string `json:"currentVersion,omitempty" tf:"current_version,omitempty"`
 
-	// (Boolean)
+	// .
 	NewRevisionAvailable *bool `json:"newRevisionAvailable,omitempty" tf:"new_revision_available,omitempty"`
 
-	// (String)
+	// .
 	NewRevisionSummary *string `json:"newRevisionSummary,omitempty" tf:"new_revision_summary,omitempty"`
 
-	// (Boolean)
+	// .
 	VersionDeprecated *bool `json:"versionDeprecated,omitempty" tf:"version_deprecated,omitempty"`
 }
 
 type VersionInfoParameters struct {
 }
 
+type WorkloadIdentityFederationInitParameters struct {
+
+	// (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+	// Identifies whether Workload Identity Federation is enabled.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type WorkloadIdentityFederationObservation struct {
+
+	// (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+	// Identifies whether Workload Identity Federation is enabled.
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// Only) (String). Issuer URI for Kubernetes service account tokens.
+	// Issuer URI for Kubernetes service account tokens.
+	Issuer *string `json:"issuer,omitempty" tf:"issuer,omitempty"`
+
+	// Only) (String). JSON Web Key Set URI used to verify token signatures.
+	// JSON Web Key Set URI used to verify token signatures.
+	JwksURI *string `json:"jwksUri,omitempty" tf:"jwks_uri,omitempty"`
+}
+
+type WorkloadIdentityFederationParameters struct {
+
+	// (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+	// Identifies whether Workload Identity Federation is enabled.
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
+}
+
 type ZonalInitParameters struct {
 
-	// (String) ID of the subnet.
+	// (String). ID of the subnet.
 	// ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -1040,25 +1071,25 @@ type ZonalInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// (String) ID of the availability zone.
+	// (String). ID of the availability zone.
 	// ID of the availability zone.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type ZonalObservation struct {
 
-	// (String) ID of the subnet.
+	// (String). ID of the subnet.
 	// ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// (String) ID of the availability zone.
+	// (String). ID of the availability zone.
 	// ID of the availability zone.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type ZonalParameters struct {
 
-	// (String) ID of the subnet.
+	// (String). ID of the subnet.
 	// ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
@@ -1072,7 +1103,7 @@ type ZonalParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.Selector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// (String) ID of the availability zone.
+	// (String). ID of the availability zone.
 	// ID of the availability zone.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
@@ -1105,7 +1136,7 @@ type ClusterStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Cluster is the Schema for the Clusters API. Allows management of Yandex Kubernetes Cluster.
+// Cluster is the Schema for the Clusters API. Manages the yandex_kubernetes_cluster resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

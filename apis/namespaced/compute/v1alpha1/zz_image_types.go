@@ -39,21 +39,21 @@ type HardwareGenerationGeneration2FeaturesParameters struct {
 
 type HardwareGenerationLegacyFeaturesInitParameters struct {
 
-	// (String) A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
+	// (String). A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
 	// A variant of PCI topology, one of `PCI_TOPOLOGY_V1` or `PCI_TOPOLOGY_V2`.
 	PciTopology *string `json:"pciTopology,omitempty" tf:"pci_topology,omitempty"`
 }
 
 type HardwareGenerationLegacyFeaturesObservation struct {
 
-	// (String) A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
+	// (String). A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
 	// A variant of PCI topology, one of `PCI_TOPOLOGY_V1` or `PCI_TOPOLOGY_V2`.
 	PciTopology *string `json:"pciTopology,omitempty" tf:"pci_topology,omitempty"`
 }
 
 type HardwareGenerationLegacyFeaturesParameters struct {
 
-	// (String) A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
+	// (String). A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
 	// A variant of PCI topology, one of `PCI_TOPOLOGY_V1` or `PCI_TOPOLOGY_V2`.
 	// +kubebuilder:validation:Optional
 	PciTopology *string `json:"pciTopology,omitempty" tf:"pci_topology,omitempty"`
@@ -61,34 +61,34 @@ type HardwareGenerationLegacyFeaturesParameters struct {
 
 type ImageHardwareGenerationInitParameters struct {
 
-	// (Block List, Max: 1) A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot. (see below for nested schema)
+	// [Block]. A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot.
 	// A newer hardware generation, which always uses `PCI_TOPOLOGY_V2` and UEFI boot.
 	Generation2Features []HardwareGenerationGeneration2FeaturesInitParameters `json:"generation2Features,omitempty" tf:"generation2_features,omitempty"`
 
-	// (Block List, Max: 1) Defines the first known hardware generation and its features. (see below for nested schema)
+	// [Block]. Defines the first known hardware generation and its features.
 	// Defines the first known hardware generation and its features.
 	LegacyFeatures []HardwareGenerationLegacyFeaturesInitParameters `json:"legacyFeatures,omitempty" tf:"legacy_features,omitempty"`
 }
 
 type ImageHardwareGenerationObservation struct {
 
-	// (Block List, Max: 1) A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot. (see below for nested schema)
+	// [Block]. A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot.
 	// A newer hardware generation, which always uses `PCI_TOPOLOGY_V2` and UEFI boot.
 	Generation2Features []HardwareGenerationGeneration2FeaturesParameters `json:"generation2Features,omitempty" tf:"generation2_features,omitempty"`
 
-	// (Block List, Max: 1) Defines the first known hardware generation and its features. (see below for nested schema)
+	// [Block]. Defines the first known hardware generation and its features.
 	// Defines the first known hardware generation and its features.
 	LegacyFeatures []HardwareGenerationLegacyFeaturesObservation `json:"legacyFeatures,omitempty" tf:"legacy_features,omitempty"`
 }
 
 type ImageHardwareGenerationParameters struct {
 
-	// (Block List, Max: 1) A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot. (see below for nested schema)
+	// [Block]. A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot.
 	// A newer hardware generation, which always uses `PCI_TOPOLOGY_V2` and UEFI boot.
 	// +kubebuilder:validation:Optional
 	Generation2Features []HardwareGenerationGeneration2FeaturesParameters `json:"generation2Features,omitempty" tf:"generation2_features,omitempty"`
 
-	// (Block List, Max: 1) Defines the first known hardware generation and its features. (see below for nested schema)
+	// [Block]. Defines the first known hardware generation and its features.
 	// Defines the first known hardware generation and its features.
 	// +kubebuilder:validation:Optional
 	LegacyFeatures []HardwareGenerationLegacyFeaturesParameters `json:"legacyFeatures,omitempty" tf:"legacy_features,omitempty"`
@@ -96,11 +96,11 @@ type ImageHardwareGenerationParameters struct {
 
 type ImageInitParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) The name of the image family to which this image belongs.
+	// (String). The name of the image family to which this image belongs.
 	// The name of the image family to which this image belongs.
 	Family *string `json:"family,omitempty" tf:"family,omitempty"`
 
@@ -117,37 +117,37 @@ type ImageInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Block List, Max: 1) Hardware generation and its features, which will be applied to the instance when this image is used for creating a boot disk. Provide this property if you wish to override this value, which otherwise is inherited from the source. (see below for nested schema)
+	// [Block]. Hardware generation and its features, which will be applied to the instance when this image is used for creating a boot disk. Provide this property if you wish to override this value, which otherwise is inherited from the source.
 	// Hardware generation and its features, which will be applied to the instance when this image is used for creating a boot disk. Provide this property if you wish to override this value, which otherwise is inherited from the source.
 	HardwareGeneration []ImageHardwareGenerationInitParameters `json:"hardwareGeneration,omitempty" tf:"hardware_generation,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Number) Minimum size in GB of the disk that will be created from this image.
+	// (Number). Minimum size in GB of the disk that will be created from this image.
 	// Minimum size in GB of the disk that will be created from this image.
 	MinDiskSize *float64 `json:"minDiskSize,omitempty" tf:"min_disk_size,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Operating system type that is contained in the image. Possible values: LINUX, WINDOWS.
+	// (String). Operating system type that is contained in the image. Possible values: LINUX, WINDOWS.
 	// Operating system type that is contained in the image. Possible values: `LINUX`, `WINDOWS`.
 	OsType *string `json:"osType,omitempty" tf:"os_type,omitempty"`
 
-	// (Boolean) Optimize the image to create a disk.
+	// (Bool). Optimize the image to create a disk.
 	// Optimize the image to create a disk.
 	Pooled *bool `json:"pooled,omitempty" tf:"pooled,omitempty"`
 
-	// (Set of String) License IDs that indicate which licenses are attached to this image.
+	// (Set Of String). License IDs that indicate which licenses are attached to this image.
 	// License IDs that indicate which licenses are attached to this image.
 	// +listType=set
 	ProductIds []*string `json:"productIds,omitempty" tf:"product_ids,omitempty"`
 
-	// (String) The ID of a disk to use as the source of the image. Changing this ID forces a new resource to be created.
+	// (String). The ID of a disk to use as the source of the image. Changing this ID forces a new resource to be created.
 	// The ID of a disk to use as the source of the image. Changing this ID forces a new resource to be created.
 	SourceDisk *string `json:"sourceDisk,omitempty" tf:"source_disk,omitempty"`
 
@@ -155,30 +155,30 @@ type ImageInitParameters struct {
 	// The name of the family to use as the source of the new image. The ID of the latest image is taken from the `standard-images` folder. Changing the family forces a new resource to be created.
 	SourceFamily *string `json:"sourceFamily,omitempty" tf:"source_family,omitempty"`
 
-	// (String) The ID of an existing image to use as the source of the image. Changing this ID forces a new resource to be created.
+	// (String). The ID of an existing image to use as the source of the image. Changing this ID forces a new resource to be created.
 	// The ID of an existing image to use as the source of the image. Changing this ID forces a new resource to be created.
 	SourceImage *string `json:"sourceImage,omitempty" tf:"source_image,omitempty"`
 
-	// (String) The ID of a snapshot to use as the source of the image. Changing this ID forces a new resource to be created.
+	// (String). The ID of a snapshot to use as the source of the image. Changing this ID forces a new resource to be created.
 	// The ID of a snapshot to use as the source of the image. Changing this ID forces a new resource to be created.
 	SourceSnapshot *string `json:"sourceSnapshot,omitempty" tf:"source_snapshot,omitempty"`
 
-	// (String) The URL to use as the source of the image. Changing this URL forces a new resource to be created.
+	// (String). The URL to use as the source of the image. Changing this URL forces a new resource to be created.
 	// The URL to use as the source of the image. Changing this URL forces a new resource to be created.
 	SourceURL *string `json:"sourceUrl,omitempty" tf:"source_url,omitempty"`
 }
 
 type ImageObservation struct {
 
-	// (String) The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
 	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) The name of the image family to which this image belongs.
+	// (String). The name of the image family to which this image belongs.
 	// The name of the image family to which this image belongs.
 	Family *string `json:"family,omitempty" tf:"family,omitempty"`
 
@@ -186,44 +186,44 @@ type ImageObservation struct {
 	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (Block List, Max: 1) Hardware generation and its features, which will be applied to the instance when this image is used for creating a boot disk. Provide this property if you wish to override this value, which otherwise is inherited from the source. (see below for nested schema)
+	// [Block]. Hardware generation and its features, which will be applied to the instance when this image is used for creating a boot disk. Provide this property if you wish to override this value, which otherwise is inherited from the source.
 	// Hardware generation and its features, which will be applied to the instance when this image is used for creating a boot disk. Provide this property if you wish to override this value, which otherwise is inherited from the source.
 	HardwareGeneration []ImageHardwareGenerationObservation `json:"hardwareGeneration,omitempty" tf:"hardware_generation,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Number) Minimum size in GB of the disk that will be created from this image.
+	// (Number). Minimum size in GB of the disk that will be created from this image.
 	// Minimum size in GB of the disk that will be created from this image.
 	MinDiskSize *float64 `json:"minDiskSize,omitempty" tf:"min_disk_size,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Operating system type that is contained in the image. Possible values: LINUX, WINDOWS.
+	// (String). Operating system type that is contained in the image. Possible values: LINUX, WINDOWS.
 	// Operating system type that is contained in the image. Possible values: `LINUX`, `WINDOWS`.
 	OsType *string `json:"osType,omitempty" tf:"os_type,omitempty"`
 
-	// (Boolean) Optimize the image to create a disk.
+	// (Bool). Optimize the image to create a disk.
 	// Optimize the image to create a disk.
 	Pooled *bool `json:"pooled,omitempty" tf:"pooled,omitempty"`
 
-	// (Set of String) License IDs that indicate which licenses are attached to this image.
+	// (Set Of String). License IDs that indicate which licenses are attached to this image.
 	// License IDs that indicate which licenses are attached to this image.
 	// +listType=set
 	ProductIds []*string `json:"productIds,omitempty" tf:"product_ids,omitempty"`
 
-	// (Number) The size of the image, specified in GB.
+	// Only) (Number). The size of the image, specified in GB.
 	// The size of the image, specified in GB.
 	Size *float64 `json:"size,omitempty" tf:"size,omitempty"`
 
-	// (String) The ID of a disk to use as the source of the image. Changing this ID forces a new resource to be created.
+	// (String). The ID of a disk to use as the source of the image. Changing this ID forces a new resource to be created.
 	// The ID of a disk to use as the source of the image. Changing this ID forces a new resource to be created.
 	SourceDisk *string `json:"sourceDisk,omitempty" tf:"source_disk,omitempty"`
 
@@ -231,31 +231,31 @@ type ImageObservation struct {
 	// The name of the family to use as the source of the new image. The ID of the latest image is taken from the `standard-images` folder. Changing the family forces a new resource to be created.
 	SourceFamily *string `json:"sourceFamily,omitempty" tf:"source_family,omitempty"`
 
-	// (String) The ID of an existing image to use as the source of the image. Changing this ID forces a new resource to be created.
+	// (String). The ID of an existing image to use as the source of the image. Changing this ID forces a new resource to be created.
 	// The ID of an existing image to use as the source of the image. Changing this ID forces a new resource to be created.
 	SourceImage *string `json:"sourceImage,omitempty" tf:"source_image,omitempty"`
 
-	// (String) The ID of a snapshot to use as the source of the image. Changing this ID forces a new resource to be created.
+	// (String). The ID of a snapshot to use as the source of the image. Changing this ID forces a new resource to be created.
 	// The ID of a snapshot to use as the source of the image. Changing this ID forces a new resource to be created.
 	SourceSnapshot *string `json:"sourceSnapshot,omitempty" tf:"source_snapshot,omitempty"`
 
-	// (String) The URL to use as the source of the image. Changing this URL forces a new resource to be created.
+	// (String). The URL to use as the source of the image. Changing this URL forces a new resource to be created.
 	// The URL to use as the source of the image. Changing this URL forces a new resource to be created.
 	SourceURL *string `json:"sourceUrl,omitempty" tf:"source_url,omitempty"`
 
-	// (String) The status of the image.
+	// Only) (String). The status of the image.
 	// The status of the image.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type ImageParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) The name of the image family to which this image belongs.
+	// (String). The name of the image family to which this image belongs.
 	// The name of the image family to which this image belongs.
 	// +kubebuilder:validation:Optional
 	Family *string `json:"family,omitempty" tf:"family,omitempty"`
@@ -274,44 +274,44 @@ type ImageParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Block List, Max: 1) Hardware generation and its features, which will be applied to the instance when this image is used for creating a boot disk. Provide this property if you wish to override this value, which otherwise is inherited from the source. (see below for nested schema)
+	// [Block]. Hardware generation and its features, which will be applied to the instance when this image is used for creating a boot disk. Provide this property if you wish to override this value, which otherwise is inherited from the source.
 	// Hardware generation and its features, which will be applied to the instance when this image is used for creating a boot disk. Provide this property if you wish to override this value, which otherwise is inherited from the source.
 	// +kubebuilder:validation:Optional
 	HardwareGeneration []ImageHardwareGenerationParameters `json:"hardwareGeneration,omitempty" tf:"hardware_generation,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Number) Minimum size in GB of the disk that will be created from this image.
+	// (Number). Minimum size in GB of the disk that will be created from this image.
 	// Minimum size in GB of the disk that will be created from this image.
 	// +kubebuilder:validation:Optional
 	MinDiskSize *float64 `json:"minDiskSize,omitempty" tf:"min_disk_size,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Operating system type that is contained in the image. Possible values: LINUX, WINDOWS.
+	// (String). Operating system type that is contained in the image. Possible values: LINUX, WINDOWS.
 	// Operating system type that is contained in the image. Possible values: `LINUX`, `WINDOWS`.
 	// +kubebuilder:validation:Optional
 	OsType *string `json:"osType,omitempty" tf:"os_type,omitempty"`
 
-	// (Boolean) Optimize the image to create a disk.
+	// (Bool). Optimize the image to create a disk.
 	// Optimize the image to create a disk.
 	// +kubebuilder:validation:Optional
 	Pooled *bool `json:"pooled,omitempty" tf:"pooled,omitempty"`
 
-	// (Set of String) License IDs that indicate which licenses are attached to this image.
+	// (Set Of String). License IDs that indicate which licenses are attached to this image.
 	// License IDs that indicate which licenses are attached to this image.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	ProductIds []*string `json:"productIds,omitempty" tf:"product_ids,omitempty"`
 
-	// (String) The ID of a disk to use as the source of the image. Changing this ID forces a new resource to be created.
+	// (String). The ID of a disk to use as the source of the image. Changing this ID forces a new resource to be created.
 	// The ID of a disk to use as the source of the image. Changing this ID forces a new resource to be created.
 	// +kubebuilder:validation:Optional
 	SourceDisk *string `json:"sourceDisk,omitempty" tf:"source_disk,omitempty"`
@@ -321,17 +321,17 @@ type ImageParameters struct {
 	// +kubebuilder:validation:Optional
 	SourceFamily *string `json:"sourceFamily,omitempty" tf:"source_family,omitempty"`
 
-	// (String) The ID of an existing image to use as the source of the image. Changing this ID forces a new resource to be created.
+	// (String). The ID of an existing image to use as the source of the image. Changing this ID forces a new resource to be created.
 	// The ID of an existing image to use as the source of the image. Changing this ID forces a new resource to be created.
 	// +kubebuilder:validation:Optional
 	SourceImage *string `json:"sourceImage,omitempty" tf:"source_image,omitempty"`
 
-	// (String) The ID of a snapshot to use as the source of the image. Changing this ID forces a new resource to be created.
+	// (String). The ID of a snapshot to use as the source of the image. Changing this ID forces a new resource to be created.
 	// The ID of a snapshot to use as the source of the image. Changing this ID forces a new resource to be created.
 	// +kubebuilder:validation:Optional
 	SourceSnapshot *string `json:"sourceSnapshot,omitempty" tf:"source_snapshot,omitempty"`
 
-	// (String) The URL to use as the source of the image. Changing this URL forces a new resource to be created.
+	// (String). The URL to use as the source of the image. Changing this URL forces a new resource to be created.
 	// The URL to use as the source of the image. Changing this URL forces a new resource to be created.
 	// +kubebuilder:validation:Optional
 	SourceURL *string `json:"sourceUrl,omitempty" tf:"source_url,omitempty"`
@@ -364,7 +364,7 @@ type ImageStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Image is the Schema for the Images API. Creates a VM image for the Yandex Compute service from an existing tarball.
+// Image is the Schema for the Images API. Manages the yandex_compute_image resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

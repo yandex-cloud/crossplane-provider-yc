@@ -128,13 +128,14 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 		}
 
 		// Handle authentication based on the specified method
-		if pcSpec.Credentials.Token != nil {
+		switch {
+		case pcSpec.Credentials.Token != nil:
 			// Use token authentication - direct specification
 			ps.Configuration[token] = *pcSpec.Credentials.Token
-		} else if pcSpec.Credentials.ServiceAccountKeyFile != nil {
+		case pcSpec.Credentials.ServiceAccountKeyFile != nil:
 			// Use service account key file authentication - direct specification
 			ps.Configuration[serviceAccountKeyFile] = *pcSpec.Credentials.ServiceAccountKeyFile
-		} else if pcSpec.Credentials.ServiceAccountKeySecretRef != nil {
+		case pcSpec.Credentials.ServiceAccountKeySecretRef != nil:
 			// Use service account key from separate secret
 			data, err := resource.CommonCredentialExtractor(ctx, xpv1.CredentialsSourceSecret, client, xpv1.CommonCredentialSelectors{
 				SecretRef: &xpv1.SecretKeySelector{
@@ -146,7 +147,7 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string, ujpr
 				return ps, errors.Wrap(err, "cannot extract service account key from secret")
 			}
 			ps.Configuration[serviceAccountKeyFile] = string(data)
-		} else {
+		default:
 			// This handles secret references and other credential sources (backward compatibility)
 			data, err := resource.CommonCredentialExtractor(ctx, pcSpec.Credentials.Source, client, pcSpec.Credentials.CommonCredentialSelectors)
 			if err != nil {

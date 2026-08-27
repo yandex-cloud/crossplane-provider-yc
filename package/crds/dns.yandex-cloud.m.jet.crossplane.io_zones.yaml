@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: zones.dns.yandex-cloud.m.jet.crossplane.io
 spec:
   group: dns.yandex-cloud.m.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Zone is the Schema for the Zones API. Manages a DNS Zone within
-          Yandex Cloud.
+        description: Zone is the Schema for the Zones API. Manages the yandex_dns_zone
+          resource.
         properties:
           apiVersion:
             description: |-
@@ -61,12 +61,12 @@ spec:
                 properties:
                   deletionProtection:
                     description: |-
-                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      (Bool). The true value means that resource is protected from accidental deletion.
                       The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -160,18 +160,18 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   privateNetworks:
                     description: |-
-                      (Set of String) For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
+                      (Set Of String). For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
                       For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
                     items:
                       type: string
@@ -263,12 +263,12 @@ spec:
                     type: object
                   public:
                     description: |-
-                      (Boolean) The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
+                      (Bool). The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
                       The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
                     type: boolean
                   zone:
                     description: |-
-                      (String) The DNS name of this zone, e.g. example.com.. Must ends with dot.
+                      (String). The DNS name of this zone, e.g. example.com.. Must ends with dot.
                       The DNS name of this zone, e.g. `example.com.`. Must ends with dot.
                     type: string
                 type: object
@@ -287,12 +287,12 @@ spec:
                 properties:
                   deletionProtection:
                     description: |-
-                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      (Bool). The true value means that resource is protected from accidental deletion.
                       The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -386,18 +386,18 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   privateNetworks:
                     description: |-
-                      (Set of String) For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
+                      (Set Of String). For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
                       For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
                     items:
                       type: string
@@ -489,12 +489,12 @@ spec:
                     type: object
                   public:
                     description: |-
-                      (Boolean) The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
+                      (Bool). The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
                       The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
                     type: boolean
                   zone:
                     description: |-
-                      (String) The DNS name of this zone, e.g. example.com.. Must ends with dot.
+                      (String). The DNS name of this zone, e.g. example.com.. Must ends with dot.
                       The DNS name of this zone, e.g. `example.com.`. Must ends with dot.
                     type: string
                 type: object
@@ -568,17 +568,17 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
                       The creation timestamp of the resource.
                     type: string
                   deletionProtection:
                     description: |-
-                      (Boolean) The true value means that resource is protected from accidental deletion.
+                      (Bool). The true value means that resource is protected from accidental deletion.
                       The `true` value means that resource is protected from accidental deletion.
                     type: boolean
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -587,24 +587,24 @@ spec:
                       The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   privateNetworks:
                     description: |-
-                      (Set of String) For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
+                      (Set Of String). For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
                       For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
                     items:
                       type: string
@@ -612,12 +612,12 @@ spec:
                     x-kubernetes-list-type: set
                   public:
                     description: |-
-                      (Boolean) The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
+                      (Bool). The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
                       The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
                     type: boolean
                   zone:
                     description: |-
-                      (String) The DNS name of this zone, e.g. example.com.. Must ends with dot.
+                      (String). The DNS name of this zone, e.g. example.com.. Must ends with dot.
                       The DNS name of this zone, e.g. `example.com.`. Must ends with dot.
                     type: string
                 type: object

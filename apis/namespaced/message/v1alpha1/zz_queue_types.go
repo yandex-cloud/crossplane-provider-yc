@@ -30,7 +30,7 @@ import (
 
 type QueueInitParameters struct {
 
-	// (String) The access key to use when applying changes. If omitted, ymq_access_key specified in provider config is used. For more information see documentation.
+	// (String). The access key to use when applying changes. If omitted, ymq_access_key specified in provider config is used. For more information see documentation.
 	// The [access key](https://yandex.cloud/docs/iam/operations/sa/create-access-key) to use when applying changes. If omitted, `ymq_access_key` specified in provider config is used. For more information see [documentation](https://yandex.cloud/docs/message-queue/quickstart).
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/iam/v1alpha1.ServiceAccountStaticAccessKey
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/message.ExtractAccessKey()
@@ -48,35 +48,35 @@ type QueueInitParameters struct {
 	// Enables [content-based deduplication](https://yandex.cloud/docs/message-queue/concepts/deduplication#content-based-deduplication). Can be used only if queue is [FIFO](https://yandex.cloud/docs/message-queue/concepts/queue#fifo-queues).
 	ContentBasedDeduplication *bool `json:"contentBasedDeduplication,omitempty" tf:"content_based_deduplication,omitempty"`
 
-	// (Number) Number of seconds to delay the message from being available for processing. Valid values: from 0 to 900 seconds (15 minutes). Default: 0.
+	// (Number). Number of seconds to delay the message from being available for processing. Valid values: from 0 to 900 seconds (15 minutes). Default: 0.
 	// Number of seconds to [delay the message from being available for processing](https://yandex.cloud/docs/message-queue/concepts/delay-queues#delay-queues). Valid values: from 0 to 900 seconds (15 minutes). Default: 0.
 	DelaySeconds *float64 `json:"delaySeconds,omitempty" tf:"delay_seconds,omitempty"`
 
-	// (Boolean) Is this queue FIFO. If this parameter is not used, a standard queue is created. You cannot change the parameter value for a created queue.
+	// (Bool). Is this queue FIFO. If this parameter is not used, a standard queue is created. You cannot change the parameter value for a created queue.
 	// Is this queue [FIFO](https://yandex.cloud/docs/message-queue/concepts/queue#fifo-queues). If this parameter is not used, a standard queue is created. You cannot change the parameter value for a created queue.
 	FifoQueue *bool `json:"fifoQueue,omitempty" tf:"fifo_queue,omitempty"`
 
-	// (Number) Maximum message size in bytes. Valid values: from 1024 bytes (1 KB) to 262144 bytes (256 KB). Default: 262144 (256 KB). For more information see documentation.
+	// (Number). Maximum message size in bytes. Valid values: from 1024 bytes (1 KB) to 262144 bytes (256 KB). Default: 262144 (256 KB). For more information see documentation.
 	// Maximum message size in bytes. Valid values: from 1024 bytes (1 KB) to 262144 bytes (256 KB). Default: 262144 (256 KB). For more information see [documentation](https://yandex.cloud/docs/message-queue/api-ref/queue/CreateQueue).
 	MaxMessageSize *float64 `json:"maxMessageSize,omitempty" tf:"max_message_size,omitempty"`
 
-	// (Number) The length of time in seconds to retain a message. Valid values: from 60 seconds (1 minute) to 1209600 seconds (14 days). Default: 345600 (4 days). For more information see documentation.
+	// (Number). The length of time in seconds to retain a message. Valid values: from 60 seconds (1 minute) to 1209600 seconds (14 days). Default: 345600 (4 days). For more information see documentation.
 	// The length of time in seconds to retain a message. Valid values: from 60 seconds (1 minute) to 1209600 seconds (14 days). Default: 345600 (4 days). For more information see [documentation](https://yandex.cloud/docs/message-queue/api-ref/queue/CreateQueue).
 	MessageRetentionSeconds *float64 `json:"messageRetentionSeconds,omitempty" tf:"message_retention_seconds,omitempty"`
 
-	// (String) Queue name. The maximum length is 80 characters. You can use numbers, letters, underscores, and hyphens in the name. The name of a FIFO queue must end with the .fifo suffix. If not specified, random name will be generated. Conflicts with name_prefix. For more information see documentation.
+	// (String). Queue name. The maximum length is 80 characters. You can use numbers, letters, underscores, and hyphens in the name. The name of a FIFO queue must end with the .fifo suffix. If not specified, random name will be generated. Conflicts with name_prefix. For more information see documentation.
 	// Queue name. The maximum length is 80 characters. You can use numbers, letters, underscores, and hyphens in the name. The name of a FIFO queue must end with the `.fifo` suffix. If not specified, random name will be generated. Conflicts with `name_prefix`. For more information see [documentation](https://yandex.cloud/docs/message-queue/api-ref/queue/CreateQueue).
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Generates random name with the specified prefix. Conflicts with name.
+	// (String). Generates random name with the specified prefix. Conflicts with name.
 	// Generates random name with the specified prefix. Conflicts with `name`.
 	NamePrefix *string `json:"namePrefix,omitempty" tf:"name_prefix,omitempty"`
 
-	// (Number) Wait time for the ReceiveMessage method (for long polling), in seconds. Valid values: from 0 to 20 seconds. Default: 0. For more information about long polling see documentation.
+	// (Number). Wait time for the ReceiveMessage method (for long polling), in seconds. Valid values: from 0 to 20 seconds. Default: 0. For more information about long polling see documentation.
 	// Wait time for the [ReceiveMessage](https://yandex.cloud/docs/message-queue/api-ref/message/ReceiveMessage) method (for long polling), in seconds. Valid values: from 0 to 20 seconds. Default: 0. For more information about long polling see [documentation](https://yandex.cloud/docs/message-queue/concepts/long-polling).
 	ReceiveWaitTimeSeconds *float64 `json:"receiveWaitTimeSeconds,omitempty" tf:"receive_wait_time_seconds,omitempty"`
 
-	// (String) Message redrive policy in Dead Letter Queue. The source queue and DLQ must be the same type: for FIFO queues, the DLQ must also be a FIFO queue. For more information about redrive policy see documentation. Also you can use example in this page.
+	// (String). Message redrive policy in Dead Letter Queue. The source queue and DLQ must be the same type: for FIFO queues, the DLQ must also be a FIFO queue. For more information about redrive policy see documentation. Also you can use example in this page.
 	// Message redrive policy in [Dead Letter Queue](https://yandex.cloud/docs/message-queue/concepts/dlq). The source queue and DLQ must be the same type: for FIFO queues, the DLQ must also be a FIFO queue. For more information about redrive policy see [documentation](https://yandex.cloud/docs/message-queue/api-ref/queue/CreateQueue). Also you can use example in this page.
 	RedrivePolicy *string `json:"redrivePolicy,omitempty" tf:"redrive_policy,omitempty"`
 
@@ -84,27 +84,27 @@ type QueueInitParameters struct {
 	// ID of the region where the message queue is located at. The default is 'ru-central1'.
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
-	// (String, Sensitive) The secret key to use when applying changes. If omitted, ymq_secret_key specified in provider config is used. For more information see documentation.
+	// (String). The secret key to use when applying changes. If omitted, ymq_secret_key specified in provider config is used. For more information see documentation.
 	// The [secret key](https://yandex.cloud/docs/iam/operations/sa/create-access-key) to use when applying changes. If omitted, `ymq_secret_key` specified in provider config is used. For more information see [documentation](https://yandex.cloud/docs/message-queue/quickstart).
 	SecretKeySecretRef *v1.LocalSecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
 
-	// (Map of String) SQS tags
+	// (Map Of String). SQS tags
 	// SQS tags
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// (Number) Visibility timeout for messages in a queue, specified in seconds. Valid values: from 0 to 43200 seconds (12 hours). Default: 30.
+	// (Number). Visibility timeout for messages in a queue, specified in seconds. Valid values: from 0 to 43200 seconds (12 hours). Default: 30.
 	// [Visibility timeout](https://yandex.cloud/docs/message-queue/concepts/visibility-timeout) for messages in a queue, specified in seconds. Valid values: from 0 to 43200 seconds (12 hours). Default: 30.
 	VisibilityTimeoutSeconds *float64 `json:"visibilityTimeoutSeconds,omitempty" tf:"visibility_timeout_seconds,omitempty"`
 }
 
 type QueueObservation struct {
 
-	// (String) The access key to use when applying changes. If omitted, ymq_access_key specified in provider config is used. For more information see documentation.
+	// (String). The access key to use when applying changes. If omitted, ymq_access_key specified in provider config is used. For more information see documentation.
 	// The [access key](https://yandex.cloud/docs/iam/operations/sa/create-access-key) to use when applying changes. If omitted, `ymq_access_key` specified in provider config is used. For more information see [documentation](https://yandex.cloud/docs/message-queue/quickstart).
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
 
-	// (String) ARN of the Yandex Message Queue. It is used for setting up a redrive policy. See documentation.
+	// Only) (String). ARN of the Yandex Message Queue. It is used for setting up a redrive policy. See documentation.
 	// ARN of the Yandex Message Queue. It is used for setting up a [redrive policy](https://yandex.cloud/docs/message-queue/concepts/dlq). See [documentation](https://yandex.cloud/docs/message-queue/api-ref/queue/SetQueueAttributes).
 	Arn *string `json:"arn,omitempty" tf:"arn,omitempty"`
 
@@ -112,38 +112,38 @@ type QueueObservation struct {
 	// Enables [content-based deduplication](https://yandex.cloud/docs/message-queue/concepts/deduplication#content-based-deduplication). Can be used only if queue is [FIFO](https://yandex.cloud/docs/message-queue/concepts/queue#fifo-queues).
 	ContentBasedDeduplication *bool `json:"contentBasedDeduplication,omitempty" tf:"content_based_deduplication,omitempty"`
 
-	// (Number) Number of seconds to delay the message from being available for processing. Valid values: from 0 to 900 seconds (15 minutes). Default: 0.
+	// (Number). Number of seconds to delay the message from being available for processing. Valid values: from 0 to 900 seconds (15 minutes). Default: 0.
 	// Number of seconds to [delay the message from being available for processing](https://yandex.cloud/docs/message-queue/concepts/delay-queues#delay-queues). Valid values: from 0 to 900 seconds (15 minutes). Default: 0.
 	DelaySeconds *float64 `json:"delaySeconds,omitempty" tf:"delay_seconds,omitempty"`
 
-	// (Boolean) Is this queue FIFO. If this parameter is not used, a standard queue is created. You cannot change the parameter value for a created queue.
+	// (Bool). Is this queue FIFO. If this parameter is not used, a standard queue is created. You cannot change the parameter value for a created queue.
 	// Is this queue [FIFO](https://yandex.cloud/docs/message-queue/concepts/queue#fifo-queues). If this parameter is not used, a standard queue is created. You cannot change the parameter value for a created queue.
 	FifoQueue *bool `json:"fifoQueue,omitempty" tf:"fifo_queue,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Number) Maximum message size in bytes. Valid values: from 1024 bytes (1 KB) to 262144 bytes (256 KB). Default: 262144 (256 KB). For more information see documentation.
+	// (Number). Maximum message size in bytes. Valid values: from 1024 bytes (1 KB) to 262144 bytes (256 KB). Default: 262144 (256 KB). For more information see documentation.
 	// Maximum message size in bytes. Valid values: from 1024 bytes (1 KB) to 262144 bytes (256 KB). Default: 262144 (256 KB). For more information see [documentation](https://yandex.cloud/docs/message-queue/api-ref/queue/CreateQueue).
 	MaxMessageSize *float64 `json:"maxMessageSize,omitempty" tf:"max_message_size,omitempty"`
 
-	// (Number) The length of time in seconds to retain a message. Valid values: from 60 seconds (1 minute) to 1209600 seconds (14 days). Default: 345600 (4 days). For more information see documentation.
+	// (Number). The length of time in seconds to retain a message. Valid values: from 60 seconds (1 minute) to 1209600 seconds (14 days). Default: 345600 (4 days). For more information see documentation.
 	// The length of time in seconds to retain a message. Valid values: from 60 seconds (1 minute) to 1209600 seconds (14 days). Default: 345600 (4 days). For more information see [documentation](https://yandex.cloud/docs/message-queue/api-ref/queue/CreateQueue).
 	MessageRetentionSeconds *float64 `json:"messageRetentionSeconds,omitempty" tf:"message_retention_seconds,omitempty"`
 
-	// (String) Queue name. The maximum length is 80 characters. You can use numbers, letters, underscores, and hyphens in the name. The name of a FIFO queue must end with the .fifo suffix. If not specified, random name will be generated. Conflicts with name_prefix. For more information see documentation.
+	// (String). Queue name. The maximum length is 80 characters. You can use numbers, letters, underscores, and hyphens in the name. The name of a FIFO queue must end with the .fifo suffix. If not specified, random name will be generated. Conflicts with name_prefix. For more information see documentation.
 	// Queue name. The maximum length is 80 characters. You can use numbers, letters, underscores, and hyphens in the name. The name of a FIFO queue must end with the `.fifo` suffix. If not specified, random name will be generated. Conflicts with `name_prefix`. For more information see [documentation](https://yandex.cloud/docs/message-queue/api-ref/queue/CreateQueue).
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Generates random name with the specified prefix. Conflicts with name.
+	// (String). Generates random name with the specified prefix. Conflicts with name.
 	// Generates random name with the specified prefix. Conflicts with `name`.
 	NamePrefix *string `json:"namePrefix,omitempty" tf:"name_prefix,omitempty"`
 
-	// (Number) Wait time for the ReceiveMessage method (for long polling), in seconds. Valid values: from 0 to 20 seconds. Default: 0. For more information about long polling see documentation.
+	// (Number). Wait time for the ReceiveMessage method (for long polling), in seconds. Valid values: from 0 to 20 seconds. Default: 0. For more information about long polling see documentation.
 	// Wait time for the [ReceiveMessage](https://yandex.cloud/docs/message-queue/api-ref/message/ReceiveMessage) method (for long polling), in seconds. Valid values: from 0 to 20 seconds. Default: 0. For more information about long polling see [documentation](https://yandex.cloud/docs/message-queue/concepts/long-polling).
 	ReceiveWaitTimeSeconds *float64 `json:"receiveWaitTimeSeconds,omitempty" tf:"receive_wait_time_seconds,omitempty"`
 
-	// (String) Message redrive policy in Dead Letter Queue. The source queue and DLQ must be the same type: for FIFO queues, the DLQ must also be a FIFO queue. For more information about redrive policy see documentation. Also you can use example in this page.
+	// (String). Message redrive policy in Dead Letter Queue. The source queue and DLQ must be the same type: for FIFO queues, the DLQ must also be a FIFO queue. For more information about redrive policy see documentation. Also you can use example in this page.
 	// Message redrive policy in [Dead Letter Queue](https://yandex.cloud/docs/message-queue/concepts/dlq). The source queue and DLQ must be the same type: for FIFO queues, the DLQ must also be a FIFO queue. For more information about redrive policy see [documentation](https://yandex.cloud/docs/message-queue/api-ref/queue/CreateQueue). Also you can use example in this page.
 	RedrivePolicy *string `json:"redrivePolicy,omitempty" tf:"redrive_policy,omitempty"`
 
@@ -151,19 +151,19 @@ type QueueObservation struct {
 	// ID of the region where the message queue is located at. The default is 'ru-central1'.
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
-	// (Map of String) SQS tags
+	// (Map Of String). SQS tags
 	// SQS tags
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// (Number) Visibility timeout for messages in a queue, specified in seconds. Valid values: from 0 to 43200 seconds (12 hours). Default: 30.
+	// (Number). Visibility timeout for messages in a queue, specified in seconds. Valid values: from 0 to 43200 seconds (12 hours). Default: 30.
 	// [Visibility timeout](https://yandex.cloud/docs/message-queue/concepts/visibility-timeout) for messages in a queue, specified in seconds. Valid values: from 0 to 43200 seconds (12 hours). Default: 30.
 	VisibilityTimeoutSeconds *float64 `json:"visibilityTimeoutSeconds,omitempty" tf:"visibility_timeout_seconds,omitempty"`
 }
 
 type QueueParameters struct {
 
-	// (String) The access key to use when applying changes. If omitted, ymq_access_key specified in provider config is used. For more information see documentation.
+	// (String). The access key to use when applying changes. If omitted, ymq_access_key specified in provider config is used. For more information see documentation.
 	// The [access key](https://yandex.cloud/docs/iam/operations/sa/create-access-key) to use when applying changes. If omitted, `ymq_access_key` specified in provider config is used. For more information see [documentation](https://yandex.cloud/docs/message-queue/quickstart).
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/iam/v1alpha1.ServiceAccountStaticAccessKey
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/message.ExtractAccessKey()
@@ -183,42 +183,42 @@ type QueueParameters struct {
 	// +kubebuilder:validation:Optional
 	ContentBasedDeduplication *bool `json:"contentBasedDeduplication,omitempty" tf:"content_based_deduplication,omitempty"`
 
-	// (Number) Number of seconds to delay the message from being available for processing. Valid values: from 0 to 900 seconds (15 minutes). Default: 0.
+	// (Number). Number of seconds to delay the message from being available for processing. Valid values: from 0 to 900 seconds (15 minutes). Default: 0.
 	// Number of seconds to [delay the message from being available for processing](https://yandex.cloud/docs/message-queue/concepts/delay-queues#delay-queues). Valid values: from 0 to 900 seconds (15 minutes). Default: 0.
 	// +kubebuilder:validation:Optional
 	DelaySeconds *float64 `json:"delaySeconds,omitempty" tf:"delay_seconds,omitempty"`
 
-	// (Boolean) Is this queue FIFO. If this parameter is not used, a standard queue is created. You cannot change the parameter value for a created queue.
+	// (Bool). Is this queue FIFO. If this parameter is not used, a standard queue is created. You cannot change the parameter value for a created queue.
 	// Is this queue [FIFO](https://yandex.cloud/docs/message-queue/concepts/queue#fifo-queues). If this parameter is not used, a standard queue is created. You cannot change the parameter value for a created queue.
 	// +kubebuilder:validation:Optional
 	FifoQueue *bool `json:"fifoQueue,omitempty" tf:"fifo_queue,omitempty"`
 
-	// (Number) Maximum message size in bytes. Valid values: from 1024 bytes (1 KB) to 262144 bytes (256 KB). Default: 262144 (256 KB). For more information see documentation.
+	// (Number). Maximum message size in bytes. Valid values: from 1024 bytes (1 KB) to 262144 bytes (256 KB). Default: 262144 (256 KB). For more information see documentation.
 	// Maximum message size in bytes. Valid values: from 1024 bytes (1 KB) to 262144 bytes (256 KB). Default: 262144 (256 KB). For more information see [documentation](https://yandex.cloud/docs/message-queue/api-ref/queue/CreateQueue).
 	// +kubebuilder:validation:Optional
 	MaxMessageSize *float64 `json:"maxMessageSize,omitempty" tf:"max_message_size,omitempty"`
 
-	// (Number) The length of time in seconds to retain a message. Valid values: from 60 seconds (1 minute) to 1209600 seconds (14 days). Default: 345600 (4 days). For more information see documentation.
+	// (Number). The length of time in seconds to retain a message. Valid values: from 60 seconds (1 minute) to 1209600 seconds (14 days). Default: 345600 (4 days). For more information see documentation.
 	// The length of time in seconds to retain a message. Valid values: from 60 seconds (1 minute) to 1209600 seconds (14 days). Default: 345600 (4 days). For more information see [documentation](https://yandex.cloud/docs/message-queue/api-ref/queue/CreateQueue).
 	// +kubebuilder:validation:Optional
 	MessageRetentionSeconds *float64 `json:"messageRetentionSeconds,omitempty" tf:"message_retention_seconds,omitempty"`
 
-	// (String) Queue name. The maximum length is 80 characters. You can use numbers, letters, underscores, and hyphens in the name. The name of a FIFO queue must end with the .fifo suffix. If not specified, random name will be generated. Conflicts with name_prefix. For more information see documentation.
+	// (String). Queue name. The maximum length is 80 characters. You can use numbers, letters, underscores, and hyphens in the name. The name of a FIFO queue must end with the .fifo suffix. If not specified, random name will be generated. Conflicts with name_prefix. For more information see documentation.
 	// Queue name. The maximum length is 80 characters. You can use numbers, letters, underscores, and hyphens in the name. The name of a FIFO queue must end with the `.fifo` suffix. If not specified, random name will be generated. Conflicts with `name_prefix`. For more information see [documentation](https://yandex.cloud/docs/message-queue/api-ref/queue/CreateQueue).
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Generates random name with the specified prefix. Conflicts with name.
+	// (String). Generates random name with the specified prefix. Conflicts with name.
 	// Generates random name with the specified prefix. Conflicts with `name`.
 	// +kubebuilder:validation:Optional
 	NamePrefix *string `json:"namePrefix,omitempty" tf:"name_prefix,omitempty"`
 
-	// (Number) Wait time for the ReceiveMessage method (for long polling), in seconds. Valid values: from 0 to 20 seconds. Default: 0. For more information about long polling see documentation.
+	// (Number). Wait time for the ReceiveMessage method (for long polling), in seconds. Valid values: from 0 to 20 seconds. Default: 0. For more information about long polling see documentation.
 	// Wait time for the [ReceiveMessage](https://yandex.cloud/docs/message-queue/api-ref/message/ReceiveMessage) method (for long polling), in seconds. Valid values: from 0 to 20 seconds. Default: 0. For more information about long polling see [documentation](https://yandex.cloud/docs/message-queue/concepts/long-polling).
 	// +kubebuilder:validation:Optional
 	ReceiveWaitTimeSeconds *float64 `json:"receiveWaitTimeSeconds,omitempty" tf:"receive_wait_time_seconds,omitempty"`
 
-	// (String) Message redrive policy in Dead Letter Queue. The source queue and DLQ must be the same type: for FIFO queues, the DLQ must also be a FIFO queue. For more information about redrive policy see documentation. Also you can use example in this page.
+	// (String). Message redrive policy in Dead Letter Queue. The source queue and DLQ must be the same type: for FIFO queues, the DLQ must also be a FIFO queue. For more information about redrive policy see documentation. Also you can use example in this page.
 	// Message redrive policy in [Dead Letter Queue](https://yandex.cloud/docs/message-queue/concepts/dlq). The source queue and DLQ must be the same type: for FIFO queues, the DLQ must also be a FIFO queue. For more information about redrive policy see [documentation](https://yandex.cloud/docs/message-queue/api-ref/queue/CreateQueue). Also you can use example in this page.
 	// +kubebuilder:validation:Optional
 	RedrivePolicy *string `json:"redrivePolicy,omitempty" tf:"redrive_policy,omitempty"`
@@ -228,18 +228,18 @@ type QueueParameters struct {
 	// +kubebuilder:validation:Optional
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
-	// (String, Sensitive) The secret key to use when applying changes. If omitted, ymq_secret_key specified in provider config is used. For more information see documentation.
+	// (String). The secret key to use when applying changes. If omitted, ymq_secret_key specified in provider config is used. For more information see documentation.
 	// The [secret key](https://yandex.cloud/docs/iam/operations/sa/create-access-key) to use when applying changes. If omitted, `ymq_secret_key` specified in provider config is used. For more information see [documentation](https://yandex.cloud/docs/message-queue/quickstart).
 	// +kubebuilder:validation:Optional
 	SecretKeySecretRef *v1.LocalSecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
 
-	// (Map of String) SQS tags
+	// (Map Of String). SQS tags
 	// SQS tags
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// (Number) Visibility timeout for messages in a queue, specified in seconds. Valid values: from 0 to 43200 seconds (12 hours). Default: 30.
+	// (Number). Visibility timeout for messages in a queue, specified in seconds. Valid values: from 0 to 43200 seconds (12 hours). Default: 30.
 	// [Visibility timeout](https://yandex.cloud/docs/message-queue/concepts/visibility-timeout) for messages in a queue, specified in seconds. Valid values: from 0 to 43200 seconds (12 hours). Default: 30.
 	// +kubebuilder:validation:Optional
 	VisibilityTimeoutSeconds *float64 `json:"visibilityTimeoutSeconds,omitempty" tf:"visibility_timeout_seconds,omitempty"`
@@ -272,7 +272,7 @@ type QueueStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Queue is the Schema for the Queues API. Allows management of a Yandex Cloud Message Queue.
+// Queue is the Schema for the Queues API. Manages the yandex_message_queue resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

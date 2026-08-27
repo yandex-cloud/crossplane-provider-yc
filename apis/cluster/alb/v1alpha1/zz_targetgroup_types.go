@@ -29,7 +29,7 @@ import (
 
 type TargetGroupInitParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -46,27 +46,27 @@ type TargetGroupInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block List) A Target resource. (see below for nested schema)
+	// [Block]. A Target resource.
 	// A Target resource.
 	Target []TargetInitParameters `json:"target,omitempty" tf:"target,omitempty"`
 }
 
 type TargetGroupObservation struct {
 
-	// (String) The resource name.
+	// Only) (String). The resource name.
 	// The resource name.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -74,26 +74,26 @@ type TargetGroupObservation struct {
 	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block List) A Target resource. (see below for nested schema)
+	// [Block]. A Target resource.
 	// A Target resource.
 	Target []TargetObservation `json:"target,omitempty" tf:"target,omitempty"`
 }
 
 type TargetGroupParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -112,18 +112,18 @@ type TargetGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block List) A Target resource. (see below for nested schema)
+	// [Block]. A Target resource.
 	// A Target resource.
 	// +kubebuilder:validation:Optional
 	Target []TargetParameters `json:"target,omitempty" tf:"target,omitempty"`
@@ -131,14 +131,19 @@ type TargetGroupParameters struct {
 
 type TargetInitParameters struct {
 
-	// (String) IP address of the target.
+	// (Bool). External address of the target.
+	// External address of the target.
+	ExternalAddress *bool `json:"externalAddress,omitempty" tf:"external_address,omitempty"`
+
+	// (String). IP address of the target.
 	// IP address of the target.
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// (Boolean)
+	// (Bool). Private IPv4 address of the target.
+	// Private IPv4 address of the target.
 	PrivateIPv4Address *bool `json:"privateIpv4Address,omitempty" tf:"private_ipv4_address,omitempty"`
 
-	// (String) ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
+	// (String). ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
 	// ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -154,30 +159,41 @@ type TargetInitParameters struct {
 
 type TargetObservation struct {
 
-	// (String) IP address of the target.
+	// (Bool). External address of the target.
+	// External address of the target.
+	ExternalAddress *bool `json:"externalAddress,omitempty" tf:"external_address,omitempty"`
+
+	// (String). IP address of the target.
 	// IP address of the target.
 	IPAddress *string `json:"ipAddress,omitempty" tf:"ip_address,omitempty"`
 
-	// (Boolean)
+	// (Bool). Private IPv4 address of the target.
+	// Private IPv4 address of the target.
 	PrivateIPv4Address *bool `json:"privateIpv4Address,omitempty" tf:"private_ipv4_address,omitempty"`
 
-	// (String) ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
+	// (String). ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
 	// ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
 type TargetParameters struct {
 
-	// (String) IP address of the target.
+	// (Bool). External address of the target.
+	// External address of the target.
+	// +kubebuilder:validation:Optional
+	ExternalAddress *bool `json:"externalAddress,omitempty" tf:"external_address,omitempty"`
+
+	// (String). IP address of the target.
 	// IP address of the target.
 	// +kubebuilder:validation:Optional
 	IPAddress *string `json:"ipAddress" tf:"ip_address,omitempty"`
 
-	// (Boolean)
+	// (Bool). Private IPv4 address of the target.
+	// Private IPv4 address of the target.
 	// +kubebuilder:validation:Optional
 	PrivateIPv4Address *bool `json:"privateIpv4Address,omitempty" tf:"private_ipv4_address,omitempty"`
 
-	// (String) ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
+	// (String). ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
 	// ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
@@ -219,7 +235,7 @@ type TargetGroupStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TargetGroup is the Schema for the TargetGroups API. An application load balancer distributes the load across cloud resources that are combined into a target group.
+// TargetGroup is the Schema for the TargetGroups API. Manages the yandex_alb_target_group resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

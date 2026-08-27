@@ -29,47 +29,47 @@ import (
 
 type DHCPOptionsInitParameters struct {
 
-	// (String) Domain name.
+	// (String). Domain name.
 	// Domain name.
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
 
-	// (List of String) Domain name server IP addresses.
+	// (List Of String). Domain name server IP addresses.
 	// Domain name server IP addresses.
 	DomainNameServers []*string `json:"domainNameServers,omitempty" tf:"domain_name_servers,omitempty"`
 
-	// (List of String) NTP server IP addresses.
+	// (List Of String). NTP server IP addresses.
 	// NTP server IP addresses.
 	NtpServers []*string `json:"ntpServers,omitempty" tf:"ntp_servers,omitempty"`
 }
 
 type DHCPOptionsObservation struct {
 
-	// (String) Domain name.
+	// (String). Domain name.
 	// Domain name.
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
 
-	// (List of String) Domain name server IP addresses.
+	// (List Of String). Domain name server IP addresses.
 	// Domain name server IP addresses.
 	DomainNameServers []*string `json:"domainNameServers,omitempty" tf:"domain_name_servers,omitempty"`
 
-	// (List of String) NTP server IP addresses.
+	// (List Of String). NTP server IP addresses.
 	// NTP server IP addresses.
 	NtpServers []*string `json:"ntpServers,omitempty" tf:"ntp_servers,omitempty"`
 }
 
 type DHCPOptionsParameters struct {
 
-	// (String) Domain name.
+	// (String). Domain name.
 	// Domain name.
 	// +kubebuilder:validation:Optional
 	DomainName *string `json:"domainName,omitempty" tf:"domain_name,omitempty"`
 
-	// (List of String) Domain name server IP addresses.
+	// (List Of String). Domain name server IP addresses.
 	// Domain name server IP addresses.
 	// +kubebuilder:validation:Optional
 	DomainNameServers []*string `json:"domainNameServers,omitempty" tf:"domain_name_servers,omitempty"`
 
-	// (List of String) NTP server IP addresses.
+	// (List Of String). NTP server IP addresses.
 	// NTP server IP addresses.
 	// +kubebuilder:validation:Optional
 	NtpServers []*string `json:"ntpServers,omitempty" tf:"ntp_servers,omitempty"`
@@ -77,11 +77,11 @@ type DHCPOptionsParameters struct {
 
 type SubnetInitParameters struct {
 
-	// (Block List, Max: 1) Options for DHCP client. (see below for nested schema)
+	// [Block]. Options for DHCP client.
 	// Options for DHCP client.
 	DHCPOptions []DHCPOptionsInitParameters `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -98,16 +98,16 @@ type SubnetInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
+	// (String). ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
 	// ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
 	// +crossplane:generate:reference:type=Network
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -120,7 +120,7 @@ type SubnetInitParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// (String) The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
+	// (String). The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
 	// The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
 
@@ -128,22 +128,22 @@ type SubnetInitParameters struct {
 	// A list of blocks of internal IPv4 addresses that are owned by this subnet. Provide this property when you create the subnet. For example, `10.0.0.0/22` or `192.168.0.0/16`. Blocks of addresses must be unique and non-overlapping within a network. Minimum subnet size is `/28`, and maximum subnet size is `/16`. Only IPv4 is supported.
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
-	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
 	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type SubnetObservation struct {
 
-	// (String) The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
 	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Block List, Max: 1) Options for DHCP client. (see below for nested schema)
+	// [Block]. Options for DHCP client.
 	// Options for DHCP client.
 	DHCPOptions []DHCPOptionsObservation `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -151,23 +151,23 @@ type SubnetObservation struct {
 	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
+	// (String). ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
 	// ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// (String) The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
+	// (String). The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
 	// The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
 
@@ -175,23 +175,23 @@ type SubnetObservation struct {
 	// A list of blocks of internal IPv4 addresses that are owned by this subnet. Provide this property when you create the subnet. For example, `10.0.0.0/22` or `192.168.0.0/16`. Blocks of addresses must be unique and non-overlapping within a network. Minimum subnet size is `/28`, and maximum subnet size is `/16`. Only IPv4 is supported.
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
-	// (List of String) An optional list of blocks of IPv6 addresses that are owned by this subnet.
+	// Only) (List Of String). An optional list of blocks of IPv6 addresses that are owned by this subnet.
 	// An optional list of blocks of IPv6 addresses that are owned by this subnet.
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 
-	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
 	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type SubnetParameters struct {
 
-	// (Block List, Max: 1) Options for DHCP client. (see below for nested schema)
+	// [Block]. Options for DHCP client.
 	// Options for DHCP client.
 	// +kubebuilder:validation:Optional
 	DHCPOptions []DHCPOptionsParameters `json:"dhcpOptions,omitempty" tf:"dhcp_options,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -210,18 +210,18 @@ type SubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
+	// (String). ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
 	// ID of the network this subnet belongs to. Only networks that are in the distributed mode can have subnets.
 	// +crossplane:generate:reference:type=Network
 	// +kubebuilder:validation:Optional
@@ -235,7 +235,7 @@ type SubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.Selector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// (String) The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
+	// (String). The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
 	// The ID of the route table to assign to this subnet. Assigned route table should belong to the same network as this subnet.
 	// +kubebuilder:validation:Optional
 	RouteTableID *string `json:"routeTableId,omitempty" tf:"route_table_id,omitempty"`
@@ -245,7 +245,7 @@ type SubnetParameters struct {
 	// +kubebuilder:validation:Optional
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
-	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
 	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
@@ -278,7 +278,7 @@ type SubnetStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Subnet is the Schema for the Subnets API. A VPC network is a virtual version of the traditional physical networks that exist within and between physical data centers.
+// Subnet is the Schema for the Subnets API. Manages the yandex_vpc_subnet resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -30,20 +30,20 @@ import (
 
 type SymmetricKeyInitParameters struct {
 
-	// (String) Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is AES_128.
-	// Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is `AES_128`.
+	// (String). Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is AES_128.
+	// Default encryption algorithm to be used with new versions of the key.
 	DefaultAlgorithm *string `json:"defaultAlgorithm,omitempty" tf:"default_algorithm,omitempty"`
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
-	// The `true` value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
+	// Flag that inhibits deletion of the key
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
-	// The resource description.
+	// (String). The resource description.
+	// Description of the key.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// id is used.
-	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+	// ID of the folder that the key belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -55,86 +55,101 @@ type SymmetricKeyInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
-	// A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
+	// Custom labels for the key as `key:value` pairs. Maximum 64 per key.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). The resource name.
+	// Name of the key.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Interval between automatic rotations. To disable automatic rotation, omit this parameter.
-	// Interval between automatic rotations. To disable automatic rotation, omit this parameter.
+	// (String). Interval between automatic rotations. To disable automatic rotation, omit this parameter.
+	// Time period between automatic key rotations.
 	RotationPeriod *string `json:"rotationPeriod,omitempty" tf:"rotation_period,omitempty"`
+
+	// Only) (String). The status of the key.
+	// Current status of the key.
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// (String). The symmetric key ID.
+	// ID of the symmetric KMS key to return.
+	// To get the ID of a symmetric KMS key use a [SymmetricKeyService.List] request.
+	SymmetricKeyID *string `json:"symmetricKeyId,omitempty" tf:"symmetric_key_id,omitempty"`
 }
 
 type SymmetricKeyObservation struct {
 
-	// (String) The creation timestamp of the resource.
-	// The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
+	// Time when the key was created.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is AES_128.
-	// Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is `AES_128`.
+	// (String). Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is AES_128.
+	// Default encryption algorithm to be used with new versions of the key.
 	DefaultAlgorithm *string `json:"defaultAlgorithm,omitempty" tf:"default_algorithm,omitempty"`
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
-	// The `true` value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
+	// Flag that inhibits deletion of the key
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
-	// The resource description.
+	// (String). The resource description.
+	// Description of the key.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// id is used.
-	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+	// ID of the folder that the key belongs to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
-	// A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
+	// Custom labels for the key as `key:value` pairs. Maximum 64 per key.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). The resource name.
+	// Name of the key.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Last rotation timestamp of the key.
-	// Last rotation timestamp of the key.
+	// Only) (String). Last rotation timestamp of the key.
+	// Time of the last key rotation (time when the last version was created).
+	// Empty if the key does not have versions yet.
 	RotatedAt *string `json:"rotatedAt,omitempty" tf:"rotated_at,omitempty"`
 
-	// (String) Interval between automatic rotations. To disable automatic rotation, omit this parameter.
-	// Interval between automatic rotations. To disable automatic rotation, omit this parameter.
+	// (String). Interval between automatic rotations. To disable automatic rotation, omit this parameter.
+	// Time period between automatic key rotations.
 	RotationPeriod *string `json:"rotationPeriod,omitempty" tf:"rotation_period,omitempty"`
 
-	// (String) The status of the key.
-	// The status of the key.
+	// Only) (String). The status of the key.
+	// Current status of the key.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// (String). The symmetric key ID.
+	// ID of the symmetric KMS key to return.
+	// To get the ID of a symmetric KMS key use a [SymmetricKeyService.List] request.
+	SymmetricKeyID *string `json:"symmetricKeyId,omitempty" tf:"symmetric_key_id,omitempty"`
 }
 
 type SymmetricKeyParameters struct {
 
-	// (String) Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is AES_128.
-	// Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is `AES_128`.
+	// (String). Encryption algorithm to be used with a new key version, generated with the next rotation. The default value is AES_128.
+	// Default encryption algorithm to be used with new versions of the key.
 	// +kubebuilder:validation:Optional
 	DefaultAlgorithm *string `json:"defaultAlgorithm,omitempty" tf:"default_algorithm,omitempty"`
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
-	// The `true` value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
+	// Flag that inhibits deletion of the key
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
-	// The resource description.
+	// (String). The resource description.
+	// Description of the key.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// id is used.
-	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+	// ID of the folder that the key belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -147,21 +162,32 @@ type SymmetricKeyParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
-	// A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
+	// Custom labels for the key as `key:value` pairs. Maximum 64 per key.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). The resource name.
+	// Name of the key.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) Interval between automatic rotations. To disable automatic rotation, omit this parameter.
-	// Interval between automatic rotations. To disable automatic rotation, omit this parameter.
+	// (String). Interval between automatic rotations. To disable automatic rotation, omit this parameter.
+	// Time period between automatic key rotations.
 	// +kubebuilder:validation:Optional
 	RotationPeriod *string `json:"rotationPeriod,omitempty" tf:"rotation_period,omitempty"`
+
+	// Only) (String). The status of the key.
+	// Current status of the key.
+	// +kubebuilder:validation:Optional
+	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// (String). The symmetric key ID.
+	// ID of the symmetric KMS key to return.
+	// To get the ID of a symmetric KMS key use a [SymmetricKeyService.List] request.
+	// +kubebuilder:validation:Optional
+	SymmetricKeyID *string `json:"symmetricKeyId,omitempty" tf:"symmetric_key_id,omitempty"`
 }
 
 // SymmetricKeySpec defines the desired state of SymmetricKey
@@ -191,7 +217,7 @@ type SymmetricKeyStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SymmetricKey is the Schema for the SymmetricKeys API. Creates a Yandex KMS symmetric key that can be used for cryptographic operation.
+// SymmetricKey is the Schema for the SymmetricKeys API. Manages the yandex_kms_symmetric_key resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

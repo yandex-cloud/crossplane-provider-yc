@@ -30,12 +30,16 @@ import (
 
 type RecordsetInitParameters struct {
 
-	// (Set of String) The string data for the records in this record set.
+	// (Set Of String). The string data for the records in this record set.
 	// The string data for the records in this record set.
 	// +listType=set
 	Data []*string `json:"data,omitempty" tf:"data,omitempty"`
 
-	// (String) The DNS name this record set will apply to.
+	// (String). The DNS record set description.
+	// The DNS record set description.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (String). The DNS name this record set will apply to.
 	// The DNS name this record set will apply to.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -43,11 +47,11 @@ type RecordsetInitParameters struct {
 	// The time-to-live of this record set (seconds).
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 
-	// (String) The DNS record set type.
+	// (String). The DNS record set type.
 	// The DNS record set type.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (String) The id of the zone in which this record set will reside.
+	// (String). The id of the zone in which this record set will reside.
 	// The id of the zone in which this record set will reside.
 	// +crossplane:generate:reference:type=Zone
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
@@ -63,15 +67,19 @@ type RecordsetInitParameters struct {
 
 type RecordsetObservation struct {
 
-	// (Set of String) The string data for the records in this record set.
+	// (Set Of String). The string data for the records in this record set.
 	// The string data for the records in this record set.
 	// +listType=set
 	Data []*string `json:"data,omitempty" tf:"data,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String). The DNS record set description.
+	// The DNS record set description.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) The DNS name this record set will apply to.
+	// (String). The DNS name this record set will apply to.
 	// The DNS name this record set will apply to.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
@@ -79,24 +87,29 @@ type RecordsetObservation struct {
 	// The time-to-live of this record set (seconds).
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 
-	// (String) The DNS record set type.
+	// (String). The DNS record set type.
 	// The DNS record set type.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (String) The id of the zone in which this record set will reside.
+	// (String). The id of the zone in which this record set will reside.
 	// The id of the zone in which this record set will reside.
 	ZoneID *string `json:"zoneId,omitempty" tf:"zone_id,omitempty"`
 }
 
 type RecordsetParameters struct {
 
-	// (Set of String) The string data for the records in this record set.
+	// (Set Of String). The string data for the records in this record set.
 	// The string data for the records in this record set.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Data []*string `json:"data,omitempty" tf:"data,omitempty"`
 
-	// (String) The DNS name this record set will apply to.
+	// (String). The DNS record set description.
+	// The DNS record set description.
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// (String). The DNS name this record set will apply to.
 	// The DNS name this record set will apply to.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -106,12 +119,12 @@ type RecordsetParameters struct {
 	// +kubebuilder:validation:Optional
 	TTL *float64 `json:"ttl,omitempty" tf:"ttl,omitempty"`
 
-	// (String) The DNS record set type.
+	// (String). The DNS record set type.
 	// The DNS record set type.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (String) The id of the zone in which this record set will reside.
+	// (String). The id of the zone in which this record set will reside.
 	// The id of the zone in which this record set will reside.
 	// +crossplane:generate:reference:type=Zone
 	// +kubebuilder:validation:Optional
@@ -153,7 +166,7 @@ type RecordsetStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Recordset is the Schema for the Recordsets API. Manages a DNS RecordSet within Yandex Cloud.
+// Recordset is the Schema for the Recordsets API. Manages the yandex_dns_recordset resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

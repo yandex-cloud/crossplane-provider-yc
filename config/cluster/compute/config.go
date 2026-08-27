@@ -23,9 +23,9 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/config"
 
-	"github.com/yandex-cloud/crossplane-provider-yc/config/common"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/cluster/iam"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/cluster/vpc"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/common"
 )
 
 const (
@@ -86,6 +86,18 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_compute_disk", func(r *config.Resource) {
 		r.References["disk_placement_policy.disk_placement_group_id"] = config.Reference{
 			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "DiskPlacementGroup"),
+		}
+	})
+	p.AddResourceConfigurator("yandex_compute_disk_iam_binding", func(r *config.Resource) {
+		r.ExternalName = common.IAMExternalName("disk_id", "role")
+		r.References["disk_id"] = config.Reference{
+			Type: "Disk",
+		}
+		r.References["members"] = config.Reference{
+			Type:              fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccount"),
+			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
+			RefFieldName:      "ServiceAccountRef",
+			SelectorFieldName: "ServiceAccountSelector",
 		}
 	})
 

@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: targetgroups.lb.yandex-cloud.m.jet.crossplane.io
 spec:
   group: lb.yandex-cloud.m.jet.crossplane.io
@@ -34,9 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: TargetGroup is the Schema for the TargetGroups API. A load balancer
-          distributes the load across cloud resources that are combined into a target
-          group.
+        description: TargetGroup is the Schema for the TargetGroups API. Manages the
+          yandex_lb_target_group resource.
         properties:
           apiVersion:
             description: |-
@@ -62,13 +61,13 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      Only) (String). The resource description.
+                      Description of the target group. 0-256 characters long.
                     type: string
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the target group belongs to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -156,29 +155,30 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+                      Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the target group.
+                      The name is unique within the folder. 3-63 characters long.
                     type: string
                   regionId:
                     description: |-
-                      (String) ID of the availability zone where the target group resides. If omitted, default region is being used.
-                      ID of the availability zone where the target group resides. If omitted, default region is being used.
+                      (String). ID of the region where the target group resides.
+                      ID of the region where the target group resides.
                     type: string
                   target:
                     description: |-
-                      (Block Set) A Target resource. (see below for nested schema)
-                      A Target resource.
+                      [Block].
+                      A list of targets in the target group.
                     items:
                       properties:
                         address:
                           description: |-
-                            (String) IP address of the target.
+                            .
                             IP address of the target.
                           type: string
                         addressRef:
@@ -265,8 +265,10 @@ spec:
                           type: object
                         subnetId:
                           description: |-
-                            (String) ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
-                            ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
+                            .
+                            ID of the subnet that targets are connected to.
+                            All targets in the target group must be connected to the same subnet within a single availability zone.
+                            The length must be less than or equal to 50.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -350,6 +352,14 @@ spec:
                           type: object
                       type: object
                     type: array
+                  targetGroupId:
+                    description: |-
+                      (String). Target Group ID.
+                      ID of the TargetGroup resource to return.
+                      To get the target group ID, use a [TargetGroupService.List] request.
+                      The length must be less than or equal to 50.
+                      This field is required.
+                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -366,13 +376,13 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      Only) (String). The resource description.
+                      Description of the target group. 0-256 characters long.
                     type: string
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the target group belongs to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -460,29 +470,30 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+                      Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the target group.
+                      The name is unique within the folder. 3-63 characters long.
                     type: string
                   regionId:
                     description: |-
-                      (String) ID of the availability zone where the target group resides. If omitted, default region is being used.
-                      ID of the availability zone where the target group resides. If omitted, default region is being used.
+                      (String). ID of the region where the target group resides.
+                      ID of the region where the target group resides.
                     type: string
                   target:
                     description: |-
-                      (Block Set) A Target resource. (see below for nested schema)
-                      A Target resource.
+                      [Block].
+                      A list of targets in the target group.
                     items:
                       properties:
                         address:
                           description: |-
-                            (String) IP address of the target.
+                            .
                             IP address of the target.
                           type: string
                         addressRef:
@@ -569,8 +580,10 @@ spec:
                           type: object
                         subnetId:
                           description: |-
-                            (String) ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
-                            ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
+                            .
+                            ID of the subnet that targets are connected to.
+                            All targets in the target group must be connected to the same subnet within a single availability zone.
+                            The length must be less than or equal to 50.
                           type: string
                         subnetIdRef:
                           description: Reference to a Subnet in vpc to populate subnetId.
@@ -654,6 +667,14 @@ spec:
                           type: object
                       type: object
                     type: array
+                  targetGroupId:
+                    description: |-
+                      (String). Target Group ID.
+                      ID of the TargetGroup resource to return.
+                      To get the target group ID, use a [TargetGroupService.List] request.
+                      The length must be less than or equal to 50.
+                      This field is required.
+                    type: string
                 type: object
               managementPolicies:
                 default:
@@ -720,58 +741,69 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
-                      The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
+                      Output only. Creation timestamp in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      Only) (String). The resource description.
+                      Description of the target group. 0-256 characters long.
                     type: string
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the target group belongs to.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+                      Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the target group.
+                      The name is unique within the folder. 3-63 characters long.
                     type: string
                   regionId:
                     description: |-
-                      (String) ID of the availability zone where the target group resides. If omitted, default region is being used.
-                      ID of the availability zone where the target group resides. If omitted, default region is being used.
+                      (String). ID of the region where the target group resides.
+                      ID of the region where the target group resides.
                     type: string
                   target:
                     description: |-
-                      (Block Set) A Target resource. (see below for nested schema)
-                      A Target resource.
+                      [Block].
+                      A list of targets in the target group.
                     items:
                       properties:
                         address:
                           description: |-
-                            (String) IP address of the target.
+                            .
                             IP address of the target.
                           type: string
                         subnetId:
                           description: |-
-                            (String) ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
-                            ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
+                            .
+                            ID of the subnet that targets are connected to.
+                            All targets in the target group must be connected to the same subnet within a single availability zone.
+                            The length must be less than or equal to 50.
                           type: string
                       type: object
                     type: array
+                  targetGroupId:
+                    description: |-
+                      (String). Target Group ID.
+                      ID of the TargetGroup resource to return.
+                      To get the target group ID, use a [TargetGroupService.List] request.
+                      The length must be less than or equal to 50.
+                      This field is required.
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.

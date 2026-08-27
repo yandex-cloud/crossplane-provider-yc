@@ -26,6 +26,8 @@ import (
 	"github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	"github.com/crossplane/upjet/v2/pkg/config"
+
+	"github.com/yandex-cloud/crossplane-provider-yc/config/common"
 )
 
 const (
@@ -35,6 +37,12 @@ const (
 	ConfigPath = "github.com/yandex-cloud/crossplane-provider-yc/config/cluster/iam"
 	// ServiceAccountRefValueFn is the name of resolver.
 	ServiceAccountRefValueFn = "ServiceAccountRefValue()"
+	// ServiceAccountType is the generated ServiceAccount API type name.
+	ServiceAccountType = "ServiceAccount"
+	// ServiceAccountRefFieldName is the generated ServiceAccount reference field name.
+	ServiceAccountRefFieldName = "ServiceAccountRef"
+	// ServiceAccountSelectorFieldName is the generated ServiceAccount selector field name.
+	ServiceAccountSelectorFieldName = "ServiceAccountSelector"
 )
 
 func serviceAccountKey(attr map[string]interface{}) ([]byte, error) {
@@ -88,7 +96,7 @@ func serviceAccountStaticKey(attr map[string]interface{}) (map[string][]byte, er
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_iam_service_account_key", func(r *config.Resource) {
 		r.References["service_account_id"] = config.Reference{
-			Type: "ServiceAccount",
+			Type: ServiceAccountType,
 		}
 		r.Sensitive.AdditionalConnectionDetailsFn = func(attr map[string]interface{}) (map[string][]byte, error) {
 			bb, err := serviceAccountKey(attr)
@@ -99,41 +107,52 @@ func Configure(p *config.Provider) {
 	})
 	p.AddResourceConfigurator("yandex_iam_service_account_static_access_key", func(r *config.Resource) {
 		r.References["service_account_id"] = config.Reference{
-			Type: "ServiceAccount",
+			Type: ServiceAccountType,
 		}
 		r.Sensitive.AdditionalConnectionDetailsFn = serviceAccountStaticKey
 	})
 	p.AddResourceConfigurator("yandex_iam_service_account_iam_policy", func(r *config.Resource) {
 		r.References["service_account_id"] = config.Reference{
-			Type: "ServiceAccount",
+			Type: ServiceAccountType,
 		}
 	})
 	p.AddResourceConfigurator("yandex_iam_service_account_api_key", func(r *config.Resource) {
 		r.References["service_account_id"] = config.Reference{
-			Type: "ServiceAccount",
+			Type: ServiceAccountType,
 		}
 	})
 	p.AddResourceConfigurator("yandex_iam_service_account_iam_binding", func(r *config.Resource) {
+		r.ExternalName = common.IAMExternalName("service_account_id", "role")
 		r.References["service_account_id"] = config.Reference{
-			Type: "ServiceAccount",
+			Type: ServiceAccountType,
 		}
 		r.References["members"] = config.Reference{
-			Type:              "ServiceAccount",
+			Type:              ServiceAccountType,
 			Extractor:         fmt.Sprintf("%s.%s", ConfigPath, ServiceAccountRefValueFn),
-			RefFieldName:      "ServiceAccountRef",
-			SelectorFieldName: "ServiceAccountSelector",
+			RefFieldName:      ServiceAccountRefFieldName,
+			SelectorFieldName: ServiceAccountSelectorFieldName,
 		}
 	})
 
 	p.AddResourceConfigurator("yandex_iam_service_account_iam_member", func(r *config.Resource) {
+		r.ExternalName = common.IAMExternalName("service_account_id", "role", "member")
 		r.References["service_account_id"] = config.Reference{
-			Type: "ServiceAccount",
+			Type: ServiceAccountType,
 		}
 		r.References["member"] = config.Reference{
-			Type:              "ServiceAccount",
+			Type:              ServiceAccountType,
 			Extractor:         fmt.Sprintf("%s.%s", ConfigPath, ServiceAccountRefValueFn),
-			RefFieldName:      "ServiceAccountRef",
-			SelectorFieldName: "ServiceAccountSelector",
+			RefFieldName:      ServiceAccountRefFieldName,
+			SelectorFieldName: ServiceAccountSelectorFieldName,
+		}
+	})
+	p.AddResourceConfigurator("yandex_cm_certificate_iam_member", func(r *config.Resource) {
+		r.ExternalName = common.IAMExternalName("certificate_id", "role", "member")
+		r.References["member"] = config.Reference{
+			Type:              fmt.Sprintf("%s.%s", ApisPackagePath, ServiceAccountType),
+			Extractor:         fmt.Sprintf("%s.%s", ConfigPath, ServiceAccountRefValueFn),
+			RefFieldName:      ServiceAccountRefFieldName,
+			SelectorFieldName: ServiceAccountSelectorFieldName,
 		}
 	})
 }

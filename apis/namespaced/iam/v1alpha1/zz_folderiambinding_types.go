@@ -30,20 +30,7 @@ import (
 
 type FolderIAMBindingInitParameters struct {
 
-	// (String) The ID of the folder to attach a policy to.
-	// The ID of the folder to attach a policy to.
-	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/resourcemanager/v1alpha1.Folder
-	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
-
-	// Reference to a Folder in resourcemanager to populate folderId.
-	// +kubebuilder:validation:Optional
-	FolderIDRef *v1.NamespacedReference `json:"folderIdRef,omitempty" tf:"-"`
-
-	// Selector for a Folder in resourcemanager to populate folderId.
-	// +kubebuilder:validation:Optional
-	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
-
-	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -63,10 +50,6 @@ type FolderIAMBindingInitParameters struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
-
 	// References to ServiceAccount to populate members.
 	// +kubebuilder:validation:Optional
 	ServiceAccountsRef []v1.NamespacedReference `json:"serviceAccountsRef,omitempty" tf:"-"`
@@ -75,20 +58,21 @@ type FolderIAMBindingInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountsSelector *v1.NamespacedSelector `json:"serviceAccountsSelector,omitempty" tf:"-"`
 
-	// (Number)
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type FolderIAMBindingObservation struct {
 
-	// (String) The ID of the folder to attach a policy to.
-	// The ID of the folder to attach a policy to.
+	// (String). The ID of the folder to attach the policy to.
+	// The ID of the `folder` to attach the policy to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String). The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -104,18 +88,19 @@ type FolderIAMBindingObservation struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
+	// (String). The role that should be assigned. Only one yandex_resourcemanager_folder_iam_binding can be used per role.
+	// The role that should be assigned. Only one yandex_resourcemanager_folder_iam_binding can be used per role.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
-	// (Number)
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type FolderIAMBindingParameters struct {
 
-	// (String) The ID of the folder to attach a policy to.
-	// The ID of the folder to attach a policy to.
+	// (String). The ID of the folder to attach the policy to.
+	// The ID of the `folder` to attach the policy to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -128,7 +113,7 @@ type FolderIAMBindingParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -149,10 +134,10 @@ type FolderIAMBindingParameters struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
-	// +kubebuilder:validation:Optional
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+	// (String). The role that should be assigned. Only one yandex_resourcemanager_folder_iam_binding can be used per role.
+	// The role that should be assigned. Only one yandex_resourcemanager_folder_iam_binding can be used per role.
+	// +kubebuilder:validation:Required
+	Role *string `json:"role" tf:"role,omitempty"`
 
 	// References to ServiceAccount to populate members.
 	// +kubebuilder:validation:Optional
@@ -162,7 +147,8 @@ type FolderIAMBindingParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountsSelector *v1.NamespacedSelector `json:"serviceAccountsSelector,omitempty" tf:"-"`
 
-	// (Number)
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	// +kubebuilder:validation:Optional
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
@@ -194,7 +180,7 @@ type FolderIAMBindingStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// FolderIAMBinding is the Schema for the FolderIAMBindings API. Allows management of a single IAM binding for a Yandex Resource Manager folder.
+// FolderIAMBinding is the Schema for the FolderIAMBindings API. Manages the yandex_resourcemanager_folder_iam_binding resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -203,9 +189,8 @@ type FolderIAMBindingStatus struct {
 type FolderIAMBinding struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.role) || (has(self.initProvider) && has(self.initProvider.role))",message="spec.forProvider.role is a required parameter"
-	Spec   FolderIAMBindingSpec   `json:"spec"`
-	Status FolderIAMBindingStatus `json:"status,omitempty"`
+	Spec              FolderIAMBindingSpec   `json:"spec"`
+	Status            FolderIAMBindingStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

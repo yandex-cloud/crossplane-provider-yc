@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: objects.storage.yandex-cloud.m.jet.crossplane.io
 spec:
   group: storage.yandex-cloud.m.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Object is the Schema for the Objects API. Allows management of
-          a Yandex Cloud Storage Object.
+        description: Object is the Schema for the Objects API. Manages the yandex_storage_object
+          resource.
         properties:
           apiVersion:
             description: |-
@@ -61,7 +61,7 @@ spec:
                 properties:
                   accessKey:
                     description: |-
-                      (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      (String). The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
                       The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     type: string
                   accessKeyRef:
@@ -148,14 +148,14 @@ spec:
                     type: object
                   acl:
                     description: |-
-                      (String) The predefined ACL to apply. Defaults to private.
+                      (String). The predefined ACL to apply. Defaults to private.
                       The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`.
 
                       ~> To change ACL after creation, the service account to which used access and secret keys correspond should have `storage.admin` role, though this role is not necessary to be able to create an object with any ACL.
                     type: string
                   bucket:
                     description: |-
-                      (String) The name of the containing bucket.
+                      (String). The name of the containing bucket.
                       The name of the containing bucket.
                     type: string
                   bucketRef:
@@ -255,27 +255,27 @@ spec:
                     type: string
                   key:
                     description: |-
-                      (String) The name of the object once it is in the bucket.
+                      (String). The name of the object once it is in the bucket.
                       The name of the object once it is in the bucket.
                     type: string
                   objectLockLegalHoldStatus:
                     description: |-
-                      (String) Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
+                      (String). Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
                       Specifies a [legal hold status](https://yandex.cloud/docs/storage/concepts/object-lock#types) of an object. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   objectLockMode:
                     description: |-
-                      (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
+                      (String). Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
                       Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`. It must be set simultaneously with `object_lock_retain_until_date`. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   objectLockRetainUntilDate:
                     description: |-
-                      (String) Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
+                      (String). Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
                       Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with `object_lock_mode`. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   secretKeySecretRef:
                     description: |-
-                      (String, Sensitive) The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      (String). The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
                       The secret key to use when applying changes. This value can also be provided as `storage_secret_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     properties:
                       key:
@@ -289,19 +289,19 @@ spec:
                     type: object
                   source:
                     description: |-
-                      (String) The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
+                      (String). The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
                       The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with `content` and `content_base64`.
                     type: string
                   sourceHash:
                     description: |-
-                      (String) Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
+                      (String). Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
                       Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+                      (Map Of String). The tags object for setting tags (or labels) for bucket. See Tags for more information.
                       The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
                     type: object
                     x-kubernetes-map-type: granular
@@ -321,7 +321,7 @@ spec:
                 properties:
                   accessKey:
                     description: |-
-                      (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      (String). The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
                       The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     type: string
                   accessKeyRef:
@@ -408,14 +408,14 @@ spec:
                     type: object
                   acl:
                     description: |-
-                      (String) The predefined ACL to apply. Defaults to private.
+                      (String). The predefined ACL to apply. Defaults to private.
                       The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`.
 
                       ~> To change ACL after creation, the service account to which used access and secret keys correspond should have `storage.admin` role, though this role is not necessary to be able to create an object with any ACL.
                     type: string
                   bucket:
                     description: |-
-                      (String) The name of the containing bucket.
+                      (String). The name of the containing bucket.
                       The name of the containing bucket.
                     type: string
                   bucketRef:
@@ -515,27 +515,27 @@ spec:
                     type: string
                   key:
                     description: |-
-                      (String) The name of the object once it is in the bucket.
+                      (String). The name of the object once it is in the bucket.
                       The name of the object once it is in the bucket.
                     type: string
                   objectLockLegalHoldStatus:
                     description: |-
-                      (String) Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
+                      (String). Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
                       Specifies a [legal hold status](https://yandex.cloud/docs/storage/concepts/object-lock#types) of an object. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   objectLockMode:
                     description: |-
-                      (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
+                      (String). Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
                       Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`. It must be set simultaneously with `object_lock_retain_until_date`. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   objectLockRetainUntilDate:
                     description: |-
-                      (String) Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
+                      (String). Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
                       Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with `object_lock_mode`. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   secretKeySecretRef:
                     description: |-
-                      (String, Sensitive) The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      (String). The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
                       The secret key to use when applying changes. This value can also be provided as `storage_secret_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     properties:
                       key:
@@ -549,19 +549,19 @@ spec:
                     type: object
                   source:
                     description: |-
-                      (String) The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
+                      (String). The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
                       The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with `content` and `content_base64`.
                     type: string
                   sourceHash:
                     description: |-
-                      (String) Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
+                      (String). Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
                       Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+                      (Map Of String). The tags object for setting tags (or labels) for bucket. See Tags for more information.
                       The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
                     type: object
                     x-kubernetes-map-type: granular
@@ -636,19 +636,19 @@ spec:
                 properties:
                   accessKey:
                     description: |-
-                      (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+                      (String). The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
                       The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
                     type: string
                   acl:
                     description: |-
-                      (String) The predefined ACL to apply. Defaults to private.
+                      (String). The predefined ACL to apply. Defaults to private.
                       The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`.
 
                       ~> To change ACL after creation, the service account to which used access and secret keys correspond should have `storage.admin` role, though this role is not necessary to be able to create an object with any ACL.
                     type: string
                   bucket:
                     description: |-
-                      (String) The name of the containing bucket.
+                      (String). The name of the containing bucket.
                       The name of the containing bucket.
                     type: string
                   content:
@@ -667,43 +667,43 @@ spec:
                       A standard MIME type describing the format of the object data, e.g. `application/octet-stream`. All Valid MIME Types are valid for this input.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   key:
                     description: |-
-                      (String) The name of the object once it is in the bucket.
+                      (String). The name of the object once it is in the bucket.
                       The name of the object once it is in the bucket.
                     type: string
                   objectLockLegalHoldStatus:
                     description: |-
-                      (String) Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
+                      (String). Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
                       Specifies a [legal hold status](https://yandex.cloud/docs/storage/concepts/object-lock#types) of an object. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   objectLockMode:
                     description: |-
-                      (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
+                      (String). Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
                       Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`. It must be set simultaneously with `object_lock_retain_until_date`. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   objectLockRetainUntilDate:
                     description: |-
-                      (String) Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
+                      (String). Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
                       Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with `object_lock_mode`. Requires `object_lock_configuration` to be enabled on a bucket.
                     type: string
                   source:
                     description: |-
-                      (String) The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
+                      (String). The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
                       The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with `content` and `content_base64`.
                     type: string
                   sourceHash:
                     description: |-
-                      (String) Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
+                      (String). Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
                       Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
                     type: string
                   tags:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+                      (Map Of String). The tags object for setting tags (or labels) for bucket. See Tags for more information.
                       The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
                     type: object
                     x-kubernetes-map-type: granular

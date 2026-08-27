@@ -23,6 +23,7 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/config"
 
+	"github.com/yandex-cloud/crossplane-provider-yc/config/common"
 	"github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/iam"
 )
 
@@ -33,11 +34,12 @@ const (
 
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("yandex_kms_symmetric_key_iam_binding", func(r *config.Resource) {
+		r.ExternalName = common.IAMExternalName("symmetric_key_id", "role")
 		r.References["symmetric_key_id"] = config.Reference{
 			Type: "SymmetricKey",
 		}
 		r.References["members"] = config.Reference{
-			Type:              "ServiceAccount",
+			Type:              fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccount"),
 			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
 			RefFieldName:      "ServiceAccountRef",
 			SelectorFieldName: "ServiceAccountSelector",

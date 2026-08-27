@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: gpuclusters.compute.yandex-cloud.jet.crossplane.io
 spec:
   group: compute.yandex-cloud.jet.crossplane.io
@@ -34,9 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: GpuCluster is the Schema for the GpuClusters API. GPU Cluster
-          connects multiple Compute GPU Instances in the same availability zone with
-          high-speed low-latency network.
+        description: GpuCluster is the Schema for the GpuClusters API. Manages the
+          yandex_compute_gpu_cluster resource.
         properties:
           apiVersion:
             description: |-
@@ -76,13 +75,13 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      Only) (String). The resource description.
+                      Description of the GPU cluster.
                     type: string
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the GPU cluster belongs to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -160,28 +159,35 @@ spec:
                             type: string
                         type: object
                     type: object
+                  gpuClusterId:
+                    description: |-
+                      (String). ID of the GPU cluster.
+                      ID of the GPU cluster to return.
+                      To get a GPU cluster ID, make a [GpuClusterService.List] request.
+                    type: string
                   interconnectType:
                     description: |-
-                      (String) Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
-                      Type of interconnect between nodes to use in GPU cluster. Type `INFINIBAND` is set by default, and it is the only one available at the moment.
+                      Only) (String). Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
+                      Type of interconnect used for this GPU cluster.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+                      GPU cluster labels as `key:value` pairs.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the GPU cluster.
+                      The name is unique within the folder.
                     type: string
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
-                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                      Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      ID of the availability zone where the GPU cluster resides.
                     type: string
                 type: object
               initProvider:
@@ -199,13 +205,13 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      Only) (String). The resource description.
+                      Description of the GPU cluster.
                     type: string
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the GPU cluster belongs to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -283,28 +289,35 @@ spec:
                             type: string
                         type: object
                     type: object
+                  gpuClusterId:
+                    description: |-
+                      (String). ID of the GPU cluster.
+                      ID of the GPU cluster to return.
+                      To get a GPU cluster ID, make a [GpuClusterService.List] request.
+                    type: string
                   interconnectType:
                     description: |-
-                      (String) Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
-                      Type of interconnect between nodes to use in GPU cluster. Type `INFINIBAND` is set by default, and it is the only one available at the moment.
+                      Only) (String). Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
+                      Type of interconnect used for this GPU cluster.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+                      GPU cluster labels as `key:value` pairs.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the GPU cluster.
+                      The name is unique within the folder.
                     type: string
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
-                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                      Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      ID of the availability zone where the GPU cluster resides.
                     type: string
                 type: object
               managementPolicies:
@@ -400,49 +413,61 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
-                      The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
+                      Creation timestamp.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      Only) (String). The resource description.
+                      Description of the GPU cluster.
                     type: string
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the GPU cluster belongs to.
+                    type: string
+                  gpuClusterId:
+                    description: |-
+                      (String). ID of the GPU cluster.
+                      ID of the GPU cluster to return.
+                      To get a GPU cluster ID, make a [GpuClusterService.List] request.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   interconnectType:
                     description: |-
-                      (String) Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
-                      Type of interconnect between nodes to use in GPU cluster. Type `INFINIBAND` is set by default, and it is the only one available at the moment.
+                      Only) (String). Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
+                      Type of interconnect used for this GPU cluster.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+                      GPU cluster labels as `key:value` pairs.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the GPU cluster.
+                      The name is unique within the folder.
                     type: string
                   status:
                     description: |-
-                      (String) The status of the GPU cluster.
-                      The status of the GPU cluster.
+                      Only) (String). The status of the GPU cluster.
+                      Status of the GPU cluster.
                     type: string
+                  subnets:
+                    description: |-
+                      Only) (Number). Number of subnets in the GPU cluster.
+                      Number of subnets in the GPU cluster.
+                    type: number
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
-                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                      Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      ID of the availability zone where the GPU cluster resides.
                     type: string
                 type: object
               conditions:

@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: recordsets.dns.yandex-cloud.m.jet.crossplane.io
 spec:
   group: dns.yandex-cloud.m.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Recordset is the Schema for the Recordsets API. Manages a DNS
-          RecordSet within Yandex Cloud.
+        description: Recordset is the Schema for the Recordsets API. Manages the yandex_dns_recordset
+          resource.
         properties:
           apiVersion:
             description: |-
@@ -61,15 +61,20 @@ spec:
                 properties:
                   data:
                     description: |-
-                      (Set of String) The string data for the records in this record set.
+                      (Set Of String). The string data for the records in this record set.
                       The string data for the records in this record set.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  description:
+                    description: |-
+                      (String). The DNS record set description.
+                      The DNS record set description.
+                    type: string
                   name:
                     description: |-
-                      (String) The DNS name this record set will apply to.
+                      (String). The DNS name this record set will apply to.
                       The DNS name this record set will apply to.
                     type: string
                   ttl:
@@ -79,12 +84,12 @@ spec:
                     type: number
                   type:
                     description: |-
-                      (String) The DNS record set type.
+                      (String). The DNS record set type.
                       The DNS record set type.
                     type: string
                   zoneId:
                     description: |-
-                      (String) The id of the zone in which this record set will reside.
+                      (String). The id of the zone in which this record set will reside.
                       The id of the zone in which this record set will reside.
                     type: string
                   zoneIdRef:
@@ -183,15 +188,20 @@ spec:
                 properties:
                   data:
                     description: |-
-                      (Set of String) The string data for the records in this record set.
+                      (Set Of String). The string data for the records in this record set.
                       The string data for the records in this record set.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  description:
+                    description: |-
+                      (String). The DNS record set description.
+                      The DNS record set description.
+                    type: string
                   name:
                     description: |-
-                      (String) The DNS name this record set will apply to.
+                      (String). The DNS name this record set will apply to.
                       The DNS name this record set will apply to.
                     type: string
                   ttl:
@@ -201,12 +211,12 @@ spec:
                     type: number
                   type:
                     description: |-
-                      (String) The DNS record set type.
+                      (String). The DNS record set type.
                       The DNS record set type.
                     type: string
                   zoneId:
                     description: |-
-                      (String) The id of the zone in which this record set will reside.
+                      (String). The id of the zone in which this record set will reside.
                       The id of the zone in which this record set will reside.
                     type: string
                   zoneIdRef:
@@ -372,18 +382,23 @@ spec:
                 properties:
                   data:
                     description: |-
-                      (Set of String) The string data for the records in this record set.
+                      (Set Of String). The string data for the records in this record set.
                       The string data for the records in this record set.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  description:
+                    description: |-
+                      (String). The DNS record set description.
+                      The DNS record set description.
+                    type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   name:
                     description: |-
-                      (String) The DNS name this record set will apply to.
+                      (String). The DNS name this record set will apply to.
                       The DNS name this record set will apply to.
                     type: string
                   ttl:
@@ -393,12 +408,12 @@ spec:
                     type: number
                   type:
                     description: |-
-                      (String) The DNS record set type.
+                      (String). The DNS record set type.
                       The DNS record set type.
                     type: string
                   zoneId:
                     description: |-
-                      (String) The id of the zone in which this record set will reside.
+                      (String). The id of the zone in which this record set will reside.
                       The id of the zone in which this record set will reside.
                     type: string
                 type: object

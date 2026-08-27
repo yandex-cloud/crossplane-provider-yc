@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: clouds.resourcemanager.yandex-cloud.jet.crossplane.io
 spec:
   group: resourcemanager.yandex-cloud.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Cloud is the Schema for the Clouds API. Allows management of
-          the Cloud resource.
+        description: Cloud is the Schema for the Clouds API. Manages the yandex_resourcemanager_cloud
+          resource.
         properties:
           apiVersion:
             description: |-
@@ -75,27 +75,51 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      (String). The resource description.
+                      Description of the cloud. 0-256 characters long.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
+                      Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the cloud. 3-63 characters long.
                     type: string
                   organizationId:
                     description: |-
-                      (String) Yandex Cloud Organization that the cloud belongs to. If value is omitted, the default provider Organization ID is used.
-                      Yandex Cloud Organization that the cloud belongs to. If value is omitted, the default provider Organization ID is used.
+                      (String). ID of the organization that the cloud belongs to.
+                      ID of the organization that the cloud belongs to.
                     type: string
+                  timeouts:
+                    description: '[Block].'
+                    properties:
+                      create:
+                        description: |-
+                          (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+                          A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+                        type: string
+                      delete:
+                        description: |-
+                          (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+                          A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+                        type: string
+                      read:
+                        description: |-
+                          (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+                          A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+                        type: string
+                      update:
+                        description: |-
+                          (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+                          A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+                        type: string
+                    type: object
                 type: object
               initProvider:
                 description: |-
@@ -112,27 +136,51 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      (String). The resource description.
+                      Description of the cloud. 0-256 characters long.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
+                      Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the cloud. 3-63 characters long.
                     type: string
                   organizationId:
                     description: |-
-                      (String) Yandex Cloud Organization that the cloud belongs to. If value is omitted, the default provider Organization ID is used.
-                      Yandex Cloud Organization that the cloud belongs to. If value is omitted, the default provider Organization ID is used.
+                      (String). ID of the organization that the cloud belongs to.
+                      ID of the organization that the cloud belongs to.
                     type: string
+                  timeouts:
+                    description: '[Block].'
+                    properties:
+                      create:
+                        description: |-
+                          (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+                          A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+                        type: string
+                      delete:
+                        description: |-
+                          (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+                          A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+                        type: string
+                      read:
+                        description: |-
+                          (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+                          A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+                        type: string
+                      update:
+                        description: |-
+                          (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+                          A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+                        type: string
+                    type: object
                 type: object
               managementPolicies:
                 default:
@@ -220,6 +268,11 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
           status:
             description: CloudStatus defines the observed state of Cloud.
             properties:
@@ -227,35 +280,59 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
-                      The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
+                      Creation timestamp.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      (String). The resource description.
+                      Description of the cloud. 0-256 characters long.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      (Map Of String). Resource labels as key:value pairs. Maximum of 64 per resource.
+                      Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the cloud. 3-63 characters long.
                     type: string
                   organizationId:
                     description: |-
-                      (String) Yandex Cloud Organization that the cloud belongs to. If value is omitted, the default provider Organization ID is used.
-                      Yandex Cloud Organization that the cloud belongs to. If value is omitted, the default provider Organization ID is used.
+                      (String). ID of the organization that the cloud belongs to.
+                      ID of the organization that the cloud belongs to.
                     type: string
+                  timeouts:
+                    description: '[Block].'
+                    properties:
+                      create:
+                        description: |-
+                          (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+                          A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+                        type: string
+                      delete:
+                        description: |-
+                          (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+                          A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+                        type: string
+                      read:
+                        description: |-
+                          (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+                          A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Read operations occur during any refresh or planning operation when refresh is enabled.
+                        type: string
+                      update:
+                        description: |-
+                          (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+                          A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+                        type: string
+                    type: object
                 type: object
               conditions:
                 description: Conditions of the resource.

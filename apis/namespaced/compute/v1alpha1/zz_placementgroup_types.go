@@ -30,7 +30,7 @@ import (
 
 type PlacementGroupInitParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -47,31 +47,31 @@ type PlacementGroupInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Number) A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
+	// (Number). A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
 	// A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
 	PlacementStrategyPartitions *float64 `json:"placementStrategyPartitions,omitempty" tf:"placement_strategy_partitions,omitempty"`
 
-	// (Boolean) A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
+	// (Bool). A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
 	// A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
 	PlacementStrategySpread *bool `json:"placementStrategySpread,omitempty" tf:"placement_strategy_spread,omitempty"`
 }
 
 type PlacementGroupObservation struct {
 
-	// (String) The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
 	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -79,30 +79,30 @@ type PlacementGroupObservation struct {
 	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Number) A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
+	// (Number). A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
 	// A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
 	PlacementStrategyPartitions *float64 `json:"placementStrategyPartitions,omitempty" tf:"placement_strategy_partitions,omitempty"`
 
-	// (Boolean) A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
+	// (Bool). A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
 	// A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
 	PlacementStrategySpread *bool `json:"placementStrategySpread,omitempty" tf:"placement_strategy_spread,omitempty"`
 }
 
 type PlacementGroupParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -121,23 +121,23 @@ type PlacementGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Number) A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
+	// (Number). A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
 	// A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
 	// +kubebuilder:validation:Optional
 	PlacementStrategyPartitions *float64 `json:"placementStrategyPartitions,omitempty" tf:"placement_strategy_partitions,omitempty"`
 
-	// (Boolean) A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
+	// (Bool). A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
 	// A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
 	// +kubebuilder:validation:Optional
 	PlacementStrategySpread *bool `json:"placementStrategySpread,omitempty" tf:"placement_strategy_spread,omitempty"`
@@ -170,7 +170,7 @@ type PlacementGroupStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// PlacementGroup is the Schema for the PlacementGroups API. Manages a Placement group resource.
+// PlacementGroup is the Schema for the PlacementGroups API. Manages the yandex_compute_placement_group resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

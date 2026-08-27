@@ -1,26 +1,57 @@
 #!/bin/sh
 
-echo $pwd
+set -eu
 
-DIRECTORY=".work/terraform-provider-yandex/docs/resources"
+directory=".work/terraform-provider-yandex/docs/resources"
 
-if [ ! -d "$DIRECTORY" ]; then
-  exit 2
+if [ ! -d "$directory" ]; then
+    exit 2
 fi
 
-cd $DIRECTORY
-for file in $(ls ".")
-do
-    numRows=$(cat $file | grep 'subcategory' | wc|awk '{ print $1 }')
-    if [ $numRows -gt 0 ]; then
-        continue
-    fi
+for file in "$directory"/*.md; do
+    resource_name="yandex_$(basename "$file" .md)"
+    temporary_file="${file}.tmp"
 
-    newFile="C${file}"
+    awk -v page_title="Yandex: ${resource_name}" -v resource_name="$resource_name" '
+        NR == 1 && $0 == "---" {
+            in_front_matter = 1
+            print
+            next
+        }
 
-    if [ ! -f $newFile ]; then
-        cp $file $newFile
-        sed '1a\subcategory: "unknown"' $file > $newFile
-        rm $file
-    fi
+        in_front_matter && /^subcategory:/ {
+            has_subcategory = 1
+        }
+
+        in_front_matter && /^page_title:/ {
+            has_page_title = 1
+        }
+
+        in_front_matter && /^description:/ {
+            has_description = 1
+        }
+
+        in_front_matter && $0 == "---" {
+            if (!has_subcategory) {
+                print "subcategory: \"unknown\""
+            }
+            if (!has_page_title) {
+                print "page_title: \"" page_title "\""
+            }
+            if (!has_description) {
+                print "description: |-"
+                print "  Manages the " resource_name " resource."
+            }
+            in_front_matter = 0
+        }
+
+        { print }
+
+        END {
+            if (in_front_matter) {
+                exit 3
+            }
+        }
+    ' "$file" > "$temporary_file"
+    mv "$temporary_file" "$file"
 done

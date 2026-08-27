@@ -65,45 +65,48 @@ func injectRoleImmutability(crdFile, resourceName string) error {
 		}
 	}
 
-	// Find the location to inject the validation
-	// We're looking for the role field in initProvider section
-	inInitProvider := false
+	// Find the role field in either forProvider or initProvider. Upjet keeps
+	// identifier fields in forProvider so they are available during state
+	// reconstruction, while non-identifier immutable fields live in initProvider.
+	inProviderSection := false
+	providerSectionIndent := -1
 	inRoleField := false
+	roleFieldIndent := -1
 	injectionLine := -1
 
 	for i, line := range lines {
-		// Track when we enter initProvider
-		if strings.Contains(line, "initProvider:") {
-			inInitProvider = true
+		trimmed := strings.TrimSpace(line)
+		indent := len(line) - len(strings.TrimLeft(line, " "))
+
+		if trimmed == "forProvider:" || trimmed == "initProvider:" {
+			inProviderSection = true
+			providerSectionIndent = indent
+			inRoleField = false
 			continue
 		}
 
-		// Track when we exit initProvider (next major section at same indentation level)
-		if inInitProvider && strings.TrimSpace(line) != "" {
-			// Check if we've exited initProvider by looking at indentation
-			if !strings.HasPrefix(line, "                ") || // Less than 16 spaces
-				(strings.HasPrefix(line, "              ") && !strings.HasPrefix(line, "                ")) {
-				if !strings.Contains(line, "properties:") {
-					inInitProvider = false
-				}
-			}
+		if inProviderSection && trimmed != "" && indent <= providerSectionIndent {
+			inProviderSection = false
+			inRoleField = false
 		}
 
-		// Find role field in initProvider
-		if inInitProvider && strings.TrimSpace(line) == "role:" {
+		if inProviderSection && trimmed == "role:" {
 			inRoleField = true
+			roleFieldIndent = indent
 			continue
 		}
 
-		// Find the "type: string" line after role description in initProvider
-		if inRoleField && strings.Contains(line, "type: string") && strings.HasPrefix(line, indent20) {
+		if inRoleField && trimmed == "type: string" && indent == roleFieldIndent+2 {
 			injectionLine = i
 			break
+		}
+		if inRoleField && trimmed != "" && indent <= roleFieldIndent {
+			inRoleField = false
 		}
 	}
 
 	if injectionLine == -1 {
-		return fmt.Errorf("pattern not found - could not locate role field in initProvider")
+		return fmt.Errorf("pattern not found - could not locate role field in forProvider or initProvider")
 	}
 
 	// Prepare the validation lines to inject

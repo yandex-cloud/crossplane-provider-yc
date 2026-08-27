@@ -30,12 +30,12 @@ import (
 
 type TargetGroupInitParameters struct {
 
-	// (String) The resource description.
-	// The resource description.
+	// Only) (String). The resource description.
+	// Description of the target group. 0-256 characters long.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// id is used.
-	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+	// ID of the folder that the target group belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -47,68 +47,84 @@ type TargetGroupInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
-	// A set of key/value label pairs which assigned to resource.
+	// Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+	// Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). The resource name.
+	// Name of the target group.
+	// The name is unique within the folder. 3-63 characters long.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) ID of the availability zone where the target group resides. If omitted, default region is being used.
-	// ID of the availability zone where the target group resides. If omitted, default region is being used.
+	// (String). ID of the region where the target group resides.
+	// ID of the region where the target group resides.
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
-	// (Block Set) A Target resource. (see below for nested schema)
-	// A Target resource.
+	// [Block].
+	// A list of targets in the target group.
 	Target []TargetInitParameters `json:"target,omitempty" tf:"target,omitempty"`
+
+	// (String). Target Group ID.
+	// ID of the TargetGroup resource to return.
+	// To get the target group ID, use a [TargetGroupService.List] request.
+	// The length must be less than or equal to 50.
+	// This field is required.
+	TargetGroupID *string `json:"targetGroupId,omitempty" tf:"target_group_id,omitempty"`
 }
 
 type TargetGroupObservation struct {
 
-	// (String) The creation timestamp of the resource.
-	// The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
+	// Output only. Creation timestamp in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) The resource description.
-	// The resource description.
+	// Only) (String). The resource description.
+	// Description of the target group. 0-256 characters long.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// id is used.
-	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+	// ID of the folder that the target group belongs to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
-	// A set of key/value label pairs which assigned to resource.
+	// Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+	// Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). The resource name.
+	// Name of the target group.
+	// The name is unique within the folder. 3-63 characters long.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) ID of the availability zone where the target group resides. If omitted, default region is being used.
-	// ID of the availability zone where the target group resides. If omitted, default region is being used.
+	// (String). ID of the region where the target group resides.
+	// ID of the region where the target group resides.
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
-	// (Block Set) A Target resource. (see below for nested schema)
-	// A Target resource.
+	// [Block].
+	// A list of targets in the target group.
 	Target []TargetObservation `json:"target,omitempty" tf:"target,omitempty"`
+
+	// (String). Target Group ID.
+	// ID of the TargetGroup resource to return.
+	// To get the target group ID, use a [TargetGroupService.List] request.
+	// The length must be less than or equal to 50.
+	// This field is required.
+	TargetGroupID *string `json:"targetGroupId,omitempty" tf:"target_group_id,omitempty"`
 }
 
 type TargetGroupParameters struct {
 
-	// (String) The resource description.
-	// The resource description.
+	// Only) (String). The resource description.
+	// Description of the target group. 0-256 characters long.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// id is used.
-	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+	// ID of the folder that the target group belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -121,31 +137,40 @@ type TargetGroupParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
-	// A set of key/value label pairs which assigned to resource.
+	// Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+	// Resource labels as “ key:value “ pairs. Maximum of 64 per resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). The resource name.
+	// Name of the target group.
+	// The name is unique within the folder. 3-63 characters long.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) ID of the availability zone where the target group resides. If omitted, default region is being used.
-	// ID of the availability zone where the target group resides. If omitted, default region is being used.
+	// (String). ID of the region where the target group resides.
+	// ID of the region where the target group resides.
 	// +kubebuilder:validation:Optional
 	RegionID *string `json:"regionId,omitempty" tf:"region_id,omitempty"`
 
-	// (Block Set) A Target resource. (see below for nested schema)
-	// A Target resource.
+	// [Block].
+	// A list of targets in the target group.
 	// +kubebuilder:validation:Optional
 	Target []TargetParameters `json:"target,omitempty" tf:"target,omitempty"`
+
+	// (String). Target Group ID.
+	// ID of the TargetGroup resource to return.
+	// To get the target group ID, use a [TargetGroupService.List] request.
+	// The length must be less than or equal to 50.
+	// This field is required.
+	// +kubebuilder:validation:Optional
+	TargetGroupID *string `json:"targetGroupId,omitempty" tf:"target_group_id,omitempty"`
 }
 
 type TargetInitParameters struct {
 
-	// (String) IP address of the target.
+	// .
 	// IP address of the target.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/compute/v1alpha1.Instance
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/nlb.ExtractComputeIP()
@@ -159,8 +184,10 @@ type TargetInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AddressSelector *v1.NamespacedSelector `json:"addressSelector,omitempty" tf:"-"`
 
-	// (String) ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
-	// ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
+	// .
+	// ID of the subnet that targets are connected to.
+	// All targets in the target group must be connected to the same subnet within a single availability zone.
+	// The length must be less than or equal to 50.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
@@ -175,18 +202,20 @@ type TargetInitParameters struct {
 
 type TargetObservation struct {
 
-	// (String) IP address of the target.
+	// .
 	// IP address of the target.
 	Address *string `json:"address,omitempty" tf:"address,omitempty"`
 
-	// (String) ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
-	// ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
+	// .
+	// ID of the subnet that targets are connected to.
+	// All targets in the target group must be connected to the same subnet within a single availability zone.
+	// The length must be less than or equal to 50.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
 type TargetParameters struct {
 
-	// (String) IP address of the target.
+	// .
 	// IP address of the target.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/compute/v1alpha1.Instance
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/nlb.ExtractComputeIP()
@@ -201,8 +230,10 @@ type TargetParameters struct {
 	// +kubebuilder:validation:Optional
 	AddressSelector *v1.NamespacedSelector `json:"addressSelector,omitempty" tf:"-"`
 
-	// (String) ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
-	// ID of the subnet that targets are connected to. All targets in the target group must be connected to the same subnet within a single availability zone.
+	// .
+	// ID of the subnet that targets are connected to.
+	// All targets in the target group must be connected to the same subnet within a single availability zone.
+	// The length must be less than or equal to 50.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -243,7 +274,7 @@ type TargetGroupStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// TargetGroup is the Schema for the TargetGroups API. A load balancer distributes the load across cloud resources that are combined into a target group.
+// TargetGroup is the Schema for the TargetGroups API. Manages the yandex_lb_target_group resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

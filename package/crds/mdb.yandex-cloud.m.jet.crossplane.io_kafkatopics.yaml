@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: kafkatopics.mdb.yandex-cloud.m.jet.crossplane.io
 spec:
   group: mdb.yandex-cloud.m.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: KafkaTopic is the Schema for the KafkaTopics API. Manages a topic
-          of a Kafka cluster within Yandex Cloud.
+        description: KafkaTopic is the Schema for the KafkaTopics API. Manages the
+          yandex_mdb_kafka_topic resource.
         properties:
           apiVersion:
             description: |-
@@ -61,7 +61,7 @@ spec:
                 properties:
                   clusterId:
                     description: |-
-                      (String) The ID of the Kafka cluster.
+                      (String). The ID of the Kafka cluster.
                       The ID of the Kafka cluster.
                     type: string
                   clusterIdRef:
@@ -146,63 +146,68 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   partitions:
                     description: |-
-                      (Number) The number of the topic's partitions.
+                      (Number). The number of the topic's partitions.
                       The number of the topic's partitions.
                     type: number
                   replicationFactor:
                     description: |-
-                      (Number) Amount of data copies (replicas) for the topic in the cluster.
+                      (Number). Amount of data copies (replicas) for the topic in the cluster.
                       Amount of data copies (replicas) for the topic in the cluster.
                     type: number
                   topicConfig:
                     description: |-
-                      defined settings for the topic. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+                      defined settings for the topic. For more information, see the official documentation and the Kafka documentation.
                       User-defined settings for the topic. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/settings-list#topic-settings) and [the Kafka documentation](https://kafka.apache.org/documentation/#topicconfigs).
                     items:
                       properties:
                         cleanupPolicy:
                           description: |-
-                            (String) Retention policy to use on log segments.
+                            (String). Retention policy to use on log segments.
                             Retention policy to use on log segments.
                           type: string
                         compressionType:
                           description: |-
-                            (String) Compression type of kafka topic.
+                            (String). Compression type of kafka topic.
                             Compression type of kafka topic.
                           type: string
                         deleteRetentionMs:
                           description: |-
-                            (String) The amount of time to retain delete tombstone markers for log compacted topics.
+                            (String). The amount of time to retain delete tombstone markers for log compacted topics.
                             The amount of time to retain delete tombstone markers for log compacted topics.
                           type: string
                         fileDeleteDelayMs:
                           description: |-
-                            (String) The time to wait before deleting a file from the filesystem.
+                            (String). The time to wait before deleting a file from the filesystem.
                             The time to wait before deleting a file from the filesystem.
                           type: string
                         flushMessages:
                           description: |-
-                            (String) This setting allows specifying an interval at which we will force an fsync of data written to the log.
+                            (String). This setting allows specifying an interval at which we will force an fsync of data written to the log.
                             This setting allows specifying an interval at which we will force an fsync of data written to the log.
                           type: string
                         flushMs:
                           description: |-
-                            (String) This setting allows specifying a time interval at which we will force an fsync of data written to the log.
+                            (String). This setting allows specifying a time interval at which we will force an fsync of data written to the log.
                             This setting allows specifying a time interval at which we will force an fsync of data written to the log.
                           type: string
                         maxMessageBytes:
                           description: |-
-                            (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+                            (String). The largest record batch size allowed by Kafka (after compression if compression is enabled).
                             The largest record batch size allowed by Kafka (after compression if compression is enabled).
+                          type: string
+                        messageTimestampType:
+                          description: |-
+                            (String). Defines whether the timestamp in a message is the message creation time or the log append time. Possible values are MESSAGE_TIMESTAMP_TYPE_CREATE_TIME and MESSAGE_TIMESTAMP_TYPE_LOG_APPEND_TIME.
+                            Defines whether the timestamp in a message is the message creation time or the log append time. Possible values are `MESSAGE_TIMESTAMP_TYPE_CREATE_TIME` and `MESSAGE_TIMESTAMP_TYPE_LOG_APPEND_TIME`.
                           type: string
                         minCompactionLagMs:
                           description: |-
-                            (String) The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
+                            (String). The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
                             The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
                           type: string
                         minInsyncReplicas:
@@ -212,22 +217,22 @@ spec:
                           type: string
                         preallocate:
                           description: |-
-                            (Boolean, Deprecated) True if we should preallocate the file on disk when creating a new log segment.
+                            (Bool). True if we should preallocate the file on disk when creating a new log segment.
                             True if we should preallocate the file on disk when creating a new log segment.
                           type: boolean
                         retentionBytes:
                           description: |-
-                            (String) This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
+                            (String). This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
                             This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
                           type: string
                         retentionMs:
                           description: |-
-                            (String) This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
+                            (String). This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
                             This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
                           type: string
                         segmentBytes:
                           description: |-
-                            (String) This configuration controls the segment file size for the log.
+                            (String). This configuration controls the segment file size for the log.
                             This configuration controls the segment file size for the log.
                           type: string
                       type: object
@@ -248,7 +253,7 @@ spec:
                 properties:
                   clusterId:
                     description: |-
-                      (String) The ID of the Kafka cluster.
+                      (String). The ID of the Kafka cluster.
                       The ID of the Kafka cluster.
                     type: string
                   clusterIdRef:
@@ -333,63 +338,68 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   partitions:
                     description: |-
-                      (Number) The number of the topic's partitions.
+                      (Number). The number of the topic's partitions.
                       The number of the topic's partitions.
                     type: number
                   replicationFactor:
                     description: |-
-                      (Number) Amount of data copies (replicas) for the topic in the cluster.
+                      (Number). Amount of data copies (replicas) for the topic in the cluster.
                       Amount of data copies (replicas) for the topic in the cluster.
                     type: number
                   topicConfig:
                     description: |-
-                      defined settings for the topic. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+                      defined settings for the topic. For more information, see the official documentation and the Kafka documentation.
                       User-defined settings for the topic. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/settings-list#topic-settings) and [the Kafka documentation](https://kafka.apache.org/documentation/#topicconfigs).
                     items:
                       properties:
                         cleanupPolicy:
                           description: |-
-                            (String) Retention policy to use on log segments.
+                            (String). Retention policy to use on log segments.
                             Retention policy to use on log segments.
                           type: string
                         compressionType:
                           description: |-
-                            (String) Compression type of kafka topic.
+                            (String). Compression type of kafka topic.
                             Compression type of kafka topic.
                           type: string
                         deleteRetentionMs:
                           description: |-
-                            (String) The amount of time to retain delete tombstone markers for log compacted topics.
+                            (String). The amount of time to retain delete tombstone markers for log compacted topics.
                             The amount of time to retain delete tombstone markers for log compacted topics.
                           type: string
                         fileDeleteDelayMs:
                           description: |-
-                            (String) The time to wait before deleting a file from the filesystem.
+                            (String). The time to wait before deleting a file from the filesystem.
                             The time to wait before deleting a file from the filesystem.
                           type: string
                         flushMessages:
                           description: |-
-                            (String) This setting allows specifying an interval at which we will force an fsync of data written to the log.
+                            (String). This setting allows specifying an interval at which we will force an fsync of data written to the log.
                             This setting allows specifying an interval at which we will force an fsync of data written to the log.
                           type: string
                         flushMs:
                           description: |-
-                            (String) This setting allows specifying a time interval at which we will force an fsync of data written to the log.
+                            (String). This setting allows specifying a time interval at which we will force an fsync of data written to the log.
                             This setting allows specifying a time interval at which we will force an fsync of data written to the log.
                           type: string
                         maxMessageBytes:
                           description: |-
-                            (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+                            (String). The largest record batch size allowed by Kafka (after compression if compression is enabled).
                             The largest record batch size allowed by Kafka (after compression if compression is enabled).
+                          type: string
+                        messageTimestampType:
+                          description: |-
+                            (String). Defines whether the timestamp in a message is the message creation time or the log append time. Possible values are MESSAGE_TIMESTAMP_TYPE_CREATE_TIME and MESSAGE_TIMESTAMP_TYPE_LOG_APPEND_TIME.
+                            Defines whether the timestamp in a message is the message creation time or the log append time. Possible values are `MESSAGE_TIMESTAMP_TYPE_CREATE_TIME` and `MESSAGE_TIMESTAMP_TYPE_LOG_APPEND_TIME`.
                           type: string
                         minCompactionLagMs:
                           description: |-
-                            (String) The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
+                            (String). The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
                             The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
                           type: string
                         minInsyncReplicas:
@@ -399,22 +409,22 @@ spec:
                           type: string
                         preallocate:
                           description: |-
-                            (Boolean, Deprecated) True if we should preallocate the file on disk when creating a new log segment.
+                            (Bool). True if we should preallocate the file on disk when creating a new log segment.
                             True if we should preallocate the file on disk when creating a new log segment.
                           type: boolean
                         retentionBytes:
                           description: |-
-                            (String) This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
+                            (String). This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
                             This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
                           type: string
                         retentionMs:
                           description: |-
-                            (String) This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
+                            (String). This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
                             This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
                           type: string
                         segmentBytes:
                           description: |-
-                            (String) This configuration controls the segment file size for the log.
+                            (String). This configuration controls the segment file size for the log.
                             This configuration controls the segment file size for the log.
                           type: string
                       type: object
@@ -498,71 +508,76 @@ spec:
                 properties:
                   clusterId:
                     description: |-
-                      (String) The ID of the Kafka cluster.
+                      (String). The ID of the Kafka cluster.
                       The ID of the Kafka cluster.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   partitions:
                     description: |-
-                      (Number) The number of the topic's partitions.
+                      (Number). The number of the topic's partitions.
                       The number of the topic's partitions.
                     type: number
                   replicationFactor:
                     description: |-
-                      (Number) Amount of data copies (replicas) for the topic in the cluster.
+                      (Number). Amount of data copies (replicas) for the topic in the cluster.
                       Amount of data copies (replicas) for the topic in the cluster.
                     type: number
                   topicConfig:
                     description: |-
-                      defined settings for the topic. For more information, see the official documentation and the Kafka documentation. (see below for nested schema)
+                      defined settings for the topic. For more information, see the official documentation and the Kafka documentation.
                       User-defined settings for the topic. For more information, see [the official documentation](https://yandex.cloud/docs/managed-kafka/concepts/settings-list#topic-settings) and [the Kafka documentation](https://kafka.apache.org/documentation/#topicconfigs).
                     items:
                       properties:
                         cleanupPolicy:
                           description: |-
-                            (String) Retention policy to use on log segments.
+                            (String). Retention policy to use on log segments.
                             Retention policy to use on log segments.
                           type: string
                         compressionType:
                           description: |-
-                            (String) Compression type of kafka topic.
+                            (String). Compression type of kafka topic.
                             Compression type of kafka topic.
                           type: string
                         deleteRetentionMs:
                           description: |-
-                            (String) The amount of time to retain delete tombstone markers for log compacted topics.
+                            (String). The amount of time to retain delete tombstone markers for log compacted topics.
                             The amount of time to retain delete tombstone markers for log compacted topics.
                           type: string
                         fileDeleteDelayMs:
                           description: |-
-                            (String) The time to wait before deleting a file from the filesystem.
+                            (String). The time to wait before deleting a file from the filesystem.
                             The time to wait before deleting a file from the filesystem.
                           type: string
                         flushMessages:
                           description: |-
-                            (String) This setting allows specifying an interval at which we will force an fsync of data written to the log.
+                            (String). This setting allows specifying an interval at which we will force an fsync of data written to the log.
                             This setting allows specifying an interval at which we will force an fsync of data written to the log.
                           type: string
                         flushMs:
                           description: |-
-                            (String) This setting allows specifying a time interval at which we will force an fsync of data written to the log.
+                            (String). This setting allows specifying a time interval at which we will force an fsync of data written to the log.
                             This setting allows specifying a time interval at which we will force an fsync of data written to the log.
                           type: string
                         maxMessageBytes:
                           description: |-
-                            (String) The largest record batch size allowed by Kafka (after compression if compression is enabled).
+                            (String). The largest record batch size allowed by Kafka (after compression if compression is enabled).
                             The largest record batch size allowed by Kafka (after compression if compression is enabled).
+                          type: string
+                        messageTimestampType:
+                          description: |-
+                            (String). Defines whether the timestamp in a message is the message creation time or the log append time. Possible values are MESSAGE_TIMESTAMP_TYPE_CREATE_TIME and MESSAGE_TIMESTAMP_TYPE_LOG_APPEND_TIME.
+                            Defines whether the timestamp in a message is the message creation time or the log append time. Possible values are `MESSAGE_TIMESTAMP_TYPE_CREATE_TIME` and `MESSAGE_TIMESTAMP_TYPE_LOG_APPEND_TIME`.
                           type: string
                         minCompactionLagMs:
                           description: |-
-                            (String) The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
+                            (String). The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
                             The minimum time a message will remain uncompacted in the log. Only applicable for logs that are being compacted.
                           type: string
                         minInsyncReplicas:
@@ -572,22 +587,22 @@ spec:
                           type: string
                         preallocate:
                           description: |-
-                            (Boolean, Deprecated) True if we should preallocate the file on disk when creating a new log segment.
+                            (Bool). True if we should preallocate the file on disk when creating a new log segment.
                             True if we should preallocate the file on disk when creating a new log segment.
                           type: boolean
                         retentionBytes:
                           description: |-
-                            (String) This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
+                            (String). This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
                             This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the "delete" retention policy.
                           type: string
                         retentionMs:
                           description: |-
-                            (String) This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
+                            (String). This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
                             This configuration controls the maximum time we will retain a log before we will discard old log segments to free up space if we are using the "delete" retention policy.
                           type: string
                         segmentBytes:
                           description: |-
-                            (String) This configuration controls the segment file size for the log.
+                            (String). This configuration controls the segment file size for the log.
                             This configuration controls the segment file size for the log.
                           type: string
                       type: object

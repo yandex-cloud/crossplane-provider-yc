@@ -29,24 +29,24 @@ import (
 
 type SecurityGroupRuleInitParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) Direction of the Security group rule. Can be ingress (inbound network traffic to the VPC network) or egress (outbound network traffic from the VPC network).
+	// (String). Direction of the Security group rule. Can be ingress (inbound network traffic to the VPC network) or egress (outbound network traffic from the VPC network).
 	// Direction of the Security group rule. Can be `ingress` (inbound network traffic to the VPC network) or `egress` (outbound network traffic from the VPC network).
 	Direction *string `json:"direction,omitempty" tf:"direction,omitempty"`
 
-	// (Number) Minimum port number. Applicable for TCP and UDP protocols.
+	// (Number). Minimum port number. Applicable for TCP and UDP protocols.
 	// Minimum port number. Applicable for TCP and UDP protocols.
 	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Number) Port number (if applied to a single port).
+	// (Number). Port number (if applied to a single port).
 	// Port number (if applied to a single port).
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
@@ -54,11 +54,11 @@ type SecurityGroupRuleInitParameters struct {
 	// Special-purpose targets. The `self_security_group` target refers to this particular security group. The `loadbalancer_healthchecks` target represents [NLB health check nodes](https://yandex.cloud/docs/network-load-balancer/concepts/health-check).
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
-	// (String) Specific network protocol. Can be one of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// (String). Specific network protocol. Can be one of ANY, TCP, UDP, ICMP, IPV6_ICMP.
 	// Specific network protocol. Can be one of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// (String) The id of target security group which rule belongs to.
+	// (String). The id of target security group which rule belongs to.
 	// The id of target security group which rule belongs to.
 	// +crossplane:generate:reference:type=SecurityGroup
 	SecurityGroupBinding *string `json:"securityGroupBinding,omitempty" tf:"security_group_binding,omitempty"`
@@ -71,7 +71,7 @@ type SecurityGroupRuleInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupBindingSelector *v1.Selector `json:"securityGroupBindingSelector,omitempty" tf:"-"`
 
-	// (String) Target security group ID for this Security group rule.
+	// (String). Target security group ID for this Security group rule.
 	// Target security group ID for this Security group rule.
 	// +crossplane:generate:reference:type=SecurityGroup
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
@@ -84,42 +84,42 @@ type SecurityGroupRuleInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 
-	// (Number) Maximum port number. Applicable for TCP and UDP protocols.
+	// (Number). Maximum port number. Applicable for TCP and UDP protocols.
 	// Maximum port number. Applicable for TCP and UDP protocols.
 	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
 
-	// (List of String) The list of IPv4 CIDR prefixes for this Security group rule.
+	// (List Of String). The list of IPv4 CIDR prefixes for this Security group rule.
 	// The list of IPv4 CIDR prefixes for this Security group rule.
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
-	// (List of String) The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
+	// (List Of String). The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
 	// The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }
 
 type SecurityGroupRuleObservation struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) Direction of the Security group rule. Can be ingress (inbound network traffic to the VPC network) or egress (outbound network traffic from the VPC network).
+	// (String). Direction of the Security group rule. Can be ingress (inbound network traffic to the VPC network) or egress (outbound network traffic from the VPC network).
 	// Direction of the Security group rule. Can be `ingress` (inbound network traffic to the VPC network) or `egress` (outbound network traffic from the VPC network).
 	Direction *string `json:"direction,omitempty" tf:"direction,omitempty"`
 
-	// (Number) Minimum port number. Applicable for TCP and UDP protocols.
+	// (Number). Minimum port number. Applicable for TCP and UDP protocols.
 	// Minimum port number. Applicable for TCP and UDP protocols.
 	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
-	// (String) The resource identifier.
+	// Only) (String). The resource identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Number) Port number (if applied to a single port).
+	// (Number). Port number (if applied to a single port).
 	// Port number (if applied to a single port).
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
 
@@ -127,55 +127,55 @@ type SecurityGroupRuleObservation struct {
 	// Special-purpose targets. The `self_security_group` target refers to this particular security group. The `loadbalancer_healthchecks` target represents [NLB health check nodes](https://yandex.cloud/docs/network-load-balancer/concepts/health-check).
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
-	// (String) Specific network protocol. Can be one of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// (String). Specific network protocol. Can be one of ANY, TCP, UDP, ICMP, IPV6_ICMP.
 	// Specific network protocol. Can be one of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// (String) The id of target security group which rule belongs to.
+	// (String). The id of target security group which rule belongs to.
 	// The id of target security group which rule belongs to.
 	SecurityGroupBinding *string `json:"securityGroupBinding,omitempty" tf:"security_group_binding,omitempty"`
 
-	// (String) Target security group ID for this Security group rule.
+	// (String). Target security group ID for this Security group rule.
 	// Target security group ID for this Security group rule.
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
 
-	// (Number) Maximum port number. Applicable for TCP and UDP protocols.
+	// (Number). Maximum port number. Applicable for TCP and UDP protocols.
 	// Maximum port number. Applicable for TCP and UDP protocols.
 	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
 
-	// (List of String) The list of IPv4 CIDR prefixes for this Security group rule.
+	// (List Of String). The list of IPv4 CIDR prefixes for this Security group rule.
 	// The list of IPv4 CIDR prefixes for this Security group rule.
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
-	// (List of String) The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
+	// (List Of String). The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
 	// The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
 }
 
 type SecurityGroupRuleParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) Direction of the Security group rule. Can be ingress (inbound network traffic to the VPC network) or egress (outbound network traffic from the VPC network).
+	// (String). Direction of the Security group rule. Can be ingress (inbound network traffic to the VPC network) or egress (outbound network traffic from the VPC network).
 	// Direction of the Security group rule. Can be `ingress` (inbound network traffic to the VPC network) or `egress` (outbound network traffic from the VPC network).
 	// +kubebuilder:validation:Optional
 	Direction *string `json:"direction,omitempty" tf:"direction,omitempty"`
 
-	// (Number) Minimum port number. Applicable for TCP and UDP protocols.
+	// (Number). Minimum port number. Applicable for TCP and UDP protocols.
 	// Minimum port number. Applicable for TCP and UDP protocols.
 	// +kubebuilder:validation:Optional
 	FromPort *float64 `json:"fromPort,omitempty" tf:"from_port,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Number) Port number (if applied to a single port).
+	// (Number). Port number (if applied to a single port).
 	// Port number (if applied to a single port).
 	// +kubebuilder:validation:Optional
 	Port *float64 `json:"port,omitempty" tf:"port,omitempty"`
@@ -185,12 +185,12 @@ type SecurityGroupRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	PredefinedTarget *string `json:"predefinedTarget,omitempty" tf:"predefined_target,omitempty"`
 
-	// (String) Specific network protocol. Can be one of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+	// (String). Specific network protocol. Can be one of ANY, TCP, UDP, ICMP, IPV6_ICMP.
 	// Specific network protocol. Can be one of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
 	// +kubebuilder:validation:Optional
 	Protocol *string `json:"protocol,omitempty" tf:"protocol,omitempty"`
 
-	// (String) The id of target security group which rule belongs to.
+	// (String). The id of target security group which rule belongs to.
 	// The id of target security group which rule belongs to.
 	// +crossplane:generate:reference:type=SecurityGroup
 	// +kubebuilder:validation:Optional
@@ -204,7 +204,7 @@ type SecurityGroupRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupBindingSelector *v1.Selector `json:"securityGroupBindingSelector,omitempty" tf:"-"`
 
-	// (String) Target security group ID for this Security group rule.
+	// (String). Target security group ID for this Security group rule.
 	// Target security group ID for this Security group rule.
 	// +crossplane:generate:reference:type=SecurityGroup
 	// +kubebuilder:validation:Optional
@@ -218,17 +218,17 @@ type SecurityGroupRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIDSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 
-	// (Number) Maximum port number. Applicable for TCP and UDP protocols.
+	// (Number). Maximum port number. Applicable for TCP and UDP protocols.
 	// Maximum port number. Applicable for TCP and UDP protocols.
 	// +kubebuilder:validation:Optional
 	ToPort *float64 `json:"toPort,omitempty" tf:"to_port,omitempty"`
 
-	// (List of String) The list of IPv4 CIDR prefixes for this Security group rule.
+	// (List Of String). The list of IPv4 CIDR prefixes for this Security group rule.
 	// The list of IPv4 CIDR prefixes for this Security group rule.
 	// +kubebuilder:validation:Optional
 	V4CidrBlocks []*string `json:"v4CidrBlocks,omitempty" tf:"v4_cidr_blocks,omitempty"`
 
-	// (List of String) The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
+	// (List Of String). The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
 	// The list of IPv6 CIDR prefixes for this Security group rule. Not supported yet.
 	// +kubebuilder:validation:Optional
 	V6CidrBlocks []*string `json:"v6CidrBlocks,omitempty" tf:"v6_cidr_blocks,omitempty"`
@@ -261,7 +261,7 @@ type SecurityGroupRuleStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SecurityGroupRule is the Schema for the SecurityGroupRules API. Manages a VPC Security Group Rule within Yandex Cloud.
+// SecurityGroupRule is the Schema for the SecurityGroupRules API. Manages the yandex_vpc_security_group_rule resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

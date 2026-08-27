@@ -1,0 +1,17 @@
+apiVersion: cm.yandex-cloud.jet.crossplane.io/v1alpha1
+kind: CertificateIAMMember
+metadata:
+  annotations:
+    meta.upbound.io/example-id: cm/v1alpha1/certificateiammember
+  labels:
+    testing.upbound.io/example-name: example-certificate-iam-member
+  name: example-certificate-iam-member
+spec:
+  forProvider:
+    certificateId: ${data.certificateId}
+    role: viewer
+    serviceAccountRef:
+      name: example-sa
+    sleepAfter: 5
+  providerConfigRef:
+    name: default

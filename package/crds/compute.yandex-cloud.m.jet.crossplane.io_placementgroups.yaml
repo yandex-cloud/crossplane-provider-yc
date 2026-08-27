@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: placementgroups.compute.yandex-cloud.m.jet.crossplane.io
 spec:
   group: compute.yandex-cloud.m.jet.crossplane.io
@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: PlacementGroup is the Schema for the PlacementGroups API. Manages
-          a Placement group resource.
+          the yandex_compute_placement_group resource.
         properties:
           apiVersion:
             description: |-
@@ -61,7 +61,7 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -155,23 +155,23 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   placementStrategyPartitions:
                     description: |-
-                      (Number) A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
+                      (Number). A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
                       A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
                     type: number
                   placementStrategySpread:
                     description: |-
-                      (Boolean) A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
+                      (Bool). A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
                       A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
                     type: boolean
                 type: object
@@ -190,7 +190,7 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -284,23 +284,23 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   placementStrategyPartitions:
                     description: |-
-                      (Number) A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
+                      (Number). A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
                       A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
                     type: number
                   placementStrategySpread:
                     description: |-
-                      (Boolean) A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
+                      (Bool). A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
                       A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
                     type: boolean
                 type: object
@@ -369,12 +369,12 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
                       The creation timestamp of the resource.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -383,29 +383,29 @@ spec:
                       The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   placementStrategyPartitions:
                     description: |-
-                      (Number) A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
+                      (Number). A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
                       A number of partitions in the placement strategy with partitions policy of the Placement Group (conflicts with placement_strategy_spread).
                     type: number
                   placementStrategySpread:
                     description: |-
-                      (Boolean) A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
+                      (Bool). A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
                       A placement strategy with spread policy of the Placement Group. Should be true or unset (conflicts with placement_strategy_partitions).
                     type: boolean
                 type: object

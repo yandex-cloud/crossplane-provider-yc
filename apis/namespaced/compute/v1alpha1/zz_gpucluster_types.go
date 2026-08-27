@@ -30,12 +30,12 @@ import (
 
 type GpuClusterInitParameters struct {
 
-	// (String) The resource description.
-	// The resource description.
+	// Only) (String). The resource description.
+	// Description of the GPU cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// id is used.
-	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+	// ID of the folder that the GPU cluster belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/resourcemanager/v1alpha1.Folder
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
@@ -47,72 +47,88 @@ type GpuClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (String) Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
-	// Type of interconnect between nodes to use in GPU cluster. Type `INFINIBAND` is set by default, and it is the only one available at the moment.
+	// (String). ID of the GPU cluster.
+	// ID of the GPU cluster to return.
+	// To get a GPU cluster ID, make a [GpuClusterService.List] request.
+	GpuClusterID *string `json:"gpuClusterId,omitempty" tf:"gpu_cluster_id,omitempty"`
+
+	// Only) (String). Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
+	// Type of interconnect used for this GPU cluster.
 	InterconnectType *string `json:"interconnectType,omitempty" tf:"interconnect_type,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
-	// A set of key/value label pairs which assigned to resource.
+	// Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+	// GPU cluster labels as `key:value` pairs.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). The resource name.
+	// Name of the GPU cluster.
+	// The name is unique within the folder.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
-	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+	// Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// ID of the availability zone where the GPU cluster resides.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type GpuClusterObservation struct {
 
-	// (String) The creation timestamp of the resource.
-	// The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
+	// Creation timestamp.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) The resource description.
-	// The resource description.
+	// Only) (String). The resource description.
+	// Description of the GPU cluster.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// id is used.
-	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+	// ID of the folder that the GPU cluster belongs to.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String). ID of the GPU cluster.
+	// ID of the GPU cluster to return.
+	// To get a GPU cluster ID, make a [GpuClusterService.List] request.
+	GpuClusterID *string `json:"gpuClusterId,omitempty" tf:"gpu_cluster_id,omitempty"`
+
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
-	// Type of interconnect between nodes to use in GPU cluster. Type `INFINIBAND` is set by default, and it is the only one available at the moment.
+	// Only) (String). Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
+	// Type of interconnect used for this GPU cluster.
 	InterconnectType *string `json:"interconnectType,omitempty" tf:"interconnect_type,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
-	// A set of key/value label pairs which assigned to resource.
+	// Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+	// GPU cluster labels as `key:value` pairs.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). The resource name.
+	// Name of the GPU cluster.
+	// The name is unique within the folder.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The status of the GPU cluster.
-	// The status of the GPU cluster.
+	// Only) (String). The status of the GPU cluster.
+	// Status of the GPU cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
-	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+	// Only) (Number). Number of subnets in the GPU cluster.
+	// Number of subnets in the GPU cluster.
+	Subnets *float64 `json:"subnets,omitempty" tf:"subnets,omitempty"`
+
+	// Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// ID of the availability zone where the GPU cluster resides.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type GpuClusterParameters struct {
 
-	// (String) The resource description.
-	// The resource description.
+	// Only) (String). The resource description.
+	// Description of the GPU cluster.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	// id is used.
-	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+	// ID of the folder that the GPU cluster belongs to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/resourcemanager/v1alpha1.Folder
 	// +kubebuilder:validation:Optional
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
@@ -125,24 +141,31 @@ type GpuClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (String) Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
-	// Type of interconnect between nodes to use in GPU cluster. Type `INFINIBAND` is set by default, and it is the only one available at the moment.
+	// (String). ID of the GPU cluster.
+	// ID of the GPU cluster to return.
+	// To get a GPU cluster ID, make a [GpuClusterService.List] request.
+	// +kubebuilder:validation:Optional
+	GpuClusterID *string `json:"gpuClusterId,omitempty" tf:"gpu_cluster_id,omitempty"`
+
+	// Only) (String). Type of interconnect between nodes to use in GPU cluster. Type INFINIBAND is set by default, and it is the only one available at the moment.
+	// Type of interconnect used for this GPU cluster.
 	// +kubebuilder:validation:Optional
 	InterconnectType *string `json:"interconnectType,omitempty" tf:"interconnect_type,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
-	// A set of key/value label pairs which assigned to resource.
+	// Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+	// GPU cluster labels as `key:value` pairs.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
-	// The resource name.
+	// (String). The resource name.
+	// Name of the GPU cluster.
+	// The name is unique within the folder.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
-	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+	// Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// ID of the availability zone where the GPU cluster resides.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
@@ -174,7 +197,7 @@ type GpuClusterStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// GpuCluster is the Schema for the GpuClusters API. GPU Cluster connects multiple Compute GPU Instances in the same availability zone with high-speed low-latency network.
+// GpuCluster is the Schema for the GpuClusters API. Manages the yandex_compute_gpu_cluster resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

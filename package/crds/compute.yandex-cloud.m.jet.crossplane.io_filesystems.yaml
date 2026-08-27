@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: filesystems.compute.yandex-cloud.m.jet.crossplane.io
 spec:
   group: compute.yandex-cloud.m.jet.crossplane.io
@@ -34,9 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Filesystem is the Schema for the Filesystems API. File storage
-          is a virtual file system that can be attached to multiple Compute Cloud
-          VMs in the same availability zone.
+        description: Filesystem is the Schema for the Filesystems API. Manages the
+          yandex_compute_filesystem resource.
         properties:
           apiVersion:
             description: |-
@@ -62,18 +61,26 @@ spec:
                 properties:
                   blockSize:
                     description: |-
-                      (Number) Block size of the filesystem, specified in bytes.
-                      Block size of the filesystem, specified in bytes.
+                      Only) (Number). Block size of the filesystem, specified in bytes.
+                      Block size used for the filesystem, specified in bytes.
                     type: number
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      Only) (String). The resource description.
+                      Description of the filesystem.
+                    type: string
+                  filesystemId:
+                    description: |-
+                      (String). ID of the filesystem.
+                      ID of the filesystem to return.
+                      To get the filesystem ID, make a [FilesystemService.List] request.
+                      The length must be less than or equal to 50.
+                      This field is required.
                     type: string
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the filesystem belongs to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -161,29 +168,32 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+                      Filesystem labels as `key:value` pairs.
+                      For details about the concept, see [documentation](/docs/overview/concepts/services#labels).
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the filesystem. The name is unique within the folder.
                     type: string
                   size:
                     description: |-
-                      (Number) Size of the filesystem, specified in GB.
-                      Size of the filesystem, specified in GB.
+                      Only) (Number). Size of the filesystem, specified in GB.
+                      Size of the filesystem, specified in bytes.
                     type: number
                   type:
                     description: |-
-                      hdd is set by default.
-                      Type of filesystem to create. Type `network-hdd` is set by default.
+                      Only) (String). Type of filesystem to create. Type network-hdd is set by default.
+                      ID of the filesystem type.
+                      To get a list of available filesystem types, make a [yandex.cloud.compute.v1.DiskTypeService.List] request.
                     type: string
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
-                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                      Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      ID of the availability zone where the filesystem resides.
+                      A filesystem can be attached only to instances residing in the same availability zone.
                     type: string
                 type: object
               initProvider:
@@ -201,18 +211,26 @@ spec:
                 properties:
                   blockSize:
                     description: |-
-                      (Number) Block size of the filesystem, specified in bytes.
-                      Block size of the filesystem, specified in bytes.
+                      Only) (Number). Block size of the filesystem, specified in bytes.
+                      Block size used for the filesystem, specified in bytes.
                     type: number
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      Only) (String). The resource description.
+                      Description of the filesystem.
+                    type: string
+                  filesystemId:
+                    description: |-
+                      (String). ID of the filesystem.
+                      ID of the filesystem to return.
+                      To get the filesystem ID, make a [FilesystemService.List] request.
+                      The length must be less than or equal to 50.
+                      This field is required.
                     type: string
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the filesystem belongs to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -300,29 +318,32 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+                      Filesystem labels as `key:value` pairs.
+                      For details about the concept, see [documentation](/docs/overview/concepts/services#labels).
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the filesystem. The name is unique within the folder.
                     type: string
                   size:
                     description: |-
-                      (Number) Size of the filesystem, specified in GB.
-                      Size of the filesystem, specified in GB.
+                      Only) (Number). Size of the filesystem, specified in GB.
+                      Size of the filesystem, specified in bytes.
                     type: number
                   type:
                     description: |-
-                      hdd is set by default.
-                      Type of filesystem to create. Type `network-hdd` is set by default.
+                      Only) (String). Type of filesystem to create. Type network-hdd is set by default.
+                      ID of the filesystem type.
+                      To get a list of available filesystem types, make a [yandex.cloud.compute.v1.DiskTypeService.List] request.
                     type: string
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
-                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                      Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      ID of the availability zone where the filesystem resides.
+                      A filesystem can be attached only to instances residing in the same availability zone.
                     type: string
                 type: object
               managementPolicies:
@@ -390,59 +411,70 @@ spec:
                 properties:
                   blockSize:
                     description: |-
-                      (Number) Block size of the filesystem, specified in bytes.
-                      Block size of the filesystem, specified in bytes.
+                      Only) (Number). Block size of the filesystem, specified in bytes.
+                      Block size used for the filesystem, specified in bytes.
                     type: number
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
-                      The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
+                      Creation timestamp.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      Only) (String). The resource description.
+                      Description of the filesystem.
+                    type: string
+                  filesystemId:
+                    description: |-
+                      (String). ID of the filesystem.
+                      ID of the filesystem to return.
+                      To get the filesystem ID, make a [FilesystemService.List] request.
+                      The length must be less than or equal to 50.
+                      This field is required.
                     type: string
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the filesystem belongs to.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      Only) (Map Of String). A set of key/value label pairs which assigned to resource.
+                      Filesystem labels as `key:value` pairs.
+                      For details about the concept, see [documentation](/docs/overview/concepts/services#labels).
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the filesystem. The name is unique within the folder.
                     type: string
                   size:
                     description: |-
-                      (Number) Size of the filesystem, specified in GB.
-                      Size of the filesystem, specified in GB.
+                      Only) (Number). Size of the filesystem, specified in GB.
+                      Size of the filesystem, specified in bytes.
                     type: number
                   status:
                     description: |-
-                      (String) The status of the filesystem.
-                      The status of the filesystem.
+                      Only) (String). The status of the filesystem.
+                      Current status of the filesystem.
                     type: string
                   type:
                     description: |-
-                      hdd is set by default.
-                      Type of filesystem to create. Type `network-hdd` is set by default.
+                      Only) (String). Type of filesystem to create. Type network-hdd is set by default.
+                      ID of the filesystem type.
+                      To get a list of available filesystem types, make a [yandex.cloud.compute.v1.DiskTypeService.List] request.
                     type: string
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
-                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                      Only) (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      ID of the availability zone where the filesystem resides.
+                      A filesystem can be attached only to instances residing in the same availability zone.
                     type: string
                 type: object
               conditions:

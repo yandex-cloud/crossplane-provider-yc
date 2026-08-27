@@ -88,6 +88,18 @@ func Configure(p *config.Provider) {
 			Type: fmt.Sprintf("%s.%s", ApisPackagePath, "DiskPlacementGroup"),
 		}
 	})
+	p.AddResourceConfigurator("yandex_compute_disk_iam_binding", func(r *config.Resource) {
+		r.ExternalName = common.IAMExternalName("disk_id", "role")
+		r.References["disk_id"] = config.Reference{
+			Type: "Disk",
+		}
+		r.References["members"] = config.Reference{
+			Type:              fmt.Sprintf("%s.%s", iam.ApisPackagePath, "ServiceAccount"),
+			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
+			RefFieldName:      "ServiceAccountRef",
+			SelectorFieldName: "ServiceAccountSelector",
+		}
+	})
 
 	p.AddResourceConfigurator("yandex_compute_instance_group", func(r *config.Resource) {
 		r.References["instance_template.network_interface.network_id"] = config.Reference{

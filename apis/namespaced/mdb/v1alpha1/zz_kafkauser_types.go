@@ -30,7 +30,7 @@ import (
 
 type KafkaUserInitParameters struct {
 
-	// (String) The ID of the Kafka cluster.
+	// (String). The ID of the Kafka cluster.
 	// The ID of the Kafka cluster.
 	// +crossplane:generate:reference:type=KafkaCluster
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
@@ -43,40 +43,40 @@ type KafkaUserInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.NamespacedSelector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String, Sensitive) The password of the user.
+	// (String). The password of the user.
 	// The password of the user.
 	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
-	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
 	Permission []KafkaUserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type KafkaUserObservation struct {
 
-	// (String) The ID of the Kafka cluster.
+	// (String). The ID of the Kafka cluster.
 	// The ID of the Kafka cluster.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
 	Permission []KafkaUserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type KafkaUserParameters struct {
 
-	// (String) The ID of the Kafka cluster.
+	// (String). The ID of the Kafka cluster.
 	// The ID of the Kafka cluster.
 	// +crossplane:generate:reference:type=KafkaCluster
 	// +kubebuilder:validation:Optional
@@ -90,17 +90,17 @@ type KafkaUserParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.NamespacedSelector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String, Sensitive) The password of the user.
+	// (String). The password of the user.
 	// The password of the user.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
-	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
 	// +kubebuilder:validation:Optional
 	Permission []KafkaUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
@@ -113,11 +113,11 @@ type KafkaUserPermissionInitParameters struct {
 	// +listType=set
 	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
 
-	// (String) The role type to grant to the topic.
+	// (String). The role type to grant to the topic.
 	// The role type to grant to the topic.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
-	// (String) The name of the topic that the permission grants access to.
+	// (String). The name of the topic that the permission grants access to.
 	// The name of the topic that the permission grants access to.
 	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
 }
@@ -129,11 +129,11 @@ type KafkaUserPermissionObservation struct {
 	// +listType=set
 	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
 
-	// (String) The role type to grant to the topic.
+	// (String). The role type to grant to the topic.
 	// The role type to grant to the topic.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
-	// (String) The name of the topic that the permission grants access to.
+	// (String). The name of the topic that the permission grants access to.
 	// The name of the topic that the permission grants access to.
 	TopicName *string `json:"topicName,omitempty" tf:"topic_name,omitempty"`
 }
@@ -146,12 +146,12 @@ type KafkaUserPermissionParameters struct {
 	// +listType=set
 	AllowHosts []*string `json:"allowHosts,omitempty" tf:"allow_hosts,omitempty"`
 
-	// (String) The role type to grant to the topic.
+	// (String). The role type to grant to the topic.
 	// The role type to grant to the topic.
 	// +kubebuilder:validation:Optional
 	Role *string `json:"role" tf:"role,omitempty"`
 
-	// (String) The name of the topic that the permission grants access to.
+	// (String). The name of the topic that the permission grants access to.
 	// The name of the topic that the permission grants access to.
 	// +kubebuilder:validation:Optional
 	TopicName *string `json:"topicName" tf:"topic_name,omitempty"`
@@ -184,7 +184,7 @@ type KafkaUserStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// KafkaUser is the Schema for the KafkaUsers API. Manages a user of a Kafka cluster within Yandex Cloud.
+// KafkaUser is the Schema for the KafkaUsers API. Manages the yandex_mdb_kafka_user resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

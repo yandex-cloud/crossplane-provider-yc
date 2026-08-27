@@ -28,18 +28,18 @@ import (
 	"github.com/crossplane/upjet/v2/pkg/resource/json"
 )
 
-// GetTerraformResourceType returns Terraform resource type for this ElasticsearchCluster
-func (mg *ElasticsearchCluster) GetTerraformResourceType() string {
-	return "yandex_mdb_elasticsearch_cluster"
+// GetTerraformResourceType returns Terraform resource type for this DiskIAMBinding
+func (mg *DiskIAMBinding) GetTerraformResourceType() string {
+	return "yandex_compute_disk_iam_binding"
 }
 
-// GetConnectionDetailsMapping for this ElasticsearchCluster
-func (tr *ElasticsearchCluster) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"config[*].admin_password": "config[*].adminPasswordSecretRef"}
+// GetConnectionDetailsMapping for this DiskIAMBinding
+func (tr *DiskIAMBinding) GetConnectionDetailsMapping() map[string]string {
+	return nil
 }
 
-// GetObservation of this ElasticsearchCluster
-func (tr *ElasticsearchCluster) GetObservation() (map[string]any, error) {
+// GetObservation of this DiskIAMBinding
+func (tr *DiskIAMBinding) GetObservation() (map[string]any, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -48,8 +48,8 @@ func (tr *ElasticsearchCluster) GetObservation() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this ElasticsearchCluster
-func (tr *ElasticsearchCluster) SetObservation(obs map[string]any) error {
+// SetObservation for this DiskIAMBinding
+func (tr *DiskIAMBinding) SetObservation(obs map[string]any) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -57,16 +57,16 @@ func (tr *ElasticsearchCluster) SetObservation(obs map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this ElasticsearchCluster
-func (tr *ElasticsearchCluster) GetID() string {
+// GetID returns ID of underlying Terraform resource of this DiskIAMBinding
+func (tr *DiskIAMBinding) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this ElasticsearchCluster
-func (tr *ElasticsearchCluster) GetParameters() (map[string]any, error) {
+// GetParameters of this DiskIAMBinding
+func (tr *DiskIAMBinding) GetParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -75,8 +75,8 @@ func (tr *ElasticsearchCluster) GetParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this ElasticsearchCluster
-func (tr *ElasticsearchCluster) SetParameters(params map[string]any) error {
+// SetParameters for this DiskIAMBinding
+func (tr *DiskIAMBinding) SetParameters(params map[string]any) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -84,8 +84,8 @@ func (tr *ElasticsearchCluster) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// GetInitParameters of this ElasticsearchCluster
-func (tr *ElasticsearchCluster) GetInitParameters() (map[string]any, error) {
+// GetInitParameters of this DiskIAMBinding
+func (tr *DiskIAMBinding) GetInitParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
 	if err != nil {
 		return nil, err
@@ -94,8 +94,8 @@ func (tr *ElasticsearchCluster) GetInitParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// GetInitParameters of this ElasticsearchCluster
-func (tr *ElasticsearchCluster) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
+// GetInitParameters of this DiskIAMBinding
+func (tr *DiskIAMBinding) GetMergedParameters(shouldMergeInitProvider bool) (map[string]any, error) {
 	params, err := tr.GetParameters()
 	if err != nil {
 		return nil, errors.Wrapf(err, "cannot get parameters for resource \"%s/%s\"", tr.GetNamespace(), tr.GetName())
@@ -124,10 +124,10 @@ func (tr *ElasticsearchCluster) GetMergedParameters(shouldMergeInitProvider bool
 	return params, nil
 }
 
-// LateInitialize this ElasticsearchCluster using its observed tfState.
+// LateInitialize this DiskIAMBinding using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *ElasticsearchCluster) LateInitialize(attrs []byte) (bool, error) {
-	params := &ElasticsearchClusterParameters{}
+func (tr *DiskIAMBinding) LateInitialize(attrs []byte) (bool, error) {
+	params := &DiskIAMBindingParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -138,6 +138,6 @@ func (tr *ElasticsearchCluster) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *ElasticsearchCluster) GetTerraformSchemaVersion() int {
+func (tr *DiskIAMBinding) GetTerraformSchemaVersion() int {
 	return 0
 }

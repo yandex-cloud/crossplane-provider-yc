@@ -35,6 +35,7 @@ import (
 	datatransferCluster "github.com/yandex-cloud/crossplane-provider-yc/config/cluster/datatransfer"
 	dnsCluster "github.com/yandex-cloud/crossplane-provider-yc/config/cluster/dns"
 	iamCluster "github.com/yandex-cloud/crossplane-provider-yc/config/cluster/iam"
+	kmsCluster "github.com/yandex-cloud/crossplane-provider-yc/config/cluster/kms"
 	kubernetesCluster "github.com/yandex-cloud/crossplane-provider-yc/config/cluster/kubernetes"
 	mdbCluster "github.com/yandex-cloud/crossplane-provider-yc/config/cluster/mdb"
 	ymqCluster "github.com/yandex-cloud/crossplane-provider-yc/config/cluster/message"
@@ -52,6 +53,7 @@ import (
 	datatransferNamespaced "github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/datatransfer"
 	dnsNamespaced "github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/dns"
 	iamNamespaced "github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/iam"
+	kmsNamespaced "github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/kms"
 	kubernetesNamespaced "github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/kubernetes"
 	mdbNamespaced "github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/mdb"
 	ymqNamespaced "github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/message"
@@ -76,9 +78,41 @@ const (
 
 var (
 	tfFrameworkIncludeList = []string{
+		"yandex_cm_certificate_iam_member$",
+		"yandex_compute_disk_iam_binding$",
+		"yandex_compute_disk_placement_group$",
+		"yandex_compute_filesystem$",
+		"yandex_compute_gpu_cluster$",
+
+		"yandex_container_registry$",
+		"yandex_container_repository$",
+
+		"yandex_datatransfer_endpoint$",
+		"yandex_datatransfer_transfer$",
+
+		"yandex_iam_service_account$",
+		"yandex_iam_service_account_iam_binding$",
+		"yandex_iam_service_account_iam_member$",
+
+		"yandex_kms_symmetric_key$",
+		"yandex_kms_symmetric_key_iam_binding$",
+
+		"yandex_lb_target_group$",
+
 		"yandex_mdb_mongodb_database$",
 		"yandex_mdb_mongodb_user$",
 		// "yandex_mdb_opensearch_cluster$",
+
+		"yandex_organizationmanager_group$",
+		"yandex_organizationmanager_group_iam_member$",
+		"yandex_organizationmanager_organization_iam_binding$",
+
+		"yandex_resourcemanager_cloud$",
+		"yandex_resourcemanager_cloud_iam_binding$",
+		"yandex_resourcemanager_cloud_iam_member$",
+		"yandex_resourcemanager_folder$",
+		"yandex_resourcemanager_folder_iam_binding$",
+		"yandex_resourcemanager_folder_iam_member$",
 
 		"yandex_vpc_security_group_rule$",
 	}
@@ -104,9 +138,6 @@ var (
 		// "yandex_cdn_resource$",
 
 		"yandex_compute_disk$",
-		"yandex_compute_disk_placement_group$",
-		"yandex_compute_filesystem$",
-		"yandex_compute_gpu_cluster$",
 		"yandex_compute_image$",
 		"yandex_compute_instance$",
 		"yandex_compute_instance_group$",
@@ -114,35 +145,21 @@ var (
 		"yandex_compute_snapshot$",
 		"yandex_compute_snapshot_schedule$",
 
-		"yandex_container_repository$",
-		"yandex_container_registry$",
-
-		"yandex_datatransfer_endpoint$",
-		"yandex_datatransfer_transfer$",
-
 		"yandex_dns_zone$",
 		"yandex_dns_recordset$",
 
-		"yandex_iam_service_account$",
 		"yandex_iam_service_account_api_key$",
-		"yandex_iam_service_account_iam_binding$",
-		"yandex_iam_service_account_iam_member$",
 		"yandex_iam_service_account_key$",
 		"yandex_iam_service_account_static_access_key$",
-
-		"yandex_kms_symmetric_key$",
-		"yandex_kms_symmetric_key_iam_binding$",
 
 		"yandex_kubernetes_cluster$",
 		"yandex_kubernetes_node_group$",
 
 		"yandex_lb_network_load_balancer$",
-		"yandex_lb_target_group$",
 
 		"yandex_mdb_clickhouse_cluster$",
 		"yandex_mdb_kafka_topic$",
 		"yandex_mdb_kafka_user$",
-		"yandex_mdb_elasticsearch_cluster$",
 		"yandex_mdb_mysql_cluster$",
 		"yandex_mdb_mysql_database$",
 		"yandex_mdb_mysql_user$",
@@ -154,16 +171,6 @@ var (
 
 		"yandex_organizationmanager_saml_federation_user_account$",
 		"yandex_organizationmanager_saml_federation$",
-		"yandex_organizationmanager_organization_iam_binding$",
-		"yandex_organizationmanager_group_iam_member$",
-		"yandex_organizationmanager_group$",
-
-		"yandex_resourcemanager_cloud_iam_binding$",
-		"yandex_resourcemanager_cloud_iam_member$",
-		"yandex_resourcemanager_cloud$",
-		"yandex_resourcemanager_folder$",
-		"yandex_resourcemanager_folder_iam_member$",
-		"yandex_resourcemanager_folder_iam_binding$",
 
 		"yandex_vpc_address$",
 		"yandex_vpc_default_security_group$",
@@ -200,6 +207,7 @@ func GetProvider() *tjconfig.Provider {
 		datatransferCluster.Configure,
 		dnsCluster.Configure,
 		iamCluster.Configure,
+		kmsCluster.Configure,
 		kubernetesCluster.Configure,
 		mdbCluster.Configure,
 		storageCluster.Configure,
@@ -238,6 +246,7 @@ func GetProviderNamespaced() *tjconfig.Provider {
 		datatransferNamespaced.Configure,
 		dnsNamespaced.Configure,
 		iamNamespaced.Configure,
+		kmsNamespaced.Configure,
 		kubernetesNamespaced.Configure,
 		mdbNamespaced.Configure,
 		storageNamespaced.Configure,

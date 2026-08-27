@@ -23,7 +23,9 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
+	v1alpha11 "github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/iam/v1alpha1"
 	v1alpha1 "github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/resourcemanager/v1alpha1"
+	iam "github.com/yandex-cloud/crossplane-provider-yc/config/cluster/iam"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -67,6 +69,68 @@ func (mg *SymmetricKey) ResolveReferences(ctx context.Context, c client.Reader) 
 	}
 	mg.Spec.InitProvider.FolderID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.FolderIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this SymmetricKeyIAMBinding.
+func (mg *SymmetricKeyIAMBinding) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Members),
+		Extract:       iam.ServiceAccountRefValue(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.ForProvider.ServiceAccountRef,
+		Selector:      mg.Spec.ForProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &v1alpha11.ServiceAccountList{},
+			Managed: &v1alpha11.ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Members")
+	}
+	mg.Spec.ForProvider.Members = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.ServiceAccountRef = mrsp.ResolvedReferences
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SymmetricKeyID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.SymmetricKeyIDRef,
+		Selector:     mg.Spec.ForProvider.SymmetricKeyIDSelector,
+		To: reference.To{
+			List:    &SymmetricKeyList{},
+			Managed: &SymmetricKey{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.SymmetricKeyID")
+	}
+	mg.Spec.ForProvider.SymmetricKeyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.SymmetricKeyIDRef = rsp.ResolvedReference
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.Members),
+		Extract:       iam.ServiceAccountRefValue(),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.InitProvider.ServiceAccountRef,
+		Selector:      mg.Spec.InitProvider.ServiceAccountSelector,
+		To: reference.To{
+			List:    &v1alpha11.ServiceAccountList{},
+			Managed: &v1alpha11.ServiceAccount{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Members")
+	}
+	mg.Spec.InitProvider.Members = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.ServiceAccountRef = mrsp.ResolvedReferences
 
 	return nil
 }

@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: repositories.container.yandex-cloud.m.jet.crossplane.io
 spec:
   group: container.yandex-cloud.m.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Repository is the Schema for the Repositorys API. Creates a new
-          Container Repository.
+        description: Repository is the Schema for the Repositorys API. Manages the
+          yandex_container_repository resource.
         properties:
           apiVersion:
             description: |-
@@ -61,8 +61,15 @@ spec:
                 properties:
                   name:
                     description: |-
-                      (String) A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
-                      A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+                      (String). A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+                      Name of the repository.
+                      The name is unique within the registry.
+                    type: string
+                  repositoryId:
+                    description: |-
+                      (String). The ID of a specific repository.
+                      ID of the Repository resource to return.
+                      To get the repository ID use a [RepositoryService.List] request.
                     type: string
                 type: object
               initProvider:
@@ -80,8 +87,15 @@ spec:
                 properties:
                   name:
                     description: |-
-                      (String) A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
-                      A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+                      (String). A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+                      Name of the repository.
+                      The name is unique within the registry.
+                    type: string
+                  repositoryId:
+                    description: |-
+                      (String). The ID of a specific repository.
+                      ID of the Repository resource to return.
+                      To get the repository ID use a [RepositoryService.List] request.
                     type: string
                 type: object
               managementPolicies:
@@ -153,12 +167,19 @@ spec:
               atProvider:
                 properties:
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   name:
                     description: |-
-                      (String) A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
-                      A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+                      (String). A name of the repository. The name of the repository should start with id of a container registry and match the name of the images that will be pushed in the repository.
+                      Name of the repository.
+                      The name is unique within the registry.
+                    type: string
+                  repositoryId:
+                    description: |-
+                      (String). The ID of a specific repository.
+                      ID of the Repository resource to return.
+                      To get the repository ID use a [RepositoryService.List] request.
                     type: string
                 type: object
               conditions:

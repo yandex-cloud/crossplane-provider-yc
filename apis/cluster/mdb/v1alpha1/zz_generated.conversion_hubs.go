@@ -24,9 +24,6 @@ package v1alpha1
 func (tr *ClickhouseCluster) Hub() {}
 
 // Hub marks this type as a conversion hub.
-func (tr *ElasticsearchCluster) Hub() {}
-
-// Hub marks this type as a conversion hub.
 func (tr *KafkaCluster) Hub() {}
 
 // Hub marks this type as a conversion hub.

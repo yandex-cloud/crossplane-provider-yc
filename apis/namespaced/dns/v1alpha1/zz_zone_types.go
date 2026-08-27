@@ -30,11 +30,11 @@ import (
 
 type ZoneInitParameters struct {
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -51,16 +51,16 @@ type ZoneInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Set of String) For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
+	// (Set Of String). For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/vpc/v1alpha1.Network
 	// +listType=set
@@ -74,26 +74,26 @@ type ZoneInitParameters struct {
 	// +kubebuilder:validation:Optional
 	PrivateNetworksSelector *v1.NamespacedSelector `json:"privateNetworksSelector,omitempty" tf:"-"`
 
-	// (Boolean) The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
+	// (Bool). The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	// The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
 
-	// (String) The DNS name of this zone, e.g. example.com.. Must ends with dot.
+	// (String). The DNS name of this zone, e.g. example.com.. Must ends with dot.
 	// The DNS name of this zone, e.g. `example.com.`. Must ends with dot.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type ZoneObservation struct {
 
-	// (String) The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
 	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -101,40 +101,40 @@ type ZoneObservation struct {
 	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Set of String) For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
+	// (Set Of String). For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// +listType=set
 	PrivateNetworks []*string `json:"privateNetworks,omitempty" tf:"private_networks,omitempty"`
 
-	// (Boolean) The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
+	// (Bool). The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	// The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
 
-	// (String) The DNS name of this zone, e.g. example.com.. Must ends with dot.
+	// (String). The DNS name of this zone, e.g. example.com.. Must ends with dot.
 	// The DNS name of this zone, e.g. `example.com.`. Must ends with dot.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type ZoneParameters struct {
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -153,18 +153,18 @@ type ZoneParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Set of String) For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
+	// (Set Of String). For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// For privately visible zones, the set of Virtual Private Cloud resources that the zone is visible from.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
@@ -179,12 +179,12 @@ type ZoneParameters struct {
 	// +kubebuilder:validation:Optional
 	PrivateNetworksSelector *v1.NamespacedSelector `json:"privateNetworksSelector,omitempty" tf:"-"`
 
-	// (Boolean) The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
+	// (Bool). The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	// The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources.
 	// +kubebuilder:validation:Optional
 	Public *bool `json:"public,omitempty" tf:"public,omitempty"`
 
-	// (String) The DNS name of this zone, e.g. example.com.. Must ends with dot.
+	// (String). The DNS name of this zone, e.g. example.com.. Must ends with dot.
 	// The DNS name of this zone, e.g. `example.com.`. Must ends with dot.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
@@ -217,7 +217,7 @@ type ZoneStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Zone is the Schema for the Zones API. Manages a DNS Zone within Yandex Cloud.
+// Zone is the Schema for the Zones API. Manages the yandex_dns_zone resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

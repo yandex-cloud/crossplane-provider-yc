@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: cloudiambindings.iam.yandex-cloud.jet.crossplane.io
 spec:
   group: iam.yandex-cloud.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: CloudIAMBinding is the Schema for the CloudIAMBindings API. Allows
-          management of a single IAM binding for a Yandex Resource Manager cloud.
+        description: CloudIAMBinding is the Schema for the CloudIAMBindings API. Manages
+          the yandex_resourcemanager_cloud_iam_binding resource.
         properties:
           apiVersion:
             description: |-
@@ -75,12 +75,12 @@ spec:
                 properties:
                   cloudId:
                     description: |-
-                      (String) The ID of the cloud to attach the policy to.
-                      The ID of the cloud to attach the policy to.
+                      (String). The ID of the cloud to attach the policy to.
+                      The ID of the `cloud` to attach the policy to.
                     type: string
                   members:
                     description: |-
-                      (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+                      (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
                       An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
                       * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
                       * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -99,8 +99,8 @@ spec:
                     x-kubernetes-list-type: set
                   role:
                     description: |-
-                      (String) The role that should be applied. See roles catalog.
-                      The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
+                      (String). The role that should be assigned. Only one yandex_resourcemanager_cloud_iam_binding can be used per role.
+                      The role that should be assigned. Only one yandex_resourcemanager_cloud_iam_binding can be used per role.
                     type: string
                   serviceAccountRef:
                     description: References to ServiceAccount to populate members.
@@ -181,8 +181,13 @@ spec:
                         type: object
                     type: object
                   sleepAfter:
-                    description: (Number)
+                    description: |-
+                      (Number). For test purposes, to compensate IAM operations delay
+                      For test purposes, to compensate IAM operations delay
                     type: number
+                required:
+                - cloudId
+                - role
                 type: object
               initProvider:
                 description: |-
@@ -197,14 +202,9 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
-                  cloudId:
-                    description: |-
-                      (String) The ID of the cloud to attach the policy to.
-                      The ID of the cloud to attach the policy to.
-                    type: string
                   members:
                     description: |-
-                      (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+                      (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
                       An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
                       * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
                       * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -221,11 +221,6 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
-                  role:
-                    description: |-
-                      (String) The role that should be applied. See roles catalog.
-                      The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
-                    type: string
                   serviceAccountRef:
                     description: References to ServiceAccount to populate members.
                     items:
@@ -305,7 +300,9 @@ spec:
                         type: object
                     type: object
                   sleepAfter:
-                    description: (Number)
+                    description: |-
+                      (Number). For test purposes, to compensate IAM operations delay
+                      For test purposes, to compensate IAM operations delay
                     type: number
                 type: object
               managementPolicies:
@@ -394,15 +391,6 @@ spec:
             required:
             - forProvider
             type: object
-            x-kubernetes-validations:
-            - message: spec.forProvider.cloudId is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.cloudId)
-                || (has(self.initProvider) && has(self.initProvider.cloudId))'
-            - message: spec.forProvider.role is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.role)
-                || (has(self.initProvider) && has(self.initProvider.role))'
           status:
             description: CloudIAMBindingStatus defines the observed state of CloudIAMBinding.
             properties:
@@ -410,15 +398,15 @@ spec:
                 properties:
                   cloudId:
                     description: |-
-                      (String) The ID of the cloud to attach the policy to.
-                      The ID of the cloud to attach the policy to.
+                      (String). The ID of the cloud to attach the policy to.
+                      The ID of the `cloud` to attach the policy to.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String). The ID of this resource.
                     type: string
                   members:
                     description: |-
-                      (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+                      (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
                       An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
                       * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
                       * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -437,11 +425,13 @@ spec:
                     x-kubernetes-list-type: set
                   role:
                     description: |-
-                      (String) The role that should be applied. See roles catalog.
-                      The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
+                      (String). The role that should be assigned. Only one yandex_resourcemanager_cloud_iam_binding can be used per role.
+                      The role that should be assigned. Only one yandex_resourcemanager_cloud_iam_binding can be used per role.
                     type: string
                   sleepAfter:
-                    description: (Number)
+                    description: |-
+                      (Number). For test purposes, to compensate IAM operations delay
+                      For test purposes, to compensate IAM operations delay
                     type: number
                 type: object
               conditions:

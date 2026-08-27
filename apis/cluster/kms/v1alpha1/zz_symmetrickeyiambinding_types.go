@@ -29,7 +29,7 @@ import (
 
 type SymmetricKeyIAMBindingInitParameters struct {
 
-	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -42,27 +42,32 @@ type SymmetricKeyIAMBindingInitParameters struct {
 	// * **system:allUsers**: All users, including unauthenticated ones.
 	//
 	// ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/iam/v1alpha1.ServiceAccount
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/cluster/iam.ServiceAccountRefValue()
+	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
+	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+	// References to ServiceAccount in iam to populate members.
+	// +kubebuilder:validation:Optional
+	ServiceAccountRef []v1.Reference `json:"serviceAccountRef,omitempty" tf:"-"`
 
-	// (Number)
+	// Selector for a list of ServiceAccount in iam to populate members.
+	// +kubebuilder:validation:Optional
+	ServiceAccountSelector *v1.Selector `json:"serviceAccountSelector,omitempty" tf:"-"`
+
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
-
-	// (String) The Yandex Key Management Service Symmetric Key ID to apply a binding to.
-	// The [Yandex Key Management Service](https://yandex.cloud/docs/kms/) Symmetric Key ID to apply a binding to.
-	SymmetricKeyID *string `json:"symmetricKeyId,omitempty" tf:"symmetric_key_id,omitempty"`
 }
 
 type SymmetricKeyIAMBindingObservation struct {
 
-	// (String) The ID of this resource.
+	// (String). The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -78,21 +83,22 @@ type SymmetricKeyIAMBindingObservation struct {
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
+	// (String). The role that should be assigned. Only one yandex_kms_symmetric_key_iam_binding can be used per role.
+	// The role that should be assigned. Only one yandex_kms_symmetric_key_iam_binding can be used per role.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
-	// (Number)
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 
-	// (String) The Yandex Key Management Service Symmetric Key ID to apply a binding to.
-	// The [Yandex Key Management Service](https://yandex.cloud/docs/kms/) Symmetric Key ID to apply a binding to.
+	// (String). The ID of the symmetric_key to attach the policy to.
+	// The ID of the `symmetric_key` to attach the policy to.
 	SymmetricKeyID *string `json:"symmetricKeyId,omitempty" tf:"symmetric_key_id,omitempty"`
 }
 
 type SymmetricKeyIAMBindingParameters struct {
 
-	// (Set of String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
+	// (Set Of String). An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
 	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
@@ -105,23 +111,45 @@ type SymmetricKeyIAMBindingParameters struct {
 	// * **system:allUsers**: All users, including unauthenticated ones.
 	//
 	// ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
+	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/iam/v1alpha1.ServiceAccount
+	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/cluster/iam.ServiceAccountRefValue()
+	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
+	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
-	// +kubebuilder:validation:Optional
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+	// (String). The role that should be assigned. Only one yandex_kms_symmetric_key_iam_binding can be used per role.
+	// The role that should be assigned. Only one yandex_kms_symmetric_key_iam_binding can be used per role.
+	// +kubebuilder:validation:Required
+	Role *string `json:"role" tf:"role,omitempty"`
 
-	// (Number)
+	// References to ServiceAccount in iam to populate members.
+	// +kubebuilder:validation:Optional
+	ServiceAccountRef []v1.Reference `json:"serviceAccountRef,omitempty" tf:"-"`
+
+	// Selector for a list of ServiceAccount in iam to populate members.
+	// +kubebuilder:validation:Optional
+	ServiceAccountSelector *v1.Selector `json:"serviceAccountSelector,omitempty" tf:"-"`
+
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	// +kubebuilder:validation:Optional
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 
-	// (String) The Yandex Key Management Service Symmetric Key ID to apply a binding to.
-	// The [Yandex Key Management Service](https://yandex.cloud/docs/kms/) Symmetric Key ID to apply a binding to.
+	// (String). The ID of the symmetric_key to attach the policy to.
+	// The ID of the `symmetric_key` to attach the policy to.
+	// +crossplane:generate:reference:type=SymmetricKey
 	// +kubebuilder:validation:Optional
 	SymmetricKeyID *string `json:"symmetricKeyId,omitempty" tf:"symmetric_key_id,omitempty"`
+
+	// Reference to a SymmetricKey to populate symmetricKeyId.
+	// +kubebuilder:validation:Optional
+	SymmetricKeyIDRef *v1.Reference `json:"symmetricKeyIdRef,omitempty" tf:"-"`
+
+	// Selector for a SymmetricKey to populate symmetricKeyId.
+	// +kubebuilder:validation:Optional
+	SymmetricKeyIDSelector *v1.Selector `json:"symmetricKeyIdSelector,omitempty" tf:"-"`
 }
 
 // SymmetricKeyIAMBindingSpec defines the desired state of SymmetricKeyIAMBinding
@@ -151,7 +179,7 @@ type SymmetricKeyIAMBindingStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// SymmetricKeyIAMBinding is the Schema for the SymmetricKeyIAMBindings API. Allows management of a single IAM binding for a Key Management Service.
+// SymmetricKeyIAMBinding is the Schema for the SymmetricKeyIAMBindings API. Manages the yandex_kms_symmetric_key_iam_binding resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -160,11 +188,8 @@ type SymmetricKeyIAMBindingStatus struct {
 type SymmetricKeyIAMBinding struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.members) || (has(self.initProvider) && has(self.initProvider.members))",message="spec.forProvider.members is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.role) || (has(self.initProvider) && has(self.initProvider.role))",message="spec.forProvider.role is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.symmetricKeyId) || (has(self.initProvider) && has(self.initProvider.symmetricKeyId))",message="spec.forProvider.symmetricKeyId is a required parameter"
-	Spec   SymmetricKeyIAMBindingSpec   `json:"spec"`
-	Status SymmetricKeyIAMBindingStatus `json:"status,omitempty"`
+	Spec              SymmetricKeyIAMBindingSpec   `json:"spec"`
+	Status            SymmetricKeyIAMBindingStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

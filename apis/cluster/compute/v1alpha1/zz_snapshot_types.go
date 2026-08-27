@@ -38,32 +38,32 @@ type SnapshotHardwareGenerationGeneration2FeaturesParameters struct {
 
 type SnapshotHardwareGenerationInitParameters struct {
 
-	// (Block List, Max: 1) A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot. (see below for nested schema)
+	// [Block]. A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot.
 	// A newer hardware generation, which always uses `PCI_TOPOLOGY_V2` and UEFI boot.
 	Generation2Features []SnapshotHardwareGenerationGeneration2FeaturesInitParameters `json:"generation2Features,omitempty" tf:"generation2_features,omitempty"`
 
-	// (Block List, Max: 1) Defines the first known hardware generation and its features. (see below for nested schema)
+	// [Block]. Defines the first known hardware generation and its features.
 	// Defines the first known hardware generation and its features.
 	LegacyFeatures []SnapshotHardwareGenerationLegacyFeaturesInitParameters `json:"legacyFeatures,omitempty" tf:"legacy_features,omitempty"`
 }
 
 type SnapshotHardwareGenerationLegacyFeaturesInitParameters struct {
 
-	// (String) A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
+	// (String). A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
 	// A variant of PCI topology, one of `PCI_TOPOLOGY_V1` or `PCI_TOPOLOGY_V2`.
 	PciTopology *string `json:"pciTopology,omitempty" tf:"pci_topology,omitempty"`
 }
 
 type SnapshotHardwareGenerationLegacyFeaturesObservation struct {
 
-	// (String) A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
+	// (String). A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
 	// A variant of PCI topology, one of `PCI_TOPOLOGY_V1` or `PCI_TOPOLOGY_V2`.
 	PciTopology *string `json:"pciTopology,omitempty" tf:"pci_topology,omitempty"`
 }
 
 type SnapshotHardwareGenerationLegacyFeaturesParameters struct {
 
-	// (String) A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
+	// (String). A variant of PCI topology, one of PCI_TOPOLOGY_V1 or PCI_TOPOLOGY_V2.
 	// A variant of PCI topology, one of `PCI_TOPOLOGY_V1` or `PCI_TOPOLOGY_V2`.
 	// +kubebuilder:validation:Optional
 	PciTopology *string `json:"pciTopology,omitempty" tf:"pci_topology,omitempty"`
@@ -71,23 +71,23 @@ type SnapshotHardwareGenerationLegacyFeaturesParameters struct {
 
 type SnapshotHardwareGenerationObservation struct {
 
-	// (Block List, Max: 1) A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot. (see below for nested schema)
+	// [Block]. A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot.
 	// A newer hardware generation, which always uses `PCI_TOPOLOGY_V2` and UEFI boot.
 	Generation2Features []SnapshotHardwareGenerationGeneration2FeaturesParameters `json:"generation2Features,omitempty" tf:"generation2_features,omitempty"`
 
-	// (Block List, Max: 1) Defines the first known hardware generation and its features. (see below for nested schema)
+	// [Block]. Defines the first known hardware generation and its features.
 	// Defines the first known hardware generation and its features.
 	LegacyFeatures []SnapshotHardwareGenerationLegacyFeaturesObservation `json:"legacyFeatures,omitempty" tf:"legacy_features,omitempty"`
 }
 
 type SnapshotHardwareGenerationParameters struct {
 
-	// (Block List, Max: 1) A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot. (see below for nested schema)
+	// [Block]. A newer hardware generation, which always uses PCI_TOPOLOGY_V2 and UEFI boot.
 	// A newer hardware generation, which always uses `PCI_TOPOLOGY_V2` and UEFI boot.
 	// +kubebuilder:validation:Optional
 	Generation2Features []SnapshotHardwareGenerationGeneration2FeaturesParameters `json:"generation2Features,omitempty" tf:"generation2_features,omitempty"`
 
-	// (Block List, Max: 1) Defines the first known hardware generation and its features. (see below for nested schema)
+	// [Block]. Defines the first known hardware generation and its features.
 	// Defines the first known hardware generation and its features.
 	// +kubebuilder:validation:Optional
 	LegacyFeatures []SnapshotHardwareGenerationLegacyFeaturesParameters `json:"legacyFeatures,omitempty" tf:"legacy_features,omitempty"`
@@ -95,7 +95,7 @@ type SnapshotHardwareGenerationParameters struct {
 
 type SnapshotInitParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -112,20 +112,20 @@ type SnapshotInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Block List, Max: 1) Hardware generation and its features, which will be applied to the instance when this snapshot is used as a boot disk source. Provide this property if you wish to override this value, which otherwise is inherited from the source. (see below for nested schema)
+	// [Block]. Hardware generation and its features, which will be applied to the instance when this snapshot is used as a boot disk source. Provide this property if you wish to override this value, which otherwise is inherited from the source.
 	// Hardware generation and its features, which will be applied to the instance when this snapshot is used as a boot disk source. Provide this property if you wish to override this value, which otherwise is inherited from the source.
 	HardwareGeneration []SnapshotHardwareGenerationInitParameters `json:"hardwareGeneration,omitempty" tf:"hardware_generation,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) ID of the disk to create a snapshot from.
+	// (String). ID of the disk to create a snapshot from.
 	// ID of the disk to create a snapshot from.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/compute/v1alpha1.Disk
 	SourceDiskID *string `json:"sourceDiskId,omitempty" tf:"source_disk_id,omitempty"`
@@ -141,15 +141,15 @@ type SnapshotInitParameters struct {
 
 type SnapshotObservation struct {
 
-	// (String) The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
 	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Number) Size of the disk when the snapshot was created, specified in GB.
+	// Only) (Number). Size of the disk when the snapshot was created, specified in GB.
 	// Size of the disk when the snapshot was created, specified in GB.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
@@ -157,34 +157,34 @@ type SnapshotObservation struct {
 	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (Block List, Max: 1) Hardware generation and its features, which will be applied to the instance when this snapshot is used as a boot disk source. Provide this property if you wish to override this value, which otherwise is inherited from the source. (see below for nested schema)
+	// [Block]. Hardware generation and its features, which will be applied to the instance when this snapshot is used as a boot disk source. Provide this property if you wish to override this value, which otherwise is inherited from the source.
 	// Hardware generation and its features, which will be applied to the instance when this snapshot is used as a boot disk source. Provide this property if you wish to override this value, which otherwise is inherited from the source.
 	HardwareGeneration []SnapshotHardwareGenerationObservation `json:"hardwareGeneration,omitempty" tf:"hardware_generation,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) ID of the disk to create a snapshot from.
+	// (String). ID of the disk to create a snapshot from.
 	// ID of the disk to create a snapshot from.
 	SourceDiskID *string `json:"sourceDiskId,omitempty" tf:"source_disk_id,omitempty"`
 
-	// (Number) Size of the snapshot, specified in GB.
+	// Only) (Number). Size of the snapshot, specified in GB.
 	// Size of the snapshot, specified in GB.
 	StorageSize *float64 `json:"storageSize,omitempty" tf:"storage_size,omitempty"`
 }
 
 type SnapshotParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -203,23 +203,23 @@ type SnapshotParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.Selector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Block List, Max: 1) Hardware generation and its features, which will be applied to the instance when this snapshot is used as a boot disk source. Provide this property if you wish to override this value, which otherwise is inherited from the source. (see below for nested schema)
+	// [Block]. Hardware generation and its features, which will be applied to the instance when this snapshot is used as a boot disk source. Provide this property if you wish to override this value, which otherwise is inherited from the source.
 	// Hardware generation and its features, which will be applied to the instance when this snapshot is used as a boot disk source. Provide this property if you wish to override this value, which otherwise is inherited from the source.
 	// +kubebuilder:validation:Optional
 	HardwareGeneration []SnapshotHardwareGenerationParameters `json:"hardwareGeneration,omitempty" tf:"hardware_generation,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) ID of the disk to create a snapshot from.
+	// (String). ID of the disk to create a snapshot from.
 	// ID of the disk to create a snapshot from.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/compute/v1alpha1.Disk
 	// +kubebuilder:validation:Optional
@@ -261,7 +261,7 @@ type SnapshotStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Snapshot is the Schema for the Snapshots API. Creates a new snapshot of a disk.
+// Snapshot is the Schema for the Snapshots API. Manages the yandex_compute_snapshot resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: defaultsecuritygroups.vpc.yandex-cloud.m.jet.crossplane.io
 spec:
   group: vpc.yandex-cloud.m.jet.crossplane.io
@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: DefaultSecurityGroup is the Schema for the DefaultSecurityGroups
-          API. Yandex VPC Default Security Group.
+          API. Manages the yandex_vpc_default_security_group resource.
         properties:
           apiVersion:
             description: |-
@@ -61,36 +61,36 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   egress:
                     description: |-
-                      (Block Set) A list of egress rules. (see below for nested schema)
+                      [Block]. A list of egress rules.
                       A list of egress rules.
                     items:
                       properties:
                         description:
                           description: |-
-                            (String) The resource description.
+                            (String). The resource description.
                             Description of the rule.
                           type: string
                         fromPort:
                           description: |-
-                            (Number) Minimum port number.
+                            (Number). Minimum port number.
                             Minimum port number.
                           type: number
                         labels:
                           additionalProperties:
                             type: string
                           description: |-
-                            (Map of String) A set of key/value label pairs which assigned to resource.
+                            (Map Of String). A set of key/value label pairs which assigned to resource.
                             Labels to assign to this rule.
                           type: object
                           x-kubernetes-map-type: granular
                         port:
                           description: |-
-                            (Number) Port number (if applied to a single port).
+                            (Number). Port number (if applied to a single port).
                             Port number (if applied to a single port).
                           type: number
                         predefinedTarget:
@@ -100,29 +100,29 @@ spec:
                           type: string
                         protocol:
                           description: |-
-                            (String) One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+                            (String). One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
                             One of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
                           type: string
                         securityGroupId:
                           description: |-
-                            (String) Target security group ID for this rule.
+                            (String). Target security group ID for this rule.
                             Target security group ID for this rule.
                           type: string
                         toPort:
                           description: |-
-                            (Number) Maximum port number.
+                            (Number). Maximum port number.
                             Maximum port number.
                           type: number
                         v4CidrBlocks:
                           description: |-
-                            (List of String) The blocks of IPv4 addresses for this rule.
+                            (List Of String). The blocks of IPv4 addresses for this rule.
                             The blocks of IPv4 addresses for this rule.
                           items:
                             type: string
                           type: array
                         v6CidrBlocks:
                           description: |-
-                            (List of String) The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+                            (List Of String). The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
                             The blocks of IPv6 addresses for this rule. `v6_cidr_blocks` argument is currently not supported. It will be available in the future.
                           items:
                             type: string
@@ -218,31 +218,31 @@ spec:
                     type: object
                   ingress:
                     description: |-
-                      (Block Set) A list of ingress rules. (see below for nested schema)
+                      [Block]. A list of ingress rules.
                       A list of ingress rules.
                     items:
                       properties:
                         description:
                           description: |-
-                            (String) The resource description.
+                            (String). The resource description.
                             Description of the rule.
                           type: string
                         fromPort:
                           description: |-
-                            (Number) Minimum port number.
+                            (Number). Minimum port number.
                             Minimum port number.
                           type: number
                         labels:
                           additionalProperties:
                             type: string
                           description: |-
-                            (Map of String) A set of key/value label pairs which assigned to resource.
+                            (Map Of String). A set of key/value label pairs which assigned to resource.
                             Labels to assign to this rule.
                           type: object
                           x-kubernetes-map-type: granular
                         port:
                           description: |-
-                            (Number) Port number (if applied to a single port).
+                            (Number). Port number (if applied to a single port).
                             Port number (if applied to a single port).
                           type: number
                         predefinedTarget:
@@ -252,29 +252,29 @@ spec:
                           type: string
                         protocol:
                           description: |-
-                            (String) One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+                            (String). One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
                             One of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
                           type: string
                         securityGroupId:
                           description: |-
-                            (String) Target security group ID for this rule.
+                            (String). Target security group ID for this rule.
                             Target security group ID for this rule.
                           type: string
                         toPort:
                           description: |-
-                            (Number) Maximum port number.
+                            (Number). Maximum port number.
                             Maximum port number.
                           type: number
                         v4CidrBlocks:
                           description: |-
-                            (List of String) The blocks of IPv4 addresses for this rule.
+                            (List Of String). The blocks of IPv4 addresses for this rule.
                             The blocks of IPv4 addresses for this rule.
                           items:
                             type: string
                           type: array
                         v6CidrBlocks:
                           description: |-
-                            (List of String) The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+                            (List Of String). The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
                             The blocks of IPv6 addresses for this rule. `v6_cidr_blocks` argument is currently not supported. It will be available in the future.
                           items:
                             type: string
@@ -285,13 +285,13 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   networkId:
                     description: |-
-                      (String) ID of the network this security group belongs to.
+                      (String). ID of the network this security group belongs to.
                       ID of the network this security group belongs to.
                     type: string
                   networkIdRef:
@@ -390,36 +390,36 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   egress:
                     description: |-
-                      (Block Set) A list of egress rules. (see below for nested schema)
+                      [Block]. A list of egress rules.
                       A list of egress rules.
                     items:
                       properties:
                         description:
                           description: |-
-                            (String) The resource description.
+                            (String). The resource description.
                             Description of the rule.
                           type: string
                         fromPort:
                           description: |-
-                            (Number) Minimum port number.
+                            (Number). Minimum port number.
                             Minimum port number.
                           type: number
                         labels:
                           additionalProperties:
                             type: string
                           description: |-
-                            (Map of String) A set of key/value label pairs which assigned to resource.
+                            (Map Of String). A set of key/value label pairs which assigned to resource.
                             Labels to assign to this rule.
                           type: object
                           x-kubernetes-map-type: granular
                         port:
                           description: |-
-                            (Number) Port number (if applied to a single port).
+                            (Number). Port number (if applied to a single port).
                             Port number (if applied to a single port).
                           type: number
                         predefinedTarget:
@@ -429,29 +429,29 @@ spec:
                           type: string
                         protocol:
                           description: |-
-                            (String) One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+                            (String). One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
                             One of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
                           type: string
                         securityGroupId:
                           description: |-
-                            (String) Target security group ID for this rule.
+                            (String). Target security group ID for this rule.
                             Target security group ID for this rule.
                           type: string
                         toPort:
                           description: |-
-                            (Number) Maximum port number.
+                            (Number). Maximum port number.
                             Maximum port number.
                           type: number
                         v4CidrBlocks:
                           description: |-
-                            (List of String) The blocks of IPv4 addresses for this rule.
+                            (List Of String). The blocks of IPv4 addresses for this rule.
                             The blocks of IPv4 addresses for this rule.
                           items:
                             type: string
                           type: array
                         v6CidrBlocks:
                           description: |-
-                            (List of String) The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+                            (List Of String). The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
                             The blocks of IPv6 addresses for this rule. `v6_cidr_blocks` argument is currently not supported. It will be available in the future.
                           items:
                             type: string
@@ -547,31 +547,31 @@ spec:
                     type: object
                   ingress:
                     description: |-
-                      (Block Set) A list of ingress rules. (see below for nested schema)
+                      [Block]. A list of ingress rules.
                       A list of ingress rules.
                     items:
                       properties:
                         description:
                           description: |-
-                            (String) The resource description.
+                            (String). The resource description.
                             Description of the rule.
                           type: string
                         fromPort:
                           description: |-
-                            (Number) Minimum port number.
+                            (Number). Minimum port number.
                             Minimum port number.
                           type: number
                         labels:
                           additionalProperties:
                             type: string
                           description: |-
-                            (Map of String) A set of key/value label pairs which assigned to resource.
+                            (Map Of String). A set of key/value label pairs which assigned to resource.
                             Labels to assign to this rule.
                           type: object
                           x-kubernetes-map-type: granular
                         port:
                           description: |-
-                            (Number) Port number (if applied to a single port).
+                            (Number). Port number (if applied to a single port).
                             Port number (if applied to a single port).
                           type: number
                         predefinedTarget:
@@ -581,29 +581,29 @@ spec:
                           type: string
                         protocol:
                           description: |-
-                            (String) One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+                            (String). One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
                             One of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
                           type: string
                         securityGroupId:
                           description: |-
-                            (String) Target security group ID for this rule.
+                            (String). Target security group ID for this rule.
                             Target security group ID for this rule.
                           type: string
                         toPort:
                           description: |-
-                            (Number) Maximum port number.
+                            (Number). Maximum port number.
                             Maximum port number.
                           type: number
                         v4CidrBlocks:
                           description: |-
-                            (List of String) The blocks of IPv4 addresses for this rule.
+                            (List Of String). The blocks of IPv4 addresses for this rule.
                             The blocks of IPv4 addresses for this rule.
                           items:
                             type: string
                           type: array
                         v6CidrBlocks:
                           description: |-
-                            (List of String) The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+                            (List Of String). The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
                             The blocks of IPv6 addresses for this rule. `v6_cidr_blocks` argument is currently not supported. It will be available in the future.
                           items:
                             type: string
@@ -614,13 +614,13 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   networkId:
                     description: |-
-                      (String) ID of the network this security group belongs to.
+                      (String). ID of the network this security group belongs to.
                       ID of the network this security group belongs to.
                     type: string
                   networkIdRef:
@@ -770,46 +770,46 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
                       The creation timestamp of the resource.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   egress:
                     description: |-
-                      (Block Set) A list of egress rules. (see below for nested schema)
+                      [Block]. A list of egress rules.
                       A list of egress rules.
                     items:
                       properties:
                         description:
                           description: |-
-                            (String) The resource description.
+                            (String). The resource description.
                             Description of the rule.
                           type: string
                         fromPort:
                           description: |-
-                            (Number) Minimum port number.
+                            (Number). Minimum port number.
                             Minimum port number.
                           type: number
                         id:
                           description: |-
-                            (String) The ID of this resource.
+                            (String).
                             The resource identifier.
                           type: string
                         labels:
                           additionalProperties:
                             type: string
                           description: |-
-                            (Map of String) A set of key/value label pairs which assigned to resource.
+                            (Map Of String). A set of key/value label pairs which assigned to resource.
                             Labels to assign to this rule.
                           type: object
                           x-kubernetes-map-type: granular
                         port:
                           description: |-
-                            (Number) Port number (if applied to a single port).
+                            (Number). Port number (if applied to a single port).
                             Port number (if applied to a single port).
                           type: number
                         predefinedTarget:
@@ -819,29 +819,29 @@ spec:
                           type: string
                         protocol:
                           description: |-
-                            (String) One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+                            (String). One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
                             One of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
                           type: string
                         securityGroupId:
                           description: |-
-                            (String) Target security group ID for this rule.
+                            (String). Target security group ID for this rule.
                             Target security group ID for this rule.
                           type: string
                         toPort:
                           description: |-
-                            (Number) Maximum port number.
+                            (Number). Maximum port number.
                             Maximum port number.
                           type: number
                         v4CidrBlocks:
                           description: |-
-                            (List of String) The blocks of IPv4 addresses for this rule.
+                            (List Of String). The blocks of IPv4 addresses for this rule.
                             The blocks of IPv4 addresses for this rule.
                           items:
                             type: string
                           type: array
                         v6CidrBlocks:
                           description: |-
-                            (List of String) The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+                            (List Of String). The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
                             The blocks of IPv6 addresses for this rule. `v6_cidr_blocks` argument is currently not supported. It will be available in the future.
                           items:
                             type: string
@@ -854,40 +854,40 @@ spec:
                       The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   ingress:
                     description: |-
-                      (Block Set) A list of ingress rules. (see below for nested schema)
+                      [Block]. A list of ingress rules.
                       A list of ingress rules.
                     items:
                       properties:
                         description:
                           description: |-
-                            (String) The resource description.
+                            (String). The resource description.
                             Description of the rule.
                           type: string
                         fromPort:
                           description: |-
-                            (Number) Minimum port number.
+                            (Number). Minimum port number.
                             Minimum port number.
                           type: number
                         id:
                           description: |-
-                            (String) The ID of this resource.
+                            (String).
                             The resource identifier.
                           type: string
                         labels:
                           additionalProperties:
                             type: string
                           description: |-
-                            (Map of String) A set of key/value label pairs which assigned to resource.
+                            (Map Of String). A set of key/value label pairs which assigned to resource.
                             Labels to assign to this rule.
                           type: object
                           x-kubernetes-map-type: granular
                         port:
                           description: |-
-                            (Number) Port number (if applied to a single port).
+                            (Number). Port number (if applied to a single port).
                             Port number (if applied to a single port).
                           type: number
                         predefinedTarget:
@@ -897,29 +897,29 @@ spec:
                           type: string
                         protocol:
                           description: |-
-                            (String) One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
+                            (String). One of ANY, TCP, UDP, ICMP, IPV6_ICMP.
                             One of `ANY`, `TCP`, `UDP`, `ICMP`, `IPV6_ICMP`.
                           type: string
                         securityGroupId:
                           description: |-
-                            (String) Target security group ID for this rule.
+                            (String). Target security group ID for this rule.
                             Target security group ID for this rule.
                           type: string
                         toPort:
                           description: |-
-                            (Number) Maximum port number.
+                            (Number). Maximum port number.
                             Maximum port number.
                           type: number
                         v4CidrBlocks:
                           description: |-
-                            (List of String) The blocks of IPv4 addresses for this rule.
+                            (List Of String). The blocks of IPv4 addresses for this rule.
                             The blocks of IPv4 addresses for this rule.
                           items:
                             type: string
                           type: array
                         v6CidrBlocks:
                           description: |-
-                            (List of String) The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
+                            (List Of String). The blocks of IPv6 addresses for this rule. v6_cidr_blocks argument is currently not supported. It will be available in the future.
                             The blocks of IPv6 addresses for this rule. `v6_cidr_blocks` argument is currently not supported. It will be available in the future.
                           items:
                             type: string
@@ -930,23 +930,23 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name. Cannot be updated.
+                      Only) (String). The resource name. Cannot be updated.
                       The resource name. Cannot be updated.
                     type: string
                   networkId:
                     description: |-
-                      (String) ID of the network this security group belongs to.
+                      (String). ID of the network this security group belongs to.
                       ID of the network this security group belongs to.
                     type: string
                   status:
                     description: |-
-                      (String) Status of this security group.
+                      Only) (String). Status of this security group.
                       Status of this security group.
                     type: string
                 type: object

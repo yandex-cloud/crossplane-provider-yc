@@ -29,11 +29,11 @@ import (
 
 type ServiceAccountStaticAccessKeyInitParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Block List, Max: 1) option to create a Lockbox secret version from sensitive outputs (see below for nested schema)
+	// [Block]. option to create a Lockbox secret version from sensitive outputs
 	// option to create a Lockbox secret version from sensitive outputs
 	OutputToLockbox []ServiceAccountStaticAccessKeyOutputToLockboxInitParameters `json:"outputToLockbox,omitempty" tf:"output_to_lockbox,omitempty"`
 
@@ -41,7 +41,7 @@ type ServiceAccountStaticAccessKeyInitParameters struct {
 	// An optional PGP key to encrypt the resulting secret key material. May either be a base64-encoded public key or a keybase username in the form `keybase:keybaseusername`.
 	PgpKey *string `json:"pgpKey,omitempty" tf:"pgp_key,omitempty"`
 
-	// (String) ID of the service account which is used to get a static key.
+	// (String). ID of the service account which is used to get a static key.
 	// ID of the service account which is used to get a static key.
 	// +crossplane:generate:reference:type=ServiceAccount
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
@@ -57,34 +57,34 @@ type ServiceAccountStaticAccessKeyInitParameters struct {
 
 type ServiceAccountStaticAccessKeyObservation struct {
 
-	// (String) ID of the static access key. This is only populated when output_to_lockbox is not provided.
+	// Only) (String). ID of the static access key. This is only populated when output_to_lockbox is not provided.
 	// ID of the static access key. This is only populated when `output_to_lockbox` is not provided.
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
 
-	// (String) The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
 	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) The encrypted secret, base64 encoded. This is only populated when pgp_key is supplied.
+	// Only) (String). The encrypted secret, base64 encoded. This is only populated when pgp_key is supplied.
 	// The encrypted secret, base64 encoded. This is only populated when `pgp_key` is supplied.
 	EncryptedSecretKey *string `json:"encryptedSecretKey,omitempty" tf:"encrypted_secret_key,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) The fingerprint of the PGP key used to encrypt the secret key. This is only populated when pgp_key is supplied.
+	// Only) (String). The fingerprint of the PGP key used to encrypt the secret key. This is only populated when pgp_key is supplied.
 	// The fingerprint of the PGP key used to encrypt the secret key. This is only populated when `pgp_key` is supplied.
 	KeyFingerprint *string `json:"keyFingerprint,omitempty" tf:"key_fingerprint,omitempty"`
 
-	// (Block List, Max: 1) option to create a Lockbox secret version from sensitive outputs (see below for nested schema)
+	// [Block]. option to create a Lockbox secret version from sensitive outputs
 	// option to create a Lockbox secret version from sensitive outputs
 	OutputToLockbox []ServiceAccountStaticAccessKeyOutputToLockboxObservation `json:"outputToLockbox,omitempty" tf:"output_to_lockbox,omitempty"`
 
-	// (String) ID of the Lockbox secret version that contains the value of secret_key. This is only populated when output_to_lockbox is supplied. This version will be destroyed when the IAM key is destroyed, or when output_to_lockbox is removed.
+	// Only) (String). ID of the Lockbox secret version that contains the value of secret_key. This is only populated when output_to_lockbox is supplied. This version will be destroyed when the IAM key is destroyed, or when output_to_lockbox is removed.
 	// ID of the Lockbox secret version that contains the value of `secret_key`. This is only populated when `output_to_lockbox` is supplied. This version will be destroyed when the IAM key is destroyed, or when `output_to_lockbox` is removed.
 	OutputToLockboxVersionID *string `json:"outputToLockboxVersionId,omitempty" tf:"output_to_lockbox_version_id,omitempty"`
 
@@ -92,54 +92,54 @@ type ServiceAccountStaticAccessKeyObservation struct {
 	// An optional PGP key to encrypt the resulting secret key material. May either be a base64-encoded public key or a keybase username in the form `keybase:keybaseusername`.
 	PgpKey *string `json:"pgpKey,omitempty" tf:"pgp_key,omitempty"`
 
-	// (String) ID of the service account which is used to get a static key.
+	// (String). ID of the service account which is used to get a static key.
 	// ID of the service account which is used to get a static key.
 	ServiceAccountID *string `json:"serviceAccountId,omitempty" tf:"service_account_id,omitempty"`
 }
 
 type ServiceAccountStaticAccessKeyOutputToLockboxInitParameters struct {
 
-	// (String) entry that will store the value of access_key
+	// (String). entry that will store the value of access_key
 	// entry that will store the value of access_key
 	EntryForAccessKey *string `json:"entryForAccessKey,omitempty" tf:"entry_for_access_key,omitempty"`
 
-	// (String) entry that will store the value of secret_key
+	// (String). entry that will store the value of secret_key
 	// entry that will store the value of secret_key
 	EntryForSecretKey *string `json:"entryForSecretKey,omitempty" tf:"entry_for_secret_key,omitempty"`
 
-	// (String) ID of the Lockbox secret where to store the sensible values.
+	// (String). ID of the Lockbox secret where to store the sensible values.
 	// ID of the Lockbox secret where to store the sensible values.
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
 }
 
 type ServiceAccountStaticAccessKeyOutputToLockboxObservation struct {
 
-	// (String) entry that will store the value of access_key
+	// (String). entry that will store the value of access_key
 	// entry that will store the value of access_key
 	EntryForAccessKey *string `json:"entryForAccessKey,omitempty" tf:"entry_for_access_key,omitempty"`
 
-	// (String) entry that will store the value of secret_key
+	// (String). entry that will store the value of secret_key
 	// entry that will store the value of secret_key
 	EntryForSecretKey *string `json:"entryForSecretKey,omitempty" tf:"entry_for_secret_key,omitempty"`
 
-	// (String) ID of the Lockbox secret where to store the sensible values.
+	// (String). ID of the Lockbox secret where to store the sensible values.
 	// ID of the Lockbox secret where to store the sensible values.
 	SecretID *string `json:"secretId,omitempty" tf:"secret_id,omitempty"`
 }
 
 type ServiceAccountStaticAccessKeyOutputToLockboxParameters struct {
 
-	// (String) entry that will store the value of access_key
+	// (String). entry that will store the value of access_key
 	// entry that will store the value of access_key
 	// +kubebuilder:validation:Optional
 	EntryForAccessKey *string `json:"entryForAccessKey" tf:"entry_for_access_key,omitempty"`
 
-	// (String) entry that will store the value of secret_key
+	// (String). entry that will store the value of secret_key
 	// entry that will store the value of secret_key
 	// +kubebuilder:validation:Optional
 	EntryForSecretKey *string `json:"entryForSecretKey" tf:"entry_for_secret_key,omitempty"`
 
-	// (String) ID of the Lockbox secret where to store the sensible values.
+	// (String). ID of the Lockbox secret where to store the sensible values.
 	// ID of the Lockbox secret where to store the sensible values.
 	// +kubebuilder:validation:Optional
 	SecretID *string `json:"secretId" tf:"secret_id,omitempty"`
@@ -147,12 +147,12 @@ type ServiceAccountStaticAccessKeyOutputToLockboxParameters struct {
 
 type ServiceAccountStaticAccessKeyParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (Block List, Max: 1) option to create a Lockbox secret version from sensitive outputs (see below for nested schema)
+	// [Block]. option to create a Lockbox secret version from sensitive outputs
 	// option to create a Lockbox secret version from sensitive outputs
 	// +kubebuilder:validation:Optional
 	OutputToLockbox []ServiceAccountStaticAccessKeyOutputToLockboxParameters `json:"outputToLockbox,omitempty" tf:"output_to_lockbox,omitempty"`
@@ -162,7 +162,7 @@ type ServiceAccountStaticAccessKeyParameters struct {
 	// +kubebuilder:validation:Optional
 	PgpKey *string `json:"pgpKey,omitempty" tf:"pgp_key,omitempty"`
 
-	// (String) ID of the service account which is used to get a static key.
+	// (String). ID of the service account which is used to get a static key.
 	// ID of the service account which is used to get a static key.
 	// +crossplane:generate:reference:type=ServiceAccount
 	// +kubebuilder:validation:Optional
@@ -204,7 +204,7 @@ type ServiceAccountStaticAccessKeyStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// ServiceAccountStaticAccessKey is the Schema for the ServiceAccountStaticAccessKeys API. Allows management of a Yandex Cloud IAM service account static access key.
+// ServiceAccountStaticAccessKey is the Schema for the ServiceAccountStaticAccessKeys API. Manages the yandex_iam_service_account_static_access_key resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: diskplacementgroups.compute.yandex-cloud.jet.crossplane.io
 spec:
   group: compute.yandex-cloud.jet.crossplane.io
@@ -35,7 +35,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: DiskPlacementGroup is the Schema for the DiskPlacementGroups
-          API. Manages a Disk Placement Group resource.
+          API. Manages the yandex_compute_disk_placement_group resource.
         properties:
           apiVersion:
             description: |-
@@ -75,13 +75,24 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      (String). The resource description.
+                      Description of the placement group.
+                    type: string
+                  diskPlacementGroupId:
+                    description: |-
+                      (String). ID of the placement group to return.
+                      To get the placement group ID, use [DiskPlacementGroupService.List] request.
+                      The length must be less than or equal to 50.
+                      This field is required.
+                      ID of the placement group to return.
+                      To get the placement group ID, use [DiskPlacementGroupService.List] request.
+                      The length must be less than or equal to 50.
+                      This field is required.
                     type: string
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the placement group belongs to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -163,19 +174,20 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
+                      Resource labels as `key:value` pairs.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the placement group.
+                      The name is unique within the folder.
                     type: string
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
-                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      ID of the availability zone where the placement group resides.
                     type: string
                 type: object
               initProvider:
@@ -193,13 +205,24 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      (String). The resource description.
+                      Description of the placement group.
+                    type: string
+                  diskPlacementGroupId:
+                    description: |-
+                      (String). ID of the placement group to return.
+                      To get the placement group ID, use [DiskPlacementGroupService.List] request.
+                      The length must be less than or equal to 50.
+                      This field is required.
+                      ID of the placement group to return.
+                      To get the placement group ID, use [DiskPlacementGroupService.List] request.
+                      The length must be less than or equal to 50.
+                      This field is required.
                     type: string
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the placement group belongs to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -281,19 +304,20 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
+                      Resource labels as `key:value` pairs.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the placement group.
+                      The name is unique within the folder.
                     type: string
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
-                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      ID of the availability zone where the placement group resides.
                     type: string
                 type: object
               managementPolicies:
@@ -389,44 +413,56 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
-                      The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
+                      Creation timestamp in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      (String). The resource description.
+                      Description of the placement group.
+                    type: string
+                  diskPlacementGroupId:
+                    description: |-
+                      (String). ID of the placement group to return.
+                      To get the placement group ID, use [DiskPlacementGroupService.List] request.
+                      The length must be less than or equal to 50.
+                      This field is required.
+                      ID of the placement group to return.
+                      To get the placement group ID, use [DiskPlacementGroupService.List] request.
+                      The length must be less than or equal to 50.
+                      This field is required.
                     type: string
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the placement group belongs to.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
+                      Resource labels as `key:value` pairs.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the placement group.
+                      The name is unique within the folder.
                     type: string
                   status:
                     description: |-
-                      (String) Status of the Disk Placement Group.
-                      Status of the Disk Placement Group.
+                      Only) (String). Status of the Disk Placement Group.
+                      Current status of the placement group
                     type: string
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
-                      The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      ID of the availability zone where the placement group resides.
                     type: string
                 type: object
               conditions:

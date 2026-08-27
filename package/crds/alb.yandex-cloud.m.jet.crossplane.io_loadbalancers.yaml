@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: loadbalancers.alb.yandex-cloud.m.jet.crossplane.io
 spec:
   group: alb.yandex-cloud.m.jet.crossplane.io
@@ -34,9 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: LoadBalancer is the Schema for the LoadBalancers API. A Load
-          Balancer is used for receiving incoming traffic and transmitting it to the
-          backend endpoints specified in the ALB Target Groups.
+        description: LoadBalancer is the Schema for the LoadBalancers API. Manages
+          the yandex_alb_load_balancer resource.
         properties:
           apiVersion:
             description: |-
@@ -62,24 +61,24 @@ spec:
                 properties:
                   allocationPolicy:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Allocation zones for the Load Balancer instance. (see below for nested schema)
+                      [Block]. Allocation zones for the Load Balancer instance.
                       Allocation zones for the Load Balancer instance.
                     items:
                       properties:
                         location:
                           description: |-
-                            (Block Set, Min: 1) Unique set of locations. (see below for nested schema)
+                            [Block]. Unique set of locations.
                             Unique set of locations.
                           items:
                             properties:
                               disableTraffic:
                                 description: |-
-                                  (Boolean) If set, will disable all L7 instances in the zone for request handling.
+                                  (Bool). If set, will disable all L7 instances in the zone for request handling.
                                   If set, will disable all L7 instances in the zone for request handling.
                                 type: boolean
                               subnetId:
                                 description: |-
-                                  (String) ID of the subnet that location is located at.
+                                  (String). ID of the subnet that location is located at.
                                   ID of the subnet that location is located at.
                                 type: string
                               subnetIdRef:
@@ -166,7 +165,7 @@ spec:
                                 type: object
                               zoneId:
                                 description: |-
-                                  (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                                  (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
                                   The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                                 type: string
                             type: object
@@ -175,30 +174,30 @@ spec:
                     type: array
                   allowZonalShift:
                     description: |-
-                      (Boolean) Specifies whether application load balancer is available to zonal shift
+                      (Bool). Specifies whether application load balancer is available to zonal shift
                       Specifies whether application load balancer is available to zonal shift
                     type: boolean
                   autoScalePolicy:
                     description: |-
-                      (Block List, Max: 1) Scaling settings of the application load balancer. (see below for nested schema)
+                      [Block]. Scaling settings of the application load balancer.
                       Scaling settings of the application load balancer.
                     items:
                       properties:
                         maxSize:
                           description: |-
-                            (Number) Upper limit for total instance count (across all zones)
+                            (Number). Upper limit for total instance count (across all zones)
                             Upper limit for total instance count (across all zones)
                           type: number
                         minZoneSize:
                           description: |-
-                            (Number) Lower limit for instance count in each zone.
+                            (Number). Lower limit for instance count in each zone.
                             Lower limit for instance count in each zone.
                           type: number
                       type: object
                     type: array
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -292,68 +291,68 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   listener:
                     description: |-
-                      (Block List) List of listeners for the Load Balancer. (see below for nested schema)
+                      [Block]. List of listeners for the Load Balancer.
                       List of listeners for the Load Balancer.
                     items:
                       properties:
                         endpoint:
                           description: |-
-                            (Block List) Network endpoint (addresses and ports) of the listener. (see below for nested schema)
+                            [Block]. Network endpoint (addresses and ports) of the listener.
                             Network endpoint (addresses and ports) of the listener.
                           items:
                             properties:
                               address:
                                 description: |-
-                                  (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                  [Block]. One or more addresses to listen on.
                                   One or more addresses to listen on.
                                 items:
                                   properties:
                                     externalIpv4Address:
                                       description: |-
-                                        (Block List, Max: 1) External IPv4 address. (see below for nested schema)
+                                        [Block]. External IPv4 address.
                                         External IPv4 address.
                                       items:
                                         properties:
                                           address:
                                             description: |-
-                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              [Block]. One or more addresses to listen on.
                                               Provided by the client or computed automatically.
                                             type: string
                                         type: object
                                       type: array
                                     externalIpv6Address:
                                       description: |-
-                                        (Block List, Max: 1) External IPv6 address. (see below for nested schema)
+                                        [Block]. External IPv6 address.
                                         External IPv6 address.
                                       items:
                                         properties:
                                           address:
                                             description: |-
-                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              [Block]. One or more addresses to listen on.
                                               Provided by the client or computed automatically.
                                             type: string
                                         type: object
                                       type: array
                                     internalIpv4Address:
                                       description: |-
-                                        (Block List, Max: 1) Internal IPv4 address. (see below for nested schema)
+                                        [Block]. Internal IPv4 address.
                                         Internal IPv4 address.
                                       items:
                                         properties:
                                           address:
                                             description: |-
-                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              [Block]. One or more addresses to listen on.
                                               Provided by the client or computed automatically.
                                             type: string
                                           subnetId:
                                             description: |-
-                                              (String) ID of the subnet that location is located at.
+                                              (String). ID of the subnet that location is located at.
                                               ID of the subnet that the address belongs to.
                                             type: string
                                           subnetIdRef:
@@ -446,7 +445,7 @@ spec:
                                 type: array
                               ports:
                                 description: |-
-                                  (List of Number) One or more ports to listen on.
+                                  (List Of Number). One or more ports to listen on.
                                   One or more ports to listen on.
                                 items:
                                   type: number
@@ -455,37 +454,37 @@ spec:
                           type: array
                         http:
                           description: |-
-                            (Block List, Max: 1) HTTP handler that sets plain text HTTP router. (see below for nested schema)
+                            [Block]. HTTP handler that sets plain text HTTP router.
                             HTTP handler that sets plain text HTTP router.
                           items:
                             properties:
                               handler:
                                 description: |-
-                                  (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                  [Block]. HTTP handler.
                                   HTTP handler.
                                 items:
                                   properties:
                                     allowHttp10:
                                       description: |-
-                                        (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                        (Bool). If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                         If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                       type: boolean
                                     http2Options:
                                       description: |-
-                                        (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                        [Block]. If set, will enable HTTP2 protocol for the handler.
                                         If set, will enable HTTP2 protocol for the handler.
                                       items:
                                         properties:
                                           maxConcurrentStreams:
                                             description: |-
-                                              (Number) Maximum number of concurrent streams.
+                                              (Number). Maximum number of concurrent streams.
                                               Maximum number of concurrent streams.
                                             type: number
                                         type: object
                                       type: array
                                     httpRouterId:
                                       description: |-
-                                        (String) HTTP router id.
+                                        (String). HTTP router id.
                                         HTTP router id.
                                       type: string
                                     httpRouterIdRef:
@@ -571,6 +570,11 @@ spec:
                                               type: string
                                           type: object
                                       type: object
+                                    preserveHttp1HeaderCasing:
+                                      description: |-
+                                        (Bool). When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                        When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                      type: boolean
                                     rewriteRequestId:
                                       description: |-
                                         request-id header, otherwise would rewrite it with a new value.
@@ -580,13 +584,13 @@ spec:
                                 type: array
                               redirects:
                                 description: |-
-                                  > https redirects. (see below for nested schema)
+                                  > https redirects.
                                   Shortcut for adding http -> https redirects.
                                 items:
                                   properties:
                                     httpToHttps:
                                       description: |-
-                                        (Boolean) If set redirects all unencrypted HTTP requests to the same URI with scheme changed to https.
+                                        (Bool). If set redirects all unencrypted HTTP requests to the same URI with scheme changed to https.
                                         If set redirects all unencrypted HTTP requests to the same URI with scheme changed to `https`.
                                       type: boolean
                                   type: object
@@ -595,29 +599,29 @@ spec:
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the listener.
                           type: string
                         stream:
                           description: |-
-                            (Block List, Max: 1) Stream configuration (see below for nested schema)
+                            [Block]. Stream configuration
                             Stream configuration
                           items:
                             properties:
                               handler:
                                 description: |-
-                                  (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                  [Block]. HTTP handler.
                                   Stream handler resource.
                                 items:
                                   properties:
                                     backendGroupId:
                                       description: |-
-                                        (String) Backend Group ID.
+                                        (String). Backend Group ID.
                                         Backend Group ID.
                                       type: string
                                     idleTimeout:
                                       description: |-
-                                        (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                        (String). The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                         The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                       type: string
                                   type: object
@@ -626,53 +630,76 @@ spec:
                           type: array
                         tls:
                           description: |-
-                            (Block List, Max: 1) TLS configuration (see below for nested schema)
+                            [Block]. TLS configuration
                             TLS configuration
                           items:
                             properties:
                               defaultHandler:
                                 description: |-
-                                  (Block List, Min: 1, Max: 1) TLS handler resource. (see below for nested schema)
+                                  [Block]. TLS handler resource.
                                   TLS handler resource.
                                 items:
                                   properties:
                                     certificateIds:
                                       description: |-
-                                        (Set of String) Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                        (Set Of String). Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
                                         Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
                                       items:
                                         type: string
                                       type: array
                                       x-kubernetes-list-type: set
+                                    clientCertificatesVerification:
+                                      description: |-
+                                        [Block]. Client certificates verification settings.
+                                        Client certificates verification settings.
+                                      items:
+                                        properties:
+                                          bytes:
+                                            description: |-
+                                              (String). Trusted certificate authority certificates bundle (PEM text).
+                                              Trusted certificate authority certificates bundle (PEM text).
+                                            type: string
+                                          requireClientCertificate:
+                                            description: |-
+                                              (Bool). If true, ALB will reject connections without a valid client certificate.
+                                              If true, ALB will reject connections without a valid client certificate.
+                                            type: boolean
+                                        type: object
+                                      type: array
                                     httpHandler:
                                       description: |-
-                                        (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                        [Block]. HTTP handler.
                                         HTTP handler.
                                       items:
                                         properties:
                                           allowHttp10:
                                             description: |-
-                                              (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                              (Bool). If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                               If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                             type: boolean
                                           http2Options:
                                             description: |-
-                                              (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                              [Block]. If set, will enable HTTP2 protocol for the handler.
                                               If set, will enable HTTP2 protocol for the handler.
                                             items:
                                               properties:
                                                 maxConcurrentStreams:
                                                   description: |-
-                                                    (Number) Maximum number of concurrent streams.
+                                                    (Number). Maximum number of concurrent streams.
                                                     Maximum number of concurrent streams.
                                                   type: number
                                               type: object
                                             type: array
                                           httpRouterId:
                                             description: |-
-                                              (String) HTTP router id.
+                                              (String). HTTP router id.
                                               HTTP router id.
                                             type: string
+                                          preserveHttp1HeaderCasing:
+                                            description: |-
+                                              (Bool). When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                              When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                            type: boolean
                                           rewriteRequestId:
                                             description: |-
                                               request-id header, otherwise would rewrite it with a new value.
@@ -682,18 +709,18 @@ spec:
                                       type: array
                                     streamHandler:
                                       description: |-
-                                        (Block List, Max: 1) Stream handler resource. (see below for nested schema)
+                                        [Block]. Stream handler resource.
                                         Stream handler resource.
                                       items:
                                         properties:
                                           backendGroupId:
                                             description: |-
-                                              (String) Backend Group ID.
+                                              (String). Backend Group ID.
                                               Backend Group ID.
                                             type: string
                                           idleTimeout:
                                             description: |-
-                                              (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                              (String). The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                               The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                             type: string
                                         type: object
@@ -702,53 +729,76 @@ spec:
                                 type: array
                               sniHandler:
                                 description: |-
-                                  (Block List) Settings for handling requests with Server Name Indication (SNI) (see below for nested schema)
+                                  [Block]. Settings for handling requests with Server Name Indication (SNI)
                                   Settings for handling requests with Server Name Indication (SNI)
                                 items:
                                   properties:
                                     handler:
                                       description: |-
-                                        (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                        [Block]. HTTP handler.
                                         TLS handler resource.
                                       items:
                                         properties:
                                           certificateIds:
                                             description: |-
-                                              (Set of String) Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                              (Set Of String). Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
                                               Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
                                             items:
                                               type: string
                                             type: array
                                             x-kubernetes-list-type: set
+                                          clientCertificatesVerification:
+                                            description: |-
+                                              [Block]. Client certificates verification settings.
+                                              Client certificates verification settings.
+                                            items:
+                                              properties:
+                                                bytes:
+                                                  description: |-
+                                                    (String). Trusted certificate authority certificates bundle (PEM text).
+                                                    Trusted certificate authority certificates bundle (PEM text).
+                                                  type: string
+                                                requireClientCertificate:
+                                                  description: |-
+                                                    (Bool). If true, ALB will reject connections without a valid client certificate.
+                                                    If true, ALB will reject connections without a valid client certificate.
+                                                  type: boolean
+                                              type: object
+                                            type: array
                                           httpHandler:
                                             description: |-
-                                              (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                              [Block]. HTTP handler.
                                               HTTP handler.
                                             items:
                                               properties:
                                                 allowHttp10:
                                                   description: |-
-                                                    (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                                    (Bool). If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                                     If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                                   type: boolean
                                                 http2Options:
                                                   description: |-
-                                                    (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                                    [Block]. If set, will enable HTTP2 protocol for the handler.
                                                     If set, will enable HTTP2 protocol for the handler.
                                                   items:
                                                     properties:
                                                       maxConcurrentStreams:
                                                         description: |-
-                                                          (Number) Maximum number of concurrent streams.
+                                                          (Number). Maximum number of concurrent streams.
                                                           Maximum number of concurrent streams.
                                                         type: number
                                                     type: object
                                                   type: array
                                                 httpRouterId:
                                                   description: |-
-                                                    (String) HTTP router id.
+                                                    (String). HTTP router id.
                                                     HTTP router id.
                                                   type: string
+                                                preserveHttp1HeaderCasing:
+                                                  description: |-
+                                                    (Bool). When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                                    When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                                  type: boolean
                                                 rewriteRequestId:
                                                   description: |-
                                                     request-id header, otherwise would rewrite it with a new value.
@@ -758,18 +808,18 @@ spec:
                                             type: array
                                           streamHandler:
                                             description: |-
-                                              (Block List, Max: 1) Stream handler resource. (see below for nested schema)
+                                              [Block]. Stream handler resource.
                                               Stream handler resource.
                                             items:
                                               properties:
                                                 backendGroupId:
                                                   description: |-
-                                                    (String) Backend Group ID.
+                                                    (String). Backend Group ID.
                                                     Backend Group ID.
                                                   type: string
                                                 idleTimeout:
                                                   description: |-
-                                                    (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                                    (String). The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                                     The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                                   type: string
                                               type: object
@@ -778,12 +828,12 @@ spec:
                                       type: array
                                     name:
                                       description: |-
-                                        (String) The resource name.
+                                        (String). The resource name.
                                         Name of the SNI handler
                                       type: string
                                     serverNames:
                                       description: |-
-                                        (Set of String) Server names that are matched by the SNI handler
+                                        (Set Of String). Server names that are matched by the SNI handler
                                         Server names that are matched by the SNI handler
                                       items:
                                         type: string
@@ -797,29 +847,29 @@ spec:
                     type: array
                   logOptions:
                     description: |-
-                      (Block List, Max: 1) Cloud Logging settings. (see below for nested schema)
+                      [Block]. Cloud Logging settings.
                       Cloud Logging settings.
                     items:
                       properties:
                         disable:
                           description: |-
-                            (Boolean) Set to true to disable Cloud Logging for the balancer.
+                            (Bool). Set to true to disable Cloud Logging for the balancer.
                             Set to `true` to disable Cloud Logging for the balancer.
                           type: boolean
                         discardRule:
                           description: |-
-                            (Block List) List of rules to discard a fraction of logs. (see below for nested schema)
+                            [Block]. List of rules to discard a fraction of logs.
                             List of rules to discard a fraction of logs.
                           items:
                             properties:
                               discardPercent:
                                 description: |-
-                                  (Number) The percent of logs which will be discarded.
+                                  (Number). The percent of logs which will be discarded.
                                   The percent of logs which will be discarded.
                                 type: number
                               grpcCodes:
                                 description: |-
-                                  (List of String) list of grpc codes by name, e.g, [NOT_FOUND, RESOURCE_EXHAUSTED].
+                                  (List Of String). list of grpc codes by name, e.g, [NOT_FOUND, RESOURCE_EXHAUSTED].
                                   list of grpc codes by name, e.g, [**NOT_FOUND**, **RESOURCE_EXHAUSTED**].
                                 items:
                                   type: string
@@ -842,19 +892,19 @@ spec:
                           type: array
                         logGroupId:
                           description: |-
-                            (String) Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+                            Only) (String). Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
                             Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
                           type: string
                       type: object
                     type: array
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkId:
                     description: |-
-                      (String) The VPC Network ID of subnets which resource attached to.
+                      (String). The VPC Network ID of subnets which resource attached to.
                       The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   networkIdRef:
@@ -939,12 +989,12 @@ spec:
                     type: object
                   regionId:
                     description: |-
-                      (String) The region ID where Load Balancer is located at.
+                      (String). The region ID where Load Balancer is located at.
                       The region ID where Load Balancer is located at.
                     type: string
                   securityGroupIds:
                     description: |-
-                      (Set of String) The list of security groups applied to resource or their components.
+                      (Set Of String). The list of security groups applied to resource or their components.
                       The list of security groups applied to resource or their components.
                     items:
                       type: string
@@ -1050,24 +1100,24 @@ spec:
                 properties:
                   allocationPolicy:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Allocation zones for the Load Balancer instance. (see below for nested schema)
+                      [Block]. Allocation zones for the Load Balancer instance.
                       Allocation zones for the Load Balancer instance.
                     items:
                       properties:
                         location:
                           description: |-
-                            (Block Set, Min: 1) Unique set of locations. (see below for nested schema)
+                            [Block]. Unique set of locations.
                             Unique set of locations.
                           items:
                             properties:
                               disableTraffic:
                                 description: |-
-                                  (Boolean) If set, will disable all L7 instances in the zone for request handling.
+                                  (Bool). If set, will disable all L7 instances in the zone for request handling.
                                   If set, will disable all L7 instances in the zone for request handling.
                                 type: boolean
                               subnetId:
                                 description: |-
-                                  (String) ID of the subnet that location is located at.
+                                  (String). ID of the subnet that location is located at.
                                   ID of the subnet that location is located at.
                                 type: string
                               subnetIdRef:
@@ -1154,7 +1204,7 @@ spec:
                                 type: object
                               zoneId:
                                 description: |-
-                                  (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                                  (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
                                   The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                                 type: string
                             type: object
@@ -1163,30 +1213,30 @@ spec:
                     type: array
                   allowZonalShift:
                     description: |-
-                      (Boolean) Specifies whether application load balancer is available to zonal shift
+                      (Bool). Specifies whether application load balancer is available to zonal shift
                       Specifies whether application load balancer is available to zonal shift
                     type: boolean
                   autoScalePolicy:
                     description: |-
-                      (Block List, Max: 1) Scaling settings of the application load balancer. (see below for nested schema)
+                      [Block]. Scaling settings of the application load balancer.
                       Scaling settings of the application load balancer.
                     items:
                       properties:
                         maxSize:
                           description: |-
-                            (Number) Upper limit for total instance count (across all zones)
+                            (Number). Upper limit for total instance count (across all zones)
                             Upper limit for total instance count (across all zones)
                           type: number
                         minZoneSize:
                           description: |-
-                            (Number) Lower limit for instance count in each zone.
+                            (Number). Lower limit for instance count in each zone.
                             Lower limit for instance count in each zone.
                           type: number
                       type: object
                     type: array
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -1280,68 +1330,68 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   listener:
                     description: |-
-                      (Block List) List of listeners for the Load Balancer. (see below for nested schema)
+                      [Block]. List of listeners for the Load Balancer.
                       List of listeners for the Load Balancer.
                     items:
                       properties:
                         endpoint:
                           description: |-
-                            (Block List) Network endpoint (addresses and ports) of the listener. (see below for nested schema)
+                            [Block]. Network endpoint (addresses and ports) of the listener.
                             Network endpoint (addresses and ports) of the listener.
                           items:
                             properties:
                               address:
                                 description: |-
-                                  (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                  [Block]. One or more addresses to listen on.
                                   One or more addresses to listen on.
                                 items:
                                   properties:
                                     externalIpv4Address:
                                       description: |-
-                                        (Block List, Max: 1) External IPv4 address. (see below for nested schema)
+                                        [Block]. External IPv4 address.
                                         External IPv4 address.
                                       items:
                                         properties:
                                           address:
                                             description: |-
-                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              [Block]. One or more addresses to listen on.
                                               Provided by the client or computed automatically.
                                             type: string
                                         type: object
                                       type: array
                                     externalIpv6Address:
                                       description: |-
-                                        (Block List, Max: 1) External IPv6 address. (see below for nested schema)
+                                        [Block]. External IPv6 address.
                                         External IPv6 address.
                                       items:
                                         properties:
                                           address:
                                             description: |-
-                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              [Block]. One or more addresses to listen on.
                                               Provided by the client or computed automatically.
                                             type: string
                                         type: object
                                       type: array
                                     internalIpv4Address:
                                       description: |-
-                                        (Block List, Max: 1) Internal IPv4 address. (see below for nested schema)
+                                        [Block]. Internal IPv4 address.
                                         Internal IPv4 address.
                                       items:
                                         properties:
                                           address:
                                             description: |-
-                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              [Block]. One or more addresses to listen on.
                                               Provided by the client or computed automatically.
                                             type: string
                                           subnetId:
                                             description: |-
-                                              (String) ID of the subnet that location is located at.
+                                              (String). ID of the subnet that location is located at.
                                               ID of the subnet that the address belongs to.
                                             type: string
                                           subnetIdRef:
@@ -1434,7 +1484,7 @@ spec:
                                 type: array
                               ports:
                                 description: |-
-                                  (List of Number) One or more ports to listen on.
+                                  (List Of Number). One or more ports to listen on.
                                   One or more ports to listen on.
                                 items:
                                   type: number
@@ -1443,37 +1493,37 @@ spec:
                           type: array
                         http:
                           description: |-
-                            (Block List, Max: 1) HTTP handler that sets plain text HTTP router. (see below for nested schema)
+                            [Block]. HTTP handler that sets plain text HTTP router.
                             HTTP handler that sets plain text HTTP router.
                           items:
                             properties:
                               handler:
                                 description: |-
-                                  (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                  [Block]. HTTP handler.
                                   HTTP handler.
                                 items:
                                   properties:
                                     allowHttp10:
                                       description: |-
-                                        (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                        (Bool). If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                         If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                       type: boolean
                                     http2Options:
                                       description: |-
-                                        (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                        [Block]. If set, will enable HTTP2 protocol for the handler.
                                         If set, will enable HTTP2 protocol for the handler.
                                       items:
                                         properties:
                                           maxConcurrentStreams:
                                             description: |-
-                                              (Number) Maximum number of concurrent streams.
+                                              (Number). Maximum number of concurrent streams.
                                               Maximum number of concurrent streams.
                                             type: number
                                         type: object
                                       type: array
                                     httpRouterId:
                                       description: |-
-                                        (String) HTTP router id.
+                                        (String). HTTP router id.
                                         HTTP router id.
                                       type: string
                                     httpRouterIdRef:
@@ -1559,6 +1609,11 @@ spec:
                                               type: string
                                           type: object
                                       type: object
+                                    preserveHttp1HeaderCasing:
+                                      description: |-
+                                        (Bool). When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                        When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                      type: boolean
                                     rewriteRequestId:
                                       description: |-
                                         request-id header, otherwise would rewrite it with a new value.
@@ -1568,13 +1623,13 @@ spec:
                                 type: array
                               redirects:
                                 description: |-
-                                  > https redirects. (see below for nested schema)
+                                  > https redirects.
                                   Shortcut for adding http -> https redirects.
                                 items:
                                   properties:
                                     httpToHttps:
                                       description: |-
-                                        (Boolean) If set redirects all unencrypted HTTP requests to the same URI with scheme changed to https.
+                                        (Bool). If set redirects all unencrypted HTTP requests to the same URI with scheme changed to https.
                                         If set redirects all unencrypted HTTP requests to the same URI with scheme changed to `https`.
                                       type: boolean
                                   type: object
@@ -1583,29 +1638,29 @@ spec:
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the listener.
                           type: string
                         stream:
                           description: |-
-                            (Block List, Max: 1) Stream configuration (see below for nested schema)
+                            [Block]. Stream configuration
                             Stream configuration
                           items:
                             properties:
                               handler:
                                 description: |-
-                                  (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                  [Block]. HTTP handler.
                                   Stream handler resource.
                                 items:
                                   properties:
                                     backendGroupId:
                                       description: |-
-                                        (String) Backend Group ID.
+                                        (String). Backend Group ID.
                                         Backend Group ID.
                                       type: string
                                     idleTimeout:
                                       description: |-
-                                        (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                        (String). The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                         The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                       type: string
                                   type: object
@@ -1614,53 +1669,76 @@ spec:
                           type: array
                         tls:
                           description: |-
-                            (Block List, Max: 1) TLS configuration (see below for nested schema)
+                            [Block]. TLS configuration
                             TLS configuration
                           items:
                             properties:
                               defaultHandler:
                                 description: |-
-                                  (Block List, Min: 1, Max: 1) TLS handler resource. (see below for nested schema)
+                                  [Block]. TLS handler resource.
                                   TLS handler resource.
                                 items:
                                   properties:
                                     certificateIds:
                                       description: |-
-                                        (Set of String) Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                        (Set Of String). Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
                                         Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
                                       items:
                                         type: string
                                       type: array
                                       x-kubernetes-list-type: set
+                                    clientCertificatesVerification:
+                                      description: |-
+                                        [Block]. Client certificates verification settings.
+                                        Client certificates verification settings.
+                                      items:
+                                        properties:
+                                          bytes:
+                                            description: |-
+                                              (String). Trusted certificate authority certificates bundle (PEM text).
+                                              Trusted certificate authority certificates bundle (PEM text).
+                                            type: string
+                                          requireClientCertificate:
+                                            description: |-
+                                              (Bool). If true, ALB will reject connections without a valid client certificate.
+                                              If true, ALB will reject connections without a valid client certificate.
+                                            type: boolean
+                                        type: object
+                                      type: array
                                     httpHandler:
                                       description: |-
-                                        (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                        [Block]. HTTP handler.
                                         HTTP handler.
                                       items:
                                         properties:
                                           allowHttp10:
                                             description: |-
-                                              (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                              (Bool). If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                               If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                             type: boolean
                                           http2Options:
                                             description: |-
-                                              (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                              [Block]. If set, will enable HTTP2 protocol for the handler.
                                               If set, will enable HTTP2 protocol for the handler.
                                             items:
                                               properties:
                                                 maxConcurrentStreams:
                                                   description: |-
-                                                    (Number) Maximum number of concurrent streams.
+                                                    (Number). Maximum number of concurrent streams.
                                                     Maximum number of concurrent streams.
                                                   type: number
                                               type: object
                                             type: array
                                           httpRouterId:
                                             description: |-
-                                              (String) HTTP router id.
+                                              (String). HTTP router id.
                                               HTTP router id.
                                             type: string
+                                          preserveHttp1HeaderCasing:
+                                            description: |-
+                                              (Bool). When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                              When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                            type: boolean
                                           rewriteRequestId:
                                             description: |-
                                               request-id header, otherwise would rewrite it with a new value.
@@ -1670,18 +1748,18 @@ spec:
                                       type: array
                                     streamHandler:
                                       description: |-
-                                        (Block List, Max: 1) Stream handler resource. (see below for nested schema)
+                                        [Block]. Stream handler resource.
                                         Stream handler resource.
                                       items:
                                         properties:
                                           backendGroupId:
                                             description: |-
-                                              (String) Backend Group ID.
+                                              (String). Backend Group ID.
                                               Backend Group ID.
                                             type: string
                                           idleTimeout:
                                             description: |-
-                                              (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                              (String). The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                               The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                             type: string
                                         type: object
@@ -1690,53 +1768,76 @@ spec:
                                 type: array
                               sniHandler:
                                 description: |-
-                                  (Block List) Settings for handling requests with Server Name Indication (SNI) (see below for nested schema)
+                                  [Block]. Settings for handling requests with Server Name Indication (SNI)
                                   Settings for handling requests with Server Name Indication (SNI)
                                 items:
                                   properties:
                                     handler:
                                       description: |-
-                                        (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                        [Block]. HTTP handler.
                                         TLS handler resource.
                                       items:
                                         properties:
                                           certificateIds:
                                             description: |-
-                                              (Set of String) Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                              (Set Of String). Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
                                               Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
                                             items:
                                               type: string
                                             type: array
                                             x-kubernetes-list-type: set
+                                          clientCertificatesVerification:
+                                            description: |-
+                                              [Block]. Client certificates verification settings.
+                                              Client certificates verification settings.
+                                            items:
+                                              properties:
+                                                bytes:
+                                                  description: |-
+                                                    (String). Trusted certificate authority certificates bundle (PEM text).
+                                                    Trusted certificate authority certificates bundle (PEM text).
+                                                  type: string
+                                                requireClientCertificate:
+                                                  description: |-
+                                                    (Bool). If true, ALB will reject connections without a valid client certificate.
+                                                    If true, ALB will reject connections without a valid client certificate.
+                                                  type: boolean
+                                              type: object
+                                            type: array
                                           httpHandler:
                                             description: |-
-                                              (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                              [Block]. HTTP handler.
                                               HTTP handler.
                                             items:
                                               properties:
                                                 allowHttp10:
                                                   description: |-
-                                                    (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                                    (Bool). If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                                     If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                                   type: boolean
                                                 http2Options:
                                                   description: |-
-                                                    (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                                    [Block]. If set, will enable HTTP2 protocol for the handler.
                                                     If set, will enable HTTP2 protocol for the handler.
                                                   items:
                                                     properties:
                                                       maxConcurrentStreams:
                                                         description: |-
-                                                          (Number) Maximum number of concurrent streams.
+                                                          (Number). Maximum number of concurrent streams.
                                                           Maximum number of concurrent streams.
                                                         type: number
                                                     type: object
                                                   type: array
                                                 httpRouterId:
                                                   description: |-
-                                                    (String) HTTP router id.
+                                                    (String). HTTP router id.
                                                     HTTP router id.
                                                   type: string
+                                                preserveHttp1HeaderCasing:
+                                                  description: |-
+                                                    (Bool). When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                                    When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                                  type: boolean
                                                 rewriteRequestId:
                                                   description: |-
                                                     request-id header, otherwise would rewrite it with a new value.
@@ -1746,18 +1847,18 @@ spec:
                                             type: array
                                           streamHandler:
                                             description: |-
-                                              (Block List, Max: 1) Stream handler resource. (see below for nested schema)
+                                              [Block]. Stream handler resource.
                                               Stream handler resource.
                                             items:
                                               properties:
                                                 backendGroupId:
                                                   description: |-
-                                                    (String) Backend Group ID.
+                                                    (String). Backend Group ID.
                                                     Backend Group ID.
                                                   type: string
                                                 idleTimeout:
                                                   description: |-
-                                                    (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                                    (String). The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                                     The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                                   type: string
                                               type: object
@@ -1766,12 +1867,12 @@ spec:
                                       type: array
                                     name:
                                       description: |-
-                                        (String) The resource name.
+                                        (String). The resource name.
                                         Name of the SNI handler
                                       type: string
                                     serverNames:
                                       description: |-
-                                        (Set of String) Server names that are matched by the SNI handler
+                                        (Set Of String). Server names that are matched by the SNI handler
                                         Server names that are matched by the SNI handler
                                       items:
                                         type: string
@@ -1785,29 +1886,29 @@ spec:
                     type: array
                   logOptions:
                     description: |-
-                      (Block List, Max: 1) Cloud Logging settings. (see below for nested schema)
+                      [Block]. Cloud Logging settings.
                       Cloud Logging settings.
                     items:
                       properties:
                         disable:
                           description: |-
-                            (Boolean) Set to true to disable Cloud Logging for the balancer.
+                            (Bool). Set to true to disable Cloud Logging for the balancer.
                             Set to `true` to disable Cloud Logging for the balancer.
                           type: boolean
                         discardRule:
                           description: |-
-                            (Block List) List of rules to discard a fraction of logs. (see below for nested schema)
+                            [Block]. List of rules to discard a fraction of logs.
                             List of rules to discard a fraction of logs.
                           items:
                             properties:
                               discardPercent:
                                 description: |-
-                                  (Number) The percent of logs which will be discarded.
+                                  (Number). The percent of logs which will be discarded.
                                   The percent of logs which will be discarded.
                                 type: number
                               grpcCodes:
                                 description: |-
-                                  (List of String) list of grpc codes by name, e.g, [NOT_FOUND, RESOURCE_EXHAUSTED].
+                                  (List Of String). list of grpc codes by name, e.g, [NOT_FOUND, RESOURCE_EXHAUSTED].
                                   list of grpc codes by name, e.g, [**NOT_FOUND**, **RESOURCE_EXHAUSTED**].
                                 items:
                                   type: string
@@ -1830,19 +1931,19 @@ spec:
                           type: array
                         logGroupId:
                           description: |-
-                            (String) Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+                            Only) (String). Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
                             Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
                           type: string
                       type: object
                     type: array
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkId:
                     description: |-
-                      (String) The VPC Network ID of subnets which resource attached to.
+                      (String). The VPC Network ID of subnets which resource attached to.
                       The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   networkIdRef:
@@ -1927,12 +2028,12 @@ spec:
                     type: object
                   regionId:
                     description: |-
-                      (String) The region ID where Load Balancer is located at.
+                      (String). The region ID where Load Balancer is located at.
                       The region ID where Load Balancer is located at.
                     type: string
                   securityGroupIds:
                     description: |-
-                      (Set of String) The list of security groups applied to resource or their components.
+                      (Set Of String). The list of security groups applied to resource or their components.
                       The list of security groups applied to resource or their components.
                     items:
                       type: string
@@ -2093,29 +2194,29 @@ spec:
                 properties:
                   allocationPolicy:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Allocation zones for the Load Balancer instance. (see below for nested schema)
+                      [Block]. Allocation zones for the Load Balancer instance.
                       Allocation zones for the Load Balancer instance.
                     items:
                       properties:
                         location:
                           description: |-
-                            (Block Set, Min: 1) Unique set of locations. (see below for nested schema)
+                            [Block]. Unique set of locations.
                             Unique set of locations.
                           items:
                             properties:
                               disableTraffic:
                                 description: |-
-                                  (Boolean) If set, will disable all L7 instances in the zone for request handling.
+                                  (Bool). If set, will disable all L7 instances in the zone for request handling.
                                   If set, will disable all L7 instances in the zone for request handling.
                                 type: boolean
                               subnetId:
                                 description: |-
-                                  (String) ID of the subnet that location is located at.
+                                  (String). ID of the subnet that location is located at.
                                   ID of the subnet that location is located at.
                                 type: string
                               zoneId:
                                 description: |-
-                                  (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                                  (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
                                   The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                                 type: string
                             type: object
@@ -2124,35 +2225,35 @@ spec:
                     type: array
                   allowZonalShift:
                     description: |-
-                      (Boolean) Specifies whether application load balancer is available to zonal shift
+                      (Bool). Specifies whether application load balancer is available to zonal shift
                       Specifies whether application load balancer is available to zonal shift
                     type: boolean
                   autoScalePolicy:
                     description: |-
-                      (Block List, Max: 1) Scaling settings of the application load balancer. (see below for nested schema)
+                      [Block]. Scaling settings of the application load balancer.
                       Scaling settings of the application load balancer.
                     items:
                       properties:
                         maxSize:
                           description: |-
-                            (Number) Upper limit for total instance count (across all zones)
+                            (Number). Upper limit for total instance count (across all zones)
                             Upper limit for total instance count (across all zones)
                           type: number
                         minZoneSize:
                           description: |-
-                            (Number) Lower limit for instance count in each zone.
+                            (Number). Lower limit for instance count in each zone.
                             Lower limit for instance count in each zone.
                           type: number
                       type: object
                     type: array
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
                       The creation timestamp of the resource.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -2161,74 +2262,74 @@ spec:
                       The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   listener:
                     description: |-
-                      (Block List) List of listeners for the Load Balancer. (see below for nested schema)
+                      [Block]. List of listeners for the Load Balancer.
                       List of listeners for the Load Balancer.
                     items:
                       properties:
                         endpoint:
                           description: |-
-                            (Block List) Network endpoint (addresses and ports) of the listener. (see below for nested schema)
+                            [Block]. Network endpoint (addresses and ports) of the listener.
                             Network endpoint (addresses and ports) of the listener.
                           items:
                             properties:
                               address:
                                 description: |-
-                                  (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                  [Block]. One or more addresses to listen on.
                                   One or more addresses to listen on.
                                 items:
                                   properties:
                                     externalIpv4Address:
                                       description: |-
-                                        (Block List, Max: 1) External IPv4 address. (see below for nested schema)
+                                        [Block]. External IPv4 address.
                                         External IPv4 address.
                                       items:
                                         properties:
                                           address:
                                             description: |-
-                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              [Block]. One or more addresses to listen on.
                                               Provided by the client or computed automatically.
                                             type: string
                                         type: object
                                       type: array
                                     externalIpv6Address:
                                       description: |-
-                                        (Block List, Max: 1) External IPv6 address. (see below for nested schema)
+                                        [Block]. External IPv6 address.
                                         External IPv6 address.
                                       items:
                                         properties:
                                           address:
                                             description: |-
-                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              [Block]. One or more addresses to listen on.
                                               Provided by the client or computed automatically.
                                             type: string
                                         type: object
                                       type: array
                                     internalIpv4Address:
                                       description: |-
-                                        (Block List, Max: 1) Internal IPv4 address. (see below for nested schema)
+                                        [Block]. Internal IPv4 address.
                                         Internal IPv4 address.
                                       items:
                                         properties:
                                           address:
                                             description: |-
-                                              (Block List, Min: 1) One or more addresses to listen on. (see below for nested schema)
+                                              [Block]. One or more addresses to listen on.
                                               Provided by the client or computed automatically.
                                             type: string
                                           subnetId:
                                             description: |-
-                                              (String) ID of the subnet that location is located at.
+                                              (String). ID of the subnet that location is located at.
                                               ID of the subnet that the address belongs to.
                                             type: string
                                         type: object
@@ -2237,7 +2338,7 @@ spec:
                                 type: array
                               ports:
                                 description: |-
-                                  (List of Number) One or more ports to listen on.
+                                  (List Of Number). One or more ports to listen on.
                                   One or more ports to listen on.
                                 items:
                                   type: number
@@ -2246,39 +2347,44 @@ spec:
                           type: array
                         http:
                           description: |-
-                            (Block List, Max: 1) HTTP handler that sets plain text HTTP router. (see below for nested schema)
+                            [Block]. HTTP handler that sets plain text HTTP router.
                             HTTP handler that sets plain text HTTP router.
                           items:
                             properties:
                               handler:
                                 description: |-
-                                  (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                  [Block]. HTTP handler.
                                   HTTP handler.
                                 items:
                                   properties:
                                     allowHttp10:
                                       description: |-
-                                        (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                        (Bool). If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                         If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                       type: boolean
                                     http2Options:
                                       description: |-
-                                        (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                        [Block]. If set, will enable HTTP2 protocol for the handler.
                                         If set, will enable HTTP2 protocol for the handler.
                                       items:
                                         properties:
                                           maxConcurrentStreams:
                                             description: |-
-                                              (Number) Maximum number of concurrent streams.
+                                              (Number). Maximum number of concurrent streams.
                                               Maximum number of concurrent streams.
                                             type: number
                                         type: object
                                       type: array
                                     httpRouterId:
                                       description: |-
-                                        (String) HTTP router id.
+                                        (String). HTTP router id.
                                         HTTP router id.
                                       type: string
+                                    preserveHttp1HeaderCasing:
+                                      description: |-
+                                        (Bool). When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                        When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                      type: boolean
                                     rewriteRequestId:
                                       description: |-
                                         request-id header, otherwise would rewrite it with a new value.
@@ -2288,13 +2394,13 @@ spec:
                                 type: array
                               redirects:
                                 description: |-
-                                  > https redirects. (see below for nested schema)
+                                  > https redirects.
                                   Shortcut for adding http -> https redirects.
                                 items:
                                   properties:
                                     httpToHttps:
                                       description: |-
-                                        (Boolean) If set redirects all unencrypted HTTP requests to the same URI with scheme changed to https.
+                                        (Bool). If set redirects all unencrypted HTTP requests to the same URI with scheme changed to https.
                                         If set redirects all unencrypted HTTP requests to the same URI with scheme changed to `https`.
                                       type: boolean
                                   type: object
@@ -2303,29 +2409,29 @@ spec:
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the listener.
                           type: string
                         stream:
                           description: |-
-                            (Block List, Max: 1) Stream configuration (see below for nested schema)
+                            [Block]. Stream configuration
                             Stream configuration
                           items:
                             properties:
                               handler:
                                 description: |-
-                                  (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                  [Block]. HTTP handler.
                                   Stream handler resource.
                                 items:
                                   properties:
                                     backendGroupId:
                                       description: |-
-                                        (String) Backend Group ID.
+                                        (String). Backend Group ID.
                                         Backend Group ID.
                                       type: string
                                     idleTimeout:
                                       description: |-
-                                        (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                        (String). The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                         The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                       type: string
                                   type: object
@@ -2334,53 +2440,76 @@ spec:
                           type: array
                         tls:
                           description: |-
-                            (Block List, Max: 1) TLS configuration (see below for nested schema)
+                            [Block]. TLS configuration
                             TLS configuration
                           items:
                             properties:
                               defaultHandler:
                                 description: |-
-                                  (Block List, Min: 1, Max: 1) TLS handler resource. (see below for nested schema)
+                                  [Block]. TLS handler resource.
                                   TLS handler resource.
                                 items:
                                   properties:
                                     certificateIds:
                                       description: |-
-                                        (Set of String) Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                        (Set Of String). Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
                                         Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
                                       items:
                                         type: string
                                       type: array
                                       x-kubernetes-list-type: set
+                                    clientCertificatesVerification:
+                                      description: |-
+                                        [Block]. Client certificates verification settings.
+                                        Client certificates verification settings.
+                                      items:
+                                        properties:
+                                          bytes:
+                                            description: |-
+                                              (String). Trusted certificate authority certificates bundle (PEM text).
+                                              Trusted certificate authority certificates bundle (PEM text).
+                                            type: string
+                                          requireClientCertificate:
+                                            description: |-
+                                              (Bool). If true, ALB will reject connections without a valid client certificate.
+                                              If true, ALB will reject connections without a valid client certificate.
+                                            type: boolean
+                                        type: object
+                                      type: array
                                     httpHandler:
                                       description: |-
-                                        (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                        [Block]. HTTP handler.
                                         HTTP handler.
                                       items:
                                         properties:
                                           allowHttp10:
                                             description: |-
-                                              (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                              (Bool). If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                               If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                             type: boolean
                                           http2Options:
                                             description: |-
-                                              (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                              [Block]. If set, will enable HTTP2 protocol for the handler.
                                               If set, will enable HTTP2 protocol for the handler.
                                             items:
                                               properties:
                                                 maxConcurrentStreams:
                                                   description: |-
-                                                    (Number) Maximum number of concurrent streams.
+                                                    (Number). Maximum number of concurrent streams.
                                                     Maximum number of concurrent streams.
                                                   type: number
                                               type: object
                                             type: array
                                           httpRouterId:
                                             description: |-
-                                              (String) HTTP router id.
+                                              (String). HTTP router id.
                                               HTTP router id.
                                             type: string
+                                          preserveHttp1HeaderCasing:
+                                            description: |-
+                                              (Bool). When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                              When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                            type: boolean
                                           rewriteRequestId:
                                             description: |-
                                               request-id header, otherwise would rewrite it with a new value.
@@ -2390,18 +2519,18 @@ spec:
                                       type: array
                                     streamHandler:
                                       description: |-
-                                        (Block List, Max: 1) Stream handler resource. (see below for nested schema)
+                                        [Block]. Stream handler resource.
                                         Stream handler resource.
                                       items:
                                         properties:
                                           backendGroupId:
                                             description: |-
-                                              (String) Backend Group ID.
+                                              (String). Backend Group ID.
                                               Backend Group ID.
                                             type: string
                                           idleTimeout:
                                             description: |-
-                                              (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                              (String). The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                               The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                             type: string
                                         type: object
@@ -2410,53 +2539,76 @@ spec:
                                 type: array
                               sniHandler:
                                 description: |-
-                                  (Block List) Settings for handling requests with Server Name Indication (SNI) (see below for nested schema)
+                                  [Block]. Settings for handling requests with Server Name Indication (SNI)
                                   Settings for handling requests with Server Name Indication (SNI)
                                 items:
                                   properties:
                                     handler:
                                       description: |-
-                                        (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                        [Block]. HTTP handler.
                                         TLS handler resource.
                                       items:
                                         properties:
                                           certificateIds:
                                             description: |-
-                                              (Set of String) Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
+                                              (Set Of String). Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
                                               Certificate IDs in the Certificate Manager. Multiple TLS certificates can be associated with the same context to allow both RSA and ECDSA certificates. Only the first certificate of each type will be used.
                                             items:
                                               type: string
                                             type: array
                                             x-kubernetes-list-type: set
+                                          clientCertificatesVerification:
+                                            description: |-
+                                              [Block]. Client certificates verification settings.
+                                              Client certificates verification settings.
+                                            items:
+                                              properties:
+                                                bytes:
+                                                  description: |-
+                                                    (String). Trusted certificate authority certificates bundle (PEM text).
+                                                    Trusted certificate authority certificates bundle (PEM text).
+                                                  type: string
+                                                requireClientCertificate:
+                                                  description: |-
+                                                    (Bool). If true, ALB will reject connections without a valid client certificate.
+                                                    If true, ALB will reject connections without a valid client certificate.
+                                                  type: boolean
+                                              type: object
+                                            type: array
                                           httpHandler:
                                             description: |-
-                                              (Block List, Max: 1) HTTP handler. (see below for nested schema)
+                                              [Block]. HTTP handler.
                                               HTTP handler.
                                             items:
                                               properties:
                                                 allowHttp10:
                                                   description: |-
-                                                    (Boolean) If set, will enable only HTTP1 protocol with HTTP1.0 support.
+                                                    (Bool). If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                                     If set, will enable only HTTP1 protocol with HTTP1.0 support.
                                                   type: boolean
                                                 http2Options:
                                                   description: |-
-                                                    (Block List, Max: 1) If set, will enable HTTP2 protocol for the handler. (see below for nested schema)
+                                                    [Block]. If set, will enable HTTP2 protocol for the handler.
                                                     If set, will enable HTTP2 protocol for the handler.
                                                   items:
                                                     properties:
                                                       maxConcurrentStreams:
                                                         description: |-
-                                                          (Number) Maximum number of concurrent streams.
+                                                          (Number). Maximum number of concurrent streams.
                                                           Maximum number of concurrent streams.
                                                         type: number
                                                     type: object
                                                   type: array
                                                 httpRouterId:
                                                   description: |-
-                                                    (String) HTTP router id.
+                                                    (String). HTTP router id.
                                                     HTTP router id.
                                                   type: string
+                                                preserveHttp1HeaderCasing:
+                                                  description: |-
+                                                    (Bool). When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                                    When unset, will preserve the casing of the incoming HTTP headers, otherwise would convert them to lowercase. Works only for HTTP1.1 and HTTP1.0 requests.
+                                                  type: boolean
                                                 rewriteRequestId:
                                                   description: |-
                                                     request-id header, otherwise would rewrite it with a new value.
@@ -2466,18 +2618,18 @@ spec:
                                             type: array
                                           streamHandler:
                                             description: |-
-                                              (Block List, Max: 1) Stream handler resource. (see below for nested schema)
+                                              [Block]. Stream handler resource.
                                               Stream handler resource.
                                             items:
                                               properties:
                                                 backendGroupId:
                                                   description: |-
-                                                    (String) Backend Group ID.
+                                                    (String). Backend Group ID.
                                                     Backend Group ID.
                                                   type: string
                                                 idleTimeout:
                                                   description: |-
-                                                    (String) The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
+                                                    (String). The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                                     The idle timeout is the interval after which the connection will be forcibly closed if no data has been transmitted or received on either the upstream or downstream connection. If not configured, the default idle timeout is 1 hour. Setting it to 0 disables the timeout.
                                                   type: string
                                               type: object
@@ -2486,12 +2638,12 @@ spec:
                                       type: array
                                     name:
                                       description: |-
-                                        (String) The resource name.
+                                        (String). The resource name.
                                         Name of the SNI handler
                                       type: string
                                     serverNames:
                                       description: |-
-                                        (Set of String) Server names that are matched by the SNI handler
+                                        (Set Of String). Server names that are matched by the SNI handler
                                         Server names that are matched by the SNI handler
                                       items:
                                         type: string
@@ -2505,34 +2657,34 @@ spec:
                     type: array
                   logGroupId:
                     description: |-
-                      (String) Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+                      Only) (String). Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
                       Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
                     type: string
                   logOptions:
                     description: |-
-                      (Block List, Max: 1) Cloud Logging settings. (see below for nested schema)
+                      [Block]. Cloud Logging settings.
                       Cloud Logging settings.
                     items:
                       properties:
                         disable:
                           description: |-
-                            (Boolean) Set to true to disable Cloud Logging for the balancer.
+                            (Bool). Set to true to disable Cloud Logging for the balancer.
                             Set to `true` to disable Cloud Logging for the balancer.
                           type: boolean
                         discardRule:
                           description: |-
-                            (Block List) List of rules to discard a fraction of logs. (see below for nested schema)
+                            [Block]. List of rules to discard a fraction of logs.
                             List of rules to discard a fraction of logs.
                           items:
                             properties:
                               discardPercent:
                                 description: |-
-                                  (Number) The percent of logs which will be discarded.
+                                  (Number). The percent of logs which will be discarded.
                                   The percent of logs which will be discarded.
                                 type: number
                               grpcCodes:
                                 description: |-
-                                  (List of String) list of grpc codes by name, e.g, [NOT_FOUND, RESOURCE_EXHAUSTED].
+                                  (List Of String). list of grpc codes by name, e.g, [NOT_FOUND, RESOURCE_EXHAUSTED].
                                   list of grpc codes by name, e.g, [**NOT_FOUND**, **RESOURCE_EXHAUSTED**].
                                 items:
                                   type: string
@@ -2555,29 +2707,29 @@ spec:
                           type: array
                         logGroupId:
                           description: |-
-                            (String) Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
+                            Only) (String). Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
                             Cloud Logging group ID to send logs to. Leave empty to use the balancer folder default log group.
                           type: string
                       type: object
                     type: array
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkId:
                     description: |-
-                      (String) The VPC Network ID of subnets which resource attached to.
+                      (String). The VPC Network ID of subnets which resource attached to.
                       The `VPC Network ID` of subnets which resource attached to.
                     type: string
                   regionId:
                     description: |-
-                      (String) The region ID where Load Balancer is located at.
+                      (String). The region ID where Load Balancer is located at.
                       The region ID where Load Balancer is located at.
                     type: string
                   securityGroupIds:
                     description: |-
-                      (Set of String) The list of security groups applied to resource or their components.
+                      (Set Of String). The list of security groups applied to resource or their components.
                       The list of security groups applied to resource or their components.
                     items:
                       type: string
@@ -2585,7 +2737,7 @@ spec:
                     x-kubernetes-list-type: set
                   status:
                     description: |-
-                      (String) Status of the Load Balancer.
+                      Only) (String). Status of the Load Balancer.
                       Status of the Load Balancer.
                     type: string
                 type: object

@@ -26,6 +26,7 @@ import (
 
 	v1alpha1 "github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/alb/v1alpha1"
 	v1alpha1cdn "github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/cdn/v1alpha1"
+	v1alpha1cm "github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/cm/v1alpha1"
 	v1alpha1compute "github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/compute/v1alpha1"
 	v1alpha1container "github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/container/v1alpha1"
 	v1alpha1datatransfer "github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/datatransfer/v1alpha1"
@@ -50,6 +51,7 @@ func init() {
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
 		v1alpha1cdn.SchemeBuilder.AddToScheme,
+		v1alpha1cm.SchemeBuilder.AddToScheme,
 		v1alpha1compute.SchemeBuilder.AddToScheme,
 		v1alpha1container.SchemeBuilder.AddToScheme,
 		v1alpha1datatransfer.SchemeBuilder.AddToScheme,

@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: virtualhosts.alb.yandex-cloud.m.jet.crossplane.io
 spec:
   group: alb.yandex-cloud.m.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: VirtualHost is the Schema for the VirtualHosts API. Virtual hosts
-          combine routes belonging to the same set of domains.
+        description: VirtualHost is the Schema for the VirtualHosts API. Manages the
+          yandex_alb_virtual_host resource.
         properties:
           apiVersion:
             description: |-
@@ -69,7 +69,7 @@ spec:
                     x-kubernetes-list-type: set
                   httpRouterId:
                     description: |-
-                      (String) The ID of the HTTP router to which the virtual host belongs.
+                      (String). The ID of the HTTP router to which the virtual host belongs.
                       The ID of the HTTP router to which the virtual host belongs.
                     type: string
                   httpRouterIdRef:
@@ -154,7 +154,7 @@ spec:
                     type: object
                   modifyRequestHeaders:
                     description: |-
-                      (Block List) Apply the following modifications to the Request/Response header.
+                      [Block]. Apply the following modifications to the Request/Response header.
                       Apply the following modifications to the Request/Response header.
 
                       ~> Only one type of actions `append` or `replace` or `remove` should be specified.
@@ -162,29 +162,29 @@ spec:
                       properties:
                         append:
                           description: |-
-                            (String) Append string to the header value.
+                            (String). Append string to the header value.
                             Append string to the header value.
                           type: string
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the header to modify.
                           type: string
                         remove:
                           description: |-
-                            (Boolean) If set, remove the header.
+                            (Bool). If set, remove the header.
                             If set, remove the header.
                           type: boolean
                         replace:
                           description: |-
-                            (String) New value for a header. Header values support the following formatters.
+                            (String). New value for a header. Header values support the following formatters.
                             New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
                           type: string
                       type: object
                     type: array
                   modifyResponseHeaders:
                     description: |-
-                      (Block List) Apply the following modifications to the Request/Response header.
+                      [Block]. Apply the following modifications to the Request/Response header.
                       Apply the following modifications to the Request/Response header.
 
                       ~> Only one type of actions `append` or `replace` or `remove` should be specified.
@@ -192,69 +192,69 @@ spec:
                       properties:
                         append:
                           description: |-
-                            (String) Append string to the header value.
+                            (String). Append string to the header value.
                             Append string to the header value.
                           type: string
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the header to modify.
                           type: string
                         remove:
                           description: |-
-                            (Boolean) If set, remove the header.
+                            (Bool). If set, remove the header.
                             If set, remove the header.
                           type: boolean
                         replace:
                           description: |-
-                            (String) New value for a header. Header values support the following formatters.
+                            (String). New value for a header. Header values support the following formatters.
                             New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
                           type: string
                       type: object
                     type: array
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   rateLimit:
                     description: |-
-                      (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                      [Block]. Rate limit configuration applied for a whole virtual host
                       Rate limit configuration applied for a whole virtual host
                     items:
                       properties:
                         allRequests:
                           description: |-
-                            (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                            [Block]. Rate limit configuration applied to all incoming requests
                             Rate limit configuration applied to all incoming requests
                           items:
                             properties:
                               perMinute:
                                 description: |-
-                                  (Number) Limit value specified with per minute time unit
+                                  (Number). Limit value specified with per minute time unit
                                   Limit value specified with per minute time unit
                                 type: number
                               perSecond:
                                 description: |-
-                                  (Number) Limit value specified with per second time unit
+                                  (Number). Limit value specified with per second time unit
                                   Limit value specified with per second time unit
                                 type: number
                             type: object
                           type: array
                         requestsPerIp:
                           description: |-
-                            (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                            [Block]. Rate limit configuration applied separately for each set of requests grouped by client IP address
                             Rate limit configuration applied separately for each set of requests grouped by client IP address
                           items:
                             properties:
                               perMinute:
                                 description: |-
-                                  (Number) Limit value specified with per minute time unit
+                                  (Number). Limit value specified with per minute time unit
                                   Limit value specified with per minute time unit
                                 type: number
                               perSecond:
                                 description: |-
-                                  (Number) Limit value specified with per second time unit
+                                  (Number). Limit value specified with per second time unit
                                   Limit value specified with per second time unit
                                 type: number
                             type: object
@@ -269,42 +269,61 @@ spec:
                       ~> Exactly one type of routes `http_route` or `grpc_route` should be specified.
                     items:
                       properties:
+                        clientCertificateForward:
+                          description: |-
+                            [Block]. Client certificate forwarding settings.
+                            Client certificate forwarding settings.
+                          items:
+                            properties:
+                              httpHeader:
+                                description: |-
+                                  (String). HTTP header name to forward client certificate information.
+                                  HTTP header name to forward client certificate information.
+                                type: string
+                              issuerHeaderName:
+                                description: |-
+                                  (String). Header name for the certificate issuer information.
+                                  Header name for the certificate issuer information.
+                                type: string
+                              subjectHeaderName:
+                                description: |-
+                                  (String). Header name for the certificate subject information.
+                                  Header name for the certificate subject information.
+                                type: string
+                            type: object
+                          type: array
+                        disableSecurityProfile:
+                          description: |-
+                            (Bool). Disables security profile for the route
+                            Disables security profile for the route
+                          type: boolean
                         grpcRoute:
                           description: |-
-                            (Block List, Max: 1) gRPC route resource.
+                            [Block]. gRPC route resource.
                             gRPC route resource.
 
                             ~> Exactly one type of actions `grpc_route_action` or `grpc_status_response_action` should be specified.
                           items:
                             properties:
                               grpcMatch:
-                                description: |-
-                                  (Block List) Checks / prefix by default. (see below for nested schema)
-                                  Checks `/` prefix by default.
+                                description: Checks `/` prefix by default.
                                 items:
                                   properties:
                                     fqmn:
                                       description: |-
-                                        (Block List, Max: 1) The path and fqmn blocks.
                                         The `path` and `fqmn` blocks.
 
                                         ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                       items:
                                         properties:
                                           exact:
-                                            description: |-
-                                              (String) Match exactly.
-                                              Match exactly.
+                                            description: Match exactly.
                                             type: string
                                           prefix:
-                                            description: |-
-                                              (String) Match prefix.
-                                              Match prefix.
+                                            description: Match prefix.
                                             type: string
                                           regex:
-                                            description: |-
-                                              (String) Match regex.
-                                              Match regex.
+                                            description: Match regex.
                                             type: string
                                         type: object
                                       type: array
@@ -312,20 +331,19 @@ spec:
                                 type: array
                               grpcRouteAction:
                                 description: |-
-                                  (Block List, Max: 1) gRPC route action resource.
+                                  (String).
                                   gRPC route action resource.
 
                                   ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
                                 items:
                                   properties:
                                     autoHostRewrite:
-                                      description: |-
-                                        (Boolean) If set, will automatically rewrite host.
-                                        If set, will automatically rewrite host.
+                                      description: If set, will automatically rewrite
+                                        host.
                                       type: boolean
                                     backendGroupId:
                                       description: |-
-                                        (String) Backend group to route requests.
+                                        (String).
                                         Backend group to route requests.
                                       type: string
                                     backendGroupIdRef:
@@ -412,58 +430,61 @@ spec:
                                           type: object
                                       type: object
                                     hostRewrite:
-                                      description: |-
-                                        (String) Host rewrite specifier.
-                                        Host rewrite specifier.
+                                      description: Host rewrite specifier.
                                       type: string
                                     idleTimeout:
-                                      description: |-
-                                        one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
-                                        Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios - one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                      description: Specifies the idle timeout (time
+                                        without any data transfer for the active request)
+                                        for the route. It is useful for streaming
+                                        scenarios - one should set idle_timeout to
+                                        something meaningful and max_timeout to the
+                                        maximum time the stream is allowed to be alive.
+                                        If not specified, there is no per-route idle
+                                        timeout.
                                       type: string
                                     maxTimeout:
-                                      description: |-
-                                        timeout header). If not set, default is 60 seconds.
-                                        Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is 60 seconds.
+                                      description: Lower timeout may be specified
+                                        by the client (using grpc-timeout header).
+                                        If not set, default is 60 seconds.
                                       type: string
                                     rateLimit:
                                       description: |-
-                                        (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                                        [Block]. Rate limit configuration applied for a whole virtual host
                                         Rate limit configuration applied for a whole virtual host
                                       items:
                                         properties:
                                           allRequests:
                                             description: |-
-                                              (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                                              [Block]. Rate limit configuration applied to all incoming requests
                                               Rate limit configuration applied to all incoming requests
                                             items:
                                               properties:
                                                 perMinute:
                                                   description: |-
-                                                    (Number) Limit value specified with per minute time unit
+                                                    (Number). Limit value specified with per minute time unit
                                                     Limit value specified with per minute time unit
                                                   type: number
                                                 perSecond:
                                                   description: |-
-                                                    (Number) Limit value specified with per second time unit
+                                                    (Number). Limit value specified with per second time unit
                                                     Limit value specified with per second time unit
                                                   type: number
                                               type: object
                                             type: array
                                           requestsPerIp:
                                             description: |-
-                                              (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                                              [Block]. Rate limit configuration applied separately for each set of requests grouped by client IP address
                                               Rate limit configuration applied separately for each set of requests grouped by client IP address
                                             items:
                                               properties:
                                                 perMinute:
                                                   description: |-
-                                                    (Number) Limit value specified with per minute time unit
+                                                    (Number). Limit value specified with per minute time unit
                                                     Limit value specified with per minute time unit
                                                   type: number
                                                 perSecond:
                                                   description: |-
-                                                    (Number) Limit value specified with per second time unit
+                                                    (Number). Limit value specified with per second time unit
                                                     Limit value specified with per second time unit
                                                   type: number
                                               type: object
@@ -474,14 +495,15 @@ spec:
                                 type: array
                               grpcStatusResponseAction:
                                 description: |-
-                                  (Block List, Max: 1) gRPC status response action resource. (see below for nested schema)
+                                  (String).
                                   gRPC status response action resource.
                                 items:
                                   properties:
                                     status:
-                                      description: |-
-                                        (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
-                                        The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+                                      description: 'The status of the response. Supported
+                                        values are: ok, invalid_argumet, not_found,
+                                        permission_denied, unauthenticated, unimplemented,
+                                        internal, unavailable.'
                                       type: string
                                   type: object
                                 type: array
@@ -489,7 +511,7 @@ spec:
                           type: array
                         httpRoute:
                           description: |-
-                            (Block List, Max: 1) HTTP route resource.
+                            [Block]. HTTP route resource.
                             HTTP route resource.
 
                             ~> Exactly one type of actions `http_route_action` or `redirect_action` or `direct_response_action` should be specified.
@@ -497,58 +519,44 @@ spec:
                             properties:
                               directResponseAction:
                                 description: |-
-                                  (Block List, Max: 1) Direct response action resource. (see below for nested schema)
+                                  (String).
                                   Direct response action resource.
                                 items:
                                   properties:
                                     body:
-                                      description: |-
-                                        (String) Response body text.
-                                        Response body text.
+                                      description: Response body text.
                                       type: string
                                     status:
-                                      description: |-
-                                        (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
-                                        HTTP response status. Should be between `100` and `599`.
+                                      description: HTTP response status. Should be
+                                        between `100` and `599`.
                                       type: number
                                   type: object
                                 type: array
                               httpMatch:
-                                description: |-
-                                  (Block List) Checks / prefix by default. (see below for nested schema)
-                                  Checks `/` prefix by default.
+                                description: Checks `/` prefix by default.
                                 items:
                                   properties:
                                     httpMethod:
-                                      description: |-
-                                        (Set of String) List of methods (strings).
-                                        List of methods (strings).
+                                      description: List of methods (strings).
                                       items:
                                         type: string
                                       type: array
                                       x-kubernetes-list-type: set
                                     path:
                                       description: |-
-                                        (Block List, Max: 1) The path and fqmn blocks.
                                         The `path` and `fqmn` blocks.
 
                                         ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                       items:
                                         properties:
                                           exact:
-                                            description: |-
-                                              (String) Match exactly.
-                                              Match exactly.
+                                            description: Match exactly.
                                             type: string
                                           prefix:
-                                            description: |-
-                                              (String) Match prefix.
-                                              Match prefix.
+                                            description: Match prefix.
                                             type: string
                                           regex:
-                                            description: |-
-                                              (String) Match regex.
-                                              Match regex.
+                                            description: Match regex.
                                             type: string
                                         type: object
                                       type: array
@@ -556,20 +564,19 @@ spec:
                                 type: array
                               httpRouteAction:
                                 description: |-
-                                  (Block List, Max: 1) HTTP route action resource.
+                                  (String).
                                   HTTP route action resource.
 
                                   ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
                                 items:
                                   properties:
                                     autoHostRewrite:
-                                      description: |-
-                                        (Boolean) If set, will automatically rewrite host.
-                                        If set, will automatically rewrite host.
+                                      description: If set, will automatically rewrite
+                                        host.
                                       type: boolean
                                     backendGroupId:
                                       description: |-
-                                        (String) Backend group to route requests.
+                                        (String).
                                         Backend group to route requests.
                                       type: string
                                     backendGroupIdRef:
@@ -656,58 +663,60 @@ spec:
                                           type: object
                                       type: object
                                     hostRewrite:
-                                      description: |-
-                                        (String) Host rewrite specifier.
-                                        Host rewrite specifier.
+                                      description: Host rewrite specifier.
                                       type: string
                                     idleTimeout:
-                                      description: |-
-                                        one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
-                                        Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                      description: Specifies the idle timeout (time
+                                        without any data transfer for the active request)
+                                        for the route. It is useful for streaming
+                                        scenarios (i.e. long-polling, server-sent
+                                        events) - one should set idle_timeout to something
+                                        meaningful and timeout to the maximum time
+                                        the stream is allowed to be alive. If not
+                                        specified, there is no per-route idle timeout.
                                       type: string
                                     prefixRewrite:
-                                      description: |-
-                                        (String) If not empty, matched path prefix will be replaced by this value.
-                                        If not empty, matched path prefix will be replaced by this value.
+                                      description: If not empty, matched path prefix
+                                        will be replaced by this value.
                                       type: string
                                     rateLimit:
                                       description: |-
-                                        (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                                        [Block]. Rate limit configuration applied for a whole virtual host
                                         Rate limit configuration applied for a whole virtual host
                                       items:
                                         properties:
                                           allRequests:
                                             description: |-
-                                              (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                                              [Block]. Rate limit configuration applied to all incoming requests
                                               Rate limit configuration applied to all incoming requests
                                             items:
                                               properties:
                                                 perMinute:
                                                   description: |-
-                                                    (Number) Limit value specified with per minute time unit
+                                                    (Number). Limit value specified with per minute time unit
                                                     Limit value specified with per minute time unit
                                                   type: number
                                                 perSecond:
                                                   description: |-
-                                                    (Number) Limit value specified with per second time unit
+                                                    (Number). Limit value specified with per second time unit
                                                     Limit value specified with per second time unit
                                                   type: number
                                               type: object
                                             type: array
                                           requestsPerIp:
                                             description: |-
-                                              (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                                              [Block]. Rate limit configuration applied separately for each set of requests grouped by client IP address
                                               Rate limit configuration applied separately for each set of requests grouped by client IP address
                                             items:
                                               properties:
                                                 perMinute:
                                                   description: |-
-                                                    (Number) Limit value specified with per minute time unit
+                                                    (Number). Limit value specified with per minute time unit
                                                     Limit value specified with per minute time unit
                                                   type: number
                                                 perSecond:
                                                   description: |-
-                                                    (Number) Limit value specified with per second time unit
+                                                    (Number). Limit value specified with per second time unit
                                                     Limit value specified with per second time unit
                                                   type: number
                                               type: object
@@ -715,32 +724,28 @@ spec:
                                         type: object
                                       type: array
                                     regexRewrite:
-                                      description: |-
-                                        (Block List, Max: 1) Replacement for path substrings that match the pattern (see below for nested schema)
-                                        Replacement for path substrings that match the pattern
+                                      description: Replacement for path substrings
+                                        that match the pattern
                                       items:
                                         properties:
                                           regex:
-                                            description: |-
-                                              (String) Match regex.
-                                              RE2 regular expression
+                                            description: RE2 regular expression
                                             type: string
                                           substitute:
-                                            description: |-
-                                              (String) The string which should be used to substitute matched substrings
-                                              The string which should be used to substitute matched substrings
+                                            description: The string which should be
+                                              used to substitute matched substrings
                                             type: string
                                         type: object
                                       type: array
                                     timeout:
-                                      description: |-
-                                        (String) Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
-                                        Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
+                                      description: Specifies the request timeout (overall
+                                        time request processing is allowed to take)
+                                        for the route. If not set, default is 60 seconds.
                                       type: string
                                     upgradeTypes:
-                                      description: |-
-                                        (Set of String) List of upgrade types. Only specified upgrade types will be allowed. For example, websocket.
-                                        List of upgrade types. Only specified upgrade types will be allowed. For example, `websocket`.
+                                      description: List of upgrade types. Only specified
+                                        upgrade types will be allowed. For example,
+                                        `websocket`.
                                       items:
                                         type: string
                                       type: array
@@ -749,46 +754,40 @@ spec:
                                 type: array
                               redirectAction:
                                 description: |-
-                                  (Block List, Max: 1) Redirect action resource.
+                                  (String).
                                   Redirect action resource.
 
                                   ~> Only one type of paths `replace_path` or `replace_prefix` should be specified.
                                 items:
                                   properties:
                                     removeQuery:
-                                      description: |-
-                                        (Boolean) If set, remove query part.
-                                        If set, remove query part.
+                                      description: If set, remove query part.
                                       type: boolean
                                     replaceHost:
-                                      description: |-
-                                        (String) Replaces hostname.
-                                        Replaces hostname.
+                                      description: Replaces hostname.
                                       type: string
                                     replacePath:
-                                      description: |-
-                                        (String) Replace path.
-                                        Replace path.
+                                      description: Replace path.
                                       type: string
                                     replacePort:
-                                      description: |-
-                                        (Number) Replaces port.
-                                        Replaces port.
+                                      description: Replaces port.
                                       type: number
                                     replacePrefix:
-                                      description: |-
-                                        (String) Replace only matched prefix. Example: match:{ prefix_match: /some }  redirect: { replace_prefix: /other }  will redirect /something to /otherthing.
-                                        Replace only matched prefix. Example:<br/> match:{ prefix_match: `/some` } <br/> redirect: { replace_prefix: `/other` } <br/> will redirect `/something` to `/otherthing`.
+                                      description: 'Replace only matched prefix. Example:<br/>
+                                        match:{ prefix_match: `/some` } <br/> redirect:
+                                        { replace_prefix: `/other` } <br/> will redirect
+                                        `/something` to `/otherthing`.'
                                       type: string
                                     replaceScheme:
-                                      description: |-
-                                        (String) Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
-                                        Replaces scheme. If the original scheme is `http` or `https`, will also remove the 80 or 443 port, if present.
+                                      description: Replaces scheme. If the original
+                                        scheme is `http` or `https`, will also remove
+                                        the 80 or 443 port, if present.
                                       type: string
                                     responseCode:
-                                      description: |-
-                                        (String) The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
-                                        The HTTP status code to use in the redirect response. Supported values are: `moved_permanently`, `found`, `see_other`, `temporary_redirect`, `permanent_redirect`.
+                                      description: 'The HTTP status code to use in
+                                        the redirect response. Supported values are:
+                                        `moved_permanently`, `found`, `see_other`,
+                                        `temporary_redirect`, `permanent_redirect`.'
                                       type: string
                                   type: object
                                 type: array
@@ -796,75 +795,66 @@ spec:
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the route.
                           type: string
                         routeOptions:
                           description: |-
-                            (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                            [Block]. Route options for the virtual host.
                             Route options for the virtual host.
                           items:
                             properties:
                               rbac:
                                 description: |-
-                                  (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                                  [Block]. RBAC configuration.
                                   RBAC configuration.
                                 items:
                                   properties:
                                     action:
-                                      description: (String)
+                                      description: (String).
                                       type: string
                                     principals:
-                                      description: '(Block List, Min: 1) (see below
-                                        for nested schema)'
+                                      description: '[Block].'
                                       items:
                                         properties:
                                           andPrincipals:
-                                            description: '(Block List, Min: 1) (see
-                                              below for nested schema)'
+                                            description: '[Block].'
                                             items:
                                               properties:
                                                 any:
-                                                  description: (Boolean)
+                                                  description: (Bool).
                                                   type: boolean
                                                 header:
-                                                  description: '(Block List, Max:
-                                                    1) (see below for nested schema)'
+                                                  description: '[Block].'
                                                   items:
                                                     properties:
                                                       name:
-                                                        description: (String) The
+                                                        description: (String). The
                                                           resource name.
                                                         type: string
                                                       value:
                                                         description: |-
-                                                          (Block List, Max: 1) The path and fqmn blocks.
+                                                          [Block]. The path and fqmn blocks.
                                                           The `path` and `fqmn` blocks.
 
                                                           ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                                         items:
                                                           properties:
                                                             exact:
-                                                              description: |-
-                                                                (String) Match exactly.
-                                                                Match exactly.
+                                                              description: Match exactly.
                                                               type: string
                                                             prefix:
-                                                              description: |-
-                                                                (String) Match prefix.
-                                                                Match prefix.
+                                                              description: Match prefix.
                                                               type: string
                                                             regex:
-                                                              description: |-
-                                                                (String) Match regex.
-                                                                Match regex.
+                                                              description: Match regex.
                                                               type: string
                                                           type: object
                                                         type: array
                                                     type: object
                                                   type: array
                                                 remoteIp:
-                                                  description: (String)
+                                                  description: (String).
                                                   type: string
                                               type: object
                                             type: array
@@ -874,7 +864,7 @@ spec:
                                 type: array
                               securityProfileId:
                                 description: |-
-                                  (String) SWS profile ID.
+                                  (String). SWS profile ID.
                                   SWS profile ID.
                                 type: string
                             type: object
@@ -883,70 +873,61 @@ spec:
                     type: array
                   routeOptions:
                     description: |-
-                      (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                      [Block]. Route options for the virtual host.
                       Route options for the virtual host.
                     items:
                       properties:
                         rbac:
                           description: |-
-                            (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                            [Block]. RBAC configuration.
                             RBAC configuration.
                           items:
                             properties:
                               action:
-                                description: (String)
+                                description: (String).
                                 type: string
                               principals:
-                                description: '(Block List, Min: 1) (see below for
-                                  nested schema)'
+                                description: '[Block].'
                                 items:
                                   properties:
                                     andPrincipals:
-                                      description: '(Block List, Min: 1) (see below
-                                        for nested schema)'
+                                      description: '[Block].'
                                       items:
                                         properties:
                                           any:
-                                            description: (Boolean)
+                                            description: (Bool).
                                             type: boolean
                                           header:
-                                            description: '(Block List, Max: 1) (see
-                                              below for nested schema)'
+                                            description: '[Block].'
                                             items:
                                               properties:
                                                 name:
-                                                  description: (String) The resource
+                                                  description: (String). The resource
                                                     name.
                                                   type: string
                                                 value:
                                                   description: |-
-                                                    (Block List, Max: 1) The path and fqmn blocks.
+                                                    [Block]. The path and fqmn blocks.
                                                     The `path` and `fqmn` blocks.
 
                                                     ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                                   items:
                                                     properties:
                                                       exact:
-                                                        description: |-
-                                                          (String) Match exactly.
-                                                          Match exactly.
+                                                        description: Match exactly.
                                                         type: string
                                                       prefix:
-                                                        description: |-
-                                                          (String) Match prefix.
-                                                          Match prefix.
+                                                        description: Match prefix.
                                                         type: string
                                                       regex:
-                                                        description: |-
-                                                          (String) Match regex.
-                                                          Match regex.
+                                                        description: Match regex.
                                                         type: string
                                                     type: object
                                                   type: array
                                               type: object
                                             type: array
                                           remoteIp:
-                                            description: (String)
+                                            description: (String).
                                             type: string
                                         type: object
                                       type: array
@@ -956,7 +937,7 @@ spec:
                           type: array
                         securityProfileId:
                           description: |-
-                            (String) SWS profile ID.
+                            (String). SWS profile ID.
                             SWS profile ID.
                           type: string
                       type: object
@@ -985,7 +966,7 @@ spec:
                     x-kubernetes-list-type: set
                   httpRouterId:
                     description: |-
-                      (String) The ID of the HTTP router to which the virtual host belongs.
+                      (String). The ID of the HTTP router to which the virtual host belongs.
                       The ID of the HTTP router to which the virtual host belongs.
                     type: string
                   httpRouterIdRef:
@@ -1070,7 +1051,7 @@ spec:
                     type: object
                   modifyRequestHeaders:
                     description: |-
-                      (Block List) Apply the following modifications to the Request/Response header.
+                      [Block]. Apply the following modifications to the Request/Response header.
                       Apply the following modifications to the Request/Response header.
 
                       ~> Only one type of actions `append` or `replace` or `remove` should be specified.
@@ -1078,29 +1059,29 @@ spec:
                       properties:
                         append:
                           description: |-
-                            (String) Append string to the header value.
+                            (String). Append string to the header value.
                             Append string to the header value.
                           type: string
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the header to modify.
                           type: string
                         remove:
                           description: |-
-                            (Boolean) If set, remove the header.
+                            (Bool). If set, remove the header.
                             If set, remove the header.
                           type: boolean
                         replace:
                           description: |-
-                            (String) New value for a header. Header values support the following formatters.
+                            (String). New value for a header. Header values support the following formatters.
                             New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
                           type: string
                       type: object
                     type: array
                   modifyResponseHeaders:
                     description: |-
-                      (Block List) Apply the following modifications to the Request/Response header.
+                      [Block]. Apply the following modifications to the Request/Response header.
                       Apply the following modifications to the Request/Response header.
 
                       ~> Only one type of actions `append` or `replace` or `remove` should be specified.
@@ -1108,69 +1089,69 @@ spec:
                       properties:
                         append:
                           description: |-
-                            (String) Append string to the header value.
+                            (String). Append string to the header value.
                             Append string to the header value.
                           type: string
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the header to modify.
                           type: string
                         remove:
                           description: |-
-                            (Boolean) If set, remove the header.
+                            (Bool). If set, remove the header.
                             If set, remove the header.
                           type: boolean
                         replace:
                           description: |-
-                            (String) New value for a header. Header values support the following formatters.
+                            (String). New value for a header. Header values support the following formatters.
                             New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
                           type: string
                       type: object
                     type: array
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   rateLimit:
                     description: |-
-                      (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                      [Block]. Rate limit configuration applied for a whole virtual host
                       Rate limit configuration applied for a whole virtual host
                     items:
                       properties:
                         allRequests:
                           description: |-
-                            (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                            [Block]. Rate limit configuration applied to all incoming requests
                             Rate limit configuration applied to all incoming requests
                           items:
                             properties:
                               perMinute:
                                 description: |-
-                                  (Number) Limit value specified with per minute time unit
+                                  (Number). Limit value specified with per minute time unit
                                   Limit value specified with per minute time unit
                                 type: number
                               perSecond:
                                 description: |-
-                                  (Number) Limit value specified with per second time unit
+                                  (Number). Limit value specified with per second time unit
                                   Limit value specified with per second time unit
                                 type: number
                             type: object
                           type: array
                         requestsPerIp:
                           description: |-
-                            (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                            [Block]. Rate limit configuration applied separately for each set of requests grouped by client IP address
                             Rate limit configuration applied separately for each set of requests grouped by client IP address
                           items:
                             properties:
                               perMinute:
                                 description: |-
-                                  (Number) Limit value specified with per minute time unit
+                                  (Number). Limit value specified with per minute time unit
                                   Limit value specified with per minute time unit
                                 type: number
                               perSecond:
                                 description: |-
-                                  (Number) Limit value specified with per second time unit
+                                  (Number). Limit value specified with per second time unit
                                   Limit value specified with per second time unit
                                 type: number
                             type: object
@@ -1185,42 +1166,61 @@ spec:
                       ~> Exactly one type of routes `http_route` or `grpc_route` should be specified.
                     items:
                       properties:
+                        clientCertificateForward:
+                          description: |-
+                            [Block]. Client certificate forwarding settings.
+                            Client certificate forwarding settings.
+                          items:
+                            properties:
+                              httpHeader:
+                                description: |-
+                                  (String). HTTP header name to forward client certificate information.
+                                  HTTP header name to forward client certificate information.
+                                type: string
+                              issuerHeaderName:
+                                description: |-
+                                  (String). Header name for the certificate issuer information.
+                                  Header name for the certificate issuer information.
+                                type: string
+                              subjectHeaderName:
+                                description: |-
+                                  (String). Header name for the certificate subject information.
+                                  Header name for the certificate subject information.
+                                type: string
+                            type: object
+                          type: array
+                        disableSecurityProfile:
+                          description: |-
+                            (Bool). Disables security profile for the route
+                            Disables security profile for the route
+                          type: boolean
                         grpcRoute:
                           description: |-
-                            (Block List, Max: 1) gRPC route resource.
+                            [Block]. gRPC route resource.
                             gRPC route resource.
 
                             ~> Exactly one type of actions `grpc_route_action` or `grpc_status_response_action` should be specified.
                           items:
                             properties:
                               grpcMatch:
-                                description: |-
-                                  (Block List) Checks / prefix by default. (see below for nested schema)
-                                  Checks `/` prefix by default.
+                                description: Checks `/` prefix by default.
                                 items:
                                   properties:
                                     fqmn:
                                       description: |-
-                                        (Block List, Max: 1) The path and fqmn blocks.
                                         The `path` and `fqmn` blocks.
 
                                         ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                       items:
                                         properties:
                                           exact:
-                                            description: |-
-                                              (String) Match exactly.
-                                              Match exactly.
+                                            description: Match exactly.
                                             type: string
                                           prefix:
-                                            description: |-
-                                              (String) Match prefix.
-                                              Match prefix.
+                                            description: Match prefix.
                                             type: string
                                           regex:
-                                            description: |-
-                                              (String) Match regex.
-                                              Match regex.
+                                            description: Match regex.
                                             type: string
                                         type: object
                                       type: array
@@ -1228,20 +1228,19 @@ spec:
                                 type: array
                               grpcRouteAction:
                                 description: |-
-                                  (Block List, Max: 1) gRPC route action resource.
+                                  (String).
                                   gRPC route action resource.
 
                                   ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
                                 items:
                                   properties:
                                     autoHostRewrite:
-                                      description: |-
-                                        (Boolean) If set, will automatically rewrite host.
-                                        If set, will automatically rewrite host.
+                                      description: If set, will automatically rewrite
+                                        host.
                                       type: boolean
                                     backendGroupId:
                                       description: |-
-                                        (String) Backend group to route requests.
+                                        (String).
                                         Backend group to route requests.
                                       type: string
                                     backendGroupIdRef:
@@ -1328,58 +1327,61 @@ spec:
                                           type: object
                                       type: object
                                     hostRewrite:
-                                      description: |-
-                                        (String) Host rewrite specifier.
-                                        Host rewrite specifier.
+                                      description: Host rewrite specifier.
                                       type: string
                                     idleTimeout:
-                                      description: |-
-                                        one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
-                                        Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios - one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                      description: Specifies the idle timeout (time
+                                        without any data transfer for the active request)
+                                        for the route. It is useful for streaming
+                                        scenarios - one should set idle_timeout to
+                                        something meaningful and max_timeout to the
+                                        maximum time the stream is allowed to be alive.
+                                        If not specified, there is no per-route idle
+                                        timeout.
                                       type: string
                                     maxTimeout:
-                                      description: |-
-                                        timeout header). If not set, default is 60 seconds.
-                                        Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is 60 seconds.
+                                      description: Lower timeout may be specified
+                                        by the client (using grpc-timeout header).
+                                        If not set, default is 60 seconds.
                                       type: string
                                     rateLimit:
                                       description: |-
-                                        (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                                        [Block]. Rate limit configuration applied for a whole virtual host
                                         Rate limit configuration applied for a whole virtual host
                                       items:
                                         properties:
                                           allRequests:
                                             description: |-
-                                              (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                                              [Block]. Rate limit configuration applied to all incoming requests
                                               Rate limit configuration applied to all incoming requests
                                             items:
                                               properties:
                                                 perMinute:
                                                   description: |-
-                                                    (Number) Limit value specified with per minute time unit
+                                                    (Number). Limit value specified with per minute time unit
                                                     Limit value specified with per minute time unit
                                                   type: number
                                                 perSecond:
                                                   description: |-
-                                                    (Number) Limit value specified with per second time unit
+                                                    (Number). Limit value specified with per second time unit
                                                     Limit value specified with per second time unit
                                                   type: number
                                               type: object
                                             type: array
                                           requestsPerIp:
                                             description: |-
-                                              (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                                              [Block]. Rate limit configuration applied separately for each set of requests grouped by client IP address
                                               Rate limit configuration applied separately for each set of requests grouped by client IP address
                                             items:
                                               properties:
                                                 perMinute:
                                                   description: |-
-                                                    (Number) Limit value specified with per minute time unit
+                                                    (Number). Limit value specified with per minute time unit
                                                     Limit value specified with per minute time unit
                                                   type: number
                                                 perSecond:
                                                   description: |-
-                                                    (Number) Limit value specified with per second time unit
+                                                    (Number). Limit value specified with per second time unit
                                                     Limit value specified with per second time unit
                                                   type: number
                                               type: object
@@ -1390,14 +1392,15 @@ spec:
                                 type: array
                               grpcStatusResponseAction:
                                 description: |-
-                                  (Block List, Max: 1) gRPC status response action resource. (see below for nested schema)
+                                  (String).
                                   gRPC status response action resource.
                                 items:
                                   properties:
                                     status:
-                                      description: |-
-                                        (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
-                                        The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+                                      description: 'The status of the response. Supported
+                                        values are: ok, invalid_argumet, not_found,
+                                        permission_denied, unauthenticated, unimplemented,
+                                        internal, unavailable.'
                                       type: string
                                   type: object
                                 type: array
@@ -1405,7 +1408,7 @@ spec:
                           type: array
                         httpRoute:
                           description: |-
-                            (Block List, Max: 1) HTTP route resource.
+                            [Block]. HTTP route resource.
                             HTTP route resource.
 
                             ~> Exactly one type of actions `http_route_action` or `redirect_action` or `direct_response_action` should be specified.
@@ -1413,58 +1416,44 @@ spec:
                             properties:
                               directResponseAction:
                                 description: |-
-                                  (Block List, Max: 1) Direct response action resource. (see below for nested schema)
+                                  (String).
                                   Direct response action resource.
                                 items:
                                   properties:
                                     body:
-                                      description: |-
-                                        (String) Response body text.
-                                        Response body text.
+                                      description: Response body text.
                                       type: string
                                     status:
-                                      description: |-
-                                        (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
-                                        HTTP response status. Should be between `100` and `599`.
+                                      description: HTTP response status. Should be
+                                        between `100` and `599`.
                                       type: number
                                   type: object
                                 type: array
                               httpMatch:
-                                description: |-
-                                  (Block List) Checks / prefix by default. (see below for nested schema)
-                                  Checks `/` prefix by default.
+                                description: Checks `/` prefix by default.
                                 items:
                                   properties:
                                     httpMethod:
-                                      description: |-
-                                        (Set of String) List of methods (strings).
-                                        List of methods (strings).
+                                      description: List of methods (strings).
                                       items:
                                         type: string
                                       type: array
                                       x-kubernetes-list-type: set
                                     path:
                                       description: |-
-                                        (Block List, Max: 1) The path and fqmn blocks.
                                         The `path` and `fqmn` blocks.
 
                                         ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                       items:
                                         properties:
                                           exact:
-                                            description: |-
-                                              (String) Match exactly.
-                                              Match exactly.
+                                            description: Match exactly.
                                             type: string
                                           prefix:
-                                            description: |-
-                                              (String) Match prefix.
-                                              Match prefix.
+                                            description: Match prefix.
                                             type: string
                                           regex:
-                                            description: |-
-                                              (String) Match regex.
-                                              Match regex.
+                                            description: Match regex.
                                             type: string
                                         type: object
                                       type: array
@@ -1472,20 +1461,19 @@ spec:
                                 type: array
                               httpRouteAction:
                                 description: |-
-                                  (Block List, Max: 1) HTTP route action resource.
+                                  (String).
                                   HTTP route action resource.
 
                                   ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
                                 items:
                                   properties:
                                     autoHostRewrite:
-                                      description: |-
-                                        (Boolean) If set, will automatically rewrite host.
-                                        If set, will automatically rewrite host.
+                                      description: If set, will automatically rewrite
+                                        host.
                                       type: boolean
                                     backendGroupId:
                                       description: |-
-                                        (String) Backend group to route requests.
+                                        (String).
                                         Backend group to route requests.
                                       type: string
                                     backendGroupIdRef:
@@ -1572,58 +1560,60 @@ spec:
                                           type: object
                                       type: object
                                     hostRewrite:
-                                      description: |-
-                                        (String) Host rewrite specifier.
-                                        Host rewrite specifier.
+                                      description: Host rewrite specifier.
                                       type: string
                                     idleTimeout:
-                                      description: |-
-                                        one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
-                                        Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                      description: Specifies the idle timeout (time
+                                        without any data transfer for the active request)
+                                        for the route. It is useful for streaming
+                                        scenarios (i.e. long-polling, server-sent
+                                        events) - one should set idle_timeout to something
+                                        meaningful and timeout to the maximum time
+                                        the stream is allowed to be alive. If not
+                                        specified, there is no per-route idle timeout.
                                       type: string
                                     prefixRewrite:
-                                      description: |-
-                                        (String) If not empty, matched path prefix will be replaced by this value.
-                                        If not empty, matched path prefix will be replaced by this value.
+                                      description: If not empty, matched path prefix
+                                        will be replaced by this value.
                                       type: string
                                     rateLimit:
                                       description: |-
-                                        (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                                        [Block]. Rate limit configuration applied for a whole virtual host
                                         Rate limit configuration applied for a whole virtual host
                                       items:
                                         properties:
                                           allRequests:
                                             description: |-
-                                              (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                                              [Block]. Rate limit configuration applied to all incoming requests
                                               Rate limit configuration applied to all incoming requests
                                             items:
                                               properties:
                                                 perMinute:
                                                   description: |-
-                                                    (Number) Limit value specified with per minute time unit
+                                                    (Number). Limit value specified with per minute time unit
                                                     Limit value specified with per minute time unit
                                                   type: number
                                                 perSecond:
                                                   description: |-
-                                                    (Number) Limit value specified with per second time unit
+                                                    (Number). Limit value specified with per second time unit
                                                     Limit value specified with per second time unit
                                                   type: number
                                               type: object
                                             type: array
                                           requestsPerIp:
                                             description: |-
-                                              (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                                              [Block]. Rate limit configuration applied separately for each set of requests grouped by client IP address
                                               Rate limit configuration applied separately for each set of requests grouped by client IP address
                                             items:
                                               properties:
                                                 perMinute:
                                                   description: |-
-                                                    (Number) Limit value specified with per minute time unit
+                                                    (Number). Limit value specified with per minute time unit
                                                     Limit value specified with per minute time unit
                                                   type: number
                                                 perSecond:
                                                   description: |-
-                                                    (Number) Limit value specified with per second time unit
+                                                    (Number). Limit value specified with per second time unit
                                                     Limit value specified with per second time unit
                                                   type: number
                                               type: object
@@ -1631,32 +1621,28 @@ spec:
                                         type: object
                                       type: array
                                     regexRewrite:
-                                      description: |-
-                                        (Block List, Max: 1) Replacement for path substrings that match the pattern (see below for nested schema)
-                                        Replacement for path substrings that match the pattern
+                                      description: Replacement for path substrings
+                                        that match the pattern
                                       items:
                                         properties:
                                           regex:
-                                            description: |-
-                                              (String) Match regex.
-                                              RE2 regular expression
+                                            description: RE2 regular expression
                                             type: string
                                           substitute:
-                                            description: |-
-                                              (String) The string which should be used to substitute matched substrings
-                                              The string which should be used to substitute matched substrings
+                                            description: The string which should be
+                                              used to substitute matched substrings
                                             type: string
                                         type: object
                                       type: array
                                     timeout:
-                                      description: |-
-                                        (String) Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
-                                        Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
+                                      description: Specifies the request timeout (overall
+                                        time request processing is allowed to take)
+                                        for the route. If not set, default is 60 seconds.
                                       type: string
                                     upgradeTypes:
-                                      description: |-
-                                        (Set of String) List of upgrade types. Only specified upgrade types will be allowed. For example, websocket.
-                                        List of upgrade types. Only specified upgrade types will be allowed. For example, `websocket`.
+                                      description: List of upgrade types. Only specified
+                                        upgrade types will be allowed. For example,
+                                        `websocket`.
                                       items:
                                         type: string
                                       type: array
@@ -1665,46 +1651,40 @@ spec:
                                 type: array
                               redirectAction:
                                 description: |-
-                                  (Block List, Max: 1) Redirect action resource.
+                                  (String).
                                   Redirect action resource.
 
                                   ~> Only one type of paths `replace_path` or `replace_prefix` should be specified.
                                 items:
                                   properties:
                                     removeQuery:
-                                      description: |-
-                                        (Boolean) If set, remove query part.
-                                        If set, remove query part.
+                                      description: If set, remove query part.
                                       type: boolean
                                     replaceHost:
-                                      description: |-
-                                        (String) Replaces hostname.
-                                        Replaces hostname.
+                                      description: Replaces hostname.
                                       type: string
                                     replacePath:
-                                      description: |-
-                                        (String) Replace path.
-                                        Replace path.
+                                      description: Replace path.
                                       type: string
                                     replacePort:
-                                      description: |-
-                                        (Number) Replaces port.
-                                        Replaces port.
+                                      description: Replaces port.
                                       type: number
                                     replacePrefix:
-                                      description: |-
-                                        (String) Replace only matched prefix. Example: match:{ prefix_match: /some }  redirect: { replace_prefix: /other }  will redirect /something to /otherthing.
-                                        Replace only matched prefix. Example:<br/> match:{ prefix_match: `/some` } <br/> redirect: { replace_prefix: `/other` } <br/> will redirect `/something` to `/otherthing`.
+                                      description: 'Replace only matched prefix. Example:<br/>
+                                        match:{ prefix_match: `/some` } <br/> redirect:
+                                        { replace_prefix: `/other` } <br/> will redirect
+                                        `/something` to `/otherthing`.'
                                       type: string
                                     replaceScheme:
-                                      description: |-
-                                        (String) Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
-                                        Replaces scheme. If the original scheme is `http` or `https`, will also remove the 80 or 443 port, if present.
+                                      description: Replaces scheme. If the original
+                                        scheme is `http` or `https`, will also remove
+                                        the 80 or 443 port, if present.
                                       type: string
                                     responseCode:
-                                      description: |-
-                                        (String) The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
-                                        The HTTP status code to use in the redirect response. Supported values are: `moved_permanently`, `found`, `see_other`, `temporary_redirect`, `permanent_redirect`.
+                                      description: 'The HTTP status code to use in
+                                        the redirect response. Supported values are:
+                                        `moved_permanently`, `found`, `see_other`,
+                                        `temporary_redirect`, `permanent_redirect`.'
                                       type: string
                                   type: object
                                 type: array
@@ -1712,75 +1692,66 @@ spec:
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the route.
                           type: string
                         routeOptions:
                           description: |-
-                            (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                            [Block]. Route options for the virtual host.
                             Route options for the virtual host.
                           items:
                             properties:
                               rbac:
                                 description: |-
-                                  (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                                  [Block]. RBAC configuration.
                                   RBAC configuration.
                                 items:
                                   properties:
                                     action:
-                                      description: (String)
+                                      description: (String).
                                       type: string
                                     principals:
-                                      description: '(Block List, Min: 1) (see below
-                                        for nested schema)'
+                                      description: '[Block].'
                                       items:
                                         properties:
                                           andPrincipals:
-                                            description: '(Block List, Min: 1) (see
-                                              below for nested schema)'
+                                            description: '[Block].'
                                             items:
                                               properties:
                                                 any:
-                                                  description: (Boolean)
+                                                  description: (Bool).
                                                   type: boolean
                                                 header:
-                                                  description: '(Block List, Max:
-                                                    1) (see below for nested schema)'
+                                                  description: '[Block].'
                                                   items:
                                                     properties:
                                                       name:
-                                                        description: (String) The
+                                                        description: (String). The
                                                           resource name.
                                                         type: string
                                                       value:
                                                         description: |-
-                                                          (Block List, Max: 1) The path and fqmn blocks.
+                                                          [Block]. The path and fqmn blocks.
                                                           The `path` and `fqmn` blocks.
 
                                                           ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                                         items:
                                                           properties:
                                                             exact:
-                                                              description: |-
-                                                                (String) Match exactly.
-                                                                Match exactly.
+                                                              description: Match exactly.
                                                               type: string
                                                             prefix:
-                                                              description: |-
-                                                                (String) Match prefix.
-                                                                Match prefix.
+                                                              description: Match prefix.
                                                               type: string
                                                             regex:
-                                                              description: |-
-                                                                (String) Match regex.
-                                                                Match regex.
+                                                              description: Match regex.
                                                               type: string
                                                           type: object
                                                         type: array
                                                     type: object
                                                   type: array
                                                 remoteIp:
-                                                  description: (String)
+                                                  description: (String).
                                                   type: string
                                               type: object
                                             type: array
@@ -1790,7 +1761,7 @@ spec:
                                 type: array
                               securityProfileId:
                                 description: |-
-                                  (String) SWS profile ID.
+                                  (String). SWS profile ID.
                                   SWS profile ID.
                                 type: string
                             type: object
@@ -1799,70 +1770,61 @@ spec:
                     type: array
                   routeOptions:
                     description: |-
-                      (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                      [Block]. Route options for the virtual host.
                       Route options for the virtual host.
                     items:
                       properties:
                         rbac:
                           description: |-
-                            (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                            [Block]. RBAC configuration.
                             RBAC configuration.
                           items:
                             properties:
                               action:
-                                description: (String)
+                                description: (String).
                                 type: string
                               principals:
-                                description: '(Block List, Min: 1) (see below for
-                                  nested schema)'
+                                description: '[Block].'
                                 items:
                                   properties:
                                     andPrincipals:
-                                      description: '(Block List, Min: 1) (see below
-                                        for nested schema)'
+                                      description: '[Block].'
                                       items:
                                         properties:
                                           any:
-                                            description: (Boolean)
+                                            description: (Bool).
                                             type: boolean
                                           header:
-                                            description: '(Block List, Max: 1) (see
-                                              below for nested schema)'
+                                            description: '[Block].'
                                             items:
                                               properties:
                                                 name:
-                                                  description: (String) The resource
+                                                  description: (String). The resource
                                                     name.
                                                   type: string
                                                 value:
                                                   description: |-
-                                                    (Block List, Max: 1) The path and fqmn blocks.
+                                                    [Block]. The path and fqmn blocks.
                                                     The `path` and `fqmn` blocks.
 
                                                     ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                                   items:
                                                     properties:
                                                       exact:
-                                                        description: |-
-                                                          (String) Match exactly.
-                                                          Match exactly.
+                                                        description: Match exactly.
                                                         type: string
                                                       prefix:
-                                                        description: |-
-                                                          (String) Match prefix.
-                                                          Match prefix.
+                                                        description: Match prefix.
                                                         type: string
                                                       regex:
-                                                        description: |-
-                                                          (String) Match regex.
-                                                          Match regex.
+                                                        description: Match regex.
                                                         type: string
                                                     type: object
                                                   type: array
                                               type: object
                                             type: array
                                           remoteIp:
-                                            description: (String)
+                                            description: (String).
                                             type: string
                                         type: object
                                       type: array
@@ -1872,7 +1834,7 @@ spec:
                           type: array
                         securityProfileId:
                           description: |-
-                            (String) SWS profile ID.
+                            (String). SWS profile ID.
                             SWS profile ID.
                           type: string
                       type: object
@@ -1956,15 +1918,15 @@ spec:
                     x-kubernetes-list-type: set
                   httpRouterId:
                     description: |-
-                      (String) The ID of the HTTP router to which the virtual host belongs.
+                      (String). The ID of the HTTP router to which the virtual host belongs.
                       The ID of the HTTP router to which the virtual host belongs.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   modifyRequestHeaders:
                     description: |-
-                      (Block List) Apply the following modifications to the Request/Response header.
+                      [Block]. Apply the following modifications to the Request/Response header.
                       Apply the following modifications to the Request/Response header.
 
                       ~> Only one type of actions `append` or `replace` or `remove` should be specified.
@@ -1972,29 +1934,29 @@ spec:
                       properties:
                         append:
                           description: |-
-                            (String) Append string to the header value.
+                            (String). Append string to the header value.
                             Append string to the header value.
                           type: string
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the header to modify.
                           type: string
                         remove:
                           description: |-
-                            (Boolean) If set, remove the header.
+                            (Bool). If set, remove the header.
                             If set, remove the header.
                           type: boolean
                         replace:
                           description: |-
-                            (String) New value for a header. Header values support the following formatters.
+                            (String). New value for a header. Header values support the following formatters.
                             New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
                           type: string
                       type: object
                     type: array
                   modifyResponseHeaders:
                     description: |-
-                      (Block List) Apply the following modifications to the Request/Response header.
+                      [Block]. Apply the following modifications to the Request/Response header.
                       Apply the following modifications to the Request/Response header.
 
                       ~> Only one type of actions `append` or `replace` or `remove` should be specified.
@@ -2002,69 +1964,69 @@ spec:
                       properties:
                         append:
                           description: |-
-                            (String) Append string to the header value.
+                            (String). Append string to the header value.
                             Append string to the header value.
                           type: string
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the header to modify.
                           type: string
                         remove:
                           description: |-
-                            (Boolean) If set, remove the header.
+                            (Bool). If set, remove the header.
                             If set, remove the header.
                           type: boolean
                         replace:
                           description: |-
-                            (String) New value for a header. Header values support the following formatters.
+                            (String). New value for a header. Header values support the following formatters.
                             New value for a header. Header values support the following [formatters](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers#custom-request-response-headers).
                           type: string
                       type: object
                     type: array
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   rateLimit:
                     description: |-
-                      (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                      [Block]. Rate limit configuration applied for a whole virtual host
                       Rate limit configuration applied for a whole virtual host
                     items:
                       properties:
                         allRequests:
                           description: |-
-                            (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                            [Block]. Rate limit configuration applied to all incoming requests
                             Rate limit configuration applied to all incoming requests
                           items:
                             properties:
                               perMinute:
                                 description: |-
-                                  (Number) Limit value specified with per minute time unit
+                                  (Number). Limit value specified with per minute time unit
                                   Limit value specified with per minute time unit
                                 type: number
                               perSecond:
                                 description: |-
-                                  (Number) Limit value specified with per second time unit
+                                  (Number). Limit value specified with per second time unit
                                   Limit value specified with per second time unit
                                 type: number
                             type: object
                           type: array
                         requestsPerIp:
                           description: |-
-                            (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                            [Block]. Rate limit configuration applied separately for each set of requests grouped by client IP address
                             Rate limit configuration applied separately for each set of requests grouped by client IP address
                           items:
                             properties:
                               perMinute:
                                 description: |-
-                                  (Number) Limit value specified with per minute time unit
+                                  (Number). Limit value specified with per minute time unit
                                   Limit value specified with per minute time unit
                                 type: number
                               perSecond:
                                 description: |-
-                                  (Number) Limit value specified with per second time unit
+                                  (Number). Limit value specified with per second time unit
                                   Limit value specified with per second time unit
                                 type: number
                             type: object
@@ -2079,42 +2041,61 @@ spec:
                       ~> Exactly one type of routes `http_route` or `grpc_route` should be specified.
                     items:
                       properties:
+                        clientCertificateForward:
+                          description: |-
+                            [Block]. Client certificate forwarding settings.
+                            Client certificate forwarding settings.
+                          items:
+                            properties:
+                              httpHeader:
+                                description: |-
+                                  (String). HTTP header name to forward client certificate information.
+                                  HTTP header name to forward client certificate information.
+                                type: string
+                              issuerHeaderName:
+                                description: |-
+                                  (String). Header name for the certificate issuer information.
+                                  Header name for the certificate issuer information.
+                                type: string
+                              subjectHeaderName:
+                                description: |-
+                                  (String). Header name for the certificate subject information.
+                                  Header name for the certificate subject information.
+                                type: string
+                            type: object
+                          type: array
+                        disableSecurityProfile:
+                          description: |-
+                            (Bool). Disables security profile for the route
+                            Disables security profile for the route
+                          type: boolean
                         grpcRoute:
                           description: |-
-                            (Block List, Max: 1) gRPC route resource.
+                            [Block]. gRPC route resource.
                             gRPC route resource.
 
                             ~> Exactly one type of actions `grpc_route_action` or `grpc_status_response_action` should be specified.
                           items:
                             properties:
                               grpcMatch:
-                                description: |-
-                                  (Block List) Checks / prefix by default. (see below for nested schema)
-                                  Checks `/` prefix by default.
+                                description: Checks `/` prefix by default.
                                 items:
                                   properties:
                                     fqmn:
                                       description: |-
-                                        (Block List, Max: 1) The path and fqmn blocks.
                                         The `path` and `fqmn` blocks.
 
                                         ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                       items:
                                         properties:
                                           exact:
-                                            description: |-
-                                              (String) Match exactly.
-                                              Match exactly.
+                                            description: Match exactly.
                                             type: string
                                           prefix:
-                                            description: |-
-                                              (String) Match prefix.
-                                              Match prefix.
+                                            description: Match prefix.
                                             type: string
                                           regex:
-                                            description: |-
-                                              (String) Match regex.
-                                              Match regex.
+                                            description: Match regex.
                                             type: string
                                         type: object
                                       type: array
@@ -2122,75 +2103,77 @@ spec:
                                 type: array
                               grpcRouteAction:
                                 description: |-
-                                  (Block List, Max: 1) gRPC route action resource.
+                                  (String).
                                   gRPC route action resource.
 
                                   ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
                                 items:
                                   properties:
                                     autoHostRewrite:
-                                      description: |-
-                                        (Boolean) If set, will automatically rewrite host.
-                                        If set, will automatically rewrite host.
+                                      description: If set, will automatically rewrite
+                                        host.
                                       type: boolean
                                     backendGroupId:
                                       description: |-
-                                        (String) Backend group to route requests.
+                                        (String).
                                         Backend group to route requests.
                                       type: string
                                     hostRewrite:
-                                      description: |-
-                                        (String) Host rewrite specifier.
-                                        Host rewrite specifier.
+                                      description: Host rewrite specifier.
                                       type: string
                                     idleTimeout:
-                                      description: |-
-                                        one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
-                                        Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios - one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                      description: Specifies the idle timeout (time
+                                        without any data transfer for the active request)
+                                        for the route. It is useful for streaming
+                                        scenarios - one should set idle_timeout to
+                                        something meaningful and max_timeout to the
+                                        maximum time the stream is allowed to be alive.
+                                        If not specified, there is no per-route idle
+                                        timeout.
                                       type: string
                                     maxTimeout:
-                                      description: |-
-                                        timeout header). If not set, default is 60 seconds.
-                                        Lower timeout may be specified by the client (using grpc-timeout header). If not set, default is 60 seconds.
+                                      description: Lower timeout may be specified
+                                        by the client (using grpc-timeout header).
+                                        If not set, default is 60 seconds.
                                       type: string
                                     rateLimit:
                                       description: |-
-                                        (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                                        [Block]. Rate limit configuration applied for a whole virtual host
                                         Rate limit configuration applied for a whole virtual host
                                       items:
                                         properties:
                                           allRequests:
                                             description: |-
-                                              (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                                              [Block]. Rate limit configuration applied to all incoming requests
                                               Rate limit configuration applied to all incoming requests
                                             items:
                                               properties:
                                                 perMinute:
                                                   description: |-
-                                                    (Number) Limit value specified with per minute time unit
+                                                    (Number). Limit value specified with per minute time unit
                                                     Limit value specified with per minute time unit
                                                   type: number
                                                 perSecond:
                                                   description: |-
-                                                    (Number) Limit value specified with per second time unit
+                                                    (Number). Limit value specified with per second time unit
                                                     Limit value specified with per second time unit
                                                   type: number
                                               type: object
                                             type: array
                                           requestsPerIp:
                                             description: |-
-                                              (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                                              [Block]. Rate limit configuration applied separately for each set of requests grouped by client IP address
                                               Rate limit configuration applied separately for each set of requests grouped by client IP address
                                             items:
                                               properties:
                                                 perMinute:
                                                   description: |-
-                                                    (Number) Limit value specified with per minute time unit
+                                                    (Number). Limit value specified with per minute time unit
                                                     Limit value specified with per minute time unit
                                                   type: number
                                                 perSecond:
                                                   description: |-
-                                                    (Number) Limit value specified with per second time unit
+                                                    (Number). Limit value specified with per second time unit
                                                     Limit value specified with per second time unit
                                                   type: number
                                               type: object
@@ -2201,14 +2184,15 @@ spec:
                                 type: array
                               grpcStatusResponseAction:
                                 description: |-
-                                  (Block List, Max: 1) gRPC status response action resource. (see below for nested schema)
+                                  (String).
                                   gRPC status response action resource.
                                 items:
                                   properties:
                                     status:
-                                      description: |-
-                                        (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
-                                        The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
+                                      description: 'The status of the response. Supported
+                                        values are: ok, invalid_argumet, not_found,
+                                        permission_denied, unauthenticated, unimplemented,
+                                        internal, unavailable.'
                                       type: string
                                   type: object
                                 type: array
@@ -2216,7 +2200,7 @@ spec:
                           type: array
                         httpRoute:
                           description: |-
-                            (Block List, Max: 1) HTTP route resource.
+                            [Block]. HTTP route resource.
                             HTTP route resource.
 
                             ~> Exactly one type of actions `http_route_action` or `redirect_action` or `direct_response_action` should be specified.
@@ -2224,58 +2208,44 @@ spec:
                             properties:
                               directResponseAction:
                                 description: |-
-                                  (Block List, Max: 1) Direct response action resource. (see below for nested schema)
+                                  (String).
                                   Direct response action resource.
                                 items:
                                   properties:
                                     body:
-                                      description: |-
-                                        (String) Response body text.
-                                        Response body text.
+                                      description: Response body text.
                                       type: string
                                     status:
-                                      description: |-
-                                        (String) The status of the response. Supported values are: ok, invalid_argumet, not_found, permission_denied, unauthenticated, unimplemented, internal, unavailable.
-                                        HTTP response status. Should be between `100` and `599`.
+                                      description: HTTP response status. Should be
+                                        between `100` and `599`.
                                       type: number
                                   type: object
                                 type: array
                               httpMatch:
-                                description: |-
-                                  (Block List) Checks / prefix by default. (see below for nested schema)
-                                  Checks `/` prefix by default.
+                                description: Checks `/` prefix by default.
                                 items:
                                   properties:
                                     httpMethod:
-                                      description: |-
-                                        (Set of String) List of methods (strings).
-                                        List of methods (strings).
+                                      description: List of methods (strings).
                                       items:
                                         type: string
                                       type: array
                                       x-kubernetes-list-type: set
                                     path:
                                       description: |-
-                                        (Block List, Max: 1) The path and fqmn blocks.
                                         The `path` and `fqmn` blocks.
 
                                         ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                       items:
                                         properties:
                                           exact:
-                                            description: |-
-                                              (String) Match exactly.
-                                              Match exactly.
+                                            description: Match exactly.
                                             type: string
                                           prefix:
-                                            description: |-
-                                              (String) Match prefix.
-                                              Match prefix.
+                                            description: Match prefix.
                                             type: string
                                           regex:
-                                            description: |-
-                                              (String) Match regex.
-                                              Match regex.
+                                            description: Match regex.
                                             type: string
                                         type: object
                                       type: array
@@ -2283,75 +2253,76 @@ spec:
                                 type: array
                               httpRouteAction:
                                 description: |-
-                                  (Block List, Max: 1) HTTP route action resource.
+                                  (String).
                                   HTTP route action resource.
 
                                   ~> Only one type of host rewrite specifiers `host_rewrite` or `auto_host_rewrite` should be specified.
                                 items:
                                   properties:
                                     autoHostRewrite:
-                                      description: |-
-                                        (Boolean) If set, will automatically rewrite host.
-                                        If set, will automatically rewrite host.
+                                      description: If set, will automatically rewrite
+                                        host.
                                       type: boolean
                                     backendGroupId:
                                       description: |-
-                                        (String) Backend group to route requests.
+                                        (String).
                                         Backend group to route requests.
                                       type: string
                                     hostRewrite:
-                                      description: |-
-                                        (String) Host rewrite specifier.
-                                        Host rewrite specifier.
+                                      description: Host rewrite specifier.
                                       type: string
                                     idleTimeout:
-                                      description: |-
-                                        one should set idle_timeout to something meaningful and max_timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
-                                        Specifies the idle timeout (time without any data transfer for the active request) for the route. It is useful for streaming scenarios (i.e. long-polling, server-sent events) - one should set idle_timeout to something meaningful and timeout to the maximum time the stream is allowed to be alive. If not specified, there is no per-route idle timeout.
+                                      description: Specifies the idle timeout (time
+                                        without any data transfer for the active request)
+                                        for the route. It is useful for streaming
+                                        scenarios (i.e. long-polling, server-sent
+                                        events) - one should set idle_timeout to something
+                                        meaningful and timeout to the maximum time
+                                        the stream is allowed to be alive. If not
+                                        specified, there is no per-route idle timeout.
                                       type: string
                                     prefixRewrite:
-                                      description: |-
-                                        (String) If not empty, matched path prefix will be replaced by this value.
-                                        If not empty, matched path prefix will be replaced by this value.
+                                      description: If not empty, matched path prefix
+                                        will be replaced by this value.
                                       type: string
                                     rateLimit:
                                       description: |-
-                                        (Block List, Max: 1) Rate limit configuration applied for a whole virtual host (see below for nested schema)
+                                        [Block]. Rate limit configuration applied for a whole virtual host
                                         Rate limit configuration applied for a whole virtual host
                                       items:
                                         properties:
                                           allRequests:
                                             description: |-
-                                              (Block List, Max: 1) Rate limit configuration applied to all incoming requests (see below for nested schema)
+                                              [Block]. Rate limit configuration applied to all incoming requests
                                               Rate limit configuration applied to all incoming requests
                                             items:
                                               properties:
                                                 perMinute:
                                                   description: |-
-                                                    (Number) Limit value specified with per minute time unit
+                                                    (Number). Limit value specified with per minute time unit
                                                     Limit value specified with per minute time unit
                                                   type: number
                                                 perSecond:
                                                   description: |-
-                                                    (Number) Limit value specified with per second time unit
+                                                    (Number). Limit value specified with per second time unit
                                                     Limit value specified with per second time unit
                                                   type: number
                                               type: object
                                             type: array
                                           requestsPerIp:
                                             description: |-
-                                              (Block List, Max: 1) Rate limit configuration applied separately for each set of requests grouped by client IP address (see below for nested schema)
+                                              [Block]. Rate limit configuration applied separately for each set of requests grouped by client IP address
                                               Rate limit configuration applied separately for each set of requests grouped by client IP address
                                             items:
                                               properties:
                                                 perMinute:
                                                   description: |-
-                                                    (Number) Limit value specified with per minute time unit
+                                                    (Number). Limit value specified with per minute time unit
                                                     Limit value specified with per minute time unit
                                                   type: number
                                                 perSecond:
                                                   description: |-
-                                                    (Number) Limit value specified with per second time unit
+                                                    (Number). Limit value specified with per second time unit
                                                     Limit value specified with per second time unit
                                                   type: number
                                               type: object
@@ -2359,32 +2330,28 @@ spec:
                                         type: object
                                       type: array
                                     regexRewrite:
-                                      description: |-
-                                        (Block List, Max: 1) Replacement for path substrings that match the pattern (see below for nested schema)
-                                        Replacement for path substrings that match the pattern
+                                      description: Replacement for path substrings
+                                        that match the pattern
                                       items:
                                         properties:
                                           regex:
-                                            description: |-
-                                              (String) Match regex.
-                                              RE2 regular expression
+                                            description: RE2 regular expression
                                             type: string
                                           substitute:
-                                            description: |-
-                                              (String) The string which should be used to substitute matched substrings
-                                              The string which should be used to substitute matched substrings
+                                            description: The string which should be
+                                              used to substitute matched substrings
                                             type: string
                                         type: object
                                       type: array
                                     timeout:
-                                      description: |-
-                                        (String) Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
-                                        Specifies the request timeout (overall time request processing is allowed to take) for the route. If not set, default is 60 seconds.
+                                      description: Specifies the request timeout (overall
+                                        time request processing is allowed to take)
+                                        for the route. If not set, default is 60 seconds.
                                       type: string
                                     upgradeTypes:
-                                      description: |-
-                                        (Set of String) List of upgrade types. Only specified upgrade types will be allowed. For example, websocket.
-                                        List of upgrade types. Only specified upgrade types will be allowed. For example, `websocket`.
+                                      description: List of upgrade types. Only specified
+                                        upgrade types will be allowed. For example,
+                                        `websocket`.
                                       items:
                                         type: string
                                       type: array
@@ -2393,46 +2360,40 @@ spec:
                                 type: array
                               redirectAction:
                                 description: |-
-                                  (Block List, Max: 1) Redirect action resource.
+                                  (String).
                                   Redirect action resource.
 
                                   ~> Only one type of paths `replace_path` or `replace_prefix` should be specified.
                                 items:
                                   properties:
                                     removeQuery:
-                                      description: |-
-                                        (Boolean) If set, remove query part.
-                                        If set, remove query part.
+                                      description: If set, remove query part.
                                       type: boolean
                                     replaceHost:
-                                      description: |-
-                                        (String) Replaces hostname.
-                                        Replaces hostname.
+                                      description: Replaces hostname.
                                       type: string
                                     replacePath:
-                                      description: |-
-                                        (String) Replace path.
-                                        Replace path.
+                                      description: Replace path.
                                       type: string
                                     replacePort:
-                                      description: |-
-                                        (Number) Replaces port.
-                                        Replaces port.
+                                      description: Replaces port.
                                       type: number
                                     replacePrefix:
-                                      description: |-
-                                        (String) Replace only matched prefix. Example: match:{ prefix_match: /some }  redirect: { replace_prefix: /other }  will redirect /something to /otherthing.
-                                        Replace only matched prefix. Example:<br/> match:{ prefix_match: `/some` } <br/> redirect: { replace_prefix: `/other` } <br/> will redirect `/something` to `/otherthing`.
+                                      description: 'Replace only matched prefix. Example:<br/>
+                                        match:{ prefix_match: `/some` } <br/> redirect:
+                                        { replace_prefix: `/other` } <br/> will redirect
+                                        `/something` to `/otherthing`.'
                                       type: string
                                     replaceScheme:
-                                      description: |-
-                                        (String) Replaces scheme. If the original scheme is http or https, will also remove the 80 or 443 port, if present.
-                                        Replaces scheme. If the original scheme is `http` or `https`, will also remove the 80 or 443 port, if present.
+                                      description: Replaces scheme. If the original
+                                        scheme is `http` or `https`, will also remove
+                                        the 80 or 443 port, if present.
                                       type: string
                                     responseCode:
-                                      description: |-
-                                        (String) The HTTP status code to use in the redirect response. Supported values are: moved_permanently, found, see_other, temporary_redirect, permanent_redirect.
-                                        The HTTP status code to use in the redirect response. Supported values are: `moved_permanently`, `found`, `see_other`, `temporary_redirect`, `permanent_redirect`.
+                                      description: 'The HTTP status code to use in
+                                        the redirect response. Supported values are:
+                                        `moved_permanently`, `found`, `see_other`,
+                                        `temporary_redirect`, `permanent_redirect`.'
                                       type: string
                                   type: object
                                 type: array
@@ -2440,75 +2401,66 @@ spec:
                           type: array
                         name:
                           description: |-
-                            (String) The resource name.
+                            (String). The resource name.
                             Name of the route.
                           type: string
                         routeOptions:
                           description: |-
-                            (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                            [Block]. Route options for the virtual host.
                             Route options for the virtual host.
                           items:
                             properties:
                               rbac:
                                 description: |-
-                                  (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                                  [Block]. RBAC configuration.
                                   RBAC configuration.
                                 items:
                                   properties:
                                     action:
-                                      description: (String)
+                                      description: (String).
                                       type: string
                                     principals:
-                                      description: '(Block List, Min: 1) (see below
-                                        for nested schema)'
+                                      description: '[Block].'
                                       items:
                                         properties:
                                           andPrincipals:
-                                            description: '(Block List, Min: 1) (see
-                                              below for nested schema)'
+                                            description: '[Block].'
                                             items:
                                               properties:
                                                 any:
-                                                  description: (Boolean)
+                                                  description: (Bool).
                                                   type: boolean
                                                 header:
-                                                  description: '(Block List, Max:
-                                                    1) (see below for nested schema)'
+                                                  description: '[Block].'
                                                   items:
                                                     properties:
                                                       name:
-                                                        description: (String) The
+                                                        description: (String). The
                                                           resource name.
                                                         type: string
                                                       value:
                                                         description: |-
-                                                          (Block List, Max: 1) The path and fqmn blocks.
+                                                          [Block]. The path and fqmn blocks.
                                                           The `path` and `fqmn` blocks.
 
                                                           ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                                         items:
                                                           properties:
                                                             exact:
-                                                              description: |-
-                                                                (String) Match exactly.
-                                                                Match exactly.
+                                                              description: Match exactly.
                                                               type: string
                                                             prefix:
-                                                              description: |-
-                                                                (String) Match prefix.
-                                                                Match prefix.
+                                                              description: Match prefix.
                                                               type: string
                                                             regex:
-                                                              description: |-
-                                                                (String) Match regex.
-                                                                Match regex.
+                                                              description: Match regex.
                                                               type: string
                                                           type: object
                                                         type: array
                                                     type: object
                                                   type: array
                                                 remoteIp:
-                                                  description: (String)
+                                                  description: (String).
                                                   type: string
                                               type: object
                                             type: array
@@ -2518,7 +2470,7 @@ spec:
                                 type: array
                               securityProfileId:
                                 description: |-
-                                  (String) SWS profile ID.
+                                  (String). SWS profile ID.
                                   SWS profile ID.
                                 type: string
                             type: object
@@ -2527,70 +2479,61 @@ spec:
                     type: array
                   routeOptions:
                     description: |-
-                      (Block List, Max: 1) Route options for the virtual host. (see below for nested schema)
+                      [Block]. Route options for the virtual host.
                       Route options for the virtual host.
                     items:
                       properties:
                         rbac:
                           description: |-
-                            (Block List, Max: 1) RBAC configuration. (see below for nested schema)
+                            [Block]. RBAC configuration.
                             RBAC configuration.
                           items:
                             properties:
                               action:
-                                description: (String)
+                                description: (String).
                                 type: string
                               principals:
-                                description: '(Block List, Min: 1) (see below for
-                                  nested schema)'
+                                description: '[Block].'
                                 items:
                                   properties:
                                     andPrincipals:
-                                      description: '(Block List, Min: 1) (see below
-                                        for nested schema)'
+                                      description: '[Block].'
                                       items:
                                         properties:
                                           any:
-                                            description: (Boolean)
+                                            description: (Bool).
                                             type: boolean
                                           header:
-                                            description: '(Block List, Max: 1) (see
-                                              below for nested schema)'
+                                            description: '[Block].'
                                             items:
                                               properties:
                                                 name:
-                                                  description: (String) The resource
+                                                  description: (String). The resource
                                                     name.
                                                   type: string
                                                 value:
                                                   description: |-
-                                                    (Block List, Max: 1) The path and fqmn blocks.
+                                                    [Block]. The path and fqmn blocks.
                                                     The `path` and `fqmn` blocks.
 
                                                     ~> Exactly one type of string matches `exact`, `prefix` or `regex` should be specified.
                                                   items:
                                                     properties:
                                                       exact:
-                                                        description: |-
-                                                          (String) Match exactly.
-                                                          Match exactly.
+                                                        description: Match exactly.
                                                         type: string
                                                       prefix:
-                                                        description: |-
-                                                          (String) Match prefix.
-                                                          Match prefix.
+                                                        description: Match prefix.
                                                         type: string
                                                       regex:
-                                                        description: |-
-                                                          (String) Match regex.
-                                                          Match regex.
+                                                        description: Match regex.
                                                         type: string
                                                     type: object
                                                   type: array
                                               type: object
                                             type: array
                                           remoteIp:
-                                            description: (String)
+                                            description: (String).
                                             type: string
                                         type: object
                                       type: array
@@ -2600,7 +2543,7 @@ spec:
                           type: array
                         securityProfileId:
                           description: |-
-                            (String) SWS profile ID.
+                            (String). SWS profile ID.
                             SWS profile ID.
                           type: string
                       type: object

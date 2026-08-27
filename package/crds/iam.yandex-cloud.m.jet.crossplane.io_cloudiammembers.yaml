@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: cloudiammembers.iam.yandex-cloud.m.jet.crossplane.io
 spec:
   group: iam.yandex-cloud.m.jet.crossplane.io
@@ -34,9 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: CloudIAMMember is the Schema for the CloudIAMMembers API. Allows
-          management of a single member for a single IAM binding on a Yandex Resource
-          Manager cloud.
+        description: CloudIAMMember is the Schema for the CloudIAMMembers API. Manages
+          the yandex_resourcemanager_cloud_iam_member resource.
         properties:
           apiVersion:
             description: |-
@@ -62,17 +61,16 @@ spec:
                 properties:
                   cloudId:
                     description: |-
-                      (String) The ID of the cloud to attach the policy to.
-                      The ID of the cloud to attach the policy to.
+                      (String). The ID of the cloud to attach the policy to.
+                      The ID of the `cloud` to attach the policy to.
                     type: string
                   member:
                     description: |-
-                      (String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
-                      An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
+                      (String). An identity that will be granted the privilege in the role. It can have one of the following values:
+                      An identity that will be granted the privilege in the `role`. It can have one of the following values:
                       * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
                       * **serviceAccount:{service_account_id}**: A unique service account ID.
                       * **federatedUser:{federated_user_id}**: A unique federated user ID.
-                      * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
                       * **group:{group_id}**: A unique group ID.
                       * **system:group:federation:{federation_id}:users**: All users in federation.
                       * **system:group:organization:{organization_id}:users**: All users in organization.
@@ -83,8 +81,8 @@ spec:
                     type: string
                   role:
                     description: |-
-                      (String) The role that should be applied. See roles catalog.
-                      The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
+                      (String). The role that should be assigned to the member.
+                      The role that should be assigned to the member.
                     type: string
                   serviceAccountRef:
                     description: Reference to a ServiceAccount to populate member.
@@ -167,8 +165,13 @@ spec:
                         type: object
                     type: object
                   sleepAfter:
-                    description: (Number)
+                    description: |-
+                      (Number). For test purposes, to compensate IAM operations delay
+                      For test purposes, to compensate IAM operations delay
                     type: number
+                required:
+                - cloudId
+                - role
                 type: object
               initProvider:
                 description: |-
@@ -183,114 +186,10 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
-                  cloudId:
-                    description: |-
-                      (String) The ID of the cloud to attach the policy to.
-                      The ID of the cloud to attach the policy to.
-                    type: string
-                  member:
-                    description: |-
-                      (String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
-                      An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
-                      * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
-                      * **serviceAccount:{service_account_id}**: A unique service account ID.
-                      * **federatedUser:{federated_user_id}**: A unique federated user ID.
-                      * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
-                      * **group:{group_id}**: A unique group ID.
-                      * **system:group:federation:{federation_id}:users**: All users in federation.
-                      * **system:group:organization:{organization_id}:users**: All users in organization.
-                      * **system:allAuthenticatedUsers**: All authenticated users.
-                      * **system:allUsers**: All users, including unauthenticated ones.
-
-                      ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
-                    type: string
-                  role:
-                    description: |-
-                      (String) The role that should be applied. See roles catalog.
-                      The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
-                    type: string
-                  serviceAccountRef:
-                    description: Reference to a ServiceAccount to populate member.
-                    properties:
-                      name:
-                        description: Name of the referenced object.
-                        type: string
-                      namespace:
-                        description: Namespace of the referenced object
-                        type: string
-                      policy:
-                        description: Policies for referencing.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: |-
-                              Resolution specifies whether resolution of this reference is required.
-                              The default is 'Required', which means the reconcile will fail if the
-                              reference cannot be resolved. 'Optional' means this reference will be
-                              a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: |-
-                              Resolve specifies when this reference should be resolved. The default
-                              is 'IfNotPresent', which will attempt to resolve the reference only when
-                              the corresponding field is not present. Use 'Always' to resolve the
-                              reference on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    required:
-                    - name
-                    type: object
-                  serviceAccountSelector:
-                    description: Selector for a ServiceAccount to populate member.
-                    properties:
-                      matchControllerRef:
-                        description: |-
-                          MatchControllerRef ensures an object with the same controller reference
-                          as the selecting object is selected.
-                        type: boolean
-                      matchLabels:
-                        additionalProperties:
-                          type: string
-                        description: MatchLabels ensures an object with matching labels
-                          is selected.
-                        type: object
-                      namespace:
-                        description: Namespace for the selector
-                        type: string
-                      policy:
-                        description: Policies for selection.
-                        properties:
-                          resolution:
-                            default: Required
-                            description: |-
-                              Resolution specifies whether resolution of this reference is required.
-                              The default is 'Required', which means the reconcile will fail if the
-                              reference cannot be resolved. 'Optional' means this reference will be
-                              a no-op if it cannot be resolved.
-                            enum:
-                            - Required
-                            - Optional
-                            type: string
-                          resolve:
-                            description: |-
-                              Resolve specifies when this reference should be resolved. The default
-                              is 'IfNotPresent', which will attempt to resolve the reference only when
-                              the corresponding field is not present. Use 'Always' to resolve the
-                              reference on every reconcile.
-                            enum:
-                            - Always
-                            - IfNotPresent
-                            type: string
-                        type: object
-                    type: object
                   sleepAfter:
-                    description: (Number)
+                    description: |-
+                      (Number). For test purposes, to compensate IAM operations delay
+                      For test purposes, to compensate IAM operations delay
                     type: number
                 type: object
               managementPolicies:
@@ -351,15 +250,6 @@ spec:
             required:
             - forProvider
             type: object
-            x-kubernetes-validations:
-            - message: spec.forProvider.cloudId is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.cloudId)
-                || (has(self.initProvider) && has(self.initProvider.cloudId))'
-            - message: spec.forProvider.role is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.role)
-                || (has(self.initProvider) && has(self.initProvider.role))'
           status:
             description: CloudIAMMemberStatus defines the observed state of CloudIAMMember.
             properties:
@@ -367,20 +257,19 @@ spec:
                 properties:
                   cloudId:
                     description: |-
-                      (String) The ID of the cloud to attach the policy to.
-                      The ID of the cloud to attach the policy to.
+                      (String). The ID of the cloud to attach the policy to.
+                      The ID of the `cloud` to attach the policy to.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String). The ID of this resource.
                     type: string
                   member:
                     description: |-
-                      (String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
-                      An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
+                      (String). An identity that will be granted the privilege in the role. It can have one of the following values:
+                      An identity that will be granted the privilege in the `role`. It can have one of the following values:
                       * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
                       * **serviceAccount:{service_account_id}**: A unique service account ID.
                       * **federatedUser:{federated_user_id}**: A unique federated user ID.
-                      * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
                       * **group:{group_id}**: A unique group ID.
                       * **system:group:federation:{federation_id}:users**: All users in federation.
                       * **system:group:organization:{organization_id}:users**: All users in organization.
@@ -391,11 +280,13 @@ spec:
                     type: string
                   role:
                     description: |-
-                      (String) The role that should be applied. See roles catalog.
-                      The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
+                      (String). The role that should be assigned to the member.
+                      The role that should be assigned to the member.
                     type: string
                   sleepAfter:
-                    description: (Number)
+                    description: |-
+                      (Number). For test purposes, to compensate IAM operations delay
+                      For test purposes, to compensate IAM operations delay
                     type: number
                 type: object
               conditions:

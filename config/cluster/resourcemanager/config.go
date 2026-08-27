@@ -24,6 +24,7 @@ import (
 	"github.com/crossplane/upjet/v2/pkg/config"
 
 	"github.com/yandex-cloud/crossplane-provider-yc/config/cluster/iam"
+	"github.com/yandex-cloud/crossplane-provider-yc/config/common"
 )
 
 const (
@@ -35,57 +36,70 @@ const (
 
 // Configure adds configurations for resourcemanager group.
 func Configure(p *config.Provider) {
+	p.AddResourceConfigurator("yandex_resourcemanager_cloud", func(r *config.Resource) {
+		r.ExternalName.OmittedFields = append(r.ExternalName.OmittedFields, "cloud_id")
+	})
+	p.AddResourceConfigurator("yandex_resourcemanager_folder", func(r *config.Resource) {
+		r.ExternalName.OmittedFields = append(r.ExternalName.OmittedFields, "folder_id")
+	})
+
 	shortGroup := "iam"
 	p.AddResourceConfigurator("yandex_organizationmanager_organization_iam_binding", func(r *config.Resource) {
+		r.ExternalName = common.IAMExternalName("organization_id", "role")
 		r.ShortGroup = shortGroup
 		r.References["members"] = config.Reference{
-			Type:              "ServiceAccount",
+			Type:              iam.ServiceAccountType,
 			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
-			RefFieldName:      "ServiceAccountRef",
-			SelectorFieldName: "ServiceAccountSelector",
+			RefFieldName:      iam.ServiceAccountRefFieldName,
+			SelectorFieldName: iam.ServiceAccountSelectorFieldName,
 		}
 	})
 	p.AddResourceConfigurator("yandex_organizationmanager_group_iam_member", func(r *config.Resource) {
+		r.ExternalName = common.IAMExternalName("group_id", "role", "member")
 		r.ShortGroup = shortGroup
 		r.References["member"] = config.Reference{
-			Type:              "ServiceAccount",
+			Type:              iam.ServiceAccountType,
 			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
-			RefFieldName:      "ServiceAccountRef",
-			SelectorFieldName: "ServiceAccountSelector",
+			RefFieldName:      iam.ServiceAccountRefFieldName,
+			SelectorFieldName: iam.ServiceAccountSelectorFieldName,
 		}
 	})
 	p.AddResourceConfigurator("yandex_resourcemanager_cloud_iam_member", func(r *config.Resource) {
+		r.ExternalName = common.IAMExternalName("cloud_id", "role", "member")
 		r.ShortGroup = shortGroup
 		r.References["member"] = config.Reference{
-			Type:              "ServiceAccount",
+			Type:              iam.ServiceAccountType,
 			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
-			RefFieldName:      "ServiceAccountRef",
-			SelectorFieldName: "ServiceAccountSelector",
+			RefFieldName:      iam.ServiceAccountRefFieldName,
+			SelectorFieldName: iam.ServiceAccountSelectorFieldName,
 		}
 	})
 	p.AddResourceConfigurator("yandex_resourcemanager_cloud_iam_binding", func(r *config.Resource) {
+		r.ExternalName = common.IAMExternalName("cloud_id", "role")
 		r.ShortGroup = shortGroup
 		r.References["members"] = config.Reference{
-			Type:              "ServiceAccount",
+			Type:              iam.ServiceAccountType,
 			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
-			RefFieldName:      "ServiceAccountRef",
-			SelectorFieldName: "ServiceAccountSelector",
+			RefFieldName:      iam.ServiceAccountRefFieldName,
+			SelectorFieldName: iam.ServiceAccountSelectorFieldName,
 		}
 	})
 
 	p.AddResourceConfigurator("yandex_resourcemanager_folder_iam_member", func(r *config.Resource) {
+		r.ExternalName = common.IAMExternalName("folder_id", "role", "member")
 		r.ShortGroup = shortGroup
 		r.References["member"] = config.Reference{
-			Type:              "ServiceAccount",
+			Type:              iam.ServiceAccountType,
 			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
-			RefFieldName:      "ServiceAccountRef",
-			SelectorFieldName: "ServiceAccountSelector",
+			RefFieldName:      iam.ServiceAccountRefFieldName,
+			SelectorFieldName: iam.ServiceAccountSelectorFieldName,
 		}
 	})
 	p.AddResourceConfigurator("yandex_resourcemanager_folder_iam_binding", func(r *config.Resource) {
+		r.ExternalName = common.IAMExternalName("folder_id", "role")
 		r.ShortGroup = shortGroup
 		r.References["members"] = config.Reference{
-			Type:              "ServiceAccount",
+			Type:              iam.ServiceAccountType,
 			Extractor:         fmt.Sprintf("%s.%s", iam.ConfigPath, iam.ServiceAccountRefValueFn),
 			RefFieldName:      "ServiceAccountsRef",
 			SelectorFieldName: "ServiceAccountsSelector",

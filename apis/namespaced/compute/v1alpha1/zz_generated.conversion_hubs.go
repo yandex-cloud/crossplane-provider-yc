@@ -24,6 +24,9 @@ package v1alpha1
 func (tr *Disk) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *DiskIAMBinding) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *DiskPlacementGroup) Hub() {}
 
 // Hub marks this type as a conversion hub.

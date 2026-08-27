@@ -28,62 +28,188 @@ import (
 	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
 )
 
+type ConnectorConfigIcebergSinkInitParameters struct {
+
+	// [Block]. Optional control settings.
+	// Optional control settings.
+	ControlConfig []ControlConfigInitParameters `json:"controlConfig,omitempty" tf:"control_config,omitempty"`
+
+	// (String). Control topic name for Iceberg connector.
+	// Control topic name for Iceberg connector.
+	ControlTopic *string `json:"controlTopic,omitempty" tf:"control_topic,omitempty"`
+
+	// [Block]. Dynamic table routing configuration. Cannot be changed after creation.
+	// Dynamic table routing configuration. Cannot be changed after creation.
+	DynamicTables []DynamicTablesInitParameters `json:"dynamicTables,omitempty" tf:"dynamic_tables,omitempty"`
+
+	// [Block]. Settings for connection to Hive Metastore.
+	// Settings for connection to Hive Metastore.
+	MetastoreConnection []MetastoreConnectionInitParameters `json:"metastoreConnection,omitempty" tf:"metastore_connection,omitempty"`
+
+	// compatible storage.
+	// Settings for connection to s3-compatible storage.
+	S3Connection []S3ConnectionInitParameters `json:"s3Connection,omitempty" tf:"s3_connection,omitempty"`
+
+	// [Block]. Static table routing configuration. Cannot be changed after creation.
+	// Static table routing configuration. Cannot be changed after creation.
+	StaticTables []StaticTablesInitParameters `json:"staticTables,omitempty" tf:"static_tables,omitempty"`
+
+	// [Block]. Optional table settings.
+	// Optional table settings.
+	TablesConfig []TablesConfigInitParameters `json:"tablesConfig,omitempty" tf:"tables_config,omitempty"`
+
+	// (String). The pattern for topic names to be written to Iceberg tables.
+	// The pattern for topic names to be written to Iceberg tables.
+	Topics *string `json:"topics,omitempty" tf:"topics,omitempty"`
+
+	// (String). Regex pattern for topic names to be written to Iceberg tables.
+	// Regex pattern for topic names to be written to Iceberg tables.
+	TopicsRegex *string `json:"topicsRegex,omitempty" tf:"topics_regex,omitempty"`
+}
+
+type ConnectorConfigIcebergSinkObservation struct {
+
+	// [Block]. Optional control settings.
+	// Optional control settings.
+	ControlConfig []ControlConfigObservation `json:"controlConfig,omitempty" tf:"control_config,omitempty"`
+
+	// (String). Control topic name for Iceberg connector.
+	// Control topic name for Iceberg connector.
+	ControlTopic *string `json:"controlTopic,omitempty" tf:"control_topic,omitempty"`
+
+	// [Block]. Dynamic table routing configuration. Cannot be changed after creation.
+	// Dynamic table routing configuration. Cannot be changed after creation.
+	DynamicTables []DynamicTablesObservation `json:"dynamicTables,omitempty" tf:"dynamic_tables,omitempty"`
+
+	// [Block]. Settings for connection to Hive Metastore.
+	// Settings for connection to Hive Metastore.
+	MetastoreConnection []MetastoreConnectionObservation `json:"metastoreConnection,omitempty" tf:"metastore_connection,omitempty"`
+
+	// compatible storage.
+	// Settings for connection to s3-compatible storage.
+	S3Connection []S3ConnectionObservation `json:"s3Connection,omitempty" tf:"s3_connection,omitempty"`
+
+	// [Block]. Static table routing configuration. Cannot be changed after creation.
+	// Static table routing configuration. Cannot be changed after creation.
+	StaticTables []StaticTablesObservation `json:"staticTables,omitempty" tf:"static_tables,omitempty"`
+
+	// [Block]. Optional table settings.
+	// Optional table settings.
+	TablesConfig []TablesConfigObservation `json:"tablesConfig,omitempty" tf:"tables_config,omitempty"`
+
+	// (String). The pattern for topic names to be written to Iceberg tables.
+	// The pattern for topic names to be written to Iceberg tables.
+	Topics *string `json:"topics,omitempty" tf:"topics,omitempty"`
+
+	// (String). Regex pattern for topic names to be written to Iceberg tables.
+	// Regex pattern for topic names to be written to Iceberg tables.
+	TopicsRegex *string `json:"topicsRegex,omitempty" tf:"topics_regex,omitempty"`
+}
+
+type ConnectorConfigIcebergSinkParameters struct {
+
+	// [Block]. Optional control settings.
+	// Optional control settings.
+	// +kubebuilder:validation:Optional
+	ControlConfig []ControlConfigParameters `json:"controlConfig,omitempty" tf:"control_config,omitempty"`
+
+	// (String). Control topic name for Iceberg connector.
+	// Control topic name for Iceberg connector.
+	// +kubebuilder:validation:Optional
+	ControlTopic *string `json:"controlTopic,omitempty" tf:"control_topic,omitempty"`
+
+	// [Block]. Dynamic table routing configuration. Cannot be changed after creation.
+	// Dynamic table routing configuration. Cannot be changed after creation.
+	// +kubebuilder:validation:Optional
+	DynamicTables []DynamicTablesParameters `json:"dynamicTables,omitempty" tf:"dynamic_tables,omitempty"`
+
+	// [Block]. Settings for connection to Hive Metastore.
+	// Settings for connection to Hive Metastore.
+	// +kubebuilder:validation:Optional
+	MetastoreConnection []MetastoreConnectionParameters `json:"metastoreConnection" tf:"metastore_connection,omitempty"`
+
+	// compatible storage.
+	// Settings for connection to s3-compatible storage.
+	// +kubebuilder:validation:Optional
+	S3Connection []S3ConnectionParameters `json:"s3Connection" tf:"s3_connection,omitempty"`
+
+	// [Block]. Static table routing configuration. Cannot be changed after creation.
+	// Static table routing configuration. Cannot be changed after creation.
+	// +kubebuilder:validation:Optional
+	StaticTables []StaticTablesParameters `json:"staticTables,omitempty" tf:"static_tables,omitempty"`
+
+	// [Block]. Optional table settings.
+	// Optional table settings.
+	// +kubebuilder:validation:Optional
+	TablesConfig []TablesConfigParameters `json:"tablesConfig,omitempty" tf:"tables_config,omitempty"`
+
+	// (String). The pattern for topic names to be written to Iceberg tables.
+	// The pattern for topic names to be written to Iceberg tables.
+	// +kubebuilder:validation:Optional
+	Topics *string `json:"topics,omitempty" tf:"topics,omitempty"`
+
+	// (String). Regex pattern for topic names to be written to Iceberg tables.
+	// Regex pattern for topic names to be written to Iceberg tables.
+	// +kubebuilder:validation:Optional
+	TopicsRegex *string `json:"topicsRegex,omitempty" tf:"topics_regex,omitempty"`
+}
+
 type ConnectorConfigMirrormakerInitParameters struct {
 
-	// (Number) Replication factor for topics created in target cluster.
+	// (Number). Replication factor for topics created in target cluster.
 	// Replication factor for topics created in target cluster.
 	ReplicationFactor *int64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
 
-	// (Block List, Min: 1, Max: 1) Settings for source cluster. (see below for nested schema)
+	// [Block]. Settings for source cluster.
 	// Settings for source cluster.
 	SourceCluster []SourceClusterInitParameters `json:"sourceCluster,omitempty" tf:"source_cluster,omitempty"`
 
-	// (Block List, Min: 1, Max: 1) Settings for target cluster. (see below for nested schema)
+	// [Block]. Settings for target cluster.
 	// Settings for target cluster.
 	TargetCluster []TargetClusterInitParameters `json:"targetCluster,omitempty" tf:"target_cluster,omitempty"`
 
-	// (String) The pattern for topic names to be replicated.
+	// (String). The pattern for topic names to be written to Iceberg tables.
 	// The pattern for topic names to be replicated.
 	Topics *string `json:"topics,omitempty" tf:"topics,omitempty"`
 }
 
 type ConnectorConfigMirrormakerObservation struct {
 
-	// (Number) Replication factor for topics created in target cluster.
+	// (Number). Replication factor for topics created in target cluster.
 	// Replication factor for topics created in target cluster.
 	ReplicationFactor *int64 `json:"replicationFactor,omitempty" tf:"replication_factor,omitempty"`
 
-	// (Block List, Min: 1, Max: 1) Settings for source cluster. (see below for nested schema)
+	// [Block]. Settings for source cluster.
 	// Settings for source cluster.
 	SourceCluster []SourceClusterObservation `json:"sourceCluster,omitempty" tf:"source_cluster,omitempty"`
 
-	// (Block List, Min: 1, Max: 1) Settings for target cluster. (see below for nested schema)
+	// [Block]. Settings for target cluster.
 	// Settings for target cluster.
 	TargetCluster []TargetClusterObservation `json:"targetCluster,omitempty" tf:"target_cluster,omitempty"`
 
-	// (String) The pattern for topic names to be replicated.
+	// (String). The pattern for topic names to be written to Iceberg tables.
 	// The pattern for topic names to be replicated.
 	Topics *string `json:"topics,omitempty" tf:"topics,omitempty"`
 }
 
 type ConnectorConfigMirrormakerParameters struct {
 
-	// (Number) Replication factor for topics created in target cluster.
+	// (Number). Replication factor for topics created in target cluster.
 	// Replication factor for topics created in target cluster.
 	// +kubebuilder:validation:Optional
 	ReplicationFactor *int64 `json:"replicationFactor" tf:"replication_factor,omitempty"`
 
-	// (Block List, Min: 1, Max: 1) Settings for source cluster. (see below for nested schema)
+	// [Block]. Settings for source cluster.
 	// Settings for source cluster.
 	// +kubebuilder:validation:Optional
 	SourceCluster []SourceClusterParameters `json:"sourceCluster" tf:"source_cluster,omitempty"`
 
-	// (Block List, Min: 1, Max: 1) Settings for target cluster. (see below for nested schema)
+	// [Block]. Settings for target cluster.
 	// Settings for target cluster.
 	// +kubebuilder:validation:Optional
 	TargetCluster []TargetClusterParameters `json:"targetCluster" tf:"target_cluster,omitempty"`
 
-	// (String) The pattern for topic names to be replicated.
+	// (String). The pattern for topic names to be written to Iceberg tables.
 	// The pattern for topic names to be replicated.
 	// +kubebuilder:validation:Optional
 	Topics *string `json:"topics" tf:"topics,omitempty"`
@@ -91,130 +217,261 @@ type ConnectorConfigMirrormakerParameters struct {
 
 type ConnectorConfigS3SinkInitParameters struct {
 
-	// (String) Compression type for messages. Cannot be changed.
+	// (String). Compression type for messages. Cannot be changed.
 	// Compression type for messages. Cannot be changed.
 	FileCompressionType *string `json:"fileCompressionType,omitempty" tf:"file_compression_type,omitempty"`
 
-	// (Number) Max records per file.
+	// (Number). Max records per file.
 	// Max records per file.
 	FileMaxRecords *int64 `json:"fileMaxRecords,omitempty" tf:"file_max_records,omitempty"`
 
-	// compatible storage. (see below for nested schema)
+	// compatible storage.
 	// Settings for connection to s3-compatible storage.
-	S3Connection []S3ConnectionInitParameters `json:"s3Connection,omitempty" tf:"s3_connection,omitempty"`
+	S3Connection []ConnectorConfigS3SinkS3ConnectionInitParameters `json:"s3Connection,omitempty" tf:"s3_connection,omitempty"`
 
-	// (String) The pattern for topic names to be replicated.
+	// (String). The pattern for topic names to be written to Iceberg tables.
 	// The pattern for topic names to be copied to s3 bucket.
 	Topics *string `json:"topics,omitempty" tf:"topics,omitempty"`
 }
 
 type ConnectorConfigS3SinkObservation struct {
 
-	// (String) Compression type for messages. Cannot be changed.
+	// (String). Compression type for messages. Cannot be changed.
 	// Compression type for messages. Cannot be changed.
 	FileCompressionType *string `json:"fileCompressionType,omitempty" tf:"file_compression_type,omitempty"`
 
-	// (Number) Max records per file.
+	// (Number). Max records per file.
 	// Max records per file.
 	FileMaxRecords *int64 `json:"fileMaxRecords,omitempty" tf:"file_max_records,omitempty"`
 
-	// compatible storage. (see below for nested schema)
+	// compatible storage.
 	// Settings for connection to s3-compatible storage.
-	S3Connection []S3ConnectionObservation `json:"s3Connection,omitempty" tf:"s3_connection,omitempty"`
+	S3Connection []ConnectorConfigS3SinkS3ConnectionObservation `json:"s3Connection,omitempty" tf:"s3_connection,omitempty"`
 
-	// (String) The pattern for topic names to be replicated.
+	// (String). The pattern for topic names to be written to Iceberg tables.
 	// The pattern for topic names to be copied to s3 bucket.
 	Topics *string `json:"topics,omitempty" tf:"topics,omitempty"`
 }
 
 type ConnectorConfigS3SinkParameters struct {
 
-	// (String) Compression type for messages. Cannot be changed.
+	// (String). Compression type for messages. Cannot be changed.
 	// Compression type for messages. Cannot be changed.
 	// +kubebuilder:validation:Optional
 	FileCompressionType *string `json:"fileCompressionType" tf:"file_compression_type,omitempty"`
 
-	// (Number) Max records per file.
+	// (Number). Max records per file.
 	// Max records per file.
 	// +kubebuilder:validation:Optional
 	FileMaxRecords *int64 `json:"fileMaxRecords,omitempty" tf:"file_max_records,omitempty"`
 
-	// compatible storage. (see below for nested schema)
+	// compatible storage.
 	// Settings for connection to s3-compatible storage.
 	// +kubebuilder:validation:Optional
-	S3Connection []S3ConnectionParameters `json:"s3Connection" tf:"s3_connection,omitempty"`
+	S3Connection []ConnectorConfigS3SinkS3ConnectionParameters `json:"s3Connection" tf:"s3_connection,omitempty"`
 
-	// (String) The pattern for topic names to be replicated.
+	// (String). The pattern for topic names to be written to Iceberg tables.
 	// The pattern for topic names to be copied to s3 bucket.
 	// +kubebuilder:validation:Optional
 	Topics *string `json:"topics" tf:"topics,omitempty"`
 }
 
+type ConnectorConfigS3SinkS3ConnectionInitParameters struct {
+
+	// compatible storage.
+	// Name of the bucket in s3-compatible storage.
+	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
+
+	// compatible storage.
+	// Connection params for external s3-compatible storage.
+	ExternalS3 []S3ConnectionExternalS3InitParameters `json:"externalS3,omitempty" tf:"external_s3,omitempty"`
+}
+
+type ConnectorConfigS3SinkS3ConnectionObservation struct {
+
+	// compatible storage.
+	// Name of the bucket in s3-compatible storage.
+	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
+
+	// compatible storage.
+	// Connection params for external s3-compatible storage.
+	ExternalS3 []S3ConnectionExternalS3Observation `json:"externalS3,omitempty" tf:"external_s3,omitempty"`
+}
+
+type ConnectorConfigS3SinkS3ConnectionParameters struct {
+
+	// compatible storage.
+	// Name of the bucket in s3-compatible storage.
+	// +kubebuilder:validation:Optional
+	BucketName *string `json:"bucketName" tf:"bucket_name,omitempty"`
+
+	// compatible storage.
+	// Connection params for external s3-compatible storage.
+	// +kubebuilder:validation:Optional
+	ExternalS3 []S3ConnectionExternalS3Parameters `json:"externalS3" tf:"external_s3,omitempty"`
+}
+
+type ControlConfigInitParameters struct {
+
+	// (Number). Interval between commits in milliseconds. Default: 300000 (5 minutes)
+	// Interval between commits in milliseconds. Default: 300000 (5 minutes)
+	CommitIntervalMs *int64 `json:"commitIntervalMs,omitempty" tf:"commit_interval_ms,omitempty"`
+
+	// (Number). Number of threads for commit operations. Default: cores * 2
+	// Number of threads for commit operations. Default: cores * 2
+	CommitThreads *int64 `json:"commitThreads,omitempty" tf:"commit_threads,omitempty"`
+
+	// (Number). Commit operation timeout in milliseconds. Default: 30000 (30 seconds)
+	// Commit operation timeout in milliseconds. Default: 30000 (30 seconds)
+	CommitTimeoutMs *int64 `json:"commitTimeoutMs,omitempty" tf:"commit_timeout_ms,omitempty"`
+
+	// control'
+	// Consumer group ID prefix for control topic. Default: 'cg-control'
+	GroupIDPrefix *string `json:"groupIdPrefix,omitempty" tf:"group_id_prefix,omitempty"`
+
+	// (String). Prefix for transactional operations. Default: ”
+	// Prefix for transactional operations. Default: ”
+	TransactionalPrefix *string `json:"transactionalPrefix,omitempty" tf:"transactional_prefix,omitempty"`
+}
+
+type ControlConfigObservation struct {
+
+	// (Number). Interval between commits in milliseconds. Default: 300000 (5 minutes)
+	// Interval between commits in milliseconds. Default: 300000 (5 minutes)
+	CommitIntervalMs *int64 `json:"commitIntervalMs,omitempty" tf:"commit_interval_ms,omitempty"`
+
+	// (Number). Number of threads for commit operations. Default: cores * 2
+	// Number of threads for commit operations. Default: cores * 2
+	CommitThreads *int64 `json:"commitThreads,omitempty" tf:"commit_threads,omitempty"`
+
+	// (Number). Commit operation timeout in milliseconds. Default: 30000 (30 seconds)
+	// Commit operation timeout in milliseconds. Default: 30000 (30 seconds)
+	CommitTimeoutMs *int64 `json:"commitTimeoutMs,omitempty" tf:"commit_timeout_ms,omitempty"`
+
+	// control'
+	// Consumer group ID prefix for control topic. Default: 'cg-control'
+	GroupIDPrefix *string `json:"groupIdPrefix,omitempty" tf:"group_id_prefix,omitempty"`
+
+	// (String). Prefix for transactional operations. Default: ”
+	// Prefix for transactional operations. Default: ”
+	TransactionalPrefix *string `json:"transactionalPrefix,omitempty" tf:"transactional_prefix,omitempty"`
+}
+
+type ControlConfigParameters struct {
+
+	// (Number). Interval between commits in milliseconds. Default: 300000 (5 minutes)
+	// Interval between commits in milliseconds. Default: 300000 (5 minutes)
+	// +kubebuilder:validation:Optional
+	CommitIntervalMs *int64 `json:"commitIntervalMs,omitempty" tf:"commit_interval_ms,omitempty"`
+
+	// (Number). Number of threads for commit operations. Default: cores * 2
+	// Number of threads for commit operations. Default: cores * 2
+	// +kubebuilder:validation:Optional
+	CommitThreads *int64 `json:"commitThreads,omitempty" tf:"commit_threads,omitempty"`
+
+	// (Number). Commit operation timeout in milliseconds. Default: 30000 (30 seconds)
+	// Commit operation timeout in milliseconds. Default: 30000 (30 seconds)
+	// +kubebuilder:validation:Optional
+	CommitTimeoutMs *int64 `json:"commitTimeoutMs,omitempty" tf:"commit_timeout_ms,omitempty"`
+
+	// control'
+	// Consumer group ID prefix for control topic. Default: 'cg-control'
+	// +kubebuilder:validation:Optional
+	GroupIDPrefix *string `json:"groupIdPrefix,omitempty" tf:"group_id_prefix,omitempty"`
+
+	// (String). Prefix for transactional operations. Default: ”
+	// Prefix for transactional operations. Default: ”
+	// +kubebuilder:validation:Optional
+	TransactionalPrefix *string `json:"transactionalPrefix,omitempty" tf:"transactional_prefix,omitempty"`
+}
+
+type DynamicTablesInitParameters struct {
+
+	// (String). Field in the message to define the target table.
+	// Field in the message to define the target table.
+	RouteField *string `json:"routeField,omitempty" tf:"route_field,omitempty"`
+}
+
+type DynamicTablesObservation struct {
+
+	// (String). Field in the message to define the target table.
+	// Field in the message to define the target table.
+	RouteField *string `json:"routeField,omitempty" tf:"route_field,omitempty"`
+}
+
+type DynamicTablesParameters struct {
+
+	// (String). Field in the message to define the target table.
+	// Field in the message to define the target table.
+	// +kubebuilder:validation:Optional
+	RouteField *string `json:"routeField" tf:"route_field,omitempty"`
+}
+
 type ExternalClusterInitParameters struct {
 
-	// (String) List of bootstrap servers to connect to cluster.
+	// (String). List of bootstrap servers to connect to cluster.
 	// List of bootstrap servers to connect to cluster.
 	BootstrapServers *string `json:"bootstrapServers,omitempty" tf:"bootstrap_servers,omitempty"`
 
-	// (String) Type of SASL authentification mechanism to use.
+	// (String). Type of SASL authentification mechanism to use.
 	// Type of SASL authentification mechanism to use.
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
 
-	// (String, Sensitive) Password to use in SASL authentification mechanism
+	// (String). Password to use in SASL authentification mechanism
 	// Password to use in SASL authentification mechanism
 	SaslPasswordSecretRef *v1.LocalSecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
 
-	// (String) Username to use in SASL authentification mechanism.
+	// (String). Username to use in SASL authentification mechanism.
 	// Username to use in SASL authentification mechanism.
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
 
-	// (String) Security protocol to use.
+	// (String). Security protocol to use.
 	// Security protocol to use.
 	SecurityProtocol *string `json:"securityProtocol,omitempty" tf:"security_protocol,omitempty"`
 }
 
 type ExternalClusterObservation struct {
 
-	// (String) List of bootstrap servers to connect to cluster.
+	// (String). List of bootstrap servers to connect to cluster.
 	// List of bootstrap servers to connect to cluster.
 	BootstrapServers *string `json:"bootstrapServers,omitempty" tf:"bootstrap_servers,omitempty"`
 
-	// (String) Type of SASL authentification mechanism to use.
+	// (String). Type of SASL authentification mechanism to use.
 	// Type of SASL authentification mechanism to use.
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
 
-	// (String) Username to use in SASL authentification mechanism.
+	// (String). Username to use in SASL authentification mechanism.
 	// Username to use in SASL authentification mechanism.
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
 
-	// (String) Security protocol to use.
+	// (String). Security protocol to use.
 	// Security protocol to use.
 	SecurityProtocol *string `json:"securityProtocol,omitempty" tf:"security_protocol,omitempty"`
 }
 
 type ExternalClusterParameters struct {
 
-	// (String) List of bootstrap servers to connect to cluster.
+	// (String). List of bootstrap servers to connect to cluster.
 	// List of bootstrap servers to connect to cluster.
 	// +kubebuilder:validation:Optional
 	BootstrapServers *string `json:"bootstrapServers" tf:"bootstrap_servers,omitempty"`
 
-	// (String) Type of SASL authentification mechanism to use.
+	// (String). Type of SASL authentification mechanism to use.
 	// Type of SASL authentification mechanism to use.
 	// +kubebuilder:validation:Optional
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
 
-	// (String, Sensitive) Password to use in SASL authentification mechanism
+	// (String). Password to use in SASL authentification mechanism
 	// Password to use in SASL authentification mechanism
 	// +kubebuilder:validation:Optional
 	SaslPasswordSecretRef *v1.LocalSecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
 
-	// (String) Username to use in SASL authentification mechanism.
+	// (String). Username to use in SASL authentification mechanism.
 	// Username to use in SASL authentification mechanism.
 	// +kubebuilder:validation:Optional
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
 
-	// (String) Security protocol to use.
+	// (String). Security protocol to use.
 	// Security protocol to use.
 	// +kubebuilder:validation:Optional
 	SecurityProtocol *string `json:"securityProtocol,omitempty" tf:"security_protocol,omitempty"`
@@ -230,8 +487,8 @@ type ExternalS3InitParameters struct {
 	// URL of s3-compatible storage.
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// compatible storage. Available region list.
-	// Region of s3-compatible storage. [Available region list](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/regions/Regions.html).
+	// compatible storage.
+	// Region of s3-compatible storage.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
 	// compatible static key.
@@ -249,8 +506,8 @@ type ExternalS3Observation struct {
 	// URL of s3-compatible storage.
 	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
 
-	// compatible storage. Available region list.
-	// Region of s3-compatible storage. [Available region list](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/regions/Regions.html).
+	// compatible storage.
+	// Region of s3-compatible storage.
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 }
 
@@ -266,8 +523,8 @@ type ExternalS3Parameters struct {
 	// +kubebuilder:validation:Optional
 	Endpoint *string `json:"endpoint" tf:"endpoint,omitempty"`
 
-	// compatible storage. Available region list.
-	// Region of s3-compatible storage. [Available region list](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/regions/Regions.html).
+	// compatible storage.
+	// Region of s3-compatible storage.
 	// +kubebuilder:validation:Optional
 	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
@@ -279,7 +536,7 @@ type ExternalS3Parameters struct {
 
 type KafkaConnectorInitParameters struct {
 
-	// (String) The ID of the Kafka cluster.
+	// (String). The ID of the Kafka cluster.
 	// The ID of the Kafka cluster.
 	// +crossplane:generate:reference:type=KafkaCluster
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
@@ -292,62 +549,70 @@ type KafkaConnectorInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.NamespacedSelector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// (Block List) Settings for MirrorMaker2 connector. (see below for nested schema)
+	// [Block]. Settings for Iceberg Sink connector.
+	// Settings for Iceberg Sink connector.
+	ConnectorConfigIcebergSink []ConnectorConfigIcebergSinkInitParameters `json:"connectorConfigIcebergSink,omitempty" tf:"connector_config_iceberg_sink,omitempty"`
+
+	// [Block]. Settings for MirrorMaker2 connector.
 	// Settings for MirrorMaker2 connector.
 	ConnectorConfigMirrormaker []ConnectorConfigMirrormakerInitParameters `json:"connectorConfigMirrormaker,omitempty" tf:"connector_config_mirrormaker,omitempty"`
 
-	// (Block List) Settings for S3 Sink connector. (see below for nested schema)
+	// [Block]. Settings for S3 Sink connector.
 	// Settings for S3 Sink connector.
 	ConnectorConfigS3Sink []ConnectorConfigS3SinkInitParameters `json:"connectorConfigS3Sink,omitempty" tf:"connector_config_s3_sink,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Map of String) Additional properties for connector.
+	// (Map Of String). Additional properties for connector.
 	// Additional properties for connector.
 	// +mapType=granular
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
-	// (Number) The number of the connector's parallel working tasks. Default is the number of brokers.
+	// (Number). The number of the connector's parallel working tasks. Default is the number of brokers.
 	// The number of the connector's parallel working tasks. Default is the number of brokers.
 	TasksMax *int64 `json:"tasksMax,omitempty" tf:"tasks_max,omitempty"`
 }
 
 type KafkaConnectorObservation struct {
 
-	// (String) The ID of the Kafka cluster.
+	// (String). The ID of the Kafka cluster.
 	// The ID of the Kafka cluster.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
-	// (Block List) Settings for MirrorMaker2 connector. (see below for nested schema)
+	// [Block]. Settings for Iceberg Sink connector.
+	// Settings for Iceberg Sink connector.
+	ConnectorConfigIcebergSink []ConnectorConfigIcebergSinkObservation `json:"connectorConfigIcebergSink,omitempty" tf:"connector_config_iceberg_sink,omitempty"`
+
+	// [Block]. Settings for MirrorMaker2 connector.
 	// Settings for MirrorMaker2 connector.
 	ConnectorConfigMirrormaker []ConnectorConfigMirrormakerObservation `json:"connectorConfigMirrormaker,omitempty" tf:"connector_config_mirrormaker,omitempty"`
 
-	// (Block List) Settings for S3 Sink connector. (see below for nested schema)
+	// [Block]. Settings for S3 Sink connector.
 	// Settings for S3 Sink connector.
 	ConnectorConfigS3Sink []ConnectorConfigS3SinkObservation `json:"connectorConfigS3Sink,omitempty" tf:"connector_config_s3_sink,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Map of String) Additional properties for connector.
+	// (Map Of String). Additional properties for connector.
 	// Additional properties for connector.
 	// +mapType=granular
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
-	// (Number) The number of the connector's parallel working tasks. Default is the number of brokers.
+	// (Number). The number of the connector's parallel working tasks. Default is the number of brokers.
 	// The number of the connector's parallel working tasks. Default is the number of brokers.
 	TasksMax *int64 `json:"tasksMax,omitempty" tf:"tasks_max,omitempty"`
 }
 
 type KafkaConnectorParameters struct {
 
-	// (String) The ID of the Kafka cluster.
+	// (String). The ID of the Kafka cluster.
 	// The ID of the Kafka cluster.
 	// +crossplane:generate:reference:type=KafkaCluster
 	// +kubebuilder:validation:Optional
@@ -361,40 +626,133 @@ type KafkaConnectorParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.NamespacedSelector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// (Block List) Settings for MirrorMaker2 connector. (see below for nested schema)
+	// [Block]. Settings for Iceberg Sink connector.
+	// Settings for Iceberg Sink connector.
+	// +kubebuilder:validation:Optional
+	ConnectorConfigIcebergSink []ConnectorConfigIcebergSinkParameters `json:"connectorConfigIcebergSink,omitempty" tf:"connector_config_iceberg_sink,omitempty"`
+
+	// [Block]. Settings for MirrorMaker2 connector.
 	// Settings for MirrorMaker2 connector.
 	// +kubebuilder:validation:Optional
 	ConnectorConfigMirrormaker []ConnectorConfigMirrormakerParameters `json:"connectorConfigMirrormaker,omitempty" tf:"connector_config_mirrormaker,omitempty"`
 
-	// (Block List) Settings for S3 Sink connector. (see below for nested schema)
+	// [Block]. Settings for S3 Sink connector.
 	// Settings for S3 Sink connector.
 	// +kubebuilder:validation:Optional
 	ConnectorConfigS3Sink []ConnectorConfigS3SinkParameters `json:"connectorConfigS3Sink,omitempty" tf:"connector_config_s3_sink,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Map of String) Additional properties for connector.
+	// (Map Of String). Additional properties for connector.
 	// Additional properties for connector.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Properties map[string]*string `json:"properties,omitempty" tf:"properties,omitempty"`
 
-	// (Number) The number of the connector's parallel working tasks. Default is the number of brokers.
+	// (Number). The number of the connector's parallel working tasks. Default is the number of brokers.
 	// The number of the connector's parallel working tasks. Default is the number of brokers.
 	// +kubebuilder:validation:Optional
 	TasksMax *int64 `json:"tasksMax,omitempty" tf:"tasks_max,omitempty"`
 }
 
+type MetastoreConnectionInitParameters struct {
+
+	// (String). Thrift URI of Hive Metastore. Format: 'thrift://host:9083'
+	// Thrift URI of Hive Metastore. Format: 'thrift://host:9083'
+	CatalogURI *string `json:"catalogUri,omitempty" tf:"catalog_uri,omitempty"`
+
+	// name/path/to/warehouse'
+	// Warehouse root directory in S3. Format: 's3a://bucket-name/path/to/warehouse'
+	Warehouse *string `json:"warehouse,omitempty" tf:"warehouse,omitempty"`
+}
+
+type MetastoreConnectionObservation struct {
+
+	// (String). Thrift URI of Hive Metastore. Format: 'thrift://host:9083'
+	// Thrift URI of Hive Metastore. Format: 'thrift://host:9083'
+	CatalogURI *string `json:"catalogUri,omitempty" tf:"catalog_uri,omitempty"`
+
+	// name/path/to/warehouse'
+	// Warehouse root directory in S3. Format: 's3a://bucket-name/path/to/warehouse'
+	Warehouse *string `json:"warehouse,omitempty" tf:"warehouse,omitempty"`
+}
+
+type MetastoreConnectionParameters struct {
+
+	// (String). Thrift URI of Hive Metastore. Format: 'thrift://host:9083'
+	// Thrift URI of Hive Metastore. Format: 'thrift://host:9083'
+	// +kubebuilder:validation:Optional
+	CatalogURI *string `json:"catalogUri" tf:"catalog_uri,omitempty"`
+
+	// name/path/to/warehouse'
+	// Warehouse root directory in S3. Format: 's3a://bucket-name/path/to/warehouse'
+	// +kubebuilder:validation:Optional
+	Warehouse *string `json:"warehouse" tf:"warehouse,omitempty"`
+}
+
+type S3ConnectionExternalS3InitParameters struct {
+
+	// compatible static key.
+	// ID of aws-compatible static key.
+	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
+
+	// compatible storage.
+	// URL of s3-compatible storage.
+	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+
+	// compatible storage.
+	// Region of s3-compatible storage. [Available region list](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/regions/Regions.html).
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// compatible static key.
+	// Secret key of aws-compatible static key.
+	SecretAccessKeySecretRef *v1.LocalSecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
+}
+
+type S3ConnectionExternalS3Observation struct {
+
+	// compatible static key.
+	// ID of aws-compatible static key.
+	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
+
+	// compatible storage.
+	// URL of s3-compatible storage.
+	Endpoint *string `json:"endpoint,omitempty" tf:"endpoint,omitempty"`
+
+	// compatible storage.
+	// Region of s3-compatible storage. [Available region list](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/regions/Regions.html).
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+}
+
+type S3ConnectionExternalS3Parameters struct {
+
+	// compatible static key.
+	// ID of aws-compatible static key.
+	// +kubebuilder:validation:Optional
+	AccessKeyID *string `json:"accessKeyId,omitempty" tf:"access_key_id,omitempty"`
+
+	// compatible storage.
+	// URL of s3-compatible storage.
+	// +kubebuilder:validation:Optional
+	Endpoint *string `json:"endpoint" tf:"endpoint,omitempty"`
+
+	// compatible storage.
+	// Region of s3-compatible storage. [Available region list](https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/regions/Regions.html).
+	// +kubebuilder:validation:Optional
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// compatible static key.
+	// Secret key of aws-compatible static key.
+	// +kubebuilder:validation:Optional
+	SecretAccessKeySecretRef *v1.LocalSecretKeySelector `json:"secretAccessKeySecretRef,omitempty" tf:"-"`
+}
+
 type S3ConnectionInitParameters struct {
 
 	// compatible storage.
-	// Name of the bucket in s3-compatible storage.
-	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
-
-	// compatible storage. (see below for nested schema)
 	// Connection params for external s3-compatible storage.
 	ExternalS3 []ExternalS3InitParameters `json:"externalS3,omitempty" tf:"external_s3,omitempty"`
 }
@@ -402,10 +760,6 @@ type S3ConnectionInitParameters struct {
 type S3ConnectionObservation struct {
 
 	// compatible storage.
-	// Name of the bucket in s3-compatible storage.
-	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
-
-	// compatible storage. (see below for nested schema)
 	// Connection params for external s3-compatible storage.
 	ExternalS3 []ExternalS3Observation `json:"externalS3,omitempty" tf:"external_s3,omitempty"`
 }
@@ -413,11 +767,6 @@ type S3ConnectionObservation struct {
 type S3ConnectionParameters struct {
 
 	// compatible storage.
-	// Name of the bucket in s3-compatible storage.
-	// +kubebuilder:validation:Optional
-	BucketName *string `json:"bucketName" tf:"bucket_name,omitempty"`
-
-	// compatible storage. (see below for nested schema)
 	// Connection params for external s3-compatible storage.
 	// +kubebuilder:validation:Optional
 	ExternalS3 []ExternalS3Parameters `json:"externalS3" tf:"external_s3,omitempty"`
@@ -425,117 +774,226 @@ type S3ConnectionParameters struct {
 
 type SourceClusterInitParameters struct {
 
-	// (String) Name of the cluster. Used also as a topic prefix.
+	// (String). Name of the cluster. Used also as a topic prefix.
 	// Name of the cluster. Used also as a topic prefix.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (Block List) Connection settings for external cluster. (see below for nested schema)
+	// [Block]. Connection settings for external cluster.
 	// Connection settings for external cluster.
 	ExternalCluster []ExternalClusterInitParameters `json:"externalCluster,omitempty" tf:"external_cluster,omitempty"`
 
-	// (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+	// [Block]. Using this section in the cluster definition (source or target) means it's this cluster.
 	// Using this section in the cluster definition (source or target) means it's this cluster.
 	ThisCluster []ThisClusterInitParameters `json:"thisCluster,omitempty" tf:"this_cluster,omitempty"`
 }
 
 type SourceClusterObservation struct {
 
-	// (String) Name of the cluster. Used also as a topic prefix.
+	// (String). Name of the cluster. Used also as a topic prefix.
 	// Name of the cluster. Used also as a topic prefix.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (Block List) Connection settings for external cluster. (see below for nested schema)
+	// [Block]. Connection settings for external cluster.
 	// Connection settings for external cluster.
 	ExternalCluster []ExternalClusterObservation `json:"externalCluster,omitempty" tf:"external_cluster,omitempty"`
 
-	// (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+	// [Block]. Using this section in the cluster definition (source or target) means it's this cluster.
 	// Using this section in the cluster definition (source or target) means it's this cluster.
 	ThisCluster []ThisClusterParameters `json:"thisCluster,omitempty" tf:"this_cluster,omitempty"`
 }
 
 type SourceClusterParameters struct {
 
-	// (String) Name of the cluster. Used also as a topic prefix.
+	// (String). Name of the cluster. Used also as a topic prefix.
 	// Name of the cluster. Used also as a topic prefix.
 	// +kubebuilder:validation:Optional
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (Block List) Connection settings for external cluster. (see below for nested schema)
+	// [Block]. Connection settings for external cluster.
 	// Connection settings for external cluster.
 	// +kubebuilder:validation:Optional
 	ExternalCluster []ExternalClusterParameters `json:"externalCluster,omitempty" tf:"external_cluster,omitempty"`
 
-	// (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+	// [Block]. Using this section in the cluster definition (source or target) means it's this cluster.
 	// Using this section in the cluster definition (source or target) means it's this cluster.
 	// +kubebuilder:validation:Optional
 	ThisCluster []ThisClusterParameters `json:"thisCluster,omitempty" tf:"this_cluster,omitempty"`
 }
 
+type StaticTablesInitParameters struct {
+
+	// (String). List of tables, separated by ','.
+	// List of tables, separated by ','.
+	Tables *string `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type StaticTablesObservation struct {
+
+	// (String). List of tables, separated by ','.
+	// List of tables, separated by ','.
+	Tables *string `json:"tables,omitempty" tf:"tables,omitempty"`
+}
+
+type StaticTablesParameters struct {
+
+	// (String). List of tables, separated by ','.
+	// List of tables, separated by ','.
+	// +kubebuilder:validation:Optional
+	Tables *string `json:"tables" tf:"tables,omitempty"`
+}
+
+type TablesConfigInitParameters struct {
+
+	// like branch name for Iceberg commits. Default: 'main'
+	// Default Git-like branch name for Iceberg commits. Default: 'main'
+	DefaultCommitBranch *string `json:"defaultCommitBranch,omitempty" tf:"default_commit_branch,omitempty"`
+
+	// (String). List of columns used as identifiers for upsert operations, separated by ','.
+	// List of columns used as identifiers for upsert operations, separated by ','.
+	DefaultIDColumns *string `json:"defaultIdColumns,omitempty" tf:"default_id_columns,omitempty"`
+
+	// separated list of columns or transform expressions for table partitioning.
+	// Comma-separated list of columns or transform expressions for table partitioning.
+	DefaultPartitionBy *string `json:"defaultPartitionBy,omitempty" tf:"default_partition_by,omitempty"`
+
+	// (Bool). Enable automatic schema evolution. Default: false
+	// Enable automatic schema evolution. Default: false
+	EvolveSchemaEnabled *bool `json:"evolveSchemaEnabled,omitempty" tf:"evolve_schema_enabled,omitempty"`
+
+	// insensitive field name matching. Default: false
+	// Enable case-insensitive field name matching. Default: false
+	SchemaCaseInsensitive *bool `json:"schemaCaseInsensitive,omitempty" tf:"schema_case_insensitive,omitempty"`
+
+	// (Bool). Force all columns to be nullable. Default: false
+	// Force all columns to be nullable. Default: false
+	SchemaForceOptional *bool `json:"schemaForceOptional,omitempty" tf:"schema_force_optional,omitempty"`
+}
+
+type TablesConfigObservation struct {
+
+	// like branch name for Iceberg commits. Default: 'main'
+	// Default Git-like branch name for Iceberg commits. Default: 'main'
+	DefaultCommitBranch *string `json:"defaultCommitBranch,omitempty" tf:"default_commit_branch,omitempty"`
+
+	// (String). List of columns used as identifiers for upsert operations, separated by ','.
+	// List of columns used as identifiers for upsert operations, separated by ','.
+	DefaultIDColumns *string `json:"defaultIdColumns,omitempty" tf:"default_id_columns,omitempty"`
+
+	// separated list of columns or transform expressions for table partitioning.
+	// Comma-separated list of columns or transform expressions for table partitioning.
+	DefaultPartitionBy *string `json:"defaultPartitionBy,omitempty" tf:"default_partition_by,omitempty"`
+
+	// (Bool). Enable automatic schema evolution. Default: false
+	// Enable automatic schema evolution. Default: false
+	EvolveSchemaEnabled *bool `json:"evolveSchemaEnabled,omitempty" tf:"evolve_schema_enabled,omitempty"`
+
+	// insensitive field name matching. Default: false
+	// Enable case-insensitive field name matching. Default: false
+	SchemaCaseInsensitive *bool `json:"schemaCaseInsensitive,omitempty" tf:"schema_case_insensitive,omitempty"`
+
+	// (Bool). Force all columns to be nullable. Default: false
+	// Force all columns to be nullable. Default: false
+	SchemaForceOptional *bool `json:"schemaForceOptional,omitempty" tf:"schema_force_optional,omitempty"`
+}
+
+type TablesConfigParameters struct {
+
+	// like branch name for Iceberg commits. Default: 'main'
+	// Default Git-like branch name for Iceberg commits. Default: 'main'
+	// +kubebuilder:validation:Optional
+	DefaultCommitBranch *string `json:"defaultCommitBranch,omitempty" tf:"default_commit_branch,omitempty"`
+
+	// (String). List of columns used as identifiers for upsert operations, separated by ','.
+	// List of columns used as identifiers for upsert operations, separated by ','.
+	// +kubebuilder:validation:Optional
+	DefaultIDColumns *string `json:"defaultIdColumns,omitempty" tf:"default_id_columns,omitempty"`
+
+	// separated list of columns or transform expressions for table partitioning.
+	// Comma-separated list of columns or transform expressions for table partitioning.
+	// +kubebuilder:validation:Optional
+	DefaultPartitionBy *string `json:"defaultPartitionBy,omitempty" tf:"default_partition_by,omitempty"`
+
+	// (Bool). Enable automatic schema evolution. Default: false
+	// Enable automatic schema evolution. Default: false
+	// +kubebuilder:validation:Optional
+	EvolveSchemaEnabled *bool `json:"evolveSchemaEnabled,omitempty" tf:"evolve_schema_enabled,omitempty"`
+
+	// insensitive field name matching. Default: false
+	// Enable case-insensitive field name matching. Default: false
+	// +kubebuilder:validation:Optional
+	SchemaCaseInsensitive *bool `json:"schemaCaseInsensitive,omitempty" tf:"schema_case_insensitive,omitempty"`
+
+	// (Bool). Force all columns to be nullable. Default: false
+	// Force all columns to be nullable. Default: false
+	// +kubebuilder:validation:Optional
+	SchemaForceOptional *bool `json:"schemaForceOptional,omitempty" tf:"schema_force_optional,omitempty"`
+}
+
 type TargetClusterExternalClusterInitParameters struct {
 
-	// (String) List of bootstrap servers to connect to cluster.
+	// (String). List of bootstrap servers to connect to cluster.
 	// List of bootstrap servers to connect to cluster.
 	BootstrapServers *string `json:"bootstrapServers,omitempty" tf:"bootstrap_servers,omitempty"`
 
-	// (String) Type of SASL authentification mechanism to use.
+	// (String). Type of SASL authentification mechanism to use.
 	// Type of SASL authentification mechanism to use.
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
 
-	// (String, Sensitive) Password to use in SASL authentification mechanism
+	// (String). Password to use in SASL authentification mechanism
 	// Password to use in SASL authentification mechanism
 	SaslPasswordSecretRef *v1.LocalSecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
 
-	// (String) Username to use in SASL authentification mechanism.
+	// (String). Username to use in SASL authentification mechanism.
 	// Username to use in SASL authentification mechanism.
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
 
-	// (String) Security protocol to use.
+	// (String). Security protocol to use.
 	// Security protocol to use.
 	SecurityProtocol *string `json:"securityProtocol,omitempty" tf:"security_protocol,omitempty"`
 }
 
 type TargetClusterExternalClusterObservation struct {
 
-	// (String) List of bootstrap servers to connect to cluster.
+	// (String). List of bootstrap servers to connect to cluster.
 	// List of bootstrap servers to connect to cluster.
 	BootstrapServers *string `json:"bootstrapServers,omitempty" tf:"bootstrap_servers,omitempty"`
 
-	// (String) Type of SASL authentification mechanism to use.
+	// (String). Type of SASL authentification mechanism to use.
 	// Type of SASL authentification mechanism to use.
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
 
-	// (String) Username to use in SASL authentification mechanism.
+	// (String). Username to use in SASL authentification mechanism.
 	// Username to use in SASL authentification mechanism.
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
 
-	// (String) Security protocol to use.
+	// (String). Security protocol to use.
 	// Security protocol to use.
 	SecurityProtocol *string `json:"securityProtocol,omitempty" tf:"security_protocol,omitempty"`
 }
 
 type TargetClusterExternalClusterParameters struct {
 
-	// (String) List of bootstrap servers to connect to cluster.
+	// (String). List of bootstrap servers to connect to cluster.
 	// List of bootstrap servers to connect to cluster.
 	// +kubebuilder:validation:Optional
 	BootstrapServers *string `json:"bootstrapServers" tf:"bootstrap_servers,omitempty"`
 
-	// (String) Type of SASL authentification mechanism to use.
+	// (String). Type of SASL authentification mechanism to use.
 	// Type of SASL authentification mechanism to use.
 	// +kubebuilder:validation:Optional
 	SaslMechanism *string `json:"saslMechanism,omitempty" tf:"sasl_mechanism,omitempty"`
 
-	// (String, Sensitive) Password to use in SASL authentification mechanism
+	// (String). Password to use in SASL authentification mechanism
 	// Password to use in SASL authentification mechanism
 	// +kubebuilder:validation:Optional
 	SaslPasswordSecretRef *v1.LocalSecretKeySelector `json:"saslPasswordSecretRef,omitempty" tf:"-"`
 
-	// (String) Username to use in SASL authentification mechanism.
+	// (String). Username to use in SASL authentification mechanism.
 	// Username to use in SASL authentification mechanism.
 	// +kubebuilder:validation:Optional
 	SaslUsername *string `json:"saslUsername,omitempty" tf:"sasl_username,omitempty"`
 
-	// (String) Security protocol to use.
+	// (String). Security protocol to use.
 	// Security protocol to use.
 	// +kubebuilder:validation:Optional
 	SecurityProtocol *string `json:"securityProtocol,omitempty" tf:"security_protocol,omitempty"`
@@ -543,47 +1001,47 @@ type TargetClusterExternalClusterParameters struct {
 
 type TargetClusterInitParameters struct {
 
-	// (String) Name of the cluster. Used also as a topic prefix.
+	// (String). Name of the cluster. Used also as a topic prefix.
 	// Name of the cluster. Used also as a topic prefix.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (Block List) Connection settings for external cluster. (see below for nested schema)
+	// [Block]. Connection settings for external cluster.
 	// Connection settings for external cluster.
 	ExternalCluster []TargetClusterExternalClusterInitParameters `json:"externalCluster,omitempty" tf:"external_cluster,omitempty"`
 
-	// (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+	// [Block]. Using this section in the cluster definition (source or target) means it's this cluster.
 	// Using this section in the cluster definition (source or target) means it's this cluster.
 	ThisCluster []TargetClusterThisClusterInitParameters `json:"thisCluster,omitempty" tf:"this_cluster,omitempty"`
 }
 
 type TargetClusterObservation struct {
 
-	// (String) Name of the cluster. Used also as a topic prefix.
+	// (String). Name of the cluster. Used also as a topic prefix.
 	// Name of the cluster. Used also as a topic prefix.
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (Block List) Connection settings for external cluster. (see below for nested schema)
+	// [Block]. Connection settings for external cluster.
 	// Connection settings for external cluster.
 	ExternalCluster []TargetClusterExternalClusterObservation `json:"externalCluster,omitempty" tf:"external_cluster,omitempty"`
 
-	// (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+	// [Block]. Using this section in the cluster definition (source or target) means it's this cluster.
 	// Using this section in the cluster definition (source or target) means it's this cluster.
 	ThisCluster []TargetClusterThisClusterParameters `json:"thisCluster,omitempty" tf:"this_cluster,omitempty"`
 }
 
 type TargetClusterParameters struct {
 
-	// (String) Name of the cluster. Used also as a topic prefix.
+	// (String). Name of the cluster. Used also as a topic prefix.
 	// Name of the cluster. Used also as a topic prefix.
 	// +kubebuilder:validation:Optional
 	Alias *string `json:"alias,omitempty" tf:"alias,omitempty"`
 
-	// (Block List) Connection settings for external cluster. (see below for nested schema)
+	// [Block]. Connection settings for external cluster.
 	// Connection settings for external cluster.
 	// +kubebuilder:validation:Optional
 	ExternalCluster []TargetClusterExternalClusterParameters `json:"externalCluster,omitempty" tf:"external_cluster,omitempty"`
 
-	// (Block List) Using this section in the cluster definition (source or target) means it's this cluster. (see below for nested schema)
+	// [Block]. Using this section in the cluster definition (source or target) means it's this cluster.
 	// Using this section in the cluster definition (source or target) means it's this cluster.
 	// +kubebuilder:validation:Optional
 	ThisCluster []TargetClusterThisClusterParameters `json:"thisCluster,omitempty" tf:"this_cluster,omitempty"`
@@ -634,7 +1092,7 @@ type KafkaConnectorStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// KafkaConnector is the Schema for the KafkaConnectors API. Manages a connectors of a Kafka cluster within Yandex Cloud.
+// KafkaConnector is the Schema for the KafkaConnectors API. Manages the yandex_mdb_kafka_connector resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

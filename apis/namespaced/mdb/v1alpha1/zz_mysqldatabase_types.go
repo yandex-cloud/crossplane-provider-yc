@@ -30,7 +30,7 @@ import (
 
 type MySQLDatabaseInitParameters struct {
 
-	// (String) The MySQL cluster ID.
+	// (String). The MySQL cluster ID.
 	// The MySQL cluster ID.
 	// +crossplane:generate:reference:type=MySQLCluster
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
@@ -43,28 +43,28 @@ type MySQLDatabaseInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.NamespacedSelector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// (String) The name of the database.
+	// (String). The name of the database.
 	// The name of the database.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type MySQLDatabaseObservation struct {
 
-	// (String) The MySQL cluster ID.
+	// (String). The MySQL cluster ID.
 	// The MySQL cluster ID.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) The name of the database.
+	// (String). The name of the database.
 	// The name of the database.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type MySQLDatabaseParameters struct {
 
-	// (String) The MySQL cluster ID.
+	// (String). The MySQL cluster ID.
 	// The MySQL cluster ID.
 	// +crossplane:generate:reference:type=MySQLCluster
 	// +kubebuilder:validation:Optional
@@ -78,7 +78,7 @@ type MySQLDatabaseParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.NamespacedSelector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// (String) The name of the database.
+	// (String). The name of the database.
 	// The name of the database.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
@@ -111,7 +111,7 @@ type MySQLDatabaseStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// MySQLDatabase is the Schema for the MySQLDatabases API. Manages a MySQL database within Yandex Cloud.
+// MySQLDatabase is the Schema for the MySQLDatabases API. Manages the yandex_mdb_mysql_database resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

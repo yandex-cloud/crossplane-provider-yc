@@ -30,7 +30,7 @@ import (
 
 type RouteTableInitParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -47,16 +47,16 @@ type RouteTableInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) ID of the network this route table belongs to.
+	// (String). ID of the network this route table belongs to.
 	// ID of the network this route table belongs to.
 	// +crossplane:generate:reference:type=Network
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -69,7 +69,7 @@ type RouteTableInitParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.NamespacedSelector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// (Block Set) A list of static route records for the route table.
+	// [Block]. A list of static route records for the route table.
 	// A list of static route records for the route table.
 	//
 	// ~> Only one of `next_hop_address` or `gateway_id` should be specified.
@@ -78,11 +78,11 @@ type RouteTableInitParameters struct {
 
 type RouteTableObservation struct {
 
-	// (String) The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
 	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -90,23 +90,23 @@ type RouteTableObservation struct {
 	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) ID of the network this route table belongs to.
+	// (String). ID of the network this route table belongs to.
 	// ID of the network this route table belongs to.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// (Block Set) A list of static route records for the route table.
+	// [Block]. A list of static route records for the route table.
 	// A list of static route records for the route table.
 	//
 	// ~> Only one of `next_hop_address` or `gateway_id` should be specified.
@@ -115,7 +115,7 @@ type RouteTableObservation struct {
 
 type RouteTableParameters struct {
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -134,18 +134,18 @@ type RouteTableParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) ID of the network this route table belongs to.
+	// (String). ID of the network this route table belongs to.
 	// ID of the network this route table belongs to.
 	// +crossplane:generate:reference:type=Network
 	// +kubebuilder:validation:Optional
@@ -159,7 +159,7 @@ type RouteTableParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.NamespacedSelector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// (Block Set) A list of static route records for the route table.
+	// [Block]. A list of static route records for the route table.
 	// A list of static route records for the route table.
 	//
 	// ~> Only one of `next_hop_address` or `gateway_id` should be specified.
@@ -169,11 +169,11 @@ type RouteTableParameters struct {
 
 type StaticRouteInitParameters struct {
 
-	// (String) Route prefix in CIDR notation.
+	// (String). Route prefix in CIDR notation.
 	// Route prefix in CIDR notation.
 	DestinationPrefix *string `json:"destinationPrefix,omitempty" tf:"destination_prefix,omitempty"`
 
-	// (String) ID of the gateway used ad next hop.
+	// (String). ID of the gateway used ad next hop.
 	// ID of the gateway used ad next hop.
 	// +crossplane:generate:reference:type=Gateway
 	GatewayID *string `json:"gatewayId,omitempty" tf:"gateway_id,omitempty"`
@@ -186,34 +186,34 @@ type StaticRouteInitParameters struct {
 	// +kubebuilder:validation:Optional
 	GatewayIDSelector *v1.NamespacedSelector `json:"gatewayIdSelector,omitempty" tf:"-"`
 
-	// (String) Address of the next hop.
+	// (String). Address of the next hop.
 	// Address of the next hop.
 	NextHopAddress *string `json:"nextHopAddress,omitempty" tf:"next_hop_address,omitempty"`
 }
 
 type StaticRouteObservation struct {
 
-	// (String) Route prefix in CIDR notation.
+	// (String). Route prefix in CIDR notation.
 	// Route prefix in CIDR notation.
 	DestinationPrefix *string `json:"destinationPrefix,omitempty" tf:"destination_prefix,omitempty"`
 
-	// (String) ID of the gateway used ad next hop.
+	// (String). ID of the gateway used ad next hop.
 	// ID of the gateway used ad next hop.
 	GatewayID *string `json:"gatewayId,omitempty" tf:"gateway_id,omitempty"`
 
-	// (String) Address of the next hop.
+	// (String). Address of the next hop.
 	// Address of the next hop.
 	NextHopAddress *string `json:"nextHopAddress,omitempty" tf:"next_hop_address,omitempty"`
 }
 
 type StaticRouteParameters struct {
 
-	// (String) Route prefix in CIDR notation.
+	// (String). Route prefix in CIDR notation.
 	// Route prefix in CIDR notation.
 	// +kubebuilder:validation:Optional
 	DestinationPrefix *string `json:"destinationPrefix,omitempty" tf:"destination_prefix,omitempty"`
 
-	// (String) ID of the gateway used ad next hop.
+	// (String). ID of the gateway used ad next hop.
 	// ID of the gateway used ad next hop.
 	// +crossplane:generate:reference:type=Gateway
 	// +kubebuilder:validation:Optional
@@ -227,7 +227,7 @@ type StaticRouteParameters struct {
 	// +kubebuilder:validation:Optional
 	GatewayIDSelector *v1.NamespacedSelector `json:"gatewayIdSelector,omitempty" tf:"-"`
 
-	// (String) Address of the next hop.
+	// (String). Address of the next hop.
 	// Address of the next hop.
 	// +kubebuilder:validation:Optional
 	NextHopAddress *string `json:"nextHopAddress,omitempty" tf:"next_hop_address,omitempty"`
@@ -260,7 +260,7 @@ type RouteTableStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// RouteTable is the Schema for the RouteTables API. A VPC route table is a virtual version of the traditional route table on router device.
+// RouteTable is the Schema for the RouteTables API. Manages the yandex_vpc_route_table resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -30,7 +30,11 @@ import (
 
 type MongodbUserInitParameters struct {
 
-	// (String) The ID of the cluster to which user belongs to.
+	// (String). The authentication type of the user. Either PASSWORD (default) or IAM.
+	// The authentication type of the user. Either `PASSWORD` (default) or `IAM`.
+	AuthType *string `json:"authType,omitempty" tf:"auth_type,omitempty"`
+
+	// (String). The ID of the cluster to which user belongs to.
 	// The ID of the cluster to which user belongs to.
 	// +crossplane:generate:reference:type=MongodbCluster
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
@@ -43,40 +47,63 @@ type MongodbUserInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.NamespacedSelector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// (String) The name of the user.
+	// (Bool). Inhibits deletion of the user.
+	// Inhibits deletion of the user.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// (String). The name of the user.
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String, Sensitive) The password of the user.
-	// The password of the user.
-	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	// (String). The password of the user. Required for users with PASSWORD authentication and must be omitted for users with IAM authentication.
+	// The password of the user. Required for users with `PASSWORD` authentication and must be omitted for users with `IAM` authentication.
+	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
-	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
 	Permission []MongodbUserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+
+	// [Block].
+	Timeouts *MongodbUserTimeoutsInitParameters `json:"timeouts,omitempty" tf:"timeouts,omitempty"`
 }
 
 type MongodbUserObservation struct {
 
-	// (String) The ID of the cluster to which user belongs to.
+	// (String). The authentication type of the user. Either PASSWORD (default) or IAM.
+	// The authentication type of the user. Either `PASSWORD` (default) or `IAM`.
+	AuthType *string `json:"authType,omitempty" tf:"auth_type,omitempty"`
+
+	// (String). The ID of the cluster to which user belongs to.
 	// The ID of the cluster to which user belongs to.
 	ClusterID *string `json:"clusterId,omitempty" tf:"cluster_id,omitempty"`
 
-	// (String) The resource identifier.
+	// (Bool). Inhibits deletion of the user.
+	// Inhibits deletion of the user.
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// Only) (String). The resource identifier.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) The name of the user.
+	// (String). The name of the user.
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
 	Permission []MongodbUserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
+
+	// [Block].
+	Timeouts *MongodbUserTimeoutsObservation `json:"timeouts,omitempty" tf:"timeouts,omitempty"`
 }
 
 type MongodbUserParameters struct {
 
-	// (String) The ID of the cluster to which user belongs to.
+	// (String). The authentication type of the user. Either PASSWORD (default) or IAM.
+	// The authentication type of the user. Either `PASSWORD` (default) or `IAM`.
+	// +kubebuilder:validation:Optional
+	AuthType *string `json:"authType,omitempty" tf:"auth_type,omitempty"`
+
+	// (String). The ID of the cluster to which user belongs to.
 	// The ID of the cluster to which user belongs to.
 	// +crossplane:generate:reference:type=MongodbCluster
 	// +kubebuilder:validation:Optional
@@ -90,29 +117,38 @@ type MongodbUserParameters struct {
 	// +kubebuilder:validation:Optional
 	ClusterIDSelector *v1.NamespacedSelector `json:"clusterIdSelector,omitempty" tf:"-"`
 
-	// (String) The name of the user.
+	// (Bool). Inhibits deletion of the user.
+	// Inhibits deletion of the user.
+	// +kubebuilder:validation:Optional
+	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
+
+	// (String). The name of the user.
 	// The name of the user.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String, Sensitive) The password of the user.
-	// The password of the user.
+	// (String). The password of the user. Required for users with PASSWORD authentication and must be omitted for users with IAM authentication.
+	// The password of the user. Required for users with `PASSWORD` authentication and must be omitted for users with `IAM` authentication.
 	// +kubebuilder:validation:Optional
-	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
+	PasswordSecretRef *v1.LocalSecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
 
-	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
 	// +kubebuilder:validation:Optional
 	Permission []MongodbUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
+
+	// [Block].
+	// +kubebuilder:validation:Optional
+	Timeouts *MongodbUserTimeoutsParameters `json:"timeouts,omitempty" tf:"timeouts,omitempty"`
 }
 
 type MongodbUserPermissionInitParameters struct {
 
-	// (String) The name of the database that the permission grants access to.
+	// (String). The name of the database that the permission grants access to.
 	// The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 
-	// (Set of String) The roles of the user in this database. For more information see the official documentation.
+	// (Set Of String). The roles of the user in this database. For more information see the official documentation.
 	// The roles of the user in this database. For more information see [the official documentation](https://yandex.cloud/docs/managed-mongodb/concepts/users-and-roles).
 	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
@@ -120,11 +156,11 @@ type MongodbUserPermissionInitParameters struct {
 
 type MongodbUserPermissionObservation struct {
 
-	// (String) The name of the database that the permission grants access to.
+	// (String). The name of the database that the permission grants access to.
 	// The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 
-	// (Set of String) The roles of the user in this database. For more information see the official documentation.
+	// (Set Of String). The roles of the user in this database. For more information see the official documentation.
 	// The roles of the user in this database. For more information see [the official documentation](https://yandex.cloud/docs/managed-mongodb/concepts/users-and-roles).
 	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
@@ -132,16 +168,64 @@ type MongodbUserPermissionObservation struct {
 
 type MongodbUserPermissionParameters struct {
 
-	// (String) The name of the database that the permission grants access to.
+	// (String). The name of the database that the permission grants access to.
 	// The name of the database that the permission grants access to.
 	// +kubebuilder:validation:Optional
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 
-	// (Set of String) The roles of the user in this database. For more information see the official documentation.
+	// (Set Of String). The roles of the user in this database. For more information see the official documentation.
 	// The roles of the user in this database. For more information see [the official documentation](https://yandex.cloud/docs/managed-mongodb/concepts/users-and-roles).
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
+}
+
+type MongodbUserTimeoutsInitParameters struct {
+
+	// (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	// A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	Create *string `json:"create,omitempty" tf:"create,omitempty"`
+
+	// (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+	// A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+	Delete *string `json:"delete,omitempty" tf:"delete,omitempty"`
+
+	// (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	// A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	Update *string `json:"update,omitempty" tf:"update,omitempty"`
+}
+
+type MongodbUserTimeoutsObservation struct {
+
+	// (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	// A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	Create *string `json:"create,omitempty" tf:"create,omitempty"`
+
+	// (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+	// A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+	Delete *string `json:"delete,omitempty" tf:"delete,omitempty"`
+
+	// (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	// A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	Update *string `json:"update,omitempty" tf:"update,omitempty"`
+}
+
+type MongodbUserTimeoutsParameters struct {
+
+	// (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	// A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	// +kubebuilder:validation:Optional
+	Create *string `json:"create,omitempty" tf:"create,omitempty"`
+
+	// (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+	// A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs.
+	// +kubebuilder:validation:Optional
+	Delete *string `json:"delete,omitempty" tf:"delete,omitempty"`
+
+	// (String). A string that can be parsed as a duration consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	// A string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as "30s" or "2h45m". Valid time units are "s" (seconds), "m" (minutes), "h" (hours).
+	// +kubebuilder:validation:Optional
+	Update *string `json:"update,omitempty" tf:"update,omitempty"`
 }
 
 // MongodbUserSpec defines the desired state of MongodbUser
@@ -171,7 +255,7 @@ type MongodbUserStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// MongodbUser is the Schema for the MongodbUsers API. Manages a MongoDB User within Yandex Cloud.
+// MongodbUser is the Schema for the MongodbUsers API. Manages the yandex_mdb_mongodb_user resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -181,7 +265,6 @@ type MongodbUser struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.passwordSecretRef)",message="spec.forProvider.passwordSecretRef is a required parameter"
 	Spec   MongodbUserSpec   `json:"spec"`
 	Status MongodbUserStatus `json:"status,omitempty"`
 }

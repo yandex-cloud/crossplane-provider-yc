@@ -68,6 +68,11 @@ func (in *RecordsetInitParameters) DeepCopyInto(out *RecordsetInitParameters) {
 			}
 		}
 	}
+	if in.Description != nil {
+		in, out := &in.Description, &out.Description
+		*out = new(string)
+		**out = **in
+	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name
 		*out = new(string)
@@ -156,6 +161,11 @@ func (in *RecordsetObservation) DeepCopyInto(out *RecordsetObservation) {
 			}
 		}
 	}
+	if in.Description != nil {
+		in, out := &in.Description, &out.Description
+		*out = new(string)
+		**out = **in
+	}
 	if in.ID != nil {
 		in, out := &in.ID, &out.ID
 		*out = new(string)
@@ -206,6 +216,11 @@ func (in *RecordsetParameters) DeepCopyInto(out *RecordsetParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.Description != nil {
+		in, out := &in.Description, &out.Description
+		*out = new(string)
+		**out = **in
 	}
 	if in.Name != nil {
 		in, out := &in.Name, &out.Name

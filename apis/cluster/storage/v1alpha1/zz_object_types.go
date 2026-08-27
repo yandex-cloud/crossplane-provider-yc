@@ -29,13 +29,13 @@ import (
 
 type ObjectInitParameters struct {
 
-	// (String) The predefined ACL to apply. Defaults to private.
+	// (String). The predefined ACL to apply. Defaults to private.
 	// The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`.
 	//
 	// ~> To change ACL after creation, the service account to which used access and secret keys correspond should have `storage.admin` role, though this role is not necessary to be able to create an object with any ACL.
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
-	// (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+	// (String). The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	// The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/iam/v1alpha1.ServiceAccountStaticAccessKey
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/cluster/storage.ExtractAccessKey()
@@ -49,7 +49,7 @@ type ObjectInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AccessKeySelector *v1.Selector `json:"accessKeySelector,omitempty" tf:"-"`
 
-	// (String) The name of the containing bucket.
+	// (String). The name of the containing bucket.
 	// The name of the containing bucket.
 	// +crossplane:generate:reference:type=Bucket
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
@@ -74,35 +74,35 @@ type ObjectInitParameters struct {
 	// A standard MIME type describing the format of the object data, e.g. `application/octet-stream`. All Valid MIME Types are valid for this input.
 	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
 
-	// (String) The name of the object once it is in the bucket.
+	// (String). The name of the object once it is in the bucket.
 	// The name of the object once it is in the bucket.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// (String) Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
+	// (String). Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
 	// Specifies a [legal hold status](https://yandex.cloud/docs/storage/concepts/object-lock#types) of an object. Requires `object_lock_configuration` to be enabled on a bucket.
 	ObjectLockLegalHoldStatus *string `json:"objectLockLegalHoldStatus,omitempty" tf:"object_lock_legal_hold_status,omitempty"`
 
-	// (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
+	// (String). Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
 	// Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`. It must be set simultaneously with `object_lock_retain_until_date`. Requires `object_lock_configuration` to be enabled on a bucket.
 	ObjectLockMode *string `json:"objectLockMode,omitempty" tf:"object_lock_mode,omitempty"`
 
-	// (String) Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
+	// (String). Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
 	// Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with `object_lock_mode`. Requires `object_lock_configuration` to be enabled on a bucket.
 	ObjectLockRetainUntilDate *string `json:"objectLockRetainUntilDate,omitempty" tf:"object_lock_retain_until_date,omitempty"`
 
-	// (String, Sensitive) The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
+	// (String). The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	// The secret key to use when applying changes. This value can also be provided as `storage_secret_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
 	SecretKeySecretRef *v1.SecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
 
-	// (String) The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
+	// (String). The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
 	// The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with `content` and `content_base64`.
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 
-	// (String) Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
+	// (String). Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
 	// Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
 	SourceHash *string `json:"sourceHash,omitempty" tf:"source_hash,omitempty"`
 
-	// (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+	// (Map Of String). The tags object for setting tags (or labels) for bucket. See Tags for more information.
 	// The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -110,17 +110,17 @@ type ObjectInitParameters struct {
 
 type ObjectObservation struct {
 
-	// (String) The predefined ACL to apply. Defaults to private.
+	// (String). The predefined ACL to apply. Defaults to private.
 	// The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`.
 	//
 	// ~> To change ACL after creation, the service account to which used access and secret keys correspond should have `storage.admin` role, though this role is not necessary to be able to create an object with any ACL.
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
-	// (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+	// (String). The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	// The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
 
-	// (String) The name of the containing bucket.
+	// (String). The name of the containing bucket.
 	// The name of the containing bucket.
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
@@ -136,34 +136,34 @@ type ObjectObservation struct {
 	// A standard MIME type describing the format of the object data, e.g. `application/octet-stream`. All Valid MIME Types are valid for this input.
 	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) The name of the object once it is in the bucket.
+	// (String). The name of the object once it is in the bucket.
 	// The name of the object once it is in the bucket.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// (String) Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
+	// (String). Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
 	// Specifies a [legal hold status](https://yandex.cloud/docs/storage/concepts/object-lock#types) of an object. Requires `object_lock_configuration` to be enabled on a bucket.
 	ObjectLockLegalHoldStatus *string `json:"objectLockLegalHoldStatus,omitempty" tf:"object_lock_legal_hold_status,omitempty"`
 
-	// (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
+	// (String). Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
 	// Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`. It must be set simultaneously with `object_lock_retain_until_date`. Requires `object_lock_configuration` to be enabled on a bucket.
 	ObjectLockMode *string `json:"objectLockMode,omitempty" tf:"object_lock_mode,omitempty"`
 
-	// (String) Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
+	// (String). Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
 	// Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with `object_lock_mode`. Requires `object_lock_configuration` to be enabled on a bucket.
 	ObjectLockRetainUntilDate *string `json:"objectLockRetainUntilDate,omitempty" tf:"object_lock_retain_until_date,omitempty"`
 
-	// (String) The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
+	// (String). The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
 	// The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with `content` and `content_base64`.
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 
-	// (String) Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
+	// (String). Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
 	// Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
 	SourceHash *string `json:"sourceHash,omitempty" tf:"source_hash,omitempty"`
 
-	// (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+	// (Map Of String). The tags object for setting tags (or labels) for bucket. See Tags for more information.
 	// The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -171,14 +171,14 @@ type ObjectObservation struct {
 
 type ObjectParameters struct {
 
-	// (String) The predefined ACL to apply. Defaults to private.
+	// (String). The predefined ACL to apply. Defaults to private.
 	// The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`.
 	//
 	// ~> To change ACL after creation, the service account to which used access and secret keys correspond should have `storage.admin` role, though this role is not necessary to be able to create an object with any ACL.
 	// +kubebuilder:validation:Optional
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
-	// (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+	// (String). The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	// The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/cluster/iam/v1alpha1.ServiceAccountStaticAccessKey
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/cluster/storage.ExtractAccessKey()
@@ -193,7 +193,7 @@ type ObjectParameters struct {
 	// +kubebuilder:validation:Optional
 	AccessKeySelector *v1.Selector `json:"accessKeySelector,omitempty" tf:"-"`
 
-	// (String) The name of the containing bucket.
+	// (String). The name of the containing bucket.
 	// The name of the containing bucket.
 	// +crossplane:generate:reference:type=Bucket
 	// +kubebuilder:validation:Optional
@@ -222,42 +222,42 @@ type ObjectParameters struct {
 	// +kubebuilder:validation:Optional
 	ContentType *string `json:"contentType,omitempty" tf:"content_type,omitempty"`
 
-	// (String) The name of the object once it is in the bucket.
+	// (String). The name of the object once it is in the bucket.
 	// The name of the object once it is in the bucket.
 	// +kubebuilder:validation:Optional
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// (String) Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
+	// (String). Specifies a legal hold status of an object. Requires object_lock_configuration to be enabled on a bucket.
 	// Specifies a [legal hold status](https://yandex.cloud/docs/storage/concepts/object-lock#types) of an object. Requires `object_lock_configuration` to be enabled on a bucket.
 	// +kubebuilder:validation:Optional
 	ObjectLockLegalHoldStatus *string `json:"objectLockLegalHoldStatus,omitempty" tf:"object_lock_legal_hold_status,omitempty"`
 
-	// (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
+	// (String). Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"]. It must be set simultaneously with object_lock_retain_until_date. Requires object_lock_configuration to be enabled on a bucket.
 	// Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`. It must be set simultaneously with `object_lock_retain_until_date`. Requires `object_lock_configuration` to be enabled on a bucket.
 	// +kubebuilder:validation:Optional
 	ObjectLockMode *string `json:"objectLockMode,omitempty" tf:"object_lock_mode,omitempty"`
 
-	// (String) Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
+	// (String). Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with object_lock_mode. Requires object_lock_configuration to be enabled on a bucket.
 	// Specifies date and time in RTC3339 format until which an object is to be locked. It must be set simultaneously with `object_lock_mode`. Requires `object_lock_configuration` to be enabled on a bucket.
 	// +kubebuilder:validation:Optional
 	ObjectLockRetainUntilDate *string `json:"objectLockRetainUntilDate,omitempty" tf:"object_lock_retain_until_date,omitempty"`
 
-	// (String, Sensitive) The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
+	// (String). The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	// The secret key to use when applying changes. This value can also be provided as `storage_secret_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
 	// +kubebuilder:validation:Optional
 	SecretKeySecretRef *v1.SecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
 
-	// (String) The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
+	// (String). The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with content and content_base64.
 	// The path to a file that will be read and uploaded as raw bytes for the object content. Conflicts with `content` and `content_base64`.
 	// +kubebuilder:validation:Optional
 	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 
-	// (String) Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
+	// (String). Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
 	// Used to trigger object update when the source content changes. So the only meaningful value is `filemd5("path/to/source"). The value is only stored in state and not saved by Yandex Storage.
 	// +kubebuilder:validation:Optional
 	SourceHash *string `json:"sourceHash,omitempty" tf:"source_hash,omitempty"`
 
-	// (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+	// (Map Of String). The tags object for setting tags (or labels) for bucket. See Tags for more information.
 	// The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
@@ -291,7 +291,7 @@ type ObjectStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Object is the Schema for the Objects API. Allows management of a Yandex Cloud Storage Object.
+// Object is the Schema for the Objects API. Manages the yandex_storage_object resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

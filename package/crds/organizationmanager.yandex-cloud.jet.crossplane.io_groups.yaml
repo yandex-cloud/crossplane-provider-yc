@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: groups.organizationmanager.yandex-cloud.jet.crossplane.io
 spec:
   group: organizationmanager.yandex-cloud.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Group is the Schema for the Groups API. Allows management of
-          a single Group within an existing Yandex Cloud Organization.
+        description: Group is the Schema for the Groups API. Manages the yandex_organizationmanager_group
+          resource.
         properties:
           apiVersion:
             description: |-
@@ -75,18 +75,32 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      Only) (String). The resource description.
+                      Description of the group.
                     type: string
+                  groupId:
+                    description: |-
+                      (String). ID of a Group.
+                      ID of the Group resource to return.
+                      To get the group ID, use a [GroupService.List] request.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map Of String). Resource labels as key:value pairs.
+                      Resource labels as `key:value` pairs.
+                    type: object
+                    x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the group.
                     type: string
                   organizationId:
                     description: |-
-                      (String) The organization to attach this Group to.
-                      The organization to attach this Group to.
+                      (String). Organization that the Group belongs to. If value is omitted, the default provider organization is used.
+                      ID of the organization that the group belongs to.
                     type: string
                 type: object
               initProvider:
@@ -104,18 +118,32 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      Only) (String). The resource description.
+                      Description of the group.
                     type: string
+                  groupId:
+                    description: |-
+                      (String). ID of a Group.
+                      ID of the Group resource to return.
+                      To get the group ID, use a [GroupService.List] request.
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map Of String). Resource labels as key:value pairs.
+                      Resource labels as `key:value` pairs.
+                    type: object
+                    x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the group.
                     type: string
                   organizationId:
                     description: |-
-                      (String) The organization to attach this Group to.
-                      The organization to attach this Group to.
+                      (String). Organization that the Group belongs to. If value is omitted, the default provider organization is used.
+                      ID of the organization that the group belongs to.
                     type: string
                 type: object
               managementPolicies:
@@ -220,26 +248,40 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
-                      The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
+                      Creation timestamp.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
-                      The resource description.
+                      Only) (String). The resource description.
+                      Description of the group.
+                    type: string
+                  groupId:
+                    description: |-
+                      (String). ID of a Group.
+                      ID of the Group resource to return.
+                      To get the group ID, use a [GroupService.List] request.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      (Map Of String). Resource labels as key:value pairs.
+                      Resource labels as `key:value` pairs.
+                    type: object
+                    x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the group.
                     type: string
                   organizationId:
                     description: |-
-                      (String) The organization to attach this Group to.
-                      The organization to attach this Group to.
+                      (String). Organization that the Group belongs to. If value is omitted, the default provider organization is used.
+                      ID of the organization that the group belongs to.
                     type: string
                 type: object
               conditions:

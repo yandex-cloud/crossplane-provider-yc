@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: clusters.kubernetes.yandex-cloud.jet.crossplane.io
 spec:
   group: kubernetes.yandex-cloud.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Cluster is the Schema for the Clusters API. Allows management
-          of Yandex Kubernetes Cluster.
+        description: Cluster is the Schema for the Clusters API. Manages the yandex_kubernetes_cluster
+          resource.
         properties:
           apiVersion:
             description: |-
@@ -75,17 +75,17 @@ spec:
                 properties:
                   clusterIpv4Range:
                     description: |-
-                      (String) CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
+                      (String). CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
                       CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
                     type: string
                   clusterIpv6Range:
                     description: |-
-                      (String) Identical to cluster_ipv4_range but for IPv6 protocol.
+                      (String). Identical to cluster_ipv4_range but for IPv6 protocol.
                       Identical to `cluster_ipv4_range` but for IPv6 protocol.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -171,13 +171,13 @@ spec:
                     type: object
                   kmsProvider:
                     description: |-
-                      (Block List, Max: 1) Cluster KMS provider parameters. (see below for nested schema)
+                      [Block]. Cluster KMS provider parameters.
                       Cluster KMS provider parameters.
                     items:
                       properties:
                         keyId:
                           description: |-
-                            (String) KMS key ID.
+                            (String). KMS key ID.
                             KMS key ID.
                           type: string
                         keyIdRef:
@@ -262,24 +262,24 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   master:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Kubernetes master configuration options. (see below for nested schema)
+                      [Block]. Kubernetes master configuration options.
                       Kubernetes master configuration options.
                     items:
                       properties:
                         etcdClusterSize:
                           description: |-
-                            (Number) Number of etcd clusters that will be used for the Kubernetes master.
+                            (Number). Number of etcd clusters that will be used for the Kubernetes master.
                             Number of etcd clusters that will be used for the Kubernetes master.
                           type: number
                         externalV6Address:
                           description: |-
-                            (String) An IPv6 external network address that is assigned to the master.
+                            (String). An IPv6 external network address that is assigned to the master.
                             An IPv6 external network address that is assigned to the master.
                           type: string
                         index:
@@ -289,37 +289,34 @@ spec:
                           type: string
                         maintenancePolicy:
                           description: |-
-                            >1.30) should be performed manually. (see below for nested schema)
+                            >1.30) should be performed manually.
                             Maintenance policy for Kubernetes master. If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.29. Minor version upgrades (e.g. 1.29->1.30) should be performed manually.
                           items:
                             properties:
                               autoUpgrade:
                                 description: |-
-                                  (Boolean) Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
+                                  (Bool). Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
                                   Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
                                 type: boolean
                               maintenanceWindow:
                                 description: |-
-                                  (Block Set) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
+                                  [Block]. This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
                                   This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, `start_time` and `duration`. Please see `zonal_cluster_resource_name` config example.
 
                                   To allow maintenance only on specific days of week, please provide list of elements, with all fields set. Only one time interval (`duration`) is allowed for each day of week. Please see `regional_cluster_resource_name` config example
                                 items:
                                   properties:
                                     day:
-                                      description: |-
-                                        (String) The day of the week which you want to update.
-                                        The day of the week which you want to update.
+                                      description: The day of the week which you want
+                                        to update.
                                       type: string
                                     duration:
-                                      description: |-
-                                        (String) The duration of the day of week you want to update.
-                                        The duration of the day of week you want to update.
+                                      description: The duration of the day of week
+                                        you want to update.
                                       type: string
                                     startTime:
-                                      description: |-
-                                        (String) The start time of the day of week you want to update.
-                                        The start time of the day of week you want to update.
+                                      description: The start time of the day of week
+                                        you want to update.
                                       type: string
                                   type: object
                                 type: array
@@ -327,25 +324,25 @@ spec:
                           type: array
                         masterLocation:
                           description: |-
-                            (Block List) Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated in place. When creating regional cluster (three master instances), its region will be evaluated automatically by backend. (see below for nested schema)
+                            [Block]. Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated in place. When creating regional cluster (three master instances), its region will be evaluated automatically by backend.
                             Cluster master's instances locations array (zone and subnet). Cannot be used together with `zonal` or `regional`. Currently, supports either one, for zonal master, or three instances of `master_location`. Can be updated in place. When creating regional cluster (three master instances), its `region` will be evaluated automatically by backend.
                           items:
                             properties:
                               subnetId:
                                 description: |-
-                                  (String) ID of the subnet.
+                                  (String). ID of the subnet.
                                   ID of the subnet.
                                 type: string
                               zone:
                                 description: |-
-                                  (String) ID of the availability zone.
+                                  (String). ID of the availability zone.
                                   ID of the availability zone.
                                 type: string
                             type: object
                           type: array
                         masterLogging:
                           description: |-
-                            (Block List, Max: 1) Master Logging options. (see below for nested schema)
+                            [Block]. Master Logging options.
                             Master Logging options.
                           items:
                             properties:
@@ -361,14 +358,14 @@ spec:
                                 type: boolean
                               enabled:
                                 description: |-
-                                  (Boolean) Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+                                  (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
                                   Boolean flag that specifies if master components logs should be sent to [Yandex Cloud Logging](https://yandex.cloud/docs/logging/). The exact components that will send their logs must be configured via the options described below.
 
                                   ~> Only one of `log_group_id` or `folder_id` (or none) may be specified. If `log_group_id` is specified, logs will be sent to this specific Log group. If `folder_id` is specified, logs will be sent to **default** Log group of this folder. If none of two is specified, logs will be sent to **default** Log group of the **same** folder as Kubernetes cluster.
                                 type: boolean
                               eventsEnabled:
                                 description: |-
-                                  (Boolean) Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
+                                  (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
                                   Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
                                 type: boolean
                               folderId:
@@ -378,36 +375,36 @@ spec:
                                 type: string
                               kubeApiserverEnabled:
                                 description: |-
-                                  apiserver logs should be sent to Yandex Cloud Logging.
+                                  (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
                                   Boolean flag that specifies if kube-apiserver logs should be sent to Yandex Cloud Logging.
                                 type: boolean
                               logGroupId:
                                 description: |-
-                                  (String) Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
+                                  Only) (String). Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
                                   ID of the Yandex Cloud Logging [Log group](https://yandex.cloud/docs/logging/concepts/log-group).
                                 type: string
                             type: object
                           type: array
                         publicIp:
                           description: |-
-                            (Boolean) When true, Kubernetes master will have visible ipv4 address.
+                            (Bool). When true, Kubernetes master will have visible ipv4 address.
                             When `true`, Kubernetes master will have visible ipv4 address.
                           type: boolean
                         regional:
                           description: |-
-                            (Block List, Max: 1) Initialize parameters for Regional Master (highly available master). (see below for nested schema)
+                            [Block]. Initialize parameters for Regional Master (highly available master).
                             Initialize parameters for Regional Master (highly available master).
                           items:
                             properties:
                               location:
                                 description: |-
-                                  (Block List) Array of locations, where master instances will be allocated. (see below for nested schema)
+                                  [Block]. Array of locations, where master instances will be allocated.
                                   Array of locations, where master instances will be allocated.
                                 items:
                                   properties:
                                     subnetId:
                                       description: |-
-                                        (String) ID of the subnet.
+                                        (String). ID of the subnet.
                                         ID of the subnet.
                                       type: string
                                     subnetIdRef:
@@ -488,7 +485,7 @@ spec:
                                       type: object
                                     zone:
                                       description: |-
-                                        (String) ID of the availability zone.
+                                        (String). ID of the availability zone.
                                         ID of the availability zone.
                                       type: string
                                   type: object
@@ -502,19 +499,19 @@ spec:
                           type: array
                         scalePolicy:
                           description: |-
-                            (Block List, Max: 1) Scale policy of the master. (see below for nested schema)
+                            [Block]. Scale policy of the master.
                             Scale policy of the master.
                           items:
                             properties:
                               autoScale:
                                 description: |-
-                                  (Block List, Max: 1) Autoscaled master instance resources. (see below for nested schema)
+                                  [Block]. Autoscaled master instance resources.
                                   Autoscaled master instance resources.
                                 items:
                                   properties:
                                     minResourcePresetId:
                                       description: |-
-                                        (String) Minimal resource preset ID.
+                                        (String). Minimal resource preset ID.
                                         Minimal resource preset ID.
                                       type: string
                                   type: object
@@ -523,7 +520,7 @@ spec:
                           type: array
                         securityGroupIds:
                           description: |-
-                            (Set of String) The list of security groups applied to resource or their components.
+                            (Set Of String). The list of security groups applied to resource or their components.
                             The list of security groups applied to resource or their components.
                           items:
                             type: string
@@ -610,18 +607,18 @@ spec:
                           type: object
                         version:
                           description: |-
-                            (String) Version of Kubernetes that will be used for master.
+                            (String). Version of Kubernetes that will be used for master.
                             Version of Kubernetes that will be used for master.
                           type: string
                         zonal:
                           description: |-
-                            (Block List, Max: 1) Initialize parameters for Zonal Master (single node master). (see below for nested schema)
+                            [Block]. Initialize parameters for Zonal Master (single node master).
                             Initialize parameters for Zonal Master (single node master).
                           items:
                             properties:
                               subnetId:
                                 description: |-
-                                  (String) ID of the subnet.
+                                  (String). ID of the subnet.
                                   ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
                                 type: string
                               subnetIdRef:
@@ -702,7 +699,7 @@ spec:
                                 type: object
                               zone:
                                 description: |-
-                                  (String) ID of the availability zone.
+                                  (String). ID of the availability zone.
                                   ID of the availability zone.
                                 type: string
                             type: object
@@ -714,12 +711,12 @@ spec:
                     x-kubernetes-list-type: map
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkId:
                     description: |-
-                      (String) The ID of the cluster network.
+                      (String). The ID of the cluster network.
                       The ID of the cluster network.
                     type: string
                   networkIdRef:
@@ -798,13 +795,13 @@ spec:
                     type: object
                   networkImplementation:
                     description: |-
-                      (Block List, Max: 1) Network Implementation options. (see below for nested schema)
+                      [Block]. Network Implementation options.
                       Network Implementation options.
                     items:
                       properties:
                         cilium:
                           description: |-
-                            (Block List, Max: 1) Cilium network implementation configuration. No options exist. (see below for nested schema)
+                            [Block]. Cilium network implementation configuration. No options exist.
                             Cilium network implementation configuration. No options exist.
                           items:
                             type: object
@@ -813,17 +810,17 @@ spec:
                     type: array
                   networkPolicyProvider:
                     description: |-
-                      (String) Network policy provider for the cluster. Possible values: CALICO.
+                      (String). Network policy provider for the cluster. Possible values: CALICO.
                       Network policy provider for the cluster. Possible values: `CALICO`.
                     type: string
                   nodeIpv4CidrMaskSize:
                     description: |-
-                      (Number) Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
+                      (Number). Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
                       Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
                     type: number
                   nodeServiceAccountId:
                     description: |-
-                      (String) Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
+                      (String). Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
                       Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
                     type: string
                   nodeServiceAccountIdRef:
@@ -904,12 +901,12 @@ spec:
                     type: object
                   releaseChannel:
                     description: |-
-                      (String) Cluster release channel.
+                      (String). Cluster release channel.
                       Cluster release channel.
                     type: string
                   serviceAccountId:
                     description: |-
-                      (String) Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
+                      (String). Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
                       Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have `edit` role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
                     type: string
                   serviceAccountIdRef:
@@ -990,14 +987,27 @@ spec:
                     type: object
                   serviceIpv4Range:
                     description: |-
-                      (String) CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
+                      (String). CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
                       CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
                     type: string
                   serviceIpv6Range:
                     description: |-
-                      (String) Identical to service_ipv4_range but for IPv6 protocol.
+                      (String). Identical to service_ipv4_range but for IPv6 protocol.
                       Identical to service_ipv4_range but for IPv6 protocol.
                     type: string
+                  workloadIdentityFederation:
+                    description: |-
+                      [Block]. Workload Identity Federation configuration.
+                      Workload Identity Federation configuration.
+                    items:
+                      properties:
+                        enabled:
+                          description: |-
+                            (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+                            Identifies whether Workload Identity Federation is enabled.
+                          type: boolean
+                      type: object
+                    type: array
                 type: object
               initProvider:
                 description: |-
@@ -1014,17 +1024,17 @@ spec:
                 properties:
                   clusterIpv4Range:
                     description: |-
-                      (String) CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
+                      (String). CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
                       CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
                     type: string
                   clusterIpv6Range:
                     description: |-
-                      (String) Identical to cluster_ipv4_range but for IPv6 protocol.
+                      (String). Identical to cluster_ipv4_range but for IPv6 protocol.
                       Identical to `cluster_ipv4_range` but for IPv6 protocol.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -1110,13 +1120,13 @@ spec:
                     type: object
                   kmsProvider:
                     description: |-
-                      (Block List, Max: 1) Cluster KMS provider parameters. (see below for nested schema)
+                      [Block]. Cluster KMS provider parameters.
                       Cluster KMS provider parameters.
                     items:
                       properties:
                         keyId:
                           description: |-
-                            (String) KMS key ID.
+                            (String). KMS key ID.
                             KMS key ID.
                           type: string
                         keyIdRef:
@@ -1201,24 +1211,24 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   master:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Kubernetes master configuration options. (see below for nested schema)
+                      [Block]. Kubernetes master configuration options.
                       Kubernetes master configuration options.
                     items:
                       properties:
                         etcdClusterSize:
                           description: |-
-                            (Number) Number of etcd clusters that will be used for the Kubernetes master.
+                            (Number). Number of etcd clusters that will be used for the Kubernetes master.
                             Number of etcd clusters that will be used for the Kubernetes master.
                           type: number
                         externalV6Address:
                           description: |-
-                            (String) An IPv6 external network address that is assigned to the master.
+                            (String). An IPv6 external network address that is assigned to the master.
                             An IPv6 external network address that is assigned to the master.
                           type: string
                         index:
@@ -1228,37 +1238,34 @@ spec:
                           type: string
                         maintenancePolicy:
                           description: |-
-                            >1.30) should be performed manually. (see below for nested schema)
+                            >1.30) should be performed manually.
                             Maintenance policy for Kubernetes master. If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.29. Minor version upgrades (e.g. 1.29->1.30) should be performed manually.
                           items:
                             properties:
                               autoUpgrade:
                                 description: |-
-                                  (Boolean) Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
+                                  (Bool). Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
                                   Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
                                 type: boolean
                               maintenanceWindow:
                                 description: |-
-                                  (Block Set) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
+                                  [Block]. This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
                                   This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, `start_time` and `duration`. Please see `zonal_cluster_resource_name` config example.
 
                                   To allow maintenance only on specific days of week, please provide list of elements, with all fields set. Only one time interval (`duration`) is allowed for each day of week. Please see `regional_cluster_resource_name` config example
                                 items:
                                   properties:
                                     day:
-                                      description: |-
-                                        (String) The day of the week which you want to update.
-                                        The day of the week which you want to update.
+                                      description: The day of the week which you want
+                                        to update.
                                       type: string
                                     duration:
-                                      description: |-
-                                        (String) The duration of the day of week you want to update.
-                                        The duration of the day of week you want to update.
+                                      description: The duration of the day of week
+                                        you want to update.
                                       type: string
                                     startTime:
-                                      description: |-
-                                        (String) The start time of the day of week you want to update.
-                                        The start time of the day of week you want to update.
+                                      description: The start time of the day of week
+                                        you want to update.
                                       type: string
                                   type: object
                                 type: array
@@ -1266,25 +1273,25 @@ spec:
                           type: array
                         masterLocation:
                           description: |-
-                            (Block List) Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated in place. When creating regional cluster (three master instances), its region will be evaluated automatically by backend. (see below for nested schema)
+                            [Block]. Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated in place. When creating regional cluster (three master instances), its region will be evaluated automatically by backend.
                             Cluster master's instances locations array (zone and subnet). Cannot be used together with `zonal` or `regional`. Currently, supports either one, for zonal master, or three instances of `master_location`. Can be updated in place. When creating regional cluster (three master instances), its `region` will be evaluated automatically by backend.
                           items:
                             properties:
                               subnetId:
                                 description: |-
-                                  (String) ID of the subnet.
+                                  (String). ID of the subnet.
                                   ID of the subnet.
                                 type: string
                               zone:
                                 description: |-
-                                  (String) ID of the availability zone.
+                                  (String). ID of the availability zone.
                                   ID of the availability zone.
                                 type: string
                             type: object
                           type: array
                         masterLogging:
                           description: |-
-                            (Block List, Max: 1) Master Logging options. (see below for nested schema)
+                            [Block]. Master Logging options.
                             Master Logging options.
                           items:
                             properties:
@@ -1300,14 +1307,14 @@ spec:
                                 type: boolean
                               enabled:
                                 description: |-
-                                  (Boolean) Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+                                  (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
                                   Boolean flag that specifies if master components logs should be sent to [Yandex Cloud Logging](https://yandex.cloud/docs/logging/). The exact components that will send their logs must be configured via the options described below.
 
                                   ~> Only one of `log_group_id` or `folder_id` (or none) may be specified. If `log_group_id` is specified, logs will be sent to this specific Log group. If `folder_id` is specified, logs will be sent to **default** Log group of this folder. If none of two is specified, logs will be sent to **default** Log group of the **same** folder as Kubernetes cluster.
                                 type: boolean
                               eventsEnabled:
                                 description: |-
-                                  (Boolean) Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
+                                  (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
                                   Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
                                 type: boolean
                               folderId:
@@ -1317,36 +1324,36 @@ spec:
                                 type: string
                               kubeApiserverEnabled:
                                 description: |-
-                                  apiserver logs should be sent to Yandex Cloud Logging.
+                                  (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
                                   Boolean flag that specifies if kube-apiserver logs should be sent to Yandex Cloud Logging.
                                 type: boolean
                               logGroupId:
                                 description: |-
-                                  (String) Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
+                                  Only) (String). Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
                                   ID of the Yandex Cloud Logging [Log group](https://yandex.cloud/docs/logging/concepts/log-group).
                                 type: string
                             type: object
                           type: array
                         publicIp:
                           description: |-
-                            (Boolean) When true, Kubernetes master will have visible ipv4 address.
+                            (Bool). When true, Kubernetes master will have visible ipv4 address.
                             When `true`, Kubernetes master will have visible ipv4 address.
                           type: boolean
                         regional:
                           description: |-
-                            (Block List, Max: 1) Initialize parameters for Regional Master (highly available master). (see below for nested schema)
+                            [Block]. Initialize parameters for Regional Master (highly available master).
                             Initialize parameters for Regional Master (highly available master).
                           items:
                             properties:
                               location:
                                 description: |-
-                                  (Block List) Array of locations, where master instances will be allocated. (see below for nested schema)
+                                  [Block]. Array of locations, where master instances will be allocated.
                                   Array of locations, where master instances will be allocated.
                                 items:
                                   properties:
                                     subnetId:
                                       description: |-
-                                        (String) ID of the subnet.
+                                        (String). ID of the subnet.
                                         ID of the subnet.
                                       type: string
                                     subnetIdRef:
@@ -1427,7 +1434,7 @@ spec:
                                       type: object
                                     zone:
                                       description: |-
-                                        (String) ID of the availability zone.
+                                        (String). ID of the availability zone.
                                         ID of the availability zone.
                                       type: string
                                   type: object
@@ -1441,19 +1448,19 @@ spec:
                           type: array
                         scalePolicy:
                           description: |-
-                            (Block List, Max: 1) Scale policy of the master. (see below for nested schema)
+                            [Block]. Scale policy of the master.
                             Scale policy of the master.
                           items:
                             properties:
                               autoScale:
                                 description: |-
-                                  (Block List, Max: 1) Autoscaled master instance resources. (see below for nested schema)
+                                  [Block]. Autoscaled master instance resources.
                                   Autoscaled master instance resources.
                                 items:
                                   properties:
                                     minResourcePresetId:
                                       description: |-
-                                        (String) Minimal resource preset ID.
+                                        (String). Minimal resource preset ID.
                                         Minimal resource preset ID.
                                       type: string
                                   type: object
@@ -1462,7 +1469,7 @@ spec:
                           type: array
                         securityGroupIds:
                           description: |-
-                            (Set of String) The list of security groups applied to resource or their components.
+                            (Set Of String). The list of security groups applied to resource or their components.
                             The list of security groups applied to resource or their components.
                           items:
                             type: string
@@ -1549,18 +1556,18 @@ spec:
                           type: object
                         version:
                           description: |-
-                            (String) Version of Kubernetes that will be used for master.
+                            (String). Version of Kubernetes that will be used for master.
                             Version of Kubernetes that will be used for master.
                           type: string
                         zonal:
                           description: |-
-                            (Block List, Max: 1) Initialize parameters for Zonal Master (single node master). (see below for nested schema)
+                            [Block]. Initialize parameters for Zonal Master (single node master).
                             Initialize parameters for Zonal Master (single node master).
                           items:
                             properties:
                               subnetId:
                                 description: |-
-                                  (String) ID of the subnet.
+                                  (String). ID of the subnet.
                                   ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
                                 type: string
                               subnetIdRef:
@@ -1641,7 +1648,7 @@ spec:
                                 type: object
                               zone:
                                 description: |-
-                                  (String) ID of the availability zone.
+                                  (String). ID of the availability zone.
                                   ID of the availability zone.
                                 type: string
                             type: object
@@ -1653,12 +1660,12 @@ spec:
                     x-kubernetes-list-type: map
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkId:
                     description: |-
-                      (String) The ID of the cluster network.
+                      (String). The ID of the cluster network.
                       The ID of the cluster network.
                     type: string
                   networkIdRef:
@@ -1737,13 +1744,13 @@ spec:
                     type: object
                   networkImplementation:
                     description: |-
-                      (Block List, Max: 1) Network Implementation options. (see below for nested schema)
+                      [Block]. Network Implementation options.
                       Network Implementation options.
                     items:
                       properties:
                         cilium:
                           description: |-
-                            (Block List, Max: 1) Cilium network implementation configuration. No options exist. (see below for nested schema)
+                            [Block]. Cilium network implementation configuration. No options exist.
                             Cilium network implementation configuration. No options exist.
                           items:
                             type: object
@@ -1752,17 +1759,17 @@ spec:
                     type: array
                   networkPolicyProvider:
                     description: |-
-                      (String) Network policy provider for the cluster. Possible values: CALICO.
+                      (String). Network policy provider for the cluster. Possible values: CALICO.
                       Network policy provider for the cluster. Possible values: `CALICO`.
                     type: string
                   nodeIpv4CidrMaskSize:
                     description: |-
-                      (Number) Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
+                      (Number). Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
                       Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
                     type: number
                   nodeServiceAccountId:
                     description: |-
-                      (String) Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
+                      (String). Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
                       Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
                     type: string
                   nodeServiceAccountIdRef:
@@ -1843,12 +1850,12 @@ spec:
                     type: object
                   releaseChannel:
                     description: |-
-                      (String) Cluster release channel.
+                      (String). Cluster release channel.
                       Cluster release channel.
                     type: string
                   serviceAccountId:
                     description: |-
-                      (String) Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
+                      (String). Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
                       Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have `edit` role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
                     type: string
                   serviceAccountIdRef:
@@ -1929,14 +1936,27 @@ spec:
                     type: object
                   serviceIpv4Range:
                     description: |-
-                      (String) CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
+                      (String). CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
                       CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
                     type: string
                   serviceIpv6Range:
                     description: |-
-                      (String) Identical to service_ipv4_range but for IPv6 protocol.
+                      (String). Identical to service_ipv4_range but for IPv6 protocol.
                       Identical to service_ipv4_range but for IPv6 protocol.
                     type: string
+                  workloadIdentityFederation:
+                    description: |-
+                      [Block]. Workload Identity Federation configuration.
+                      Workload Identity Federation configuration.
+                    items:
+                      properties:
+                        enabled:
+                          description: |-
+                            (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+                            Identifies whether Workload Identity Federation is enabled.
+                          type: boolean
+                      type: object
+                    type: array
                 type: object
               managementPolicies:
                 default:
@@ -2036,22 +2056,22 @@ spec:
                 properties:
                   clusterIpv4Range:
                     description: |-
-                      (String) CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
+                      (String). CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
                       CIDR block. IP range for allocating pod addresses. It should not overlap with any subnet in the network the Kubernetes cluster located in. Static routes will be set up for this CIDR blocks in node subnets.
                     type: string
                   clusterIpv6Range:
                     description: |-
-                      (String) Identical to cluster_ipv4_range but for IPv6 protocol.
+                      (String). Identical to cluster_ipv4_range but for IPv6 protocol.
                       Identical to `cluster_ipv4_range` but for IPv6 protocol.
                     type: string
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
                       The creation timestamp of the resource.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -2061,21 +2081,21 @@ spec:
                     type: string
                   health:
                     description: |-
-                      (String) Health of the Kubernetes cluster.
+                      Only) (String). Health of the Kubernetes cluster.
                       Health of the Kubernetes cluster.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   kmsProvider:
                     description: |-
-                      (Block List, Max: 1) Cluster KMS provider parameters. (see below for nested schema)
+                      [Block]. Cluster KMS provider parameters.
                       Cluster KMS provider parameters.
                     items:
                       properties:
                         keyId:
                           description: |-
-                            (String) KMS key ID.
+                            (String). KMS key ID.
                             KMS key ID.
                           type: string
                       type: object
@@ -2084,99 +2104,95 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   logGroupId:
                     description: |-
-                      (String) Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
+                      Only) (String). Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
                       Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
                     type: string
                   master:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Kubernetes master configuration options. (see below for nested schema)
+                      [Block]. Kubernetes master configuration options.
                       Kubernetes master configuration options.
                     items:
                       properties:
                         clusterCaCertificate:
                           description: |-
-                            encoded public certificate that is the root of trust for the Kubernetes cluster.
+                            Only) (String). PEM-encoded public certificate that is the root of trust for the Kubernetes cluster.
                             PEM-encoded public certificate that is the root of trust for the Kubernetes cluster.
                           type: string
                         etcdClusterSize:
                           description: |-
-                            (Number) Number of etcd clusters that will be used for the Kubernetes master.
+                            (Number). Number of etcd clusters that will be used for the Kubernetes master.
                             Number of etcd clusters that will be used for the Kubernetes master.
                           type: number
                         externalV4Address:
                           description: |-
-                            (String) An IPv4 external network address that is assigned to the master.
+                            Only) (String). An IPv4 external network address that is assigned to the master.
                             An IPv4 external network address that is assigned to the master.
                           type: string
                         externalV4Endpoint:
                           description: |-
-                            (String) External endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
+                            Only) (String). External endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
                             External endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
                           type: string
                         externalV6Address:
                           description: |-
-                            (String) An IPv6 external network address that is assigned to the master.
+                            (String). An IPv6 external network address that is assigned to the master.
                             An IPv6 external network address that is assigned to the master.
                           type: string
                         externalV6Endpoint:
                           description: |-
-                            (String) External IPv6 endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
+                            Only) (String). External IPv6 endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
                             External IPv6 endpoint that can be used to access Kubernetes cluster API from the internet (outside of the cloud).
                           type: string
                         index:
-                          default: default
                           description: This is an injected field with a default value
                             for being able to merge items of the parent object list.
                           type: string
                         internalV4Address:
                           description: |-
-                            (String) An IPv4 internal network address that is assigned to the master.
+                            Only) (String). An IPv4 internal network address that is assigned to the master.
                             An IPv4 internal network address that is assigned to the master.
                           type: string
                         internalV4Endpoint:
                           description: |-
-                            (String) Internal endpoint that can be used to connect to the master from cloud networks.
+                            Only) (String). Internal endpoint that can be used to connect to the master from cloud networks.
                             Internal endpoint that can be used to connect to the master from cloud networks.
                           type: string
                         maintenancePolicy:
                           description: |-
-                            >1.30) should be performed manually. (see below for nested schema)
+                            >1.30) should be performed manually.
                             Maintenance policy for Kubernetes master. If policy is omitted, automatic revision upgrades of the kubernetes master are enabled and could happen at any time. Revision upgrades are performed only within the same minor version, e.g. 1.29. Minor version upgrades (e.g. 1.29->1.30) should be performed manually.
                           items:
                             properties:
                               autoUpgrade:
                                 description: |-
-                                  (Boolean) Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
+                                  (Bool). Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
                                   Boolean flag that specifies if master can be upgraded automatically. When omitted, default value is TRUE.
                                 type: boolean
                               maintenanceWindow:
                                 description: |-
-                                  (Block Set) This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
+                                  [Block]. This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, start_time and duration. Please see zonal_cluster_resource_name config example.
                                   This structure specifies maintenance window, when update for master is allowed. When omitted, it defaults to any time. To specify time of day interval, for all days, one element should be provided, with two fields set, `start_time` and `duration`. Please see `zonal_cluster_resource_name` config example.
 
                                   To allow maintenance only on specific days of week, please provide list of elements, with all fields set. Only one time interval (`duration`) is allowed for each day of week. Please see `regional_cluster_resource_name` config example
                                 items:
                                   properties:
                                     day:
-                                      description: |-
-                                        (String) The day of the week which you want to update.
-                                        The day of the week which you want to update.
+                                      description: The day of the week which you want
+                                        to update.
                                       type: string
                                     duration:
-                                      description: |-
-                                        (String) The duration of the day of week you want to update.
-                                        The duration of the day of week you want to update.
+                                      description: The duration of the day of week
+                                        you want to update.
                                       type: string
                                     startTime:
-                                      description: |-
-                                        (String) The start time of the day of week you want to update.
-                                        The start time of the day of week you want to update.
+                                      description: The start time of the day of week
+                                        you want to update.
                                       type: string
                                   type: object
                                 type: array
@@ -2184,25 +2200,25 @@ spec:
                           type: array
                         masterLocation:
                           description: |-
-                            (Block List) Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated in place. When creating regional cluster (three master instances), its region will be evaluated automatically by backend. (see below for nested schema)
+                            [Block]. Cluster master's instances locations array (zone and subnet). Cannot be used together with zonal or regional. Currently, supports either one, for zonal master, or three instances of master_location. Can be updated in place. When creating regional cluster (three master instances), its region will be evaluated automatically by backend.
                             Cluster master's instances locations array (zone and subnet). Cannot be used together with `zonal` or `regional`. Currently, supports either one, for zonal master, or three instances of `master_location`. Can be updated in place. When creating regional cluster (three master instances), its `region` will be evaluated automatically by backend.
                           items:
                             properties:
                               subnetId:
                                 description: |-
-                                  (String) ID of the subnet.
+                                  (String). ID of the subnet.
                                   ID of the subnet.
                                 type: string
                               zone:
                                 description: |-
-                                  (String) ID of the availability zone.
+                                  (String). ID of the availability zone.
                                   ID of the availability zone.
                                 type: string
                             type: object
                           type: array
                         masterLogging:
                           description: |-
-                            (Block List, Max: 1) Master Logging options. (see below for nested schema)
+                            [Block]. Master Logging options.
                             Master Logging options.
                           items:
                             properties:
@@ -2218,14 +2234,14 @@ spec:
                                 type: boolean
                               enabled:
                                 description: |-
-                                  (Boolean) Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+                                  (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
                                   Boolean flag that specifies if master components logs should be sent to [Yandex Cloud Logging](https://yandex.cloud/docs/logging/). The exact components that will send their logs must be configured via the options described below.
 
                                   ~> Only one of `log_group_id` or `folder_id` (or none) may be specified. If `log_group_id` is specified, logs will be sent to this specific Log group. If `folder_id` is specified, logs will be sent to **default** Log group of this folder. If none of two is specified, logs will be sent to **default** Log group of the **same** folder as Kubernetes cluster.
                                 type: boolean
                               eventsEnabled:
                                 description: |-
-                                  (Boolean) Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
+                                  (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
                                   Boolean flag that specifies if kubernetes cluster events should be sent to Yandex Cloud Logging.
                                 type: boolean
                               folderId:
@@ -2235,41 +2251,41 @@ spec:
                                 type: string
                               kubeApiserverEnabled:
                                 description: |-
-                                  apiserver logs should be sent to Yandex Cloud Logging.
+                                  (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
                                   Boolean flag that specifies if kube-apiserver logs should be sent to Yandex Cloud Logging.
                                 type: boolean
                               logGroupId:
                                 description: |-
-                                  (String) Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
+                                  Only) (String). Log group where cluster stores cluster system logs, like audit, events, or control plane logs.
                                   ID of the Yandex Cloud Logging [Log group](https://yandex.cloud/docs/logging/concepts/log-group).
                                 type: string
                             type: object
                           type: array
                         publicIp:
                           description: |-
-                            (Boolean) When true, Kubernetes master will have visible ipv4 address.
+                            (Bool). When true, Kubernetes master will have visible ipv4 address.
                             When `true`, Kubernetes master will have visible ipv4 address.
                           type: boolean
                         regional:
                           description: |-
-                            (Block List, Max: 1) Initialize parameters for Regional Master (highly available master). (see below for nested schema)
+                            [Block]. Initialize parameters for Regional Master (highly available master).
                             Initialize parameters for Regional Master (highly available master).
                           items:
                             properties:
                               location:
                                 description: |-
-                                  (Block List) Array of locations, where master instances will be allocated. (see below for nested schema)
+                                  [Block]. Array of locations, where master instances will be allocated.
                                   Array of locations, where master instances will be allocated.
                                 items:
                                   properties:
                                     subnetId:
                                       description: |-
-                                        (String) ID of the subnet.
+                                        (String). ID of the subnet.
                                         ID of the subnet.
                                       type: string
                                     zone:
                                       description: |-
-                                        (String) ID of the availability zone.
+                                        (String). ID of the availability zone.
                                         ID of the availability zone.
                                       type: string
                                   type: object
@@ -2283,19 +2299,19 @@ spec:
                           type: array
                         scalePolicy:
                           description: |-
-                            (Block List, Max: 1) Scale policy of the master. (see below for nested schema)
+                            [Block]. Scale policy of the master.
                             Scale policy of the master.
                           items:
                             properties:
                               autoScale:
                                 description: |-
-                                  (Block List, Max: 1) Autoscaled master instance resources. (see below for nested schema)
+                                  [Block]. Autoscaled master instance resources.
                                   Autoscaled master instance resources.
                                 items:
                                   properties:
                                     minResourcePresetId:
                                       description: |-
-                                        (String) Minimal resource preset ID.
+                                        (String). Minimal resource preset ID.
                                         Minimal resource preset ID.
                                       type: string
                                   type: object
@@ -2304,7 +2320,7 @@ spec:
                           type: array
                         securityGroupIds:
                           description: |-
-                            (Set of String) The list of security groups applied to resource or their components.
+                            (Set Of String). The list of security groups applied to resource or their components.
                             The list of security groups applied to resource or their components.
                           items:
                             type: string
@@ -2312,71 +2328,68 @@ spec:
                           x-kubernetes-list-type: set
                         version:
                           description: |-
-                            (String) Version of Kubernetes that will be used for master.
+                            (String). Version of Kubernetes that will be used for master.
                             Version of Kubernetes that will be used for master.
                           type: string
                         versionInfo:
                           description: |-
-                            (List of Object) Information about cluster version. (see below for nested schema)
+                            Only) (List Of Object). Information about cluster version.
                             Information about cluster version.
                           items:
                             properties:
                               currentVersion:
-                                description: (String)
+                                description: .
                                 type: string
                               newRevisionAvailable:
-                                description: (Boolean)
+                                description: .
                                 type: boolean
                               newRevisionSummary:
-                                description: (String)
+                                description: .
                                 type: string
                               versionDeprecated:
-                                description: (Boolean)
+                                description: .
                                 type: boolean
                             type: object
                           type: array
                         zonal:
                           description: |-
-                            (Block List, Max: 1) Initialize parameters for Zonal Master (single node master). (see below for nested schema)
+                            [Block]. Initialize parameters for Zonal Master (single node master).
                             Initialize parameters for Zonal Master (single node master).
                           items:
                             properties:
                               subnetId:
                                 description: |-
-                                  (String) ID of the subnet.
+                                  (String). ID of the subnet.
                                   ID of the subnet. If no ID is specified, and there only one subnet in specified zone, an address in this subnet will be allocated.
                                 type: string
                               zone:
                                 description: |-
-                                  (String) ID of the availability zone.
+                                  (String). ID of the availability zone.
                                   ID of the availability zone.
                                 type: string
                             type: object
                           type: array
                       type: object
                     type: array
-                    x-kubernetes-list-map-keys:
-                    - index
-                    x-kubernetes-list-type: map
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkId:
                     description: |-
-                      (String) The ID of the cluster network.
+                      (String). The ID of the cluster network.
                       The ID of the cluster network.
                     type: string
                   networkImplementation:
                     description: |-
-                      (Block List, Max: 1) Network Implementation options. (see below for nested schema)
+                      [Block]. Network Implementation options.
                       Network Implementation options.
                     items:
                       properties:
                         cilium:
                           description: |-
-                            (Block List, Max: 1) Cilium network implementation configuration. No options exist. (see below for nested schema)
+                            [Block]. Cilium network implementation configuration. No options exist.
                             Cilium network implementation configuration. No options exist.
                           items:
                             type: object
@@ -2385,44 +2398,67 @@ spec:
                     type: array
                   networkPolicyProvider:
                     description: |-
-                      (String) Network policy provider for the cluster. Possible values: CALICO.
+                      (String). Network policy provider for the cluster. Possible values: CALICO.
                       Network policy provider for the cluster. Possible values: `CALICO`.
                     type: string
                   nodeIpv4CidrMaskSize:
                     description: |-
-                      (Number) Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
+                      (Number). Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
                       Size of the masks that are assigned to each node in the cluster. Effectively limits maximum number of pods for each node.
                     type: number
                   nodeServiceAccountId:
                     description: |-
-                      (String) Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
+                      (String). Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
                       Service account to be used by the worker nodes of the Kubernetes cluster to access Container Registry or to push node logs and metrics.
                     type: string
                   releaseChannel:
                     description: |-
-                      (String) Cluster release channel.
+                      (String). Cluster release channel.
                       Cluster release channel.
                     type: string
                   serviceAccountId:
                     description: |-
-                      (String) Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
+                      (String). Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have edit role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
                       Service account to be used for provisioning Compute Cloud and VPC resources for Kubernetes cluster. Selected service account should have `edit` role on the folder where the Kubernetes cluster will be located and on the folder where selected network resides.
                     type: string
                   serviceIpv4Range:
                     description: |-
-                      (String) CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
+                      (String). CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
                       CIDR block. IP range Kubernetes service Kubernetes cluster IP addresses will be allocated from. It should not overlap with any subnet in the network the Kubernetes cluster located in.
                     type: string
                   serviceIpv6Range:
                     description: |-
-                      (String) Identical to service_ipv4_range but for IPv6 protocol.
+                      (String). Identical to service_ipv4_range but for IPv6 protocol.
                       Identical to service_ipv4_range but for IPv6 protocol.
                     type: string
                   status:
                     description: |-
-                      (String) Status of the Kubernetes cluster.
+                      Only) (String). Status of the Kubernetes cluster.
                       Status of the Kubernetes cluster.
                     type: string
+                  workloadIdentityFederation:
+                    description: |-
+                      [Block]. Workload Identity Federation configuration.
+                      Workload Identity Federation configuration.
+                    items:
+                      properties:
+                        enabled:
+                          description: |-
+                            (Bool). Boolean flag that specifies if master components logs should be sent to Yandex Cloud Logging. The exact components that will send their logs must be configured via the options described below.
+                            Identifies whether Workload Identity Federation is enabled.
+                          type: boolean
+                        issuer:
+                          description: |-
+                            Only) (String). Issuer URI for Kubernetes service account tokens.
+                            Issuer URI for Kubernetes service account tokens.
+                          type: string
+                        jwksUri:
+                          description: |-
+                            Only) (String). JSON Web Key Set URI used to verify token signatures.
+                            JSON Web Key Set URI used to verify token signatures.
+                          type: string
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.

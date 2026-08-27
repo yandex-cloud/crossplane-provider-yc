@@ -84,6 +84,11 @@ func (in *OriginGroupInitParameters) DeepCopyInto(out *OriginGroupInitParameters
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.ProviderType != nil {
+		in, out := &in.ProviderType, &out.ProviderType
+		*out = new(string)
+		**out = **in
+	}
 	if in.UseNext != nil {
 		in, out := &in.UseNext, &out.UseNext
 		*out = new(bool)
@@ -158,6 +163,11 @@ func (in *OriginGroupObservation) DeepCopyInto(out *OriginGroupObservation) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.ProviderType != nil {
+		in, out := &in.ProviderType, &out.ProviderType
+		*out = new(string)
+		**out = **in
+	}
 	if in.UseNext != nil {
 		in, out := &in.UseNext, &out.UseNext
 		*out = new(bool)
@@ -204,6 +214,11 @@ func (in *OriginGroupParameters) DeepCopyInto(out *OriginGroupParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.ProviderType != nil {
+		in, out := &in.ProviderType, &out.ProviderType
+		*out = new(string)
+		**out = **in
 	}
 	if in.UseNext != nil {
 		in, out := &in.UseNext, &out.UseNext
@@ -302,7 +317,7 @@ func (in *OriginObservation) DeepCopyInto(out *OriginObservation) {
 	}
 	if in.OriginGroupID != nil {
 		in, out := &in.OriginGroupID, &out.OriginGroupID
-		*out = new(float64)
+		*out = new(string)
 		**out = **in
 	}
 	if in.Source != nil {

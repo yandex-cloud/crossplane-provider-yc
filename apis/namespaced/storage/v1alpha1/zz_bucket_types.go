@@ -30,19 +30,17 @@ import (
 
 type AndInitParameters struct {
 
-	// (Number) Minimum object size to which the rule applies.
 	// Minimum object size to which the rule applies.
 	ObjectSizeGreaterThan *float64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
 
-	// (Number) Maximum object size to which the rule applies.
 	// Maximum object size to which the rule applies.
 	ObjectSizeLessThan *float64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
 
-	// (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+	// (String). Object key prefix identifying one or more objects to which the rule applies.
 	// Object key prefix identifying one or more objects to which the rule applies.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
-	// (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+	// (Map Of String). The tags object for setting tags (or labels) for bucket. See Tags for more information.
 	// The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -50,19 +48,17 @@ type AndInitParameters struct {
 
 type AndObservation struct {
 
-	// (Number) Minimum object size to which the rule applies.
 	// Minimum object size to which the rule applies.
 	ObjectSizeGreaterThan *float64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
 
-	// (Number) Maximum object size to which the rule applies.
 	// Maximum object size to which the rule applies.
 	ObjectSizeLessThan *float64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
 
-	// (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+	// (String). Object key prefix identifying one or more objects to which the rule applies.
 	// Object key prefix identifying one or more objects to which the rule applies.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
-	// (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+	// (Map Of String). The tags object for setting tags (or labels) for bucket. See Tags for more information.
 	// The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
@@ -70,22 +66,20 @@ type AndObservation struct {
 
 type AndParameters struct {
 
-	// (Number) Minimum object size to which the rule applies.
 	// Minimum object size to which the rule applies.
 	// +kubebuilder:validation:Optional
 	ObjectSizeGreaterThan *float64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
 
-	// (Number) Maximum object size to which the rule applies.
 	// Maximum object size to which the rule applies.
 	// +kubebuilder:validation:Optional
 	ObjectSizeLessThan *float64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
 
-	// (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+	// (String). Object key prefix identifying one or more objects to which the rule applies.
 	// Object key prefix identifying one or more objects to which the rule applies.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
-	// (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+	// (Map Of String). The tags object for setting tags (or labels) for bucket. See Tags for more information.
 	// The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
@@ -94,47 +88,47 @@ type AndParameters struct {
 
 type AnonymousAccessFlagsInitParameters struct {
 
-	// (Boolean) Allows to read bucket configuration anonymously.
+	// (Bool). Allows to read bucket configuration anonymously.
 	// Allows to read bucket configuration anonymously.
 	ConfigRead *bool `json:"configRead,omitempty" tf:"config_read,omitempty"`
 
-	// (Boolean) Allows to list object in bucket anonymously.
+	// (Bool). Allows to list object in bucket anonymously.
 	// Allows to list object in bucket anonymously.
 	List *bool `json:"list,omitempty" tf:"list,omitempty"`
 
-	// (Boolean) Allows to read objects in bucket anonymously.
+	// (Bool). Allows to read objects in bucket anonymously.
 	// Allows to read objects in bucket anonymously.
 	Read *bool `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type AnonymousAccessFlagsObservation struct {
 
-	// (Boolean) Allows to read bucket configuration anonymously.
+	// (Bool). Allows to read bucket configuration anonymously.
 	// Allows to read bucket configuration anonymously.
 	ConfigRead *bool `json:"configRead,omitempty" tf:"config_read,omitempty"`
 
-	// (Boolean) Allows to list object in bucket anonymously.
+	// (Bool). Allows to list object in bucket anonymously.
 	// Allows to list object in bucket anonymously.
 	List *bool `json:"list,omitempty" tf:"list,omitempty"`
 
-	// (Boolean) Allows to read objects in bucket anonymously.
+	// (Bool). Allows to read objects in bucket anonymously.
 	// Allows to read objects in bucket anonymously.
 	Read *bool `json:"read,omitempty" tf:"read,omitempty"`
 }
 
 type AnonymousAccessFlagsParameters struct {
 
-	// (Boolean) Allows to read bucket configuration anonymously.
+	// (Bool). Allows to read bucket configuration anonymously.
 	// Allows to read bucket configuration anonymously.
 	// +kubebuilder:validation:Optional
 	ConfigRead *bool `json:"configRead,omitempty" tf:"config_read,omitempty"`
 
-	// (Boolean) Allows to list object in bucket anonymously.
+	// (Bool). Allows to list object in bucket anonymously.
 	// Allows to list object in bucket anonymously.
 	// +kubebuilder:validation:Optional
 	List *bool `json:"list,omitempty" tf:"list,omitempty"`
 
-	// (Boolean) Allows to read objects in bucket anonymously.
+	// (Bool). Allows to read objects in bucket anonymously.
 	// Allows to read objects in bucket anonymously.
 	// +kubebuilder:validation:Optional
 	Read *bool `json:"read,omitempty" tf:"read,omitempty"`
@@ -177,13 +171,13 @@ type ApplyServerSideEncryptionByDefaultParameters struct {
 
 type BucketInitParameters struct {
 
-	// (String, Deprecated) The predefined ACL to apply. Defaults to private. Conflicts with grant.
+	// (String). The predefined ACL to apply. Defaults to private. Conflicts with grant.
 	// The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`. Conflicts with `grant`.
 	//
 	// ~> To change ACL after creation, service account with `storage.admin` role should be used, though this role is not necessary to create a bucket with any ACL.
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
-	// (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+	// (String). The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	// The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/iam/v1alpha1.ServiceAccountStaticAccessKey
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/storage.ExtractAccessKey()
@@ -197,27 +191,31 @@ type BucketInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AccessKeySelector *v1.NamespacedSelector `json:"accessKeySelector,omitempty" tf:"-"`
 
-	// (Block Set, Max: 1) Provides various access to objects. See Bucket Availability for more information. (see below for nested schema)
+	// [Block]. Provides various access to objects. See Bucket Availability for more information.
 	// Provides various access to objects. See [Bucket Availability](https://yandex.cloud/docs/storage/operations/buckets/bucket-availability) for more information.
 	AnonymousAccessFlags []AnonymousAccessFlagsInitParameters `json:"anonymousAccessFlags,omitempty" tf:"anonymous_access_flags,omitempty"`
 
-	// (String) The name of the bucket.
+	// (String). The name of the bucket.
 	// The name of the bucket.
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
-	// (String) Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
+	// (String). Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
 	// Creates a unique bucket name beginning with the specified prefix. Conflicts with `bucket`.
 	BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
 
-	// Origin Resource Sharing (CORS object). (see below for nested schema)
+	// Origin Resource Sharing (CORS object).
 	// A rule of [Cross-Origin Resource Sharing](https://yandex.cloud/docs/storage/concepts/cors) (CORS object).
 	CorsRule []CorsRuleInitParameters `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
 
-	// (String) Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD". See Storage Class for more information.
+	// (String). Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD". See Storage Class for more information.
 	// Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is `"STANDARD"`. See [Storage Class](https://yandex.cloud/docs/storage/concepts/storage-class) for more information.
 	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
 
-	// (String) Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
+	// (Bool). If true, static key authentication in bucket is forbidden. Default is false.
+	// If true, static key authentication in bucket is forbidden. Default is `false`.
+	DisabledStatickeyAuth *bool `json:"disabledStatickeyAuth,omitempty" tf:"disabled_statickey_auth,omitempty"`
+
+	// (String). Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
 	// Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
 	//
 	// ~> It will try to create bucket using `IAM-token`, not using `access keys`.
@@ -232,189 +230,193 @@ type BucketInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Boolean) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable. Default is false.
+	// (Bool).  A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable. Default is false.
 	// A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are *not* recoverable. Default is `false`.
 	ForceDestroy *bool `json:"forceDestroy,omitempty" tf:"force_destroy,omitempty"`
 
-	// (Block Set, Deprecated) An ACL policy grant. Conflicts with acl.
+	// [Block]. An ACL policy grant. Conflicts with acl.
 	// An [ACL policy grant](https://yandex.cloud/docs/storage/concepts/acl#permissions-types). Conflicts with `acl`.
 	//
 	// ~> To manage `grant` argument, service account with `storage.admin` role should be used.
 	Grant []GrantInitParameters `json:"grant,omitempty" tf:"grant,omitempty"`
 
-	// (Block Set, Max: 1) Manages https certificates for bucket. See https for more information. (see below for nested schema)
+	// [Block]. Manages https certificates for bucket. See https for more information.
 	// Manages https certificates for bucket. See [https](https://yandex.cloud/docs/storage/operations/hosting/certificate) for more information.
 	HTTPS []HTTPSInitParameters `json:"https,omitempty" tf:"https,omitempty"`
 
-	// (Block List) A configuration of object lifecycle management. (see below for nested schema)
+	// [Block]. A configuration of object lifecycle management.
 	// A configuration of [object lifecycle management](https://yandex.cloud/docs/storage/concepts/lifecycles).
 	LifecycleRule []LifecycleRuleInitParameters `json:"lifecycleRule,omitempty" tf:"lifecycle_rule,omitempty"`
 
-	// (Block Set) A settings of bucket logging. (see below for nested schema)
+	// [Block]. A settings of bucket logging.
 	// A settings of [bucket logging](https://yandex.cloud/docs/storage/concepts/server-logs).
 	Logging []LoggingInitParameters `json:"logging,omitempty" tf:"logging,omitempty"`
 
-	// (Number) The size of bucket, in bytes. See Size Limiting for more information.
+	// (Number). The size of bucket, in bytes. See Size Limiting for more information.
 	// The size of bucket, in bytes. See [Size Limiting](https://yandex.cloud/docs/storage/operations/buckets/limit-max-volume) for more information.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// (Block List, Max: 1) A configuration of object lock management. (see below for nested schema)
+	// [Block]. A configuration of object lock management.
 	// A configuration of [object lock management](https://yandex.cloud/docs/storage/concepts/object-lock).
 	ObjectLockConfiguration []ObjectLockConfigurationInitParameters `json:"objectLockConfiguration,omitempty" tf:"object_lock_configuration,omitempty"`
 
-	// (String, Deprecated) The policy object should contain the only field with the text of the policy. See policy documentation for more information on policy format.
+	// (String). The policy object should contain the only field with the text of the policy. See policy documentation for more information on policy format.
 	// The `policy` object should contain the only field with the text of the policy. See [policy documentation](https://yandex.cloud/docs/storage/concepts/policy) for more information on policy format.
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
-	// (String, Sensitive) The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
+	// (String). The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	// The secret key to use when applying changes. This value can also be provided as `storage_secret_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
 	SecretKeySecretRef *v1.LocalSecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
 
-	// side encryption for the bucket. (see below for nested schema)
+	// side encryption for the bucket.
 	// A configuration of server-side encryption for the bucket.
 	ServerSideEncryptionConfiguration []ServerSideEncryptionConfigurationInitParameters `json:"serverSideEncryptionConfiguration,omitempty" tf:"server_side_encryption_configuration,omitempty"`
 
-	// (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+	// (Map Of String). The tags object for setting tags (or labels) for bucket. See Tags for more information.
 	// The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// (Block List, Max: 1) A state of versioning.
+	// [Block]. A state of versioning.
 	// A state of [versioning](https://yandex.cloud/docs/storage/concepts/versioning).
 	//
 	// ~> To manage `versioning` argument, service account with `storage.admin` role should be used.
 	Versioning []VersioningInitParameters `json:"versioning,omitempty" tf:"versioning,omitempty"`
 
-	// (Block List, Max: 1) A Website Object (see below for nested schema)
+	// [Block]. A Website Object
 	// A [Website Object](https://yandex.cloud/docs/storage/concepts/hosting)
 	Website []WebsiteInitParameters `json:"website,omitempty" tf:"website,omitempty"`
 
-	// (String) The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+	// (String). The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
 	// The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
 	WebsiteDomain *string `json:"websiteDomain,omitempty" tf:"website_domain,omitempty"`
 
-	// (String) The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+	// (String). The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
 	// The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
 	WebsiteEndpoint *string `json:"websiteEndpoint,omitempty" tf:"website_endpoint,omitempty"`
 }
 
 type BucketObservation struct {
 
-	// (String, Deprecated) The predefined ACL to apply. Defaults to private. Conflicts with grant.
+	// (String). The predefined ACL to apply. Defaults to private. Conflicts with grant.
 	// The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`. Conflicts with `grant`.
 	//
 	// ~> To change ACL after creation, service account with `storage.admin` role should be used, though this role is not necessary to create a bucket with any ACL.
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
-	// (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+	// (String). The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	// The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
 	AccessKey *string `json:"accessKey,omitempty" tf:"access_key,omitempty"`
 
-	// (Block Set, Max: 1) Provides various access to objects. See Bucket Availability for more information. (see below for nested schema)
+	// [Block]. Provides various access to objects. See Bucket Availability for more information.
 	// Provides various access to objects. See [Bucket Availability](https://yandex.cloud/docs/storage/operations/buckets/bucket-availability) for more information.
 	AnonymousAccessFlags []AnonymousAccessFlagsObservation `json:"anonymousAccessFlags,omitempty" tf:"anonymous_access_flags,omitempty"`
 
-	// (String) The name of the bucket.
+	// (String). The name of the bucket.
 	// The name of the bucket.
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
-	// (String) The bucket domain name.
+	// Only) (String). The bucket domain name.
 	// The bucket domain name.
 	BucketDomainName *string `json:"bucketDomainName,omitempty" tf:"bucket_domain_name,omitempty"`
 
-	// (String) Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
+	// (String). Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
 	// Creates a unique bucket name beginning with the specified prefix. Conflicts with `bucket`.
 	BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
 
-	// Origin Resource Sharing (CORS object). (see below for nested schema)
+	// Origin Resource Sharing (CORS object).
 	// A rule of [Cross-Origin Resource Sharing](https://yandex.cloud/docs/storage/concepts/cors) (CORS object).
 	CorsRule []CorsRuleObservation `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
 
-	// (String) Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD". See Storage Class for more information.
+	// (String). Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD". See Storage Class for more information.
 	// Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is `"STANDARD"`. See [Storage Class](https://yandex.cloud/docs/storage/concepts/storage-class) for more information.
 	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
 
-	// (String) Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
+	// (Bool). If true, static key authentication in bucket is forbidden. Default is false.
+	// If true, static key authentication in bucket is forbidden. Default is `false`.
+	DisabledStatickeyAuth *bool `json:"disabledStatickeyAuth,omitempty" tf:"disabled_statickey_auth,omitempty"`
+
+	// (String). Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
 	// Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
 	//
 	// ~> It will try to create bucket using `IAM-token`, not using `access keys`.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (Boolean) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable. Default is false.
+	// (Bool).  A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable. Default is false.
 	// A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are *not* recoverable. Default is `false`.
 	ForceDestroy *bool `json:"forceDestroy,omitempty" tf:"force_destroy,omitempty"`
 
-	// (Block Set, Deprecated) An ACL policy grant. Conflicts with acl.
+	// [Block]. An ACL policy grant. Conflicts with acl.
 	// An [ACL policy grant](https://yandex.cloud/docs/storage/concepts/acl#permissions-types). Conflicts with `acl`.
 	//
 	// ~> To manage `grant` argument, service account with `storage.admin` role should be used.
 	Grant []GrantObservation `json:"grant,omitempty" tf:"grant,omitempty"`
 
-	// (Block Set, Max: 1) Manages https certificates for bucket. See https for more information. (see below for nested schema)
+	// [Block]. Manages https certificates for bucket. See https for more information.
 	// Manages https certificates for bucket. See [https](https://yandex.cloud/docs/storage/operations/hosting/certificate) for more information.
 	HTTPS []HTTPSObservation `json:"https,omitempty" tf:"https,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Block List) A configuration of object lifecycle management. (see below for nested schema)
+	// [Block]. A configuration of object lifecycle management.
 	// A configuration of [object lifecycle management](https://yandex.cloud/docs/storage/concepts/lifecycles).
 	LifecycleRule []LifecycleRuleObservation `json:"lifecycleRule,omitempty" tf:"lifecycle_rule,omitempty"`
 
-	// (Block Set) A settings of bucket logging. (see below for nested schema)
+	// [Block]. A settings of bucket logging.
 	// A settings of [bucket logging](https://yandex.cloud/docs/storage/concepts/server-logs).
 	Logging []LoggingObservation `json:"logging,omitempty" tf:"logging,omitempty"`
 
-	// (Number) The size of bucket, in bytes. See Size Limiting for more information.
+	// (Number). The size of bucket, in bytes. See Size Limiting for more information.
 	// The size of bucket, in bytes. See [Size Limiting](https://yandex.cloud/docs/storage/operations/buckets/limit-max-volume) for more information.
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// (Block List, Max: 1) A configuration of object lock management. (see below for nested schema)
+	// [Block]. A configuration of object lock management.
 	// A configuration of [object lock management](https://yandex.cloud/docs/storage/concepts/object-lock).
 	ObjectLockConfiguration []ObjectLockConfigurationObservation `json:"objectLockConfiguration,omitempty" tf:"object_lock_configuration,omitempty"`
 
-	// (String, Deprecated) The policy object should contain the only field with the text of the policy. See policy documentation for more information on policy format.
+	// (String). The policy object should contain the only field with the text of the policy. See policy documentation for more information on policy format.
 	// The `policy` object should contain the only field with the text of the policy. See [policy documentation](https://yandex.cloud/docs/storage/concepts/policy) for more information on policy format.
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
-	// side encryption for the bucket. (see below for nested schema)
+	// side encryption for the bucket.
 	// A configuration of server-side encryption for the bucket.
 	ServerSideEncryptionConfiguration []ServerSideEncryptionConfigurationObservation `json:"serverSideEncryptionConfiguration,omitempty" tf:"server_side_encryption_configuration,omitempty"`
 
-	// (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+	// (Map Of String). The tags object for setting tags (or labels) for bucket. See Tags for more information.
 	// The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// (Block List, Max: 1) A state of versioning.
+	// [Block]. A state of versioning.
 	// A state of [versioning](https://yandex.cloud/docs/storage/concepts/versioning).
 	//
 	// ~> To manage `versioning` argument, service account with `storage.admin` role should be used.
 	Versioning []VersioningObservation `json:"versioning,omitempty" tf:"versioning,omitempty"`
 
-	// (Block List, Max: 1) A Website Object (see below for nested schema)
+	// [Block]. A Website Object
 	// A [Website Object](https://yandex.cloud/docs/storage/concepts/hosting)
 	Website []WebsiteObservation `json:"website,omitempty" tf:"website,omitempty"`
 
-	// (String) The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+	// (String). The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
 	// The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
 	WebsiteDomain *string `json:"websiteDomain,omitempty" tf:"website_domain,omitempty"`
 
-	// (String) The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+	// (String). The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
 	// The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
 	WebsiteEndpoint *string `json:"websiteEndpoint,omitempty" tf:"website_endpoint,omitempty"`
 }
 
 type BucketParameters struct {
 
-	// (String, Deprecated) The predefined ACL to apply. Defaults to private. Conflicts with grant.
+	// (String). The predefined ACL to apply. Defaults to private. Conflicts with grant.
 	// The [predefined ACL](https://yandex.cloud/docs/storage/concepts/acl#predefined_acls) to apply. Defaults to `private`. Conflicts with `grant`.
 	//
 	// ~> To change ACL after creation, service account with `storage.admin` role should be used, though this role is not necessary to create a bucket with any ACL.
 	// +kubebuilder:validation:Optional
 	ACL *string `json:"acl,omitempty" tf:"acl,omitempty"`
 
-	// (String) The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
+	// (String). The access key to use when applying changes. This value can also be provided as storage_access_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	// The access key to use when applying changes. This value can also be provided as `storage_access_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/iam/v1alpha1.ServiceAccountStaticAccessKey
 	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/storage.ExtractAccessKey()
@@ -429,32 +431,37 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	AccessKeySelector *v1.NamespacedSelector `json:"accessKeySelector,omitempty" tf:"-"`
 
-	// (Block Set, Max: 1) Provides various access to objects. See Bucket Availability for more information. (see below for nested schema)
+	// [Block]. Provides various access to objects. See Bucket Availability for more information.
 	// Provides various access to objects. See [Bucket Availability](https://yandex.cloud/docs/storage/operations/buckets/bucket-availability) for more information.
 	// +kubebuilder:validation:Optional
 	AnonymousAccessFlags []AnonymousAccessFlagsParameters `json:"anonymousAccessFlags,omitempty" tf:"anonymous_access_flags,omitempty"`
 
-	// (String) The name of the bucket.
+	// (String). The name of the bucket.
 	// The name of the bucket.
 	// +kubebuilder:validation:Optional
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
-	// (String) Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
+	// (String). Creates a unique bucket name beginning with the specified prefix. Conflicts with bucket.
 	// Creates a unique bucket name beginning with the specified prefix. Conflicts with `bucket`.
 	// +kubebuilder:validation:Optional
 	BucketPrefix *string `json:"bucketPrefix,omitempty" tf:"bucket_prefix,omitempty"`
 
-	// Origin Resource Sharing (CORS object). (see below for nested schema)
+	// Origin Resource Sharing (CORS object).
 	// A rule of [Cross-Origin Resource Sharing](https://yandex.cloud/docs/storage/concepts/cors) (CORS object).
 	// +kubebuilder:validation:Optional
 	CorsRule []CorsRuleParameters `json:"corsRule,omitempty" tf:"cors_rule,omitempty"`
 
-	// (String) Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD". See Storage Class for more information.
+	// (String). Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is "STANDARD". See Storage Class for more information.
 	// Storage class which is used for storing objects by default. Available values are: "STANDARD", "COLD", "ICE". Default is `"STANDARD"`. See [Storage Class](https://yandex.cloud/docs/storage/concepts/storage-class) for more information.
 	// +kubebuilder:validation:Optional
 	DefaultStorageClass *string `json:"defaultStorageClass,omitempty" tf:"default_storage_class,omitempty"`
 
-	// (String) Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
+	// (Bool). If true, static key authentication in bucket is forbidden. Default is false.
+	// If true, static key authentication in bucket is forbidden. Default is `false`.
+	// +kubebuilder:validation:Optional
+	DisabledStatickeyAuth *bool `json:"disabledStatickeyAuth,omitempty" tf:"disabled_statickey_auth,omitempty"`
+
+	// (String). Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
 	// Allow to create bucket in different folder. In case you are using IAM token from UserAccount, you are needed to explicitly specify folder_id in the resource, as it cannot be identified from such type of account. In case you are using IAM token from ServiceAccount or static access keys, folder_id does not need to be specified unless you want to create the resource in a different folder than the account folder.
 	//
 	// ~> It will try to create bucket using `IAM-token`, not using `access keys`.
@@ -470,82 +477,82 @@ type BucketParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Boolean) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable. Default is false.
+	// (Bool).  A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable. Default is false.
 	// A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are *not* recoverable. Default is `false`.
 	// +kubebuilder:validation:Optional
 	ForceDestroy *bool `json:"forceDestroy,omitempty" tf:"force_destroy,omitempty"`
 
-	// (Block Set, Deprecated) An ACL policy grant. Conflicts with acl.
+	// [Block]. An ACL policy grant. Conflicts with acl.
 	// An [ACL policy grant](https://yandex.cloud/docs/storage/concepts/acl#permissions-types). Conflicts with `acl`.
 	//
 	// ~> To manage `grant` argument, service account with `storage.admin` role should be used.
 	// +kubebuilder:validation:Optional
 	Grant []GrantParameters `json:"grant,omitempty" tf:"grant,omitempty"`
 
-	// (Block Set, Max: 1) Manages https certificates for bucket. See https for more information. (see below for nested schema)
+	// [Block]. Manages https certificates for bucket. See https for more information.
 	// Manages https certificates for bucket. See [https](https://yandex.cloud/docs/storage/operations/hosting/certificate) for more information.
 	// +kubebuilder:validation:Optional
 	HTTPS []HTTPSParameters `json:"https,omitempty" tf:"https,omitempty"`
 
-	// (Block List) A configuration of object lifecycle management. (see below for nested schema)
+	// [Block]. A configuration of object lifecycle management.
 	// A configuration of [object lifecycle management](https://yandex.cloud/docs/storage/concepts/lifecycles).
 	// +kubebuilder:validation:Optional
 	LifecycleRule []LifecycleRuleParameters `json:"lifecycleRule,omitempty" tf:"lifecycle_rule,omitempty"`
 
-	// (Block Set) A settings of bucket logging. (see below for nested schema)
+	// [Block]. A settings of bucket logging.
 	// A settings of [bucket logging](https://yandex.cloud/docs/storage/concepts/server-logs).
 	// +kubebuilder:validation:Optional
 	Logging []LoggingParameters `json:"logging,omitempty" tf:"logging,omitempty"`
 
-	// (Number) The size of bucket, in bytes. See Size Limiting for more information.
+	// (Number). The size of bucket, in bytes. See Size Limiting for more information.
 	// The size of bucket, in bytes. See [Size Limiting](https://yandex.cloud/docs/storage/operations/buckets/limit-max-volume) for more information.
 	// +kubebuilder:validation:Optional
 	MaxSize *float64 `json:"maxSize,omitempty" tf:"max_size,omitempty"`
 
-	// (Block List, Max: 1) A configuration of object lock management. (see below for nested schema)
+	// [Block]. A configuration of object lock management.
 	// A configuration of [object lock management](https://yandex.cloud/docs/storage/concepts/object-lock).
 	// +kubebuilder:validation:Optional
 	ObjectLockConfiguration []ObjectLockConfigurationParameters `json:"objectLockConfiguration,omitempty" tf:"object_lock_configuration,omitempty"`
 
-	// (String, Deprecated) The policy object should contain the only field with the text of the policy. See policy documentation for more information on policy format.
+	// (String). The policy object should contain the only field with the text of the policy. See policy documentation for more information on policy format.
 	// The `policy` object should contain the only field with the text of the policy. See [policy documentation](https://yandex.cloud/docs/storage/concepts/policy) for more information on policy format.
 	// +kubebuilder:validation:Optional
 	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
-	// (String, Sensitive) The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
+	// (String). The secret key to use when applying changes. This value can also be provided as storage_secret_key specified in provider config (explicitly or within shared_credentials_file) is used.
 	// The secret key to use when applying changes. This value can also be provided as `storage_secret_key` specified in provider config (explicitly or within `shared_credentials_file`) is used.
 	// +kubebuilder:validation:Optional
 	SecretKeySecretRef *v1.LocalSecretKeySelector `json:"secretKeySecretRef,omitempty" tf:"-"`
 
-	// side encryption for the bucket. (see below for nested schema)
+	// side encryption for the bucket.
 	// A configuration of server-side encryption for the bucket.
 	// +kubebuilder:validation:Optional
 	ServerSideEncryptionConfiguration []ServerSideEncryptionConfigurationParameters `json:"serverSideEncryptionConfiguration,omitempty" tf:"server_side_encryption_configuration,omitempty"`
 
-	// (Map of String) The tags object for setting tags (or labels) for bucket. See Tags for more information.
+	// (Map Of String). The tags object for setting tags (or labels) for bucket. See Tags for more information.
 	// The `tags` object for setting tags (or labels) for bucket. See [Tags](https://yandex.cloud/docs/storage/concepts/tags) for more information.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Tags map[string]*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
-	// (Block List, Max: 1) A state of versioning.
+	// [Block]. A state of versioning.
 	// A state of [versioning](https://yandex.cloud/docs/storage/concepts/versioning).
 	//
 	// ~> To manage `versioning` argument, service account with `storage.admin` role should be used.
 	// +kubebuilder:validation:Optional
 	Versioning []VersioningParameters `json:"versioning,omitempty" tf:"versioning,omitempty"`
 
-	// (Block List, Max: 1) A Website Object (see below for nested schema)
+	// [Block]. A Website Object
 	// A [Website Object](https://yandex.cloud/docs/storage/concepts/hosting)
 	// +kubebuilder:validation:Optional
 	Website []WebsiteParameters `json:"website,omitempty" tf:"website,omitempty"`
 
-	// (String) The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+	// (String). The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
 	// The domain of the website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
 	// +kubebuilder:validation:Optional
 	WebsiteDomain *string `json:"websiteDomain,omitempty" tf:"website_domain,omitempty"`
 
-	// (String) The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
+	// (String). The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
 	// The website endpoint, if the bucket is configured with a website. If not, this will be an empty string.
 	// +kubebuilder:validation:Optional
 	WebsiteEndpoint *string `json:"websiteEndpoint,omitempty" tf:"website_endpoint,omitempty"`
@@ -553,73 +560,73 @@ type BucketParameters struct {
 
 type CorsRuleInitParameters struct {
 
-	// (List of String) Specifies which headers are allowed.
+	// (List Of String). Specifies which headers are allowed.
 	// Specifies which headers are allowed.
 	AllowedHeaders []*string `json:"allowedHeaders,omitempty" tf:"allowed_headers,omitempty"`
 
-	// (List of String) Specifies which methods are allowed. Can be GET, PUT, POST, DELETE or HEAD.
+	// (List Of String). Specifies which methods are allowed. Can be GET, PUT, POST, DELETE or HEAD.
 	// Specifies which methods are allowed. Can be `GET`, `PUT`, `POST`, `DELETE` or `HEAD`.
 	AllowedMethods []*string `json:"allowedMethods,omitempty" tf:"allowed_methods,omitempty"`
 
-	// (List of String) Specifies which origins are allowed.
+	// (List Of String). Specifies which origins are allowed.
 	// Specifies which origins are allowed.
 	AllowedOrigins []*string `json:"allowedOrigins,omitempty" tf:"allowed_origins,omitempty"`
 
-	// (List of String) Specifies expose header in the response.
+	// (List Of String). Specifies expose header in the response.
 	// Specifies expose header in the response.
 	ExposeHeaders []*string `json:"exposeHeaders,omitempty" tf:"expose_headers,omitempty"`
 
-	// (Number) Specifies time in seconds that browser can cache the response for a preflight request.
+	// (Number). Specifies time in seconds that browser can cache the response for a preflight request.
 	// Specifies time in seconds that browser can cache the response for a preflight request.
 	MaxAgeSeconds *float64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
 }
 
 type CorsRuleObservation struct {
 
-	// (List of String) Specifies which headers are allowed.
+	// (List Of String). Specifies which headers are allowed.
 	// Specifies which headers are allowed.
 	AllowedHeaders []*string `json:"allowedHeaders,omitempty" tf:"allowed_headers,omitempty"`
 
-	// (List of String) Specifies which methods are allowed. Can be GET, PUT, POST, DELETE or HEAD.
+	// (List Of String). Specifies which methods are allowed. Can be GET, PUT, POST, DELETE or HEAD.
 	// Specifies which methods are allowed. Can be `GET`, `PUT`, `POST`, `DELETE` or `HEAD`.
 	AllowedMethods []*string `json:"allowedMethods,omitempty" tf:"allowed_methods,omitempty"`
 
-	// (List of String) Specifies which origins are allowed.
+	// (List Of String). Specifies which origins are allowed.
 	// Specifies which origins are allowed.
 	AllowedOrigins []*string `json:"allowedOrigins,omitempty" tf:"allowed_origins,omitempty"`
 
-	// (List of String) Specifies expose header in the response.
+	// (List Of String). Specifies expose header in the response.
 	// Specifies expose header in the response.
 	ExposeHeaders []*string `json:"exposeHeaders,omitempty" tf:"expose_headers,omitempty"`
 
-	// (Number) Specifies time in seconds that browser can cache the response for a preflight request.
+	// (Number). Specifies time in seconds that browser can cache the response for a preflight request.
 	// Specifies time in seconds that browser can cache the response for a preflight request.
 	MaxAgeSeconds *float64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
 }
 
 type CorsRuleParameters struct {
 
-	// (List of String) Specifies which headers are allowed.
+	// (List Of String). Specifies which headers are allowed.
 	// Specifies which headers are allowed.
 	// +kubebuilder:validation:Optional
 	AllowedHeaders []*string `json:"allowedHeaders,omitempty" tf:"allowed_headers,omitempty"`
 
-	// (List of String) Specifies which methods are allowed. Can be GET, PUT, POST, DELETE or HEAD.
+	// (List Of String). Specifies which methods are allowed. Can be GET, PUT, POST, DELETE or HEAD.
 	// Specifies which methods are allowed. Can be `GET`, `PUT`, `POST`, `DELETE` or `HEAD`.
 	// +kubebuilder:validation:Optional
 	AllowedMethods []*string `json:"allowedMethods" tf:"allowed_methods,omitempty"`
 
-	// (List of String) Specifies which origins are allowed.
+	// (List Of String). Specifies which origins are allowed.
 	// Specifies which origins are allowed.
 	// +kubebuilder:validation:Optional
 	AllowedOrigins []*string `json:"allowedOrigins" tf:"allowed_origins,omitempty"`
 
-	// (List of String) Specifies expose header in the response.
+	// (List Of String). Specifies expose header in the response.
 	// Specifies expose header in the response.
 	// +kubebuilder:validation:Optional
 	ExposeHeaders []*string `json:"exposeHeaders,omitempty" tf:"expose_headers,omitempty"`
 
-	// (Number) Specifies time in seconds that browser can cache the response for a preflight request.
+	// (Number). Specifies time in seconds that browser can cache the response for a preflight request.
 	// Specifies time in seconds that browser can cache the response for a preflight request.
 	// +kubebuilder:validation:Optional
 	MaxAgeSeconds *float64 `json:"maxAgeSeconds,omitempty" tf:"max_age_seconds,omitempty"`
@@ -627,47 +634,47 @@ type CorsRuleParameters struct {
 
 type DefaultRetentionInitParameters struct {
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with `years`.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
+	// (String). Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
 	// Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// (Number) Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
+	// (Number). Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
 	// Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with `days`.
 	Years *float64 `json:"years,omitempty" tf:"years,omitempty"`
 }
 
 type DefaultRetentionObservation struct {
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with `years`.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
+	// (String). Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
 	// Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// (Number) Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
+	// (Number). Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
 	// Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with `days`.
 	Years *float64 `json:"years,omitempty" tf:"years,omitempty"`
 }
 
 type DefaultRetentionParameters struct {
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies a retention period in days after uploading an object version. It must be a positive integer. You can't set it simultaneously with `years`.
 	// +kubebuilder:validation:Optional
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// (String) Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
+	// (String). Specifies a type of object lock. One of ["GOVERNANCE", "COMPLIANCE"].
 	// Specifies a type of object lock. One of `["GOVERNANCE", "COMPLIANCE"]`.
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode" tf:"mode,omitempty"`
 
-	// (Number) Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
+	// (Number). Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with days.
 	// Specifies a retention period in years after uploading an object version. It must be a positive integer. You can't set it simultaneously with `days`.
 	// +kubebuilder:validation:Optional
 	Years *float64 `json:"years,omitempty" tf:"years,omitempty"`
@@ -675,11 +682,11 @@ type DefaultRetentionParameters struct {
 
 type ExpirationInitParameters struct {
 
-	// (String) Specifies the date after which you want the corresponding action to take effect.
+	// (String). Specifies the date after which you want the corresponding action to take effect.
 	// Specifies the date after which you want the corresponding action to take effect.
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies the number of days after object creation when the specific rule action takes effect.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
@@ -690,11 +697,11 @@ type ExpirationInitParameters struct {
 
 type ExpirationObservation struct {
 
-	// (String) Specifies the date after which you want the corresponding action to take effect.
+	// (String). Specifies the date after which you want the corresponding action to take effect.
 	// Specifies the date after which you want the corresponding action to take effect.
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies the number of days after object creation when the specific rule action takes effect.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
@@ -705,12 +712,12 @@ type ExpirationObservation struct {
 
 type ExpirationParameters struct {
 
-	// (String) Specifies the date after which you want the corresponding action to take effect.
+	// (String). Specifies the date after which you want the corresponding action to take effect.
 	// Specifies the date after which you want the corresponding action to take effect.
 	// +kubebuilder:validation:Optional
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies the number of days after object creation when the specific rule action takes effect.
 	// +kubebuilder:validation:Optional
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
@@ -723,73 +730,61 @@ type ExpirationParameters struct {
 
 type FilterInitParameters struct {
 
-	// (Block List, Max: 1) A logical and operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used. (see below for nested schema)
 	// A logical `and` operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used.
 	And []AndInitParameters `json:"and,omitempty" tf:"and,omitempty"`
 
-	// (Number) Minimum object size to which the rule applies.
 	// Minimum object size to which the rule applies.
 	ObjectSizeGreaterThan *float64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
 
-	// (Number) Maximum object size to which the rule applies.
 	// Maximum object size to which the rule applies.
 	ObjectSizeLessThan *float64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
 
-	// (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+	// (String). Object key prefix identifying one or more objects to which the rule applies.
 	// Object key prefix identifying one or more objects to which the rule applies.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
-	// (Block List, Max: 1) A key and value pair for filtering objects. E.g.: key=key1, value=value1. (see below for nested schema)
 	// A key and value pair for filtering objects. E.g.: `key=key1, value=value1`.
 	Tag []TagInitParameters `json:"tag,omitempty" tf:"tag,omitempty"`
 }
 
 type FilterObservation struct {
 
-	// (Block List, Max: 1) A logical and operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used. (see below for nested schema)
 	// A logical `and` operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used.
 	And []AndObservation `json:"and,omitempty" tf:"and,omitempty"`
 
-	// (Number) Minimum object size to which the rule applies.
 	// Minimum object size to which the rule applies.
 	ObjectSizeGreaterThan *float64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
 
-	// (Number) Maximum object size to which the rule applies.
 	// Maximum object size to which the rule applies.
 	ObjectSizeLessThan *float64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
 
-	// (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+	// (String). Object key prefix identifying one or more objects to which the rule applies.
 	// Object key prefix identifying one or more objects to which the rule applies.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
-	// (Block List, Max: 1) A key and value pair for filtering objects. E.g.: key=key1, value=value1. (see below for nested schema)
 	// A key and value pair for filtering objects. E.g.: `key=key1, value=value1`.
 	Tag []TagObservation `json:"tag,omitempty" tf:"tag,omitempty"`
 }
 
 type FilterParameters struct {
 
-	// (Block List, Max: 1) A logical and operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used. (see below for nested schema)
 	// A logical `and` operator applied to one or more filter parameters. It should be used when two or more of the above parameters are used.
 	// +kubebuilder:validation:Optional
 	And []AndParameters `json:"and,omitempty" tf:"and,omitempty"`
 
-	// (Number) Minimum object size to which the rule applies.
 	// Minimum object size to which the rule applies.
 	// +kubebuilder:validation:Optional
 	ObjectSizeGreaterThan *float64 `json:"objectSizeGreaterThan,omitempty" tf:"object_size_greater_than,omitempty"`
 
-	// (Number) Maximum object size to which the rule applies.
 	// Maximum object size to which the rule applies.
 	// +kubebuilder:validation:Optional
 	ObjectSizeLessThan *float64 `json:"objectSizeLessThan,omitempty" tf:"object_size_less_than,omitempty"`
 
-	// (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+	// (String). Object key prefix identifying one or more objects to which the rule applies.
 	// Object key prefix identifying one or more objects to which the rule applies.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
-	// (Block List, Max: 1) A key and value pair for filtering objects. E.g.: key=key1, value=value1. (see below for nested schema)
 	// A key and value pair for filtering objects. E.g.: `key=key1, value=value1`.
 	// +kubebuilder:validation:Optional
 	Tag []TagParameters `json:"tag,omitempty" tf:"tag,omitempty"`
@@ -797,7 +792,7 @@ type FilterParameters struct {
 
 type GrantInitParameters struct {
 
-	// (String) The ID of this resource.
+	// (String).
 	// Canonical user id to grant for. Used only when type is `CanonicalUser`.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/iam/v1alpha1.ServiceAccount
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
@@ -810,43 +805,43 @@ type GrantInitParameters struct {
 	// +kubebuilder:validation:Optional
 	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 
-	// (Set of String) List of permissions to apply for grantee. Valid values are READ, WRITE, FULL_CONTROL.
+	// (Set Of String). List of permissions to apply for grantee. Valid values are READ, WRITE, FULL_CONTROL.
 	// List of permissions to apply for grantee. Valid values are `READ`, `WRITE`, `FULL_CONTROL`.
 	// +listType=set
 	Permissions []*string `json:"permissions,omitempty" tf:"permissions,omitempty"`
 
-	// (String) Type of grantee to apply for. Valid values are CanonicalUser and Group.
+	// (String). Type of grantee to apply for. Valid values are CanonicalUser and Group.
 	// Type of grantee to apply for. Valid values are `CanonicalUser` and `Group`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (String) URI address to grant for. Used only when type is Group.
+	// (String). URI address to grant for. Used only when type is Group.
 	// URI address to grant for. Used only when type is Group.
 	URI *string `json:"uri,omitempty" tf:"uri,omitempty"`
 }
 
 type GrantObservation struct {
 
-	// (String) The ID of this resource.
+	// (String).
 	// Canonical user id to grant for. Used only when type is `CanonicalUser`.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Set of String) List of permissions to apply for grantee. Valid values are READ, WRITE, FULL_CONTROL.
+	// (Set Of String). List of permissions to apply for grantee. Valid values are READ, WRITE, FULL_CONTROL.
 	// List of permissions to apply for grantee. Valid values are `READ`, `WRITE`, `FULL_CONTROL`.
 	// +listType=set
 	Permissions []*string `json:"permissions,omitempty" tf:"permissions,omitempty"`
 
-	// (String) Type of grantee to apply for. Valid values are CanonicalUser and Group.
+	// (String). Type of grantee to apply for. Valid values are CanonicalUser and Group.
 	// Type of grantee to apply for. Valid values are `CanonicalUser` and `Group`.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
-	// (String) URI address to grant for. Used only when type is Group.
+	// (String). URI address to grant for. Used only when type is Group.
 	// URI address to grant for. Used only when type is Group.
 	URI *string `json:"uri,omitempty" tf:"uri,omitempty"`
 }
 
 type GrantParameters struct {
 
-	// (String) The ID of this resource.
+	// (String).
 	// Canonical user id to grant for. Used only when type is `CanonicalUser`.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/iam/v1alpha1.ServiceAccount
 	// +kubebuilder:validation:Optional
@@ -860,18 +855,18 @@ type GrantParameters struct {
 	// +kubebuilder:validation:Optional
 	IDSelector *v1.NamespacedSelector `json:"idSelector,omitempty" tf:"-"`
 
-	// (Set of String) List of permissions to apply for grantee. Valid values are READ, WRITE, FULL_CONTROL.
+	// (Set Of String). List of permissions to apply for grantee. Valid values are READ, WRITE, FULL_CONTROL.
 	// List of permissions to apply for grantee. Valid values are `READ`, `WRITE`, `FULL_CONTROL`.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Permissions []*string `json:"permissions" tf:"permissions,omitempty"`
 
-	// (String) Type of grantee to apply for. Valid values are CanonicalUser and Group.
+	// (String). Type of grantee to apply for. Valid values are CanonicalUser and Group.
 	// Type of grantee to apply for. Valid values are `CanonicalUser` and `Group`.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
 
-	// (String) URI address to grant for. Used only when type is Group.
+	// (String). URI address to grant for. Used only when type is Group.
 	// URI address to grant for. Used only when type is Group.
 	// +kubebuilder:validation:Optional
 	URI *string `json:"uri,omitempty" tf:"uri,omitempty"`
@@ -879,21 +874,21 @@ type GrantParameters struct {
 
 type HTTPSInitParameters struct {
 
-	// (String) Id of the certificate in Certificate Manager, that will be used for bucket.
+	// (String). Id of the certificate in Certificate Manager, that will be used for bucket.
 	// Id of the certificate in Certificate Manager, that will be used for bucket.
 	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
 }
 
 type HTTPSObservation struct {
 
-	// (String) Id of the certificate in Certificate Manager, that will be used for bucket.
+	// (String). Id of the certificate in Certificate Manager, that will be used for bucket.
 	// Id of the certificate in Certificate Manager, that will be used for bucket.
 	CertificateID *string `json:"certificateId,omitempty" tf:"certificate_id,omitempty"`
 }
 
 type HTTPSParameters struct {
 
-	// (String) Id of the certificate in Certificate Manager, that will be used for bucket.
+	// (String). Id of the certificate in Certificate Manager, that will be used for bucket.
 	// Id of the certificate in Certificate Manager, that will be used for bucket.
 	// +kubebuilder:validation:Optional
 	CertificateID *string `json:"certificateId" tf:"certificate_id,omitempty"`
@@ -901,131 +896,131 @@ type HTTPSParameters struct {
 
 type LifecycleRuleInitParameters struct {
 
-	// (Number) Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
+	// (Number). Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
 	// Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
 	AbortIncompleteMultipartUploadDays *float64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
 
-	// (Boolean) Specifies lifecycle rule status.
+	// (Bool). Specifies lifecycle rule status.
 	// Specifies lifecycle rule status.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (Block List, Max: 1) Specifies a period in the object's expire. (see below for nested schema)
+	// [Block]. Specifies a period in the object's expire.
 	// Specifies a period in the object's expire.
 	Expiration []ExpirationInitParameters `json:"expiration,omitempty" tf:"expiration,omitempty"`
 
-	// (Block List, Max: 1) Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
+	// [Block]. Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
 	// Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
 	//
 	// At least one of `abort_incomplete_multipart_upload_days`, `expiration`, `transition`, `noncurrent_version_expiration`, `noncurrent_version_transition` must be specified.
 	Filter []FilterInitParameters `json:"filter,omitempty" tf:"filter,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	// Unique identifier for the rule. Must be less than or equal to 255 characters in length.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Block List, Max: 1) Specifies when noncurrent object versions expire. (see below for nested schema)
+	// [Block]. Specifies when noncurrent object versions expire.
 	// Specifies when noncurrent object versions expire.
 	NoncurrentVersionExpiration []NoncurrentVersionExpirationInitParameters `json:"noncurrentVersionExpiration,omitempty" tf:"noncurrent_version_expiration,omitempty"`
 
-	// (Block Set) Specifies when noncurrent object versions transitions. (see below for nested schema)
+	// [Block]. Specifies when noncurrent object versions transitions.
 	// Specifies when noncurrent object versions transitions.
 	NoncurrentVersionTransition []NoncurrentVersionTransitionInitParameters `json:"noncurrentVersionTransition,omitempty" tf:"noncurrent_version_transition,omitempty"`
 
-	// (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+	// (String). Object key prefix identifying one or more objects to which the rule applies.
 	// Object key prefix identifying one or more objects to which the rule applies.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
-	// (Block Set) Specifies a period in the object's transitions. (see below for nested schema)
+	// [Block]. Specifies a period in the object's transitions.
 	// Specifies a period in the object's transitions.
 	Transition []TransitionInitParameters `json:"transition,omitempty" tf:"transition,omitempty"`
 }
 
 type LifecycleRuleObservation struct {
 
-	// (Number) Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
+	// (Number). Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
 	// Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
 	AbortIncompleteMultipartUploadDays *float64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
 
-	// (Boolean) Specifies lifecycle rule status.
+	// (Bool). Specifies lifecycle rule status.
 	// Specifies lifecycle rule status.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (Block List, Max: 1) Specifies a period in the object's expire. (see below for nested schema)
+	// [Block]. Specifies a period in the object's expire.
 	// Specifies a period in the object's expire.
 	Expiration []ExpirationObservation `json:"expiration,omitempty" tf:"expiration,omitempty"`
 
-	// (Block List, Max: 1) Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
+	// [Block]. Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
 	// Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
 	//
 	// At least one of `abort_incomplete_multipart_upload_days`, `expiration`, `transition`, `noncurrent_version_expiration`, `noncurrent_version_transition` must be specified.
 	Filter []FilterObservation `json:"filter,omitempty" tf:"filter,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	// Unique identifier for the rule. Must be less than or equal to 255 characters in length.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Block List, Max: 1) Specifies when noncurrent object versions expire. (see below for nested schema)
+	// [Block]. Specifies when noncurrent object versions expire.
 	// Specifies when noncurrent object versions expire.
 	NoncurrentVersionExpiration []NoncurrentVersionExpirationObservation `json:"noncurrentVersionExpiration,omitempty" tf:"noncurrent_version_expiration,omitempty"`
 
-	// (Block Set) Specifies when noncurrent object versions transitions. (see below for nested schema)
+	// [Block]. Specifies when noncurrent object versions transitions.
 	// Specifies when noncurrent object versions transitions.
 	NoncurrentVersionTransition []NoncurrentVersionTransitionObservation `json:"noncurrentVersionTransition,omitempty" tf:"noncurrent_version_transition,omitempty"`
 
-	// (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+	// (String). Object key prefix identifying one or more objects to which the rule applies.
 	// Object key prefix identifying one or more objects to which the rule applies.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
-	// (Block Set) Specifies a period in the object's transitions. (see below for nested schema)
+	// [Block]. Specifies a period in the object's transitions.
 	// Specifies a period in the object's transitions.
 	Transition []TransitionObservation `json:"transition,omitempty" tf:"transition,omitempty"`
 }
 
 type LifecycleRuleParameters struct {
 
-	// (Number) Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
+	// (Number). Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
 	// Specifies the number of days after initiating a multipart upload when the multipart upload must be completed.
 	// +kubebuilder:validation:Optional
 	AbortIncompleteMultipartUploadDays *float64 `json:"abortIncompleteMultipartUploadDays,omitempty" tf:"abort_incomplete_multipart_upload_days,omitempty"`
 
-	// (Boolean) Specifies lifecycle rule status.
+	// (Bool). Specifies lifecycle rule status.
 	// Specifies lifecycle rule status.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
 
-	// (Block List, Max: 1) Specifies a period in the object's expire. (see below for nested schema)
+	// [Block]. Specifies a period in the object's expire.
 	// Specifies a period in the object's expire.
 	// +kubebuilder:validation:Optional
 	Expiration []ExpirationParameters `json:"expiration,omitempty" tf:"expiration,omitempty"`
 
-	// (Block List, Max: 1) Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
+	// [Block]. Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
 	// Filter block identifies one or more objects to which the rule applies. A Filter must have exactly one of Prefix, Tag, or And specified. The filter supports options listed below.
 	//
 	// At least one of `abort_incomplete_multipart_upload_days`, `expiration`, `transition`, `noncurrent_version_expiration`, `noncurrent_version_transition` must be specified.
 	// +kubebuilder:validation:Optional
 	Filter []FilterParameters `json:"filter,omitempty" tf:"filter,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	// Unique identifier for the rule. Must be less than or equal to 255 characters in length.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Block List, Max: 1) Specifies when noncurrent object versions expire. (see below for nested schema)
+	// [Block]. Specifies when noncurrent object versions expire.
 	// Specifies when noncurrent object versions expire.
 	// +kubebuilder:validation:Optional
 	NoncurrentVersionExpiration []NoncurrentVersionExpirationParameters `json:"noncurrentVersionExpiration,omitempty" tf:"noncurrent_version_expiration,omitempty"`
 
-	// (Block Set) Specifies when noncurrent object versions transitions. (see below for nested schema)
+	// [Block]. Specifies when noncurrent object versions transitions.
 	// Specifies when noncurrent object versions transitions.
 	// +kubebuilder:validation:Optional
 	NoncurrentVersionTransition []NoncurrentVersionTransitionParameters `json:"noncurrentVersionTransition,omitempty" tf:"noncurrent_version_transition,omitempty"`
 
-	// (String, Deprecated) Object key prefix identifying one or more objects to which the rule applies.
+	// (String). Object key prefix identifying one or more objects to which the rule applies.
 	// Object key prefix identifying one or more objects to which the rule applies.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 
-	// (Block Set) Specifies a period in the object's transitions. (see below for nested schema)
+	// [Block]. Specifies a period in the object's transitions.
 	// Specifies a period in the object's transitions.
 	// +kubebuilder:validation:Optional
 	Transition []TransitionParameters `json:"transition,omitempty" tf:"transition,omitempty"`
@@ -1033,34 +1028,34 @@ type LifecycleRuleParameters struct {
 
 type LoggingInitParameters struct {
 
-	// (String) The name of the bucket that will receive the log objects.
+	// (String). The name of the bucket that will receive the log objects.
 	// The name of the bucket that will receive the log objects.
 	TargetBucket *string `json:"targetBucket,omitempty" tf:"target_bucket,omitempty"`
 
-	// (String) To specify a key prefix for log objects.
+	// (String). To specify a key prefix for log objects.
 	// To specify a key prefix for log objects.
 	TargetPrefix *string `json:"targetPrefix,omitempty" tf:"target_prefix,omitempty"`
 }
 
 type LoggingObservation struct {
 
-	// (String) The name of the bucket that will receive the log objects.
+	// (String). The name of the bucket that will receive the log objects.
 	// The name of the bucket that will receive the log objects.
 	TargetBucket *string `json:"targetBucket,omitempty" tf:"target_bucket,omitempty"`
 
-	// (String) To specify a key prefix for log objects.
+	// (String). To specify a key prefix for log objects.
 	// To specify a key prefix for log objects.
 	TargetPrefix *string `json:"targetPrefix,omitempty" tf:"target_prefix,omitempty"`
 }
 
 type LoggingParameters struct {
 
-	// (String) The name of the bucket that will receive the log objects.
+	// (String). The name of the bucket that will receive the log objects.
 	// The name of the bucket that will receive the log objects.
 	// +kubebuilder:validation:Optional
 	TargetBucket *string `json:"targetBucket" tf:"target_bucket,omitempty"`
 
-	// (String) To specify a key prefix for log objects.
+	// (String). To specify a key prefix for log objects.
 	// To specify a key prefix for log objects.
 	// +kubebuilder:validation:Optional
 	TargetPrefix *string `json:"targetPrefix,omitempty" tf:"target_prefix,omitempty"`
@@ -1068,91 +1063,117 @@ type LoggingParameters struct {
 
 type NoncurrentVersionExpirationInitParameters struct {
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies the number of days noncurrent object versions expire.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+
+	// (Number). Specifies the number of noncurrent versions to retain. Object Storage permanently deletes any additional noncurrent versions beyond this number.
+	// Specifies the number of noncurrent versions to retain. Object Storage permanently deletes any additional noncurrent versions beyond this number.
+	NewerNoncurrentVersions *float64 `json:"newerNoncurrentVersions,omitempty" tf:"newer_noncurrent_versions,omitempty"`
 }
 
 type NoncurrentVersionExpirationObservation struct {
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies the number of days noncurrent object versions expire.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+
+	// (Number). Specifies the number of noncurrent versions to retain. Object Storage permanently deletes any additional noncurrent versions beyond this number.
+	// Specifies the number of noncurrent versions to retain. Object Storage permanently deletes any additional noncurrent versions beyond this number.
+	NewerNoncurrentVersions *float64 `json:"newerNoncurrentVersions,omitempty" tf:"newer_noncurrent_versions,omitempty"`
 }
 
 type NoncurrentVersionExpirationParameters struct {
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies the number of days noncurrent object versions expire.
 	// +kubebuilder:validation:Optional
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
+
+	// (Number). Specifies the number of noncurrent versions to retain. Object Storage permanently deletes any additional noncurrent versions beyond this number.
+	// Specifies the number of noncurrent versions to retain. Object Storage permanently deletes any additional noncurrent versions beyond this number.
+	// +kubebuilder:validation:Optional
+	NewerNoncurrentVersions *float64 `json:"newerNoncurrentVersions,omitempty" tf:"newer_noncurrent_versions,omitempty"`
 }
 
 type NoncurrentVersionTransitionInitParameters struct {
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies the number of days noncurrent object versions transition.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
-	// Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`].
+	// (Number). Specifies the number of noncurrent versions to retain. Object Storage permanently deletes any additional noncurrent versions beyond this number.
+	// Specifies the number of noncurrent versions to retain. Object Storage permanently deletes any additional noncurrent versions beyond this number.
+	NewerNoncurrentVersions *float64 `json:"newerNoncurrentVersions,omitempty" tf:"newer_noncurrent_versions,omitempty"`
+
+	// (String). Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE, INTELLIGENT_TIERING].
+	// Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`, `INTELLIGENT_TIERING`].
 	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
 }
 
 type NoncurrentVersionTransitionObservation struct {
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies the number of days noncurrent object versions transition.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
-	// Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`].
+	// (Number). Specifies the number of noncurrent versions to retain. Object Storage permanently deletes any additional noncurrent versions beyond this number.
+	// Specifies the number of noncurrent versions to retain. Object Storage permanently deletes any additional noncurrent versions beyond this number.
+	NewerNoncurrentVersions *float64 `json:"newerNoncurrentVersions,omitempty" tf:"newer_noncurrent_versions,omitempty"`
+
+	// (String). Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE, INTELLIGENT_TIERING].
+	// Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`, `INTELLIGENT_TIERING`].
 	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
 }
 
 type NoncurrentVersionTransitionParameters struct {
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies the number of days noncurrent object versions transition.
 	// +kubebuilder:validation:Optional
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
-	// Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`].
+	// (Number). Specifies the number of noncurrent versions to retain. Object Storage permanently deletes any additional noncurrent versions beyond this number.
+	// Specifies the number of noncurrent versions to retain. Object Storage permanently deletes any additional noncurrent versions beyond this number.
+	// +kubebuilder:validation:Optional
+	NewerNoncurrentVersions *float64 `json:"newerNoncurrentVersions,omitempty" tf:"newer_noncurrent_versions,omitempty"`
+
+	// (String). Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE, INTELLIGENT_TIERING].
+	// Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`, `INTELLIGENT_TIERING`].
 	// +kubebuilder:validation:Optional
 	StorageClass *string `json:"storageClass" tf:"storage_class,omitempty"`
 }
 
 type ObjectLockConfigurationInitParameters struct {
 
-	// (String) Enable object locking in a bucket. Require versioning to be enabled.
+	// (String). Enable object locking in a bucket. Require versioning to be enabled.
 	// Enable object locking in a bucket. Require versioning to be enabled.
 	ObjectLockEnabled *string `json:"objectLockEnabled,omitempty" tf:"object_lock_enabled,omitempty"`
 
-	// (Block List, Max: 1) Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled. (see below for nested schema)
+	// [Block]. Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
 	// Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
 	Rule []RuleInitParameters `json:"rule,omitempty" tf:"rule,omitempty"`
 }
 
 type ObjectLockConfigurationObservation struct {
 
-	// (String) Enable object locking in a bucket. Require versioning to be enabled.
+	// (String). Enable object locking in a bucket. Require versioning to be enabled.
 	// Enable object locking in a bucket. Require versioning to be enabled.
 	ObjectLockEnabled *string `json:"objectLockEnabled,omitempty" tf:"object_lock_enabled,omitempty"`
 
-	// (Block List, Max: 1) Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled. (see below for nested schema)
+	// [Block]. Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
 	// Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
 	Rule []RuleObservation `json:"rule,omitempty" tf:"rule,omitempty"`
 }
 
 type ObjectLockConfigurationParameters struct {
 
-	// (String) Enable object locking in a bucket. Require versioning to be enabled.
+	// (String). Enable object locking in a bucket. Require versioning to be enabled.
 	// Enable object locking in a bucket. Require versioning to be enabled.
 	// +kubebuilder:validation:Optional
 	ObjectLockEnabled *string `json:"objectLockEnabled,omitempty" tf:"object_lock_enabled,omitempty"`
 
-	// (Block List, Max: 1) Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled. (see below for nested schema)
+	// [Block]. Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
 	// Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
 	// +kubebuilder:validation:Optional
 	Rule []RuleParameters `json:"rule,omitempty" tf:"rule,omitempty"`
@@ -1160,21 +1181,21 @@ type ObjectLockConfigurationParameters struct {
 
 type RuleInitParameters struct {
 
-	// (Block List, Min: 1, Max: 1) Default retention object. (see below for nested schema)
+	// [Block]. Default retention object.
 	// Default retention object.
 	DefaultRetention []DefaultRetentionInitParameters `json:"defaultRetention,omitempty" tf:"default_retention,omitempty"`
 }
 
 type RuleObservation struct {
 
-	// (Block List, Min: 1, Max: 1) Default retention object. (see below for nested schema)
+	// [Block]. Default retention object.
 	// Default retention object.
 	DefaultRetention []DefaultRetentionObservation `json:"defaultRetention,omitempty" tf:"default_retention,omitempty"`
 }
 
 type RuleParameters struct {
 
-	// (Block List, Min: 1, Max: 1) Default retention object. (see below for nested schema)
+	// [Block]. Default retention object.
 	// Default retention object.
 	// +kubebuilder:validation:Optional
 	DefaultRetention []DefaultRetentionParameters `json:"defaultRetention" tf:"default_retention,omitempty"`
@@ -1182,21 +1203,21 @@ type RuleParameters struct {
 
 type ServerSideEncryptionConfigurationInitParameters struct {
 
-	// (Block List, Max: 1) Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled. (see below for nested schema)
+	// [Block]. Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
 	// A single object for server-side encryption by default configuration.
 	Rule []ServerSideEncryptionConfigurationRuleInitParameters `json:"rule,omitempty" tf:"rule,omitempty"`
 }
 
 type ServerSideEncryptionConfigurationObservation struct {
 
-	// (Block List, Max: 1) Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled. (see below for nested schema)
+	// [Block]. Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
 	// A single object for server-side encryption by default configuration.
 	Rule []ServerSideEncryptionConfigurationRuleObservation `json:"rule,omitempty" tf:"rule,omitempty"`
 }
 
 type ServerSideEncryptionConfigurationParameters struct {
 
-	// (Block List, Max: 1) Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled. (see below for nested schema)
+	// [Block]. Specifies a default locking configuration for added objects. Require object_lock_enabled to be enabled.
 	// A single object for server-side encryption by default configuration.
 	// +kubebuilder:validation:Optional
 	Rule []ServerSideEncryptionConfigurationRuleParameters `json:"rule" tf:"rule,omitempty"`
@@ -1204,21 +1225,21 @@ type ServerSideEncryptionConfigurationParameters struct {
 
 type ServerSideEncryptionConfigurationRuleInitParameters struct {
 
-	// side encryption by default. (see below for nested schema)
+	// side encryption by default.
 	// A single object for setting server-side encryption by default.
 	ApplyServerSideEncryptionByDefault []ApplyServerSideEncryptionByDefaultInitParameters `json:"applyServerSideEncryptionByDefault,omitempty" tf:"apply_server_side_encryption_by_default,omitempty"`
 }
 
 type ServerSideEncryptionConfigurationRuleObservation struct {
 
-	// side encryption by default. (see below for nested schema)
+	// side encryption by default.
 	// A single object for setting server-side encryption by default.
 	ApplyServerSideEncryptionByDefault []ApplyServerSideEncryptionByDefaultObservation `json:"applyServerSideEncryptionByDefault,omitempty" tf:"apply_server_side_encryption_by_default,omitempty"`
 }
 
 type ServerSideEncryptionConfigurationRuleParameters struct {
 
-	// side encryption by default. (see below for nested schema)
+	// side encryption by default.
 	// A single object for setting server-side encryption by default.
 	// +kubebuilder:validation:Optional
 	ApplyServerSideEncryptionByDefault []ApplyServerSideEncryptionByDefaultParameters `json:"applyServerSideEncryptionByDefault" tf:"apply_server_side_encryption_by_default,omitempty"`
@@ -1226,34 +1247,28 @@ type ServerSideEncryptionConfigurationRuleParameters struct {
 
 type TagInitParameters struct {
 
-	// (String) A key.
 	// A key.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// (String) A value.
 	// A value.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type TagObservation struct {
 
-	// (String) A key.
 	// A key.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
-	// (String) A value.
 	// A value.
 	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type TagParameters struct {
 
-	// (String) A key.
 	// A key.
 	// +kubebuilder:validation:Optional
 	Key *string `json:"key" tf:"key,omitempty"`
 
-	// (String) A value.
 	// A value.
 	// +kubebuilder:validation:Optional
 	Value *string `json:"value" tf:"value,omitempty"`
@@ -1261,69 +1276,69 @@ type TagParameters struct {
 
 type TransitionInitParameters struct {
 
-	// (String) Specifies the date after which you want the corresponding action to take effect.
+	// (String). Specifies the date after which you want the corresponding action to take effect.
 	// Specifies the date after which you want the corresponding action to take effect.
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies the number of days after object creation when the specific rule action takes effect.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
-	// Specifies the storage class to which you want the object to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`].
+	// (String). Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE, INTELLIGENT_TIERING].
+	// Specifies the storage class to which you want the object to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`, `INTELLIGENT_TIERING`].
 	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
 }
 
 type TransitionObservation struct {
 
-	// (String) Specifies the date after which you want the corresponding action to take effect.
+	// (String). Specifies the date after which you want the corresponding action to take effect.
 	// Specifies the date after which you want the corresponding action to take effect.
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies the number of days after object creation when the specific rule action takes effect.
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
-	// Specifies the storage class to which you want the object to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`].
+	// (String). Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE, INTELLIGENT_TIERING].
+	// Specifies the storage class to which you want the object to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`, `INTELLIGENT_TIERING`].
 	StorageClass *string `json:"storageClass,omitempty" tf:"storage_class,omitempty"`
 }
 
 type TransitionParameters struct {
 
-	// (String) Specifies the date after which you want the corresponding action to take effect.
+	// (String). Specifies the date after which you want the corresponding action to take effect.
 	// Specifies the date after which you want the corresponding action to take effect.
 	// +kubebuilder:validation:Optional
 	Date *string `json:"date,omitempty" tf:"date,omitempty"`
 
-	// (Number) Specifies the number of days after object creation when the specific rule action takes effect.
+	// (Number). Specifies the number of days after object creation when the specific rule action takes effect.
 	// Specifies the number of days after object creation when the specific rule action takes effect.
 	// +kubebuilder:validation:Optional
 	Days *float64 `json:"days,omitempty" tf:"days,omitempty"`
 
-	// (String) Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE].
-	// Specifies the storage class to which you want the object to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`].
+	// (String). Specifies the storage class to which you want the noncurrent object versions to transition. Supported values: [STANDARD_IA, COLD, ICE, INTELLIGENT_TIERING].
+	// Specifies the storage class to which you want the object to transition. Supported values: [`STANDARD_IA`, `COLD`, `ICE`, `INTELLIGENT_TIERING`].
 	// +kubebuilder:validation:Optional
 	StorageClass *string `json:"storageClass" tf:"storage_class,omitempty"`
 }
 
 type VersioningInitParameters struct {
 
-	// (Boolean) Specifies lifecycle rule status.
+	// (Bool). Specifies lifecycle rule status.
 	// Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type VersioningObservation struct {
 
-	// (Boolean) Specifies lifecycle rule status.
+	// (Bool). Specifies lifecycle rule status.
 	// Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type VersioningParameters struct {
 
-	// (Boolean) Specifies lifecycle rule status.
+	// (Bool). Specifies lifecycle rule status.
 	// Enable versioning. Once you version-enable a bucket, it can never return to an unversioned state. You can, however, suspend versioning on that bucket.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
@@ -1331,60 +1346,60 @@ type VersioningParameters struct {
 
 type WebsiteInitParameters struct {
 
-	// (String) An absolute path to the document to return in case of a 4XX error.
+	// (String). An absolute path to the document to return in case of a 4XX error.
 	// An absolute path to the document to return in case of a 4XX error.
 	ErrorDocument *string `json:"errorDocument,omitempty" tf:"error_document,omitempty"`
 
-	// (String) Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using redirect_all_requests_to).
+	// (String). Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using redirect_all_requests_to).
 	// Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using `redirect_all_requests_to`).
 	IndexDocument *string `json:"indexDocument,omitempty" tf:"index_document,omitempty"`
 
-	// (String) A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (http:// or https://) to use when redirecting requests. The default is the protocol that is used in the original request.
+	// (String). A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (http:// or https://) to use when redirecting requests. The default is the protocol that is used in the original request.
 	// A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (`http://` or `https://`) to use when redirecting requests. The default is the protocol that is used in the original request.
 	RedirectAllRequestsTo *string `json:"redirectAllRequestsTo,omitempty" tf:"redirect_all_requests_to,omitempty"`
 
-	// (String) A JSON array containing routing rules describing redirect behavior and when redirects are applied.
+	// (String). A JSON array containing routing rules describing redirect behavior and when redirects are applied.
 	// A JSON array containing [routing rules](https://yandex.cloud/docs/storage/s3/api-ref/hosting/upload#request-scheme) describing redirect behavior and when redirects are applied.
 	RoutingRules *string `json:"routingRules,omitempty" tf:"routing_rules,omitempty"`
 }
 
 type WebsiteObservation struct {
 
-	// (String) An absolute path to the document to return in case of a 4XX error.
+	// (String). An absolute path to the document to return in case of a 4XX error.
 	// An absolute path to the document to return in case of a 4XX error.
 	ErrorDocument *string `json:"errorDocument,omitempty" tf:"error_document,omitempty"`
 
-	// (String) Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using redirect_all_requests_to).
+	// (String). Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using redirect_all_requests_to).
 	// Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using `redirect_all_requests_to`).
 	IndexDocument *string `json:"indexDocument,omitempty" tf:"index_document,omitempty"`
 
-	// (String) A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (http:// or https://) to use when redirecting requests. The default is the protocol that is used in the original request.
+	// (String). A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (http:// or https://) to use when redirecting requests. The default is the protocol that is used in the original request.
 	// A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (`http://` or `https://`) to use when redirecting requests. The default is the protocol that is used in the original request.
 	RedirectAllRequestsTo *string `json:"redirectAllRequestsTo,omitempty" tf:"redirect_all_requests_to,omitempty"`
 
-	// (String) A JSON array containing routing rules describing redirect behavior and when redirects are applied.
+	// (String). A JSON array containing routing rules describing redirect behavior and when redirects are applied.
 	// A JSON array containing [routing rules](https://yandex.cloud/docs/storage/s3/api-ref/hosting/upload#request-scheme) describing redirect behavior and when redirects are applied.
 	RoutingRules *string `json:"routingRules,omitempty" tf:"routing_rules,omitempty"`
 }
 
 type WebsiteParameters struct {
 
-	// (String) An absolute path to the document to return in case of a 4XX error.
+	// (String). An absolute path to the document to return in case of a 4XX error.
 	// An absolute path to the document to return in case of a 4XX error.
 	// +kubebuilder:validation:Optional
 	ErrorDocument *string `json:"errorDocument,omitempty" tf:"error_document,omitempty"`
 
-	// (String) Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using redirect_all_requests_to).
+	// (String). Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using redirect_all_requests_to).
 	// Storage returns this index document when requests are made to the root domain or any of the subfolders (unless using `redirect_all_requests_to`).
 	// +kubebuilder:validation:Optional
 	IndexDocument *string `json:"indexDocument,omitempty" tf:"index_document,omitempty"`
 
-	// (String) A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (http:// or https://) to use when redirecting requests. The default is the protocol that is used in the original request.
+	// (String). A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (http:// or https://) to use when redirecting requests. The default is the protocol that is used in the original request.
 	// A hostname to redirect all website requests for this bucket to. Hostname can optionally be prefixed with a protocol (`http://` or `https://`) to use when redirecting requests. The default is the protocol that is used in the original request.
 	// +kubebuilder:validation:Optional
 	RedirectAllRequestsTo *string `json:"redirectAllRequestsTo,omitempty" tf:"redirect_all_requests_to,omitempty"`
 
-	// (String) A JSON array containing routing rules describing redirect behavior and when redirects are applied.
+	// (String). A JSON array containing routing rules describing redirect behavior and when redirects are applied.
 	// A JSON array containing [routing rules](https://yandex.cloud/docs/storage/s3/api-ref/hosting/upload#request-scheme) describing redirect behavior and when redirects are applied.
 	// +kubebuilder:validation:Optional
 	RoutingRules *string `json:"routingRules,omitempty" tf:"routing_rules,omitempty"`
@@ -1417,7 +1432,7 @@ type BucketStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Bucket is the Schema for the Buckets API. Allows management of a Yandex Cloud Storage Bucket.
+// Bucket is the Schema for the Buckets API. Manages the yandex_storage_bucket resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

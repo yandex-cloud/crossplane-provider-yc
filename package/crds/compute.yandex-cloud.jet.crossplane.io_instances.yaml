@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: instances.compute.yandex-cloud.jet.crossplane.io
 spec:
   group: compute.yandex-cloud.jet.crossplane.io
@@ -34,7 +34,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Instance is the Schema for the Instances API. Manages a VM instance
+        description: Instance is the Schema for the Instances API. Manages the yandex_compute_instance
           resource.
         properties:
           apiVersion:
@@ -74,17 +74,17 @@ spec:
               forProvider:
                 properties:
                   allowRecreate:
-                    description: (Boolean)
+                    description: (Bool).
                     type: boolean
                   allowStoppingForUpdate:
-                    description: If you try to update a property that requires stopping
+                    description: (Bool). If you try to update a property that requires
+                      stopping the instance without setting this field, the update
+                      will fail. If you try to update a property that requires stopping
                       the instance without setting this field, the update will fail.
-                      If you try to update a property that requires stopping the instance
-                      without setting this field, the update will fail.
                     type: boolean
                   bootDisk:
                     description: |-
-                      (Block List, Min: 1, Max: 1) The boot disk for the instance. Either initialize_params or disk_id must be specified. (see below for nested schema)
+                      [Block]. The boot disk for the instance. Either initialize_params or disk_id must be specified.
                       The boot disk for the instance. Either `initialize_params` or `disk_id` must be specified.
                     items:
                       properties:
@@ -95,12 +95,12 @@ spec:
                           type: boolean
                         deviceName:
                           description: |-
-                            (String) Name that can be used to access an attached disk.
+                            (String). Name that can be used to access an attached disk.
                             Name that can be used to access an attached disk.
                           type: string
                         diskId:
                           description: |-
-                            (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+                            (String). The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
                             The ID of the existing disk (such as those managed by `yandex_compute_disk`) to attach as a boot disk.
                           type: string
                         diskIdRef:
@@ -181,78 +181,78 @@ spec:
                           type: object
                         initializeParams:
                           description: |-
-                            (Block List, Max: 1) Parameters for a new disk that will be created alongside the new instance. Either initialize_params or disk_id must be set. Either image_id or snapshot_id must be specified. (see below for nested schema)
+                            [Block]. Parameters for a new disk that will be created alongside the new instance. Either initialize_params or disk_id must be set. Either image_id or snapshot_id must be specified.
                             Parameters for a new disk that will be created alongside the new instance. Either `initialize_params` or `disk_id` must be set. Either `image_id` or `snapshot_id` must be specified.
                           items:
                             properties:
                               blockSize:
                                 description: |-
-                                  (Number) Block size of the disk, specified in bytes.
+                                  (Number). Block size of the disk, specified in bytes.
                                   Block size of the disk, specified in bytes.
                                 type: number
                               description:
                                 description: |-
-                                  (String) The resource description.
+                                  (String). The resource description.
                                   Description of the boot disk.
                                 type: string
                               imageId:
                                 description: |-
-                                  (String) A disk image to initialize this disk from.
+                                  (String). A disk image to initialize this disk from.
                                   A disk image to initialize this disk from.
                                 type: string
                               kmsKeyId:
                                 description: |-
-                                  (String) ID of KMS symmetric key used to encrypt disk.
+                                  (String). ID of KMS symmetric key used to encrypt disk.
                                   ID of KMS symmetric key used to encrypt disk.
                                 type: string
                               name:
                                 description: |-
-                                  (String) The resource name.
+                                  (String). The resource name.
                                   Name of the boot disk.
                                 type: string
                               size:
                                 description: |-
-                                  (Number) Size of the disk in GB.
+                                  (Number). Size of the disk in GB.
                                   Size of the disk in GB.
                                 type: number
                               snapshotId:
                                 description: |-
-                                  (String) A snapshot to initialize this disk from.
+                                  (String). A snapshot to initialize this disk from.
                                   A snapshot to initialize this disk from.
                                 type: string
                               type:
                                 description: |-
-                                  (String) Disk type.
+                                  (String). Disk type.
                                   Disk type.
                                 type: string
                             type: object
                           type: array
                         mode:
                           description: |-
-                            (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+                            (String). Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
                             Type of access to the disk resource. By default, a disk is attached in `READ_WRITE` mode.
                           type: string
                       type: object
                     type: array
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   filesystem:
                     description: |-
-                      (Block Set) List of filesystems that are attached to the instance. (see below for nested schema)
+                      [Block]. List of filesystems that are attached to the instance.
                       List of filesystems that are attached to the instance.
                     items:
                       properties:
                         deviceName:
                           description: |-
-                            (String) Name that can be used to access an attached disk.
+                            (String). Name that can be used to access an attached disk.
                             Name of the device representing the filesystem on the instance.
                           type: string
                         filesystemId:
                           description: |-
-                            (String) ID of the filesystem that should be attached.
+                            (String). ID of the filesystem that should be attached.
                             ID of the filesystem that should be attached.
                           type: string
                         filesystemIdRef:
@@ -333,7 +333,7 @@ spec:
                           type: object
                         mode:
                           description: |-
-                            (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+                            (String). Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
                             Mode of access to the filesystem that should be attached. By default, filesystem is attached in `READ_WRITE` mode.
                           type: string
                       type: object
@@ -421,213 +421,224 @@ spec:
                     type: object
                   gpuClusterId:
                     description: |-
-                      (String) ID of the GPU cluster to attach this instance to.
+                      (String). ID of the GPU cluster to attach this instance to.
                       ID of the GPU cluster to attach this instance to.
                     type: string
                   hostname:
                     description: |-
-                      (String) Host name for the instance. This field is used to generate the instance fqdn value. The host name must be unique within the network and region. If not specified, the host name will be equal to id of the instance and fqdn will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
+                      (String). Host name for the instance. This field is used to generate the instance fqdn value. The host name must be unique within the network and region. If not specified, the host name will be equal to id of the instance and fqdn will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
                       Host name for the instance. This field is used to generate the instance `fqdn` value. The host name must be unique within the network and region. If not specified, the host name will be equal to `id` of the instance and `fqdn` will be `<id>.auto.internal`. Otherwise FQDN will be `<hostname>.<region_id>.internal`.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   localDisk:
                     description: |-
-                      (Block List) List of local disks that are attached to the instance.
+                      [Block]. List of local disks that are attached to the instance.
                       List of local disks that are attached to the instance.
 
                       ~> Local disks are not available for all users by default.
                     items:
                       properties:
+                        kmsKeyId:
+                          description: |-
+                            (String). ID of KMS symmetric key used to encrypt disk.
+                            The ID of the KMS key to encrypt the disk.
+                          type: string
                         sizeBytes:
                           description: |-
-                            (Number) Size of the disk, specified in bytes.
+                            (Number). Size of the disk, specified in bytes.
                             Size of the disk, specified in bytes.
                           type: number
                       type: object
                     type: array
                   maintenanceGracePeriod:
                     description: |-
-                      (String) Time between notification via metadata service and maintenance. E.g., 60s.
+                      (String). Time between notification via metadata service and maintenance. E.g., 60s.
                       Time between notification via metadata service and maintenance. E.g., `60s`.
                     type: string
                   maintenancePolicy:
                     description: |-
-                      (String) Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is unspecified.
+                      (String). Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is unspecified.
                       Behavior on maintenance events. Can be: `unspecified`, `migrate`, `restart`. The default is `unspecified`.
                     type: string
                   metadata:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) Metadata key/value pairs to make available from within the instance.
+                      (Map Of String). Metadata key/value pairs to make available from within the instance.
                       Metadata key/value pairs to make available from within the instance.
                     type: object
                     x-kubernetes-map-type: granular
                   metadataOptions:
                     description: |-
-                      (Block List, Max: 1) Options allow user to configure access to instance's metadata. (see below for nested schema)
+                      [Block]. Options allow user to configure access to instance's metadata.
                       Options allow user to configure access to instance's metadata.
                     items:
                       properties:
                         awsV1HttpEndpoint:
-                          description: (Number)
+                          description: (Number).
                           type: number
                         awsV1HttpToken:
-                          description: (Number)
+                          description: (Number).
+                          type: number
+                        awsV2HttpEndpoint:
+                          description: (Number).
+                          type: number
+                        awsV2HttpToken:
+                          description: (Number).
                           type: number
                         gceHttpEndpoint:
-                          description: (Number)
+                          description: (Number).
                           type: number
                         gceHttpToken:
-                          description: (Number)
+                          description: (Number).
                           type: number
                       type: object
                     type: array
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkAccelerationType:
                     description: |-
-                      (String) Type of network acceleration. Can be standard or software_accelerated. The default is standard.
+                      (String). Type of network acceleration. Can be standard or software_accelerated. The default is standard.
                       Type of network acceleration. Can be `standard` or `software_accelerated`. The default is `standard`.
                     type: string
                   networkInterface:
                     description: |-
-                      (Block List, Min: 1) Networks to attach to the instance. This can be specified multiple times. (see below for nested schema)
+                      [Block]. Networks to attach to the instance. This can be specified multiple times.
                       Networks to attach to the instance. This can be specified multiple times.
                     items:
                       properties:
                         dnsRecord:
                           description: |-
-                            (Block List) List of configurations for creating ipv4 DNS records. (see below for nested schema)
+                            [Block]. List of configurations for creating ipv4 DNS records.
                             List of configurations for creating ipv4 DNS records.
                           items:
                             properties:
                               dnsZoneId:
                                 description: |-
-                                  (String) DNS zone ID (if not set, private zone used).
+                                  (String). DNS zone ID (if not set, private zone used).
                                   DNS zone ID (if not set, private zone used).
                                 type: string
                               fqdn:
                                 description: |-
-                                  (String) The fully qualified DNS name of this instance.
+                                  Only) (String). The fully qualified DNS name of this instance.
                                   DNS record FQDN (must have a dot at the end).
                                 type: string
                               ptr:
                                 description: |-
-                                  (Boolean) When set to true, also create a PTR DNS record.
+                                  (Bool). When set to true, also create a PTR DNS record.
                                   When set to `true`, also create a PTR DNS record.
                                 type: boolean
                               ttl:
                                 description: |-
-                                  (Number) DNS record TTL in seconds.
+                                  (Number). DNS record TTL in seconds.
                                   DNS record TTL in seconds.
                                 type: number
                             type: object
                           type: array
                         index:
                           description: |-
-                            (Number) Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
+                            (Number). Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
                             Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
                           type: number
                         ipAddress:
                           description: |-
-                            (String) The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
+                            (String). The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
                             The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
                           type: string
                         ipv4:
                           description: |-
-                            (Boolean) Allocate an IPv4 address for the interface. The default value is true.
+                            (Bool). Allocate an IPv4 address for the interface. The default value is true.
                             Allocate an IPv4 address for the interface. The default value is `true`.
                           type: boolean
                         ipv6:
                           description: |-
-                            (Boolean) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+                            (Bool). If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
                             If `true`, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
                           type: boolean
                         ipv6Address:
                           description: |-
-                            (String) The private IPv6 address to assign to the instance.
+                            (String). The private IPv6 address to assign to the instance.
                             The private IPv6 address to assign to the instance.
                           type: string
                         ipv6DnsRecord:
                           description: |-
-                            (Block List) List of configurations for creating ipv6 DNS records. (see below for nested schema)
+                            [Block]. List of configurations for creating ipv6 DNS records.
                             List of configurations for creating ipv6 DNS records.
                           items:
                             properties:
                               dnsZoneId:
                                 description: |-
-                                  (String) DNS zone ID (if not set, private zone used).
+                                  (String). DNS zone ID (if not set, private zone used).
                                   DNS zone ID (if not set, private zone used).
                                 type: string
                               fqdn:
                                 description: |-
-                                  (String) The fully qualified DNS name of this instance.
+                                  Only) (String). The fully qualified DNS name of this instance.
                                   DNS record FQDN (must have a dot at the end).
                                 type: string
                               ptr:
                                 description: |-
-                                  (Boolean) When set to true, also create a PTR DNS record.
+                                  (Bool). When set to true, also create a PTR DNS record.
                                   When set to `true`, also create a PTR DNS record.
                                 type: boolean
                               ttl:
                                 description: |-
-                                  (Number) DNS record TTL in seconds.
+                                  (Number). DNS record TTL in seconds.
                                   DNS record TTL in seconds.
                                 type: number
                             type: object
                           type: array
                         nat:
                           description: |-
-                            (Boolean) Provide a public address, for instance, to access the internet over NAT.
+                            (Bool). Provide a public address, for instance, to access the internet over NAT.
                             Provide a public address, for instance, to access the internet over NAT.
                           type: boolean
                         natDnsRecord:
                           description: |-
-                            (Block List) List of configurations for creating ipv4 NAT DNS records. (see below for nested schema)
+                            [Block]. List of configurations for creating ipv4 NAT DNS records.
                             List of configurations for creating ipv4 NAT DNS records.
                           items:
                             properties:
                               dnsZoneId:
                                 description: |-
-                                  (String) DNS zone ID (if not set, private zone used).
+                                  (String). DNS zone ID (if not set, private zone used).
                                   DNS zone ID (if not set, private zone used).
                                 type: string
                               fqdn:
                                 description: |-
-                                  (String) The fully qualified DNS name of this instance.
+                                  Only) (String). The fully qualified DNS name of this instance.
                                   DNS record FQDN (must have a dot at the end).
                                 type: string
                               ptr:
                                 description: |-
-                                  (Boolean) When set to true, also create a PTR DNS record.
+                                  (Bool). When set to true, also create a PTR DNS record.
                                   When set to `true`, also create a PTR DNS record.
                                 type: boolean
                               ttl:
                                 description: |-
-                                  (Number) DNS record TTL in seconds.
+                                  (Number). DNS record TTL in seconds.
                                   DNS record TTL in seconds.
                                 type: number
                             type: object
                           type: array
                         natIpAddress:
                           description: |-
-                            (String) Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
+                            (String). Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
                             Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
                           type: string
                         securityGroupIds:
                           description: |-
-                            (Set of String) Security Group (SG) IDs for network interface.
+                            (Set Of String). Security Group (SG) IDs for network interface.
                             Security Group (SG) IDs for network interface.
                           items:
                             type: string
@@ -714,7 +725,7 @@ spec:
                           type: object
                         subnetId:
                           description: |-
-                            (String) ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
+                            (String). ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
                             ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
                           type: string
                         subnetIdRef:
@@ -795,13 +806,13 @@ spec:
                     type: array
                   placementPolicy:
                     description: |-
-                      (Block List, Max: 1) The placement policy configuration. (see below for nested schema)
+                      [Block]. The placement policy configuration.
                       The placement policy configuration.
                     items:
                       properties:
                         hostAffinityRules:
                           description: |-
-                            (List of Object) List of host affinity rules.
+                            (List Of Object). List of host affinity rules.
                             List of host affinity rules. To reset the values of these fields, you need to set them empty:
 
                             placement_policy {
@@ -811,13 +822,10 @@ spec:
                           items:
                             properties:
                               key:
-                                description: (String)
                                 type: string
                               op:
-                                description: (String)
                                 type: string
                               values:
-                                description: (List of String)
                                 items:
                                   type: string
                                 type: array
@@ -825,7 +833,7 @@ spec:
                           type: array
                         placementGroupId:
                           description: |-
-                            (String) Specifies the id of the Placement Group to assign to the instance.
+                            (String). Specifies the id of the Placement Group to assign to the instance.
                             Specifies the id of the Placement Group to assign to the instance.
                           type: string
                         placementGroupIdRef:
@@ -905,59 +913,64 @@ spec:
                               type: object
                           type: object
                         placementGroupPartition:
-                          description: (Number)
+                          description: (Number).
                           type: number
                       type: object
                     type: array
                   platformId:
                     description: |-
-                      (String) The type of virtual machine to create.
+                      (String). The type of virtual machine to create.
                       The type of virtual machine to create.
+                    type: string
+                  reservedInstancePoolId:
+                    description: |-
+                      (String). ID of the reserved instance pool to attach this instance to.
+                      ID of the reserved instance pool to attach this instance to.
                     type: string
                   resources:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Compute resources that are allocated for the instance. (see below for nested schema)
+                      [Block]. Compute resources that are allocated for the instance.
                       Compute resources that are allocated for the instance.
                     items:
                       properties:
                         coreFraction:
                           description: |-
-                            (Number) If provided, specifies baseline performance for a core as a percent.
+                            (Number). If provided, specifies baseline performance for a core as a percent.
                             If provided, specifies baseline performance for a core as a percent.
                           type: number
                         cores:
                           description: |-
-                            (Number) CPU cores for the instance.
+                            (Number). CPU cores for the instance.
                             CPU cores for the instance.
                           type: number
                         gpus:
                           description: |-
-                            (Number) If provided, specifies the number of GPU devices for the instance.
+                            (Number). If provided, specifies the number of GPU devices for the instance.
                             If provided, specifies the number of GPU devices for the instance.
                           type: number
                         memory:
                           description: |-
-                            (Number) Memory size in GB.
+                            (Number). Memory size in GB.
                             Memory size in GB.
                           type: number
                       type: object
                     type: array
                   schedulingPolicy:
                     description: |-
-                      (Block List, Max: 1) Scheduling policy configuration. (see below for nested schema)
+                      [Block]. Scheduling policy configuration.
                       Scheduling policy configuration.
                     items:
                       properties:
                         preemptible:
                           description: |-
-                            (Boolean) Specifies if the instance is preemptible. Defaults to false.
+                            (Bool). Specifies if the instance is preemptible. Defaults to false.
                             Specifies if the instance is preemptible. Defaults to `false`.
                           type: boolean
                       type: object
                     type: array
                   secondaryDisk:
                     description: |-
-                      (Block Set) A set of disks to attach to the instance. The structure is documented below.
+                      [Block]. A set of disks to attach to the instance. The structure is documented below.
                       A set of disks to attach to the instance. The structure is documented below.
 
                       ~> The [`allow_stopping_for_update`](#allow_stopping_for_update) property must be set to `true` in order to update this structure.
@@ -970,12 +983,12 @@ spec:
                           type: boolean
                         deviceName:
                           description: |-
-                            (String) Name that can be used to access an attached disk.
+                            (String). Name that can be used to access an attached disk.
                             Name that can be used to access an attached disk under `/dev/disk/by-id/`.
                           type: string
                         diskId:
                           description: |-
-                            (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+                            (String). The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
                             ID of the disk that is attached to the instance.
                           type: string
                         diskIdRef:
@@ -1056,14 +1069,14 @@ spec:
                           type: object
                         mode:
                           description: |-
-                            (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+                            (String). Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
                             Type of access to the disk resource. By default, a disk is attached in `READ_WRITE` mode.
                           type: string
                       type: object
                     type: array
                   serviceAccountId:
                     description: |-
-                      (String) Service account which linked to the resource.
+                      (String). Service account which linked to the resource.
                       [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
                     type: string
                   serviceAccountIdRef:
@@ -1144,7 +1157,7 @@ spec:
                     type: object
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
                       The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                     type: string
                 type: object
@@ -1162,17 +1175,17 @@ spec:
                   autoscaler.
                 properties:
                   allowRecreate:
-                    description: (Boolean)
+                    description: (Bool).
                     type: boolean
                   allowStoppingForUpdate:
-                    description: If you try to update a property that requires stopping
+                    description: (Bool). If you try to update a property that requires
+                      stopping the instance without setting this field, the update
+                      will fail. If you try to update a property that requires stopping
                       the instance without setting this field, the update will fail.
-                      If you try to update a property that requires stopping the instance
-                      without setting this field, the update will fail.
                     type: boolean
                   bootDisk:
                     description: |-
-                      (Block List, Min: 1, Max: 1) The boot disk for the instance. Either initialize_params or disk_id must be specified. (see below for nested schema)
+                      [Block]. The boot disk for the instance. Either initialize_params or disk_id must be specified.
                       The boot disk for the instance. Either `initialize_params` or `disk_id` must be specified.
                     items:
                       properties:
@@ -1183,12 +1196,12 @@ spec:
                           type: boolean
                         deviceName:
                           description: |-
-                            (String) Name that can be used to access an attached disk.
+                            (String). Name that can be used to access an attached disk.
                             Name that can be used to access an attached disk.
                           type: string
                         diskId:
                           description: |-
-                            (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+                            (String). The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
                             The ID of the existing disk (such as those managed by `yandex_compute_disk`) to attach as a boot disk.
                           type: string
                         diskIdRef:
@@ -1269,78 +1282,78 @@ spec:
                           type: object
                         initializeParams:
                           description: |-
-                            (Block List, Max: 1) Parameters for a new disk that will be created alongside the new instance. Either initialize_params or disk_id must be set. Either image_id or snapshot_id must be specified. (see below for nested schema)
+                            [Block]. Parameters for a new disk that will be created alongside the new instance. Either initialize_params or disk_id must be set. Either image_id or snapshot_id must be specified.
                             Parameters for a new disk that will be created alongside the new instance. Either `initialize_params` or `disk_id` must be set. Either `image_id` or `snapshot_id` must be specified.
                           items:
                             properties:
                               blockSize:
                                 description: |-
-                                  (Number) Block size of the disk, specified in bytes.
+                                  (Number). Block size of the disk, specified in bytes.
                                   Block size of the disk, specified in bytes.
                                 type: number
                               description:
                                 description: |-
-                                  (String) The resource description.
+                                  (String). The resource description.
                                   Description of the boot disk.
                                 type: string
                               imageId:
                                 description: |-
-                                  (String) A disk image to initialize this disk from.
+                                  (String). A disk image to initialize this disk from.
                                   A disk image to initialize this disk from.
                                 type: string
                               kmsKeyId:
                                 description: |-
-                                  (String) ID of KMS symmetric key used to encrypt disk.
+                                  (String). ID of KMS symmetric key used to encrypt disk.
                                   ID of KMS symmetric key used to encrypt disk.
                                 type: string
                               name:
                                 description: |-
-                                  (String) The resource name.
+                                  (String). The resource name.
                                   Name of the boot disk.
                                 type: string
                               size:
                                 description: |-
-                                  (Number) Size of the disk in GB.
+                                  (Number). Size of the disk in GB.
                                   Size of the disk in GB.
                                 type: number
                               snapshotId:
                                 description: |-
-                                  (String) A snapshot to initialize this disk from.
+                                  (String). A snapshot to initialize this disk from.
                                   A snapshot to initialize this disk from.
                                 type: string
                               type:
                                 description: |-
-                                  (String) Disk type.
+                                  (String). Disk type.
                                   Disk type.
                                 type: string
                             type: object
                           type: array
                         mode:
                           description: |-
-                            (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+                            (String). Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
                             Type of access to the disk resource. By default, a disk is attached in `READ_WRITE` mode.
                           type: string
                       type: object
                     type: array
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   filesystem:
                     description: |-
-                      (Block Set) List of filesystems that are attached to the instance. (see below for nested schema)
+                      [Block]. List of filesystems that are attached to the instance.
                       List of filesystems that are attached to the instance.
                     items:
                       properties:
                         deviceName:
                           description: |-
-                            (String) Name that can be used to access an attached disk.
+                            (String). Name that can be used to access an attached disk.
                             Name of the device representing the filesystem on the instance.
                           type: string
                         filesystemId:
                           description: |-
-                            (String) ID of the filesystem that should be attached.
+                            (String). ID of the filesystem that should be attached.
                             ID of the filesystem that should be attached.
                           type: string
                         filesystemIdRef:
@@ -1421,7 +1434,7 @@ spec:
                           type: object
                         mode:
                           description: |-
-                            (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+                            (String). Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
                             Mode of access to the filesystem that should be attached. By default, filesystem is attached in `READ_WRITE` mode.
                           type: string
                       type: object
@@ -1509,213 +1522,224 @@ spec:
                     type: object
                   gpuClusterId:
                     description: |-
-                      (String) ID of the GPU cluster to attach this instance to.
+                      (String). ID of the GPU cluster to attach this instance to.
                       ID of the GPU cluster to attach this instance to.
                     type: string
                   hostname:
                     description: |-
-                      (String) Host name for the instance. This field is used to generate the instance fqdn value. The host name must be unique within the network and region. If not specified, the host name will be equal to id of the instance and fqdn will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
+                      (String). Host name for the instance. This field is used to generate the instance fqdn value. The host name must be unique within the network and region. If not specified, the host name will be equal to id of the instance and fqdn will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
                       Host name for the instance. This field is used to generate the instance `fqdn` value. The host name must be unique within the network and region. If not specified, the host name will be equal to `id` of the instance and `fqdn` will be `<id>.auto.internal`. Otherwise FQDN will be `<hostname>.<region_id>.internal`.
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   localDisk:
                     description: |-
-                      (Block List) List of local disks that are attached to the instance.
+                      [Block]. List of local disks that are attached to the instance.
                       List of local disks that are attached to the instance.
 
                       ~> Local disks are not available for all users by default.
                     items:
                       properties:
+                        kmsKeyId:
+                          description: |-
+                            (String). ID of KMS symmetric key used to encrypt disk.
+                            The ID of the KMS key to encrypt the disk.
+                          type: string
                         sizeBytes:
                           description: |-
-                            (Number) Size of the disk, specified in bytes.
+                            (Number). Size of the disk, specified in bytes.
                             Size of the disk, specified in bytes.
                           type: number
                       type: object
                     type: array
                   maintenanceGracePeriod:
                     description: |-
-                      (String) Time between notification via metadata service and maintenance. E.g., 60s.
+                      (String). Time between notification via metadata service and maintenance. E.g., 60s.
                       Time between notification via metadata service and maintenance. E.g., `60s`.
                     type: string
                   maintenancePolicy:
                     description: |-
-                      (String) Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is unspecified.
+                      (String). Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is unspecified.
                       Behavior on maintenance events. Can be: `unspecified`, `migrate`, `restart`. The default is `unspecified`.
                     type: string
                   metadata:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) Metadata key/value pairs to make available from within the instance.
+                      (Map Of String). Metadata key/value pairs to make available from within the instance.
                       Metadata key/value pairs to make available from within the instance.
                     type: object
                     x-kubernetes-map-type: granular
                   metadataOptions:
                     description: |-
-                      (Block List, Max: 1) Options allow user to configure access to instance's metadata. (see below for nested schema)
+                      [Block]. Options allow user to configure access to instance's metadata.
                       Options allow user to configure access to instance's metadata.
                     items:
                       properties:
                         awsV1HttpEndpoint:
-                          description: (Number)
+                          description: (Number).
                           type: number
                         awsV1HttpToken:
-                          description: (Number)
+                          description: (Number).
+                          type: number
+                        awsV2HttpEndpoint:
+                          description: (Number).
+                          type: number
+                        awsV2HttpToken:
+                          description: (Number).
                           type: number
                         gceHttpEndpoint:
-                          description: (Number)
+                          description: (Number).
                           type: number
                         gceHttpToken:
-                          description: (Number)
+                          description: (Number).
                           type: number
                       type: object
                     type: array
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkAccelerationType:
                     description: |-
-                      (String) Type of network acceleration. Can be standard or software_accelerated. The default is standard.
+                      (String). Type of network acceleration. Can be standard or software_accelerated. The default is standard.
                       Type of network acceleration. Can be `standard` or `software_accelerated`. The default is `standard`.
                     type: string
                   networkInterface:
                     description: |-
-                      (Block List, Min: 1) Networks to attach to the instance. This can be specified multiple times. (see below for nested schema)
+                      [Block]. Networks to attach to the instance. This can be specified multiple times.
                       Networks to attach to the instance. This can be specified multiple times.
                     items:
                       properties:
                         dnsRecord:
                           description: |-
-                            (Block List) List of configurations for creating ipv4 DNS records. (see below for nested schema)
+                            [Block]. List of configurations for creating ipv4 DNS records.
                             List of configurations for creating ipv4 DNS records.
                           items:
                             properties:
                               dnsZoneId:
                                 description: |-
-                                  (String) DNS zone ID (if not set, private zone used).
+                                  (String). DNS zone ID (if not set, private zone used).
                                   DNS zone ID (if not set, private zone used).
                                 type: string
                               fqdn:
                                 description: |-
-                                  (String) The fully qualified DNS name of this instance.
+                                  Only) (String). The fully qualified DNS name of this instance.
                                   DNS record FQDN (must have a dot at the end).
                                 type: string
                               ptr:
                                 description: |-
-                                  (Boolean) When set to true, also create a PTR DNS record.
+                                  (Bool). When set to true, also create a PTR DNS record.
                                   When set to `true`, also create a PTR DNS record.
                                 type: boolean
                               ttl:
                                 description: |-
-                                  (Number) DNS record TTL in seconds.
+                                  (Number). DNS record TTL in seconds.
                                   DNS record TTL in seconds.
                                 type: number
                             type: object
                           type: array
                         index:
                           description: |-
-                            (Number) Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
+                            (Number). Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
                             Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
                           type: number
                         ipAddress:
                           description: |-
-                            (String) The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
+                            (String). The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
                             The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
                           type: string
                         ipv4:
                           description: |-
-                            (Boolean) Allocate an IPv4 address for the interface. The default value is true.
+                            (Bool). Allocate an IPv4 address for the interface. The default value is true.
                             Allocate an IPv4 address for the interface. The default value is `true`.
                           type: boolean
                         ipv6:
                           description: |-
-                            (Boolean) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+                            (Bool). If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
                             If `true`, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
                           type: boolean
                         ipv6Address:
                           description: |-
-                            (String) The private IPv6 address to assign to the instance.
+                            (String). The private IPv6 address to assign to the instance.
                             The private IPv6 address to assign to the instance.
                           type: string
                         ipv6DnsRecord:
                           description: |-
-                            (Block List) List of configurations for creating ipv6 DNS records. (see below for nested schema)
+                            [Block]. List of configurations for creating ipv6 DNS records.
                             List of configurations for creating ipv6 DNS records.
                           items:
                             properties:
                               dnsZoneId:
                                 description: |-
-                                  (String) DNS zone ID (if not set, private zone used).
+                                  (String). DNS zone ID (if not set, private zone used).
                                   DNS zone ID (if not set, private zone used).
                                 type: string
                               fqdn:
                                 description: |-
-                                  (String) The fully qualified DNS name of this instance.
+                                  Only) (String). The fully qualified DNS name of this instance.
                                   DNS record FQDN (must have a dot at the end).
                                 type: string
                               ptr:
                                 description: |-
-                                  (Boolean) When set to true, also create a PTR DNS record.
+                                  (Bool). When set to true, also create a PTR DNS record.
                                   When set to `true`, also create a PTR DNS record.
                                 type: boolean
                               ttl:
                                 description: |-
-                                  (Number) DNS record TTL in seconds.
+                                  (Number). DNS record TTL in seconds.
                                   DNS record TTL in seconds.
                                 type: number
                             type: object
                           type: array
                         nat:
                           description: |-
-                            (Boolean) Provide a public address, for instance, to access the internet over NAT.
+                            (Bool). Provide a public address, for instance, to access the internet over NAT.
                             Provide a public address, for instance, to access the internet over NAT.
                           type: boolean
                         natDnsRecord:
                           description: |-
-                            (Block List) List of configurations for creating ipv4 NAT DNS records. (see below for nested schema)
+                            [Block]. List of configurations for creating ipv4 NAT DNS records.
                             List of configurations for creating ipv4 NAT DNS records.
                           items:
                             properties:
                               dnsZoneId:
                                 description: |-
-                                  (String) DNS zone ID (if not set, private zone used).
+                                  (String). DNS zone ID (if not set, private zone used).
                                   DNS zone ID (if not set, private zone used).
                                 type: string
                               fqdn:
                                 description: |-
-                                  (String) The fully qualified DNS name of this instance.
+                                  Only) (String). The fully qualified DNS name of this instance.
                                   DNS record FQDN (must have a dot at the end).
                                 type: string
                               ptr:
                                 description: |-
-                                  (Boolean) When set to true, also create a PTR DNS record.
+                                  (Bool). When set to true, also create a PTR DNS record.
                                   When set to `true`, also create a PTR DNS record.
                                 type: boolean
                               ttl:
                                 description: |-
-                                  (Number) DNS record TTL in seconds.
+                                  (Number). DNS record TTL in seconds.
                                   DNS record TTL in seconds.
                                 type: number
                             type: object
                           type: array
                         natIpAddress:
                           description: |-
-                            (String) Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
+                            (String). Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
                             Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
                           type: string
                         securityGroupIds:
                           description: |-
-                            (Set of String) Security Group (SG) IDs for network interface.
+                            (Set Of String). Security Group (SG) IDs for network interface.
                             Security Group (SG) IDs for network interface.
                           items:
                             type: string
@@ -1802,7 +1826,7 @@ spec:
                           type: object
                         subnetId:
                           description: |-
-                            (String) ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
+                            (String). ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
                             ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
                           type: string
                         subnetIdRef:
@@ -1883,13 +1907,13 @@ spec:
                     type: array
                   placementPolicy:
                     description: |-
-                      (Block List, Max: 1) The placement policy configuration. (see below for nested schema)
+                      [Block]. The placement policy configuration.
                       The placement policy configuration.
                     items:
                       properties:
                         hostAffinityRules:
                           description: |-
-                            (List of Object) List of host affinity rules.
+                            (List Of Object). List of host affinity rules.
                             List of host affinity rules. To reset the values of these fields, you need to set them empty:
 
                             placement_policy {
@@ -1899,13 +1923,10 @@ spec:
                           items:
                             properties:
                               key:
-                                description: (String)
                                 type: string
                               op:
-                                description: (String)
                                 type: string
                               values:
-                                description: (List of String)
                                 items:
                                   type: string
                                 type: array
@@ -1913,7 +1934,7 @@ spec:
                           type: array
                         placementGroupId:
                           description: |-
-                            (String) Specifies the id of the Placement Group to assign to the instance.
+                            (String). Specifies the id of the Placement Group to assign to the instance.
                             Specifies the id of the Placement Group to assign to the instance.
                           type: string
                         placementGroupIdRef:
@@ -1993,59 +2014,64 @@ spec:
                               type: object
                           type: object
                         placementGroupPartition:
-                          description: (Number)
+                          description: (Number).
                           type: number
                       type: object
                     type: array
                   platformId:
                     description: |-
-                      (String) The type of virtual machine to create.
+                      (String). The type of virtual machine to create.
                       The type of virtual machine to create.
+                    type: string
+                  reservedInstancePoolId:
+                    description: |-
+                      (String). ID of the reserved instance pool to attach this instance to.
+                      ID of the reserved instance pool to attach this instance to.
                     type: string
                   resources:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Compute resources that are allocated for the instance. (see below for nested schema)
+                      [Block]. Compute resources that are allocated for the instance.
                       Compute resources that are allocated for the instance.
                     items:
                       properties:
                         coreFraction:
                           description: |-
-                            (Number) If provided, specifies baseline performance for a core as a percent.
+                            (Number). If provided, specifies baseline performance for a core as a percent.
                             If provided, specifies baseline performance for a core as a percent.
                           type: number
                         cores:
                           description: |-
-                            (Number) CPU cores for the instance.
+                            (Number). CPU cores for the instance.
                             CPU cores for the instance.
                           type: number
                         gpus:
                           description: |-
-                            (Number) If provided, specifies the number of GPU devices for the instance.
+                            (Number). If provided, specifies the number of GPU devices for the instance.
                             If provided, specifies the number of GPU devices for the instance.
                           type: number
                         memory:
                           description: |-
-                            (Number) Memory size in GB.
+                            (Number). Memory size in GB.
                             Memory size in GB.
                           type: number
                       type: object
                     type: array
                   schedulingPolicy:
                     description: |-
-                      (Block List, Max: 1) Scheduling policy configuration. (see below for nested schema)
+                      [Block]. Scheduling policy configuration.
                       Scheduling policy configuration.
                     items:
                       properties:
                         preemptible:
                           description: |-
-                            (Boolean) Specifies if the instance is preemptible. Defaults to false.
+                            (Bool). Specifies if the instance is preemptible. Defaults to false.
                             Specifies if the instance is preemptible. Defaults to `false`.
                           type: boolean
                       type: object
                     type: array
                   secondaryDisk:
                     description: |-
-                      (Block Set) A set of disks to attach to the instance. The structure is documented below.
+                      [Block]. A set of disks to attach to the instance. The structure is documented below.
                       A set of disks to attach to the instance. The structure is documented below.
 
                       ~> The [`allow_stopping_for_update`](#allow_stopping_for_update) property must be set to `true` in order to update this structure.
@@ -2058,12 +2084,12 @@ spec:
                           type: boolean
                         deviceName:
                           description: |-
-                            (String) Name that can be used to access an attached disk.
+                            (String). Name that can be used to access an attached disk.
                             Name that can be used to access an attached disk under `/dev/disk/by-id/`.
                           type: string
                         diskId:
                           description: |-
-                            (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+                            (String). The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
                             ID of the disk that is attached to the instance.
                           type: string
                         diskIdRef:
@@ -2144,14 +2170,14 @@ spec:
                           type: object
                         mode:
                           description: |-
-                            (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+                            (String). Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
                             Type of access to the disk resource. By default, a disk is attached in `READ_WRITE` mode.
                           type: string
                       type: object
                     type: array
                   serviceAccountId:
                     description: |-
-                      (String) Service account which linked to the resource.
+                      (String). Service account which linked to the resource.
                       [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
                     type: string
                   serviceAccountIdRef:
@@ -2232,7 +2258,7 @@ spec:
                     type: object
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
                       The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                     type: string
                 type: object
@@ -2341,17 +2367,17 @@ spec:
               atProvider:
                 properties:
                   allowRecreate:
-                    description: (Boolean)
+                    description: (Bool).
                     type: boolean
                   allowStoppingForUpdate:
-                    description: If you try to update a property that requires stopping
+                    description: (Bool). If you try to update a property that requires
+                      stopping the instance without setting this field, the update
+                      will fail. If you try to update a property that requires stopping
                       the instance without setting this field, the update will fail.
-                      If you try to update a property that requires stopping the instance
-                      without setting this field, the update will fail.
                     type: boolean
                   bootDisk:
                     description: |-
-                      (Block List, Min: 1, Max: 1) The boot disk for the instance. Either initialize_params or disk_id must be specified. (see below for nested schema)
+                      [Block]. The boot disk for the instance. Either initialize_params or disk_id must be specified.
                       The boot disk for the instance. Either `initialize_params` or `disk_id` must be specified.
                     items:
                       properties:
@@ -2362,98 +2388,98 @@ spec:
                           type: boolean
                         deviceName:
                           description: |-
-                            (String) Name that can be used to access an attached disk.
+                            (String). Name that can be used to access an attached disk.
                             Name that can be used to access an attached disk.
                           type: string
                         diskId:
                           description: |-
-                            (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+                            (String). The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
                             The ID of the existing disk (such as those managed by `yandex_compute_disk`) to attach as a boot disk.
                           type: string
                         initializeParams:
                           description: |-
-                            (Block List, Max: 1) Parameters for a new disk that will be created alongside the new instance. Either initialize_params or disk_id must be set. Either image_id or snapshot_id must be specified. (see below for nested schema)
+                            [Block]. Parameters for a new disk that will be created alongside the new instance. Either initialize_params or disk_id must be set. Either image_id or snapshot_id must be specified.
                             Parameters for a new disk that will be created alongside the new instance. Either `initialize_params` or `disk_id` must be set. Either `image_id` or `snapshot_id` must be specified.
                           items:
                             properties:
                               blockSize:
                                 description: |-
-                                  (Number) Block size of the disk, specified in bytes.
+                                  (Number). Block size of the disk, specified in bytes.
                                   Block size of the disk, specified in bytes.
                                 type: number
                               description:
                                 description: |-
-                                  (String) The resource description.
+                                  (String). The resource description.
                                   Description of the boot disk.
                                 type: string
                               imageId:
                                 description: |-
-                                  (String) A disk image to initialize this disk from.
+                                  (String). A disk image to initialize this disk from.
                                   A disk image to initialize this disk from.
                                 type: string
                               kmsKeyId:
                                 description: |-
-                                  (String) ID of KMS symmetric key used to encrypt disk.
+                                  (String). ID of KMS symmetric key used to encrypt disk.
                                   ID of KMS symmetric key used to encrypt disk.
                                 type: string
                               name:
                                 description: |-
-                                  (String) The resource name.
+                                  (String). The resource name.
                                   Name of the boot disk.
                                 type: string
                               size:
                                 description: |-
-                                  (Number) Size of the disk in GB.
+                                  (Number). Size of the disk in GB.
                                   Size of the disk in GB.
                                 type: number
                               snapshotId:
                                 description: |-
-                                  (String) A snapshot to initialize this disk from.
+                                  (String). A snapshot to initialize this disk from.
                                   A snapshot to initialize this disk from.
                                 type: string
                               type:
                                 description: |-
-                                  (String) Disk type.
+                                  (String). Disk type.
                                   Disk type.
                                 type: string
                             type: object
                           type: array
                         mode:
                           description: |-
-                            (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+                            (String). Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
                             Type of access to the disk resource. By default, a disk is attached in `READ_WRITE` mode.
                           type: string
                       type: object
                     type: array
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
                       The creation timestamp of the resource.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   filesystem:
                     description: |-
-                      (Block Set) List of filesystems that are attached to the instance. (see below for nested schema)
+                      [Block]. List of filesystems that are attached to the instance.
                       List of filesystems that are attached to the instance.
                     items:
                       properties:
                         deviceName:
                           description: |-
-                            (String) Name that can be used to access an attached disk.
+                            (String). Name that can be used to access an attached disk.
                             Name of the device representing the filesystem on the instance.
                           type: string
                         filesystemId:
                           description: |-
-                            (String) ID of the filesystem that should be attached.
+                            (String). ID of the filesystem that should be attached.
                             ID of the filesystem that should be attached.
                           type: string
                         mode:
                           description: |-
-                            (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+                            (String). Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
                             Mode of access to the filesystem that should be attached. By default, filesystem is attached in `READ_WRITE` mode.
                           type: string
                       type: object
@@ -2465,29 +2491,29 @@ spec:
                     type: string
                   fqdn:
                     description: |-
-                      (String) The fully qualified DNS name of this instance.
+                      Only) (String). The fully qualified DNS name of this instance.
                       The fully qualified DNS name of this instance.
                     type: string
                   gpuClusterId:
                     description: |-
-                      (String) ID of the GPU cluster to attach this instance to.
+                      (String). ID of the GPU cluster to attach this instance to.
                       ID of the GPU cluster to attach this instance to.
                     type: string
                   hardwareGeneration:
-                    description: (List of Object) (see below for nested schema)
+                    description: Only) (List Of Object).
                     items:
                       properties:
                         generation2Features:
-                          description: (List of Object) (see below for nested schema)
+                          description: .
                           items:
                             type: object
                           type: array
                         legacyFeatures:
-                          description: (List of Object) (see below for nested schema)
+                          description: .
                           items:
                             properties:
                               pciTopology:
-                                description: (String)
+                                description: .
                                 type: string
                             type: object
                           type: array
@@ -2495,23 +2521,23 @@ spec:
                     type: array
                   hostname:
                     description: |-
-                      (String) Host name for the instance. This field is used to generate the instance fqdn value. The host name must be unique within the network and region. If not specified, the host name will be equal to id of the instance and fqdn will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
+                      (String). Host name for the instance. This field is used to generate the instance fqdn value. The host name must be unique within the network and region. If not specified, the host name will be equal to id of the instance and fqdn will be <id>.auto.internal. Otherwise FQDN will be <hostname>.<region_id>.internal.
                       Host name for the instance. This field is used to generate the instance `fqdn` value. The host name must be unique within the network and region. If not specified, the host name will be equal to `id` of the instance and `fqdn` will be `<id>.auto.internal`. Otherwise FQDN will be `<hostname>.<region_id>.internal`.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   localDisk:
                     description: |-
-                      (Block List) List of local disks that are attached to the instance.
+                      [Block]. List of local disks that are attached to the instance.
                       List of local disks that are attached to the instance.
 
                       ~> Local disks are not available for all users by default.
@@ -2519,198 +2545,209 @@ spec:
                       properties:
                         deviceName:
                           description: |-
-                            (String) Name that can be used to access an attached disk.
+                            (String). Name that can be used to access an attached disk.
                             The name of the local disk device.
+                          type: string
+                        kmsKeyId:
+                          description: |-
+                            (String). ID of KMS symmetric key used to encrypt disk.
+                            The ID of the KMS key to encrypt the disk.
                           type: string
                         sizeBytes:
                           description: |-
-                            (Number) Size of the disk, specified in bytes.
+                            (Number). Size of the disk, specified in bytes.
                             Size of the disk, specified in bytes.
                           type: number
                       type: object
                     type: array
                   maintenanceGracePeriod:
                     description: |-
-                      (String) Time between notification via metadata service and maintenance. E.g., 60s.
+                      (String). Time between notification via metadata service and maintenance. E.g., 60s.
                       Time between notification via metadata service and maintenance. E.g., `60s`.
                     type: string
                   maintenancePolicy:
                     description: |-
-                      (String) Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is unspecified.
+                      (String). Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is unspecified.
                       Behavior on maintenance events. Can be: `unspecified`, `migrate`, `restart`. The default is `unspecified`.
                     type: string
                   metadata:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) Metadata key/value pairs to make available from within the instance.
+                      (Map Of String). Metadata key/value pairs to make available from within the instance.
                       Metadata key/value pairs to make available from within the instance.
                     type: object
                     x-kubernetes-map-type: granular
                   metadataOptions:
                     description: |-
-                      (Block List, Max: 1) Options allow user to configure access to instance's metadata. (see below for nested schema)
+                      [Block]. Options allow user to configure access to instance's metadata.
                       Options allow user to configure access to instance's metadata.
                     items:
                       properties:
                         awsV1HttpEndpoint:
-                          description: (Number)
+                          description: (Number).
                           type: number
                         awsV1HttpToken:
-                          description: (Number)
+                          description: (Number).
+                          type: number
+                        awsV2HttpEndpoint:
+                          description: (Number).
+                          type: number
+                        awsV2HttpToken:
+                          description: (Number).
                           type: number
                         gceHttpEndpoint:
-                          description: (Number)
+                          description: (Number).
                           type: number
                         gceHttpToken:
-                          description: (Number)
+                          description: (Number).
                           type: number
                       type: object
                     type: array
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkAccelerationType:
                     description: |-
-                      (String) Type of network acceleration. Can be standard or software_accelerated. The default is standard.
+                      (String). Type of network acceleration. Can be standard or software_accelerated. The default is standard.
                       Type of network acceleration. Can be `standard` or `software_accelerated`. The default is `standard`.
                     type: string
                   networkInterface:
                     description: |-
-                      (Block List, Min: 1) Networks to attach to the instance. This can be specified multiple times. (see below for nested schema)
+                      [Block]. Networks to attach to the instance. This can be specified multiple times.
                       Networks to attach to the instance. This can be specified multiple times.
                     items:
                       properties:
                         dnsRecord:
                           description: |-
-                            (Block List) List of configurations for creating ipv4 DNS records. (see below for nested schema)
+                            [Block]. List of configurations for creating ipv4 DNS records.
                             List of configurations for creating ipv4 DNS records.
                           items:
                             properties:
                               dnsZoneId:
                                 description: |-
-                                  (String) DNS zone ID (if not set, private zone used).
+                                  (String). DNS zone ID (if not set, private zone used).
                                   DNS zone ID (if not set, private zone used).
                                 type: string
                               fqdn:
                                 description: |-
-                                  (String) The fully qualified DNS name of this instance.
+                                  Only) (String). The fully qualified DNS name of this instance.
                                   DNS record FQDN (must have a dot at the end).
                                 type: string
                               ptr:
                                 description: |-
-                                  (Boolean) When set to true, also create a PTR DNS record.
+                                  (Bool). When set to true, also create a PTR DNS record.
                                   When set to `true`, also create a PTR DNS record.
                                 type: boolean
                               ttl:
                                 description: |-
-                                  (Number) DNS record TTL in seconds.
+                                  (Number). DNS record TTL in seconds.
                                   DNS record TTL in seconds.
                                 type: number
                             type: object
                           type: array
                         index:
                           description: |-
-                            (Number) Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
+                            (Number). Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
                             Index of network interface, will be calculated automatically for instance create or update operations if not specified. Required for attach/detach operations.
                           type: number
                         ipAddress:
                           description: |-
-                            (String) The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
+                            (String). The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
                             The private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet.
                           type: string
                         ipv4:
                           description: |-
-                            (Boolean) Allocate an IPv4 address for the interface. The default value is true.
+                            (Bool). Allocate an IPv4 address for the interface. The default value is true.
                             Allocate an IPv4 address for the interface. The default value is `true`.
                           type: boolean
                         ipv6:
                           description: |-
-                            (Boolean) If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
+                            (Bool). If true, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
                             If `true`, allocate an IPv6 address for the interface. The address will be automatically assigned from the specified subnet.
                           type: boolean
                         ipv6Address:
                           description: |-
-                            (String) The private IPv6 address to assign to the instance.
+                            (String). The private IPv6 address to assign to the instance.
                             The private IPv6 address to assign to the instance.
                           type: string
                         ipv6DnsRecord:
                           description: |-
-                            (Block List) List of configurations for creating ipv6 DNS records. (see below for nested schema)
+                            [Block]. List of configurations for creating ipv6 DNS records.
                             List of configurations for creating ipv6 DNS records.
                           items:
                             properties:
                               dnsZoneId:
                                 description: |-
-                                  (String) DNS zone ID (if not set, private zone used).
+                                  (String). DNS zone ID (if not set, private zone used).
                                   DNS zone ID (if not set, private zone used).
                                 type: string
                               fqdn:
                                 description: |-
-                                  (String) The fully qualified DNS name of this instance.
+                                  Only) (String). The fully qualified DNS name of this instance.
                                   DNS record FQDN (must have a dot at the end).
                                 type: string
                               ptr:
                                 description: |-
-                                  (Boolean) When set to true, also create a PTR DNS record.
+                                  (Bool). When set to true, also create a PTR DNS record.
                                   When set to `true`, also create a PTR DNS record.
                                 type: boolean
                               ttl:
                                 description: |-
-                                  (Number) DNS record TTL in seconds.
+                                  (Number). DNS record TTL in seconds.
                                   DNS record TTL in seconds.
                                 type: number
                             type: object
                           type: array
                         macAddress:
-                          description: (String)
+                          description: Only) (String).
                           type: string
                         nat:
                           description: |-
-                            (Boolean) Provide a public address, for instance, to access the internet over NAT.
+                            (Bool). Provide a public address, for instance, to access the internet over NAT.
                             Provide a public address, for instance, to access the internet over NAT.
                           type: boolean
                         natDnsRecord:
                           description: |-
-                            (Block List) List of configurations for creating ipv4 NAT DNS records. (see below for nested schema)
+                            [Block]. List of configurations for creating ipv4 NAT DNS records.
                             List of configurations for creating ipv4 NAT DNS records.
                           items:
                             properties:
                               dnsZoneId:
                                 description: |-
-                                  (String) DNS zone ID (if not set, private zone used).
+                                  (String). DNS zone ID (if not set, private zone used).
                                   DNS zone ID (if not set, private zone used).
                                 type: string
                               fqdn:
                                 description: |-
-                                  (String) The fully qualified DNS name of this instance.
+                                  Only) (String). The fully qualified DNS name of this instance.
                                   DNS record FQDN (must have a dot at the end).
                                 type: string
                               ptr:
                                 description: |-
-                                  (Boolean) When set to true, also create a PTR DNS record.
+                                  (Bool). When set to true, also create a PTR DNS record.
                                   When set to `true`, also create a PTR DNS record.
                                 type: boolean
                               ttl:
                                 description: |-
-                                  (Number) DNS record TTL in seconds.
+                                  (Number). DNS record TTL in seconds.
                                   DNS record TTL in seconds.
                                 type: number
                             type: object
                           type: array
                         natIpAddress:
                           description: |-
-                            (String) Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
+                            (String). Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
                             Provide a public address, for instance, to access the internet over NAT. Address should be already reserved in web UI.
                           type: string
                         natIpVersion:
-                          description: (String)
+                          description: Only) (String).
                           type: string
                         securityGroupIds:
                           description: |-
-                            (Set of String) Security Group (SG) IDs for network interface.
+                            (Set Of String). Security Group (SG) IDs for network interface.
                             Security Group (SG) IDs for network interface.
                           items:
                             type: string
@@ -2718,20 +2755,20 @@ spec:
                           x-kubernetes-list-type: set
                         subnetId:
                           description: |-
-                            (String) ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
+                            (String). ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
                             ID of the subnet to attach this interface to. The subnet must exist in the same zone where this instance will be created.
                           type: string
                       type: object
                     type: array
                   placementPolicy:
                     description: |-
-                      (Block List, Max: 1) The placement policy configuration. (see below for nested schema)
+                      [Block]. The placement policy configuration.
                       The placement policy configuration.
                     items:
                       properties:
                         hostAffinityRules:
                           description: |-
-                            (List of Object) List of host affinity rules.
+                            (List Of Object). List of host affinity rules.
                             List of host affinity rules. To reset the values of these fields, you need to set them empty:
 
                             placement_policy {
@@ -2741,13 +2778,10 @@ spec:
                           items:
                             properties:
                               key:
-                                description: (String)
                                 type: string
                               op:
-                                description: (String)
                                 type: string
                               values:
-                                description: (List of String)
                                 items:
                                   type: string
                                 type: array
@@ -2755,63 +2789,68 @@ spec:
                           type: array
                         placementGroupId:
                           description: |-
-                            (String) Specifies the id of the Placement Group to assign to the instance.
+                            (String). Specifies the id of the Placement Group to assign to the instance.
                             Specifies the id of the Placement Group to assign to the instance.
                           type: string
                         placementGroupPartition:
-                          description: (Number)
+                          description: (Number).
                           type: number
                       type: object
                     type: array
                   platformId:
                     description: |-
-                      (String) The type of virtual machine to create.
+                      (String). The type of virtual machine to create.
                       The type of virtual machine to create.
+                    type: string
+                  reservedInstancePoolId:
+                    description: |-
+                      (String). ID of the reserved instance pool to attach this instance to.
+                      ID of the reserved instance pool to attach this instance to.
                     type: string
                   resources:
                     description: |-
-                      (Block List, Min: 1, Max: 1) Compute resources that are allocated for the instance. (see below for nested schema)
+                      [Block]. Compute resources that are allocated for the instance.
                       Compute resources that are allocated for the instance.
                     items:
                       properties:
                         coreFraction:
                           description: |-
-                            (Number) If provided, specifies baseline performance for a core as a percent.
+                            (Number). If provided, specifies baseline performance for a core as a percent.
                             If provided, specifies baseline performance for a core as a percent.
                           type: number
                         cores:
                           description: |-
-                            (Number) CPU cores for the instance.
+                            (Number). CPU cores for the instance.
                             CPU cores for the instance.
                           type: number
                         gpus:
                           description: |-
-                            (Number) If provided, specifies the number of GPU devices for the instance.
+                            (Number). If provided, specifies the number of GPU devices for the instance.
                             If provided, specifies the number of GPU devices for the instance.
                           type: number
                         memory:
                           description: |-
-                            (Number) Memory size in GB.
+                            (Number). Memory size in GB.
                             Memory size in GB.
                           type: number
                       type: object
                     type: array
                   schedulingPolicy:
                     description: |-
-                      (Block List, Max: 1) Scheduling policy configuration. (see below for nested schema)
+                      [Block]. Scheduling policy configuration.
                       Scheduling policy configuration.
                     items:
                       properties:
                         preemptible:
                           description: |-
-                            (Boolean) Specifies if the instance is preemptible. Defaults to false.
+                            (Bool). Specifies if the instance is preemptible. Defaults to false.
                             Specifies if the instance is preemptible. Defaults to `false`.
                           type: boolean
                       type: object
                     type: array
                   secondaryDisk:
                     description: |-
-                      (Block Set) A set of disks to attach to the instance. The structure is documented below.
+                      [Block]. A set of disks to attach to the instance. The structure is documented below.
                       A set of disks to attach to the instance. The structure is documented below.
 
                       ~> The [`allow_stopping_for_update`](#allow_stopping_for_update) property must be set to `true` in order to update this structure.
@@ -2824,34 +2863,34 @@ spec:
                           type: boolean
                         deviceName:
                           description: |-
-                            (String) Name that can be used to access an attached disk.
+                            (String). Name that can be used to access an attached disk.
                             Name that can be used to access an attached disk under `/dev/disk/by-id/`.
                           type: string
                         diskId:
                           description: |-
-                            (String) The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
+                            (String). The ID of the existing disk (such as those managed by yandex_compute_disk) to attach as a boot disk.
                             ID of the disk that is attached to the instance.
                           type: string
                         mode:
                           description: |-
-                            (String) Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
+                            (String). Type of access to the disk resource. By default, a disk is attached in READ_WRITE mode.
                             Type of access to the disk resource. By default, a disk is attached in `READ_WRITE` mode.
                           type: string
                       type: object
                     type: array
                   serviceAccountId:
                     description: |-
-                      (String) Service account which linked to the resource.
+                      (String). Service account which linked to the resource.
                       [Service account](https://yandex.cloud/docs/iam/concepts/users/service-accounts) which linked to the resource.
                     type: string
                   status:
                     description: |-
-                      (String) The status of this instance.
+                      Only) (String). The status of this instance.
                       The status of this instance.
                     type: string
                   zone:
                     description: |-
-                      (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+                      (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
                       The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
                     type: string
                 type: object

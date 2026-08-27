@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: kafkausers.mdb.yandex-cloud.jet.crossplane.io
 spec:
   group: mdb.yandex-cloud.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: KafkaUser is the Schema for the KafkaUsers API. Manages a user
-          of a Kafka cluster within Yandex Cloud.
+        description: KafkaUser is the Schema for the KafkaUsers API. Manages the yandex_mdb_kafka_user
+          resource.
         properties:
           apiVersion:
             description: |-
@@ -75,7 +75,7 @@ spec:
                 properties:
                   clusterId:
                     description: |-
-                      (String) The ID of the Kafka cluster.
+                      (String). The ID of the Kafka cluster.
                       The ID of the Kafka cluster.
                     type: string
                   clusterIdRef:
@@ -154,12 +154,12 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   passwordSecretRef:
                     description: |-
-                      (String, Sensitive) The password of the user.
+                      (String). The password of the user.
                       The password of the user.
                     properties:
                       key:
@@ -178,7 +178,7 @@ spec:
                     type: object
                   permission:
                     description: |-
-                      (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                      [Block]. Set of permissions granted to the user.
                       Set of permissions granted to the user.
                     items:
                       properties:
@@ -192,12 +192,12 @@ spec:
                           x-kubernetes-list-type: set
                         role:
                           description: |-
-                            (String) The role type to grant to the topic.
+                            (String). The role type to grant to the topic.
                             The role type to grant to the topic.
                           type: string
                         topicName:
                           description: |-
-                            (String) The name of the topic that the permission grants access to.
+                            (String). The name of the topic that the permission grants access to.
                             The name of the topic that the permission grants access to.
                           type: string
                       type: object
@@ -218,7 +218,7 @@ spec:
                 properties:
                   clusterId:
                     description: |-
-                      (String) The ID of the Kafka cluster.
+                      (String). The ID of the Kafka cluster.
                       The ID of the Kafka cluster.
                     type: string
                   clusterIdRef:
@@ -297,12 +297,12 @@ spec:
                     type: object
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   passwordSecretRef:
                     description: |-
-                      (String, Sensitive) The password of the user.
+                      (String). The password of the user.
                       The password of the user.
                     properties:
                       key:
@@ -321,7 +321,7 @@ spec:
                     type: object
                   permission:
                     description: |-
-                      (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                      [Block]. Set of permissions granted to the user.
                       Set of permissions granted to the user.
                     items:
                       properties:
@@ -335,12 +335,12 @@ spec:
                           x-kubernetes-list-type: set
                         role:
                           description: |-
-                            (String) The role type to grant to the topic.
+                            (String). The role type to grant to the topic.
                             The role type to grant to the topic.
                           type: string
                         topicName:
                           description: |-
-                            (String) The name of the topic that the permission grants access to.
+                            (String). The name of the topic that the permission grants access to.
                             The name of the topic that the permission grants access to.
                           type: string
                       type: object
@@ -449,20 +449,20 @@ spec:
                 properties:
                   clusterId:
                     description: |-
-                      (String) The ID of the Kafka cluster.
+                      (String). The ID of the Kafka cluster.
                       The ID of the Kafka cluster.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   permission:
                     description: |-
-                      (Block Set) Set of permissions granted to the user. (see below for nested schema)
+                      [Block]. Set of permissions granted to the user.
                       Set of permissions granted to the user.
                     items:
                       properties:
@@ -476,12 +476,12 @@ spec:
                           x-kubernetes-list-type: set
                         role:
                           description: |-
-                            (String) The role type to grant to the topic.
+                            (String). The role type to grant to the topic.
                             The role type to grant to the topic.
                           type: string
                         topicName:
                           description: |-
-                            (String) The name of the topic that the permission grants access to.
+                            (String). The name of the topic that the permission grants access to.
                             The name of the topic that the permission grants access to.
                           type: string
                       type: object

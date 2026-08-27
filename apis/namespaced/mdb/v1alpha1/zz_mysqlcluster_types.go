@@ -30,60 +30,60 @@ import (
 
 type ConnectionLimitsInitParameters struct {
 
-	// (Number) Max connections per hour.
+	// (Number). Max connections per hour.
 	// Max connections per hour.
 	MaxConnectionsPerHour *float64 `json:"maxConnectionsPerHour,omitempty" tf:"max_connections_per_hour,omitempty"`
 
-	// (Number) Max questions per hour.
+	// (Number). Max questions per hour.
 	// Max questions per hour.
 	MaxQuestionsPerHour *float64 `json:"maxQuestionsPerHour,omitempty" tf:"max_questions_per_hour,omitempty"`
 
-	// (Number) Max updates per hour.
+	// (Number). Max updates per hour.
 	// Max updates per hour.
 	MaxUpdatesPerHour *float64 `json:"maxUpdatesPerHour,omitempty" tf:"max_updates_per_hour,omitempty"`
 
-	// (Number) Max user connections.
+	// (Number). Max user connections.
 	// Max user connections.
 	MaxUserConnections *float64 `json:"maxUserConnections,omitempty" tf:"max_user_connections,omitempty"`
 }
 
 type ConnectionLimitsObservation struct {
 
-	// (Number) Max connections per hour.
+	// (Number). Max connections per hour.
 	// Max connections per hour.
 	MaxConnectionsPerHour *float64 `json:"maxConnectionsPerHour,omitempty" tf:"max_connections_per_hour,omitempty"`
 
-	// (Number) Max questions per hour.
+	// (Number). Max questions per hour.
 	// Max questions per hour.
 	MaxQuestionsPerHour *float64 `json:"maxQuestionsPerHour,omitempty" tf:"max_questions_per_hour,omitempty"`
 
-	// (Number) Max updates per hour.
+	// (Number). Max updates per hour.
 	// Max updates per hour.
 	MaxUpdatesPerHour *float64 `json:"maxUpdatesPerHour,omitempty" tf:"max_updates_per_hour,omitempty"`
 
-	// (Number) Max user connections.
+	// (Number). Max user connections.
 	// Max user connections.
 	MaxUserConnections *float64 `json:"maxUserConnections,omitempty" tf:"max_user_connections,omitempty"`
 }
 
 type ConnectionLimitsParameters struct {
 
-	// (Number) Max connections per hour.
+	// (Number). Max connections per hour.
 	// Max connections per hour.
 	// +kubebuilder:validation:Optional
 	MaxConnectionsPerHour *float64 `json:"maxConnectionsPerHour,omitempty" tf:"max_connections_per_hour,omitempty"`
 
-	// (Number) Max questions per hour.
+	// (Number). Max questions per hour.
 	// Max questions per hour.
 	// +kubebuilder:validation:Optional
 	MaxQuestionsPerHour *float64 `json:"maxQuestionsPerHour,omitempty" tf:"max_questions_per_hour,omitempty"`
 
-	// (Number) Max updates per hour.
+	// (Number). Max updates per hour.
 	// Max updates per hour.
 	// +kubebuilder:validation:Optional
 	MaxUpdatesPerHour *float64 `json:"maxUpdatesPerHour,omitempty" tf:"max_updates_per_hour,omitempty"`
 
-	// (Number) Max user connections.
+	// (Number). Max user connections.
 	// Max user connections.
 	// +kubebuilder:validation:Optional
 	MaxUserConnections *float64 `json:"maxUserConnections,omitempty" tf:"max_user_connections,omitempty"`
@@ -91,132 +91,193 @@ type ConnectionLimitsParameters struct {
 
 type MySQLClusterAccessInitParameters struct {
 
-	// (Boolean) Allow access for Yandex DataLens.
+	// (Bool). Allow access for Yandex DataLens.
 	// Allow access for [Yandex DataLens](https://yandex.cloud/services/datalens).
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
 
-	// (Boolean) Allow access for DataTransfer.
+	// (Bool). Allow access for DataTransfer.
 	// Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
 	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
 
-	// (Boolean) Allows access for SQL queries in the management console.
+	// (Bool). Allows access for SQL queries in the management console.
 	// Allows access for [SQL queries in the management console](https://yandex.cloud/docs/managed-mysql/operations/web-sql-query).
 	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
+
+	// (Bool). Allow access for YandexQuery.
+	// Allow access for [YandexQuery](https://yandex.cloud/services/query).
+	YandexQuery *bool `json:"yandexQuery,omitempty" tf:"yandex_query,omitempty"`
 }
 
 type MySQLClusterAccessObservation struct {
 
-	// (Boolean) Allow access for Yandex DataLens.
+	// (Bool). Allow access for Yandex DataLens.
 	// Allow access for [Yandex DataLens](https://yandex.cloud/services/datalens).
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
 
-	// (Boolean) Allow access for DataTransfer.
+	// (Bool). Allow access for DataTransfer.
 	// Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
 	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
 
-	// (Boolean) Allows access for SQL queries in the management console.
+	// (Bool). Allows access for SQL queries in the management console.
 	// Allows access for [SQL queries in the management console](https://yandex.cloud/docs/managed-mysql/operations/web-sql-query).
 	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
+
+	// (Bool). Allow access for YandexQuery.
+	// Allow access for [YandexQuery](https://yandex.cloud/services/query).
+	YandexQuery *bool `json:"yandexQuery,omitempty" tf:"yandex_query,omitempty"`
 }
 
 type MySQLClusterAccessParameters struct {
 
-	// (Boolean) Allow access for Yandex DataLens.
+	// (Bool). Allow access for Yandex DataLens.
 	// Allow access for [Yandex DataLens](https://yandex.cloud/services/datalens).
 	// +kubebuilder:validation:Optional
 	DataLens *bool `json:"dataLens,omitempty" tf:"data_lens,omitempty"`
 
-	// (Boolean) Allow access for DataTransfer.
+	// (Bool). Allow access for DataTransfer.
 	// Allow access for [DataTransfer](https://yandex.cloud/services/data-transfer).
 	// +kubebuilder:validation:Optional
 	DataTransfer *bool `json:"dataTransfer,omitempty" tf:"data_transfer,omitempty"`
 
-	// (Boolean) Allows access for SQL queries in the management console.
+	// (Bool). Allows access for SQL queries in the management console.
 	// Allows access for [SQL queries in the management console](https://yandex.cloud/docs/managed-mysql/operations/web-sql-query).
 	// +kubebuilder:validation:Optional
 	WebSQL *bool `json:"webSql,omitempty" tf:"web_sql,omitempty"`
+
+	// (Bool). Allow access for YandexQuery.
+	// Allow access for [YandexQuery](https://yandex.cloud/services/query).
+	// +kubebuilder:validation:Optional
+	YandexQuery *bool `json:"yandexQuery,omitempty" tf:"yandex_query,omitempty"`
 }
 
 type MySQLClusterBackupWindowStartInitParameters struct {
 
-	// (Number) The hour at which backup will be started.
-	// The hour at which backup will be started.
+	// (Number). The hour at which backup will be started (UTC).
+	// The hour at which backup will be started (UTC).
 	Hours *float64 `json:"hours,omitempty" tf:"hours,omitempty"`
 
-	// (Number) The minute at which backup will be started.
-	// The minute at which backup will be started.
+	// (Number). The minute at which backup will be started (UTC).
+	// The minute at which backup will be started (UTC).
 	Minutes *float64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
 }
 
 type MySQLClusterBackupWindowStartObservation struct {
 
-	// (Number) The hour at which backup will be started.
-	// The hour at which backup will be started.
+	// (Number). The hour at which backup will be started (UTC).
+	// The hour at which backup will be started (UTC).
 	Hours *float64 `json:"hours,omitempty" tf:"hours,omitempty"`
 
-	// (Number) The minute at which backup will be started.
-	// The minute at which backup will be started.
+	// (Number). The minute at which backup will be started (UTC).
+	// The minute at which backup will be started (UTC).
 	Minutes *float64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
 }
 
 type MySQLClusterBackupWindowStartParameters struct {
 
-	// (Number) The hour at which backup will be started.
-	// The hour at which backup will be started.
+	// (Number). The hour at which backup will be started (UTC).
+	// The hour at which backup will be started (UTC).
 	// +kubebuilder:validation:Optional
 	Hours *float64 `json:"hours,omitempty" tf:"hours,omitempty"`
 
-	// (Number) The minute at which backup will be started.
-	// The minute at which backup will be started.
+	// (Number). The minute at which backup will be started (UTC).
+	// The minute at which backup will be started (UTC).
 	// +kubebuilder:validation:Optional
 	Minutes *float64 `json:"minutes,omitempty" tf:"minutes,omitempty"`
 }
 
 type MySQLClusterDatabaseInitParameters struct {
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The name of the database.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type MySQLClusterDatabaseObservation struct {
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The name of the database.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 }
 
 type MySQLClusterDatabaseParameters struct {
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The name of the database.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 }
 
+type MySQLClusterDiskSizeAutoscalingInitParameters struct {
+
+	// (Number). The overall maximum for disk size (GB) that limits all autoscaling iterations.
+	// The overall maximum for disk size (GB) that limits all autoscaling iterations.
+	DiskSizeLimit *float64 `json:"diskSizeLimit,omitempty" tf:"disk_size_limit,omitempty"`
+
+	// (Number). Immediate autoscaling disk usage (percent).
+	// Immediate autoscaling disk usage (percent).
+	EmergencyUsageThreshold *float64 `json:"emergencyUsageThreshold,omitempty" tf:"emergency_usage_threshold,omitempty"`
+
+	// (Number). Maintenance window autoscaling disk usage (percent).
+	// Maintenance window autoscaling disk usage (percent).
+	PlannedUsageThreshold *float64 `json:"plannedUsageThreshold,omitempty" tf:"planned_usage_threshold,omitempty"`
+}
+
+type MySQLClusterDiskSizeAutoscalingObservation struct {
+
+	// (Number). The overall maximum for disk size (GB) that limits all autoscaling iterations.
+	// The overall maximum for disk size (GB) that limits all autoscaling iterations.
+	DiskSizeLimit *float64 `json:"diskSizeLimit,omitempty" tf:"disk_size_limit,omitempty"`
+
+	// (Number). Immediate autoscaling disk usage (percent).
+	// Immediate autoscaling disk usage (percent).
+	EmergencyUsageThreshold *float64 `json:"emergencyUsageThreshold,omitempty" tf:"emergency_usage_threshold,omitempty"`
+
+	// (Number). Maintenance window autoscaling disk usage (percent).
+	// Maintenance window autoscaling disk usage (percent).
+	PlannedUsageThreshold *float64 `json:"plannedUsageThreshold,omitempty" tf:"planned_usage_threshold,omitempty"`
+}
+
+type MySQLClusterDiskSizeAutoscalingParameters struct {
+
+	// (Number). The overall maximum for disk size (GB) that limits all autoscaling iterations.
+	// The overall maximum for disk size (GB) that limits all autoscaling iterations.
+	// +kubebuilder:validation:Optional
+	DiskSizeLimit *float64 `json:"diskSizeLimit" tf:"disk_size_limit,omitempty"`
+
+	// (Number). Immediate autoscaling disk usage (percent).
+	// Immediate autoscaling disk usage (percent).
+	// +kubebuilder:validation:Optional
+	EmergencyUsageThreshold *float64 `json:"emergencyUsageThreshold,omitempty" tf:"emergency_usage_threshold,omitempty"`
+
+	// (Number). Maintenance window autoscaling disk usage (percent).
+	// Maintenance window autoscaling disk usage (percent).
+	// +kubebuilder:validation:Optional
+	PlannedUsageThreshold *float64 `json:"plannedUsageThreshold,omitempty" tf:"planned_usage_threshold,omitempty"`
+}
+
 type MySQLClusterHostInitParameters struct {
 
-	// (Boolean) Sets whether the host should get a public IP address. It can be changed on the fly only when name is set.
+	// (Bool). Sets whether the host should get a public IP address. It can be changed on the fly only when name is set.
 	// Sets whether the host should get a public IP address. It can be changed on the fly only when `name` is set.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
-	// (Number) Host backup priority. Value is between 0 and 100, default is 0.
+	// (Number). Host backup priority. Value is between 0 and 100, default is 0.
 	// Host backup priority. Value is between 0 and 100, default is 0.
 	BackupPriority *float64 `json:"backupPriority,omitempty" tf:"backup_priority,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// Host state name. It should be set for all hosts or unset for all hosts. This field can be used by another host, to select which host will be its replication source. Please refer to `replication_source_name` parameter.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Number) Host master promotion priority. Value is between 0 and 100, default is 0.
+	// (Number). Host master promotion priority. Value is between 0 and 100, default is 0.
 	// Host master promotion priority. Value is between 0 and 100, default is 0.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
-	// (String) Host replication source name points to host's name from which this host should replicate. When not set then host in HA group. It works only when name is set.
+	// (String). Host replication source name points to host's name from which this host should replicate. When not set then host in HA group. It works only when name is set.
 	// Host replication source name points to host's `name` from which this host should replicate. When not set then host in HA group. It works only when `name` is set.
 	ReplicationSourceName *string `json:"replicationSourceName,omitempty" tf:"replication_source_name,omitempty"`
 
-	// (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+	// (String). The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/vpc/v1alpha1.Subnet
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
@@ -229,78 +290,78 @@ type MySQLClusterHostInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.NamespacedSelector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
 	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type MySQLClusterHostObservation struct {
 
-	// (Boolean) Sets whether the host should get a public IP address. It can be changed on the fly only when name is set.
+	// (Bool). Sets whether the host should get a public IP address. It can be changed on the fly only when name is set.
 	// Sets whether the host should get a public IP address. It can be changed on the fly only when `name` is set.
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
-	// (Number) Host backup priority. Value is between 0 and 100, default is 0.
+	// (Number). Host backup priority. Value is between 0 and 100, default is 0.
 	// Host backup priority. Value is between 0 and 100, default is 0.
 	BackupPriority *float64 `json:"backupPriority,omitempty" tf:"backup_priority,omitempty"`
 
-	// (String) The fully qualified domain name of the host.
+	// Only) (String). The fully qualified domain name of the host.
 	// The fully qualified domain name of the host.
 	Fqdn *string `json:"fqdn,omitempty" tf:"fqdn,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// Host state name. It should be set for all hosts or unset for all hosts. This field can be used by another host, to select which host will be its replication source. Please refer to `replication_source_name` parameter.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Number) Host master promotion priority. Value is between 0 and 100, default is 0.
+	// (Number). Host master promotion priority. Value is between 0 and 100, default is 0.
 	// Host master promotion priority. Value is between 0 and 100, default is 0.
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
-	// (String) Host replication source (fqdn), when replication_source is empty then host is in HA group.
+	// Only) (String). Host replication source (fqdn), when replication_source is empty then host is in HA group.
 	// Host replication source (fqdn), when replication_source is empty then host is in HA group.
 	ReplicationSource *string `json:"replicationSource,omitempty" tf:"replication_source,omitempty"`
 
-	// (String) Host replication source name points to host's name from which this host should replicate. When not set then host in HA group. It works only when name is set.
+	// (String). Host replication source name points to host's name from which this host should replicate. When not set then host in HA group. It works only when name is set.
 	// Host replication source name points to host's `name` from which this host should replicate. When not set then host in HA group. It works only when `name` is set.
 	ReplicationSourceName *string `json:"replicationSourceName,omitempty" tf:"replication_source_name,omitempty"`
 
-	// (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+	// (String). The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 
-	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
 	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	Zone *string `json:"zone,omitempty" tf:"zone,omitempty"`
 }
 
 type MySQLClusterHostParameters struct {
 
-	// (Boolean) Sets whether the host should get a public IP address. It can be changed on the fly only when name is set.
+	// (Bool). Sets whether the host should get a public IP address. It can be changed on the fly only when name is set.
 	// Sets whether the host should get a public IP address. It can be changed on the fly only when `name` is set.
 	// +kubebuilder:validation:Optional
 	AssignPublicIP *bool `json:"assignPublicIp,omitempty" tf:"assign_public_ip,omitempty"`
 
-	// (Number) Host backup priority. Value is between 0 and 100, default is 0.
+	// (Number). Host backup priority. Value is between 0 and 100, default is 0.
 	// Host backup priority. Value is between 0 and 100, default is 0.
 	// +kubebuilder:validation:Optional
 	BackupPriority *float64 `json:"backupPriority,omitempty" tf:"backup_priority,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// Host state name. It should be set for all hosts or unset for all hosts. This field can be used by another host, to select which host will be its replication source. Please refer to `replication_source_name` parameter.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Number) Host master promotion priority. Value is between 0 and 100, default is 0.
+	// (Number). Host master promotion priority. Value is between 0 and 100, default is 0.
 	// Host master promotion priority. Value is between 0 and 100, default is 0.
 	// +kubebuilder:validation:Optional
 	Priority *float64 `json:"priority,omitempty" tf:"priority,omitempty"`
 
-	// (String) Host replication source name points to host's name from which this host should replicate. When not set then host in HA group. It works only when name is set.
+	// (String). Host replication source name points to host's name from which this host should replicate. When not set then host in HA group. It works only when name is set.
 	// Host replication source name points to host's `name` from which this host should replicate. When not set then host in HA group. It works only when `name` is set.
 	// +kubebuilder:validation:Optional
 	ReplicationSourceName *string `json:"replicationSourceName,omitempty" tf:"replication_source_name,omitempty"`
 
-	// (String) The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
+	// (String). The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// The ID of the subnet, to which the host belongs. The subnet must be a part of the network to which the cluster belongs.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/vpc/v1alpha1.Subnet
 	// +kubebuilder:validation:Optional
@@ -314,7 +375,7 @@ type MySQLClusterHostParameters struct {
 	// +kubebuilder:validation:Optional
 	SubnetIDSelector *v1.NamespacedSelector `json:"subnetIdSelector,omitempty" tf:"-"`
 
-	// (String) The availability zone where resource is located. If it is not provided, the default provider zone will be used.
+	// (String). The availability zone where resource is located. If it is not provided, the default provider zone will be used.
 	// The [availability zone](https://yandex.cloud/docs/overview/concepts/geo-scope) where resource is located. If it is not provided, the default provider zone will be used.
 	// +kubebuilder:validation:Optional
 	Zone *string `json:"zone" tf:"zone,omitempty"`
@@ -322,37 +383,45 @@ type MySQLClusterHostParameters struct {
 
 type MySQLClusterInitParameters struct {
 
-	// (Block List, Max: 1) Access policy to the MySQL cluster. (see below for nested schema)
+	// [Block]. Access policy to the MySQL cluster.
 	// Access policy to the MySQL cluster.
 	Access []MySQLClusterAccessInitParameters `json:"access,omitempty" tf:"access,omitempty"`
 
-	// (Boolean, Deprecated) Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
+	// (Bool). Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
 	// Regenerate hosts after changing the assign_public_ip parameter.
 	// Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
 	// Regenerate hosts after changing the assign_public_ip parameter.
 	AllowRegenerationHost *bool `json:"allowRegenerationHost,omitempty" tf:"allow_regeneration_host,omitempty"`
 
-	// (Number) The period in days during which backups are stored.
+	// (Number). The period in days during which backups are stored.
 	// The period in days during which backups are stored.
 	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
 
-	// (Block List, Max: 1) Time to start the daily backup, in the UTC. (see below for nested schema)
+	// [Block]. Time to start the daily backup, in the UTC.
 	// Time to start the daily backup, in the UTC.
 	BackupWindowStart []MySQLClusterBackupWindowStartInitParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
-	// (Block Set, Deprecated) To manage databases, please switch to using a separate resource type yandex_mdb_mysql_databases. (see below for nested schema)
+	// [Block]. To manage databases, please switch to using a separate resource type yandex_mdb_mysql_databases.
 	// To manage databases, please switch to using a separate resource type `yandex_mdb_mysql_databases`.
 	Database []MySQLClusterDatabaseInitParameters `json:"database,omitempty" tf:"database,omitempty"`
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) Deployment environment of the MySQL cluster.
+	// (String). ID of the KMS key for cluster disk encryption. Restoring without an encryption key will disable encryption if any exists.
+	// ID of the KMS key for cluster disk encryption. Restoring without an encryption key will disable encryption if any exists.
+	DiskEncryptionKeyID *string `json:"diskEncryptionKeyId,omitempty" tf:"disk_encryption_key_id,omitempty"`
+
+	// [Block]. Cluster disk size autoscaling settings.
+	// Cluster disk size autoscaling settings.
+	DiskSizeAutoscaling []MySQLClusterDiskSizeAutoscalingInitParameters `json:"diskSizeAutoscaling,omitempty" tf:"disk_size_autoscaling,omitempty"`
+
+	// (String). Deployment environment of the MySQL cluster.
 	// Deployment environment of the MySQL cluster.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
@@ -369,33 +438,34 @@ type MySQLClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Block List, Min: 1) A host of the MySQL cluster. (see below for nested schema)
+	// [Block]. A host of the MySQL cluster.
 	// A host of the MySQL cluster.
 	Host []MySQLClusterHostInitParameters `json:"host,omitempty" tf:"host,omitempty"`
 
-	// (Set of String)
+	// (Set Of String). A list of host group IDs to place VMs of the cluster on.
+	// A list of host group IDs to place VMs of the cluster on.
 	// +listType=set
 	HostGroupIds []*string `json:"hostGroupIds,omitempty" tf:"host_group_ids,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Block List, Max: 1) Maintenance policy of the MySQL cluster. (see below for nested schema)
+	// [Block]. Maintenance policy of the MySQL cluster.
 	// Maintenance policy of the MySQL cluster.
 	MaintenanceWindow []MySQLClusterMaintenanceWindowInitParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// (Map of String) MySQL cluster config block.
-	// MySQL cluster config block.
+	// (Map Of String). MySQL cluster configuration. For detailed information specific to your MySQL version, please refer to the API proto specifications.
+	// MySQL cluster configuration. For detailed information specific to your MySQL version, please refer to the [API proto specifications](https://github.com/yandex-cloud/cloudapi/tree/master/yandex/cloud/mdb/mysql/v1/config).
 	// +mapType=granular
 	MySQLConfig map[string]*string `json:"mysqlConfig,omitempty" tf:"mysql_config,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The VPC Network ID of subnets which resource attached to.
+	// (String). The VPC Network ID of subnets which resource attached to.
 	// The `VPC Network ID` of subnets which resource attached to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/vpc/v1alpha1.Network
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
@@ -408,19 +478,19 @@ type MySQLClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.NamespacedSelector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// (Block List, Max: 1) Cluster performance diagnostics settings. YC Documentation. (see below for nested schema)
+	// [Block]. Cluster performance diagnostics settings. YC Documentation.
 	// Cluster performance diagnostics settings. [YC Documentation](https://yandex.cloud/docs/managed-mysql/api-ref/grpc/cluster_service#PerformanceDiagnostics).
 	PerformanceDiagnostics []MySQLClusterPerformanceDiagnosticsInitParameters `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
 
-	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the MySQL cluster. (see below for nested schema)
+	// [Block]. Resources allocated to hosts of the MySQL cluster.
 	// Resources allocated to hosts of the MySQL cluster.
 	Resources []MySQLClusterResourcesInitParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// (Block List, Max: 1) The cluster will be created from the specified backup. (see below for nested schema)
+	// [Block]. The cluster will be created from the specified backup.
 	// The cluster will be created from the specified backup.
 	Restore []MySQLClusterRestoreInitParameters `json:"restore,omitempty" tf:"restore,omitempty"`
 
-	// (Set of String) The list of security groups applied to resource or their components.
+	// (Set Of String). The list of security groups applied to resource or their components.
 	// The list of security groups applied to resource or their components.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/vpc/v1alpha1.SecurityGroup
 	// +listType=set
@@ -434,58 +504,58 @@ type MySQLClusterInitParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.NamespacedSelector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
-	// (Block List, Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_mysql_user. (see below for nested schema)
+	// [Block]. To manage users, please switch to using a separate resource type yandex_mdb_mysql_user.
 	// To manage users, please switch to using a separate resource type `yandex_mdb_mysql_user`.
 	User []MySQLClusterUserInitParameters `json:"user,omitempty" tf:"user,omitempty"`
 
-	// (String) Version of the MySQL cluster. (allowed versions are: 5.7, 8.0).
-	// Version of the MySQL cluster. (allowed versions are: 5.7, 8.0).
+	// (String). Version of the MySQL cluster. (allowed versions are: 5.7, 8.0, 8.4).
+	// Version of the MySQL cluster. (allowed versions are: 5.7, 8.0, 8.4).
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type MySQLClusterMaintenanceWindowInitParameters struct {
 
-	// (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN
+	// (String). Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN
 	// Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
-	// (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+	// (Number). Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
 	// Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
 	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
-	// (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// (String). Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	// Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type MySQLClusterMaintenanceWindowObservation struct {
 
-	// (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN
+	// (String). Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN
 	// Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
-	// (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+	// (Number). Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
 	// Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
 	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
-	// (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// (String). Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	// Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type MySQLClusterMaintenanceWindowParameters struct {
 
-	// (String) Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN
+	// (String). Day of the week (in DDD format). Allowed values: MON, TUE, WED, THU, FRI, SAT, SUN
 	// Day of the week (in `DDD` format). Allowed values: `MON`, `TUE`, `WED`, `THU`, `FRI`, `SAT`, `SUN`
 	// +kubebuilder:validation:Optional
 	Day *string `json:"day,omitempty" tf:"day,omitempty"`
 
-	// (Number) Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
+	// (Number). Hour of the day in UTC (in HH format). Allowed value is between 1 and 24.
 	// Hour of the day in UTC (in `HH` format). Allowed value is between 1 and 24.
 	// +kubebuilder:validation:Optional
 	Hour *float64 `json:"hour,omitempty" tf:"hour,omitempty"`
 
-	// (String) Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
+	// (String). Type of maintenance window. Can be either ANYTIME or WEEKLY. A day and hour of window need to be specified with weekly window.
 	// Type of maintenance window. Can be either `ANYTIME` or `WEEKLY`. A day and hour of window need to be specified with weekly window.
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type" tf:"type,omitempty"`
@@ -493,41 +563,49 @@ type MySQLClusterMaintenanceWindowParameters struct {
 
 type MySQLClusterObservation struct {
 
-	// (Block List, Max: 1) Access policy to the MySQL cluster. (see below for nested schema)
+	// [Block]. Access policy to the MySQL cluster.
 	// Access policy to the MySQL cluster.
 	Access []MySQLClusterAccessObservation `json:"access,omitempty" tf:"access,omitempty"`
 
-	// (Boolean, Deprecated) Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
+	// (Bool). Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
 	// Regenerate hosts after changing the assign_public_ip parameter.
 	// Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
 	// Regenerate hosts after changing the assign_public_ip parameter.
 	AllowRegenerationHost *bool `json:"allowRegenerationHost,omitempty" tf:"allow_regeneration_host,omitempty"`
 
-	// (Number) The period in days during which backups are stored.
+	// (Number). The period in days during which backups are stored.
 	// The period in days during which backups are stored.
 	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
 
-	// (Block List, Max: 1) Time to start the daily backup, in the UTC. (see below for nested schema)
+	// [Block]. Time to start the daily backup, in the UTC.
 	// Time to start the daily backup, in the UTC.
 	BackupWindowStart []MySQLClusterBackupWindowStartObservation `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
-	// (String) The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
 	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (Block Set, Deprecated) To manage databases, please switch to using a separate resource type yandex_mdb_mysql_databases. (see below for nested schema)
+	// [Block]. To manage databases, please switch to using a separate resource type yandex_mdb_mysql_databases.
 	// To manage databases, please switch to using a separate resource type `yandex_mdb_mysql_databases`.
 	Database []MySQLClusterDatabaseObservation `json:"database,omitempty" tf:"database,omitempty"`
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) Deployment environment of the MySQL cluster.
+	// (String). ID of the KMS key for cluster disk encryption. Restoring without an encryption key will disable encryption if any exists.
+	// ID of the KMS key for cluster disk encryption. Restoring without an encryption key will disable encryption if any exists.
+	DiskEncryptionKeyID *string `json:"diskEncryptionKeyId,omitempty" tf:"disk_encryption_key_id,omitempty"`
+
+	// [Block]. Cluster disk size autoscaling settings.
+	// Cluster disk size autoscaling settings.
+	DiskSizeAutoscaling []MySQLClusterDiskSizeAutoscalingObservation `json:"diskSizeAutoscaling,omitempty" tf:"disk_size_autoscaling,omitempty"`
+
+	// (String). Deployment environment of the MySQL cluster.
 	// Deployment environment of the MySQL cluster.
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
 
@@ -535,113 +613,124 @@ type MySQLClusterObservation struct {
 	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) Aggregated health of the cluster.
+	// Only) (String). Aggregated health of the cluster.
 	// Aggregated health of the cluster.
 	Health *string `json:"health,omitempty" tf:"health,omitempty"`
 
-	// (Block List, Min: 1) A host of the MySQL cluster. (see below for nested schema)
+	// [Block]. A host of the MySQL cluster.
 	// A host of the MySQL cluster.
 	Host []MySQLClusterHostObservation `json:"host,omitempty" tf:"host,omitempty"`
 
-	// (Set of String)
+	// (Set Of String). A list of host group IDs to place VMs of the cluster on.
+	// A list of host group IDs to place VMs of the cluster on.
 	// +listType=set
 	HostGroupIds []*string `json:"hostGroupIds,omitempty" tf:"host_group_ids,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Block List, Max: 1) Maintenance policy of the MySQL cluster. (see below for nested schema)
+	// [Block]. Maintenance policy of the MySQL cluster.
 	// Maintenance policy of the MySQL cluster.
 	MaintenanceWindow []MySQLClusterMaintenanceWindowObservation `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// (Map of String) MySQL cluster config block.
-	// MySQL cluster config block.
+	// (Map Of String). MySQL cluster configuration. For detailed information specific to your MySQL version, please refer to the API proto specifications.
+	// MySQL cluster configuration. For detailed information specific to your MySQL version, please refer to the [API proto specifications](https://github.com/yandex-cloud/cloudapi/tree/master/yandex/cloud/mdb/mysql/v1/config).
 	// +mapType=granular
 	MySQLConfig map[string]*string `json:"mysqlConfig,omitempty" tf:"mysql_config,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The VPC Network ID of subnets which resource attached to.
+	// (String). The VPC Network ID of subnets which resource attached to.
 	// The `VPC Network ID` of subnets which resource attached to.
 	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
 
-	// (Block List, Max: 1) Cluster performance diagnostics settings. YC Documentation. (see below for nested schema)
+	// [Block]. Cluster performance diagnostics settings. YC Documentation.
 	// Cluster performance diagnostics settings. [YC Documentation](https://yandex.cloud/docs/managed-mysql/api-ref/grpc/cluster_service#PerformanceDiagnostics).
 	PerformanceDiagnostics []MySQLClusterPerformanceDiagnosticsObservation `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
 
-	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the MySQL cluster. (see below for nested schema)
+	// [Block]. Resources allocated to hosts of the MySQL cluster.
 	// Resources allocated to hosts of the MySQL cluster.
 	Resources []MySQLClusterResourcesObservation `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// (Block List, Max: 1) The cluster will be created from the specified backup. (see below for nested schema)
+	// [Block]. The cluster will be created from the specified backup.
 	// The cluster will be created from the specified backup.
 	Restore []MySQLClusterRestoreObservation `json:"restore,omitempty" tf:"restore,omitempty"`
 
-	// (Set of String) The list of security groups applied to resource or their components.
+	// (Set Of String). The list of security groups applied to resource or their components.
 	// The list of security groups applied to resource or their components.
 	// +listType=set
 	SecurityGroupIds []*string `json:"securityGroupIds,omitempty" tf:"security_group_ids,omitempty"`
 
-	// (String) Status of the cluster.
+	// Only) (String). Status of the cluster.
 	// Status of the cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// (Block List, Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_mysql_user. (see below for nested schema)
+	// [Block]. To manage users, please switch to using a separate resource type yandex_mdb_mysql_user.
 	// To manage users, please switch to using a separate resource type `yandex_mdb_mysql_user`.
 	User []MySQLClusterUserObservation `json:"user,omitempty" tf:"user,omitempty"`
 
-	// (String) Version of the MySQL cluster. (allowed versions are: 5.7, 8.0).
-	// Version of the MySQL cluster. (allowed versions are: 5.7, 8.0).
+	// (String). Version of the MySQL cluster. (allowed versions are: 5.7, 8.0, 8.4).
+	// Version of the MySQL cluster. (allowed versions are: 5.7, 8.0, 8.4).
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type MySQLClusterParameters struct {
 
-	// (Block List, Max: 1) Access policy to the MySQL cluster. (see below for nested schema)
+	// [Block]. Access policy to the MySQL cluster.
 	// Access policy to the MySQL cluster.
 	// +kubebuilder:validation:Optional
 	Access []MySQLClusterAccessParameters `json:"access,omitempty" tf:"access,omitempty"`
 
-	// (Boolean, Deprecated) Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
+	// (Bool). Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
 	// Regenerate hosts after changing the assign_public_ip parameter.
 	// Deprecated field. You can safely remove this option. There is no need to recreate host if assign_public_ip is changed.
 	// Regenerate hosts after changing the assign_public_ip parameter.
 	// +kubebuilder:validation:Optional
 	AllowRegenerationHost *bool `json:"allowRegenerationHost,omitempty" tf:"allow_regeneration_host,omitempty"`
 
-	// (Number) The period in days during which backups are stored.
+	// (Number). The period in days during which backups are stored.
 	// The period in days during which backups are stored.
 	// +kubebuilder:validation:Optional
 	BackupRetainPeriodDays *float64 `json:"backupRetainPeriodDays,omitempty" tf:"backup_retain_period_days,omitempty"`
 
-	// (Block List, Max: 1) Time to start the daily backup, in the UTC. (see below for nested schema)
+	// [Block]. Time to start the daily backup, in the UTC.
 	// Time to start the daily backup, in the UTC.
 	// +kubebuilder:validation:Optional
 	BackupWindowStart []MySQLClusterBackupWindowStartParameters `json:"backupWindowStart,omitempty" tf:"backup_window_start,omitempty"`
 
-	// (Block Set, Deprecated) To manage databases, please switch to using a separate resource type yandex_mdb_mysql_databases. (see below for nested schema)
+	// [Block]. To manage databases, please switch to using a separate resource type yandex_mdb_mysql_databases.
 	// To manage databases, please switch to using a separate resource type `yandex_mdb_mysql_databases`.
 	// +kubebuilder:validation:Optional
 	Database []MySQLClusterDatabaseParameters `json:"database,omitempty" tf:"database,omitempty"`
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) Deployment environment of the MySQL cluster.
+	// (String). ID of the KMS key for cluster disk encryption. Restoring without an encryption key will disable encryption if any exists.
+	// ID of the KMS key for cluster disk encryption. Restoring without an encryption key will disable encryption if any exists.
+	// +kubebuilder:validation:Optional
+	DiskEncryptionKeyID *string `json:"diskEncryptionKeyId,omitempty" tf:"disk_encryption_key_id,omitempty"`
+
+	// [Block]. Cluster disk size autoscaling settings.
+	// Cluster disk size autoscaling settings.
+	// +kubebuilder:validation:Optional
+	DiskSizeAutoscaling []MySQLClusterDiskSizeAutoscalingParameters `json:"diskSizeAutoscaling,omitempty" tf:"disk_size_autoscaling,omitempty"`
+
+	// (String). Deployment environment of the MySQL cluster.
 	// Deployment environment of the MySQL cluster.
 	// +kubebuilder:validation:Optional
 	Environment *string `json:"environment,omitempty" tf:"environment,omitempty"`
@@ -660,39 +749,40 @@ type MySQLClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Block List, Min: 1) A host of the MySQL cluster. (see below for nested schema)
+	// [Block]. A host of the MySQL cluster.
 	// A host of the MySQL cluster.
 	// +kubebuilder:validation:Optional
 	Host []MySQLClusterHostParameters `json:"host,omitempty" tf:"host,omitempty"`
 
-	// (Set of String)
+	// (Set Of String). A list of host group IDs to place VMs of the cluster on.
+	// A list of host group IDs to place VMs of the cluster on.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	HostGroupIds []*string `json:"hostGroupIds,omitempty" tf:"host_group_ids,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (Block List, Max: 1) Maintenance policy of the MySQL cluster. (see below for nested schema)
+	// [Block]. Maintenance policy of the MySQL cluster.
 	// Maintenance policy of the MySQL cluster.
 	// +kubebuilder:validation:Optional
 	MaintenanceWindow []MySQLClusterMaintenanceWindowParameters `json:"maintenanceWindow,omitempty" tf:"maintenance_window,omitempty"`
 
-	// (Map of String) MySQL cluster config block.
-	// MySQL cluster config block.
+	// (Map Of String). MySQL cluster configuration. For detailed information specific to your MySQL version, please refer to the API proto specifications.
+	// MySQL cluster configuration. For detailed information specific to your MySQL version, please refer to the [API proto specifications](https://github.com/yandex-cloud/cloudapi/tree/master/yandex/cloud/mdb/mysql/v1/config).
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	MySQLConfig map[string]*string `json:"mysqlConfig,omitempty" tf:"mysql_config,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String) The VPC Network ID of subnets which resource attached to.
+	// (String). The VPC Network ID of subnets which resource attached to.
 	// The `VPC Network ID` of subnets which resource attached to.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/vpc/v1alpha1.Network
 	// +kubebuilder:validation:Optional
@@ -706,22 +796,22 @@ type MySQLClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	NetworkIDSelector *v1.NamespacedSelector `json:"networkIdSelector,omitempty" tf:"-"`
 
-	// (Block List, Max: 1) Cluster performance diagnostics settings. YC Documentation. (see below for nested schema)
+	// [Block]. Cluster performance diagnostics settings. YC Documentation.
 	// Cluster performance diagnostics settings. [YC Documentation](https://yandex.cloud/docs/managed-mysql/api-ref/grpc/cluster_service#PerformanceDiagnostics).
 	// +kubebuilder:validation:Optional
 	PerformanceDiagnostics []MySQLClusterPerformanceDiagnosticsParameters `json:"performanceDiagnostics,omitempty" tf:"performance_diagnostics,omitempty"`
 
-	// (Block List, Min: 1, Max: 1) Resources allocated to hosts of the MySQL cluster. (see below for nested schema)
+	// [Block]. Resources allocated to hosts of the MySQL cluster.
 	// Resources allocated to hosts of the MySQL cluster.
 	// +kubebuilder:validation:Optional
 	Resources []MySQLClusterResourcesParameters `json:"resources,omitempty" tf:"resources,omitempty"`
 
-	// (Block List, Max: 1) The cluster will be created from the specified backup. (see below for nested schema)
+	// [Block]. The cluster will be created from the specified backup.
 	// The cluster will be created from the specified backup.
 	// +kubebuilder:validation:Optional
 	Restore []MySQLClusterRestoreParameters `json:"restore,omitempty" tf:"restore,omitempty"`
 
-	// (Set of String) The list of security groups applied to resource or their components.
+	// (Set Of String). The list of security groups applied to resource or their components.
 	// The list of security groups applied to resource or their components.
 	// +crossplane:generate:reference:type=github.com/yandex-cloud/crossplane-provider-yc/apis/namespaced/vpc/v1alpha1.SecurityGroup
 	// +kubebuilder:validation:Optional
@@ -736,60 +826,60 @@ type MySQLClusterParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdsSelector *v1.NamespacedSelector `json:"securityGroupIdsSelector,omitempty" tf:"-"`
 
-	// (Block List, Deprecated) To manage users, please switch to using a separate resource type yandex_mdb_mysql_user. (see below for nested schema)
+	// [Block]. To manage users, please switch to using a separate resource type yandex_mdb_mysql_user.
 	// To manage users, please switch to using a separate resource type `yandex_mdb_mysql_user`.
 	// +kubebuilder:validation:Optional
 	User []MySQLClusterUserParameters `json:"user,omitempty" tf:"user,omitempty"`
 
-	// (String) Version of the MySQL cluster. (allowed versions are: 5.7, 8.0).
-	// Version of the MySQL cluster. (allowed versions are: 5.7, 8.0).
+	// (String). Version of the MySQL cluster. (allowed versions are: 5.7, 8.0, 8.4).
+	// Version of the MySQL cluster. (allowed versions are: 5.7, 8.0, 8.4).
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type MySQLClusterPerformanceDiagnosticsInitParameters struct {
 
-	// (Boolean) Enable performance diagnostics.
+	// (Bool). Enable performance diagnostics.
 	// Enable performance diagnostics.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (Number) Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+	// (Number). Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 	// Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 	SessionsSamplingInterval *float64 `json:"sessionsSamplingInterval,omitempty" tf:"sessions_sampling_interval,omitempty"`
 
-	// (Number) Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+	// (Number). Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
 	// Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
 	StatementsSamplingInterval *float64 `json:"statementsSamplingInterval,omitempty" tf:"statements_sampling_interval,omitempty"`
 }
 
 type MySQLClusterPerformanceDiagnosticsObservation struct {
 
-	// (Boolean) Enable performance diagnostics.
+	// (Bool). Enable performance diagnostics.
 	// Enable performance diagnostics.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (Number) Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+	// (Number). Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 	// Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 	SessionsSamplingInterval *float64 `json:"sessionsSamplingInterval,omitempty" tf:"sessions_sampling_interval,omitempty"`
 
-	// (Number) Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+	// (Number). Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
 	// Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
 	StatementsSamplingInterval *float64 `json:"statementsSamplingInterval,omitempty" tf:"statements_sampling_interval,omitempty"`
 }
 
 type MySQLClusterPerformanceDiagnosticsParameters struct {
 
-	// (Boolean) Enable performance diagnostics.
+	// (Bool). Enable performance diagnostics.
 	// Enable performance diagnostics.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
-	// (Number) Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
+	// (Number). Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 	// Interval (in seconds) for my_stat_activity sampling Acceptable values are 1 to 86400, inclusive.
 	// +kubebuilder:validation:Optional
 	SessionsSamplingInterval *float64 `json:"sessionsSamplingInterval" tf:"sessions_sampling_interval,omitempty"`
 
-	// (Number) Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
+	// (Number). Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
 	// Interval (in seconds) for my_stat_statements sampling Acceptable values are 1 to 86400, inclusive.
 	// +kubebuilder:validation:Optional
 	StatementsSamplingInterval *float64 `json:"statementsSamplingInterval" tf:"statements_sampling_interval,omitempty"`
@@ -797,47 +887,47 @@ type MySQLClusterPerformanceDiagnosticsParameters struct {
 
 type MySQLClusterResourcesInitParameters struct {
 
-	// (Number) Volume of the storage available to a MySQL host, in gigabytes.
+	// (Number). Volume of the storage available to a MySQL host, in gigabytes.
 	// Volume of the storage available to a MySQL host, in gigabytes.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// (String) Type of the storage of MySQL hosts.
+	// (String). Type of the storage of MySQL hosts.
 	// Type of the storage of MySQL hosts.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
-	// (String) The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see the official documentation.
+	// (String). The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see the official documentation.
 	// The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-mysql/concepts/instance-types).
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type MySQLClusterResourcesObservation struct {
 
-	// (Number) Volume of the storage available to a MySQL host, in gigabytes.
+	// (Number). Volume of the storage available to a MySQL host, in gigabytes.
 	// Volume of the storage available to a MySQL host, in gigabytes.
 	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
 
-	// (String) Type of the storage of MySQL hosts.
+	// (String). Type of the storage of MySQL hosts.
 	// Type of the storage of MySQL hosts.
 	DiskTypeID *string `json:"diskTypeId,omitempty" tf:"disk_type_id,omitempty"`
 
-	// (String) The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see the official documentation.
+	// (String). The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see the official documentation.
 	// The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-mysql/concepts/instance-types).
 	ResourcePresetID *string `json:"resourcePresetId,omitempty" tf:"resource_preset_id,omitempty"`
 }
 
 type MySQLClusterResourcesParameters struct {
 
-	// (Number) Volume of the storage available to a MySQL host, in gigabytes.
+	// (Number). Volume of the storage available to a MySQL host, in gigabytes.
 	// Volume of the storage available to a MySQL host, in gigabytes.
 	// +kubebuilder:validation:Optional
 	DiskSize *float64 `json:"diskSize" tf:"disk_size,omitempty"`
 
-	// (String) Type of the storage of MySQL hosts.
+	// (String). Type of the storage of MySQL hosts.
 	// Type of the storage of MySQL hosts.
 	// +kubebuilder:validation:Optional
 	DiskTypeID *string `json:"diskTypeId" tf:"disk_type_id,omitempty"`
 
-	// (String) The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see the official documentation.
+	// (String). The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see the official documentation.
 	// The ID of the preset for computational resources available to a MySQL host (CPU, memory etc.). For more information, see [the official documentation](https://yandex.cloud/docs/managed-mysql/concepts/instance-types).
 	// +kubebuilder:validation:Optional
 	ResourcePresetID *string `json:"resourcePresetId" tf:"resource_preset_id,omitempty"`
@@ -845,7 +935,7 @@ type MySQLClusterResourcesParameters struct {
 
 type MySQLClusterRestoreInitParameters struct {
 
-	// (String) Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
+	// (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
 	// Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups).
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
 
@@ -856,7 +946,7 @@ type MySQLClusterRestoreInitParameters struct {
 
 type MySQLClusterRestoreObservation struct {
 
-	// (String) Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
+	// (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
 	// Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups).
 	BackupID *string `json:"backupId,omitempty" tf:"backup_id,omitempty"`
 
@@ -867,7 +957,7 @@ type MySQLClusterRestoreObservation struct {
 
 type MySQLClusterRestoreParameters struct {
 
-	// (String) Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
+	// (String). Backup ID. The cluster will be created from the specified backup. How to get a list of MySQL backups.
 	// Backup ID. The cluster will be created from the specified backup. [How to get a list of MySQL backups](https://yandex.cloud/docs/managed-mysql/operations/cluster-backups).
 	// +kubebuilder:validation:Optional
 	BackupID *string `json:"backupId" tf:"backup_id,omitempty"`
@@ -880,85 +970,85 @@ type MySQLClusterRestoreParameters struct {
 
 type MySQLClusterUserInitParameters struct {
 
-	// (String) Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD).
-	// Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`).
+	// (String). Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH).
+	// Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD`, `MYSQL_NO_LOGIN`, `MDB_IAMPROXY_AUTH` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`, `MYSQL_NO_LOGIN`, `MDB_IAMPROXY_AUTH`).
 	AuthenticationPlugin *string `json:"authenticationPlugin,omitempty" tf:"authentication_plugin,omitempty"`
 
-	// 1. When these parameters are set to -1, backend default values will be actually used. (see below for nested schema)
+	// 1. When these parameters are set to -1, backend default values will be actually used.
 	// User's connection limits. If not specified there will be no changes. Default value is -1. When these parameters are set to -1, backend default values will be actually used.
 	ConnectionLimits []ConnectionLimitsInitParameters `json:"connectionLimits,omitempty" tf:"connection_limits,omitempty"`
 
-	// (Set of String) List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
-	// List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS` for clear list use empty list. If the attribute is not specified there will be no changes.
+	// (Set Of String). List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS, FLUSH_OPTIMIZER_COSTS, SHOW_ROUTINE, MDB_ADMIN for clear list use empty list. If the attribute is not specified there will be no changes.
+	// List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS`, `FLUSH_OPTIMIZER_COSTS`, `SHOW_ROUTINE`, `MDB_ADMIN` for clear list use empty list. If the attribute is not specified there will be no changes.
 	// +listType=set
 	GlobalPermissions []*string `json:"globalPermissions,omitempty" tf:"global_permissions,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (String, Sensitive) The password of the user.
+	// (String). The password of the user.
 	// The password of the user.
 	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
-	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
 	Permission []MySQLClusterUserPermissionInitParameters `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type MySQLClusterUserObservation struct {
 
-	// (String) Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD).
-	// Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`).
+	// (String). Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH).
+	// Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD`, `MYSQL_NO_LOGIN`, `MDB_IAMPROXY_AUTH` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`, `MYSQL_NO_LOGIN`, `MDB_IAMPROXY_AUTH`).
 	AuthenticationPlugin *string `json:"authenticationPlugin,omitempty" tf:"authentication_plugin,omitempty"`
 
-	// 1. When these parameters are set to -1, backend default values will be actually used. (see below for nested schema)
+	// 1. When these parameters are set to -1, backend default values will be actually used.
 	// User's connection limits. If not specified there will be no changes. Default value is -1. When these parameters are set to -1, backend default values will be actually used.
 	ConnectionLimits []ConnectionLimitsObservation `json:"connectionLimits,omitempty" tf:"connection_limits,omitempty"`
 
-	// (Set of String) List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
-	// List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS` for clear list use empty list. If the attribute is not specified there will be no changes.
+	// (Set Of String). List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS, FLUSH_OPTIMIZER_COSTS, SHOW_ROUTINE, MDB_ADMIN for clear list use empty list. If the attribute is not specified there will be no changes.
+	// List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS`, `FLUSH_OPTIMIZER_COSTS`, `SHOW_ROUTINE`, `MDB_ADMIN` for clear list use empty list. If the attribute is not specified there will be no changes.
 	// +listType=set
 	GlobalPermissions []*string `json:"globalPermissions,omitempty" tf:"global_permissions,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The name of the user.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
 	Permission []MySQLClusterUserPermissionObservation `json:"permission,omitempty" tf:"permission,omitempty"`
 }
 
 type MySQLClusterUserParameters struct {
 
-	// (String) Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD).
-	// Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`).
+	// (String). Authentication plugin. Allowed values: MYSQL_NATIVE_PASSWORD, CACHING_SHA2_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH (for version 5.7 MYSQL_NATIVE_PASSWORD, SHA256_PASSWORD, MYSQL_NO_LOGIN, MDB_IAMPROXY_AUTH).
+	// Authentication plugin. Allowed values: `MYSQL_NATIVE_PASSWORD`, `CACHING_SHA2_PASSWORD`, `SHA256_PASSWORD`, `MYSQL_NO_LOGIN`, `MDB_IAMPROXY_AUTH` (for version 5.7 `MYSQL_NATIVE_PASSWORD`, `SHA256_PASSWORD`, `MYSQL_NO_LOGIN`, `MDB_IAMPROXY_AUTH`).
 	// +kubebuilder:validation:Optional
 	AuthenticationPlugin *string `json:"authenticationPlugin,omitempty" tf:"authentication_plugin,omitempty"`
 
-	// 1. When these parameters are set to -1, backend default values will be actually used. (see below for nested schema)
+	// 1. When these parameters are set to -1, backend default values will be actually used.
 	// User's connection limits. If not specified there will be no changes. Default value is -1. When these parameters are set to -1, backend default values will be actually used.
 	// +kubebuilder:validation:Optional
 	ConnectionLimits []ConnectionLimitsParameters `json:"connectionLimits,omitempty" tf:"connection_limits,omitempty"`
 
-	// (Set of String) List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS for clear list use empty list. If the attribute is not specified there will be no changes.
-	// List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS` for clear list use empty list. If the attribute is not specified there will be no changes.
+	// (Set Of String). List user's global permissions. Allowed permissions: REPLICATION_CLIENT, REPLICATION_SLAVE, PROCESS, FLUSH_OPTIMIZER_COSTS, SHOW_ROUTINE, MDB_ADMIN for clear list use empty list. If the attribute is not specified there will be no changes.
+	// List user's global permissions. Allowed permissions: `REPLICATION_CLIENT`, `REPLICATION_SLAVE`, `PROCESS`, `FLUSH_OPTIMIZER_COSTS`, `SHOW_ROUTINE`, `MDB_ADMIN` for clear list use empty list. If the attribute is not specified there will be no changes.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	GlobalPermissions []*string `json:"globalPermissions,omitempty" tf:"global_permissions,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The name of the user.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name" tf:"name,omitempty"`
 
-	// (String, Sensitive) The password of the user.
+	// (String). The password of the user.
 	// The password of the user.
 	// +kubebuilder:validation:Optional
 	PasswordSecretRef v1.LocalSecretKeySelector `json:"passwordSecretRef" tf:"-"`
 
-	// (Block Set) Set of permissions granted to the user. (see below for nested schema)
+	// [Block]. Set of permissions granted to the user.
 	// Set of permissions granted to the user.
 	// +kubebuilder:validation:Optional
 	Permission []MySQLClusterUserPermissionParameters `json:"permission,omitempty" tf:"permission,omitempty"`
@@ -966,35 +1056,35 @@ type MySQLClusterUserParameters struct {
 
 type MySQLClusterUserPermissionInitParameters struct {
 
-	// (String) The name of the database that the permission grants access to.
+	// (String). The name of the database that the permission grants access to.
 	// The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 
-	// (List of String) List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
-	// List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`.
+	// (List Of String). List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE,REFERENCES.
+	// List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`,`REFERENCES`.
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
 type MySQLClusterUserPermissionObservation struct {
 
-	// (String) The name of the database that the permission grants access to.
+	// (String). The name of the database that the permission grants access to.
 	// The name of the database that the permission grants access to.
 	DatabaseName *string `json:"databaseName,omitempty" tf:"database_name,omitempty"`
 
-	// (List of String) List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
-	// List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`.
+	// (List Of String). List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE,REFERENCES.
+	// List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`,`REFERENCES`.
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
 
 type MySQLClusterUserPermissionParameters struct {
 
-	// (String) The name of the database that the permission grants access to.
+	// (String). The name of the database that the permission grants access to.
 	// The name of the database that the permission grants access to.
 	// +kubebuilder:validation:Optional
 	DatabaseName *string `json:"databaseName" tf:"database_name,omitempty"`
 
-	// (List of String) List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE.
-	// List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`.
+	// (List Of String). List user's roles in the database. Allowed roles: ALL,ALTER,ALTER_ROUTINE,CREATE,CREATE_ROUTINE,CREATE_TEMPORARY_TABLES, CREATE_VIEW,DELETE,DROP,EVENT,EXECUTE,INDEX,INSERT,LOCK_TABLES,SELECT,SHOW_VIEW,TRIGGER,UPDATE,REFERENCES.
+	// List user's roles in the database. Allowed roles: `ALL`,`ALTER`,`ALTER_ROUTINE`,`CREATE`,`CREATE_ROUTINE`,`CREATE_TEMPORARY_TABLES`, `CREATE_VIEW`,`DELETE`,`DROP`,`EVENT`,`EXECUTE`,`INDEX`,`INSERT`,`LOCK_TABLES`,`SELECT`,`SHOW_VIEW`,`TRIGGER`,`UPDATE`,`REFERENCES`.
 	// +kubebuilder:validation:Optional
 	Roles []*string `json:"roles,omitempty" tf:"roles,omitempty"`
 }
@@ -1026,7 +1116,7 @@ type MySQLClusterStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// MySQLCluster is the Schema for the MySQLClusters API. Manages a MySQL cluster within Yandex Cloud.
+// MySQLCluster is the Schema for the MySQLClusters API. Manages the yandex_mdb_mysql_cluster resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

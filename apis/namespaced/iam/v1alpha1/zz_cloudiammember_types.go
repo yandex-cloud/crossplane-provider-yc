@@ -30,60 +30,25 @@ import (
 
 type CloudIAMMemberInitParameters struct {
 
-	// (String) The ID of the cloud to attach the policy to.
-	// The ID of the cloud to attach the policy to.
-	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
-
-	// (String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
-	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
-	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
-	// * **serviceAccount:{service_account_id}**: A unique service account ID.
-	// * **federatedUser:{federated_user_id}**: A unique federated user ID.
-	// * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
-	// * **group:{group_id}**: A unique group ID.
-	// * **system:group:federation:{federation_id}:users**: All users in federation.
-	// * **system:group:organization:{organization_id}:users**: All users in organization.
-	// * **system:allAuthenticatedUsers**: All authenticated users.
-	// * **system:allUsers**: All users, including unauthenticated ones.
-	//
-	// ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
-	// +crossplane:generate:reference:type=ServiceAccount
-	// +crossplane:generate:reference:extractor=github.com/yandex-cloud/crossplane-provider-yc/config/namespaced/iam.ServiceAccountRefValue()
-	// +crossplane:generate:reference:refFieldName=ServiceAccountRef
-	// +crossplane:generate:reference:selectorFieldName=ServiceAccountSelector
-	Member *string `json:"member,omitempty" tf:"member,omitempty"`
-
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
-
-	// Reference to a ServiceAccount to populate member.
-	// +kubebuilder:validation:Optional
-	ServiceAccountRef *v1.NamespacedReference `json:"serviceAccountRef,omitempty" tf:"-"`
-
-	// Selector for a ServiceAccount to populate member.
-	// +kubebuilder:validation:Optional
-	ServiceAccountSelector *v1.NamespacedSelector `json:"serviceAccountSelector,omitempty" tf:"-"`
-
-	// (Number)
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type CloudIAMMemberObservation struct {
 
-	// (String) The ID of the cloud to attach the policy to.
-	// The ID of the cloud to attach the policy to.
+	// (String). The ID of the cloud to attach the policy to.
+	// The ID of the `cloud` to attach the policy to.
 	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String). The ID of this resource.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
-	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
+	// (String). An identity that will be granted the privilege in the role. It can have one of the following values:
+	// An identity that will be granted the privilege in the `role`. It can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
 	// * **federatedUser:{federated_user_id}**: A unique federated user ID.
-	// * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
 	// * **group:{group_id}**: A unique group ID.
 	// * **system:group:federation:{federation_id}:users**: All users in federation.
 	// * **system:group:organization:{organization_id}:users**: All users in organization.
@@ -93,27 +58,27 @@ type CloudIAMMemberObservation struct {
 	// ~> for more information about system groups, see [Cloud Documentation](https://yandex.cloud/docs/iam/concepts/access-control/system-group).
 	Member *string `json:"member,omitempty" tf:"member,omitempty"`
 
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
+	// (String). The role that should be assigned to the member.
+	// The role that should be assigned to the member.
 	Role *string `json:"role,omitempty" tf:"role,omitempty"`
 
-	// (Number)
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type CloudIAMMemberParameters struct {
 
-	// (String) The ID of the cloud to attach the policy to.
-	// The ID of the cloud to attach the policy to.
-	// +kubebuilder:validation:Optional
-	CloudID *string `json:"cloudId,omitempty" tf:"cloud_id,omitempty"`
+	// (String). The ID of the cloud to attach the policy to.
+	// The ID of the `cloud` to attach the policy to.
+	// +kubebuilder:validation:Required
+	CloudID *string `json:"cloudId" tf:"cloud_id,omitempty"`
 
-	// (String) An array of identities that will be granted the privilege in the role. Each entry can have one of the following values:
-	// An array of identities that will be granted the privilege in the `role`. Each entry can have one of the following values:
+	// (String). An identity that will be granted the privilege in the role. It can have one of the following values:
+	// An identity that will be granted the privilege in the `role`. It can have one of the following values:
 	// * **userAccount:{user_id}**: A unique user ID that represents a specific Yandex account.
 	// * **serviceAccount:{service_account_id}**: A unique service account ID.
 	// * **federatedUser:{federated_user_id}**: A unique federated user ID.
-	// * **federatedUser:{federated_user_id}:**: A unique SAML federation user account ID.
 	// * **group:{group_id}**: A unique group ID.
 	// * **system:group:federation:{federation_id}:users**: All users in federation.
 	// * **system:group:organization:{organization_id}:users**: All users in organization.
@@ -128,10 +93,10 @@ type CloudIAMMemberParameters struct {
 	// +kubebuilder:validation:Optional
 	Member *string `json:"member,omitempty" tf:"member,omitempty"`
 
-	// (String) The role that should be applied. See roles catalog.
-	// The role that should be applied. See [roles catalog](https://yandex.cloud/docs/iam/roles-reference).
-	// +kubebuilder:validation:Optional
-	Role *string `json:"role,omitempty" tf:"role,omitempty"`
+	// (String). The role that should be assigned to the member.
+	// The role that should be assigned to the member.
+	// +kubebuilder:validation:Required
+	Role *string `json:"role" tf:"role,omitempty"`
 
 	// Reference to a ServiceAccount to populate member.
 	// +kubebuilder:validation:Optional
@@ -141,7 +106,8 @@ type CloudIAMMemberParameters struct {
 	// +kubebuilder:validation:Optional
 	ServiceAccountSelector *v1.NamespacedSelector `json:"serviceAccountSelector,omitempty" tf:"-"`
 
-	// (Number)
+	// (Number). For test purposes, to compensate IAM operations delay
+	// For test purposes, to compensate IAM operations delay
 	// +kubebuilder:validation:Optional
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
@@ -173,7 +139,7 @@ type CloudIAMMemberStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// CloudIAMMember is the Schema for the CloudIAMMembers API. Allows management of a single member for a single IAM binding on a Yandex Resource Manager cloud.
+// CloudIAMMember is the Schema for the CloudIAMMembers API. Manages the yandex_resourcemanager_cloud_iam_member resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -182,10 +148,8 @@ type CloudIAMMemberStatus struct {
 type CloudIAMMember struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.cloudId) || (has(self.initProvider) && has(self.initProvider.cloudId))",message="spec.forProvider.cloudId is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.role) || (has(self.initProvider) && has(self.initProvider.role))",message="spec.forProvider.role is a required parameter"
-	Spec   CloudIAMMemberSpec   `json:"spec"`
-	Status CloudIAMMemberStatus `json:"status,omitempty"`
+	Spec              CloudIAMMemberSpec   `json:"spec"`
+	Status            CloudIAMMemberStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

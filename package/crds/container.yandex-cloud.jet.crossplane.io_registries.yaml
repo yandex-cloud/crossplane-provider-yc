@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: registries.container.yandex-cloud.jet.crossplane.io
 spec:
   group: container.yandex-cloud.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Registry is the Schema for the Registrys API. Creates a new container
-          registry.
+        description: Registry is the Schema for the Registrys API. Manages the yandex_container_registry
+          resource.
         properties:
           apiVersion:
             description: |-
@@ -76,7 +76,7 @@ spec:
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the registry belongs to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -158,14 +158,20 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
+                      Resource labels as `key:value` pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the registry.
+                    type: string
+                  registryId:
+                    description: |-
+                      (String). The ID of a specific registry.
+                      ID of the Registry resource to return.
+                      To get the registry ID use a [RegistryService.List] request.
                     type: string
                 type: object
               initProvider:
@@ -184,7 +190,7 @@ spec:
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the registry belongs to.
                     type: string
                   folderIdRef:
                     description: Reference to a Folder in resourcemanager to populate
@@ -266,14 +272,20 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
+                      Resource labels as `key:value` pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the registry.
+                    type: string
+                  registryId:
+                    description: |-
+                      (String). The ID of a specific registry.
+                      ID of the Registry resource to return.
+                      To get the registry ID use a [RegistryService.List] request.
                     type: string
                 type: object
               managementPolicies:
@@ -369,34 +381,40 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
-                      The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
+                      Output only. Creation timestamp in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
                     type: string
                   folderId:
                     description: |-
                       id is used.
-                      The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
+                      ID of the folder that the registry belongs to.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
-                      A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
+                      Resource labels as `key:value` pairs. Maximum of 64 per resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
-                      The resource name.
+                      (String). The resource name.
+                      Name of the registry.
+                    type: string
+                  registryId:
+                    description: |-
+                      (String). The ID of a specific registry.
+                      ID of the Registry resource to return.
+                      To get the registry ID use a [RegistryService.List] request.
                     type: string
                   status:
                     description: |-
-                      (String) Status of the registry.
-                      Status of the registry.
+                      Only) (String). Status of the registry.
+                      Output only. Status of the registry.
                     type: string
                 type: object
               conditions:

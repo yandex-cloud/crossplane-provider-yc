@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.21.0
   name: routetables.vpc.yandex-cloud.jet.crossplane.io
 spec:
   group: vpc.yandex-cloud.jet.crossplane.io
@@ -34,8 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: RouteTable is the Schema for the RouteTables API. A VPC route
-          table is a virtual version of the traditional route table on router device.
+        description: RouteTable is the Schema for the RouteTables API. Manages the
+          yandex_vpc_route_table resource.
         properties:
           apiVersion:
             description: |-
@@ -75,7 +75,7 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -163,18 +163,18 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkId:
                     description: |-
-                      (String) ID of the network this route table belongs to.
+                      (String). ID of the network this route table belongs to.
                       ID of the network this route table belongs to.
                     type: string
                   networkIdRef:
@@ -253,7 +253,7 @@ spec:
                     type: object
                   staticRoute:
                     description: |-
-                      (Block Set) A list of static route records for the route table.
+                      [Block]. A list of static route records for the route table.
                       A list of static route records for the route table.
 
                       ~> Only one of `next_hop_address` or `gateway_id` should be specified.
@@ -261,12 +261,12 @@ spec:
                       properties:
                         destinationPrefix:
                           description: |-
-                            (String) Route prefix in CIDR notation.
+                            (String). Route prefix in CIDR notation.
                             Route prefix in CIDR notation.
                           type: string
                         gatewayId:
                           description: |-
-                            (String) ID of the gateway used ad next hop.
+                            (String). ID of the gateway used ad next hop.
                             ID of the gateway used ad next hop.
                           type: string
                         gatewayIdRef:
@@ -345,7 +345,7 @@ spec:
                           type: object
                         nextHopAddress:
                           description: |-
-                            (String) Address of the next hop.
+                            (String). Address of the next hop.
                             Address of the next hop.
                           type: string
                       type: object
@@ -366,7 +366,7 @@ spec:
                 properties:
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -454,18 +454,18 @@ spec:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkId:
                     description: |-
-                      (String) ID of the network this route table belongs to.
+                      (String). ID of the network this route table belongs to.
                       ID of the network this route table belongs to.
                     type: string
                   networkIdRef:
@@ -544,7 +544,7 @@ spec:
                     type: object
                   staticRoute:
                     description: |-
-                      (Block Set) A list of static route records for the route table.
+                      [Block]. A list of static route records for the route table.
                       A list of static route records for the route table.
 
                       ~> Only one of `next_hop_address` or `gateway_id` should be specified.
@@ -552,12 +552,12 @@ spec:
                       properties:
                         destinationPrefix:
                           description: |-
-                            (String) Route prefix in CIDR notation.
+                            (String). Route prefix in CIDR notation.
                             Route prefix in CIDR notation.
                           type: string
                         gatewayId:
                           description: |-
-                            (String) ID of the gateway used ad next hop.
+                            (String). ID of the gateway used ad next hop.
                             ID of the gateway used ad next hop.
                           type: string
                         gatewayIdRef:
@@ -636,7 +636,7 @@ spec:
                           type: object
                         nextHopAddress:
                           description: |-
-                            (String) Address of the next hop.
+                            (String). Address of the next hop.
                             Address of the next hop.
                           type: string
                       type: object
@@ -735,12 +735,12 @@ spec:
                 properties:
                   createdAt:
                     description: |-
-                      (String) The creation timestamp of the resource.
+                      Only) (String). The creation timestamp of the resource.
                       The creation timestamp of the resource.
                     type: string
                   description:
                     description: |-
-                      (String) The resource description.
+                      (String). The resource description.
                       The resource description.
                     type: string
                   folderId:
@@ -749,29 +749,29 @@ spec:
                       The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
                     type: string
                   id:
-                    description: (String) The ID of this resource.
+                    description: (String).
                     type: string
                   labels:
                     additionalProperties:
                       type: string
                     description: |-
-                      (Map of String) A set of key/value label pairs which assigned to resource.
+                      (Map Of String). A set of key/value label pairs which assigned to resource.
                       A set of key/value label pairs which assigned to resource.
                     type: object
                     x-kubernetes-map-type: granular
                   name:
                     description: |-
-                      (String) The resource name.
+                      (String). The resource name.
                       The resource name.
                     type: string
                   networkId:
                     description: |-
-                      (String) ID of the network this route table belongs to.
+                      (String). ID of the network this route table belongs to.
                       ID of the network this route table belongs to.
                     type: string
                   staticRoute:
                     description: |-
-                      (Block Set) A list of static route records for the route table.
+                      [Block]. A list of static route records for the route table.
                       A list of static route records for the route table.
 
                       ~> Only one of `next_hop_address` or `gateway_id` should be specified.
@@ -779,17 +779,17 @@ spec:
                       properties:
                         destinationPrefix:
                           description: |-
-                            (String) Route prefix in CIDR notation.
+                            (String). Route prefix in CIDR notation.
                             Route prefix in CIDR notation.
                           type: string
                         gatewayId:
                           description: |-
-                            (String) ID of the gateway used ad next hop.
+                            (String). ID of the gateway used ad next hop.
                             ID of the gateway used ad next hop.
                           type: string
                         nextHopAddress:
                           description: |-
-                            (String) Address of the next hop.
+                            (String). Address of the next hop.
                             Address of the next hop.
                           type: string
                       type: object

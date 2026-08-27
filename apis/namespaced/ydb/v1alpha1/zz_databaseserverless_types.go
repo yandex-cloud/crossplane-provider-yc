@@ -30,11 +30,11 @@ import (
 
 type DatabaseServerlessInitParameters struct {
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
@@ -51,45 +51,45 @@ type DatabaseServerlessInitParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) Location ID for the Yandex Database serverless cluster.
+	// (String). Location ID for the Yandex Database serverless cluster.
 	// Location ID for the Yandex Database serverless cluster.
 	LocationID *string `json:"locationId,omitempty" tf:"location_id,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block Set) (see below for nested schema)
+	// [Block].
 	ServerlessDatabase []ServerlessDatabaseInitParameters `json:"serverlessDatabase,omitempty" tf:"serverless_database,omitempty"`
 
-	// (Number)
+	// (Number).
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type DatabaseServerlessObservation struct {
 
-	// (String) The creation timestamp of the resource.
+	// Only) (String). The creation timestamp of the resource.
 	// The creation timestamp of the resource.
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
-	// (String) Full database path of the Yandex Database serverless cluster. Useful for SDK configuration.
+	// Only) (String). Full database path of the Yandex Database serverless cluster. Useful for SDK configuration.
 	// Full database path of the Yandex Database serverless cluster. Useful for SDK configuration.
 	DatabasePath *string `json:"databasePath,omitempty" tf:"database_path,omitempty"`
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
-	// (String) Document API endpoint of the Yandex Database serverless cluster.
+	// Only) (String). Document API endpoint of the Yandex Database serverless cluster.
 	// Document API endpoint of the Yandex Database serverless cluster.
 	DocumentAPIEndpoint *string `json:"documentApiEndpoint,omitempty" tf:"document_api_endpoint,omitempty"`
 
@@ -97,53 +97,53 @@ type DatabaseServerlessObservation struct {
 	// The folder identifier that resource belongs to. If it is not provided, the default provider `folder-id` is used.
 	FolderID *string `json:"folderId,omitempty" tf:"folder_id,omitempty"`
 
-	// (String) The ID of this resource.
+	// (String).
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) Location ID for the Yandex Database serverless cluster.
+	// (String). Location ID for the Yandex Database serverless cluster.
 	// Location ID for the Yandex Database serverless cluster.
 	LocationID *string `json:"locationId,omitempty" tf:"location_id,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block Set) (see below for nested schema)
+	// [Block].
 	ServerlessDatabase []ServerlessDatabaseObservation `json:"serverlessDatabase,omitempty" tf:"serverless_database,omitempty"`
 
-	// (Number)
+	// (Number).
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 
-	// (String) Status of the Yandex Database serverless cluster.
+	// Only) (String). Status of the Yandex Database serverless cluster.
 	// Status of the Yandex Database serverless cluster.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// (Boolean) Whether TLS is enabled for the Yandex Database serverless cluster. Useful for SDK configuration.
+	// Only) (Bool). Whether TLS is enabled for the Yandex Database serverless cluster. Useful for SDK configuration.
 	// Whether TLS is enabled for the Yandex Database serverless cluster. Useful for SDK configuration.
 	TLSEnabled *bool `json:"tlsEnabled,omitempty" tf:"tls_enabled,omitempty"`
 
-	// (String) API endpoint of the Yandex Database serverless cluster. Useful for SDK configuration.
+	// Only) (String). API endpoint of the Yandex Database serverless cluster. Useful for SDK configuration.
 	// API endpoint of the Yandex Database serverless cluster. Useful for SDK configuration.
 	YdbAPIEndpoint *string `json:"ydbApiEndpoint,omitempty" tf:"ydb_api_endpoint,omitempty"`
 
-	// (String) Full endpoint of the Yandex Database serverless cluster.
+	// Only) (String). Full endpoint of the Yandex Database serverless cluster.
 	// Full endpoint of the Yandex Database serverless cluster.
 	YdbFullEndpoint *string `json:"ydbFullEndpoint,omitempty" tf:"ydb_full_endpoint,omitempty"`
 }
 
 type DatabaseServerlessParameters struct {
 
-	// (Boolean) The true value means that resource is protected from accidental deletion.
+	// (Bool). The true value means that resource is protected from accidental deletion.
 	// The `true` value means that resource is protected from accidental deletion.
 	// +kubebuilder:validation:Optional
 	DeletionProtection *bool `json:"deletionProtection,omitempty" tf:"deletion_protection,omitempty"`
 
-	// (String) The resource description.
+	// (String). The resource description.
 	// The resource description.
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
@@ -162,76 +162,76 @@ type DatabaseServerlessParameters struct {
 	// +kubebuilder:validation:Optional
 	FolderIDSelector *v1.NamespacedSelector `json:"folderIdSelector,omitempty" tf:"-"`
 
-	// (Map of String) A set of key/value label pairs which assigned to resource.
+	// (Map Of String). A set of key/value label pairs which assigned to resource.
 	// A set of key/value label pairs which assigned to resource.
 	// +kubebuilder:validation:Optional
 	// +mapType=granular
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
-	// (String) Location ID for the Yandex Database serverless cluster.
+	// (String). Location ID for the Yandex Database serverless cluster.
 	// Location ID for the Yandex Database serverless cluster.
 	// +kubebuilder:validation:Optional
 	LocationID *string `json:"locationId,omitempty" tf:"location_id,omitempty"`
 
-	// (String) The resource name.
+	// (String). The resource name.
 	// The resource name.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// (Block Set) (see below for nested schema)
+	// [Block].
 	// +kubebuilder:validation:Optional
 	ServerlessDatabase []ServerlessDatabaseParameters `json:"serverlessDatabase,omitempty" tf:"serverless_database,omitempty"`
 
-	// (Number)
+	// (Number).
 	// +kubebuilder:validation:Optional
 	SleepAfter *float64 `json:"sleepAfter,omitempty" tf:"sleep_after,omitempty"`
 }
 
 type ServerlessDatabaseInitParameters struct {
 
-	// (Boolean)
+	// (Bool).
 	EnableThrottlingRcuLimit *bool `json:"enableThrottlingRcuLimit,omitempty" tf:"enable_throttling_rcu_limit,omitempty"`
 
-	// (Number)
+	// (Number).
 	ProvisionedRcuLimit *float64 `json:"provisionedRcuLimit,omitempty" tf:"provisioned_rcu_limit,omitempty"`
 
-	// (Number)
+	// (Number).
 	StorageSizeLimit *float64 `json:"storageSizeLimit,omitempty" tf:"storage_size_limit,omitempty"`
 
-	// (Number)
+	// (Number).
 	ThrottlingRcuLimit *float64 `json:"throttlingRcuLimit,omitempty" tf:"throttling_rcu_limit,omitempty"`
 }
 
 type ServerlessDatabaseObservation struct {
 
-	// (Boolean)
+	// (Bool).
 	EnableThrottlingRcuLimit *bool `json:"enableThrottlingRcuLimit,omitempty" tf:"enable_throttling_rcu_limit,omitempty"`
 
-	// (Number)
+	// (Number).
 	ProvisionedRcuLimit *float64 `json:"provisionedRcuLimit,omitempty" tf:"provisioned_rcu_limit,omitempty"`
 
-	// (Number)
+	// (Number).
 	StorageSizeLimit *float64 `json:"storageSizeLimit,omitempty" tf:"storage_size_limit,omitempty"`
 
-	// (Number)
+	// (Number).
 	ThrottlingRcuLimit *float64 `json:"throttlingRcuLimit,omitempty" tf:"throttling_rcu_limit,omitempty"`
 }
 
 type ServerlessDatabaseParameters struct {
 
-	// (Boolean)
+	// (Bool).
 	// +kubebuilder:validation:Optional
 	EnableThrottlingRcuLimit *bool `json:"enableThrottlingRcuLimit,omitempty" tf:"enable_throttling_rcu_limit,omitempty"`
 
-	// (Number)
+	// (Number).
 	// +kubebuilder:validation:Optional
 	ProvisionedRcuLimit *float64 `json:"provisionedRcuLimit,omitempty" tf:"provisioned_rcu_limit,omitempty"`
 
-	// (Number)
+	// (Number).
 	// +kubebuilder:validation:Optional
 	StorageSizeLimit *float64 `json:"storageSizeLimit,omitempty" tf:"storage_size_limit,omitempty"`
 
-	// (Number)
+	// (Number).
 	// +kubebuilder:validation:Optional
 	ThrottlingRcuLimit *float64 `json:"throttlingRcuLimit,omitempty" tf:"throttling_rcu_limit,omitempty"`
 }
@@ -263,7 +263,7 @@ type DatabaseServerlessStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// DatabaseServerless is the Schema for the DatabaseServerlesss API. Manages Yandex Database serverless cluster.
+// DatabaseServerless is the Schema for the DatabaseServerlesss API. Manages the yandex_ydb_database_serverless resource.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
