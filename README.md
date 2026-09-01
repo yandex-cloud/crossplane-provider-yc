@@ -10,7 +10,7 @@ managed resources for [Yandex Cloud](https://cloud.yandex.com/).
 
 Install crossplane:
 
-```
+```shell
 kubectl create namespace crossplane-system
 
 helm repo add crossplane-stable https://charts.crossplane.io/stable
@@ -21,7 +21,7 @@ helm install crossplane --namespace crossplane-system crossplane-stable/crosspla
 
 Check crossplane status:
 
-```
+```shell
 helm list -n crossplane-system
 
 kubectl get all -n crossplane-system
@@ -36,16 +36,17 @@ sudo mv crossplane $(dirname $(which kubectl))
 
 Install the provider by using the following command after changing tag to the latest release:
 
+```shell
+crossplane xpkg install provider xpkg.upbound.io/yandexcloud/crossplane-provider-yc:v0.14.0
+```
 
-```
-crossplane xpkg install provider xpkg.upbound.io/yandexcloud/crossplane-provider-yc:v0.4.1
-```
+or set in .Values.provider.package
 
 ### Setup ProviderConfig
 
 Create service account:
 
-```
+```shell
 yc iam service-account create --name <service-account>
 ```
 
@@ -69,16 +70,16 @@ kubectl create secret generic yc-creds -n "crossplane-system" --from-file=creden
 
 Apply example ProviderConfig:
 
-```
+```shell
 kubectl apply -f examples/providerconfig/providerconfig.yaml
 ```
 
 ### Update crossplane-provider-yc
 
-Update provider version on new tag (e.g. v0.4.1):
+Update provider version on new tag (e.g. v0.14.0):
 
-```
-kubectl crossplane update provider crossplane-provider-yc v0.4.1
+```shell
+kubectl crossplane update provider crossplane-provider-yc v0.14.0
 ```
 
 ## Useful things
